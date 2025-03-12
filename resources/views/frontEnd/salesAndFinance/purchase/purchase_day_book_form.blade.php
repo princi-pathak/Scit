@@ -45,13 +45,13 @@
                   <div class="mb-3 row">
                     <label for="reclaim_amount" class="col-sm-2 col-form-label"> Reclaim <span class="radStar">*</span></label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="" id="reclaim_amount" value="" placeholder="">
+                      <input type="text" class="form-control editInput" name="reclaim" id="reclaim_amount" value="" placeholder="">
                     </div>
                   </div>
                   <div class="mb-3 row">
                     <label for="expenses" class="col-sm-2 col-form-label"> Expenses <span class="radStar">*</span></label>
                     <div class="col-sm-9">
-                      <select class="form-control editInput selectOptions" name="expenses" id="expenses">
+                      <select class="form-control editInput selectOptions" name="expense_type" id="expenses">
                         <option>Please Select</option>
                         @foreach($purchase_expenses as $purchase_expense)
                         <option value="{{ $purchase_expense->id }}">{{ $purchase_expense->title }}</option>
@@ -89,13 +89,13 @@
                   <div class="mb-3 row">
                     <label for="not_claim" class="col-sm-2 col-form-label"> Not Claim <span class="radStar">*</span></label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="" id="not_claim" value="" placeholder="">
+                      <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" value="" placeholder="">
                     </div>
                   </div>
                   <div class="mb-3 row">
                     <label for="rate_input" class="col-sm-2 col-form-label">Expense Amount</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="" id="expenses_amount" value="">
+                      <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" value="">
                     </div>
                   </div>
                 </div>

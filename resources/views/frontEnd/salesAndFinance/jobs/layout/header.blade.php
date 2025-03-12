@@ -46,11 +46,13 @@
             display: flex;
             align-items: center;
         }
-        .ActiveBtn{
+
+        .ActiveBtn {
             background-color: #1f88b5;
             color: #fff;
         }
-        .ActiveBtn span i{
+
+        .ActiveBtn span i {
             color: #fff !important;
         }
     </style>
@@ -58,7 +60,7 @@
 <?php
 $rights = App\User::where('id', Auth::user()->id)->where('is_deleted', 0)->first()->access_rights;
 $access_rights = explode(',', $rights);
-$current_url=last(request()->segments());
+$current_url = last(request()->segments());
 ?>
 
 <body>
@@ -920,27 +922,18 @@ $current_url=last(request()->segments());
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h5>Projects</h5>
                                                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel5')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F"></path>
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F"></path>
                                                                 </g>
                                                             </svg></a>
                                                     </div>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">note_add
-                                                                </i>
+                                                            <div  lass="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">note_add </i>
                                                                 <span>New Project</span>
                                                             </div>
                                                         </a>
@@ -949,28 +942,23 @@ $current_url=last(request()->segments());
                                                         <a href="#!">
                                                             <div
                                                                 class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">trending_up
-                                                                </i>
+                                                                <i class="material-symbols-outlined">trending_up </i>
                                                                 <span>Active Projects</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">block
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">block</i>
                                                                 <span>Inactive Projects</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">check_circle
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">check_circle</i>
                                                                 <span>Completed Projects</span>
                                                             </div>
                                                         </a>
@@ -979,29 +967,17 @@ $current_url=last(request()->segments());
                                             </div>
                                         </li>
                                         <li>
-                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'finance') ActiveBtn @endif @endif"
-                                                onclick="openNav(event, 'mySidepanel6')"><span
-                                                    class="plus_icon"><i class="material-symbols-outlined">
-                                                        finance_mode </i></span>Finance</button>
+                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'finance') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel6')"><span class="plus_icon"><i class="material-symbols-outlined"> finance_mode </i></span>Finance</button>
                                             <div id="mySidepanel6" class="sidepanel">
                                                 <ul>
-                                                    <div
-                                                        class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5>Finance</h5>
-                                                        <a href="javascript:void(0)" class="closebtn"
-                                                            onclick="closeNav('mySidepanel6')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel6')">
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F">
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F">
                                                                     </path>
                                                                 </g>
                                                             </svg>
@@ -1009,182 +985,135 @@ $current_url=last(request()->segments());
                                                     </div>
                                                     <li class="custom_dropdown">
                                                         <a class="dropbtn">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">
-                                                                    receipt_long </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined"> receipt_long </i>
                                                                 <span>Invoice</span>
                                                                 <i class="fa-solid fa-angle-right arrow"></i>
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
                                                             <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>Dashboard</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">receipt_long</i>
+                                                                    <span>Dashboard</span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>New Invoice</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">receipt_long</i>
+                                                                    <span>New Invoice</span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>Draft
-                                                                        Invoices</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">receipt_long</i>
+                                                                        <span>Draft Invoices</span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>Outstanding
-                                                                        Invoices</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                                    <span>Outstanding Invoices</span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>Overdue
-                                                                        Invoices
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                                    <span>Overdue Invoices
                                                                     </span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>Paid
-                                                                        Invoices
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                                        <span>Paid Invoices </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                                    <span>Search Invoices</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">receipt_long</i>
+                                                                        <span>Account Statements
                                                                     </span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>Search
-                                                                        Invoices
-                                                                    </span>
-                                                                </div>
-                                                            </a>
-                                                            <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>Account
-                                                                        Statements
-                                                                    </span>
-                                                                </div>
-                                                            </a>
-                                                            <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        receipt_long</i><span>Reminders</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                                    <span>Reminders</span>
                                                                 </div>
                                                             </a>
                                                             <div class="custom_dropdown2">
                                                                 <a tabindex=0>
-                                                                    <div
-                                                                        class="d-flex align-items-center gap-2 mb-2">
-                                                                        <i class="material-symbols-outlined">
-                                                                        receipt_long</i>
+                                                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                                                        <i class="material-symbols-outlined">receipt_long</i>
                                                                         <span>Recurring Invoices</span>
                                                                         <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>New
-                                                                                Recurring Invoice
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span>New Recurring Invoice </span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Recurring Invoice
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span> Recurring Invoice</span>
                                                                         </div>
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                             <div class="custom_dropdown2">
                                                                 <a tabindex=0>
-                                                                    <div
-                                                                        class="d-flex align-items-center gap-2 mb-2">
-                                                                        <i class="material-symbols-outlined">
-                                                                        receipt_long</i>
+                                                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                                                        <i class="material-symbols-outlined">receipt_long</i>
                                                                         <span>Credit Notes</span>
                                                                         <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                New Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                            <span> New Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Draft Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span>Draft Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Awaiting Approval Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span> Awaiting Approval Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Approval Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                            <span>Approval Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Paid Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                            <span>Paid Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Cancelled Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                            <span>Cancelled Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                 </div>
@@ -1193,188 +1122,140 @@ $current_url=last(request()->segments());
                                                     </li>
                                                     <li class="custom_dropdown">
                                                         <a class="dropbtn">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">
-                                                                    shopping_cart </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">shopping_cart </i>
                                                                 <span>Purchase Orders</span>
-                                                                <i
-                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                                <i class="fa-solid fa-angle-right arrow"></i>
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
                                                             <a href="">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Dashboard
-                                                                    </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                    <span>Dashboard</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('purchase_order')}}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        New Purchase Order </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span>New Purchase Order </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('draft_purchase_order')}}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Draft Purchase Order </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Draft Purchase Order </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Awaiting Approval Purchase Orders</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                    <span> Awaiting Approval Purchase Orders</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('draft_purchase_order?list_mode=Approved') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Approved Purchase Order </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span>Approved Purchase Order </span>
                                                                 </div>
                                                             </a>
                                                             <!-- <a href="#!">Active Customers</a> -->
                                                             <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Rejected Purchase Order </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                    <span> Rejected Purchase Order </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Actioned Purchase Order </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Actioned Purchase Order </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('draft_purchase_order?list_mode=Paid') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Paid Purchase Order </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Paid Purchase Order </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('draft_purchase_order?list_mode=Paid') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Paid Purchase Order </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Paid Purchase Order </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('purchase-orders-search')}}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Search Purchase Orders </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Search Purchase Orders </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('purchase-order-invoices')}}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Invoices Received </span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Invoices Received </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('purchase-order-statements')}}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Purchase Orders Statements</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Purchase Orders Statements</span>
                                                                 </div>
                                                             </a>
                                                             <div class="custom_dropdown2">
                                                                 <a tabindex=0>
-                                                                    <div
-                                                                        class="d-flex align-items-center gap-2 mb-2">
-                                                                        <i class="material-symbols-outlined">
-                                                                            keyboard_double_arrow_right</i>
+                                                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                                                        <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                         <span>Recurring Purchase Orders</span>
                                                                         <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                New Recurring Purchase Order</span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span> New Recurring Purchase Order</span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Recurring Purchase Orders</span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span> Recurring Purchase Orders</span>
                                                                         </div>
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                             <div class="custom_dropdown2">
                                                                 <a tabindex=0>
-                                                                    <div
-                                                                        class="d-flex align-items-center gap-2 mb-2">
-                                                                        <i class="material-symbols-outlined">
-                                                                            keyboard_double_arrow_right</i>
+                                                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                                                        <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                         <span>Credit Notes</span>
                                                                         <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
                                                                     <a href="{{url('new_credit_notes')}}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                New Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span> New Credit Note </span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="{{url('credit_notes?list_mode=Approved')}}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Approval Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span> Approval Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="{{url('credit_notes?list_mode=Paid')}}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Paid Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                            <span> Paid Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                     <a href="{{url('credit_notes?list_mode=Cancelled')}}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-2 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                keyboard_double_arrow_right</i><span>
-                                                                                Cancelled Credit Note
-                                                                            </span>
+                                                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                            <span> Cancelled Credit Note</span>
                                                                         </div>
                                                                     </a>
                                                                 </div>
@@ -1385,29 +1266,17 @@ $current_url=last(request()->segments());
                                             </div>
                                         </li>
                                         <li>
-                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'customers') ActiveBtn @endif @endif"
-                                                onclick="openNav(event, 'mySidepanel7')"><span
-                                                    class="plus_icon"><i class="material-symbols-outlined">
-                                                        contact_page </i></span>Contacts</button>
+                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'customers') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel7')"><span class="plus_icon"><i class="material-symbols-outlined"> contact_page </i></span>Contacts</button>
                                             <div id="mySidepanel7" class="sidepanel">
                                                 <ul>
-                                                    <div
-                                                        class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5>Contacts</h5>
-                                                        <a href="javascript:void(0)" class="closebtn"
-                                                            onclick="closeNav('mySidepanel7')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel7')">
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F">
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F">
                                                                     </path>
                                                                 </g>
                                                             </svg>
@@ -1415,83 +1284,64 @@ $current_url=last(request()->segments());
                                                     </div>
                                                     <li class="custom_dropdown">
                                                         <a class="dropbtn">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">
-                                                                    group_add </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">group_add </i>
                                                                 <span>Customers</span>
                                                                 <i class="fa-solid fa-angle-right arrow"></i>
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
                                                             <a href="{{url('customer_add_edit')}}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        New Customers</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> New Customers</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('customers?list_mode=ACTIVE') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Active Customers</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                    <span> Active Customers</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('customers?list_mode=INACTIVE') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Inactive Customers</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span>Inactive Customers</span>
                                                                 </div>
                                                             </a>
                                                             <a href="#">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Customers Logins</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Customers Logins</span>
                                                                 </div>
                                                             </a>
                                                         </div>
                                                     </li>
                                                     <li class="custom_dropdown">
                                                         <a class="dropbtn">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">
-                                                                    storefront </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined"> storefront </i>
                                                                 <span>Suppliers</span>
-                                                                <i
-                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                                <i class="fa-solid fa-angle-right arrow"></i>
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
                                                             <a href="{{url('supplier_add')}}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        New Suppliers</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> New Suppliers</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('supplier?list_mode=ACTIVE') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Active Suppliers</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Active Suppliers</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('supplier?list_mode=INACTIVE') }}">
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">
-                                                                        keyboard_double_arrow_right</i><span>
-                                                                        Inactive Suppliers</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
+                                                                    <span> Inactive Suppliers</span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -1500,32 +1350,19 @@ $current_url=last(request()->segments());
                                             </div>
                                         </li>
                                         <li>
-                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'item') ActiveBtn @endif @endif"
-                                                onclick="openNav(event, 'mySidepanel8')">
-                                                <span class="plus_icon">
-                                                    <i class="material-symbols-outlined">
-                                                        align_items_stretch</i>
-                                                </span>Items
+                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'item') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel8')">
+                                                <span class="plus_icon"> <i class="material-symbols-outlined"> align_items_stretch</i></span>Items
                                             </button>
                                             <div id="mySidepanel8" class="sidepanel">
                                                 <ul>
-                                                    <div
-                                                        class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5>Items</h5>
-                                                        <a href="javascript:void(0)" class="closebtn"
-                                                            onclick="closeNav('mySidepanel8')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel8')">
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F">
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F">
                                                                     </path>
                                                                 </g>
                                                             </svg>
@@ -1533,40 +1370,32 @@ $current_url=last(request()->segments());
                                                     </div>
                                                     <li>
                                                         <a href="{{ url('/item/product_categories') }}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">view_list
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">view_list</i>
                                                                 <span>Product Categories</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="{{ url('/item/products') }}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">category
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">category</i>
                                                                 <span>Products</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="{{ url('/item/catalogues') }}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">apps
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">apps</i>
                                                                 <span>Product Groups</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="{{ url('/item/item-groups') }}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">menu_book
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">menu_book </i>
                                                                 <span>Catalogues</span>
                                                             </div>
                                                         </a>
@@ -1582,71 +1411,50 @@ $current_url=last(request()->segments());
                                             </a>
                                         </li>
                                         <li>
-                                            <button href="#" class="openbtn"
-                                                onclick="openNav(event, 'mySidepanel9')">
-                                                <span class="plus_icon">
-                                                    <i class="material-symbols-outlined"> diversity_2 </i>
-                                                </span>Users
+                                            <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel9')"> <span class="plus_icon"> <i class="material-symbols-outlined"> diversity_2 </i></span>Users
                                             </button>
                                             <div id="mySidepanel9" class="sidepanel">
                                                 <ul>
-                                                    <div
-                                                        class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5>Users</h5>
-                                                        <a href="javascript:void(0)" class="closebtn"
-                                                            onclick="closeNav('mySidepanel9')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel9')">
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F"></path>
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F"></path>
                                                                 </g>
                                                             </svg>
                                                         </a>
                                                     </div>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">group
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">group</i>
                                                                 <span> Users</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">diversity_3
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">diversity_3</i>
                                                                 <span>Team Members</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">alarm_off
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">alarm_off</i>
                                                                 <span>Timeoff</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">person
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">person</i>
                                                                 <span>Lone Worker Active List</span>
                                                             </div>
                                                         </a>
@@ -1655,162 +1463,125 @@ $current_url=last(request()->segments());
                                             </div>
                                         </li>
                                         <li>
-                                            <button href="#" class="openbtn"
-                                                onclick="openNav(event, 'mySidepanel10')">
+                                            <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel10')">
                                                 <span class="plus_icon">
-                                                    <i class="material-symbols-outlined"> partner_reports
-                                                    </i>
+                                                    <i class="material-symbols-outlined"> partner_reports </i>
                                                 </span>Reports
                                             </button>
                                             <div id="mySidepanel10" class="sidepanel">
                                                 <ul>
-                                                    <div
-                                                        class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5>Reports</h5>
-                                                        <a href="javascript:void(0)" class="closebtn"
-                                                            onclick="closeNav('mySidepanel10')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel10')">
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F"></path>
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F"></path>
                                                                 </g>
                                                             </svg>
                                                         </a>
                                                     </div>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">group
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">group</i>
                                                                 <span> Customers</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">description
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">description</i>
                                                                 <span> Quote</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">work
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">  
+                                                                <i class="material-symbols-outlined">work</i>
                                                                 <span>Jobs</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">receipt_long
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">receipt_long </i>
                                                                 <span> Invoices</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">group
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">group</i>
                                                                 <span>Users</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">shopping_cart
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">shopping_cart</i>
                                                                 <span>Purchase Orders</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">shopping_bag
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">shopping_bag</i>
                                                                 <span>Products</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">directions_car
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">directions_car</i>
                                                                 <span>Vehicle Tracking</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">sms
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">sms</i>
                                                                 <span>SMS Report</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">attach_email
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">attach_email</i>
                                                                 <span>Email Report</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">event_note
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">event_note</i>
                                                                 <span>Reminder Report</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">insert_chart
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">insert_chart</i>
                                                                 <span>Task Report</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">table_chart
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">table_chart</i>
                                                                 <span>Report Builder</span>
                                                             </div>
                                                         </a>
@@ -1819,61 +1590,44 @@ $current_url=last(request()->segments());
                                             </div>
                                         </li>
                                         <li>
-                                            <button href="#" class="openbtn"
-                                                onclick="openNav(event, 'mySidepanel11')">
+                                            <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel11')">
                                                 <span class="plus_icon">
-                                                    <i class="material-symbols-outlined">
-                                                        bookmark_manager</i>
+                                                    <i class="material-symbols-outlined">bookmark_manager</i>
                                                 </span>File Manager
                                             </button>
                                             <div id="mySidepanel11" class="sidepanel">
                                                 <ul>
-                                                    <div
-                                                        class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5>File Manager</h5>
-                                                        <a href="javascript:void(0)" class="closebtn"
-                                                            onclick="closeNav('mySidepanel11')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel11')">
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F"></path>
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F"></path>
                                                                 </g>
                                                             </svg></a>
                                                     </div>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">attachment
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">attachment</i>
                                                                 <span>Attachments </span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">article
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">article </i>
                                                                 <span>Digital Documents</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#!">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">task_alt
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">task_alt </i>
                                                                 <span>Completed Questionnaires</span>
                                                             </div>
                                                         </a>
@@ -1882,29 +1636,17 @@ $current_url=last(request()->segments());
                                             </div>
                                         </li>
                                         <li>
-                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'setting' || $current_url == 'complaint_type' || $current_url == 'CRM_section_types') ActiveBtn @endif @endif"
-                                                onclick="openNav(event, 'mySidepanel12')"><span
-                                                    class="plus_icon"><i class="material-symbols-outlined">
-                                                        construction </i></span>Settings</button>
+                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'setting' || $current_url == 'complaint_type' || $current_url =='CRM_section_types') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel12')"><span class="plus_icon"><i class="material-symbols-outlined"> construction </i></span>Settings</button>
                                             <div id="mySidepanel12" class="sidepanel">
                                                 <ul>
-                                                    <div
-                                                        class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5>Settings</h5>
-                                                        <a href="javascript:void(0)" class="closebtn"
-                                                            onclick="closeNav('mySidepanel12')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel12')">
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"> </g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F">
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F">
                                                                     </path>
                                                                 </g>
                                                             </svg>
@@ -1968,33 +1710,39 @@ $current_url=last(request()->segments());
                                                         </a>
                                                         <div class="dropdown_content">
                                                             <a href="">
-                                                                <div  class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Lead Settings</span>
+                                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Lead Settings</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('/lead/lead_sources') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Lead Sources</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Lead Sources</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('/lead/lead_status') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Lead Status</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Lead Status</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('/lead/lead_task_type') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Lead Task Types</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Lead Task Types</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('/lead/lead_reject_types') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Lead Reject Types</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Lead Reject Types</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('/lead/lead_notes_type') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Lead Notes Type</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Lead Notes Type</span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2002,7 +1750,7 @@ $current_url=last(request()->segments());
                                                     <li class="custom_dropdown">
                                                         <a class="dropbtn">
                                                             <div class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">  comment </i>
+                                                                <i class="material-symbols-outlined"> comment </i>
                                                                 <span> Quotes </span>
                                                                 <i class="fa-solid fa-angle-right arrow"></i>
                                                             </div>
@@ -2010,17 +1758,20 @@ $current_url=last(request()->segments());
                                                         <div class="dropdown_content">
                                                             <a href="{{ url('/quote/quote_type') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Quote Type </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Quote Type </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('/quote/quote_sources') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Quote Source </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Quote Source </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{ url('/quote/quote_reject_types') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Quote Reject </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Quote Reject </span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2035,17 +1786,20 @@ $current_url=last(request()->segments());
                                                         <div class="dropdown_content">
                                                             <a href="{{url('job_type')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Job Type </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Job Type </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('job_appointment_type_list')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Job Appointment Type </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Job Appointment Type </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('appointment_rejection_cat_list')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Rejection Categories </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Rejection Categories </span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2061,12 +1815,14 @@ $current_url=last(request()->segments());
                                                         <div class="dropdown_content">
                                                             <a href="{{url('/account_codes')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span>Account Codes </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span>Account Codes </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('/tax_rate')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Tax Rate</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Tax Rate</span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2082,7 +1838,8 @@ $current_url=last(request()->segments());
                                                         <div class="dropdown_content">
                                                             <a href="{{url('departments')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Departments</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Departments</span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2098,17 +1855,20 @@ $current_url=last(request()->segments());
                                                         <div class="dropdown_content">
                                                             <a href="{{url('customer_type')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Customer Type</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Customer Type</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('job_titles')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Customer Job Title </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Customer Job Title </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('complaint_type')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Complaint Type</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Complaint Type</span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2116,39 +1876,46 @@ $current_url=last(request()->segments());
                                                     <li class="custom_dropdown">
                                                         <a class="dropbtn">
                                                             <div class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined"> group </i><span> Users </span>
+                                                                <i class="material-symbols-outlined"> group </i>
+                                                                <span> Users </span>
                                                                 <i class="fa-solid fa-angle-right arrow"></i>
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> User Type </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> User Type </span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> User Profiles </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> User Profiles </span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> User Working Areas </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> User Working Areas </span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Personal Time Type </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Personal Time Type </span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> User Contractors </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> User Contractors </span>
                                                                 </div>
                                                             </a>
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> User Location </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> User Location </span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2156,14 +1923,16 @@ $current_url=last(request()->segments());
                                                     <li class="custom_dropdown">
                                                         <a class="dropbtn">
                                                             <div class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined"> database </i><span> CRM </span>
+                                                                <i class="material-symbols-outlined"> database </i>
+                                                                <span> CRM </span>
                                                                 <i class="fa-solid fa-angle-right arrow"></i>
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
                                                             <a href="{{ url('/lead/CRM_section_types') }}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> CRM Section Types</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> CRM Section Types</span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2171,34 +1940,40 @@ $current_url=last(request()->segments());
                                                     <li class="custom_dropdown">
                                                         <a class="dropbtn">
                                                             <div class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined"> settings </i><span> General </span>
+                                                                <i class="material-symbols-outlined"> settings </i>
+                                                                <span> General </span>
                                                                 <i class="fa-solid fa-angle-right arrow"></i>
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
                                                             <a href="{{url('/attachments_types')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Attachment Types</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Attachment Types</span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('/Payment_type')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Payment Types </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Payment Types </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('/regions')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span>Regions </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span>Regions </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('/task_types')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Task Types </span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Task Types </span>
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('/tags')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i><span> Tags</span>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
+                                                                    <span> Tags</span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -2206,7 +1981,8 @@ $current_url=last(request()->segments());
                                                     <li>
                                                         <a href="quick_setup_wizard.html">
                                                             <div class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined"> auto_mode </i><span> Quick Setup Wizard </span>
+                                                                <i class="material-symbols-outlined"> auto_mode </i>
+                                                                <span> Quick Setup Wizard </span>
                                                             </div>
                                                         </a>
                                                     </li>
@@ -2262,64 +2038,47 @@ $current_url=last(request()->segments());
                                         </li>
                                         <!-- Fixed Asset start here -->
                                         <li>
-                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'assets') ActiveBtn @endif @endif"
-                                                onclick="openNav(event, 'mySidepanel14')">
+                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'assets') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel14')">
                                                 <span class="plus_icon">
-                                                    <i class="material-symbols-outlined"> web_asset
-                                                    </i>
+                                                    <i class="material-symbols-outlined"> web_asset</i>
                                                 </span>Fixed Assets
                                             </button>
                                             <div id="mySidepanel14" class="sidepanel">
                                                 <ul>
-                                                    <div
-                                                        class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5>Fixed Assets</h5>
-                                                        <a href="javascript:void(0)" class="closebtn"
-                                                            onclick="closeNav('mySidepanel14')">
-                                                            <svg width="40px" height="40px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                </g>
-                                                                <g id="SVGRepo_tracerCarrier"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
+                                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel14')">
+                                                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                        fill="#0F0F0F"></path>
+                                                                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F"></path>
                                                                 </g>
                                                             </svg>
                                                         </a>
                                                     </div>
                                                     <li>
                                                         <a href="{{url('sales-finance/assets/asset-category')}}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">web_asset
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">web_asset </i>
                                                                 <span>Asset Catetgory</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                     <li class="custom_dropdown">
                                                         <a href="{{url('sales-finance/assets/depreciation-type')}}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">
-                                                                web_asset </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined"> web_asset </i>
                                                                 <span> Depreciation Type </span>
-                                                                
+
                                                             </div>
                                                         </a>
-                                                        
+
                                                     </li>
                                                     <li>
                                                         <a href="{{url('sales-finance/assets/asset-register')}}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">app_registration
-                                                                </i>
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">app_registration</i>
                                                                 <span>Asset Register</span>
                                                             </div>
                                                         </a>
@@ -2387,7 +2146,6 @@ $current_url=last(request()->segments());
                                         <div class="col-md-8">
                                             <span id="" class="editInput">Default</span>
                                             <input type="hidden" id="" name="">
-
                                         </div>
                                     </div>
                                     <div class="row pt-3">
@@ -2477,9 +2235,6 @@ $current_url=last(request()->segments());
                                             <a href="#" class="profileDrop p-2 crmNewBtn" id="userCRMCallsModel"> New</a>
                                         </div>
                                     </div>
-
-
-
                                     <div class="col-sm-3">
                                         <form class="searchForm" action="">
                                             <div class="input-group mb-3  mt-3">
@@ -2699,7 +2454,6 @@ $current_url=last(request()->segments());
                                                             </div>
 
                                                             <form class="">
-
                                                             </form>
 
                                                         </div>
@@ -3496,7 +3250,7 @@ $current_url=last(request()->segments());
                     // Get the CKEditor content
                     document.getElementById('calls_notes').value = editor.getData();
                     // console.log(document.getElementById('calls_notes').value);
-                    // var formData = $('#CRM_calls_form').serialize();
+                    // var formData = $('#CRM_calls_form').serialize(); 
 
 
                 });

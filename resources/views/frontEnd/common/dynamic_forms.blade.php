@@ -5,7 +5,7 @@
 </style>
 <?php
 $home_id = Auth::user()->home_id;
-$service_users = App\ServiceUser::where('home_id', $home_id)->get()->toArray();
+$service_users = App\ServiceUser::where('home_id', $home_id)->where('deleted_at', 0)->get()->toArray();
 $dynamic_forms = App\DynamicFormBuilder::getFormList();
 $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 ?>

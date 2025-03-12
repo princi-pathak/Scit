@@ -28,7 +28,11 @@ class PurchaseDayBookRequest extends FormRequest
             'vatAmount' => 'required|numeric|min:0',
             'Vat' => 'required|exists:construction_tax_rates,id',
             'grossAmount' => 'required|numeric|min:0',
-            'purchase_day_book_id' => 'nullable|numeric|min:0'
+            'purchase_day_book_id' => 'nullable|numeric|min:0',
+            'reclaim'       => 'nullable|numeric|min:0',
+            'not_reclaim'   => 'nullable|numeric|min:0',
+            'expense_type'  => 'nullable|numeric|min:0',
+            'expense_amount'  => 'nullable|numeric|min:0',
         ];
     }
 }

@@ -29,7 +29,6 @@
           </div>
 
           <div class="searchJobForm" id="divTohide" style="display:none">
-
             <div class="row">
               <div class="col-lg-12">
                 <div class="newJobForm mt-4">

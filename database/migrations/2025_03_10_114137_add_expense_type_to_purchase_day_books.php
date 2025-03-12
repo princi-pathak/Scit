@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('purchase_day_books', function (Blueprint $table) {
-            $table->decimal('reclaim', 8, 2)->nullable();
-            $table->decimal('not_reclaim', 8, 2)->nullable();
-            $table->integer('expense_type')->nullable();
-            $table->decimal('expense_amount', 8, 2)->nullable();
+            $table->decimal('reclaim', 8, 2)->after('grossAmount')->nullable();
+            $table->decimal('not_reclaim', 8, 2)->after('reclaim')->nullable();
+            $table->integer('expense_type')->after('not_reclaim')->nullable();
+            $table->decimal('expense_amount', 8, 2)->after('expense_type')->nullable();
         });
     }
 
