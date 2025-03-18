@@ -1812,6 +1812,7 @@ form .page .btns button.next {
 
 #divTohide {
   min-height: 250px;
+  max-height: 100%;
   opacity: 1;
   display: block;
 }

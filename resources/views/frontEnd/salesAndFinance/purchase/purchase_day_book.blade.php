@@ -40,6 +40,10 @@
                                     <th>Gross </th>
                                     <th>Rate </th>
                                     <th>Total </th>
+                                    <th>Recliam </th>
+                                    <th>Not Recliam </th>
+                                    <th>Expense Type </th>
+                                    <th>Expense Amount </th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -49,6 +53,9 @@
                                 $totalVatAmount = 0;
                                 $totalGrossAmount = 0;
                                 $totalFinalAmount = 0;
+                                $totalReclaim = 0; 
+                                $totalNotReclaim = 0; 
+                                $totalExpense = 0; 
                                 @endphp
 
                                 @foreach($purchaseDayBook as $purchaseBook)
@@ -57,12 +64,18 @@
                                 $netAmount = $purchaseBook->netAmount ?? 0;
                                 $vatAmount = $purchaseBook->vatAmount ?? 0;
                                 $grossAmount = $purchaseBook->grossAmount ?? 0;
+                                $reclaim = $purchaseBook->reclaim;
+                                $not_reclaim = $purchaseBook->not_reclaim;
+                                $expense_amount = $purchaseBook->expense_amount;
                                 $finalAmount = $netAmount + $vatAmount;
 
                                 $totalNetAmount += $netAmount;
                                 $totalVatAmount += $vatAmount;
                                 $totalGrossAmount += $grossAmount;
                                 $totalFinalAmount += $finalAmount;
+                                $totalReclaim += $reclaim;
+                                $totalNotReclaim += $not_reclaim;
+                                $totalExpense += $expense_amount;
                                 @endphp
 
                                 <tr>
@@ -74,6 +87,10 @@
                                     <td>{{ $purchaseBook->grossAmount }}</td>
                                     <td>{{ $purchaseBook->tax_rate_name }}</td>
                                     <td>{{ $purchaseBook->netAmount + $purchaseBook->vatAmount }}</td>
+                                    <td>{{ $purchaseBook->reclaim }}</td>
+                                    <td>{{ $purchaseBook->not_reclaim }}</td>
+                                    <td>{{ $purchaseBook->title }}</td>
+                                    <td>{{ $purchaseBook->expense_amount }}</td>
                                     <td>
                                         <div class="d-flex justify-content-end actionDropdown">
                                             <div class="nav-item dropdown">
@@ -95,6 +112,9 @@
                                     <th rowspan="1" colspan="1">£{{ number_format($totalVatAmount, 2) }}</th>
                                     <th rowspan="1" colspan="2">£{{ number_format($totalGrossAmount, 2) }}</th>
                                     <th rowspan="1" colspan="1">£{{ number_format($totalFinalAmount, 2) }}</th>
+                                    <th rowspan="1" colspan="1">£{{ number_format($totalReclaim, 2) }}</th>
+                                    <th rowspan="1" colspan="2">£{{ number_format($totalNotReclaim, 2) }}</th>
+                                    <th rowspan="1" colspan="1">£{{ number_format($totalExpense, 2) }}</th>
                                 </tr>
                             </tfoot>
                         </table>
