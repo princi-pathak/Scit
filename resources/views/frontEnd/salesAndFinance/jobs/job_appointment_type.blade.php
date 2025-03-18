@@ -158,7 +158,7 @@
                                                         <div class="col-sm-3">
                                                             <label class="col-form-label">(Hours:Minutes)</label>
                                                         </div>
-                                                        &emsp;(Hours:Minutes)
+                                                        &emsp;
                                                     </div>
                                                 </div>
                                                     <div class="mb-2 row">

@@ -201,7 +201,7 @@ h6 {
 
 .profileDrop:hover {
   background-color: #32323A;
-  color: #fff;
+  color: #fff !important;
 }
 
 button.profileDrop {
@@ -857,7 +857,7 @@ section.main_section_page {
 
 .newJobForm {
   border: 2px solid #1f88b5;
-  padding: 20px 12px 12px 12px ;
+  padding: 20px 12px 12px 12px;
   border-radius: 4px;
   position: relative;
 }
@@ -1417,8 +1417,14 @@ table.checkboxhide.dataTable td.select-checkbox:after {
 
 .extraInformationTab .nav.nav-tabs .nav-link {
   color: #0078d1;
+  background-color: #fff !important;
   font-size: 13px;
   font-weight: 700;
+  border-bottom: 1px solid #ddd;
+}
+
+.extraInformationTab .nav.nav-tabs .nav-link.active {
+  border-bottom: 1px solid transparent;
 }
 
 canvas#canv1 {
@@ -1811,7 +1817,7 @@ form .page .btns button.next {
 }
 
 #divTohide {
-  min-height: 250px;
+  min-height: auto;
   opacity: 1;
   display: block;
 }
@@ -2159,7 +2165,7 @@ span.oNOfswich {
   background: lightgray;
   border-radius: 50%;
   margin: 0 auto 10px auto;
-  padding: 2px
+  padding: 2px;
 }
 
 #progressbar li:after {
@@ -2170,7 +2176,7 @@ span.oNOfswich {
   position: absolute;
   left: 0;
   top: 25px;
-  z-index: -1
+  z-index: -1;
 }
 
 #progressbar li.active:before,
@@ -3028,7 +3034,7 @@ ul#supplierList {
   color: #000;
 }
 
-.custom_dropdown .dropdown_content a div .second-arrow{
+.custom_dropdown .dropdown_content a div .second-arrow {
   font-size: 15px !important;
 }
 
@@ -3040,16 +3046,54 @@ ul#supplierList {
 .asset_layer .total2 .line {
   border-bottom: 2px solid #000;
   font-weight: 600;
+  position: relative;
+}
+
+.asset_layer .total2 .line::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  width: 100%;
+  border-bottom: 2px solid #000;
 }
 
 .asset_layer table thead tr th,
 .asset_layer table tbody tr td {
   text-align: end;
 }
-.asset_layer table tbody tr th{
+
+.asset_layer table tbody tr th {
   font-size: 13px !important;
 }
+
 .asset_layer table tbody tr td[colspan="8"],
 .asset_layer table tbody tr thok[colspan="8"] {
   height: 38px;
+}
+
+.nav-pills .nav-link.active,
+.nav .nav-link.active,
+.nav-pills .show>.nav-link,
+.nav .show>.nav-link {
+  background: #1f88b5 !important;
+  color: #fff;
+}
+
+.nav-pills .nav-link,
+.nav .nav-link {
+  padding: 6px 10px;
+  border-radius: 3px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: .6s;
+  display: inline-block;
+  line-height: 18px;
+  color: #1f88b5;
+  margin-right: 10px;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: #1f88b5;
 }

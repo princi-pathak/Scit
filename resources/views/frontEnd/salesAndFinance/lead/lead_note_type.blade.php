@@ -61,36 +61,38 @@
                         </thead>
                         <tbody>
                             @if(!$lead_notes_type->isEmpty())
-                                @foreach ($lead_notes_type as $value)
-                                    <tr>
-                                        <!-- Ram bulk delete -->
-                                        <td><input type="checkbox" id="" class="delete_checkbox" value="{{$value->id}}"></td>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $value->title }}</td>
-                                        <!-- Ram 15/10/2024 here code for status change -->
-                                        <td> 
-                                            <?php if($value->status == 1){?>
-                                                <span class="grencheck" onclick="status_change({{$value->id}},{{$value->status}})"><i class="fa-solid fa-circle-check"></i></span>
-                                                <?php } else {?>
-                                                <span class="grayCheck" onclick="status_change({{$value->id}},{{$value->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                            @foreach ($lead_notes_type as $value)
+                            <tr>
+                                <!-- Ram bulk delete -->
+                                <td><input type="checkbox" id="" class="delete_checkbox" value="{{$value->id}}"></td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $value->title }}</td>
+                                <!-- Ram 15/10/2024 here code for status change -->
+                                <td>
+                                    <?php if ($value->status == 1) { ?>
+                                        <span class="grencheck" onclick="status_change({{$value->id}},{{$value->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                    <?php } else { ?>
+                                        <span class="grayCheck" onclick="status_change({{$value->id}},{{$value->status}})"><i class="fa-solid fa-circle-check"></i></span>
 
-                                            <?php }?>
-                                        </td>
-                                    <!-- end here -->
-                                        <td>
-                                            <div class="d-inline-flex align-items-center ">
-                                                <div class="nav-item dropdown">
-                                                    <a href="#" class="nav-link dropdown-toggle profileDrop show" data-bs-toggle="dropdown" aria-expanded="true">Action</a>
-                                                    <div class="dropdown-menu fade-up m-0">
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#histroyTypeModel" data-id="{{ $value->id }}" data-title="{{ $value->title }}" data-status="{{ $value->status }}"  class="dropdown-item open-modal">Edit details</a>
-                                                    </div>
-                                                </div>
+                                    <?php } ?>
+                                </td>
+                                <!-- end here -->
+                                <td>
+                                    <div class="d-inline-flex align-items-center ">
+                                        <div class="nav-item dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle profileDrop show" data-bs-toggle="dropdown" aria-expanded="true">Action</a>
+                                            <div class="dropdown-menu fade-up m-0">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#histroyTypeModel" data-id="{{ $value->id }}" data-title="{{ $value->title }}" data-status="{{ $value->status }}" class="dropdown-item open-modal">Edit details</a>
                                             </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
                             @else
-                                <tr> <td colspan="10" class="text-center"><strong>Sorry, there are no items available..</strong></td></tr>
+                            <tr>
+                                <td colspan="10" class="text-center"><strong>Sorry, there are no items available..</strong></td>
+                            </tr>
                             @endif
                         </tbody>
                     </table>
@@ -99,13 +101,13 @@
         </di>
     </div>
 </section>
-  <!-- popup start -->
-  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="histroyTypeModel" class="modal fade">
+<!-- popup start -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="histroyTypeModel" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content add_Customer">
-            <div class="modal-header terques-bg">
-                <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
+            <div class="modal-header">
                 <h5 class="modal-title pupTitle">History Type - Add</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="" id="lead_notes_type_form">
@@ -139,113 +141,123 @@
 <!-- end Popup  -->
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
-        $(document).ready(function() {
-            $('.open-modal').on('click', function() {
-                var itemId = $(this).data('id');
-                var itemTitle = $(this).data('title');
-                var itemStatus = $(this).data('status');
-                $('#lead_notes_type_id').val('');
-                $('#title').val('');
-                $('#modale_status').val(1);
-                $('.modal-title').text('');
-                $('#saveChanges').text('');
+    $(document).ready(function() {
+        $('.open-modal').on('click', function() {
+            var itemId = $(this).data('id');
+            var itemTitle = $(this).data('title');
+            var itemStatus = $(this).data('status');
+            $('#lead_notes_type_id').val('');
+            $('#title').val('');
+            $('#modale_status').val(1);
+            $('.modal-title').text('');
+            $('#saveChanges').text('');
 
-                if (itemId) {
-                    // Editing existing record
-                    $('#lead_notes_type_id').val(itemId);
-                    $('#title').val(itemTitle);
-                    $('#modale_status').val(itemStatus);
-                    $('.modal-title').text('Edit Notes Type');
-                    $('#saveChanges').text('Save Changes');
-                } else {
-                    // Adding new record (clear form fields if needed)
-                
-                    $('.modal-title').text('Add Notes Type');
-                    $('#saveChanges').text('Add');
-                }
-            });
+            if (itemId) {
+                // Editing existing record
+                $('#lead_notes_type_id').val(itemId);
+                $('#title').val(itemTitle);
+                $('#modale_status').val(itemStatus);
+                $('.modal-title').text('Edit Notes Type');
+                $('#saveChanges').text('Save Changes');
+            } else {
+                // Adding new record (clear form fields if needed)
 
-            $('#saveChanges').on('click', function() {
-                var formData = $('#lead_notes_type_form').serialize();
-
-                $.ajax({
-                    url: '{{ route("lead.ajax.saveLeadNoteType") }}',
-                    method: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        alert(response.message);
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            });
+                $('.modal-title').text('Add Notes Type');
+                $('#saveChanges').text('Add');
+            }
         });
-    </script>
-<script>
-   $("#deleteSelectedRows").on('click', function() {
-    let ids = [];
-    
-    $('.delete_checkbox:checked').each(function() {
-        ids.push($(this).val());
-    });
-    if(ids.length == 0){
-        alert("Please check the checkbox for delete");
-    }else{
-        if(confirm("Are you sure to delete?")){
-            // console.log(ids);
-            var token='<?php echo csrf_token();?>'
-            var model='LeadNoteType';
+
+        $('#saveChanges').on('click', function() {
+            var formData = $('#lead_notes_type_form').serialize();
+
             $.ajax({
-                type: "POST",
-                url: "{{url('/bulk_delete')}}",
-                data: {ids:ids,model:model,_token:token},
-                success: function(data) {
-                    console.log(data);
-                    if(data){
-                        location.reload();
-                    }else{
-                        alert("Something went wrong");
-                    }
-                    // return false;
+                url: '{{ route("lead.ajax.saveLeadNoteType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    location.reload();
                 },
                 error: function(xhr, status, error) {
-                   var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                    console.error(error);
                 }
             });
-        }
-    }
-    
-});
-$('.delete_checkbox').on('click', function() {
-    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
-        $('#selectAll').prop('checked', true);
-    } else {
-        $('#selectAll').prop('checked', false);
-    }
-});
-function status_change(id, status){
-            var token='<?php echo csrf_token();?>'
-            var model="LeadNoteType";
-            $.ajax({
-                type: "POST",
-                url: "{{url('/status_change')}}",
-                data: {id:id,status:status,model:model,_token:token},
-                success: function(data) {
-                    console.log(data);
-                    if($.trim(data)==1){
-                        $("#status_meesage").text("status Changed Successfully Done");
-                        $("#msg").show();
-                        setTimeout(function() {
-                            location.reload();
-                        }, 3000);
+        });
+    });
+</script>
+<script>
+    $("#deleteSelectedRows").on('click', function() {
+        let ids = [];
 
-                        
+        $('.delete_checkbox:checked').each(function() {
+            ids.push($(this).val());
+        });
+        if (ids.length == 0) {
+            alert("Please check the checkbox for delete");
+        } else {
+            if (confirm("Are you sure to delete?")) {
+                // console.log(ids);
+                var token = '<?php echo csrf_token(); ?>'
+                var model = 'LeadNoteType';
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('/bulk_delete')}}",
+                    data: {
+                        ids: ids,
+                        model: model,
+                        _token: token
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data) {
+                            location.reload();
+                        } else {
+                            alert("Something went wrong");
+                        }
+                        // return false;
+                    },
+                    error: function(xhr, status, error) {
+                        var errorMessage = xhr.status + ': ' + xhr.statusText;
+                        alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
                     }
-                    
-                }
-            });
+                });
+            }
         }
- </script> 
+
+    });
+    $('.delete_checkbox').on('click', function() {
+        if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+            $('#selectAll').prop('checked', true);
+        } else {
+            $('#selectAll').prop('checked', false);
+        }
+    });
+
+    function status_change(id, status) {
+        var token = '<?php echo csrf_token(); ?>'
+        var model = "LeadNoteType";
+        $.ajax({
+            type: "POST",
+            url: "{{url('/status_change')}}",
+            data: {
+                id: id,
+                status: status,
+                model: model,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                if ($.trim(data) == 1) {
+                    $("#status_meesage").text("status Changed Successfully Done");
+                    $("#msg").show();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
+
+
+                }
+
+            }
+        });
+    }
+</script>
