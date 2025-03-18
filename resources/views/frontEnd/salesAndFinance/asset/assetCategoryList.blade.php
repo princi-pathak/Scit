@@ -40,7 +40,6 @@
                         <div class="searchFilter" style="display:none">
                             <a href="#!" onclick="hideShowDiv()" class="hidebtn">Show Search Filter</a>
                         </div>
-
                     </div>
 
                     <div class="searchJobForm" id="divTohide" style="display:none">
@@ -70,11 +69,8 @@
                                         </div>
                                     </div>
                                     <div class="row form-group mb-2">
-
                                         <label class="col-md-4 col-form-label text-end ">
-                                            <a href="#!" class="tutor-student-tooltip-col">
-                                                EDD From:
-
+                                            <a href="#!" class="tutor-student-tooltip-col">EDD From:
                                                 <span class="tutor-student-tooltiptext3">Expedcted Delivery Date</span>
                                             </a>
                                         </label>
@@ -176,7 +172,6 @@
                             <div class="col-md-7">
                                 <div class="jobsection">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                    
                                 </div>
                             </div>
                             <!-- <div class="col-md-5">

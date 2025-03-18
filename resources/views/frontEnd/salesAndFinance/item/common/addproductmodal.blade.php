@@ -61,7 +61,7 @@
                     <div class="alert alert-danger text-center productsuccessdanger producthidemessagedanger"></div>
                 <div class="row">
                     <div class="col-md-6 col-lg-6 col-xl-6">
-                        <div class="formDtail">
+                        <div class="formDtail mt-3">
                             
                             <div class="mb-2 row">
                                 <label for="inputName" class="col-sm-4 col-form-label">Customer</label>
@@ -179,7 +179,7 @@
                     </div>
 
                     <div class="col-md-6 col-lg-6 col-xl-6">
-                        <div class="formDtail">
+                        <div class="formDtail mt-3">
                             
                                 <div class="mb-2 row">
                                     <label for="bar_code" class="col-sm-4 col-form-label">Bar
