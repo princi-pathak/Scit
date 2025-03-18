@@ -12,9 +12,9 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <div class="newJobForm card">
-          <form action="{{ url('purchase/save-purchase-day-book') }}" method="POST" class="customerForm">
-            @csrf
+        <form action="{{ url('purchase/save-purchase-day-book') }}" method="POST" class="customerForm">
+          @csrf
+          <div class="newJobForm card mt-4">
             <div class="row">
               <div class="col-md-6 col-lg-6 col-xl-6">
                 <div class="formDtail">
@@ -101,17 +101,18 @@
                 </div>
               </div>
             </div>
+
             <p>(Residual - 6.99% for claimed, 93.01% for not claimed ) </p>
             <div class="row">
               <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="pageTitleBtn">
                   <button type="submit" class="profileDrop reDesignBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                 </div>
+
               </div>
             </div>
-          </form>
-        </div>
-        <!-- End  off newJobForm -->
+          </div>
+        </form>
       </div>
       <!-- End col-12 -->
     </div>
@@ -123,6 +124,7 @@
     let netAmountInput = document.getElementById('net_amount');
     let vatAmountInput = document.getElementById('vat_amount');
     let grossAmountInput = document.getElementById('gross_amount');
+
     let not_claim = document.getElementById('not_claim');
     let reclaim_amount = document.getElementById('reclaim_amount');
     
@@ -142,6 +144,7 @@
 
       reclaim_amount.value = claimedVAT.toFixed(2);
       not_claim.value = notClaimedVAT.toFixed(2);
+
       vatAmountInput.value = vatAmount.toFixed(2);
       grossAmountInput.value = grossAmount.toFixed(2);
     }
@@ -154,8 +157,6 @@
       let not_claim = document.getElementById('not_claim').value;
       document.getElementById("expenses_amount").value = not_claim; // Set input value
     });
-
-
   });
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

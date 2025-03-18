@@ -137,7 +137,8 @@ function hideShowDiv() {
 var myConfig = {
   "type": "pie",
   "title": {
-    "text": "All Potential Jobs - July 2024"
+    "text": "All Potential Jobs - July 2024",
+    "fontSize": "17px" 
   },
   "series": [{
     "values": [59]
@@ -179,6 +180,7 @@ let chartConfig = {
     text: 'Authorised Jobs For Period',
     align: 'left',
     marginLeft: '23%',
+    fontSize: '17px', // Adjust the font size as needed
   },
   legend: {
     adjustLayout: true,

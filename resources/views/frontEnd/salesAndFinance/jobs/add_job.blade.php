@@ -227,7 +227,7 @@
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Company</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="company" id="company" class="form-control" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->company ?? "");}?>">
+                                                    <input type="text" name="company" id="company" class="form-control editInput" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->company ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">

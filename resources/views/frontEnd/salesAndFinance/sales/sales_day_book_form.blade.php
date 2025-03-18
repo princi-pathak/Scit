@@ -12,18 +12,18 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="newJobForm card mt-4">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                    <form action="{{ url('sales/save-sales-day-book') }}" method="POST" class="customerForm">
-                        @csrf
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <form action="{{ url('sales/save-sales-day-book') }}" method="POST" class="customerForm">
+                    @csrf
+                    <div class="newJobForm card mt-4">
                         <div class="row">
                             <div class="col-md-6 col-lg-6 col-xl-6">
                                 <div class="formDtail">
@@ -87,12 +87,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-end mt-4">
-                            <button type="submit" class="profileDrop reDesignBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 px-3">
+                            <div class="pageTitleBtn">
+                                <button type="submit" class="profileDrop reDesignBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                            </div>
                         </div>
-                    </form>
-                </div>
-
+                    </div>
+                </form>
             </div>
         </div>
     </div>
