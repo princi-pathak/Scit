@@ -483,7 +483,9 @@ $current_url=last(request()->segments());
                 </nav>
             </div>
         </div> -->
+
     </header>
+
     <section class="dashbord-main-info">
         <div class="container-fluid p-0">
             <div class="row m-0">
@@ -1722,7 +1724,7 @@ $current_url=last(request()->segments());
                                             <button href="#" class="openbtn"
                                                 onclick="openNav(event, 'mySidepanel9')">
                                                 <span class="plus_icon">
-                                                    <i class="material-symbols-outlined"> diversity_2 </i>
+                                                    <i class="material-symbols-outlined"> group </i>
                                                 </span>Users
                                             </button>
                                             <div id="mySidepanel9" class="sidepanel">
@@ -1795,7 +1797,7 @@ $current_url=last(request()->segments());
                                             <button href="#" class="openbtn"
                                                 onclick="openNav(event, 'mySidepanel10')">
                                                 <span class="plus_icon">
-                                                    <i class="material-symbols-outlined"> partner_reports
+                                                    <i class="material-symbols-outlined"> fact_check
                                                     </i>
                                                 </span>Reports
                                             </button>
