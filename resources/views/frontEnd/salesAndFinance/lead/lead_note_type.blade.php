@@ -80,7 +80,7 @@
                                         <td>
                                             <div class="d-inline-flex align-items-center ">
                                                 <div class="nav-item dropdown">
-                                                    <a href="#" class="nav-link dropdown-toggle profileDrop show" data-bs-toggle="dropdown" aria-expanded="true">Action</a>
+                                                    <a href="#" class="nav-link dropdown-toggle profileDrop show" data-bs-toggle="dropdown" aria-expanded="true"> Action</a>
                                                     <div class="dropdown-menu fade-up m-0">
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#histroyTypeModel" data-id="{{ $value->id }}" data-title="{{ $value->title }}" data-status="{{ $value->status }}"  class="dropdown-item open-modal">Edit details</a>
                                                     </div>
@@ -105,7 +105,7 @@
         <div class="modal-content add_Customer">
             <div class="modal-header terques-bg">
                 <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
-                <h5 class="modal-title pupTitle">History Type - Add</h5>
+                <h5 class="modal-title pupTitle"></h5>
             </div>
             <div class="modal-body">
                 <form action="" id="lead_notes_type_form">
@@ -114,7 +114,7 @@
                     <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 col-form-label">Histroy Type</label>
                         <div class="col-md-9">
-                            <input type="hidden" name="lead_notes_type_id" id="lead_notes_type_id">
+                            <input type="hidden" name="lead_notes_type_id" id="lead_notes_type_id"> 
                             <input type="text" name="title" class="form-control editInput " placeholder="History Type" id="title">
                         </div>
                     </div>
@@ -142,6 +142,7 @@
         $(document).ready(function() {
             $('.open-modal').on('click', function() {
                 var itemId = $(this).data('id');
+                console.log(itemId);
                 var itemTitle = $(this).data('title');
                 var itemStatus = $(this).data('status');
                 $('#lead_notes_type_id').val('');
@@ -155,12 +156,11 @@
                     $('#lead_notes_type_id').val(itemId);
                     $('#title').val(itemTitle);
                     $('#modale_status').val(itemStatus);
-                    $('.modal-title').text('Edit Notes Type');
+                    $('.modal-title').text('Edit History Type');
                     $('#saveChanges').text('Save Changes');
                 } else {
                     // Adding new record (clear form fields if needed)
-                
-                    $('.modal-title').text('Add Notes Type');
+                    $('.modal-title').text('Add History Type');
                     $('#saveChanges').text('Add');
                 }
             });

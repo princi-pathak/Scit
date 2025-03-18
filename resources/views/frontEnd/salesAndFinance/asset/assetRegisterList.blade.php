@@ -28,9 +28,10 @@
             <div class="searchFilter"><a href="#!" onclick="hideShowDiv()" class="hidebtn">Show Search Filter</a></div>
           </div>
 
-          <div class="searchJobForm" id="divTohide" style="display:none">
+          <div class="searchJobForm">
             <div class="row">
               <div class="col-lg-12">
+              <div id="divTohide" >
                 <div class="newJobForm mt-4">
                   <div class="extraInformationTab">
                     <div class="col-sm-12">
@@ -60,8 +61,8 @@
                         </div>
                       </form>
                       <div class="mb-3 row">
-                        <div class="col-md-12">
-                          <div class="productDetailTable pt-3 asset_layer" id="search_data" style="display:none">
+                        <div class="col-md-12" id="search_data">
+                          <div class="productDetailTable pt-3 asset_layer"  style="display:none">
                             <table class="table" id="containerA">
                               <thead class="table-light">
                                 <tr class="text-center">
@@ -200,6 +201,7 @@
                     </div>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>

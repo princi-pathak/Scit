@@ -5,7 +5,7 @@
 </style>
 <?php
 $home_id = Auth::user()->home_id;
-$service_users = App\ServiceUser::where('home_id', $home_id)->where('deleted_at', 0)->get()->toArray();
+$service_users = App\ServiceUser::where('home_id', $home_id)->where('is_deleted', 0)->get()->toArray();
 $dynamic_forms = App\DynamicFormBuilder::getFormList();
 $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 ?>
@@ -62,9 +62,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                                             $this_location_id = App\DynamicFormLocation::getLocationIdByTag('top_profile_btn');
                                             foreach ($dynamic_forms as $value) {
-
                                                 $location_ids_arr = explode(',', $value['location_ids']);
-
                                                 if (in_array($this_location_id, $location_ids_arr)) {
                                             ?>
                                                     <option value="{{ $value['id'] }}"> {{ ucfirst($value['title']) }} </option>
@@ -293,8 +291,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         <form method="post" action="" id="">
                             {{-- sourabh --}}
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Category:
-                                </label>
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Category: </label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         <select name="s_category_id" class="select-field form-control" required id="category_list" style="width:100%;">

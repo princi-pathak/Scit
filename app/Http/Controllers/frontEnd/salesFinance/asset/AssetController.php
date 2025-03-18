@@ -106,13 +106,14 @@ class AssetController extends Controller
     }
     public function asset_register_search(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $query=AssetRegistration::getAllAssetRegistration();
+        $query = AssetRegistration::getAllAssetRegistration();
         if ($request->filled('start_date') && $request->filled('end_date')) {
             $query->whereBetween('date', [$request->start_date, $request->end_date]);
         }
-        $list=$query->get();
+        $list = $query->get();
         return response()->json(['success' => true,'message'=>'Search List.', 'data' => $list]);
     }
+    
     public function asset_register_delete(Request $request){
         // echo "<pre>";print_r($request->all());die;
         try{
