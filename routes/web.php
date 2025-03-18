@@ -504,6 +504,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::controller(PurchaseController::class)->group(function () {
 		Route::prefix('purchase')->group(function () {
+			Route::get('purchase-expenses', 'purchase_expenses')->name('purchase.purchaseExpenses');
+			Route::post('save-purchase-expenses', 'save_purchase_expenses')->name('purchase.purchaseExpensesSave');
+			
+
 			Route::get('/purchase-day-book', 'index')->name('purchase.purchaseDayBook');
 			Route::get('/purchase-day-book/add', 'create')->name('purchase.purchaseDayBookCreate');
 			Route::post('/save-purchase-day-book', 'store');

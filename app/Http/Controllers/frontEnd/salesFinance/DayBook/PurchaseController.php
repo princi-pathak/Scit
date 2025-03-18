@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Supplier;
 use Illuminate\Support\Carbon;
+use App\Models\PurchaseExpenses;
 
 use App\Http\Requests\Daybook\PurchaseDayBookRequest;
 use App\Models\DayBook\PurchaseDayBook;
@@ -18,8 +19,9 @@ class PurchaseController extends Controller
         $data['page'] = "dayBook";
         $data['purchaseDayBook'] = PurchaseDayBook::join('suppliers', 'suppliers.id', '=', 'purchase_day_books.supplier_id')
         ->join('construction_tax_rates', 'construction_tax_rates.id', '=', 'purchase_day_books.Vat')
+        ->leftjoin('purchase_expenses', 'purchase_expenses.id', '=', 'purchase_day_books.expense_type')
         ->where('purchase_day_books.home_id', Auth::user()->home_id)
-        ->select('purchase_day_books.*', 'suppliers.name as customer_name', 'construction_tax_rates.name as tax_rate_name')
+        ->select('purchase_day_books.*', 'suppliers.name as customer_name', 'construction_tax_rates.name as tax_rate_name', 'purchase_expenses.title')
         ->whereNull('purchase_day_books.deleted_at')
         ->orderBy('purchase_day_books.created_at', 'desc')
         ->get();
@@ -30,6 +32,8 @@ class PurchaseController extends Controller
         $data['page'] = "dayBook";
         $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
         $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
+        $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
+        // dd($data);
         return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
     }
 
@@ -65,6 +69,34 @@ class PurchaseController extends Controller
         $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
         $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
         return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
+    }
+
+    public function purchase_expenses(){
+
+        $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at',  null)->get();
+
+        return view('frontEnd.salesAndFinance.purchase.purchase_expenses', $data);
+    }
+
+    public function save_purchase_expenses(Request $request){
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        $data = PurchaseExpenses::updateOrCreate(['id' => $request['purchase_expense_id']], $validatedData);
+
+        if(empty($request['purchase_expense_id'])){
+            return response()->json([
+                'success' => (bool) $data,
+                'message' => $data ? "Purchase expenses added successfully! " : 'Failed to save purchase expenses'
+            ]);
+        } else {
+            return response()->json([
+                'success' => (bool) $data,
+                'message' => $data ? "Purchase expenses edited successfully! " : 'Failed to edit purchase expenses'
+            ]);
+        }
     }
 
 }

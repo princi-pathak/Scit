@@ -17,13 +17,16 @@
         </div>
       </div>
     </div>
+
     <div class="row mb-4">
+
       <div class="col-lg-12">
         <div class="maimTable">
           <div class="printExpt">
             <div class="prntExpbtn">
               <a href="#!">Print</a>
               <a href="#!">Export</a>
+
             </div>
             <div class="searchFilter">
               <a href="#!" onclick="hideShowDiv()" class="hidebtn">Show Search Filter</a>
