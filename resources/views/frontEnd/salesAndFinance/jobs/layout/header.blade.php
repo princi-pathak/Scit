@@ -485,7 +485,9 @@ $current_url = last(request()->segments());
                 </nav>
             </div>
         </div> -->
+
     </header>
+
     <section class="dashbord-main-info">
         <div class="container-fluid p-0">
             <div class="row m-0">
@@ -503,6 +505,7 @@ $current_url = last(request()->segments());
                                         </a>
                                     </li> -->
                                     <div class="scroll">
+                                        <!-- Lead start here -->
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'leads') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel1')">
                                                 <span class="plus_icon">
@@ -598,6 +601,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Quotes start here -->
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'quotes') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel2')"><span class="plus_icon"><i class="material-symbols-outlined">description </i></span>Quotes</button>
                                             <div id="mySidepanel2" class="sidepanel">
@@ -696,9 +700,12 @@ $current_url = last(request()->segments());
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
-                                                            <a href="">
-                                                                <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">calendar_month </i>
+                                                            <a href="#!">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        calendar_month </i>
+
                                                                     <span>Sales Appointment</span>
                                                                 </div>
                                                             </a>
@@ -713,15 +720,20 @@ $current_url = last(request()->segments());
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
-                                                            <a href="" class="m-0">
-                                                                <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> restart_alt </i>
+                                                            <a href="#!" class="m-0">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        restart_alt </i>
                                                                     <span>New Recurring Quote</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="" class="m-0">
-                                                                <div class="d-flex align-items-center gap-2">
-                                                                    <i class="material-symbols-outlined">restart_alt </i>
+                                                            <a href="#!" class="m-0">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        restart_alt </i>
+
                                                                     <span> Recurring Quote</span>
                                                                 </div>
                                                             </a>
@@ -730,6 +742,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Jobs start here -->
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'jobs') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel3')">
                                                 <span class="plus_icon">
@@ -848,6 +861,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Planner start here -->
                                         <li>
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel4')">
                                                 <span class="plus_icon">
@@ -911,6 +925,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Project start here -->
                                         <li>
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel5')">
                                                 <span class="plus_icon">
@@ -966,6 +981,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Finance start here -->
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'finance') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel6')"><span class="plus_icon"><i class="material-symbols-outlined"> finance_mode </i></span>Finance</button>
                                             <div id="mySidepanel6" class="sidepanel">
@@ -992,37 +1008,49 @@ $current_url = last(request()->segments());
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
-                                                            <a href="">
-                                                                <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">receipt_long</i>
+                                                            <a href="#!">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i>
                                                                     <span>Dashboard</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
-                                                                <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">receipt_long</i>
+                                                            <a href="#!">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i>
                                                                     <span>New Invoice</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
-                                                                <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">receipt_long</i>
-                                                                        <span>Draft Invoices</span>
+                                                            <a href="#!">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i>
+                                                                    <span>Draft Invoices</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
-                                                                <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                            <a href="#!">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i>
                                                                     <span>Outstanding Invoices</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
-                                                                <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                            <a href="#!">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i>
+
                                                                     <span>Overdue Invoices
                                                                     </span>
                                                                 </div>
                                                             </a>
+
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> receipt_long</i>
@@ -1045,18 +1073,22 @@ $current_url = last(request()->segments());
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> receipt_long</i>
+
                                                                     <span>Reminders</span>
                                                                 </div>
                                                             </a>
                                                             <div class="custom_dropdown2">
                                                                 <a tabindex=0>
+
                                                                     <div class="d-flex align-items-center gap-2 mb-2">
                                                                         <i class="material-symbols-outlined">receipt_long</i>
+
                                                                         <span>Recurring Invoices</span>
                                                                         <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
+
                                                                     <a href="">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
@@ -1067,19 +1099,23 @@ $current_url = last(request()->segments());
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                             <span> Recurring Invoice</span>
+
                                                                         </div>
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                             <div class="custom_dropdown2">
                                                                 <a tabindex=0>
+
                                                                     <div class="d-flex align-items-center gap-2 mb-2">
                                                                         <i class="material-symbols-outlined">receipt_long</i>
+
                                                                         <span>Credit Notes</span>
                                                                         <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
+
                                                                     <a href="">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
@@ -1114,6 +1150,7 @@ $current_url = last(request()->segments());
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                             <span>Cancelled Credit Note</span>
+
                                                                         </div>
                                                                     </a>
                                                                 </div>
@@ -1129,10 +1166,12 @@ $current_url = last(request()->segments());
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
+
                                                             <a href="">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                     <span>Dashboard</span>
+
                                                                 </div>
                                                             </a>
                                                             <a href="{{url('purchase_order')}}">
@@ -1211,6 +1250,7 @@ $current_url = last(request()->segments());
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
+
                                                                     <a href="">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
@@ -1221,6 +1261,7 @@ $current_url = last(request()->segments());
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                             <span> Recurring Purchase Orders</span>
+
                                                                         </div>
                                                                     </a>
                                                                 </div>
@@ -1265,6 +1306,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Contacts start here -->
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'customers') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel7')"><span class="plus_icon"><i class="material-symbols-outlined"> contact_page </i></span>Contacts</button>
                                             <div id="mySidepanel7" class="sidepanel">
@@ -1349,6 +1391,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Items start here -->
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'item') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel8')">
                                                 <span class="plus_icon"> <i class="material-symbols-outlined"> align_items_stretch</i></span>Items
@@ -1403,6 +1446,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Expenses start here -->
                                         <li>
                                             <a href="{{url('/expenses')}}" class="@if(isset($page)) @if($page == 'expenses') ActiveBtn @endif @endif">
                                                 <span class="plus_icon">
@@ -1410,7 +1454,9 @@ $current_url = last(request()->segments());
                                                 </span>Expenses
                                             </a>
                                         </li>
+                                        <!-- Users start here -->
                                         <li>
+
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel9')"> <span class="plus_icon"> <i class="material-symbols-outlined"> diversity_2 </i></span>Users
                                             </button>
                                             <div id="mySidepanel9" class="sidepanel">
@@ -1462,6 +1508,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Reports start here -->
                                         <li>
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel10')">
                                                 <span class="plus_icon">
@@ -1589,6 +1636,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- File Manager start here -->
                                         <li>
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel11')">
                                                 <span class="plus_icon">
@@ -1635,6 +1683,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Settings start here -->
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'setting' || $current_url == 'complaint_type' || $current_url =='CRM_section_types') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel12')"><span class="plus_icon"><i class="material-symbols-outlined"> construction </i></span>Settings</button>
                                             <div id="mySidepanel12" class="sidepanel">
@@ -1989,6 +2038,7 @@ $current_url = last(request()->segments());
                                                 </ul>
                                             </div>
                                         </li>
+                                        <!-- Day Book start here -->
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'dayBook') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel13')">
                                                 <span class="plus_icon">
@@ -2067,10 +2117,10 @@ $current_url = last(request()->segments());
                                                     </li>
                                                     <li class="custom_dropdown">
                                                         <a href="{{url('sales-finance/assets/depreciation-type')}}">
+
                                                             <div class="d-flex align-items-center gap-3 mb-2">
                                                                 <i class="material-symbols-outlined"> web_asset </i>
                                                                 <span> Depreciation Type </span>
-
                                                             </div>
                                                         </a>
 
@@ -2105,32 +2155,32 @@ $current_url = last(request()->segments());
             <div class="modal-content add_Customer">
                 <div class="modal-header terques-bg">
                     <h5 class="modal-title pupTitle" id="CRMHeaderPopupLabel">CRM View</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body crmModelCont pt-2">
                     <div class="jobsection pb-2 hideandshow">
                         <button class="profileDrop" id="onclickbtnHideShow">Hide/Show</button>
                     </div>
                     <div id="showDivCont">
-                        <div class="newJobForm mb-4 p-1 px-3">
+                        <div class="newJobForm mb-4 p-3">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="">
                                         <h4 class="contTitle text-center">Contact Details</h4>
                                     </div>
-                                    <div class="row pt-3">
+                                    <div class="row">
                                         <label class="col-md-4 col-form-label"> <strong>Full Name:</strong></label>
                                         <div class="col-md-8">
                                             <span id="" class="editInput"> Arjun Kumar</span>
                                         </div>
                                     </div>
-                                    <div class="row pt-3">
+                                    <div class="row pt-2">
                                         <label class="col-md-4 col-form-label"> <strong>Email Address:</strong></label>
                                         <div class="col-md-8">
                                             <span id="" class="editInput">arjun@gmail.com</span>
                                         </div>
                                     </div>
-                                    <div class="row pt-3">
+                                    <div class="row pt-2">
                                         <label class="col-md-4 col-form-label"> <strong>Telephone:</strong></label>
                                         <div class="col-md-8">
                                             <span id="" class="editInput">+91-1234567890</span>
@@ -2141,14 +2191,14 @@ $current_url = last(request()->segments());
                                     <div class="">
                                         <h4 class="contTitle text-center"> <strong>Lead Details</strong></h4>
                                     </div>
-                                    <div class="row pt-3">
+                                    <div class="row">
                                         <label class="col-md-4 col-form-label"><strong>Lead Ref.:</strong></label>
                                         <div class="col-md-8">
                                             <span id="" class="editInput">Default</span>
                                             <input type="hidden" id="" name="">
                                         </div>
                                     </div>
-                                    <div class="row pt-3">
+                                    <div class="row pt-2">
                                         <label class="col-md-4 col-form-label"> <strong>Lead Status:</strong></label>
                                         <div class="col-md-8">
                                             <span id="" class="editInput">425</span>
@@ -2190,8 +2240,8 @@ $current_url = last(request()->segments());
                                     <div class="col-sm-3">
                                         <form class="searchForm" action="">
                                             <div class="input-group mb-3 mt-3">
-                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                                <input type="text" class="form-control editInput ps-3" placeholder="Your Email" name="email">
+                                                <button type="button" class="input-group-text profileDrop">Search</button>
                                             </div>
                                         </form>
                                     </div>
