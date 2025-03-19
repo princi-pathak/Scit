@@ -15,7 +15,7 @@
           <!-- <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i>
                 </span></a> -->
         </div>
-
+      </div>
       <form id="assetRegisterFormData" class="customerForm">
         <input type="hidden" name="id" id="id" value="<?php if(isset($register) && $register->id !=''){echo $register->id;}?>">
         @csrf
@@ -45,16 +45,16 @@
                 <div class="col-md-6 col-lg-6 col-xl-6">
                   <div class="formDtail">
                       <div class="mb-3 row">
-                        <label for="asset_type" class="col-sm-3 col-form-label"> Asset Type <span
+                        <label for="asset_type" class="col-sm-2 col-form-label"> Asset Type <span
                             class="radStar">*</span></label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-9">
                           <select name="asset_type" id="asset_type" class="form-control editInput">
                             <?php foreach($AssetCategoryList as $cat){?>
                               <option value="{{$cat->id}}" <?php if(isset($register) && $register->asset_type == $cat->id){echo "selected";}?>>{{$cat->name}}</option>
                             <?php }?>
                           </select>
                         </div>
-        </select>
+                        </select>
 
                       </div>
                     </div>
@@ -62,7 +62,7 @@
                 </div>
 
               </div>
-            </div>
+           
             <!-- End  off newJobForm -->
 
             <div class="newJobForm mt-4">
@@ -104,7 +104,7 @@
                 </div>
               </div>
 
-            </div>
+           
             <!-- End  off newJobForm -->
 
             <div class="newJobForm mt-4">
@@ -119,8 +119,8 @@
                         </div>
                       </div>
                       <div class="mb-3 row">
-                        <label for=" depreciation_type" class="col-sm-3 col-form-label"> Type of Depreciation</label>
-                        <div class="col-sm-8">
+                        <label for=" depreciation_type" class="col-sm-2 col-form-label"> Type of Depreciation</label>
+                        <div class="col-sm-9">
                           <select name="depreciation_type" id="depreciation_type" class="form-control editInput" onchange="calculate()">
                             <?php foreach($DepreciationTypeList as $type){?>
                               <option value="{{$type->id}}" data-attr="{{$type->percentage}}" <?php if(isset($register) && $register->depreciation_type ==$type->id){echo "selected";}?>>{{$type->percentage}} (%)</option>
@@ -156,7 +156,7 @@
                 </div>
               </div>
 
-            </div>
+           
             <!-- End  off newJobForm -->
 
             <div class="newJobForm mt-4">
@@ -165,9 +165,9 @@
                 <div class="col-md-6 col-lg-6 col-xl-6">
                   <div class="formDtail">
                       <div class="mb-3 row">
-                        <label for="nbv_cfwd" class="col-sm-2 col-form-label"> C/fwd</label>
+                        <label for="nbv_cfwd" class="col-sm-2 col-form-label"> B/fwd</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control editInput" id="nbv_cfwd" name="nbv_cfwd" placeholder="00.00" readonly value="<?php if(isset($register) && $register->nbv_cfwd !=''){echo $register->nbv_cfwd;}?>">
+                          <input type="text" class="form-control editInput" id="nbv_bfwd" name="nbv_cfwd" placeholder="00.00" readonly value="<?php if(isset($register) && $register->nbv_cfwd !=''){echo $register->nbv_cfwd;}?>">
                         </div>
                       </div>
                       <div class="mb-3 row">
@@ -179,31 +179,31 @@
                           <label for="no">NO</label>
                           <label for="" class="ps-2"><small>(NO CAPITAL ALLOWANCES CLAIM)</small></label>
                         </div>
-
                       </div>
                     </div>
-                    <div class="mb-3 row">
-                      <label for="charge" class="col-sm-3 col-form-label"> Charge</label>
-                      <div class="col-sm-8">
+                    <!-- <div class="mb-3 row">
+                      <label for="charge" class="col-sm-2 col-form-label"> Charge</label>
+                      <div class="col-sm-9">
                         <input type="text" class="form-control editInput" id="charge" name="charge" placeholder="00.00" readonly>
                       </div>
                     </div>
                     <div class="mb-3 row">
-                      <label for="depreciation" class="col-sm-3 col-form-label"> Disps</label>
-                      <div class="col-sm-8">
+                      <label for="depreciation" class="col-sm-2 col-form-label"> Disps</label>
+                      <div class="col-sm-9">
                         <input type="text" class="form-control editInput numberInput" id="depreciation" name="depreciation" placeholder="Disps" onkeyup="calculate()">
                       </div>
-                    </div>
+                    </div> -->
                     <div class="mb-3 row">
-                      <label for="depreciation_cfwd" class="col-sm-3 col-form-label"> C/fwd</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control editInput" id="depreciation_cfwd" name="depreciation_cfwd" placeholder="00.00" readonly>
+                      <label for="depreciation_cfwd" class="col-sm-2 col-form-label"> C/fwd</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control editInput" id="nbv_cfwd" name="depreciation_cfwd" placeholder="00.00" readonly>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </form>
       </div>

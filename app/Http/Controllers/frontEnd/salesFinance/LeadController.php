@@ -149,7 +149,6 @@ class LeadController extends Controller
 
     public function edit($id)
     {
-
         $page = 'leads';
         $lead = Customer::getCustomerLeads($id);
         // dd($lead);
