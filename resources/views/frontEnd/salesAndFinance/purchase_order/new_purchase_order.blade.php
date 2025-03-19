@@ -589,7 +589,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="" class="col-sm-4 col-form-label">
+                                        <label for="" class="col-sm-5 col-form-label">
                                             <a href="javascript:void(0)" onclick="openReminderModal(<?php if (isset($purchase_orders) && $purchase_orders != '') {
                                                                                                         echo $purchase_orders->id;
                                                                                                     } ?>)" class="profileDrop"> <i class="fa fa-clock"></i> Set

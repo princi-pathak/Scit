@@ -582,11 +582,11 @@
                                         <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
                                             <div class="tabheadingTitle">
                                                 <a href="#!" class="profileDrop me-3" onclick="insrtAppoinment()"> New Appointments</a>
-                                                <a href="#!" class="profileDrop ms-3"> Send To Planner</a>
+                                                <a href="#!" class="profileDrop"> Send To Planner</a>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="productDetailTable mt-3">
-                                                    <table class="table" id="containerA">
+                                                    <table class="table mt-3" id="containerA">
                                                         <thead class="table-light">
                                                             <tr>
                                                                 <th>User</th>
@@ -597,12 +597,9 @@
                                                                 <th>Status </th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody class="add_insrtAppoinment">
-
-                                                        </tbody>
-
+                                                        <tbody class="add_insrtAppoinment"></tbody>
                                                         <tfoot>
-                                                            <a href="#!" class="profileDrop ms-3"> Save Appointment(s)</a>
+                                                            <a href="#!" class="profileDrop"> Save Appointment(s)</a>
                                                         </tfoot>
                                                     </table>
                                                 </div>
