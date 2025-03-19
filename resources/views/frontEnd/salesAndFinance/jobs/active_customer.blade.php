@@ -7,9 +7,10 @@
     }
     .icon {
         color: white;
-        background-color: green;
+        background-color: #039b1c;
         border-radius: 15px;
-        font-size: x-large;
+        padding: 5px;
+        font-size: 10px;
     }
     
     <?php }else{?>
@@ -20,7 +21,8 @@
         color: white;
         background-color: #474747;
         border-radius: 15px;
-        font-size: x-large;
+        font-size: 10px;
+        padding: 5px;
     }
     <?php }?>
     .textbox {
