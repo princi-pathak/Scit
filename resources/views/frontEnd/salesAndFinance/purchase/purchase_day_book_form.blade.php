@@ -59,6 +59,7 @@
                       </select>
                     </div>
                   </div>
+                  <label class="col-form-label">(Residual - 6.99% for claimed, 93.01% for not claimed ) </label>
                 </div>
               </div>
               <div class="col-md-6 col-lg-6 col-xl-6">
@@ -98,23 +99,22 @@
                       <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" value="">
                     </div>
                   </div>
+                  
                 </div>
-              </div>
-            </div>
-
-            <p>(Residual - 6.99% for claimed, 93.01% for not claimed ) </p>
-            <div class="row">
-              <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-                <div class="pageTitleBtn">
-                  <button type="submit" class="profileDrop reDesignBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                </div>
-
               </div>
             </div>
           </div>
         </form>
       </div>
       <!-- End col-12 -->
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col-xl-12 px-3">
+        <div class="pageTitleBtn">
+          <button type="submit" class="profileDrop reDesignBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -127,7 +127,7 @@
 
     let not_claim = document.getElementById('not_claim');
     let reclaim_amount = document.getElementById('reclaim_amount');
-    
+
 
     function calculateTax() {
       let netAmount = parseFloat(netAmountInput.value) || 0;
