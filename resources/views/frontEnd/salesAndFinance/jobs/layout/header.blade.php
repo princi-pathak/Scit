@@ -1455,8 +1455,7 @@ $current_url = last(request()->segments());
                                             </a>
                                         </li>
                                         <!-- Users start here -->
-                                        <li>
-
+                                        <!-- <li>
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel9')"> <span class="plus_icon"> <i class="material-symbols-outlined"> diversity_2 </i></span>Users
                                             </button>
                                             <div id="mySidepanel9" class="sidepanel">
@@ -1507,7 +1506,7 @@ $current_url = last(request()->segments());
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </li>
+                                        </li> -->
                                         <!-- Reports start here -->
                                         <li>
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel10')">

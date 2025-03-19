@@ -19,7 +19,6 @@
     </div>
 
     <div class="row mb-4">
-
       <div class="col-lg-12">
         <div class="maimTable">
           <div class="printExpt">
@@ -72,140 +71,8 @@
             <div class="extraInformationTab">
               <div class="col-sm-12">
                 <div class="mb-3 row mb-4">
-                  <div class="col-md-12">
-                    <div class="productDetailTable asset_layer" id="search_data" style="display:none">
-                      <table class="table" id="containerA">
-                        <thead class="table-light">
-                          <tr class="text-center">
-                            <th class="col-1"></th>
-                            <th class="col-1"></th>
-                            <th class="col-1">Total</th>
-                            <th class="col-1"></th>
-                            <th class="col-1">Property</th>
-                            <th class="col-1">Household</th>
-                            <th class="col-1">F&F</th>
-                            <th class="col-1">Motor Vehicle</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th colspan="8">Cost</th>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td class="text-start">Bfwd</td>
-                            <td>1,334,736</td>
-                            <td></td>
-                            <td>901,506</td>
-                            <td>163,814</td>
-                            <td>102,164</td>
-                            <td>167,252</td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td class="text-start">Additions</td>
-                            <td>276,688</td>
-                            <td></td>
-                            <td>-</td>
-                            <td>40,065</td>
-                            <td>100,083</td>
-                            <td>136,540</td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td class="text-start">Disposals</td>
-                            <td>70,149</td>
-                            <td></td>
-                            <td>-</td>
-                            <td>- 159</td>
-                            <td>-</td>
-                            <td>- 69,990</td>
-                          </tr>
-                          <tr class="total">
-                            <td></td>
-                            <td class="text-start">Cfwd</td>
-                            <td class="line">1,541,275</td>
-                            <td></td>
-                            <td class="line">901,506</td>
-                            <td class="line">203,720</td>
-                            <td class="line">202,247</td>
-                            <td class="line">233,802</td>
-                          </tr>
-                          <tr>
-                            <td colspan="8"></td>
-                          </tr>
-                          <tr>
-                            <th colspan="8">Depreciation</th>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td class="text-start">Bfwd</td>
-                            <td>255,441</td>
-                            <td></td>
-                            <td>26,105</td>
-                            <td>107,375</td>
-                            <td>74,817</td>
-                            <td>47,144</td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td class="text-start">Charge For Year</td>
-                            <td>140,732</td>
-                            <td></td>
-                            <td>18,030</td>
-                            <td>31,831</td>
-                            <td>36,306</td>
-                            <td>54,565</td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td class="text-start">Eliminated on disposals</td>
-                            <td>17,538</td>
-                            <td></td>
-                            <td>-</td>
-                            <td>- 40</td>
-                            <td>-</td>
-                            <td>- 17,498</td>
-                          </tr>
-                          <tr class="total">
-                            <td></td>
-                            <td class="text-start">Cfwd</td>
-                            <td class="line">378,635</td>
-                            <td></td>
-                            <td class="line">44,136</td>
-                            <td class="line">139,166</td>
-                            <td class="line">111,123</td>
-                            <td class="line">84,211</td>
-                          </tr>
-                          <tr>
-                            <td colspan="8"></td>
-                          </tr>
-                          <tr class="total2">
-                            <td></td>
-                            <th class="text-start">NBV Cfwd</th>
-                            <td class="line">1,162,640</td>
-                            <td></td>
-                            <td class="line">857,371</td>
-                            <td class="line">64,554</td>
-                            <td class="line">91,124</td>
-                            <td class="line">149,591</td>
-                          </tr>
-                          <tr>
-                            <td colspan="8"></td>
-                          </tr>
-                          <tr class="total2">
-                            <td></td>
-                            <th class="text-start">NBV Bfwd</th>
-                            <td class="line">1,079,295</td>
-                            <td></td>
-                            <td class="line">875,401</td>
-                            <td class="line">56,440</td>
-                            <td class="line">27,347</td>
-                            <td class="line">120,108</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <div class="col-md-12" id="search_data">
+
                   </div>
                 </div>
                 <!-- Button trigger modal -->
@@ -335,5 +202,5 @@
   var searchUrl = "{{url('sales-finance/assets/asset-register-search')}}";
   var deleteAssetRegisterUrl = "{{url('sales-finance/assets/asset-register-delete')}}";
 </script>
-<script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
+<script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}"></script>

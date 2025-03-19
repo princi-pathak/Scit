@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\DepreciationType;
 use App\Models\AssetCategory;
 use App\Models\AssetRegistration;
+use App\Home;
 use Validator;
 
 class AssetController extends Controller
@@ -17,6 +18,7 @@ class AssetController extends Controller
         return view('frontEnd.salesAndFinance.asset.assetCategoryList',$data);
     }
     public function asset_register(Request $request){
+
         $data['page']='assets';
         $data['list']=AssetRegistration::getAllAssetRegistration()->get();
         return view('frontEnd.salesAndFinance.asset.assetRegisterList',$data);
@@ -43,7 +45,7 @@ class AssetController extends Controller
         }
         
         try {
-            
+            $request['company_id'] = Home::getCompanyIdFromHome();            
             $asset_registration=AssetRegistration::saveAssetRegistration($request->all());
             if($request->id == ''){
                 return response()->json(['success' => true,'message'=>'The Aseet Registration has been saved succesfully.', 'data' => $asset_registration]);
@@ -55,8 +57,8 @@ class AssetController extends Controller
         }
     }
     public function depreciation_type(Request $request){
-        $data['page']='assets';
-        $data['list']=DepreciationType::getDepreciationType()->get();
+        $data['page'] = 'assets';
+        $data['list'] = DepreciationType::getDepreciationType()->get();
         return view('frontEnd.salesAndFinance.asset.depreciation_typeList',$data);
     }
     public function asset_category_save(Request $request){
@@ -70,8 +72,7 @@ class AssetController extends Controller
         }
         
         try {
-            
-            $asset_category=AssetCategory::saveAssetCategory($request->all());
+            $asset_category = AssetCategory::saveAssetCategory($request->all());
             if($request->id == ''){
                 return response()->json(['success' => true,'message'=>'The Aseet Category has been saved succesfully.', 'data' => $asset_category]);
             }else{
@@ -93,7 +94,7 @@ class AssetController extends Controller
         }
         
         try {
-            
+    
             $DepreciationType=DepreciationType::saveDepreciationType($request->all());
             if($request->id == ''){
                 return response()->json(['success' => true,'message'=>'The Depreciation Type has been saved succesfully.', 'data' => $DepreciationType]);
