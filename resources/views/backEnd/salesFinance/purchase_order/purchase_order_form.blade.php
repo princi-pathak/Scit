@@ -1223,13 +1223,13 @@
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                <label class="col-lg-3 control-label">Site Name<span class="radStar ">*</span></label>
+                                                <label class="col-lg-3 control-label">Site Name <span class="radStar ">*</span></label>
                                                 <div class="col-lg-9">
                                                     <input type="text" name="site_name" id="site_name" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                <label class="col-lg-4 control-label">Contact Name<span class="radStar ">*</span></label>
+                                                <label class="col-lg-4 control-label">Contact Name <span class="radStar ">*</span></label>
                                                 <div class="col-lg-8">
                                                     <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
                                                 </div>
@@ -1307,7 +1307,7 @@
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                <label class="col-lg-3 control-label">Address<span class="radStar ">*</span></label>
+                                                <label class="col-lg-3 control-label">Address <span class="radStar ">*</span></label>
                                                 <div class="col-lg-9">
                                                     <textarea name="site_address" class="form-control" id="site_address" rows="3" cols="6"></textarea>
                                                 </div>

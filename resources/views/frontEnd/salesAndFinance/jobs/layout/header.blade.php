@@ -42,7 +42,7 @@
         }
 
         .calendar_icon {
-            color: red;
+            color: #e10078;
             display: flex;
             align-items: center;
         }
@@ -563,6 +563,14 @@ $current_url = last(request()->segments());
                                                             <div class="d-flex align-items-center gap-3 mb-2">
                                                                 <i class="material-symbols-outlined"> task_alt </i>
                                                                 <span>Actioned Leads</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/lead/rejected') }}">
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined"> task_alt </i>
+                                                                <span>Rejected Leads</span>
                                                             </div>
                                                         </a>
                                                     </li>
@@ -2827,7 +2835,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div class="">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
@@ -2835,7 +2843,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
                                     <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
@@ -2962,7 +2970,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="user_notification_email_div">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
@@ -2970,7 +2978,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -3050,7 +3058,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="user_notification_notes_div">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="user_id" class="form-control editInput" id="">
                                         <option>dfgdfg</option>
@@ -3059,7 +3067,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -3141,7 +3149,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="user_id" class="form-control editInput" id="user_notifiy">
                                         <option value="">default1</option>
@@ -3150,7 +3158,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_complaint_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="" value="1"> Notification (User Only)

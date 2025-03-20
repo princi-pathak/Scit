@@ -15,7 +15,7 @@
                     <input type="hidden" name="po_id" id="{{ $hiddenForeignId }}" value="">
                     
                     <div class="mb-3 row">
-                        <label for="title" class="col-sm-3 col-form-label">Reminder Date<span class="radStar ">*</span></label>
+                        <label for="title" class="col-sm-3 col-form-label">Reminder Date <span class="radStar ">*</span></label>
                         <div class="col-sm-4">
                             <input type="date" name="{{ $reminderDate }}" class="form-control editInput" id="{{ $reminderDate }}" value="">
                         </div>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="description" class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span></label>
+                        <label for="description" class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span></label>
                         <div class="col-sm-9">
                             <label for="purchase_notify_who1" class="editInput">
                                 <input type="checkbox" name="notification" id="{{ $reminderNotification }}" value="1"> Notification </label>

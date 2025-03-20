@@ -169,7 +169,7 @@ display: block;
                                 <input type="hidden" name="{{ $foreignId }}" id="email_{{ $foreignId }}">
 
                                 <div class="mb-2 row">
-                                    <label for="inputProject" class="col-sm-3 col-form-label">To<span class="radStar ">*</span></label>
+                                    <label for="inputProject" class="col-sm-3 col-form-label">To <span class="radStar ">*</span></label>
                                     <div class="col-sm-9">
                                         <div class="dropdownMaltiSelect">
                                             <button type="button" id="dropdownButton" class="form-control editInput"></button>
@@ -204,7 +204,7 @@ display: block;
                                 </div>
                                 
                                 <div class="mb-2 row">
-                                    <label for="inputProject" class="col-sm-3 col-form-label">Subject<span class="radStar ">*</span></label>
+                                    <label for="inputProject" class="col-sm-3 col-form-label">Subject <span class="radStar ">*</span></label>
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control editInput" id="{{ $subject }}" name="subject">
                                     </div>

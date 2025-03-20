@@ -373,14 +373,14 @@
                                                         <div class="row">
                                                             <div class="col-md-6 col-lg-6 col-xl-6">
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-4 col-form-label">Expense Name<span class="radStar">*</span></label>
+                                                                        <label for="inputName" class="col-sm-4 col-form-label">Expense Name <span class="radStar">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" class="form-control editInput"
                                                                                 id="title" name="title" value="" placeholder="Expense Name">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-4 col-form-label">Net Amount<span class="radStar">*</span></label>
+                                                                        <label for="inputName" class="col-sm-4 col-form-label">Net Amount <span class="radStar">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" class="form-control editInput"
                                                                                 id="amount" name="amount" value="" placeholder="Net Amount">
@@ -388,7 +388,7 @@
                                                                     </div>
                                                                     <div class="mb-2 row">
                                                                         <label for="inputProject"
-                                                                            class="col-sm-4 col-form-label">Vat<span class="radStar">*</span></label>
+                                                                            class="col-sm-4 col-form-label">Vat <span class="radStar">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <select class="form-control editInput selectOptions"
                                                                                 id="vat" name="vat">
@@ -407,14 +407,14 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-4 col-form-label">Gross Amount<span class="radStar">*</span></label>
+                                                                        <label for="inputName" class="col-sm-4 col-form-label">Gross Amount <span class="radStar">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" class="form-control editInput"
                                                                                 id="gross_amount" name="gross_amount" value="" disabled>
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-4 col-form-label">Expense Date<span class="radStar">*</span></label>
+                                                                        <label for="inputName" class="col-sm-4 col-form-label">Expense Date <span class="radStar">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="date" class="form-control editInput"
                                                                                 id="expense_date" name="expense_date" value="">
@@ -1091,7 +1091,7 @@ job_input.addEventListener('input', function() {
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: red; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",

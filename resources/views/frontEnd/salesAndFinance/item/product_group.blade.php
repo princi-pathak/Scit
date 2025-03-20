@@ -203,7 +203,7 @@
                         <div class="row pt-3">
                             <div class="col-lg-6">
                                 <div class="mb-2 row">
-                                    <label for="inputCity" class="col-sm-4 col-form-label">Product Group<span class="radStar">*</span></label>
+                                    <label for="inputCity" class="col-sm-4 col-form-label">Product Group <span class="radStar">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" name="name" id="name" value="">
                                     </div>
@@ -697,7 +697,7 @@
                     noDataRow.id='EmptyError'
                         const noDataCell = document.createElement('td');
                         noDataCell.setAttribute('colspan', 7);
-                        noDataCell.innerHTML = '<span class="text-center" style="color:red">Sorry, there are no items available</span>';
+                        noDataCell.innerHTML = '<span class="text-center" style="color:#e10078;">Sorry, there are no items available</span>';
                         noDataCell.style.textAlign = 'center';
                         noDataRow.appendChild(noDataCell);
                         tableBody.appendChild(noDataRow);

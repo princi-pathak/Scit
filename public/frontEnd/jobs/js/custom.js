@@ -63,7 +63,7 @@ $(document).ready(function () {
       },
       info: "Showing _START_ to _END_ of _TOTAL_ entries",
       infoEmpty: "No entries available",
-      emptyTable: '<span style="color: red; font-weight: bold;">Sorry, there are no items available</span>',
+      emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
       infoFiltered: "(filtered from _MAX_ total entries)",
       lengthMenu: "Show _MENU_ entries",
       search: "Search:",
@@ -138,22 +138,27 @@ var myConfig = {
   "type": "pie",
   "title": {
     "text": "All Potential Jobs - July 2024",
-    "fontSize": "17px" 
+    "fontSize": "17px"
   },
   "series": [{
-    "values": [59]
+    values: [59],
+    backgroundColor: "#FF5733"
   },
   {
-    "values": [55]
+    values: [55],
+    backgroundColor: "#1f88b5"
   },
   {
-    "values": [30]
+    values: [30],
+    backgroundColor: "#5c6bc0"
   },
   {
-    "values": [28]
+    values: [28],
+    backgroundColor: "#e10078"
   },
   {
-    "values": [15]
+    values: [15],
+    backgroundColor: '#42a5f5'
   }
   ]
 };
@@ -276,7 +281,7 @@ let chartConfig = {
       type: 'line',
       text: 'Completed Tasks',
       values: [90, 80, 70, 60, 50, 40, 30, 20],
-      lineColor: '#66bb6a',
+      lineColor: '#e10078',
       marker: {
         visible: false,
       },
@@ -286,7 +291,7 @@ let chartConfig = {
       type: 'bar',
       text: 'Completed Tasks',
       values: [5, 10, 6, 3, 6, 2, 0, 9],
-      backgroundColor: '#0877bd',
+      backgroundColor: '#1f88b5',
       scales: 'scale-x, scale-y-2',
     },
   ],

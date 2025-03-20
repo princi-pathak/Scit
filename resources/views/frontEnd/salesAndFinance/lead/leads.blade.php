@@ -1190,7 +1190,7 @@
                     </div>
                     <div class="notification_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1201,7 +1201,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
                                 <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
@@ -1328,7 +1328,7 @@
                     </div>
                     <div id="notification_email_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1339,7 +1339,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -1423,7 +1423,7 @@
                     </div>
                     <div id="notification_notes_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="user_id" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1434,7 +1434,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -1556,7 +1556,7 @@
                     </div>
                     <div id="notification_complaint_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="user_id" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1567,7 +1567,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_complaint_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_complaint_who1" value="1"> Notification (User Only)
