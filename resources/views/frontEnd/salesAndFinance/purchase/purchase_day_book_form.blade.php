@@ -99,7 +99,7 @@
                       <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" value="">
                     </div>
                   </div>
-                  
+
                 </div>
               </div>
             </div>
@@ -156,6 +156,18 @@
     document.getElementById("expenses").addEventListener("change", function() {
       let not_claim = document.getElementById('not_claim').value;
       document.getElementById("expenses_amount").value = not_claim; // Set input value
+
+      $.ajax({
+        type: "GET",
+        url: "serverscript.xxx",
+        data: myusername,
+        cache: false,
+        success: function(data) {
+          $("#resultarea").text(data);
+        }
+      });
+
+
     });
   });
 </script>
