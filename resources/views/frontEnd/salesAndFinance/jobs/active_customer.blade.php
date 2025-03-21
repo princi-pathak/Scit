@@ -131,10 +131,10 @@
 .select2-container .select2-selection--multiple{
     min-height:32px !important;
  }
-
+/* 
  .CRMFullModel .modal-dialog.modal-xl {
         --bs-modal-width: 1600px;
-    }
+    } */
 
     .overdue {
         display: flex;
@@ -177,7 +177,7 @@
     }
 
     #showDivContLeads {
-        height: 176px;
+        height: 200px;
         transition: .7s;
         overflow: hidden;
     }
@@ -324,7 +324,7 @@
                                             <label for="recipient-name" class="col-form-label">Reject Type:</label>
                                             <input type="text" class="form-control" id="recipient-name">
                                         </div>
-                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2"><i class="fa-solid fa-square-plus fs-4"></i></a>
                                         <div class="mb-3">
                                             <label for="message-text" class="col-form-label">Reject Reason:</label>
                                             <textarea class="form-control" id="message-text"></textarea>

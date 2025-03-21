@@ -126,7 +126,7 @@ ul#supplierList {
                     </div>
                     <div class="markendDelete">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <div class="jobsection d-flex">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                 </div>

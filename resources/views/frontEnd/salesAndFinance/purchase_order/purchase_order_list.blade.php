@@ -307,7 +307,7 @@
                     </div>
                     <div class="markendDelete">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <div class="jobsection">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                     <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="profileDrop">Preview Purchase Order</a>

@@ -4,9 +4,9 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <style>
-    .CRMFullModel .modal-dialog.modal-xl {
+    /* .CRMFullModel .modal-dialog.modal-xl {
         --bs-modal-width: 1600px;
-    }
+    } */
 
     .overdue {
         display: flex;
@@ -49,7 +49,7 @@
     }
 
     #showDivContLeads {
-        height: 176px;
+        height: 200px;
         transition: .7s;
         overflow: hidden;
     }
@@ -224,8 +224,8 @@
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-2 d-flex align-items-center">
-                                                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2">
-                                                                            <i class="fa-solid fa-square-plus"></i>
+                                                                        <a href="#!"  data-bs-toggle="modal" data-bs-target="#rejectModal2">
+                                                                            <i class="fa-solid fa-square-plus fs-4"></i>
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -306,21 +306,21 @@
                                 <div class="">
                                     <h4 class="contTitle text-center">Contact Details</h4>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Full Name:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Full Name:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_contact_name"></span>
                                     </div>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Email Address:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Email Address:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_email"></span>
                                     </div>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Telephone:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Telephone:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_telephone"></span>
                                     </div>
                                 </div>
@@ -329,17 +329,16 @@
                                 <div class="">
                                     <h4 class="contTitle text-center">Lead Details</h4>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Lead Ref.:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Lead Ref.:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_lead_refs"></span>
                                         <input type="hidden" id="lead_id_CRM" name="">
-
                                     </div>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Lead Status:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Lead Status:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_status"></span>
                                     </div>
                                 </div>
