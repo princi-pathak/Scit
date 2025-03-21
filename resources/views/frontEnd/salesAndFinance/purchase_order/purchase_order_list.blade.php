@@ -307,7 +307,7 @@
                     </div>
                     <div class="markendDelete">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <div class="jobsection">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                     <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="profileDrop">Preview Purchase Order</a>
@@ -545,7 +545,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-2 row notificationHideShow" style="display:none">
-                                    <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                    <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                     <div class="col-sm-9">
                                         <label for="purchase_notify_who1" class="editInput">
                                             <input type="checkbox" name="notification" id="purchase_notify_who1" value="1" checked=""> Notification (User Only)
@@ -669,7 +669,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid<span class="radStar">*</span></label>
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid <span class="radStar">*</span></label>
                                             <div class="col-sm-1">
                                                 <div class="tag_box text-center">
                                                     <span style="padding:3px">£</span>
@@ -680,13 +680,13 @@
                                             </div>
                                         </div>
                                         <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Payment Date<span class="radStar ">*</span></label>
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Payment Date <span class="radStar ">*</span></label>
                                             <div class="col-sm-9">
                                                 <input type="date" id="record_PaymentDate" name="record_payment_date" class="form-control editInput">
                                             </div>
                                         </div>
                                         <div class="mb-2 row">
-                                            <label for="inputProject" class="col-sm-3 col-form-label">Payment Type<span class="radStar ">*</span></label>
+                                            <label for="inputProject" class="col-sm-3 col-form-label">Payment Type <span class="radStar ">*</span></label>
                                             <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions" id="record_PaymentType" name="record_payment_type">
                                                     @foreach($paymentTypeList as $type)
@@ -1087,7 +1087,7 @@
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: red; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",

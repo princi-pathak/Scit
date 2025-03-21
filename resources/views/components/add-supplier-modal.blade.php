@@ -110,7 +110,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="formDtail">
                                 <div class="mb-2 row">
-                                    <label for="supplier_address" class="col-sm-3 col-form-label">Address<span class="radStar ">*</span></label>
+                                    <label for="supplier_address" class="col-sm-3 col-form-label">Address <span class="radStar ">*</span></label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control textareaInput suppliercheckError" maxlength="300" placeholder="Enter Supplier Address" id="supplier_address" name="address" rows="3"></textarea>
                                     </div>

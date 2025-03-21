@@ -10,7 +10,7 @@
     }
 
     .calendar_icon {
-        color: red;
+        color: #e10078;
         display: flex;
         align-items: center;
     }
@@ -97,7 +97,7 @@
                                                                                     } ?>">
                                     <div class="mb-3 row">
                                         <label for="inputCustomer"
-                                            class="col-sm-3 col-form-label">Supplier<span class="radStar">*</span></label>
+                                            class="col-sm-3 col-form-label">Supplier <span class="radStar">*</span></label>
                                         <div class="col-sm-7">
                                             <select class="form-control editInput selectOptions PurchaseOrdercheckError" id="purchase_supplier_id" name="supplier_id" onchange="get_supplier_details()">
                                                 <option selected disabled>Select Supplier</option>
@@ -138,7 +138,7 @@
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="inputName" class="col-sm-3 col-form-label">Name<span
+                                        <label for="inputName" class="col-sm-3 col-form-label">Name <span
                                                 class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput textareaInput PurchaseOrdercheckError" name="name" id="purchase_name" value="<?php if (isset($purchase_orders) && $purchase_orders != '') {
@@ -148,7 +148,7 @@
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress"
-                                            class="col-sm-3 col-form-label">Address<span
+                                            class="col-sm-3 col-form-label">Address <span
                                                 class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <textarea class="form-control textareaInput PurchaseOrdercheckError" id="purchase_address" name="address" rows="3" placeholder="Enter Your Address"><?php if (isset($purchase_orders) && $purchase_orders != '') {
@@ -306,7 +306,7 @@
 
                                     <div class="mb-3 row">
                                         <label for="inputContact"
-                                            class="col-sm-3 col-form-label">Name<span class="radStar">*</span></label>
+                                            class="col-sm-3 col-form-label">Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="user_name" id="purchase_user_name" class="form-control editInput textareaInput PurchaseOrdercheckError" value="<?php if (isset($purchase_orders) && $purchase_orders->user_name != '') {
                                                                                                                                                                                         echo $purchase_orders->user_name;
@@ -328,7 +328,7 @@
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress"
-                                            class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
+                                            class="col-sm-3 col-form-label">Address <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <textarea class="form-control textareaInput PurchaseOrdercheckError" id="purchase_user_address" name="user_address" rows="3" placeholder="Enter Your Address"><?php if (isset($purchase_orders) && $purchase_orders->user_address != '') {
                                                                                                                                                                                                                 echo $purchase_orders->user_address;
@@ -452,7 +452,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputTelephone" class="col-sm-3 pe-0 col-form-label">Purchase Date<span class="radStar">*</span></label>
+                                        <label for="inputTelephone" class="col-sm-3 pe-0 col-form-label">Purchase Date <span class="radStar">*</span></label>
                                         <div class="col-sm-7">
                                             <input type="date" class="form-control editInput PurchaseOrdercheckError" id="purchase_purchase_date" name="purchase_date" value="">
                                         </div>
@@ -592,7 +592,7 @@
                                         <label for="" class="col-sm-5 col-form-label">
                                             <a href="javascript:void(0)" onclick="openReminderModal(<?php if (isset($purchase_orders) && $purchase_orders != '') {
                                                                                                         echo $purchase_orders->id;
-                                                                                                    } ?>)" class="profileDrop"> <i class="fa fa-clock"></i> Set
+                                                                                                    } ?>)" class="profileDrop pink"> <i class="fa fa-clock"></i> Set
                                                 Riminder </a>
                                         </label>
 
@@ -1025,7 +1025,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid<span class="radStar">*</span></label>
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid <span class="radStar">*</span></label>
                                             <div class="col-sm-1">
                                                 <div class="tag_box text-center">
                                                     <span style="padding:3px">£</span>
@@ -1036,13 +1036,13 @@
                                             </div>
                                         </div>
                                         <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Payment Date<span class="radStar ">*</span></label>
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Payment Date <span class="radStar ">*</span></label>
                                             <div class="col-sm-9">
                                                 <input type="date" id="record_PaymentDate" name="record_payment_date" class="form-control editInput">
                                             </div>
                                         </div>
                                         <div class="mb-2 row">
-                                            <label for="inputProject" class="col-sm-3 col-form-label">Payment Type<span class="radStar ">*</span></label>
+                                            <label for="inputProject" class="col-sm-3 col-form-label">Payment Type <span class="radStar ">*</span></label>
                                             <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions" id="record_PaymentType" name="record_payment_type">
                                                     @foreach($paymentTypeList as $type)
