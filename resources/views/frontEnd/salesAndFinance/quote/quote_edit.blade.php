@@ -67,7 +67,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="inputCustomer" class="col-sm-3 col-form-label">Customer<span class="radStar">*</span></label>
+                                            <label for="inputCustomer" class="col-sm-3 col-form-label">Customer <span class="radStar">*</span></label>
                                             <div class="col-sm-7">
                                                 <input type="hidden" value="{{ $quoteData['customer']['customer.id'] }}" id="setCustomerId">
                                                 <select class="form-control editInput selectOptions" name="customer_id" id="getCustomerListedit">
@@ -647,7 +647,7 @@
                                             <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
                                                 <div class="tabheadingTitle">
                                                     <a href="#!" class="profileDrop me-3" onclick="insrtAppoinment()"> New Appointments</a>
-                                                    <a href="#!" class="profileDrop ms-3"> Send To Planner</a>
+                                                    <a href="#!" class="profileDrop"> Send To Planner</a>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="productDetailTable mt-3">
@@ -1066,7 +1066,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT) <span class="radStar">*</span></label>
                                                                     <div class="col-sm-1 pe-0">
                                                                         <input class="form-control editInput text-center" value="&#163;" disabled="">
                                                                     </div>
@@ -1075,13 +1075,13 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Reference <span class="radStar">*</span></label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control editInput" name="reference" id="reference" placeholder="Reference">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Description <span class="radStar">*</span></label>
                                                                     <div class="col-sm-9">
                                                                         <textarea class="form-control textareaInput rounded-1" name="description" id="description" rows="3" placeholder="Description"></textarea>
                                                                     </div>
@@ -1098,7 +1098,7 @@
                                                             </div>
                                                             <div class="newJobForm card">
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Payment Type <span class="radStar">*</span></label>
                                                                     <div class="col-sm-9">
                                                                         <select class="form-control editInput selectOptions" name="payment_type" id="payment_type">
                                                                             @foreach($paymentType as $value)
@@ -1149,7 +1149,7 @@
                                                 <div class="newJobForm card">
                                                     <div class="mb-2 row">
                                                         <input type="hidden" id="edit_customer_deposit_invoice">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date <span class="radStar">*</span></label>
                                                         <div class="col-sm-5">
                                                             <input type="date" class="form-control editInput" id="invoice_date" value="{{ now()->format('d/m/Y') }}">
                                                         </div>
@@ -1167,7 +1167,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Line Description <span class="radStar">*</span></label>
                                                         <div class="col-sm-9">
                                                             <textarea class="form-control textareaInput rounded-1" name="address" id="line_description" rows="3" placeholder="Description"></textarea>
                                                         </div>
@@ -1192,7 +1192,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">VAT (%) <span class="radStar">*</span></label>
                                                         <div class="col-sm-9">
                                                             <input type="hidden" id="getTaxtRateHidden">
                                                             <select class="form-control editInput selectOptions" id="getTaxRateValue">
@@ -1417,7 +1417,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-4 col-form-label">Task User<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-4 col-form-label">Task User <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="hidden" name="form_type" id="form_type" value="">
                                                                                             <input type="hidden" name="edit_quote_task_id" id="edit_quote_task_id" value="">
@@ -1429,13 +1429,13 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-4 col-form-label">Title<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-4 col-form-label">Title <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="text" class="form-control editInput" name="title" id="title">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-4 col-form-label">Task Type<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-4 col-form-label">Task Type <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-7">
                                                                                             <select class="form-control editInput selectOptions" name="task_type" id="setTaskTypeData">
                                                                                             </select>
@@ -1534,13 +1534,13 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-3 col-form-label">Title<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-3 col-form-label">Title <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-9">
                                                                                             <input type="text" class="form-control editInput" id="timerTitle">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-3 col-form-label">Timer<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-3 col-form-label">Timer <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-9">
                                                                                             <button type="button" class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
                                                                                             <span id="timerDisplay">00:00:00</span>
@@ -1558,7 +1558,7 @@
 
                                                                                 <div class="col-md-6">
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-3 col-form-label">Task Type<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-3 col-form-label">Task Type <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
                                                                                             <select class="form-control editInput selectOptions" id="setTaskTypeOnTimer">
 
@@ -1574,7 +1574,7 @@
                                                                                     </div>
 
                                                                                     <div class="mb-2 row">
-                                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Notes<span class="radStar">*</span></label>
+                                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Notes <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-9">
                                                                                             <textarea class="form-control textareaInput rounded-1" name="Notes" id="timerNotes" rows="5" placeholder="Notes"></textarea>
                                                                                         </div>
@@ -1626,7 +1626,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-4 col-form-label">Task User<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-4 col-form-label">Task User <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
                                                                                             <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                                                 <option>-Not Assigned-</option>
@@ -1637,13 +1637,13 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-4 col-form-label">Title<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-4 col-form-label">Title <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="text" class="form-control editInput" id="">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-4 col-form-label">Task Type<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-4 col-form-label">Task Type <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-7">
                                                                                             <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                                                 <option>-Not Assigned-</option>
@@ -1661,13 +1661,13 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-4 col-form-label">Start Date<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-4 col-form-label">Start Date <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="text" class="form-control editInput" id="">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
-                                                                                        <label class="col-sm-4 col-form-label">End Date<span class="radStar">*</span></label>
+                                                                                        <label class="col-sm-4 col-form-label">End Date <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
                                                                                             <input type="text" class="form-control editInput" id="">
                                                                                         </div>
@@ -1700,7 +1700,7 @@
                                                                                     </div>
 
                                                                                     <div class="mb-2 row">
-                                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Notes<span class="radStar">*</span></label>
+                                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Notes <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-9">
                                                                                             <textarea class="form-control textareaInput rounded-1" name="Notes" rows="5" placeholder="Notes"></textarea>
                                                                                         </div>
@@ -1713,31 +1713,31 @@
                                                                     <div class="tab-pane fade" id="newTaskTimer" role="tabpanel" aria-labelledby="newTaskTimer-tab" tabindex="0">
                                                                         <div class="newJobForm card">
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity" class="col-sm-3 col-form-label">First Name<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">First Name <span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="text" class="form-control editInput" id="inputCity" placeholder="Arjun">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Last Name<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Last Name <span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="text" class="form-control editInput" id="inputCity" placeholder="Kumar">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Email Address<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Email Address <span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="text" class="form-control editInput" id="inputCity" placeholder="info@gmail.com">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Telephone<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Telephone <span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="text" class="form-control editInput" id="inputCity">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Address Line1<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Address Line1 <span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="text" class="form-control editInput" id="inputCity" placeholder="USA">
                                                                                 </div>
@@ -1749,7 +1749,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity" class="col-sm-3 col-form-label">City<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">City <span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="text" class="form-control editInput" id="inputCity">
                                                                                 </div>
@@ -1767,7 +1767,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Postcode<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Postcode  <span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="text" class="form-control editInput" id="inputCity">
                                                                                 </div>
@@ -2344,7 +2344,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="formDtail">
                                 <div class="mb-2 row">
-                                    <label for="inputAddress" class="col-sm-4 col-form-label">Address Details<span class="radStar ">*</span></label>
+                                    <label for="inputAddress" class="col-sm-4 col-form-label">Address Details <span class="radStar ">*</span></label>
                                     <div class="col-sm-8">
                                         <label for="inputAddress" class="col-form-label">Same as Default <input type="checkbox" value="1" id="same_as_default" name="same_as_default"></label>
                                     </div>

@@ -55,9 +55,16 @@
                                     <p>Days for which location history will be saved</p>
                                 </div>
                             </div>
-							<?php
-                             	$rota_time_format = (isset($system_admin_home->rota_time_format)) ? $system_admin_home->rota_time_format : ''; 
-                             ?>
+
+							<div class="form-group">
+                                <label class="col-lg-3 control-label">Registered with Ofsted or CIW</label>
+                                <div class="col-lg-9">
+	                                <label class="col-lg-3 control-label">Yes <input type="radio" name="is_registered" class="" value="1" {{ (isset($system_admin_home->is_registerd)) == 'active' ? 'checked' : '' }}></label>
+	                                <label class="col-lg-3 control-label">No <input type="radio" name="is_registered" class="" value="0" {{ isset($system_admin_home->is_registerd) == 'inactive' ? 'checked' : '' }}></label>
+                                </div>
+                            </div>
+
+							<?php $rota_time_format = (isset($system_admin_home->rota_time_format)) ? $system_admin_home->rota_time_format : ''; ?>
                             <div class="form-group has-feedback">
 								<label class="col-lg-3 control-label">Rota Time Format</label>
 								<div class="col-lg-9">

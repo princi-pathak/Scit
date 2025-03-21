@@ -42,7 +42,7 @@
         }
 
         .calendar_icon {
-            color: red;
+            color: #e10078;
             display: flex;
             align-items: center;
         }
@@ -567,6 +567,14 @@ $current_url = last(request()->segments());
                                                         </a>
                                                     </li>
                                                     <li>
+                                                        <a href="{{ url('/lead/rejected') }}">
+                                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined"> task_alt </i>
+                                                                <span>Rejected Leads</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
                                                         <a href="{{ url('/lead/authorization') }}">
                                                             <div class="d-flex align-items-center gap-3 mb-2">
                                                                 <i class="material-symbols-outlined"> verified_user</i>
@@ -705,7 +713,6 @@ $current_url = last(request()->segments());
                                                                     class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">
                                                                         calendar_month </i>
-
                                                                     <span>Sales Appointment</span>
                                                                 </div>
                                                             </a>
@@ -947,7 +954,7 @@ $current_url = last(request()->segments());
                                                     </div>
                                                     <li>
                                                         <a href="#!">
-                                                            <div  lass="d-flex align-items-center gap-3 mb-2">
+                                                            <div  class="d-flex align-items-center gap-3 mb-2">
                                                                 <i class="material-symbols-outlined">note_add </i>
                                                                 <span>New Project</span>
                                                             </div>
@@ -1050,52 +1057,49 @@ $current_url = last(request()->segments());
                                                                     </span>
                                                                 </div>
                                                             </a>
-
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                         <span>Paid Invoices </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                     <span>Search Invoices</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined">receipt_long</i>
+                                                                    <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                         <span>Account Statements
                                                                     </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> receipt_long</i>
+                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
 
                                                                     <span>Reminders</span>
                                                                 </div>
                                                             </a>
                                                             <div class="custom_dropdown2">
                                                                 <a tabindex=0>
-
                                                                     <div class="d-flex align-items-center gap-2 mb-2">
-                                                                        <i class="material-symbols-outlined">receipt_long</i>
+                                                                        <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
 
                                                                         <span>Recurring Invoices</span>
                                                                         <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
-
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                             <span>New Recurring Invoice </span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                             <span> Recurring Invoice</span>
@@ -1106,47 +1110,45 @@ $current_url = last(request()->segments());
                                                             </div>
                                                             <div class="custom_dropdown2">
                                                                 <a tabindex=0>
-
                                                                     <div class="d-flex align-items-center gap-2 mb-2">
-                                                                        <i class="material-symbols-outlined">receipt_long</i>
-
+                                                                        <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                         <span>Credit Notes</span>
                                                                         <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
                                                                     </div>
                                                                 </a>
                                                                 <div class="dropdown-content">
 
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                             <span> New Credit Note</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                             <span>Draft Credit Note</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                             <span> Awaiting Approval Credit Note</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                             <span>Approval Credit Note</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                             <span>Paid Credit Note</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                             <span>Cancelled Credit Note</span>
@@ -1167,7 +1169,7 @@ $current_url = last(request()->segments());
                                                         </a>
                                                         <div class="dropdown_content">
 
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">keyboard_double_arrow_right</i>
                                                                     <span>Dashboard</span>
@@ -1217,12 +1219,6 @@ $current_url = last(request()->segments());
                                                                     <span> Paid Purchase Order </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="{{ url('draft_purchase_order?list_mode=Paid') }}">
-                                                                <div class="d-flex align-items-center gap-2 mb-2">
-                                                                    <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
-                                                                    <span> Paid Purchase Order </span>
-                                                                </div>
-                                                            </a>
                                                             <a href="{{url('purchase-orders-search')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
@@ -1251,13 +1247,13 @@ $current_url = last(request()->segments());
                                                                 </a>
                                                                 <div class="dropdown-content">
 
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                             <span> New Recurring Purchase Order</span>
                                                                         </div>
                                                                     </a>
-                                                                    <a href="">
+                                                                    <a href="#!">
                                                                         <div class="d-flex align-items-center gap-2 mb-2">
                                                                             <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                             <span> Recurring Purchase Orders</span>
@@ -1455,7 +1451,8 @@ $current_url = last(request()->segments());
                                             </a>
                                         </li>
                                         <!-- Users start here -->
-                                        <li>
+
+                                        <!-- <li>
 
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel9')"> <span class="plus_icon"> <i class="material-symbols-outlined"> diversity_2 </i></span>Users
                                             </button>
@@ -1507,7 +1504,7 @@ $current_url = last(request()->segments());
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </li>
+                                        </li> -->
                                         <!-- Reports start here -->
                                         <li>
                                             <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel10')">
@@ -1758,7 +1755,7 @@ $current_url = last(request()->segments());
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                     <span> Lead Settings</span>
@@ -1931,37 +1928,37 @@ $current_url = last(request()->segments());
                                                             </div>
                                                         </a>
                                                         <div class="dropdown_content">
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                     <span> User Type </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                     <span> User Profiles </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                     <span> User Working Areas </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                     <span> Personal Time Type </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                     <span> User Contractors </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#!">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                     <span> User Location </span>
@@ -2146,7 +2143,6 @@ $current_url = last(request()->segments());
             </div>
         </div>
     </section>
-
     <!-- Button trigger modal -->
 
     <!-- Modal -->
@@ -2213,7 +2209,6 @@ $current_url = last(request()->segments());
                             <button class="nav-link active" id="pills-userCRMfullHistory-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-fullHistory" type="button" role="tab" aria-controls="pills-fullHistory" aria-selected="true">Full History</button>
                         </li>
                         <li class="nav-item" role="presentation">
-
                             <button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#CRMpills-Calls" type="button" role="tab" aria-controls="pills-Calls" aria-selected="false" tabindex="-1">Calls</button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -2229,8 +2224,6 @@ $current_url = last(request()->segments());
                             <button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#CRMpills-complaints" type="button" role="tab" aria-controls="pills-complaints" aria-selected="false" tabindex="-1">Complaints</button>
                         </li>
                     </ul>
-
-
 
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="CRMpills-fullHistory" role="tabpanel" aria-labelledby="pills-userCRMfullHistory-tab" tabindex="0">
@@ -2500,12 +2493,8 @@ $current_url = last(request()->segments());
                                                                         </div>
                                                                     </form>
                                                                 </div>
-
                                                             </div>
-
-                                                            <form class="">
-                                                            </form>
-
+                                                            <!-- <form class=""></form> -->
                                                         </div>
                                                         <div class="tab-pane fade" id="CRMnav-Timer" role="tabpanel" aria-labelledby="CRMnav-Timer-tab">
                                                             <div class="row">
@@ -2846,7 +2835,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div class="">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
@@ -2854,7 +2843,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
                                     <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
@@ -2981,7 +2970,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="user_notification_email_div">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
@@ -2989,7 +2978,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -3069,7 +3058,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="user_notification_notes_div">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="user_id" class="form-control editInput" id="">
                                         <option>dfgdfg</option>
@@ -3078,7 +3067,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -3160,7 +3149,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="user_id" class="form-control editInput" id="user_notifiy">
                                         <option value="">default1</option>
@@ -3169,7 +3158,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_complaint_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="" value="1"> Notification (User Only)

@@ -4,9 +4,9 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <style>
-    .CRMFullModel .modal-dialog.modal-xl {
+    /* .CRMFullModel .modal-dialog.modal-xl {
         --bs-modal-width: 1600px;
-    }
+    } */
 
     .overdue {
         display: flex;
@@ -49,7 +49,7 @@
     }
 
     #showDivContLeads {
-        height: 176px;
+        height: 200px;
         transition: .7s;
         overflow: hidden;
     }
@@ -224,8 +224,8 @@
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-2 d-flex align-items-center">
-                                                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2">
-                                                                            <i class="fa-solid fa-square-plus"></i>
+                                                                        <a href="#!"  data-bs-toggle="modal" data-bs-target="#rejectModal2">
+                                                                            <i class="fa-solid fa-square-plus fs-4"></i>
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -306,21 +306,21 @@
                                 <div class="">
                                     <h4 class="contTitle text-center">Contact Details</h4>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Full Name:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Full Name:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_contact_name"></span>
                                     </div>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Email Address:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Email Address:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_email"></span>
                                     </div>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Telephone:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Telephone:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_telephone"></span>
                                     </div>
                                 </div>
@@ -329,17 +329,16 @@
                                 <div class="">
                                     <h4 class="contTitle text-center">Lead Details</h4>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Lead Ref.:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Lead Ref.:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_lead_refs"></span>
                                         <input type="hidden" id="lead_id_CRM" name="">
-
                                     </div>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4"><strong>Lead Status:</strong></label>
-                                    <div class="col-md-8">
+                                <div class="row pt-2">
+                                    <label class="col-md-4 col-form-label">Lead Status:</label>
+                                    <div class="col-md-8 small_content">
                                         <span id="calls_status"></span>
                                     </div>
                                 </div>
@@ -1190,7 +1189,7 @@
                     </div>
                     <div class="notification_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1201,7 +1200,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
                                 <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
@@ -1328,7 +1327,7 @@
                     </div>
                     <div id="notification_email_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1339,7 +1338,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -1423,7 +1422,7 @@
                     </div>
                     <div id="notification_notes_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="user_id" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1434,7 +1433,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -1556,7 +1555,7 @@
                     </div>
                     <div id="notification_complaint_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="user_id" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1567,7 +1566,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_complaint_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_complaint_who1" value="1"> Notification (User Only)

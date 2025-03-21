@@ -9,6 +9,10 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+a {
+  color: #1f88b5;
+}
+
 .main_wrapper {
   position: relative;
   min-height: calc(100vh - 0px);
@@ -136,7 +140,6 @@ h6 {
   background-color: #1f88b5;
 }
 
-
 @media (max-width: 991.98px) {
   .menubaar .navbar-light .navbar-nav .nav-link {
     margin-right: 0;
@@ -197,6 +200,10 @@ h6 {
   transition: .6s;
   display: inline-block;
   line-height: 18px;
+}
+
+.profileDrop.pink {
+  background: #e10078;
 }
 
 .profileDrop:hover {
@@ -321,6 +328,7 @@ table.tablechange tbody td a {
 /* .maimTable table.dataTable td.select-checkbox:before {
   margin-top: 5px;
 } */
+
 .maimTable .dataTables_wrapper .dataTables_info {
   padding-left: 10px;
   font-size: 13px;
@@ -384,7 +392,7 @@ a.overdueJobsFolder img {
 .notifiNumberRadColor {
   width: 16px;
   height: 16px;
-  background-color: rgb(255, 0, 0);
+  background-color: #e10078;
   color: #fff;
   font-size: 10px;
   border-radius: 50%;
@@ -590,7 +598,6 @@ a.overdueJobsFolder img {
 .appNotiList li span.list_cont.coutListColor5 p {
   color: #898f5b;
 }
-
 
 .stikerBx {
   padding: 10px;
@@ -904,7 +911,7 @@ section.main_section_page {
 }
 
 .checkboxtext {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .upperlineTitle {
@@ -943,6 +950,7 @@ section.main_section_page {
 /* .preInstall {
   padding: 0 60px;
 }
+
 .rental-manager-progress-bar-container {
   width: 100%;
   display: flex;
@@ -955,11 +963,13 @@ section.main_section_page {
 .rental-manager-progress-bar-container .active{
   background-color: #fff !important;
 }
+
 .circlemainBx{
   margin-top: -45px;
   width: 60px;
   text-align: center;
 }
+
 .rental-manager-progress-bar-container div {
   background-color: #024a92;
   font-weight: bold;
@@ -973,6 +983,7 @@ section.main_section_page {
   border-radius: 50%;
   z-index: 99;
 }
+
 .intalTaxt{
   font-size: 13px;
 } */
@@ -1543,7 +1554,7 @@ canvas#canv1 {
 :root {
   --primary: #333;
   --secondary: #333;
-  --errorColor: red;
+  --errorColor: #e10078;
   --stepNumber: 6;
   --containerWidth: 100%;
   --bgColor: #333;
@@ -1805,7 +1816,7 @@ form .page .btns button.next {
 .red_sorryText {
   width: 100%;
   text-align: center;
-  color: #f00;
+  color: #e10078;
   font-weight: 500;
   font-size: 12px;
 }
@@ -1883,7 +1894,7 @@ form .page .btns button.next {
 }
 
 .minusnmberRed {
-  color: #f00;
+  color: #e10078;
 }
 
 .minusnmberGreen {
@@ -3093,7 +3104,14 @@ ul#supplierList {
   margin-right: 10px;
 }
 
-.nav-link:focus,
-.nav-link:hover {
-  color: #1f88b5;
+.bg-light {
+  background-color: #f7f7f9 !important;
+}
+
+.sarchBtn {
+  font-size: 12px;
+}
+
+.small_content {
+  font-size: 13px;
 }

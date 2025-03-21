@@ -252,7 +252,7 @@
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                         <div class="formDtail">
                                                 <div class="mb-2 row">
-                                                    <label for="inputName" class="col-sm-3 col-form-label">Name<span class="radStar ">*</span></label>
+                                                    <label for="inputName" class="col-sm-3 col-form-label">Name <span class="radStar ">*</span></label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control editInput" id="name" name="name" value="">
                                                     </div>
