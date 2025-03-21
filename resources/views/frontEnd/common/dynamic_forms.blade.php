@@ -791,7 +791,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
         $(document).on('click', '.dyn-form-filler', function()
         {
-
             var previous_model_id = $(this).closest('.modal').attr('id');
             var dynamic_form_id = $(this).attr('id');
             var form_id = $(this).closest('form').attr('id');
@@ -887,14 +886,9 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             return false;
         });
 
-
-
-
         function dyn_form_filler(){
 
         }
-
-
 
         $(document).on('click', '#DynFormViewModal .previous_modal_btn', function() {
             var previous_modal_id = $(this).attr('pre_modal');
@@ -924,6 +918,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 $('.dpYears').datepicker('place')
             });
             seteditvalueeditable = false;
+            viewdatawithvalueFormio();
             //attr('pre_modal');
             return false;
         });
