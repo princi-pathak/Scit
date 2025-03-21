@@ -94,7 +94,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Customer<span class="radStar">*</span></label>
+                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Customer <span class="radStar">*</span></label>
                                         <div class="col-sm-7">
                                             <input type="hidden" value="{{ $quoteData['customer']['customer.id'] }}" id="setCustomerId">
                                             <select class="form-control editInput selectOptions" name="customer_id" id="getCustomerList">
@@ -1044,7 +1044,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT) <span class="radStar">*</span></label>
                                                                         <div class="col-sm-1 pe-0">
                                                                             <input class="form-control editInput text-center" value="&#163;" disabled="">
                                                                         </div>
@@ -1053,13 +1053,13 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Reference <span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control editInput" name="reference" id="reference" placeholder="Reference">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Description <span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <textarea class="form-control textareaInput rounded-1" name="description" id="description" rows="3" placeholder="Description"></textarea>
                                                                         </div>
@@ -1076,7 +1076,7 @@
                                                                 </div>
                                                                 <div class="newJobForm card">
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Payment Type <span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <select class="form-control editInput selectOptions" name="payment_type" id="payment_type">
                                                                                 @foreach($paymentType as $value)
@@ -1130,7 +1130,7 @@
                                                     <div class="newJobForm card">
                                                         <div class="mb-2 row">
                                                             <input type="hidden" id="edit_customer_deposit_invoice">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date <span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
                                                                 <input type="text" class="form-control editInput" id="invoice_date" value="{{ now()->format('d/m/Y') }}">
                                                             </div>
@@ -1155,7 +1155,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Line Description <span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
                                                                 <textarea class="form-control textareaInput rounded-1" name="address" id="line_description" rows="3" placeholder="Description"></textarea>
                                                             </div>
@@ -1180,7 +1180,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">VAT (%) <span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
                                                                 <input type="hidden" id="getTaxtRateHidden">
                                                                 <select class="form-control editInput selectOptions" id="getTaxRateValue">
@@ -2065,7 +2065,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="formDtail">
                                 <div class="mb-2 row">
-                                    <label for="inputAddress" class="col-sm-4 col-form-label">Address Details<span class="radStar ">*</span></label>
+                                    <label for="inputAddress" class="col-sm-4 col-form-label">Address Details <span class="radStar ">*</span></label>
                                     <div class="col-sm-8">
                                         <label for="inputAddress" class="col-form-label">Same as Default <input type="checkbox" value="1" id="same_as_default" name="same_as_default"></label>
                                     </div>

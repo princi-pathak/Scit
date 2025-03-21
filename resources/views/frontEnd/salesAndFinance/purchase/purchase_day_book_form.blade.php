@@ -65,7 +65,7 @@
               <div class="col-md-6 col-lg-6 col-xl-6">
                 <div class="formDtail">
                   <div class="mb-3 row">
-                    <label for="vat_input" class="col-sm-2 col-form-label">VAT<span class="radStar">*</span></label>
+                    <label for="vat_input" class="col-sm-2 col-form-label">VAT <span class="radStar">*</span></label>
                     <div class="col-sm-9">
                       <select class="form-control editInput selectOptions" name="Vat" id="vat_input">
                         <option>-Not Assigned-</option>

@@ -5,7 +5,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     .error {
-        color: red;
+        color: #e10078;
         font-size: 0.9em;
     }
 

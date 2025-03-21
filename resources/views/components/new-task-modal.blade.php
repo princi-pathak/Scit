@@ -114,7 +114,7 @@
                                     </div>
                                     <div id="optionsDiv" style="display:none" class="mb-3">
                                         <div class="row">
-                                        <label for="staticEmail" class="col-sm-3 col-form-label">Send as<span class="radStar ">*</span> </label>
+                                        <label for="staticEmail" class="col-sm-3 col-form-label">Send as <span class="radStar ">*</span> </label>
                                         <div class="col-sm-9">
                                             <label class="editInput"><input type="checkbox" value="1" id="" name="notification"> Notification</label>
                                             <label class="editInput"><input type="checkbox" value="1" id="" name="email"> Email</label>

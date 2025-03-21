@@ -24,7 +24,7 @@
                             <input type="hidden" id="project_customer_id" name="customer_name" value="<?php if(!empty($contact_name) && $contact_name !=''){echo $contact_name->id;}?>">
                         </div>
                         <div class="mb-3 row" id="HideShowFieldSelect">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer<span class="radStar ">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <select id="project_customer_name_select" name="customer_name" class="form-control editInput ProjectcheckError">
                                     <option selected disabled>Select Customer</option>

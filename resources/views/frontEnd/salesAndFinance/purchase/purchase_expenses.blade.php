@@ -21,12 +21,12 @@
                     </div>
                     <div class="markendDelete">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="jobsection">
                                     <a href="javascript:void(0)" onclick="openExpensesModal('', 'add')" class="profileDrop">New</a>
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6 d-flex justify-content-end">
                                 <div class="jobsection">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                 </div>
@@ -56,7 +56,7 @@
                                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                                             <div class="formDtail">
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Title<span class="radStar ">*</span></label>
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Title <span class="radStar ">*</span></label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control editInput" name="title" id="purchase_expense_title">
                                                                     </div>
