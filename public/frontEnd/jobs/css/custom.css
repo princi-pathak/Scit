@@ -3115,3 +3115,7 @@ ul#supplierList {
 .small_content {
   font-size: 13px;
 }
+
+.discount-input {
+  width: 35px;
+}
