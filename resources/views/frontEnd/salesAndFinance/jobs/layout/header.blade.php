@@ -990,7 +990,7 @@ $current_url = last(request()->segments());
                                         </li>
                                         <!-- Finance start here -->
                                         <li>
-                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'finance') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel6')"><span class="plus_icon"><i class="material-symbols-outlined"> finance_mode </i></span>Finance</button>
+                                            <button href="#" class="openbtn @if(isset($page)) @if($page == 'finance' || $page == 'invoice') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel6')"><span class="plus_icon"><i class="material-symbols-outlined"> finance_mode </i></span>Finance</button>
                                             <div id="mySidepanel6" class="sidepanel">
                                                 <ul>
                                                     <div class="d-flex justify-content-between align-items-center">
@@ -1023,7 +1023,7 @@ $current_url = last(request()->segments());
                                                                     <span>Dashboard</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/add')}}">
                                                                 <div
                                                                     class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">
