@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Construction_account_code;
 use App\Models\Construction_tax_rate;
 use App\Models\Country;
+use App\Models\Customer_type;
+use App\Models\Job_title;
+use App\Models\Currency;
+use App\Models\Region;
+use App\Models\Product_category;
 
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 
@@ -114,8 +119,15 @@ class InvoiceController extends Controller
 
     public function create(CustomerController $customer){
         $data['page'] = "invoice";
-        $data['customerList'] =  $customer->getAllCustomerList()->getData()->data;
+        $home_id = Auth::user()->home_id;
+        $data['customers'] =  $customer->getAllCustomerList()->getData()->data;
         $data['countries'] = Country::getCountriesNameCode();
+        $data['customer_types']=Customer_type::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['country']=Country::all_country_list();
+        $data['currency']=Currency::where(['status'=>1,'deleted_at'=>null])->get();
+        $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
+        $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         // dd($data);
         return view('frontEnd.salesAndFinance.invoice.invoice_form', $data);
     }

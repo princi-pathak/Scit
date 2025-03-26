@@ -122,7 +122,7 @@
                         </div>
                     </div>
                     <!-- end here -->
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="min-height: 350px;">
                         <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
