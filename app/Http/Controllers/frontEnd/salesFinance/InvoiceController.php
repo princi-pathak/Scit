@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use App\Models\Construction_account_code;
 use App\Models\Construction_tax_rate;
 use App\Models\Country;
@@ -15,6 +16,7 @@ use App\Models\Job_title;
 use App\Models\Currency;
 use App\Models\Region;
 use App\Models\Product_category;
+use App\Models\Invoice\Invoice;
 
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 
@@ -131,8 +133,78 @@ class InvoiceController extends Controller
         // dd($data);
         return view('frontEnd.salesAndFinance.invoice.invoice_form', $data);
     }
-
+    public function invoice_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id=Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        
+        $validator = Validator::make($request->all(), [
+            'customer_id'=>'required',
+            'name'=>'required',
+            'address'=>'required',
+            'invoice_date'=>'required',
+            'due_date'=>'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        // if(empty($request->product_id) && !isset($request->product_id)){
+        //     return response()->json(['vali_error' => 'Please add at least one product for purchase order.']);
+        // }
+        try {
+            // if(!empty($request->purchaseattachment_id)){
+            //     $purchaseattachment_id=$request->purchaseattachment_id;
+            //     for($i=0;$i<count($purchaseattachment_id);$i++){
+            //         $poTable=PoAttachment::find($purchaseattachment_id[$i]);
+            //         $poTable->title=$request->purchaseattachment_title[$i];
+            //         $poTable->save();
+            //     }
+            // }
+            
+            $requestData = $request->all();
+            if($request->id == ''){
+                $inv_ref=$this->create_invoice_ref();
+                $requestData['invoice_ref'] = $inv_ref;
+            }
+            $requestData['home_id'] = $home_id;
+            $requestData['sub_total'] = 0;
+            $requestData['deposit_percentage'] = 0;
+            $requestData['VAT_id'] = 0;
+            $requestData['VAT_amount'] = 0;
+            $requestData['Total'] = 0;
+            // $requestData['invoice_date'] = Carbon::createFromFormat('d/m/Y', $request->invoice_date)->format('Y-m-d');
+            // $requestData['due_date'] = Carbon::createFromFormat('d/m/Y', $request->due_date)->format('Y-m-d');
+            
+            // echo "<pre>";print_r($requestData);die;
+            $invoice=Invoice::saveInvoice($requestData);
+            // if(!empty($request->product_id) && count($request->product_id)>0){
+            //     $requestData['purchase_order_id'] = $invoice->id;
+            //     $PurchaseOrderProduct=$this->savePurchaseOrderProduct($requestData);
+            //     $responseData = $PurchaseOrderProduct->getData(true);
+            //     if (empty($responseData['success']) || $responseData['success'] === false) {
+            //         return response()->json(['success' => false,'message' => 'Something went wrong.','data' => [],]);
+            //     }
+            // }
+            if($request->id == ''){
+                return response()->json(['success' => true,'message'=>'The Invoice has been saved succesfully.', 'data' => $invoice]);
+            }else{
+                return response()->json(['success' => true,'message'=>'The Invoice has been updated succesfully.', 'data' => $invoice]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     
+    }
+    private function create_invoice_ref(){
+        $invoice_count=Invoice::count();
+        if($invoice_count == 0 || $invoice_count <10){
+           return $invoice_ref='Inv-00'.$invoice_count+1;
+        }else if($invoice_count >=10 && $invoice_count<100){
+           return $invoice_ref='Inv-0'.$invoice_count+1;
+        }else{
+            return $invoice_ref='Inv-'.$invoice_count+1;
+        }
+    }
 
     
 }

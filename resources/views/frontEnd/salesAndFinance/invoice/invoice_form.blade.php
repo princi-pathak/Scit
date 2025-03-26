@@ -18,6 +18,9 @@
                 <h3>New Invoice</h3>
             </div>
         </div>
+        <div class="col-md-4 col-lg-4 col-xl-4">
+            <div class="mt-1 mb-0 text-center" id="message_save"></div>
+        </div>
     </div>
 
     <div class="row">
@@ -31,7 +34,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Customer <span class="radStar">*</span></label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" id="invoice_customer_id" name="customer_id">
+                                            <select class="form-control editInput selectOptions InvoicecheckError" id="invoice_customer_id" name="customer_id" onchange="get_customer_details()">
                                                 <option selected disabled>Select Customer</option>
                                                 @foreach($customers as $customer)
                                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -46,7 +49,7 @@
                                         <label class="col-sm-3 col-form-label">Project</label>
                                         <div class="col-sm-7">
                                             <select class="form-control editInput selectOptions" disabled id="invoice_project_id" name="project_id">
-                                                <option>Select Customer First</option>
+                                                <option selected disabled>Select Customer First</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
@@ -57,7 +60,7 @@
                                         <label class="col-sm-3 col-form-label">Contact</label>
                                         <div class="col-sm-7">
                                             <select class="form-control editInput selectOptions" disabled id="invoice_contact_id" name="contact_id">
-                                                <option>Select Customer First</option>
+                                                <option selected disabled>Select Customer First</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
@@ -67,13 +70,13 @@
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" value="" name="name" id="invoice_name">
+                                            <input type="text" class="form-control editInput InvoicecheckError" value="" name="name" id="invoice_name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Address <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control textareaInput" name="address" id="invoice_address" rows="3" placeholder="75 Cope Road Mall Park USA"></textarea>
+                                            <textarea class="form-control textareaInput InvoicecheckError" name="address" id="invoice_address" rows="3" placeholder="75 Cope Road Mall Park USA"></textarea>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -105,7 +108,8 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="invoice_telephone" placeholder="Telephone" name="telephone">
+                                            <input type="text" class="form-control editInput" id="invoice_telephone" placeholder="Telephone" name="telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                            <span style="color:red;display:none" id="InvoiceTelephoneErr">Please enter 10 digit number</span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -119,7 +123,8 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="invoice_mobile" name="mobile" value="">
+                                            <input type="text" class="form-control editInput" id="invoice_mobile" name="mobile" value="" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                            <span style="color:red;display:none" id="InvoiceMobileErr">Please enter 10 digit number</span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -166,7 +171,7 @@
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-3 col-form-label">Company</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control-plaintext editInput" id="invoicesite_companyName" name="company_name" value="">
+                                            <input type="text" class="form-control editInput" id="invoicesite_companyName" name="company_name" value="">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -208,7 +213,8 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="invoice_siteTelephone" name="site_telephone" placeholder="Site Telephone">
+                                            <input type="text" class="form-control editInput" id="invoice_siteTelephone" name="site_telephone" placeholder="Site Telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                            <span style="color:red;display:none" id="InvoiceSiteTelephoneErr">Please enter 10 digit number</span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -222,7 +228,8 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="invoice_site_mobile" name="site_mobile" value="">
+                                            <input type="text" class="form-control editInput" id="invoice_site_mobile" name="site_mobile" value="" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                            <span style="color:red;display:none" id="InvoiceSiteMobileErr">Please enter 10 digit number</span>
                                         </div>
                                     </div>
                             </div>
@@ -266,7 +273,7 @@
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-3 col-form-label">Invoice Date <span class="radStar">*</span> </label>
                                         <div class="col-sm-7">
-                                            <input type="date" class="form-control editInput" id="invoice_date" name="invoice_date" placeholder="">
+                                            <input type="date" class="form-control editInput InvoicecheckError" id="invoice_date" name="invoice_date" placeholder="">
                                         </div>
                                         <div class="col-sm-2">
                                             <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
@@ -290,7 +297,7 @@
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-3 col-form-label">Due Date <span class="radStar">*</span></label>
                                         <div class="col-sm-7">
-                                            <input type="date" class="form-control editInput" id="invoice_due_date" name="due_date" placeholder="">
+                                            <input type="date" class="form-control editInput InvoicecheckError" id="invoice_due_date" name="due_date" placeholder="">
                                         </div>
                                         <div class="col-sm-2">
                                             <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
@@ -303,7 +310,7 @@
                                                 <option value="Draft">Draft</option>
                                                 <option value="Invoiced">Invoiced</option>
                                                 <option value="Outstanding">Outstanding</option>
-                                                <option value="Paid">Paid</option>
+                                                <option value="Paid" disabled>Paid</option>
                                                 <option value="Cancelled">Cancelled</option>
                                             </select>
                                         </div>
@@ -489,7 +496,7 @@
     <div class="row">
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="pageTitleBtn">
-                <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                <a href="javascript:void(0)" onclick="save_all_data()" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                 <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
                 <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Action</a> -->
 
@@ -538,6 +545,7 @@ var result_product_calculationUrl="{{url('result_product_calculation')}}";
 var vat_tax_detailsUrl="{{url('/vat_tax_details')}}";
 var invoice_productsDeleteUrl="{{url('invoice_productsDelete')}}";
 var invoice_saveUrl="{{url('/invoices/invoice_save')}}";
+var get_customer_details_frontUrl="{{url('get_customer_details_front')}}";
 var token = '<?php echo csrf_token(); ?>'
 </script>
 @include('components.add-customer-modal')

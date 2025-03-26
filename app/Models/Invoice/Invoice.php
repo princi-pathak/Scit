@@ -36,5 +36,8 @@ class Invoice extends Model
         'terms',
         'internal_notes'
     ];
+    public static function saveInvoice($data){
+        return self::updateOrCreate(['id' => $data['id'] ?? null],$data);
+    }
 
 }

@@ -391,6 +391,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::prefix('invoices')->group(function () {
 			Route::get('/dashborad', 'dashboard');
 			Route::get('/add', 'create');
+			Route::post('/invoice_save', 'invoice_save');
 			
 		});
 	});
