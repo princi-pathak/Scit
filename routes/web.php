@@ -26,6 +26,7 @@ use App\Http\Controllers\frontEnd\salesFinance\CreditNotesController;
 use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
 use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
+use App\Http\Controllers\frontEnd\PettyCashController;
 
 
 
@@ -441,6 +442,20 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/saveBulkInvoiceModal', 'saveBulkInvoiceModal');
 		Route::post('/saveBulkRecordPaymentModal', 'saveBulkRecordPaymentModal');
 		Route::post('/searchPurchaseOrdersStatementsOutstanding', 'searchPurchaseOrdersStatementsOutstanding');
+	});
+
+	// forntend petty cash
+	Route::controller(PettyCashController::class)->group(function (){
+		Route::prefix('petty-cash/')->group(function (){
+			Route::get('dashboard','index');
+			Route::get('expend-card','expend_card');
+			Route::get('petty_cash','petty_cash');
+			Route::get('child_register','child_register');
+			Route::get('expend_card_add','expend_card_add');
+			Route::get('petty-cash-add','petty_cash_add');
+			Route::get('child-register-add','child_register_add');
+			
+		});
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {

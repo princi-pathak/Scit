@@ -3119,3 +3119,9 @@ ul#supplierList {
 .discount-input {
   width: 35px;
 }
+
+/* 26-march petty cash start css here */
+section.main_section_page_petty {
+  padding: 80px 20px 0 20px !important;
+  min-height: 93vh;
+}
