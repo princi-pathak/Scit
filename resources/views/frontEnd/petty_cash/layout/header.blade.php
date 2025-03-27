@@ -63,25 +63,19 @@ $current_url = last(request()->segments());
 
 <body>
     <header>
-        <div class="topbaar">
+        <div class="topbaar left-0">
             <div class="container-fluid bg-light p-0">
                 <div class="row gx-0 d-none d-lg-flex">
                     <div class="col-lg-3 px-3 text-start">
                         <div class="h-100 d-inline-flex align-items-center py-1 ms-3">
-                            <a href="{{url('sales-finance/dashboard')}}" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}" alt="ewm_logo"></a>
+                            <a href="#" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}" alt="ewm_logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-9 px-3 text-end toprigihticon">
                         <?php //if (isset($page) && $page == 'job_index') { 
                         ?>
                         <div class="d-inline-flex align-items-center me-5 topbaarBtn">
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary</a>
-                            <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#CRMHeaderPopup"> <i class="material-symbols-outlined"> dashboard</i> CRM</a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i> Help Desk <span class="notifiNumberRadColor">2</span></a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages </a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i> Partners </a>
-                            <a href="{{url('/')}}" class="profileDrop"> <i class="fa fa-home"> </i> Home </a>
+                            <a href="{{url('/')}}" class="profileDrop button_green"> <i class="fa fa-home"> </i> Home </a>
                         </div>
                         <?php //} else { 
                         ?>
@@ -102,7 +96,6 @@ $current_url = last(request()->segments());
                         <div class="nav-links">
                             <nav>
                                 <ul>
-                                    
                                     <div class="scroll">
                                         <li>
                                             <button href="#" class="openbtn @if(isset($page)) @if($page == 'leads') ActiveBtn @endif @endif" onclick="openNav(event, 'mySidepanel1')">

@@ -11,9 +11,9 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="newJobForm card mt-3">
+                <div class="newJobForm green_border card mt-3">
                     <form action="">
-                        <div class="row mt-3">
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 pe-0 col-form-label">Child Initials & Name</label>
@@ -100,9 +100,9 @@
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="pageTitleBtn">
-                    <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                    <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
-                    <!-- <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a> -->
+                    <a href="#" class="profileDrop button_green"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                    <a href="#" class="profileDrop button_green"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                    <!-- <a href="#" class="profileDrop button_green"> Action <i class="fa-solid fa-arrow-down"></i></a> -->
                 </div>
             </div>
         </div>

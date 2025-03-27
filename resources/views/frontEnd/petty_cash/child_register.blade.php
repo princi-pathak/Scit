@@ -10,16 +10,16 @@
             </div>
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
-                    <a href="{{url('petty-cash/child-register-add')}}" class="profileDrop"> Add <i class="fa-solid fa-plus"></i></a>
-                    <a href="#" class="profileDrop">Residential</a>
-                    <a href="#" class="profileDrop">Supported Accomodation</a>
-                    <a href="#" class="profileDrop">Leavers</a>
+                    <a href="{{url('petty-cash/child-register-add')}}" class="profileDrop button_green"> Add <i class="fa-solid fa-plus"></i></a>
+                    <a href="#" class="profileDrop button_green">Residential</a>
+                    <a href="#" class="profileDrop button_green">Supported Accomodation</a>
+                    <a href="#" class="profileDrop button_green">Leavers</a>
                 </div>
             </div>
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-                <div class="mt-3 cash_table">
-                    <div class="table-responsive">
-                        <table class="table">
+                <div class="cash_table">
+                    <div class="table-responsive productDetailTable pt-3">
+                        <table id="" class="table mb-0" cellspacing="0" width="100%">
                             <thead class="table-light">
                                 <tr>
                                     <th>#</th>
@@ -89,22 +89,8 @@
                                 </tr>
                             </tbody>
                             <tfoot>
-                                <tr colspan="14">No record Found</tr>
                                 <tr>
-                                    <th>Total</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
+                                    <th colspan="14">Total</th>
                                 </tr>
                             </tfoot>
                         </table>

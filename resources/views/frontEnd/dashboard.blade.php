@@ -225,6 +225,21 @@
                         </div>
                     </div>
                 </a>
+                <a href="{{ url('/leads/add') }}">
+                     <div class="col-md-6">
+                        <div class="profile-nav alt">
+                            <section class="panel text-center">
+                                <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-group"></i></div>
+                                <div class="panel-body">
+                                    <div class="wdgt-value">
+                                        <h1 class="count">Finance</h1>
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </a>
             </div>
 
             @include('frontEnd.common.sidebar_dashboard')
