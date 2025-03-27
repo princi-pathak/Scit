@@ -345,16 +345,18 @@ function selectProduct(id) {
                 input.type = "text";
                 input.className = "discount-input form-control";
                 input.value = "0";
+                input.name = "discount[]";
 
                 const select = document.createElement('select');
                 select.className = "discount-select form_control";
+                select.name = "discount_type[]";
 
                 const option1 = document.createElement('option');
-                option1.value = "percentage";
+                option1.value = "1";
                 option1.textContent = "%";
 
                 const option2 = document.createElement('option');
-                option2.value = "fixed";
+                option2.value = "2";
                 option2.textContent = "£";
                 select.appendChild(option1);
                 select.appendChild(option2);
@@ -434,7 +436,7 @@ function selectProduct(id) {
                 row.appendChild(deleteCell);
 
                 tableBody.appendChild(row);
-                // updateAmount(row)
+                updateAmount(row)
                 $("#product_calculation").show();
             }
 
@@ -449,7 +451,7 @@ function auto_grow(element) {
 var check_paid_amount = 0;
 
     function updateAmount(row, paid_amount = 0) {
-        // console.log(row)
+        console.log(row)
         // const priceInput = row.querySelector('.price');
         // alert(typeof(paid_amount))
 
@@ -569,8 +571,8 @@ var check_paid_amount = 0;
         for (var instance in CKEDITOR.instances) {
             CKEDITOR.instances[instance].updateElement();
         }
-        var emailErr = $("#purchaseemailErr").text();
-        $('.PurchaseOrdercheckError').each(function() {
+        var emailErr = $("#invoiceemailErr").text();
+        $('.InvoicecheckError').each(function() {
             if ($(this).val() === '' || $(this).val() == null) {
                 $(this).css('border', '1px solid red');
                 $(this).focus();
@@ -579,39 +581,39 @@ var check_paid_amount = 0;
                 $(this).css('border', '');
             }
         });
-        var purchase_telephone = $("#purchase_telephone").val();
-        var purchase_mobile = $("#purchase_mobile").val();
-        var purchase_user_telephone = $("#purchase_user_telephone").val();
-        var purchase_user_mobile = $("#purchase_user_mobile").val();
-        if (purchase_telephone != '' && purchase_telephone.length != 10) {
-            $("#CheckpurchaseTelephoneErr").show();
+        var invoice_telephone = $("#invoice_telephone").val();
+        var invoice_mobile = $("#invoice_mobile").val();
+        var invoice_siteTelephone = $("#invoice_siteTelephone").val();
+        var invoice_site_mobile = $("#invoice_site_mobile").val();
+        if (invoice_telephone != '' && invoice_telephone.length != 10) {
+            $("#InvoiceTelephoneErr").show();
             return false;
-        } else if (purchase_mobile != '' && purchase_mobile.length != 10) {
-            $("#CheckpurchaseTelephoneErr").hide();
-            $("#CheckpurchaseMobileErr").show();
+        } else if (invoice_mobile != '' && invoice_mobile.length != 10) {
+            $("#InvoiceTelephoneErr").hide();
+            $("#InvoiceMobileErr").show();
             return false;
-        } else if (purchase_user_telephone != '' && purchase_user_telephone.length != 10) {
-            $("#CheckpurchaseTelephoneErr").hide();
-            $("#CheckpurchaseMobileErr").hide();
-            $("#CheckpurchaseUserTelephoneErr").show();
+        } else if (invoice_siteTelephone != '' && invoice_siteTelephone.length != 10) {
+            $("#InvoiceTelephoneErr").hide();
+            $("#InvoiceMobileErr").hide();
+            $("#InvoiceSiteTelephoneErr").show();
             return false;
-        } else if (purchase_user_mobile != '' && purchase_user_mobile.length != 10) {
-            $("#CheckpurchaseTelephoneErr").hide();
-            $("#CheckpurchaseMobileErr").hide();
-            $("#CheckpurchaseUserTelephoneErr").hide();
-            $("#CheckpurchaseUserMobileErr").show();
+        } else if (invoice_site_mobile != '' && invoice_site_mobile.length != 10) {
+            $("#InvoiceTelephoneErr").hide();
+            $("#InvoiceMobileErr").hide();
+            $("#InvoiceSiteTelephoneErr").hide();
+            $("#InvoiceSiteMobileErr").show();
             return false;
         } else if (emailErr.length > 0) {
-            $("#CheckpurchaseTelephoneErr").hide();
-            $("#CheckpurchaseMobileErr").hide();
-            $("#CheckpurchaseUserTelephoneErr").hide();
-            $("#CheckpurchaseUserMobileErr").hide();
+            $("#InvoiceTelephoneErr").hide();
+            $("#InvoiceMobileErr").hide();
+            $("#InvoiceSiteTelephoneErr").hide();
+            $("#InvoiceSiteMobileErr").hide();
             return false;
         } else {
-            $("#CheckpurchaseTelephoneErr").hide();
-            $("#CheckpurchaseMobileErr").hide();
-            $("#CheckpurchaseUserTelephoneErr").hide();
-            $("#CheckpurchaseUserMobileErr").hide();
+            $("#InvoiceTelephoneErr").hide();
+            $("#InvoiceMobileErr").hide();
+            $("#InvoiceSiteTelephoneErr").hide();
+            $("#InvoiceSiteMobileErr").hide();
             $.ajax({
                 type: "POST",
                 url: invoice_saveUrl,
@@ -634,7 +636,7 @@ var check_paid_amount = 0;
                             // var id = parseInt(response.data.id, 10) || 0;
                             // var encodedId = btoa(unescape(encodeURIComponent(id)));
                             // location.href = '<?php echo url('purchase_order_edit'); ?>?key=' + encodedId;
-                            // location.href = '<?php echo url('draft_purchase_order'); ?>'
+                            location.href = redirectUrl
                         }, 3000);
                     } else if (response.success === false) {
                         $('#message_save').addClass('error-message').text(response.message).show();
@@ -649,4 +651,140 @@ var check_paid_amount = 0;
                 }
             });
         }
+    }
+    var invoice_name = '';
+    var invoicesite_companyName = '';
+    var invoice_address = '';
+    var invoice_city = '';
+    var invoice_county = '';
+    var invoice_Postcode = '';
+    var invoice_telephoneCode;
+    var invoice_telephone = '';
+    var invoice_mobile_code;
+    var invoice_mobile = '';
+    var invoice_email = '';
+    var invoice_siteName = '';
+    var invoicesite_companyName = '';
+
+    function get_customer_details() {
+        var customer_id = $("#invoice_customer_id").val();
+        $.ajax({
+            type: "POST",
+            url: get_customer_details_frontUrl,
+            data: {
+                customer_id: customer_id,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                // return false;
+                if (data.customers && data.customers.length > 0) {
+                    var customerData = data.customers[0];
+                    var project = '<option value="0" selected disabled>None</option>';
+                    if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
+                        for (let i = 0; i < customerData.customer_project.length; i++) {
+                            project += '<option value="' + customerData.customer_project[i].id + '">' + customerData.customer_project[i].project_name + '</option>';
+                        }
+                    }
+                    document.getElementById('invoice_project_id').innerHTML = project;
+
+                    var contact = '<option value="0" selected disabled>None</option>';
+                    if (customerData.additional_contact && Array.isArray(customerData.additional_contact)) {
+                        for (let i = 0; i < customerData.additional_contact.length; i++) {
+                            contact += '<option value="' + customerData.additional_contact[i].id + '">' + customerData.additional_contact[i].contact_name + '</option>';
+                        }
+                    }
+                    document.getElementById('invoice_contact_id').innerHTML = contact;
+
+                    var site = '<option value="0">Same as customer</option>';
+                    if (customerData.sites && Array.isArray(customerData.sites)) {
+                        for (let i = 0; i < customerData.sites.length; i++) {
+                            site += '<option value="' + customerData.sites[i].id + '">' + customerData.sites[i].site_name + '</option>';
+                        }
+                    }
+                    document.getElementById('invoice_site_id').innerHTML = site;
+                    $("#project_customer_name").text(customerData.name);
+                    $("#site_customer_name").text(customerData.name);
+                    invoice_name = customerData.name;
+                    invoicesite_companyName = customerData.contact_name;
+                    invoice_address = customerData.address;
+                    invoice_city = customerData.city;
+                    invoice_county = customerData.country;
+                    invoice_Postcode = customerData.postal_code;
+                    invoice_telephoneCode = customerData.telephone_country_code ?? 230;
+                    invoice_telephone = customerData.telephone;
+                    invoice_mobile_code = customerData.mobile_country_code ?? 230;
+                    invoice_mobile = customerData.mobile;
+                    invoice_siteName = customerData.name;
+                    invoice_email = customerData.email;
+                    $("#invoice_name").val(invoice_name);
+                    $("#invoice_address").val(invoice_address);
+                    $("#invoice_city").val(invoice_city);
+                    $("#invoice_county").val(invoice_county);
+                    $("#invoice_Postcode").val(invoice_Postcode);
+                    $("#invoice_telephoneCode").val(invoice_telephoneCode);
+                    $("#invoice_telephone").val(invoice_telephone);
+                    $("#invoice_mobile_code").val(invoice_mobile_code);
+                    $("#invoice_mobile").val(invoice_mobile);
+                    $("#invoice_email").val(invoice_email);
+                    $("#invoice_siteName").val(invoice_siteName);
+                    $("#invoicesite_companyName").val(invoicesite_companyName);
+                    $("#invoice_site_address").val(invoice_address);
+                    $("#invoice_site_city").val(invoice_city);
+                    $("#invoice_site_county").val(invoice_county);
+                    $("#invoice_site_postcode").val(invoice_Postcode);
+                    $("#invoice_siteTelephoneCode").val(invoice_telephoneCode);
+                    $("#invoice_siteTelephone").val(invoice_telephone);
+                    $("#invoice_siteMobileCode").val(invoice_mobile_code);
+                    $("#invoice_site_mobile").val(invoice_mobile);
+
+                    // $('#invoice_project_id').removeAttr('disabled');
+                    // $('#invoice_site_id').removeAttr('disabled');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    function siteDetail() {
+        var id = $("#invoice_site_id").val();
+        $.ajax({
+            url: getCustomerSiteDetailsUrl,
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
+                // return false;
+                if (id == 0) {
+                    $("#invoice_siteName").val(invoice_siteName);
+                    $("#invoicesite_companyName").val(invoicesite_companyName);
+                    $("#invoice_site_address").val(invoice_address);
+                    $("#invoice_site_city").val(invoice_city);
+                    $("#invoice_site_county").val(invoice_county);
+                    $("#invoice_site_postcode").val(invoice_Postcode);
+                    $("#invoice_siteTelephoneCode").val(invoice_telephoneCode);
+                    $("#invoice_siteTelephone").val(invoice_telephone);
+                    $("#invoice_siteMobileCode").val(invoice_mobile_code);
+                    $("#invoice_site_mobile").val(invoice_mobile);
+                } else {
+                    $("#invoice_siteName").val(response.data[0].contact_name);
+                    $("#invoicesite_companyName").val(response.data[0].company_name);
+                    $("#invoice_site_address").val(response.data[0].address);
+                    $("#invoice_site_city").val(response.data[0].city);
+                    $("#invoice_site_county").val(response.data[0].country);
+                    $("#invoice_site_postcode").val(response.data[0].post_code);
+                    $("#invoice_siteTelephoneCode").val(response.data[0].telephone_country_code ?? 230);
+                    $("#invoice_siteTelephone").val(response.data[0].telephone);
+                    $("#invoice_siteMobileCode").val(response.data[0].mobile_country_code ?? 230);
+                    $("#invoice_site_mobile").val(response.data[0].mobile);
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     }

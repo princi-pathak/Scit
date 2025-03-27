@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use PDF;
 use App\Models\Construction_account_code;
 use App\Models\Construction_tax_rate;
 use App\Models\Country;
@@ -15,6 +17,9 @@ use App\Models\Job_title;
 use App\Models\Currency;
 use App\Models\Region;
 use App\Models\Product_category;
+use App\Models\Invoice\Invoice;
+use App\Models\Invoice\InvoiceProduct;
+use App\Admin;
 
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 
@@ -131,8 +136,165 @@ class InvoiceController extends Controller
         // dd($data);
         return view('frontEnd.salesAndFinance.invoice.invoice_form', $data);
     }
-
+    public function invoice_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id=Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        
+        $validator = Validator::make($request->all(), [
+            'customer_id'=>'required',
+            'name'=>'required',
+            'address'=>'required',
+            'invoice_date'=>'required',
+            'due_date'=>'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        if(empty($request->product_id) && !isset($request->product_id)){
+            return response()->json(['vali_error' => 'Please add at least one product for purchase order.']);
+        }
+        try {
+            // if(!empty($request->purchaseattachment_id)){
+            //     $purchaseattachment_id=$request->purchaseattachment_id;
+            //     for($i=0;$i<count($purchaseattachment_id);$i++){
+            //         $poTable=PoAttachment::find($purchaseattachment_id[$i]);
+            //         $poTable->title=$request->purchaseattachment_title[$i];
+            //         $poTable->save();
+            //     }
+            // }
+            
+            $requestData = $request->all();
+            if($request->id == ''){
+                $inv_ref=$this->create_invoice_ref();
+                $requestData['invoice_ref'] = $inv_ref;
+            }
+            $requestData['home_id'] = $home_id;
+            $requestData['sub_total'] = 0;
+            $requestData['deposit_percentage'] = 0;
+            $requestData['VAT_id'] = 0;
+            $requestData['VAT_amount'] = 0;
+            $requestData['Total'] = 0;
+            $requestData['outstanding'] = 0;
+            // $requestData['invoice_date'] = Carbon::createFromFormat('d/m/Y', $request->invoice_date)->format('Y-m-d');
+            // $requestData['due_date'] = Carbon::createFromFormat('d/m/Y', $request->due_date)->format('Y-m-d');
+            
+            // echo "<pre>";print_r($requestData);die;
+            $invoice=Invoice::saveInvoice($requestData);
+            if(!empty($request->product_id) && count($request->product_id)>0){
+                $requestData['invoice_id'] = $invoice->id;
+                $InvoiceProduct=$this->saveInvoiceProduct($requestData);
+                $responseData = $InvoiceProduct->getData(true);
+                if (empty($responseData['success']) || $responseData['success'] === false) {
+                    return response()->json(['success' => false,'message' => 'Something went wrong.','data' => [],]);
+                }
+            }
+            if($request->id == ''){
+                return response()->json(['success' => true,'message'=>'The Invoice has been saved succesfully.', 'data' => $invoice]);
+            }else{
+                return response()->json(['success' => true,'message'=>'The Invoice has been updated succesfully.', 'data' => $invoice]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     
+    }
+    private function create_invoice_ref(){
+        $invoice_count=Invoice::count();
+        if($invoice_count == 0 || $invoice_count <10){
+           return $invoice_ref='Inv-00'.$invoice_count+1;
+        }else if($invoice_count >=10 && $invoice_count<100){
+           return $invoice_ref='Inv-0'.$invoice_count+1;
+        }else{
+            return $invoice_ref='Inv-'.$invoice_count+1;
+        }
+    }
+    public function saveInvoiceProduct($data){
+        // echo "<pre>";print_r($data);die;
+        try {
+            $product_ids = $data['product_id'];
+            $success = 0;
+            $outstandignAmount=0;
+            for ($i = 0; $i < count($product_ids); $i++) {
+                $sub_total=$data['qty'][$i]*$data['price'][$i];
+                $vatPercentage=$sub_total*$data['vat_ratePercentage'][$i]/100;
+                $outstandignAmount=$outstandignAmount+$sub_total+$vatPercentage;
+                $productData = [
+                    'id'=>$data['purchase_product_id'][$i] ?? null,
+                    'home_id'=>Auth::user()->home_id,
+                    'customer_id'=>$data['customer_id'],
+                    'invoice_id' => $data['invoice_id'],
+                    'product_id' => $product_ids[$i],
+                    'description' => $data['description'][$i] ?? null,
+                    'code' => $data['code'][$i] ?? null,
+                    'accountCode_id' => $data['accountCode_id'][$i] ?? null,
+                    'qty' => $data['qty'][$i] ?? 0,
+                    'price' => $data['price'][$i] ?? 0,
+                    'vat_id' => $data['vat_id'][$i] ?? null,
+                    'vat' => $data['vat_ratePercentage'][$i] ?? 0,
+                    'discount' => $data['discount'][$i] ?? 0,
+                    'discount_type' => $data['discount_type'][$i] ?? 0,
+                ];
+                Invoice::find($data['invoice_id'])->update(['outstanding' => $outstandignAmount]);
+                // echo "<pre>";print_r($productData);die;
+                $InvoiceProduct = InvoiceProduct::saveInvoiceProduct($productData);
+                if ($InvoiceProduct) {
+                    $success++;
+                }
+            }
+            if ($success === count($product_ids)) {
+                return response()->json(['success' => true, 'message' => 'All products saved successfully.']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Some products could not be saved.']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function invoice(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data['key_mode']=$request->key;
+        $data['invoice']=Invoice::with('customers','invoiceProducts','sites')->where('status',$request->key)->whereNull('deleted_at')->get();
+        $data['draft_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Draft')->count();
+        $data['outstanding_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Outstanding')->count();
+        $data['overdue_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Overdue')->count();
+        $data['paid_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Paid')->count();
+        // echo "<pre>";print_r($data['invoice']);die;
+        return view('frontEnd.salesAndFinance.invoice.invoice_list', $data);
+    }
+    public function preview(Request $request){
+        // echo "<pre>";print_r(Auth::user());die;
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            $invoice_id=base64_decode($request->key);
+            if($request->url === 'print'){
+                $invoice_table=Invoice::find($invoice_id);
+                $invoice_table->is_printed=1;
+                $invoice_table->save();
+            }
+            die;
+            $invoice_details=Invoice::with('customers','invoiceProducts')->where(['id' => $invoice_id, 'deleted_at' => null])
+            ->first();
+            // $site_detail=Customer::find($invoice_details->customer_id);
+			// echo "<pre>";print_r($site_detail);die;
+            // echo "<pre>";print_r($invoice_details);die;
+            
+            $data=[
+                'email'=>Auth::user()->email,
+                'phone_no'=>Auth::user()->phone_no,
+                'job_title'=>Auth::user()->job_title,
+                'current_location'=>Auth::user()->current_location,
+                'company'=>Admin::find(Auth::user()->company_id)->company ?? "",
+                'invoice_details'=>$invoice_details,
+            ];
+            // echo "<pre>";print_r($data);die;
+            $pdf = PDF::loadView('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF',$data);
+            return $pdf->stream('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF');
+            // return $pdf->download('purchaseOrderPDF.pdf');
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
     
 }
