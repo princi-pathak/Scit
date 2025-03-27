@@ -512,20 +512,23 @@ class DynamicFormController extends Controller
                     }
                 }
             }
-            $category_data = CategoryFrontEnd::where('id',$data['s_category_id'])->first();
 
+            $s_category_id = $data['s_category_id'] ?? null;
+            $category_data = $s_category_id ? CategoryFrontEnd::where('id', $s_category_id)->first() : null;
+            
             $log_book                  = new LogBook;
-            $log_book->dynamic_form_id = $data['dyn_form_id'];
+            $log_book->dynamic_form_id = $data['dyn_form_id'] ?? null;
             $log_book->home_id         = Auth::user()->home_id;
             $log_book->user_id         = Auth::user()->id;
-            $log_book->title           = $dyn_form->title;
+            $log_book->title           = $dyn_form->title ?? null;
             $log_book->date            = date('Y-m-d H:i:s');
-            $log_book->details         = $dyn_form->details;
-            $log_book->category_id     = $data['s_category_id'];
-            $log_book->category_name   = $category_data->name;
-            $log_book->category_icon   = $category_data->icon;
-            $log_book->logType         = $data['logtype'];
+            $log_book->details         = $dyn_form->details ?? null;
+            $log_book->category_id     = $s_category_id;
+            $log_book->category_name   = $category_data ? $category_data->name : null;
+            $log_book->category_icon   = $category_data ? $category_data->icon : null;
+            $log_book->logType         = $data['logtype'] ?? null;
             $log_book->save();
+            
 
             $su_log_record                  = new ServiceUserLogBook;
             $su_log_record->user_id         = Auth::user()->id;

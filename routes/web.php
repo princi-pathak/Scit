@@ -26,6 +26,7 @@ use App\Http\Controllers\frontEnd\salesFinance\CreditNotesController;
 use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
 use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
+use App\Http\Controllers\frontEnd\PettyCashController;
 
 
 
@@ -447,6 +448,20 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/searchPurchaseOrdersStatementsOutstanding', 'searchPurchaseOrdersStatementsOutstanding');
 	});
 
+	// forntend petty cash
+	Route::controller(PettyCashController::class)->group(function (){
+		Route::prefix('petty-cash/')->group(function (){
+			Route::get('dashboard','index');
+			Route::get('expend-card','expend_card');
+			Route::get('petty_cash','petty_cash');
+			Route::get('child_register','child_register');
+			Route::get('expend_card_add','expend_card_add');
+			Route::get('petty-cash-add','petty_cash_add');
+			Route::get('child-register-add','child_register_add');
+			
+		});
+	});
+
 	Route::controller(CreditNotesController::class)->group(function () {
 		Route::get('credit_notes', 'credit_notes');
 		Route::get('new_credit_notes', 'new_credit_notes');
@@ -510,8 +525,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::prefix('purchase')->group(function () {
 			Route::get('purchase-expenses', 'purchase_expenses')->name('purchase.purchaseExpenses');
 			Route::post('save-purchase-expenses', 'save_purchase_expenses')->name('purchase.purchaseExpensesSave');
-			
-
+			Route::get('purchase-day-book-reclaim-per', 'purchase_day_book_reclaim_per')->name('purchase.purchaseDayBookReclaimPer');
+			Route::get('reclaimPercantage', 'reclaimPercantage')->name('purchase.reclaimPercantage');
 			Route::get('/purchase-day-book', 'index')->name('purchase.purchaseDayBook');
 			Route::get('/purchase-day-book/add', 'create')->name('purchase.purchaseDayBookCreate');
 			Route::post('/save-purchase-day-book', 'store');

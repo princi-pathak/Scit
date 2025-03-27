@@ -73,7 +73,7 @@ tfoot.draftFoot tr th {
                                         <div class="col-md-4">
                                             <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 ps-0">
                                             <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@ tfoot.draftFoot tr th {
                                         <div class="col-md-4">
                                             <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 ps-0">
                                             <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
                                     </div>
@@ -142,7 +142,7 @@ tfoot.draftFoot tr th {
                                             <input type="date" class="form-control editInput" id="inputName" value="Start">
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 ps-0">
                                             <input type="date" class="form-control editInput" id="inputName" value="End">
                                         </div>
                                     </div>
@@ -322,7 +322,7 @@ tfoot.draftFoot tr th {
                             </tr>
                             @endif
                         </tbody>
-                        <tfoot>
+                        <tfoot class="table-light">
                             <tr>
                                 <td></td>
                                 <td colspan="6">Page Sub Total</td>

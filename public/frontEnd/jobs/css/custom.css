@@ -3119,3 +3119,32 @@ ul#supplierList {
 .discount-input {
   width: 35px;
 }
+
+/* 26-march petty cash start css here */
+section.main_section_page_petty {
+  padding: 80px 20px 0 20px !important;
+  min-height: 93vh;
+}
+
+.left-0 {
+  left: 0;
+}
+
+.balance_show {
+  background: #1fb5ad;
+  padding: 8px;
+  margin: 20px 0;
+}
+
+.balance_show h6 {
+  margin: 0;
+  color: #fff;
+}
+
+.button_green{
+  background-color: #1fb5ad;
+}
+
+.green_border {
+  border: 2px solid #1fb5ad;
+}
