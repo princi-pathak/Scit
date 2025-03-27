@@ -290,7 +290,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="">
                             {{-- sourabh --}}
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                            <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                 <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Category: </label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
@@ -305,7 +305,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             {{-- sourabh --}}
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                 <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child:
@@ -1188,7 +1188,16 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         setTimeout(function() {
                             $('.popup_success').fadeOut()
                         }, 5000);
-                        window.location.href = "{{ url('/service/daily-logs?key=') }}/" + s_user_id;   
+
+                        if(logtype==1){
+                            window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;   
+                        }else if(logtype==2){
+                            window.location.href = "{{ url('/service/weekly-logs?key=') }}" + s_user_id;   
+                        }else if(logtype==3){
+                            window.location.href = "{{ url('/service/monthly-logs?key=') }}" + s_user_id;   
+                        }
+
+
                         $('.dyn-logged-btn').click();
 
                     } else {
