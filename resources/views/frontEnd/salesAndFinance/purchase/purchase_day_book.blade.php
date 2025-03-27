@@ -40,8 +40,8 @@
                                     <th>Gross </th>
                                     <th>Rate </th>
                                     <th>Total </th>
-                                    <th>Recliam </th>
-                                    <th>Not Recliam </th>
+                                    <th>Reclaim </th>
+                                    <th>Not Reclaim </th>
                                     <th>Expense Type </th>
                                     <th>Expense Amount </th>
                                     <th></th>
