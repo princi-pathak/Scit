@@ -10,10 +10,10 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-12">
-        <form action="{{ url('purchase/save-purchase-day-book') }}" method="POST" class="customerForm">
-          @csrf
+    <form action="{{ url('purchase/save-purchase-day-book') }}" method="POST" class="customerForm">
+      @csrf
+      <div class="row">
+        <div class="col-lg-12">
           <div class="newJobForm card mt-4">
             <div class="row">
               <div class="col-md-6 col-lg-6 col-xl-6">
@@ -104,19 +104,18 @@
               </div>
             </div>
           </div>
-        </form>
-      </div>
-      <!-- End col-12 -->
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-        <div class="pageTitleBtn">
-          <button type="submit" class="profileDrop reDesignBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
         </div>
-
+        <!-- End col-12 -->
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-xl-12 px-3">
+      <div class="pageTitleBtn">
+        <button type="submit" class="profileDrop reDesignBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
       </div>
     </div>
   </div>
+  </form>
 </section>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -154,18 +153,40 @@
     netAmountInput.addEventListener('input', calculateTax);
 
     document.getElementById("expenses").addEventListener("change", function() {
-      let not_claim = document.getElementById('not_claim').value;
-      document.getElementById("expenses_amount").value = not_claim; // Set input value
 
       $.ajax({
         type: "GET",
-        url: "serverscript.xxx",
-        data: myusername,
-        cache: false,
+        url: "{{ url('/purchase/purchase-day-book-reclaim-per') }}",
+        data: '',
         success: function(data) {
-          $("#resultarea").text(data);
+          console.log("Response ", data);
+          if (data == "0") {
+            getCalculatedData();
+          } else {
+            let not_claim = document.getElementById('not_claim').value;
+            document.getElementById("expenses_amount").value = not_claim; // Set input value
+
+          }
         }
       });
+
+      function getCalculatedData() {
+        $.ajax({
+          type: "GET",
+          url: "{{ url('/purchase/reclaimPercantage') }}",
+          success: function(response) {
+            console.log("reclaimPercantage ", response.data);
+            var vatAmount = document.getElementById('vat_amount').value;
+            console.log("vatAmount", vatAmount);
+
+            let reclaimed = (vatAmount * response.data) / 100;
+
+            console.log("Reclaimed Amount:", reclaimed.toFixed(2));
+            document.getElementById('not_claim').value = reclaimed.toFixed(2);
+            document.getElementById("expenses_amount").value = (parseFloat(vatAmount) - parseFloat(reclaimed)).toFixed(2); 
+          }
+        });
+      }
 
 
     });

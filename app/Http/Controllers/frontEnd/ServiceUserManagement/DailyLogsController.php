@@ -21,7 +21,6 @@ class DailyLogsController extends ServiceUserManagementController
             $service_user_id = "";
         }
 
-
         $data = $request->input();
         $home_id = Auth::user()->home_id;
         $user_id = Auth::user()->id;
@@ -48,6 +47,7 @@ class DailyLogsController extends ServiceUserManagementController
                 // ->where('su_log_book.user_id',$user_id)
                 ->where('su_log_book.service_user_id', $service_user_id)->get()->toArray();
 
+            //  echo "<pre>"; print_r($su_logs); die;
             if ($request->filter == '1') {
 
 
@@ -112,14 +112,16 @@ class DailyLogsController extends ServiceUserManagementController
             Log::info($su_logs);
             $today = date('Y-m-d');
             $log_book_records = DB::table('log_book')
-                ->select('log_book.*', 'user.name as staff_name', 'category.color as category_color')
+                ->select('log_book.*', 'user.name as staff_name')
                 ->where('log_book.logType', 1)
                 ->whereIn('log_book.id', $su_logs)
                 ->whereDate('log_book.date', '=', $today)
                 ->join('user', 'log_book.user_id', '=', 'user.id')
-                ->join('category', 'log_book.category_id', '=', 'category.id')
+                // ->join('category', 'log_book.category_id', '=', 'category.id')
                 ->orderBy('date', 'desc')->get();
 
+            //  echo "<pre>"; print_r($log_book_records); die;
+            
             $log_book_records = collect($log_book_records)->map(function ($x) {
                 return (array) $x;
             })->toArray();
