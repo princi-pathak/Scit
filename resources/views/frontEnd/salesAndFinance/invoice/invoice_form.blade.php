@@ -142,7 +142,7 @@
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-3 col-form-label">Site</label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" id="invoice_site_id" name="site_delivery_add_id" disabled>
+                                            <select class="form-control editInput selectOptions" id="invoice_site_id" name="site_delivery_add_id" disabled onchange="siteDetail()">
                                                 <option>None</option>
                                             </select>
                                         </div>
@@ -247,8 +247,8 @@
                                         <label for="" class="col-sm-3 col-form-label">Invoice Type</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput selectOptions" id="invoce_type" name="invoice_type">
-                                                <option value="service">Service</option>
-                                                <option value="product">Product</option>
+                                                <option value="1">Service</option>
+                                                <option value="2">Product</option>
                                             </select>
                                         </div>
                                     </div>
@@ -284,7 +284,7 @@
                                         <label for="" class="col-sm-3 col-form-label">Payment Terms</label>
                                         <div class="col-sm-7">
                                             <select class="form-control editInput selectOptions" id="invoice_payment_terms" name="payment_terms">
-                                                <option>Default (21)</option>
+                                                <option value="21" selected>Default (21)</option>
                                                 @for($i = 0; $i <= 90; $i++)
                                                 <option value="{{ $i }}">{{ $i }}</option>
                                                 @endfor
@@ -419,6 +419,38 @@
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
+                                    <tfoot class="insrt_product_and_detail product_Det" id="product_calculation" style="display:none">
+                                        <tr>
+                                            <td class="border_tran" colspan="7"></td>
+                                            <td colspan="3">Sub Total (exc. VAT)</td>
+                                            <td id="exact_vat"></td>
+                                            <td class="border_tran" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border_tran" colspan="7"></td>
+                                            <td colspan="3">VAT</td>
+                                            <td id="vat"></td>
+                                            <td class="border_tran" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border_tran" colspan="7"></td>
+                                            <td colspan="3"><strong>Total(inc.VAT)</strong></td>
+                                            <td><strong id="total_vat"></strong></td>
+                                            <td class="border_tran" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border_tran" colspan="7"></td>
+                                            <td colspan="3"><strong>Paid</strong></td>
+                                            <td><strong id="paid_amount">-£0.00</strong></td>
+                                            <td class="border_tran" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border_tran" colspan="7"></td>
+                                            <td colspan="3"><strong>Outstanding (inc.VAT)</strong></td>
+                                            <td><strong id="outstanding_vat"></strong></td>
+                                            <td class="border_tran" colspan="3"></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -546,6 +578,8 @@ var vat_tax_detailsUrl="{{url('/vat_tax_details')}}";
 var invoice_productsDeleteUrl="{{url('invoice_productsDelete')}}";
 var invoice_saveUrl="{{url('/invoices/invoice_save')}}";
 var get_customer_details_frontUrl="{{url('get_customer_details_front')}}";
+var getCustomerSiteDetailsUrl='{{ route("customer.ajax.getCustomerSiteDetails") }}';
+var redirectUrl="{{ url('invoices/invoice?key=Draft') }}";
 var token = '<?php echo csrf_token(); ?>'
 </script>
 @include('components.add-customer-modal')

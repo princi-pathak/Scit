@@ -345,16 +345,18 @@ function selectProduct(id) {
                 input.type = "text";
                 input.className = "discount-input form-control";
                 input.value = "0";
+                input.name = "discount[]";
 
                 const select = document.createElement('select');
                 select.className = "discount-select form_control";
+                select.name = "discount_type[]";
 
                 const option1 = document.createElement('option');
-                option1.value = "percentage";
+                option1.value = "1";
                 option1.textContent = "%";
 
                 const option2 = document.createElement('option');
-                option2.value = "fixed";
+                option2.value = "2";
                 option2.textContent = "£";
                 select.appendChild(option1);
                 select.appendChild(option2);
@@ -434,7 +436,7 @@ function selectProduct(id) {
                 row.appendChild(deleteCell);
 
                 tableBody.appendChild(row);
-                // updateAmount(row)
+                updateAmount(row)
                 $("#product_calculation").show();
             }
 
@@ -449,7 +451,7 @@ function auto_grow(element) {
 var check_paid_amount = 0;
 
     function updateAmount(row, paid_amount = 0) {
-        // console.log(row)
+        console.log(row)
         // const priceInput = row.querySelector('.price');
         // alert(typeof(paid_amount))
 
@@ -634,7 +636,7 @@ var check_paid_amount = 0;
                             // var id = parseInt(response.data.id, 10) || 0;
                             // var encodedId = btoa(unescape(encodeURIComponent(id)));
                             // location.href = '<?php echo url('purchase_order_edit'); ?>?key=' + encodedId;
-                            // location.href = '<?php echo url('draft_purchase_order'); ?>'
+                            location.href = redirectUrl
                         }, 3000);
                     } else if (response.success === false) {
                         $('#message_save').addClass('error-message').text(response.message).show();
@@ -663,14 +665,6 @@ var check_paid_amount = 0;
     var invoice_email = '';
     var invoice_siteName = '';
     var invoicesite_companyName = '';
-    var invoice_site_address = '';
-    var invoice_site_city = '';
-    var invoice_site_county = '';
-    var invoice_site_postcode = '';
-    var invoice_siteTelephoneCode = '';
-    var invoice_siteTelephone = '';
-    var invoice_siteMobileCode = '';
-    var invoice_site_mobile = '';
 
     function get_customer_details() {
         var customer_id = $("#invoice_customer_id").val();
@@ -721,6 +715,8 @@ var check_paid_amount = 0;
                     invoice_telephone = customerData.telephone;
                     invoice_mobile_code = customerData.mobile_country_code ?? 230;
                     invoice_mobile = customerData.mobile;
+                    invoice_siteName = customerData.name;
+                    invoice_email = customerData.email;
                     $("#invoice_name").val(invoice_name);
                     $("#invoice_address").val(invoice_address);
                     $("#invoice_city").val(invoice_city);
@@ -733,14 +729,14 @@ var check_paid_amount = 0;
                     $("#invoice_email").val(invoice_email);
                     $("#invoice_siteName").val(invoice_siteName);
                     $("#invoicesite_companyName").val(invoicesite_companyName);
-                    $("#invoice_site_address").val(invoice_site_address);
-                    $("#invoice_site_city").val(invoice_site_city);
-                    $("#invoice_site_county").val(invoice_site_county);
-                    $("#invoice_site_postcode").val(invoice_site_postcode);
-                    $("#invoice_siteTelephoneCode").val(invoice_siteTelephoneCode);
-                    $("#invoice_siteTelephone").val(invoice_siteTelephone);
-                    $("#invoice_siteMobileCode").val(invoice_siteMobileCode);
-                    $("#invoice_site_mobile").val(invoice_site_mobile);
+                    $("#invoice_site_address").val(invoice_address);
+                    $("#invoice_site_city").val(invoice_city);
+                    $("#invoice_site_county").val(invoice_county);
+                    $("#invoice_site_postcode").val(invoice_Postcode);
+                    $("#invoice_siteTelephoneCode").val(invoice_telephoneCode);
+                    $("#invoice_siteTelephone").val(invoice_telephone);
+                    $("#invoice_siteMobileCode").val(invoice_mobile_code);
+                    $("#invoice_site_mobile").val(invoice_mobile);
 
                     // $('#invoice_project_id').removeAttr('disabled');
                     // $('#invoice_site_id').removeAttr('disabled');
@@ -748,6 +744,47 @@ var check_paid_amount = 0;
             },
             error: function(xhr, status, error) {
                 console.log(error);
+            }
+        });
+    }
+    function siteDetail() {
+        var id = $("#invoice_site_id").val();
+        $.ajax({
+            url: getCustomerSiteDetailsUrl,
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
+                // return false;
+                if (id == 0) {
+                    $("#invoice_siteName").val(invoice_siteName);
+                    $("#invoicesite_companyName").val(invoicesite_companyName);
+                    $("#invoice_site_address").val(invoice_address);
+                    $("#invoice_site_city").val(invoice_city);
+                    $("#invoice_site_county").val(invoice_county);
+                    $("#invoice_site_postcode").val(invoice_Postcode);
+                    $("#invoice_siteTelephoneCode").val(invoice_telephoneCode);
+                    $("#invoice_siteTelephone").val(invoice_telephone);
+                    $("#invoice_siteMobileCode").val(invoice_mobile_code);
+                    $("#invoice_site_mobile").val(invoice_mobile);
+                } else {
+                    $("#invoice_siteName").val(response.data[0].contact_name);
+                    $("#invoicesite_companyName").val(response.data[0].company_name);
+                    $("#invoice_site_address").val(response.data[0].address);
+                    $("#invoice_site_city").val(response.data[0].city);
+                    $("#invoice_site_county").val(response.data[0].country);
+                    $("#invoice_site_postcode").val(response.data[0].post_code);
+                    $("#invoice_siteTelephoneCode").val(response.data[0].telephone_country_code ?? 230);
+                    $("#invoice_siteTelephone").val(response.data[0].telephone);
+                    $("#invoice_siteMobileCode").val(response.data[0].mobile_country_code ?? 230);
+                    $("#invoice_site_mobile").val(response.data[0].mobile);
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
         });
     }
