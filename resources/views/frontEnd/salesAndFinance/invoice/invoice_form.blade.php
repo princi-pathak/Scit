@@ -15,7 +15,11 @@
     <div class="row">
         <div class="col-md-4 col-lg-4 col-xl-4 ">
             <div class="pageTitle">
+                @if(isset($invoice) && $invoice =='')
                 <h3>New Invoice</h3>
+                @else 
+                <h3>{{$invoice->invoice_ref}}</h3>
+                @endif
             </div>
         </div>
         <div class="col-md-4 col-lg-4 col-xl-4">
@@ -37,7 +41,7 @@
                                             <select class="form-control editInput selectOptions InvoicecheckError" id="invoice_customer_id" name="customer_id" onchange="get_customer_details()">
                                                 <option selected disabled>Select Customer</option>
                                                 @foreach($customers as $customer)
-                                                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                    <option value="{{ $customer->id }}" <?php if(isset($invoice->customer_id) && $invoice->customer_id == $customer->id){echo 'selected';}?>>{{ $customer->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -48,8 +52,11 @@
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Project</label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" disabled id="invoice_project_id" name="project_id">
+                                            <select class="form-control editInput selectOptions" <?php if (!isset($invoice) && $invoice == '') {echo 'disabled';} ?> id="invoice_project_id" name="project_id">
                                                 <option selected disabled>Select Customer First</option>
+                                                @foreach($projects as $project)
+                                                <option value="{{$project->id}}" <?php if (isset($invoice) && $invoice->project_id == $project->id) {echo 'selected'; } ?>>{{$project->project_name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
@@ -59,8 +66,11 @@
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Contact</label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" disabled id="invoice_contact_id" name="contact_id">
+                                            <select class="form-control editInput selectOptions" <?php if (!isset($invoice) && $invoice == '') {echo 'disabled';} ?> id="invoice_contact_id" name="contact_id">
                                                 <option selected disabled>Select Customer First</option>
+                                                @foreach($additional_contact as $addContact)
+                                                <option value="{{$addContact->id}}" <?php if (isset($invoice) && $invoice->contact_id == $addContact->id) { echo 'selected'; } ?>>{{$addContact->contact_name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
@@ -70,31 +80,31 @@
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput InvoicecheckError" value="" name="name" id="invoice_name">
+                                            <input type="text" class="form-control editInput InvoicecheckError" value="<?php if (isset($invoice) && $invoice->name != '') {echo $invoice->name; } ?>" name="name" id="invoice_name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Address <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control textareaInput InvoicecheckError" name="address" id="invoice_address" rows="3" placeholder="75 Cope Road Mall Park USA"></textarea>
+                                            <textarea class="form-control textareaInput InvoicecheckError" name="address" id="invoice_address" rows="3" placeholder="75 Cope Road Mall Park USA"><?php if (isset($invoice) && $invoice->address != '') {echo $invoice->address; } ?></textarea>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">City</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" value="" name="city" id="invoice_city">
+                                            <input type="text" class="form-control editInput" value="<?php if (isset($invoice) && $invoice->city != '') {echo $invoice->city; } ?>" name="city" id="invoice_city">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">County</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" value="" name="county" id="invoice_county">
+                                            <input type="text" class="form-control editInput" value="<?php if (isset($invoice) && $invoice->county != '') {echo $invoice->county; } ?>" name="county" id="invoice_county">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Postcode</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" placeholder="Postcode" name="postcode" id="invoice_Postcode">
+                                            <input type="text" class="form-control editInput" placeholder="Postcode" name="postcode" id="invoice_Postcode" value="<?php if (isset($invoice) && $invoice->postcode != '') {echo $invoice->postcode; } ?>">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -103,12 +113,12 @@
                                             <select class="form-control editInput selectOptions" id="invoice_telephoneCode" name="telephone_code">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" <?php if (isset($invoice) && $invoice->telephone_code == $value->id) {echo 'selected'; } ?>> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="invoice_telephone" placeholder="Telephone" name="telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                            <input type="text" class="form-control editInput" id="invoice_telephone" placeholder="Telephone" name="telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10" value="<?php if (isset($invoice) && $invoice->telephone != '') {echo $invoice->telephone; } ?>">
                                             <span style="color:red;display:none" id="InvoiceTelephoneErr">Please enter 10 digit number</span>
                                         </div>
                                     </div>
@@ -118,19 +128,19 @@
                                             <select class="form-control editInput selectOptions" name="mobile_code" id="invoice_mobile_code">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" <?php if (isset($invoice) && $invoice->invoice_mobile_code == $value->id) {echo 'selected'; } ?>> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="invoice_mobile" name="mobile" value="" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                            <input type="text" class="form-control editInput" id="invoice_mobile" name="mobile" value="" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10" value="<?php if (isset($invoice) && $invoice->mobile != '') {echo $invoice->mobile; } ?>">
                                             <span style="color:red;display:none" id="InvoiceMobileErr">Please enter 10 digit number</span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" id="invoice_email" name="email"  value="" onchange="invoice_check_email()">
+                                            <input type="text" class="form-control editInput" id="invoice_email" name="email"  value="<?php if (isset($invoice) && $invoice->email != '') {echo $invoice->email; } ?>" onchange="invoice_check_email()">
                                             <span style="color:red" id="invoiceemailErr"></span>
                                         </div>
                                     </div>
@@ -142,8 +152,12 @@
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-3 col-form-label">Site</label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" id="invoice_site_id" name="site_delivery_add_id" disabled onchange="siteDetail()">
+                                            <select class="form-control editInput selectOptions" id="invoice_site_id" name="site_delivery_add_id" <?php if (!isset($invoice) && $invoice == '') {echo 'disabled';} ?> onchange="siteDetail()">
                                                 <option>None</option>
+                                                <option <?php if (isset($invoice) && $invoice->site_delivery_add_id == 0 || $invoice->site_delivery_add_id == '') { echo 'selected'; } ?> value="0">Same as customer</option>
+                                                @foreach($site as $siteVal)
+                                                    <option value="{{$siteVal->id}}" <?php if (isset($purchase_orders) && $purchase_orders->site_delivery_add_id == $siteVal->id) { echo 'selected'; } ?>>{{$siteVal->site_name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-1">
@@ -272,12 +286,12 @@
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-3 col-form-label">Invoice Date <span class="radStar">*</span> </label>
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-9">
                                             <input type="date" class="form-control editInput InvoicecheckError" id="invoice_date" name="invoice_date" placeholder="">
                                         </div>
-                                        <div class="col-sm-2">
+                                        <!-- <div class="col-sm-2">
                                             <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     
                                     <div class="mb-3 row">
@@ -296,12 +310,12 @@
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-3 col-form-label">Due Date <span class="radStar">*</span></label>
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-9">
                                             <input type="date" class="form-control editInput InvoicecheckError" id="invoice_due_date" name="due_date" placeholder="">
                                         </div>
-                                        <div class="col-sm-2">
+                                        <!-- <div class="col-sm-2">
                                             <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-3 col-form-label">Status</label>
@@ -322,7 +336,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                            <a href="javascript:void(0)" class="formicon"><i class="fa-solid fa-square-plus" onclick="get_modal(7)"></i></a>
                                         </div>
                                     </div>   
                                     <div class="mb-3 row">
@@ -539,12 +553,12 @@
 </section>
 
 <x-tag-modal
-    modalId="quoteTagModal"
+    modalId="TagModal"
     modalTitle="Add Tag"
-    formId="add_quote_tag_form"
-    inputId="quoteTag"
-    statusId="status"
-    saveButtonId="saveQuoteTag"
+    formId="add_tag_form"
+    inputId="tag_title"
+    statusId="tag_status"
+    saveButtonId="saveTag"
     placeholderText="Tag" />
 
     <x-vat-tax-rate
@@ -580,6 +594,7 @@ var invoice_saveUrl="{{url('/invoices/invoice_save')}}";
 var get_customer_details_frontUrl="{{url('get_customer_details_front')}}";
 var getCustomerSiteDetailsUrl='{{ route("customer.ajax.getCustomerSiteDetails") }}';
 var redirectUrl="{{ url('invoices/invoice?key=Draft') }}";
+var save_tagUrl="{{url('/save_tag')}}";
 var token = '<?php echo csrf_token(); ?>'
 </script>
 @include('components.add-customer-modal')

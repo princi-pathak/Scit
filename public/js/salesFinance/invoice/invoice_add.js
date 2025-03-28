@@ -105,6 +105,9 @@ function get_modal(modal){
             $("#po_id").val(invoice_id);
             $("#purchase_model").modal('show');
         }
+    }else if(modal == 7){
+        $("#add_tag_form")[0].reset();
+        $("#TagModal").modal('show');
     }else{
         alert("Please Select Customer");
         return false;
@@ -788,3 +791,52 @@ var check_paid_amount = 0;
             }
         });
     }
+    $("#saveTag").on('click', function() {
+        var title = $("#tag_title").val().trim();
+        var status = $.trim($('#tag_status option:selected').val());
+
+        if (title.includes(',')) {
+            alert("Comma not allowed in the tag, please use _ or - instead");
+            return false;
+        } else if (title == '') {
+            $("#tag_title").css('border', '1px solid red');
+            return false;
+        } else {
+            $("#tag_title").css('border', '');
+            $.ajax({
+                type: "POST",
+                url: save_tagUrl,
+                data: new FormData($("#add_tag_form")[0]),
+                async: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    // console.log(response);
+                    if (response.vali_error) {
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    } else if (response.data && response.data.original && response.data.original.error) {
+                        alert(response.data.original.error);
+                        return false;
+                    } else if (response.success === true) {
+                        // $(window).scrollTop(0);
+                        // $('#message_save').text(response.message).show();
+                        // setTimeout(function() {
+                        //     $('#message_save').text('').hide();
+                        // }, 3000);
+                        $("#TagModal").modal('hide');
+                        $("#invoice_tags").append('<option value="' + response.data.id + '">' + response.data.title + '</option>')
+
+                    } else {
+                        alert("Something went wrong! Please try later");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
+                }
+            });
+        }
+    });

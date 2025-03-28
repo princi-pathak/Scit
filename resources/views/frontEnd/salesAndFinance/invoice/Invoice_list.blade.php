@@ -420,7 +420,7 @@
                                                
                                                 <a href="javascript:void(0)" class="dropdown-item">Send SMS</a>
                                                 <hr class="dropdown-divider">
-                                                <a href="#!" class="dropdown-item">Edit</a>
+                                                <a href="{{url('invoices/edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="{{url('invoices/preview?key=')}}{{base64_encode($val->id)}}&url=preview" target="_blank" class="dropdown-item">Preview</a>
                                                 <hr class="dropdown-divider">

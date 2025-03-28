@@ -20,6 +20,9 @@ use App\Models\Product_category;
 use App\Models\Invoice\Invoice;
 use App\Models\Invoice\InvoiceProduct;
 use App\Admin;
+use App\Models\Project;
+use App\Models\Constructor_additional_contact;
+use App\Models\Constructor_customer_site;
 
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 
@@ -122,9 +125,23 @@ class InvoiceController extends Controller
         ]);
     }
 
-    public function create(CustomerController $customer){
+    public function create(Request $request,CustomerController $customer){
+        // echo "<pre>";print_r($request->all());die;
+        $id=base64_decode($request->key);
         $data['page'] = "invoice";
         $home_id = Auth::user()->home_id;
+        $invoice=Invoice::find($id);
+        $projects=array();
+        $additional_contact=array();
+        $site=array();
+        if($invoice){
+            $projects=Project::where(['status'=>1,'home_id'=>$home_id])->get();
+            $additional_contact = Constructor_additional_contact::where(['home_id'=> $home_id,'userType'=>1,'customer_id'=>$invoice->customer_id,'deleted_at'=>null])->get();
+            $site=Constructor_customer_site::where('customer_id',$invoice->customer_id)->get();
+        }
+        $data['projects']=$projects;
+        $data['additional_contact']=$additional_contact;
+        $data['site']=$site;
         $data['customers'] =  $customer->getAllCustomerList()->getData()->data;
         $data['countries'] = Country::getCountriesNameCode();
         $data['customer_types']=Customer_type::where(['home_id'=>$home_id,'status'=>1])->get();
@@ -133,6 +150,7 @@ class InvoiceController extends Controller
         $data['currency']=Currency::where(['status'=>1,'deleted_at'=>null])->get();
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
+        $data['invoice']=$invoice;
         // dd($data);
         return view('frontEnd.salesAndFinance.invoice.invoice_form', $data);
     }
