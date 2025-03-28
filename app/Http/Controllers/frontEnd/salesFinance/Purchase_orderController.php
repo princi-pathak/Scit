@@ -1598,5 +1598,9 @@ class Purchase_orderController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function finance_dashboard(){
+        
+        return view('frontEnd.salesAndFinance.purchase_order.finance_dasboard');
+    }
     
 }
