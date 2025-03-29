@@ -396,6 +396,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/invoice', 'invoice');
 			Route::get('/preview', 'preview');
 			Route::get('/print', 'preview');
+			Route::get('/edit', 'create');
+			Route::post('/getInvoiceProductDetail', 'getInvoiceProductDetail');
 			
 		});
 	});

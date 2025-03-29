@@ -217,7 +217,7 @@ class Purchase_orderController extends Controller
         $tax = Product::tax_detail($home_id);
         $all_job = Job::getAllJob($home_id)->where('status', 1)->get();
         $accountCode = Construction_account_code::getActiveAccountCode($home_id);
-        $payment_type=Payment_type::getActivePaymentType($home_id);;
+        $payment_type=Payment_type::getActivePaymentType($home_id);
         
         if ($purchase_order_products->purchaseOrderProducts->isEmpty()) {
             return response()->json(['success' => false, 'message' => 'No products found for this purchase order.']);
