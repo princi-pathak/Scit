@@ -84,13 +84,13 @@
                                     <td>{{ $purchaseBook->date }}</td>
                                     <td>{{ $purchaseBook->netAmount }}</td>
                                     <td>{{ $purchaseBook->vatAmount }}</td>
-                                    <td>{{ $purchaseBook->grossAmount }}</td>
+                                    <td>{{ '£'.$purchaseBook->grossAmount ?? '' }}</td>
                                     <td>{{ $purchaseBook->tax_rate_name }}</td>
-                                    <td>{{ $purchaseBook->netAmount + $purchaseBook->vatAmount }}</td>
-                                    <td>{{ $purchaseBook->reclaim }}</td>
+                                    <td>£{{ ($purchaseBook->netAmount + $purchaseBook->vatAmount) - $purchaseBook->reclaim    }}</td>
+                                    <td>{{ $purchaseBook->reclaim ? '£' . $purchaseBook->reclaim : '' }}</td>
                                     <td>{{ $purchaseBook->not_reclaim }}</td>
                                     <td>{{ $purchaseBook->title }}</td>
-                                    <td>{{ $purchaseBook->expense_amount }}</td>
+                                    <td>{{ $purchaseBook->expense_amount ? '£' . $purchaseBook->expense_amount : '' }}</td>
                                     <td>
                                         <div class="d-flex justify-content-end actionDropdown">
                                             <div class="nav-item dropdown">
