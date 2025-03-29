@@ -199,10 +199,10 @@
             document.getElementById("purchase_expense_status").value = "";
 
             // Set modal title for "Add"
-            document.getElementById("purchaseExpesnsesModalLabel").textContent = "Add Purchase Order";
+            document.getElementById("purchaseExpesnsesModalLabel").textContent = "Add Purchase Expenses";
 
         } else if (type === "edit") {
-            document.getElementById("purchaseExpesnsesModalLabel").textContent = "Edit Purchase Order";
+            document.getElementById("purchaseExpesnsesModalLabel").textContent = "Edit Purchase Expenses";
 
             let id = element.dataset.id;
             let name = element.dataset.name;

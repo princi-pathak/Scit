@@ -14,8 +14,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <script type="importmap">
         {
         "imports": {
@@ -23,6 +23,7 @@
         }
     }
     </script>
+    
     <style>
         table.dataTable td.select-checkbox:before {
             display: none;
