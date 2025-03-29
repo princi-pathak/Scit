@@ -23,6 +23,8 @@ use App\Admin;
 use App\Models\Project;
 use App\Models\Constructor_additional_contact;
 use App\Models\Constructor_customer_site;
+use App\Models\Product;
+use App\Models\Payment_type;
 
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 
@@ -272,7 +274,7 @@ class InvoiceController extends Controller
     public function invoice(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $data['key_mode']=$request->key;
-        $data['invoice']=Invoice::with('customers','invoiceProducts','sites')->where('status',$request->key)->whereNull('deleted_at')->get();
+        $data['invoice']=Invoice::with(['customers','invoiceProducts','sites'])->where('status',$request->key)->whereNull('deleted_at')->get();
         $data['draft_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Draft')->count();
         $data['outstanding_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Outstanding')->count();
         $data['overdue_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Overdue')->count();
@@ -291,7 +293,7 @@ class InvoiceController extends Controller
                 $invoice_table->save();
             }
             die;
-            $invoice_details=Invoice::with('customers','invoiceProducts')->where(['id' => $invoice_id, 'deleted_at' => null])
+            $invoice_details=Invoice::with(['customers','invoiceProducts'])->where(['id' => $invoice_id, 'deleted_at' => null])
             ->first();
             // $site_detail=Customer::find($invoice_details->customer_id);
 			// echo "<pre>";print_r($site_detail);die;
@@ -312,6 +314,66 @@ class InvoiceController extends Controller
         }catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function getInvoiceProductDetail(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id=Auth::user()->home_id;
+        $invoice = Invoice::with(['customers','invoiceProducts','sites'])
+        ->where(['id' => $request->id, 'deleted_at' => null])
+        ->first();
+        // return $invoice;
+        if (!$invoice) {
+            return response()->json(['success' => false, 'message' => 'Invoice not found.']);
+        }
+        // return $invoice;
+        $tax = Product::tax_detail($home_id);
+        $accountCode = Construction_account_code::getActiveAccountCode($home_id);
+        $payment_type=Payment_type::getActivePaymentType($home_id);
+        if ($invoice->invoiceProducts->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'No products found for this Invoice.']);
+        }
+        $invoice_products_paginated = $invoice->invoiceProducts()
+            ->paginate(10);
+        
+        $data_array = [];
+        foreach ($invoice_products_paginated as $val) {
+            $invoice_products_detail = Product::product_detail($val->product_id);
+        
+            $data_array[] = [
+                'product_details' => $invoice,
+                'tax' => $tax,
+                'accountCode' => $accountCode,
+                'invoice_products_detail' => $invoice_products_detail,
+                'payment_type'=>$payment_type,
+            ];
+        }
+        // $paid_all_amount=$this->getAllPaymentPaid($request->id);
+        $paid_all_amount=0;
+        return response()->json([
+            'success' => true,
+            'data' => $data_array,
+            'paid_amount'=>$paid_all_amount,
+            'pagination' => [
+                'total' => $invoice_products_paginated->total(),
+                'current_page' => $invoice_products_paginated->currentPage(),
+                'last_page' => $invoice_products_paginated->lastPage(),
+                'per_page' => $invoice_products_paginated->perPage(),
+                'next_page_url' => $invoice_products_paginated->nextPageUrl(),
+                'prev_page_url' => $invoice_products_paginated->previousPageUrl(),
+            ]
+        ]);
+    }
+    private function getAllPaymentPaid($po_id){
+        $purchase_order = DB::table('purchase_order_record_payments')->where(['po_id'=>$po_id,'deleted_at'=>null])->sum('record_amount_paid');
+        
+        // return $purchase_order;
+        $credit_allocate = DB::table('credit_note_allocates')->where(['po_id'=>$po_id,'deleted_at'=>null])->sum('amount_paid');
+        
+        // $mergedData = $purchase_order->merge($credit_allocate);
+        // $sortedData = $mergedData->sortBy('date');
+
+        // $sortedArray = $sortedData->values()->all();
+        return $purchase_order+$credit_allocate;
     }
 
     

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    getRegions(document.getElementById('invoiceRegions'));
+    // getRegions(document.getElementById('invoiceRegions'));
     getTags(document.getElementById('invoice_tags'))
 });
 function getTags(tags) {
@@ -327,6 +327,7 @@ function selectProduct(id) {
                 inputPrice.value = data.product_detail.price;
                 priceCell.appendChild(inputPrice);
                 row.appendChild(priceCell);
+
                 const calcIconCell = document.createElement('td');
                 const calcIcon = document.createElement('i');
                 calcIcon.className = 'fa fa-calculator fs-4';
@@ -446,8 +447,277 @@ function selectProduct(id) {
         }
     });
 }
+function getProductDetail(id,url){
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: {
+            id: id,
+            _token: token
+        },
+        success: function(response) {
+            console.log(response);
+            // return false;
+            var data = response.data[0];
+            const tableBody = document.querySelector(`#result tbody`);
+            var invoice_products = data.product_details.invoice_products;
+            // console.log(invoice_products);return false;
+            if (invoice_products.length === 0) {
+                const noDataRow = document.createElement('tr');
+                noDataRow.id = 'EmptyError'
+                const noDataCell = document.createElement('td');
+
+                noDataCell.setAttribute('colspan', 4);
+                noDataCell.textContent = 'No products found';
+                noDataCell.style.textAlign = 'center';
+
+                noDataRow.appendChild(noDataCell);
+                tableBody.appendChild(noDataRow);
+            } else {
+                const emptyErrorRow = document.getElementById('EmptyError');
+                if (emptyErrorRow) {
+                    emptyErrorRow.remove();
+                }
+                var paid_amount = response.paid_amount;
+                $("#paid_amount").text("-£" + parseFloat(paid_amount).toFixed(2));
+                invoice_products.forEach(product => {
+                    const row = document.createElement('tr');
+
+                    const codeCell = document.createElement('td');
+                    // codeCell.textContent = data.purchase_order_products_detail.product_code;
+                    const inputCode = document.createElement('input');
+                    inputCode.className = 'product_code form-control';
+                    inputCode.name = 'product_code[]';
+                    inputCode.value = product.code;
+                    codeCell.appendChild(inputCode);
+                    row.appendChild(codeCell);
+
+                    const nameCell = document.createElement('td');
+                    nameCell.innerHTML = data.invoice_products_detail.product_name;
+                    row.appendChild(nameCell);
+                   
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.className = 'product_id';
+                    hiddenInput.name = 'product_id[]';
+                    hiddenInput.value = data.invoice_products_detail.id;
+                    row.appendChild(hiddenInput);
+                    
+                    const hiddenID = document.createElement('input');
+                    hiddenID.type = 'hidden';
+                    hiddenID.className = 'purchase_product_id';
+                    hiddenID.name = 'invoice_product_id[]';
+                    hiddenID.value = product.id;
+                    row.appendChild(hiddenID);
+
+                    const descriptionCell = document.createElement('td');
+                    const inputDescription = document.createElement('textarea');
+                    inputDescription.className = 'description form-control';
+                    inputDescription.setAttribute('rows', '1');
+                    inputDescription.name = 'description[]';
+                    inputDescription.value = product.description;
+                    inputDescription.addEventListener('input', function() {
+                        auto_grow(this);
+                    });
+                    descriptionCell.appendChild(inputDescription);
+                    row.appendChild(descriptionCell);
+                    
+                    const dropdownAccountCode = document.createElement('td');
+                    const selectDropdownAccountCode = document.createElement('select');
+                    selectDropdownAccountCode.className = 'accountCode_id form_control';
+                    selectDropdownAccountCode.name = 'accountCode_id[]';
+                    // selectDropdownAccountCode.addEventListener('click', function() {
+                    //     var elements = document.getElementsByClassName('accountCode_id');
+                    //     getAccountCode(elements);
+                    // });
+
+                    const optionsAccountCode = data.accountCode;
+
+                    const defaultOptionAccountCode = document.createElement('option');
+                    defaultOptionAccountCode.value = '';
+                    defaultOptionAccountCode.text = '-No Department-';
+                    selectDropdownAccountCode.appendChild(defaultOptionAccountCode);
+
+                    optionsAccountCode.forEach(optionJob => {
+                        const optAccountCode = document.createElement('option');
+                        optAccountCode.value = optionJob.id;
+                        optAccountCode.textContent = optionJob.name;
+                        selectDropdownAccountCode.appendChild(optAccountCode);
+                    });
+                    dropdownAccountCode.appendChild(selectDropdownAccountCode);
+                    row.appendChild(dropdownAccountCode);
+                    
+                    const qtyCell = document.createElement('td');
+                    const inputQty = document.createElement('input');
+                    inputQty.type = 'text';
+                    inputQty.className = 'qty input50 form-control';
+                    inputQty.addEventListener('input', function() {
+                        this.value = this.value.replace(/[^0-9.]/g, '');
+                        if ((this.value.match(/\./g) || []).length > 1) {
+                            this.value = this.value.slice(0, -1);
+                        }
+                        updateAmount(row, paid_amount);
+                    });
+                    inputQty.name = 'qty[]';
+                    inputQty.value = product.qty;
+                    qtyCell.appendChild(inputQty);
+                    row.appendChild(qtyCell);
+
+                    const priceCell = document.createElement('td');
+                    const inputPrice = document.createElement('input');
+                    inputPrice.type = 'text';
+                    inputPrice.className = 'product_price input50 form-control';
+                    inputPrice.addEventListener('input', function() {
+                        this.value = this.value.replace(/[^0-9.]/g, '');
+                        if ((this.value.match(/\./g) || []).length > 1) {
+                            this.value = this.value.slice(0, -1);
+                        }
+                        updateAmount(row, paid_amount);
+                    });
+                    inputPrice.name = 'price[]';
+                    inputPrice.value = product.price;
+                    priceCell.appendChild(inputPrice);
+                    row.appendChild(priceCell);
+
+                    const calcIconCell = document.createElement('td');
+                    const calcIcon = document.createElement('i');
+                    calcIcon.className = 'fa fa-calculator fs-4';
+                    calcIcon.style='cursor: pointer;color: #c4e3f3;';
+                    calcIcon.name = 'icon[]';
+                    calcIconCell.appendChild(calcIcon);
+                    row.appendChild(calcIconCell);
+
+                    const amountCell = document.createElement('td');
+                    amountCell.innerHTML = '£' + parseFloat(product.price).toFixed(2);
+                    amountCell.className = "price";
+                    row.appendChild(amountCell);
+
+                    const discountCell = document.createElement('td');
+                    const discountDiv = document.createElement('div');
+                    discountDiv.className = " d-flex gap-2";
+                    discountCell.className = "discount";
+                    const input = document.createElement('input');
+                    input.type = "text";
+                    input.className = "discount-input form-control";
+                    input.value = "0";
+                    input.name = "discount[]";
+
+                    const select = document.createElement('select');
+                    select.className = "discount-select form_control";
+                    select.name = "discount_type[]";
+
+                    const option1 = document.createElement('option');
+                    option1.value = "1";
+                    option1.textContent = "%";
+
+                    const option2 = document.createElement('option');
+                    option2.value = "2";
+                    option2.textContent = "£";
+                    select.appendChild(option1);
+                    select.appendChild(option2);
+                    discountDiv.appendChild(input);
+                    discountDiv.appendChild(select);
+                    discountCell.appendChild(discountDiv);
+                    row.appendChild(discountCell);
+
+                    const dropdownVat = document.createElement('td');
+                    const selectDropdownVat = document.createElement('select');
+                    selectDropdownVat.addEventListener('change', function() {
+                        getIdVat($(this).val(), row, paid_amount);
+                    });
+                    selectDropdownVat.name = 'vat_id[]';
+                    selectDropdownVat.className = 'vat_id form_control';
+                    const optionsVat = data.tax;
+                    var tax_rate = '00';
+                    optionsVat.forEach(optionVat => {
+                        const optVat = document.createElement('option');
+                        optVat.value = optionVat.id;
+                        if (optionVat.id == product.vat_id) {
+                            tax_rate = optionVat.tax_rate;
+                            optVat.setAttribute("selected", "selected");
+                        }
+                        optVat.textContent = optionVat.name;
+                        selectDropdownVat.appendChild(optVat);
+                    });
+                   
+                    const inputVatRate = document.createElement('input');
+                    inputVatRate.type = 'hidden';
+                    inputVatRate.className = 'vat_ratePercentage';
+                    inputVatRate.name = 'vat_ratePercentage[]';
+                    inputVatRate.value = tax_rate;
+                    dropdownVat.appendChild(inputVatRate);
+                    dropdownVat.appendChild(selectDropdownVat);
+                    row.appendChild(dropdownVat);
+
+                    const vatCell = document.createElement('td');
+                    const inputVat = document.createElement('input');
+                    inputVat.type = 'text';
+                    inputVat.className = 'vat form-control';
+                    inputVat.style = "max-width:70px;";
+                    inputVat.setAttribute('disabled', 'disabled');
+                    inputVat.addEventListener('input', function() {
+                        updateAmount(row, paid_amount);
+                    });
+                    inputVat.name = 'vat[]';
+                    inputVat.value = parseFloat(tax_rate).toFixed(2);
+                    vatCell.appendChild(inputVat);
+                    row.appendChild(vatCell);
+
+                    // const delveriQTYCell = document.createElement('td');
+                    // delveriQTYCell.innerHTML = '-';
+                    // delveriQTYCell.className = 'text-center';
+                    // row.appendChild(delveriQTYCell);
+
+                    const spanCheckboxCell = document.createElement('td');
+                    const spanCheckbox = document.createElement('span');
+                    spanCheckbox.className = 'oNOfswich';
+
+                    const innerCheckbox = document.createElement('input');
+                    innerCheckbox.type = 'checkbox';
+                    innerCheckbox.name = 'show_temp';
+                    innerCheckbox.id = 'show_temp';
+                    innerCheckbox.value = 1;
+                    innerCheckbox.checked = true;
+
+                    spanCheckbox.appendChild(innerCheckbox);
+                    spanCheckboxCell.appendChild(spanCheckbox);
+                    row.appendChild(spanCheckboxCell);
+
+                    const deleteCell = document.createElement('td');
+                    deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
+                    deleteCell.addEventListener('click', function() {
+                        removeRow(this, product.id);
+                    });
+                    row.appendChild(deleteCell);
+
+                    tableBody.appendChild(row);
+                    updateAmount(row, paid_amount)
+                    console.log(row)
+                });
+                $("#product_calculation").show();
+
+            }
+
+            // var paginationProductDetails = response.pagination;
+
+            // var paginationControlsProductDetail = $("#pagination-controls-Produc-details");
+            // paginationControlsProductDetail.empty();
+            // if (paginationProductDetails.prev_page_url) {
+            //     paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+            // }
+            // if (paginationProductDetails.next_page_url) {
+            //     paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+            // }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            // location.reload();
+        }
+    });
+
+}
 function auto_grow(element) {
-    console.log("Here")
+    // console.log("Here")
     element.style.height = "5px";
     element.style.height = (element.scrollHeight) + "px";
 }
@@ -455,6 +725,7 @@ var check_paid_amount = 0;
 
     function updateAmount(row, paid_amount = 0) {
         console.log(row)
+        // return false;
         // const priceInput = row.querySelector('.price');
         // alert(typeof(paid_amount))
 
@@ -471,7 +742,7 @@ var check_paid_amount = 0;
         const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value;
         const vat = row.querySelector('.vat');
         const percentage = amount * vat_ratePercentage / 100;
-        // alert(percentage)
+        alert(typeof(percentage))
         vat.value = percentage.toFixed(2);
 
         var calculation = 0;

@@ -144,7 +144,7 @@
                                     New
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="{{url('purchase_order')}}" class="dropdown-item">Invoice</a>
+                                    <a href="{{url('invoices/add')}}" class="dropdown-item">Invoice</a>
                                     <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
                                     <!-- <a href="#!" class="dropdown-item">Print</a>
                                     <a href="#!" class="dropdown-item">Email</a> -->
