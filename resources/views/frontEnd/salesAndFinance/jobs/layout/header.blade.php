@@ -1032,7 +1032,7 @@ $current_url = last(request()->segments());
                                                                     <span>New Invoice</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/invoice?key=Draft')}}">
                                                                 <div
                                                                     class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">
@@ -1040,7 +1040,7 @@ $current_url = last(request()->segments());
                                                                     <span>Draft Invoices</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/invoice?key=Outstanding')}}">
                                                                 <div
                                                                     class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">
@@ -1048,7 +1048,7 @@ $current_url = last(request()->segments());
                                                                     <span>Outstanding Invoices</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/invoice?key=Overdue')}}">
                                                                 <div
                                                                     class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">
@@ -1058,7 +1058,7 @@ $current_url = last(request()->segments());
                                                                     </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/invoice?key=Paid')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                         <span>Paid Invoices </span>
