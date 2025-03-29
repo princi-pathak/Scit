@@ -396,6 +396,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/invoice', 'invoice');
 			Route::get('/preview', 'preview');
 			Route::get('/print', 'preview');
+			Route::get('/edit', 'create');
+			Route::post('/getInvoiceProductDetail', 'getInvoiceProductDetail');
 			
 		});
 	});
@@ -446,6 +448,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/saveBulkInvoiceModal', 'saveBulkInvoiceModal');
 		Route::post('/saveBulkRecordPaymentModal', 'saveBulkRecordPaymentModal');
 		Route::post('/searchPurchaseOrdersStatementsOutstanding', 'searchPurchaseOrdersStatementsOutstanding');
+		Route::get('/finance', 'finance_dashboard');
 	});
 
 	// forntend petty cash

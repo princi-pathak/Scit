@@ -14,8 +14,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <script type="importmap">
         {
         "imports": {
@@ -23,6 +23,7 @@
         }
     }
     </script>
+    
     <style>
         table.dataTable td.select-checkbox:before {
             display: none;
@@ -1031,7 +1032,7 @@ $current_url = last(request()->segments());
                                                                     <span>New Invoice</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/invoice?key=Draft')}}">
                                                                 <div
                                                                     class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">
@@ -1039,7 +1040,7 @@ $current_url = last(request()->segments());
                                                                     <span>Draft Invoices</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/invoice?key=Outstanding')}}">
                                                                 <div
                                                                     class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">
@@ -1047,7 +1048,7 @@ $current_url = last(request()->segments());
                                                                     <span>Outstanding Invoices</span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/invoice?key=Overdue')}}">
                                                                 <div
                                                                     class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined">
@@ -1057,7 +1058,7 @@ $current_url = last(request()->segments());
                                                                     </span>
                                                                 </div>
                                                             </a>
-                                                            <a href="#!">
+                                                            <a href="{{url('invoices/invoice?key=Paid')}}">
                                                                 <div class="d-flex align-items-center gap-2 mb-2">
                                                                     <i class="material-symbols-outlined"> keyboard_double_arrow_right</i>
                                                                         <span>Paid Invoices </span>
