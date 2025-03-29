@@ -20,7 +20,14 @@
 ?>
 
 <script src="{{ url('public/backEnd/js/jquery.validate.min.js') }}"></script>
-
+<style>
+	.yes_no_btn input{
+		margin-top: 8px;
+	}
+	.yes_no_btn .d-flex label{
+		margin-right: 20px;
+	}
+</style>
 
  <section id="main-content" class="">
     <section class="wrapper">
@@ -55,12 +62,13 @@
                                     <p>Days for which location history will be saved</p>
                                 </div>
                             </div>
-
-							<div class="form-group">
+							<div class="form-group yes_no_btn">
                                 <label class="col-lg-3 control-label">Registered with Ofsted or CIW</label>
-                                <div class="col-lg-9">
-	                                <label class="col-lg-3 control-label">Yes <input type="radio" name="is_registered" class="" value="1" {{ (isset($system_admin_home->is_registerd)) == 'active' ? 'checked' : '' }}></label>
-	                                <label class="col-lg-3 control-label">No <input type="radio" name="is_registered" class="" value="0" {{ isset($system_admin_home->is_registerd) == 'inactive' ? 'checked' : '' }}></label>
+                                <div class="col-lg-9 d-flex align-items-center gap-2">
+									<input type="radio" name="is_registered" id="is_registered1"  value="1" {{ isset($system_admin_home->is_registered) && $system_admin_home->is_registered == 1 ? 'checked' : '' }}>
+	                                <label for="is_registered1" class="control-label">Yes </label>
+									<input type="radio" name="is_registered" id="is_registered2"  value="0" {{ isset($system_admin_home->is_registered) && $system_admin_home->is_registered == 0 ? 'checked' : '' }}>
+	                                <label for="is_registered2" class=" control-label">No </label>
                                 </div>
                             </div>
 

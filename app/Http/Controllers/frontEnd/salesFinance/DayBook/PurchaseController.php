@@ -12,8 +12,8 @@ use App\Models\PurchaseExpenses;
 
 use App\Http\Requests\Daybook\PurchaseDayBookRequest;
 use App\Models\DayBook\PurchaseDayBook;
-use App\Home;
 use App\Models\DayBook\SalesDayBook;
+use App\Home;
 
 class PurchaseController extends Controller
 {
@@ -70,6 +70,7 @@ class PurchaseController extends Controller
         // dd($data);
         $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
         $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
+        $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
         return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
     }
 
@@ -108,9 +109,7 @@ class PurchaseController extends Controller
     public function reclaimPercantage(){
 
         $excepmt = SalesDayBook::Where('Vat', 5)->whereNull('deleted_at')->sum('netAmount');
-        // echo $excepmt."<br>";
         $standard = SalesDayBook::Where('Vat', 2)->whereNull('deleted_at')->sum('netAmount');
-        // echo $standard."<br>";
 
         $residual = ($standard) / ($standard + $excepmt);
         $reclaim  = round($residual, 2); 
@@ -119,10 +118,6 @@ class PurchaseController extends Controller
             'success' => (bool) $excepmt,
             'data' => $reclaim ? $reclaim : 0
         ]);
-
-        // return $reclaim;
-        // $notReclaim = round(100 - $reclaim, 2 );
-
     }   
 
 }

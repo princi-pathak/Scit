@@ -43,23 +43,29 @@
                     </div>
                   </div>
                   <div class="mb-3 row">
-                    <label for="reclaim_amount" class="col-sm-2 col-form-label"> Reclaim <span class="radStar">*</span></label>
+                    <label for="gross_amount" class="col-sm-2 col-form-label">Total Amount (to be paid)</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="reclaim" id="reclaim_amount" value="" placeholder="">
+                      <input type="text" class="form-control editInput" name="" id="totalAmount" value="{{ isset($purchaseBook->reclaim) ? $purchaseBook->grossAmount + $purchaseBook->reclaim : $purchaseBook->grossAmount }}" readonly>
                     </div>
                   </div>
+            
                   <div class="mb-3 row">
                     <label for="expenses" class="col-sm-2 col-form-label"> Expenses <span class="radStar">*</span></label>
                     <div class="col-sm-9">
                       <select class="form-control editInput selectOptions" name="expense_type" id="expenses">
                         <option>Please Select</option>
                         @foreach($purchase_expenses as $purchase_expense)
-                        <option value="{{ $purchase_expense->id }}">{{ $purchase_expense->title }}</option>
+                        <option value="{{ $purchase_expense->id }}" {{ isset($purchaseBook->expense_type) && ($purchaseBook->expense_type == $purchase_expense->id) ? 'selected' : '' }} >{{ $purchase_expense->title }}</option>
                         @endforeach
                       </select>
+                    </div>  
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="rate_input" class="col-sm-2 col-form-label">Expense Amount</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" value="{{ isset($purchaseBook->expense_amount) ? $purchaseBook->expense_amount :  '' }}" readonly>
                     </div>
                   </div>
-                  <label class="col-form-label">(Residual - 6.99% for claimed, 93.01% for not claimed ) </label>
                 </div>
               </div>
               <div class="col-md-6 col-lg-6 col-xl-6">
@@ -88,17 +94,18 @@
                     </div>
                   </div>
                   <div class="mb-3 row">
-                    <label for="not_claim" class="col-sm-2 col-form-label"> Not Claim <span class="radStar">*</span></label>
+                    <label for="reclaim_amount" class="col-sm-2 col-form-label"> Reclaim <span class="radStar">*</span></label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" value="" placeholder="">
+                      <input type="text" class="form-control editInput" name="reclaim" id="reclaim_amount" value="{{ isset($purchaseBook->reclaim) ? $purchaseBook->reclaim : ''   }}" placeholder="" readonly>
                     </div>
                   </div>
                   <div class="mb-3 row">
-                    <label for="rate_input" class="col-sm-2 col-form-label">Expense Amount</label>
+                    <label for="not_claim" class="col-sm-2 col-form-label"> Not Claim <span class="radStar">*</span></label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" value="">
+                      <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" value="{{ isset($purchaseBook->not_reclaim) ? $purchaseBook->not_reclaim :  '' }}" placeholder="" readonly>
                     </div>
                   </div>
+               
 
                 </div>
               </div>
@@ -118,7 +125,7 @@
   </form>
 </section>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
     let vatInput = document.getElementById('vat_input');
     let netAmountInput = document.getElementById('net_amount');
     let vatAmountInput = document.getElementById('vat_amount');
@@ -126,26 +133,62 @@
 
     let not_claim = document.getElementById('not_claim');
     let reclaim_amount = document.getElementById('reclaim_amount');
+    let totalAmountInput = document.getElementById('totalAmount');
+    let expensesAmountInput = document.getElementById('expenses_amount');
 
+    
+
+    function getCalculatedData() {
+        $.ajax({
+            type: "GET",
+            url: "{{ url('/purchase/reclaimPercantage') }}",
+            success: function(response) {
+                console.log("reclaimPercantage ", response.data);
+                var vatAmount = vatAmountInput.value;
+                console.log("vatAmount", vatAmount);
+
+                let reclaimed = (vatAmount * response.data) / 100;
+
+                console.log("Reclaimed Amount:", reclaimed.toFixed(2));
+                reclaim_amount.value = reclaimed.toFixed(2);
+                var not_claimedAmt = (parseFloat(vatAmount) - parseFloat(reclaimed)).toFixed(2);
+                not_claim.value = not_claimedAmt;
+                expensesAmountInput.value = not_claimedAmt;
+                totalAmount = parseFloat(grossAmountInput.value) - parseFloat(reclaim_amount.value);
+                totalAmountInput.value = totalAmount.toFixed(2);
+            }
+        });
+    }
 
     function calculateTax() {
-      let netAmount = parseFloat(netAmountInput.value) || 0;
-      let selectedOption = vatInput.options[vatInput.selectedIndex];
-      let taxRate = parseFloat(selectedOption.getAttribute('data-tax-rate')) || 0;
+        let netAmount = parseFloat(netAmountInput.value) || 0;
+        let selectedOption = vatInput.options[vatInput.selectedIndex];
+        let taxRate = parseFloat(selectedOption.getAttribute('data-tax-rate')) || 0;
 
-      let vatAmount = (netAmount * taxRate) / 100;
-      let grossAmount = netAmount + vatAmount;
+        let vatAmount = (netAmount * taxRate) / 100;
+        let grossAmount = netAmount + vatAmount;
 
-      let claimedPercent = 6.99;
+        $.ajax({
+            type: "GET",
+            url: "{{ url('/purchase/purchase-day-book-reclaim-per') }}",
+            data: '',
+            success: function(data) {
+                console.log("Response ", data);
+                if (data == "0") {
+                    getCalculatedData(); // Now this function is defined and accessible
+                } else if(data == "1") {
+                  not_claim.value = vat_amount.value;
+                  reclaim_amount.value  = totalAmountInput.value = "00.00";  
+                    // document.getElementById("expenses_amount").value = not_claim; // Set input value
+                }
+            }
+        });
 
-      let claimedVAT = (vatAmount * claimedPercent) / 100; // Claimed VAT
-      let notClaimedVAT = vatAmount - claimedVAT; // Remaining not claimed VAT
+        vatAmountInput.value = vatAmount.toFixed(2);
+        grossAmountInput.value = grossAmount.toFixed(2);  
 
-      reclaim_amount.value = claimedVAT.toFixed(2);
-      not_claim.value = notClaimedVAT.toFixed(2);
 
-      vatAmountInput.value = vatAmount.toFixed(2);
-      grossAmountInput.value = grossAmount.toFixed(2);
+        expensesAmountInput.value = "";
     }
 
     // Trigger calculation on VAT change or Net Amount change
@@ -153,43 +196,12 @@
     netAmountInput.addEventListener('input', calculateTax);
 
     document.getElementById("expenses").addEventListener("change", function() {
-
-      $.ajax({
-        type: "GET",
-        url: "{{ url('/purchase/purchase-day-book-reclaim-per') }}",
-        data: '',
-        success: function(data) {
-          console.log("Response ", data);
-          if (data == "0") {
-            getCalculatedData();
-          } else {
-            let not_claim = document.getElementById('not_claim').value;
-            document.getElementById("expenses_amount").value = not_claim; // Set input value
-
-          }
-        }
-      });
-
-      function getCalculatedData() {
-        $.ajax({
-          type: "GET",
-          url: "{{ url('/purchase/reclaimPercantage') }}",
-          success: function(response) {
-            console.log("reclaimPercantage ", response.data);
-            var vatAmount = document.getElementById('vat_amount').value;
-            console.log("vatAmount", vatAmount);
-
-            let reclaimed = (vatAmount * response.data) / 100;
-
-            console.log("Reclaimed Amount:", reclaimed.toFixed(2));
-            document.getElementById('not_claim').value = reclaimed.toFixed(2);
-            document.getElementById("expenses_amount").value = (parseFloat(vatAmount) - parseFloat(reclaimed)).toFixed(2); 
-          }
-        });
-      }
-
+      var not_claimedAmt =  document.getElementById('not_claim').value;
+      document.getElementById("expenses_amount").value = not_claimedAmt;
 
     });
-  });
+
+});
+
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
