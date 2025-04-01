@@ -148,10 +148,6 @@
         min-height: auto;
     }
 
-    .tabs_finance {
-        padding: 20px 20px 0 20px;
-    }
-
     [data-tab-finance-content] {
         display: none;
     }
@@ -159,7 +155,7 @@
     .active[data-tab-finance-content] {
         display: block;
         border-top: 1px solid #ddd;
-        padding: 20px 20px 0 20px;
+        padding: 20px;
     }
 
     .inner_cards .icon {
@@ -169,20 +165,12 @@
         color: #fff;
         height: 90px;
         border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
+        border-top-right-radius: 5px;
         box-shadow: 0px 0px 20px rgb(0 0 0 / 10%);
-        width: 91px;
-    }
-
-    .inner_cards .card_name {
-        padding: 0px 15px 0 0;
     }
 
     .inner_cards a {
         text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 20px;
     }
 
     .inner_cards .icon.icon1 {
@@ -230,6 +218,20 @@
         font-size: 45px;
     }
 
+    .inner_cards .card_name {
+        padding: 20px 15px;
+        text-align: center;
+        background-color: #fff;
+        margin-bottom: 20px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        height: 100%;
+        min-height: 79px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .inner_cards .card_name h4 {
         margin-bottom: 0px;
         margin-top: 0px;
@@ -241,8 +243,6 @@
     .inner_cards {
         box-shadow: 0px 0px 20px rgb(0 0 0 / 10%);
         position: relative;
-        margin-bottom: 20px;
-        border-radius: 5px;
     }
 
     .show_dropdown {
@@ -261,15 +261,10 @@
         gap: 10px;
         align-items: baseline;
         border-bottom: 1px solid #ddd;
-        width: 100%;
     }
 
     .show_dropdown a div:hover {
         color: #1f88b5;
-    }
-
-    .show_dropdown a:last-child div {
-        border-bottom: 0;
     }
 
     .show_dropdown::before {
@@ -281,19 +276,6 @@
         top: -7px;
         left: 20px;
         box-shadow: 0px 0px 20px rgb(0 0 0 / 10%)
-    }
-
-    .wdgt-value {
-        color: #747474;
-    }
-
-    .tab_finance.active .profile-nav .panel .panel-body .wdgt-value h4 {
-        color: #1f88b5;
-        font-weight: 600;
-    }
-
-    .tab_finance.active .profile-nav .panel .wdgt-row {
-        background-color: #1f88b5 !important;
     }
 </style>
 
@@ -344,7 +326,7 @@
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Purchase_Order">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row lightRed">
+                                                <div class="user-heading alt wdgt-row bg-blue">
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </div>
                                                 <div class="panel-body">
@@ -374,7 +356,7 @@
                                         <a href="{{ url('/petty-cash/child_register') }}">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row bg-purple">
+                                                    <div class="user-heading alt wdgt-row purple-bg">
                                                         <i class="fa fa-child"></i>
                                                     </div>
                                                     <div class="panel-body">
@@ -392,13 +374,11 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon1">
-                                                                        <i class="fa fa-tachometer" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon1">
+                                                                    <i class="fa fa-tachometer" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Dashboard</h4>
@@ -406,13 +386,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('invoices/add')}}">
-                                                                <div>
-                                                                    <div class="icon icon2">
-                                                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon2">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>New Invoice</h4>
@@ -420,13 +398,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('invoices/invoice?key=Draft')}}">
-                                                                <div>
-                                                                    <div class="icon icon3">
-                                                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon3">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Draft Invoices</h4>
@@ -434,13 +410,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('invoices/invoice?key=Outstanding')}}">
-                                                                <div>
-                                                                    <div class="icon icon4">
-                                                                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon4">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Outstanding Invoices</h4>
@@ -448,13 +422,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('invoices/invoice?key=Overdue')}}">
-                                                                <div>
-                                                                    <div class="icon icon3">
-                                                                        <i class="fa fa-warning" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon5">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Overdue Invoices</h4>
@@ -462,13 +434,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('invoices/invoice?key=Paid')}}">
-                                                                <div>
-                                                                    <div class="icon icon6">
-                                                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon6">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Paid Invoices</h4>
@@ -476,13 +446,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon7">
-                                                                        <i class="fa fa-search" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon7">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Search Invoices</h4>
@@ -490,13 +458,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon8">
-                                                                        <i class="fa fa-book" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon8">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Account Statements</h4>
@@ -504,13 +470,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon9">
-                                                                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon9">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Reminders</h4>
@@ -518,84 +482,76 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <div class="inner_card_dropdown" data-target="show_inner_card_dropdown1">
-                                                                <a href="javascript:void(0)">
-                                                                    <div>
-                                                                        <div class="icon icon10">
-                                                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card_name">
-                                                                        <h4>Recurring Invoices</h4>
-                                                                    </div>
-                                                                </a>
+                                                                <div class="icon icon10">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Recurring Invoices</h4>
+                                                                </div>
                                                             </div>
                                                             <div class="show_dropdown show_inner_card_dropdown1 " style="display: none;">
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span>New Recurring Invoice </span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span> Recurring Invoice</span>
                                                                     </div>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <div class="inner_card_dropdown" data-target="show_inner_card_dropdown2">
-                                                                <a href="javascript:void(0)">
-                                                                    <div>
-                                                                        <div class="icon icon4">
-                                                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card_name">
-                                                                        <h4>Credit Notes</h4>
-                                                                    </div>
-                                                                </a>
+                                                                <div class="icon icon10">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Credit Notes</h4>
+                                                                </div>
                                                             </div>
                                                             <div class="show_dropdown show_inner_card_dropdown2 " style="display: none;">
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span> New Credit Note</span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span>Draft Credit Note</span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span> Awaiting Approval Credit Note</span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span>Approval Credit Note</span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span>Paid Credit Note</span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span>Cancelled Credit Note</span>
 
                                                                     </div>
@@ -611,13 +567,11 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon8">
-                                                                        <i class="fa fa-tachometer" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon8">
+                                                                    <i class="fa fa-tachometer" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Dashboard</h4>
@@ -625,13 +579,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('purchase_order')}}">
-                                                                <div>
-                                                                    <div class="icon icon9">
-                                                                        <i class="fa fa-cart-plus"></i>
-                                                                    </div>
+                                                                <div class="icon icon9">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>New Purchase Order </h4>
@@ -639,13 +591,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('draft_purchase_order')}}">
-                                                                <div>
-                                                                    <div class="icon icon10">
-                                                                        <i class="fa fa-floppy-o"></i>
-                                                                    </div>
+                                                                <div class="icon icon10">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Draft Purchase Order</h4>
@@ -653,13 +603,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}">
-                                                                <div>
-                                                                    <div class="icon icon4">
-                                                                        <i class="fa fa-hourglass-half"></i>
-                                                                    </div>
+                                                                <div class="icon icon4">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Awaiting Approval Purchase Orders</h4>
@@ -667,13 +615,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{ url('draft_purchase_order?list_mode=Approved') }}">
-                                                                <div>
-                                                                    <div class="icon icon5">
-                                                                        <i class="fa fa-check-circle"></i>
-                                                                    </div>
+                                                                <div class="icon icon5">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Approved Purchase Order</h4>
@@ -681,13 +627,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}">
-                                                                <div>
-                                                                    <div class="icon icon6">
-                                                                        <i class="fa fa-times-circle"></i>
-                                                                    </div>
+                                                                <div class="icon icon6">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Rejected Purchase Order </h4>
@@ -695,13 +639,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}">
-                                                                <div>
-                                                                    <div class="icon icon7">
-                                                                        <i class="fa fa-file-text"></i>
-                                                                    </div>
+                                                                <div class="icon icon7">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Actioned Purchase Order</h4>
@@ -709,13 +651,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{ url('draft_purchase_order?list_mode=Paid') }}">
-                                                                <div>
-                                                                    <div class="icon icon8">
-                                                                        <i class="fa fa-thumbs-up"></i>
-                                                                    </div>
+                                                                <div class="icon icon8">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Paid Purchase Order</h4>
@@ -723,13 +663,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('purchase-orders-search')}}">
-                                                                <div>
-                                                                    <div class="icon icon3">
-                                                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon3">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Search Purchase Orders </h4>
@@ -737,13 +675,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('purchase-order-invoices')}}">
-                                                                <div>
-                                                                    <div class="icon icon2">
-                                                                        <i class="fa fa-file-text"></i>
-                                                                    </div>
+                                                                <div class="icon icon2">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Invoices Received </h4>
@@ -751,13 +687,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{url('purchase-order-statements')}}">
-                                                                <div>
-                                                                    <div class="icon icon1">
-                                                                        <i class="fa fa-book"></i>
-                                                                    </div>
+                                                                <div class="icon icon1">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Purchase Orders Statements</h4>
@@ -765,72 +699,64 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <div class="inner_card_dropdown" data-target="show_inner_card_dropdown3">
-                                                                <a href="javascript:void(0)">
-                                                                    <div>
-                                                                        <div class="icon icon7">
-                                                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card_name">
-                                                                        <h4>Recurring Purchase Orders</h4>
-                                                                    </div>
-                                                                </a>
+                                                                <div class="icon icon7">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Recurring Purchase Orders</h4>
+                                                                </div>
                                                             </div>
                                                             <div class="show_dropdown show_inner_card_dropdown3 " style="display: none;">
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span>New Recurring Purchase Order</span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="#!">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span> Recurring Purchase Orders</span>
                                                                     </div>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <div class="inner_card_dropdown" data-target="show_inner_card_dropdown4">
-                                                                <a href="javascript:void(0)">
-                                                                    <div>
-                                                                        <div class="icon icon10">
-                                                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card_name">
-                                                                        <h4>Credit Notes</h4>
-                                                                    </div>
-                                                                </a>
+                                                                <div class="icon icon3">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Credit Notes</h4>
+                                                                </div>
                                                             </div>
                                                             <div class="show_dropdown show_inner_card_dropdown4 " style="display: none;">
                                                                 <a href="{{url('new_credit_notes')}}">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span> New Credit Note </span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="{{url('credit_notes?list_mode=Approved')}}">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span> Approval Credit Note</span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="{{url('credit_notes?list_mode=Paid')}}">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span> Paid Credit Note</span>
                                                                     </div>
                                                                 </a>
                                                                 <a href="{{url('credit_notes?list_mode=Cancelled')}}">
                                                                     <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                         <span> Cancelled Credit Note</span>
                                                                     </div>
                                                                 </a>
@@ -845,13 +771,11 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="{{ url('/petty-cash/expend-card') }}">
-                                                                <div>
-                                                                    <div class="icon icon10">
-                                                                        <i class="fa fa-expand" aria-hidden="true"></i>
-                                                                    </div>
+                                                                <div class="icon icon10">
+                                                                    <i class="fa fa-tachometer" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Expand Card</h4>
@@ -859,13 +783,11 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <div class="col-md-2">
                                                         <div class="inner_cards">
                                                             <a href="">
-                                                                <div>
-                                                                    <div class="icon icon7">
-                                                                        <i class="fa fa-money"></i>
-                                                                    </div>
+                                                                <div class="icon icon7">
+                                                                    <i class="fa fa-money"></i>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Cash</h4>
