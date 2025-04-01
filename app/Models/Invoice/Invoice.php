@@ -74,8 +74,8 @@ class Invoice extends Model
     public function sites(){
         return $this->belongsTo(Constructor_customer_site::class, 'site_delivery_add_id','id');
     }
-    public function poAttachments(){
-        return $this->hasMany(PoAttachment::class, 'po_id', 'id')->whereNull('deleted_at');
+    public function invoiceAttachments(){
+        return $this->hasMany(InvoiceAttachment::class, 'invoice_id', 'id')->whereNull('deleted_at');
     }
     public function invoiceProducts(){
         return $this->hasMany(InvoiceProduct::class, 'invoice_id', 'id')->whereNull('deleted_at');
