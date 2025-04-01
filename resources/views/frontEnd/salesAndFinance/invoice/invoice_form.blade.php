@@ -9,6 +9,12 @@
         resize: none;
         overflow: hidden;
     }
+    .deleteRow {
+        cursor: pointer;
+    }
+    .image_style {
+        cursor: pointer;
+    }
 </style>
 <section class="main_section_page px-3">
 <div class="container-fluid">
@@ -513,8 +519,38 @@
                             <div class="py-4">
                                 <div class="jobsection">
                                     <a href="javascript:void(0)" onclick="get_modal(6)" class="profileDrop">New Attachments</a>
+                                    <a href="javascript:void(0)" class="profileDrop">Upload Multi Attachment</a>
+                                    <a href="javascript:void(0)" class="profileDrop">Preview Attachment(s)</a>
+                                    <a href="javascript:void(0)" class="profileDrop">Download Attachment(s)</a>
+                                    <a href="javascript:void(0)" class="profileDrop">Delete Attachment(s)</a>
                                 </div>
                             </div>
+                            @if(isset($invoice) && $invoice !='')
+                            <div class="col-sm-12">
+                                <div class="productDetailTable input_style">
+                                    <table class="table">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style=" width:30px;"><input type="checkbox" id="selectAll"> <label for="selectAll"></label></th>
+                                                <th>ID</th>
+                                                <th>Type</th>
+                                                <th class="col-2">Title</th>
+                                                <th>Description</th>
+                                                <th>Section</th>
+                                                <th>Customer Visible</th>
+                                                <th>Mobile User Visible</th>
+                                                <th>File Name</th>
+                                                <th>Mime Type / Size</th>
+                                                <th>Created On</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="attachments_result"></tbody>
+                                    </table>
+                                    <div id="pagination-controls-Attachments"></div>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div><!-- End  off newJobForm -->
@@ -525,7 +561,7 @@
                         <div class="col-sm-12">
                             <div class="py-4">
                                 <div class="jobsection">
-                                    <a href="#!" class="profileDrop disabled-tab">New Tasks</a>
+                                    <a href="javascript:void(0)" onclick="get_modal(8)" class="profileDrop <?php if(isset($invoice) && $invoice ==''){ echo "disabled-tab"; }?>">New Tasks</a>
                                 </div>
                                 <div class="jobsection pt-3">
                                     <a href="#!" class="profileDrop bgColour" id="task_active_inactive" style="background-color:#474747" onclick="bgColorChange(1)">Tasks</a>
@@ -579,25 +615,35 @@
     <x-add-attachment-modal
     purchaseModalId="purchase_model"
     purchaseformId="purchase_Attachmentform"
-    refTitle="Purchase"
+    refTitle="Invoice"
     modalTitle="Add Attachment"
     typeId="purchase_typeId"
     inputTitle="purchase_title"
     selectfileName="purchase_file"
     inputDescription="purchase_description"
     saveButtonId="savePurchaseAttachment"
-    hiddenForeignId="po_id" />
+    saveButtonUrl="{{url('/invoices/invoice_attachmentSave')}}"
+    hiddenForeignId="invoice_id" />
+
 <script>
 const tagURL = '{{ route("General.ajax.getTags") }}';
 var get_itemUrl="{{ route('item.ajax.searchProduct') }}";
 var result_product_calculationUrl="{{url('result_product_calculation')}}";
 var vat_tax_detailsUrl="{{url('/vat_tax_details')}}";
-var invoice_productsDeleteUrl="{{url('invoice_productsDelete')}}";
+var invoice_productsDeleteUrl="{{url('invoices/invoice_productsDelete')}}";
 var invoice_saveUrl="{{url('/invoices/invoice_save')}}";
 var get_customer_details_frontUrl="{{url('get_customer_details_front')}}";
 var getCustomerSiteDetailsUrl='{{ route("customer.ajax.getCustomerSiteDetails") }}';
 var redirectUrl="{{ url('invoices/invoice?key=Draft') }}";
 var save_tagUrl="{{url('/save_tag')}}";
+var getAttachmentPageUrl='{{ url("invoices/getInvoiceAllAttachmens") }}';
+var customer_visibleURL='{{ url("invoices/customer_visibleUpdate") }}';
+var mobile_user_visibleURL='{{ url("invoices/mobile_user_visibleUpdate") }}';
+var deleteInvoiceAttachmentURL="{{url('/invoices/delete_invoice_attachment')}}";
+var invoice_id="<?php if(isset($invoice) && $invoice !=''){echo $invoice->id;}?>";
+var invoice_ref="<?php if(isset($invoice) && $invoice !=''){echo $invoice->invoice_ref;}?>";
+var attachmentsFileURL="<?php echo url('public/images/invoice_attachment/'); ?>";
+var delete_image="<?php echo url('public/frontEnd/jobs/images/delete.png'); ?>";
 var token = '<?php echo csrf_token(); ?>'
 </script>
 @include('components.add-customer-modal')
@@ -617,6 +663,7 @@ var token = '<?php echo csrf_token(); ?>'
 <script>
 <?php if(isset($invoice) && $invoice !=''){?>
     var id='{{$invoice->id}}';
-    getProductDetail(id, '{{ url("invoices/getInvoiceProductDetail") }}')
+    getProductDetail(id, '{{ url("invoices/getInvoiceProductDetail") }}');
+    getAttachment(id, '{{ url("invoices/getInvoiceAllAttachmens") }}');
 <?php }?>
 </script>

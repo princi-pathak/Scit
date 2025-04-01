@@ -9250,3 +9250,8 @@ ul.pop-notification>li a:hover i {
     opacity: 0;
     cursor: pointer;
 }
+
+.full-width #main-content {
+    margin-left: 0;
+    min-height: 89.3vh;
+}

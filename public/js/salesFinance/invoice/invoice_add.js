@@ -66,7 +66,6 @@ function bgColorChange(button) {
 
 function get_modal(modal){
     var customer_id=$("#invoice_customer_id").val();
-    var invoice_id='';
     if(modal == 1){  
         $("#AddCustomerModal")[0].reset();
         $("#job_title_plusIcon").hide();
@@ -101,17 +100,25 @@ function get_modal(modal){
             }
         } else {
             $("#purchase_Attachmentform")[0].reset();
-            $("#Purchase_ref").val(purchase_ref);
-            $("#po_id").val(invoice_id);
+            $("#Invoice_ref").val(invoice_ref);
+            $("#invoice_id").val(invoice_id);
             $("#purchase_model").modal('show');
         }
     }else if(modal == 7){
         $("#add_tag_form")[0].reset();
         $("#TagModal").modal('show');
+    }else if(modal == 8){
+        $("#newTaskform")[0].reset();
+        get_supplier_details();
+        $("#modal_label_title").text('Supplier');
+        $("#related_To").text(purchase_ref);
+        $("#task_po_id").val(po_id);
+        $("#NewTaskModal").modal('show');
     }else{
         alert("Please Select Customer");
         return false;
     }
+    
 }
 function open_customer_type_modal() {
     $('#cutomer_type_modal').modal('show');
@@ -188,7 +195,7 @@ $(document).ready(function() {
                         // Check if the clicked element is an <li> (to avoid triggering on other child elements)
                         if (event.target.tagName.toLowerCase() === 'li') {
                             const selectedId = event.target.id; // Get the ID of the clicked <li>
-                            console.log('Selected Product ID:', selectedId); // Print the ID of the selected product
+                            // console.log('Selected Product ID:', selectedId); // Print the ID of the selected product
                             getProductData(selectedId);
                         }
                     });
@@ -456,7 +463,7 @@ function getProductDetail(id,url){
             _token: token
         },
         success: function(response) {
-            console.log(response);
+            // console.log(response);
             // return false;
             var data = response.data[0];
             const tableBody = document.querySelector(`#result tbody`);
@@ -663,10 +670,10 @@ function getProductDetail(id,url){
                     vatCell.appendChild(inputVat);
                     row.appendChild(vatCell);
 
-                    // const delveriQTYCell = document.createElement('td');
-                    // delveriQTYCell.innerHTML = '-';
-                    // delveriQTYCell.className = 'text-center';
-                    // row.appendChild(delveriQTYCell);
+                    const delveriQTYCell = document.createElement('td');
+                    delveriQTYCell.innerHTML = '-';
+                    delveriQTYCell.className = 'text-center';
+                    row.appendChild(delveriQTYCell);
 
                     const spanCheckboxCell = document.createElement('td');
                     const spanCheckbox = document.createElement('span');
@@ -692,7 +699,7 @@ function getProductDetail(id,url){
 
                     tableBody.appendChild(row);
                     updateAmount(row, paid_amount)
-                    console.log(row)
+                    // console.log(row)
                 });
                 $("#product_calculation").show();
 
@@ -724,7 +731,7 @@ function auto_grow(element) {
 var check_paid_amount = 0;
 
     function updateAmount(row, paid_amount = 0) {
-        console.log(row)
+        // console.log(row)
         // return false;
         // const priceInput = row.querySelector('.price');
         // alert(typeof(paid_amount))
@@ -742,7 +749,7 @@ var check_paid_amount = 0;
         const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value;
         const vat = row.querySelector('.vat');
         const percentage = amount * vat_ratePercentage / 100;
-        alert(typeof(percentage))
+        // alert(typeof(percentage))
         vat.value = percentage.toFixed(2);
 
         var calculation = 0;
@@ -807,7 +814,6 @@ var check_paid_amount = 0;
         var row = button.parentNode;
 
         if (id) {
-            var token = '<?php echo csrf_token(); ?>'
             $.ajax({
                 type: "POST",
                 url: invoice_productsDeleteUrl,
@@ -1111,3 +1117,147 @@ var check_paid_amount = 0;
             });
         }
     });
+    function getAllAttachment(data) {
+        getAttachment(data.invoice_id, getAttachmentPageUrl)
+    }
+
+    function getAttachment(id, getAttachmentPageUrl) {
+        $.ajax({
+            url: getAttachmentPageUrl,
+            method: 'POST',
+            data: {
+                id: id,
+                _token: token
+            },
+            success: function(response) {
+                // console.log(response);return false;
+                var paginationAttachment = response.pagination;
+                var data = response.data.data;
+                // const attachments = response.data.data[0].po_attachments || [];
+                const attachments = data;
+                // console.log(attachments);
+                const tbody = $('#attachments_result');
+                tbody.empty();
+                attachments.forEach(attachment => {
+                    // $("#deleteSelectedRows").show();
+                    const attachmentType = attachment.attachment_type?.title || '';
+                    const title = attachment.title || '';
+                    const description = attachment.description || '';
+                    const section = attachment.Purchase_ref || 'Invoice';
+                    const fileName = attachment.original_file_name || '';
+                    const mime_type = attachment.mime_type || '';
+                    const size = attachment.size || '';
+                    const created_at = attachment.created_at || '';
+                    var customer_visible = attachment.customer_visible || 0;
+                    var mobile_user_visible = attachment.mobile_user_visible || 0;
+                    var customer_visible_icon='';
+                    var mobile_user_visible_icon='';
+                    if(customer_visible == 0){
+                        customer_visible_icon='<span class="grayCheck" onclick="customer_visible(' + attachment.id +',1)"><i class="fa-solid fa-circle-check"></i></span>';
+                    }else{
+                        customer_visible_icon='<span class="grencheck" onclick="customer_visible(' + attachment.id + ',0)"><i class="fa-solid fa-circle-check"></i></span>';
+                    }
+                    if(mobile_user_visible ==0){
+                        mobile_user_visible_icon='<span class="grayCheck" onclick="mobile_user_visible(' + attachment.id + ',1)"><i class="fa-solid fa-circle-check"></i></span>';
+                    }else{
+                        mobile_user_visible_icon='<span class="grencheck" onclick="mobile_user_visible(' + attachment.id + ',0)"><i class="fa-solid fa-circle-check"></i></span>';
+                    }
+                    var date = moment(created_at).format('DD/MM/YYYY HH:mm');
+                    var imag_url = attachmentsFileURL + '/' + attachment.file;
+                    tbody.append(`
+                        <tr>
+                            <td><input type="checkbox" id="" class="delete_checkbox" value="` + attachment.id + `"></td>
+                            <td>${attachment.id}</td>
+                            <td>${attachmentType}</td>
+                            <td><input type="hidden" name="purchaseattachment_id[]" value="${attachment.id}"><input type="text" class="form-control" name="purchaseattachment_title[]" value="${title}"></td>
+                            <td>${description}</td>
+                            <td>${section}</td>
+                            <td>${customer_visible_icon}</td>
+                            <td>${mobile_user_visible_icon}</td>
+                            <td>${fileName}</td>
+                            <td>${mime_type} / ${size}</td>
+                            <td>${date}</td>
+                            <td><a href="` + imag_url + `" target="_blank"><i class="fa fa-eye"></i></a> &emsp; <img src="` +delete_image+ `" alt="" class="attachment_delete image_style" data-delete=` + attachment.id + `></td>
+                        </tr>
+                    `);
+                });
+                var paginationControlsAttachment = $("#pagination-controls-Attachments");
+                paginationControlsAttachment.empty();
+                if (paginationAttachment.prev_page_url) {
+                    paginationControlsAttachment.append('<button type="button" class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationAttachment.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationAttachment.next_page_url) {
+                    paginationControlsAttachment.append('<button type="button" class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationAttachment.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                // location.reload();
+            }
+        });
+    }
+function customer_visible(id,customer_visibleData){
+    $.ajax({
+            url: customer_visibleURL,
+            method: 'POST',
+            data: {
+                id: id,
+                customer_visibleData:customer_visibleData,
+                _token: token
+            },
+            success: function(response) {
+                // console.log(response);return false;
+                if(response.success === true){
+                    location.reload();
+                }else{
+                    alert("Something went wrong!");
+                    return false;
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                // location.reload();
+            }
+        });
+}
+function mobile_user_visible(id,mobile_user_visibleData){
+    $.ajax({
+            url: mobile_user_visibleURL,
+            method: 'POST',
+            data: {
+                id: id,
+                mobile_user_visibleData:mobile_user_visibleData,
+                _token: token
+            },
+            success: function(response) {
+                // console.log(response);return false;
+                if(response.success === true){
+                    location.reload();
+                }else{
+                    alert("Something went wrong!");
+                    return false;
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                // location.reload();
+            }
+        });
+}
+$(document).on('click', '.attachment_delete', function() {
+    var id = $(this).data('delete');
+    if (confirm("Are you sure you want to delete this row?")) {
+        $(this).closest('tr').remove();
+        $.ajax({
+            type: "POST",
+            url: deleteInvoiceAttachmentURL,
+            data: {
+                id: id,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
+});

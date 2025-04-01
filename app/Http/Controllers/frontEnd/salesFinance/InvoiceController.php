@@ -25,6 +25,7 @@ use App\Models\Constructor_additional_contact;
 use App\Models\Constructor_customer_site;
 use App\Models\Product;
 use App\Models\Payment_type;
+use App\Models\Invoice\InvoiceAttachment;
 
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 
@@ -374,6 +375,117 @@ class InvoiceController extends Controller
 
         // $sortedArray = $sortedData->values()->all();
         return $purchase_order+$credit_allocate;
+    }
+    public function invoice_productsDelete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            InvoiceProduct::find($request->id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            Log::error('Error deleting Invoice Product: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function invoice_attachmentSave(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|file',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        try{
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $imageName = time() . '.' . $file->extension();
+                $original_name = $file->getClientOriginalName();
+                $mime_type = $file->getMimeType();
+                $file_size_bytes = $file->getSize();
+                $file->move(public_path('images/invoice_attachment'), $imageName);
+
+                if ($file_size_bytes >= 1073741824) {
+                    $file_size = round($file_size_bytes / 1073741824, 2) . ' GB';
+                } elseif ($file_size_bytes >= 1048576) { 
+                    $file_size = round($file_size_bytes / 1048576, 2) . ' MB';
+                } elseif ($file_size_bytes >= 1024) { 
+                    $file_size = round($file_size_bytes / 1024, 2) . ' KB';
+                } else {
+                    $file_size = $file_size_bytes . ' Bytes';
+                }
+
+                $requestData = $request->all();
+                $requestData['file'] = $imageName;
+                $requestData['original_file_name'] = $original_name;
+                $requestData['mime_type'] = $mime_type;
+                $requestData['size'] = $file_size;
+            } else {
+                $requestData = $request->all();
+            }
+            // echo "<pre>";print_r($requestData);die;
+            $attachment=InvoiceAttachment::saveInvoiceAttachments($requestData);
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>"Attachment Added Successfully Done",'data'=>$attachment]);
+            }else{
+                return response()->json(['success'=>true,'message'=>"Attachment Updated Successfully Done",'data'=>$attachment]);
+            }
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function getInvoiceAllAttachmens(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $invioceAttachments = InvoiceAttachment::with(['attachmentType'])->where(['invoice_id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'asc')->paginate(10);
+
+        return response()->json([
+            'success' => true, 'data' => $invioceAttachments, 
+            'pagination' => [
+                    'total' => $invioceAttachments->total(),
+                    'current_page' => $invioceAttachments->currentPage(),
+                    'last_page' => $invioceAttachments->lastPage(),
+                    'per_page' => $invioceAttachments->perPage(),
+                    'next_page_url' => $invioceAttachments->nextPageUrl(),
+                    'prev_page_url' => $invioceAttachments->previousPageUrl(),
+                ]
+        ]);
+    }
+    public function customer_visibleUpdate(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            
+            $attachment=InvoiceAttachment::find($request->id);
+            $attachment->customer_visible=$request->customer_visibleData;
+            $attachment->save();
+            if($attachment){
+                return response()->json(['success'=>true,'message'=>"Changes succesfully Done",'data'=>$attachment]);
+            }
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function mobile_user_visibleUpdate(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            
+            $attachment=InvoiceAttachment::find($request->id);
+            $attachment->mobile_user_visible=$request->mobile_user_visibleData;
+            $attachment->save();
+            if($attachment){
+                return response()->json(['success'=>true,'message'=>"Changes succesfully Done",'data'=>$attachment]);
+            }
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function delete_invoice_attachment(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            InvoiceAttachment::find($request->id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            Log::error('Error deleting Invoice Attachments: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     

@@ -398,6 +398,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/print', 'preview');
 			Route::get('/edit', 'create');
 			Route::post('/getInvoiceProductDetail', 'getInvoiceProductDetail');
+			Route::post('/invoice_productsDelete', 'invoice_productsDelete');
+			Route::post('/invoice_attachmentSave', 'invoice_attachmentSave');
+			Route::post('/getInvoiceAllAttachmens', 'getInvoiceAllAttachmens');
+			Route::post('/customer_visibleUpdate', 'customer_visibleUpdate');
+			Route::post('/mobile_user_visibleUpdate', 'mobile_user_visibleUpdate');
+			Route::post('/delete_invoice_attachment', 'delete_invoice_attachment');
 			
 		});
 	});
