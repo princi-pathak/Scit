@@ -75,7 +75,7 @@
                         <tbody id="result">
                             <?php foreach ($tax_rate as $key => $val) { ?>
                                 <tr>
-                                    <td><input type="checkbox" id="" class="delete_checkbox" @php if($val->tax_rate == 20 ){ echo "disabled"; } @endphp value="{{$val->id}}"></td>
+                                    <td><input type="checkbox" id="" class="delete_checkbox" @php if($val->id == 1 || $val->id == 2 ){ echo "disabled"; } @endphp value="{{$val->id}}"></td>
                                     <td>{{++$key}}</td>
                                     <td>{{$val->name}}</td>
                                     <td>{{$val->tax_rate}}</td>

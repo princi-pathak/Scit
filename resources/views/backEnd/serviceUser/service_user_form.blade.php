@@ -95,7 +95,24 @@
 
                                    <!-- <input class="form-control default-date-picker" type="text" value="{{ (isset($user_info->date_of_birth)) ? date('d-m-Y',strtotime($user_info->date_of_birth)) : '' }}" placeholder="DD-MM-YYYY" name="date_of_birth" value="" maxlength="10" /> -->
                                 </div>
-                            </div>                            
+                            </div>      
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Child Type</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" name="child_type" {{ (isset($del_status)) ? $disabled: '' }}>
+                                        <option value="">Select Type</option>
+                                        <option value="1">Residential</option>
+                                        <option value="2">Supported Accomodation</option>
+                                        <option value="3">Leavers</option>
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Weekly Rate</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="height" class="form-control" placeholder="Weekly Rate" value="{{ (isset($user_info->height)) ? $user_info->height : '' }}" maxlength="255" {{ (isset($del_status)) ? $disabled: '' }}>
+                                </div>
+                            </div>                     
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Height</label>
                                 <div class="col-lg-9">
