@@ -108,15 +108,15 @@ class PurchaseController extends Controller
 
     public function reclaimPercantage(){
 
-        $excepmt = SalesDayBook::Where('Vat', 5)->whereNull('deleted_at')->sum('netAmount');
+        $excepmt = SalesDayBook::Where('Vat', 1)->whereNull('deleted_at')->sum('netAmount');
         $standard = SalesDayBook::Where('Vat', 2)->whereNull('deleted_at')->sum('netAmount');
 
-        $residual = ($standard) / ($standard + $excepmt);
-        $reclaim  = round($residual, 2); 
+        $residual = (($standard) / ($standard + $excepmt))*100;
+        // $reclaim  = round($residual, 2); 
 
         return response()->json([
             'success' => (bool) $excepmt,
-            'data' => $reclaim ? $reclaim : 0
+            'data' => $residual ? $residual : 0
         ]);
     }   
 

@@ -45,7 +45,7 @@
                   <div class="mb-3 row">
                     <label for="gross_amount" class="col-sm-2 col-form-label">Total Amount (to be paid)</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="" id="totalAmount" value="{{ isset($purchaseBook->reclaim) ? $purchaseBook->grossAmount + $purchaseBook->reclaim : $purchaseBook->grossAmount }}" readonly>
+                      <input type="text" class="form-control editInput" name="" id="totalAmount" value="{{ isset($purchaseBook) ? ($purchaseBook->grossAmount + ($purchaseBook->reclaim ?? 0)) : '' }}" readonly>
                     </div>
                   </div>
             

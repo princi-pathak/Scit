@@ -20,7 +20,7 @@ class SalesController extends Controller
         $data['page'] = "dayBook";
         $data['salesDayBooks'] = SalesDayBook::join('customers', 'customers.id', '=', 'sales_day_books.customer_id')
             ->join('construction_tax_rates', 'construction_tax_rates.id', '=', 'sales_day_books.Vat')
-            ->where('sales_day_books.home_id', Auth::user()->home_id)
+            // ->where('sales_day_books.home_id', Auth::user()->home_id)
             ->select('sales_day_books.*', 'customers.name as customer_name', 'construction_tax_rates.name as tax_rate_name')
             ->whereNull('sales_day_books.deleted_at')
             ->orderBy('sales_day_books.created_at', 'desc')
