@@ -1117,6 +1117,7 @@
     selectfileName="purchase_file"
     inputDescription="purchase_description"
     saveButtonId="savePurchaseAttachment"
+    saveButtonUrl="{{url('/purchase_order_attachment_save')}}"
     hiddenForeignId="po_id" />
 
 <x-new-task-modal
