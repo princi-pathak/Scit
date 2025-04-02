@@ -91,7 +91,7 @@
     function save_reminder(){
         $.ajax({
             type: "POST",
-            url: "{{url('/save_reminder')}}",
+            url: "{{ $reminderSaveUrl }}",
             data: new FormData($("#{{ $reminderformId }}")[0]),
             async: false,
             contentType: false,
@@ -110,7 +110,10 @@
                     setTimeout(function() {
                         $('#message_reminderModal').removeClass('success-message').text('').hide();
                         $("#{{ $reminderModalId }}").modal('hide');
-                        getAllReminder(response.data);
+                        var id=$("#{{ $reminderId }}").val();
+                        if(id == '' || id == null || id == 'undefined'){
+                            getAllReminder(response.data);
+                        }
                     }, 3000);
                 }else{
                     alert("Something went wrong! Please try later");

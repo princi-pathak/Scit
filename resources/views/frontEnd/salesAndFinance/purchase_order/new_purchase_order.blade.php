@@ -1138,6 +1138,8 @@
     notifyTime="notify_time"
     taskNotesText="taskNotesText"
     modalLabelTitle="modal_label_title"
+    saveNewTaskUrl="{{url('/purchase_order_new_task_save')}}"
+    completeNewTaskUrl="{{url('/purchase_order_new_task_complete')}}"
     saveButtonId="saveNewTask" />
 
 <x-vat-tax-rate
@@ -1166,6 +1168,7 @@
     reminderSms="reminder_sms"
     reminderTitle="reminder_title"
     reminderNotes="reminder_notes"
+    reminderSaveUrl="{{url('/save_reminder')}}"
     saveButtonId="saveReminder" />
 <x-purchase-search-modal
     searchModalId="refrence_purchase_seacrh_modal"
@@ -2528,6 +2531,7 @@
         });
     }
     $(document).on('click', '.modal_dataTaskFetch', function() {
+        $("#completeBTN").show();
         var taskId = $(this).data('id');
         var task_po_id = $(this).data('po_id');
         var task_supplier_id = $(this).data('supplier_id');
@@ -2546,7 +2550,7 @@
         var notifyDate = $(this).data('notify_date');
         var notifyTime = $(this).data('notify_time');
         var notes = $(this).data('notes');
-
+        get_supplier_details();
         $('#task_id').val(taskId);
         $('#task_po_id').val(task_po_id);
         $('#task_supplier_id').val(task_supplier_id);
