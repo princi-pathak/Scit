@@ -15,6 +15,9 @@
     .image_style {
         cursor: pointer;
     }
+    .unclicked {
+        pointer-events: none;
+    }
 </style>
 <section class="main_section_page px-3">
 <div class="container-fluid">
@@ -35,6 +38,7 @@
 
     <div class="row">
         <form id="all_data"class="customerForm">
+            <input type="hidden" name="id" value="<?php if(isset($invoice) && $invoice !=''){echo $invoice->id;}?>">
             <div class="col-lg-12">
                 <div class="newJobForm">
                     <div class="row">
@@ -350,9 +354,51 @@
                                     </div>   
                                     <div class="mb-3 row">
                                         <label for="" class="col-sm-5 col-form-label">
-                                            <a href="#" class="profileDrop pink"> <i class="fa fa-clock"></i> Set Reminder </a>
+                                            <a href="javascript:void(0)" onclick="openReminderModal(<?php if (isset($invoice) && $invoice != '') { echo $invoice->id; } ?>)" class="profileDrop pink"> <i class="fa fa-clock"></i> Set Reminder </a>
                                         </label>
-                                    </div>    
+                                    </div>  
+                                    <div class="setRiminderTable" style="display:none">
+                                        <div class="productDetailTable">
+                                            <table class="table" id="">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Title </th>
+                                                        <th>Date </th>
+                                                        <th>Time</th>
+                                                        <th>Status </th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="reminder_data">
+                                                    @foreach($reminder_data as $reminderVal)
+                                                    <tr>
+                                                        <td>{{$reminderVal->title}}</td>
+                                                        <td>{{$reminderVal->reminder_date}}</td>
+                                                        <td>{{$reminderVal->reminder_time}}</td>
+                                                        @if($reminderVal->status == 1)
+                                                        <td><span class="iconColrGreen">Sent</span></td>
+                                                        <td>
+
+                                                            <a href="javascript:void(0)" data-id="{{$reminderVal->id}}" data-title="{{$reminderVal->title}}" data-user_id="{{$reminderVal->user_id}}" data-reminder_date="{{$reminderVal->reminder_date}}" data-reminder_time="{{$reminderVal->reminder_time}}" data-notification="{{$reminderVal->notification}}" data-sms="{{$reminderVal->sms}}" data-email="{{$reminderVal->email}}" data-notes="{{$reminderVal->notes}}" data-icon="eye" class="fecth_data"><i class="material-symbols-outlined">
+                                                                    visibility
+                                                                </i></a>
+                                                            <a href="#!" class="iconColrGreen"><i class="material-symbols-outlined">
+                                                                    check_circle
+                                                                </i></a>
+                                                        </td>
+                                                        @else
+                                                        <td><span class="iconColrRad">Pending</span></td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="{{$reminderVal->id}}" data-invoice_id="{{ $reminderVal->invoice_id }}" data-title="{{$reminderVal->title}}" data-user_id="{{$reminderVal->user_id}}" data-reminder_date="{{$reminderVal->reminder_date}}" data-reminder_time="{{$reminderVal->reminder_time}}" data-notification="{{$reminderVal->notification}}" data-sms="{{$reminderVal->sms}}" data-email="{{$reminderVal->email}}" data-notes="{{$reminderVal->notes}}" data-icon="edit"><i class="material-symbols-outlined">edit</i></a>
+                                                            <a href="javascript:void(0)" class="iconColrRad reminder_delete" data-delete="{{ $reminderVal->id }}"><i class="material-symbols-outlined">close</i></a>
+                                                        </td>
+                                                        @endif
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>  
                             </div>
                         </div>
                     </div>
@@ -567,6 +613,47 @@
                                     <a href="#!" class="profileDrop bgColour" id="task_active_inactive" style="background-color:#474747" onclick="bgColorChange(1)">Tasks</a>
                                     <a href="#!" class="profileDrop bgColour" id="recurring_active_inactive" onclick="bgColorChange(2)">Recurring Tasks</a>
                                 </div>
+                                <div class="col-sm-12" id="taskHideShow">
+                                <div class="productDetailTable">
+                                    <table class="table">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Ref</th>
+                                                <th>User</th>
+                                                <th>Type</th>
+                                                <th>Title</th>
+                                                <th>Notes</th>
+                                                <th>Created On</th>
+                                                <th>Executed</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="newtask_result"></tbody>
+                                    </table>
+                                    <div id="pagination-controls-New-task"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" id="recurringHideShow" style="display:none">
+                                <div class="productDetailTable">
+                                    <table class="table">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Ref</th>
+                                                <th>User</th>
+                                                <th>Type</th>
+                                                <th>Title</th>
+                                                <th>Notes</th>
+                                                <th>Created On</th>
+                                                <th>Executed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id=""></tbody>
+                                    </table>
+                                    <div id="pagination-controls-recurring"></div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -625,6 +712,45 @@
     saveButtonUrl="{{url('/invoices/invoice_attachmentSave')}}"
     hiddenForeignId="invoice_id" />
 
+    <x-add-reminder
+    reminderModalId="ReminderModal"
+    modalTitle="Invoice Reminder"
+    reminderformId="reminderform"
+    reminderId="reminder_id"
+    reminderDate="reminder_date"
+    reminderTime="reminder_time"
+    reminderUser="reminder_user"
+    hiddenForeignId="reminder_invoice_id"
+    reminderNotification="reminder_notification"
+    reminderEmail="reminder_email"
+    reminderSms="reminder_sms"
+    reminderTitle="reminder_title"
+    reminderNotes="reminder_notes"
+    reminderSaveUrl="{{url('/invoices/save_reminder')}}"
+    saveButtonId="saveReminder" />
+
+    <x-new-task-modal
+    modalId="NewTaskModal"
+    modalTitle="New Task"
+    formId="newTaskform"
+    taskCustomerId="task_customer_id"
+    taskId="task_id"
+    foriegnId="task_invoice_id"
+    userId="task_user_id"
+    taskTitle="taskTitle"
+    taskTypeId="taskTypeId"
+    taskStartDate="taskStartDate"
+    taskStartTime="taskStartTime"
+    taskEndDate="taskEndDate"
+    taskEndTime="taskEndTime"
+    notifyDate="notify_date"
+    notifyTime="notify_time"
+    taskNotesText="taskNotesText"
+    modalLabelTitle="modal_label_title"
+    saveNewTaskUrl="{{url('/invoices/new_task_save')}}"
+    completeNewTaskUrl="{{url('/invoices/completeNewTaskUrl')}}"
+    saveButtonId="saveNewTask" />
+
 <script>
 const tagURL = '{{ route("General.ajax.getTags") }}';
 var get_itemUrl="{{ route('item.ajax.searchProduct') }}";
@@ -640,11 +766,15 @@ var getAttachmentPageUrl='{{ url("invoices/getInvoiceAllAttachmens") }}';
 var customer_visibleURL='{{ url("invoices/customer_visibleUpdate") }}';
 var mobile_user_visibleURL='{{ url("invoices/mobile_user_visibleUpdate") }}';
 var deleteInvoiceAttachmentURL="{{url('/invoices/delete_invoice_attachment')}}";
+var invoice_ReminderDeleteUrl="{{url('/invoices/delete_invoice_reminder')}}";
+var getAllInvoiceNewTaskListUrl='{{ url("invoices/getAllInvoiceNewTaskList") }}';
 var invoice_id="<?php if(isset($invoice) && $invoice !=''){echo $invoice->id;}?>";
 var invoice_ref="<?php if(isset($invoice) && $invoice !=''){echo $invoice->invoice_ref;}?>";
 var attachmentsFileURL="<?php echo url('public/images/invoice_attachment/'); ?>";
 var delete_image="<?php echo url('public/frontEnd/jobs/images/delete.png'); ?>";
+var edit_image='{{url("public/frontEnd/jobs/images/pencil.png")}}';
 var token = '<?php echo csrf_token(); ?>'
+var reminder_dataCount='<?php echo count($reminder_data);?>'
 </script>
 @include('components.add-customer-modal')
 @include('components.contact-modal')
