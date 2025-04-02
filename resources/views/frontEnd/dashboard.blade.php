@@ -1,6 +1,7 @@
 @extends('frontEnd.layouts.master')
 @section('title','Dashboard')
 @section('content')
+
 <style type="text/css">
     .wdgt-value {
         padding: 24px 0;
@@ -29,7 +30,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Child Management</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +45,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Daily Log</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +59,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Forms</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +73,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Calendar</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +88,6 @@
                                     <div class="panel-body">
                                         <div class="wdgt-value">
                                             <h1 class="count">Rota Management</h1>
-                                            <p></p>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +95,6 @@
                         </div>
                     </a> <?php } ?>
                 <!-- Ram 14/06/2024 here code for job -->
-
                 <a href="{{ url('/sales-finance/dashboard') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -108,14 +103,12 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Jobs Management</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </a>
-
                 <!-- end here -->
                 <div class="col-md-6">
                     <div class="profile-nav alt">
@@ -125,7 +118,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Policies &<br>Procedures</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +132,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Staff<br>Management</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -155,14 +146,12 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">System<br>Management</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </a>
-
                 <a href="{{ url('/view-reports') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -171,7 +160,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">View<br>Reports</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -186,22 +174,20 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">General Admin</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </a>
-                <a href="{{ url('/petty-cash/expend-card') }}">
+                <a href="{{ url('/leads') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
                                 <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-briefcase"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
-                                        <h1 class="count">Petty Cash</h1>
-                                        <p></p>
+                                        <h1 class="count">Sales</h1>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +202,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Child Register</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +216,6 @@
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Finance</h1>
-                                        <p></p>
                                     </div>
                                 </div>
                             </div>
