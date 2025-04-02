@@ -2578,7 +2578,7 @@ $current_url = last(request()->segments());
                                                 <div class="modal-body">
                                                     <form action="" id="">
                                                         <div class="mb-3 row">
-                                                            <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="radStar ">*</span></label>
+                                                            <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" name="title" class="form-control editInput" id="inputJobRef" value="" placeholder="Task Type">
                                                             </div>
@@ -2800,7 +2800,7 @@ $current_url = last(request()->segments());
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                            <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="radStar">*</span> </label>
                             <div class="col-sm-7">
                                 <select name="crm_type_id" class="form-control editInput">
                                     <option value="">Select</option>
@@ -2811,7 +2811,7 @@ $current_url = last(request()->segments());
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
+                            <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <div id="UserEditor">
                                 </div>
@@ -2836,7 +2836,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div class="">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
@@ -2844,7 +2844,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
                                     <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
@@ -2884,7 +2884,7 @@ $current_url = last(request()->segments());
                 <div class="modal-body">
                     <form action="" id="">
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control editInput" name="title" id="type_title" value="">
                                 <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
@@ -2919,7 +2919,7 @@ $current_url = last(request()->segments());
                 <div class="modal-body">
                     <form action="" id="" enctype='multipart/form-data'>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">To <span class="radStar ">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">To <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="hidden" class="form-control editInput" name="crm_lead_email_id" id="">
                                 <input type="text" class="form-control editInput" name="to" id="" value="">
@@ -2932,13 +2932,13 @@ $current_url = last(request()->segments());
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Subject <span class="radStar ">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Subject <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control editInput" name="subject" id="">
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Message <span class="radStar ">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Message <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <div class="col-form-label">
                                     <div id="">
@@ -2971,7 +2971,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="user_notification_email_div">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
@@ -2979,7 +2979,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -3025,14 +3025,14 @@ $current_url = last(request()->segments());
                 <div class="modal-body">
                     <form action="" id="">
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
                                 <select class="form-control editInput" name="crm_section_type_id" id=""></select>
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <div class="col-form-label">
                                     <div id="userNotesEditor">
@@ -3059,7 +3059,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="user_notification_notes_div">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="user_id" class="form-control editInput" id="">
                                         <option>dfgdfg</option>
@@ -3068,7 +3068,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -3114,7 +3114,7 @@ $current_url = last(request()->segments());
                 <div class="modal-body">
                     <form action="" id="">
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
                                 <select class="form-control editInput" name="crm_section_type_id" id="">
@@ -3123,7 +3123,7 @@ $current_url = last(request()->segments());
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar">*</span> </label>
                             <div class="col-sm-9">
                                 <div class="col-form-label">
                                     <div id="userComplaintEditor">
@@ -3150,7 +3150,7 @@ $current_url = last(request()->segments());
                         </div>
                         <div id="">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar ">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who? <span class="radStar">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="user_id" class="form-control editInput" id="user_notifiy">
                                         <option value="">default1</option>
@@ -3159,7 +3159,7 @@ $current_url = last(request()->segments());
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As <span class="radStar">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_complaint_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="" value="1"> Notification (User Only)

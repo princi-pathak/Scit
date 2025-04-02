@@ -404,6 +404,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/customer_visibleUpdate', 'customer_visibleUpdate');
 			Route::post('/mobile_user_visibleUpdate', 'mobile_user_visibleUpdate');
 			Route::post('/delete_invoice_attachment', 'delete_invoice_attachment');
+			Route::post('/save_reminder', 'save_reminder');
+			Route::post('/delete_invoice_reminder', 'delete_invoice_reminder');
+			Route::post('/new_task_save', 'new_task_save');
+			Route::post('/getAllInvoiceNewTaskList', 'getAllInvoiceNewTaskList');
+			Route::post('/completeNewTaskUrl', 'completeNewTaskUrl');
 			
 		});
 	});
@@ -541,13 +546,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/save-purchase-day-book', 'store');
 			Route::post('/purchase-day-book/delete/{id}', 'deletePurchaseDayBook')->name('purchaseDayBook.delete');
 			Route::get('/purchase-day-book/edit/{id}', 'editPurchaseDayBook');
-
 		});
 	});
 	
-
 	Route::controller(FrontendLeadController::class)->group(function () {
 		//Leads 
+		Route::get('leads','leads');
 		Route::get('/leads/leads', 'index')->name('lead.index');
 		Route::get('/lead/myLeads', 'index')->name('lead.myleads');
 		Route::get('/lead/authorization', 'index')->name('lead.authorization');

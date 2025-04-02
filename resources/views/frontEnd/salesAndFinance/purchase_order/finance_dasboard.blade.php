@@ -289,7 +289,6 @@
 
     .tab_finance.active .profile-nav .panel .panel-body .wdgt-value h4 {
         color: #1f88b5;
-        font-weight: 600;
     }
 
     .tab_finance.active .profile-nav .panel .wdgt-row {
@@ -380,6 +379,84 @@
                                                     <div class="panel-body">
                                                         <div class="wdgt-value">
                                                             <h4 class="count">Child Register</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Quoting_System">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row bg-green">
+                                                    <i class="fa fa-file-text"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Quoting System</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="{{ url('/expenses') }}">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row bg-blue">
+                                                        <i class="fa fa-calculator"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Expenses</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="#!">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row bg-pink">
+                                                        <i class="fa fa-cogs"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Business Integrations</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="#!">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row bg-darkgreen">
+                                                        <i class="fa fa-bullhorn"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Marketing</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="#!">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row bg-themecolor">
+                                                        <i class="fa fa-bell"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">EworksPay</h4>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -728,7 +805,7 @@
                                                             <a href="{{url('purchase-orders-search')}}">
                                                                 <div>
                                                                     <div class="icon icon3">
-                                                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                                                        <i class="fa fa-search" aria-hidden="true"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
@@ -871,6 +948,194 @@
                                                                     <h4>Cash</h4>
                                                                 </div>
                                                             </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="Quoting_System" data-tab-finance-content>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="#">
+                                                                <div>
+                                                                    <div class="icon icon1">
+                                                                        <i class="fa fa-tachometer" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Dashboard</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{url('invoices/add')}}">
+                                                                <div>
+                                                                    <div class="icon icon2">
+                                                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>New Quote</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{url('invoices/invoice?key=Draft')}}">
+                                                                <div>
+                                                                    <div class="icon icon3">
+                                                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Draft Quote</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{url('invoices/invoice?key=Outstanding')}}">
+                                                                <div>
+                                                                    <div class="icon icon4">
+                                                                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Actioned Quote</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{url('invoices/invoice?key=Overdue')}}">
+                                                                <div>
+                                                                    <div class="icon icon3">
+                                                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Call Back Quote</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{url('invoices/invoice?key=Paid')}}">
+                                                                <div>
+                                                                    <div class="icon icon6">
+                                                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Accepted Quote</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="#">
+                                                                <div>
+                                                                    <div class="icon icon7">
+                                                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Converted Quote</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="#">
+                                                                <div>
+                                                                    <div class="icon icon8">
+                                                                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Quote Reminders</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="#">
+                                                                <div>
+                                                                    <div class="icon icon9">
+                                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Search Quote</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <div class="inner_card_dropdown" data-target="show_inner_card_dropdown5">
+                                                                <a href="javascript:void(0)">
+                                                                    <div>
+                                                                        <div class="icon icon10">
+                                                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card_name">
+                                                                        <h4>Appointment</h4>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="show_dropdown show_inner_card_dropdown5 " style="display: none;">
+                                                                <a href="#!">
+                                                                    <div>
+                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <span>Sales Appointment </span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <div class="inner_card_dropdown" data-target="show_inner_card_dropdown6">
+                                                                <a href="javascript:void(0)">
+                                                                    <div>
+                                                                        <div class="icon icon4">
+                                                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card_name">
+                                                                        <h4>Recurring Quote</h4>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="show_dropdown show_inner_card_dropdown6 " style="display: none;">
+                                                                <a href="#!">
+                                                                    <div>
+                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <span> New Recurring Quote</span>
+                                                                    </div>
+                                                                </a>
+                                                                <a href="#!">
+                                                                    <div>
+                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                                                        <span>Recurring Quote</span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

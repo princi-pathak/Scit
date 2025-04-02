@@ -25,7 +25,11 @@ use App\Models\Constructor_additional_contact;
 use App\Models\Constructor_customer_site;
 use App\Models\Product;
 use App\Models\Payment_type;
+use App\Models\Task_type;
 use App\Models\Invoice\InvoiceAttachment;
+use App\Models\Invoice\InvoiceReminder;
+use App\Models\Invoice\InvoiceNewTask;
+use App\User;
 
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 
@@ -137,10 +141,12 @@ class InvoiceController extends Controller
         $projects=array();
         $additional_contact=array();
         $site=array();
+        $reminder_data=array();
         if($invoice){
             $projects=Project::where(['status'=>1,'home_id'=>$home_id])->get();
             $additional_contact = Constructor_additional_contact::where(['home_id'=> $home_id,'userType'=>1,'customer_id'=>$invoice->customer_id,'deleted_at'=>null])->get();
             $site=Constructor_customer_site::where('customer_id',$invoice->customer_id)->get();
+            $reminder_data=$this->reminder_check($id);
         }
         $data['projects']=$projects;
         $data['additional_contact']=$additional_contact;
@@ -154,6 +160,7 @@ class InvoiceController extends Controller
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         $data['invoice']=$invoice;
+        $data['reminder_data']=$reminder_data;
         // dd($data);
         return view('frontEnd.salesAndFinance.invoice.invoice_form', $data);
     }
@@ -176,14 +183,14 @@ class InvoiceController extends Controller
             return response()->json(['vali_error' => 'Please add at least one product for purchase order.']);
         }
         try {
-            // if(!empty($request->purchaseattachment_id)){
-            //     $purchaseattachment_id=$request->purchaseattachment_id;
-            //     for($i=0;$i<count($purchaseattachment_id);$i++){
-            //         $poTable=PoAttachment::find($purchaseattachment_id[$i]);
-            //         $poTable->title=$request->purchaseattachment_title[$i];
-            //         $poTable->save();
-            //     }
-            // }
+            if(!empty($request->purchaseattachment_id)){
+                $purchaseattachment_id=$request->purchaseattachment_id;
+                for($i=0;$i<count($purchaseattachment_id);$i++){
+                    $poTable=InvoiceAttachment::find($purchaseattachment_id[$i]);
+                    $poTable->title=$request->purchaseattachment_title[$i];
+                    $poTable->save();
+                }
+            }
             
             $requestData = $request->all();
             if($request->id == ''){
@@ -241,7 +248,7 @@ class InvoiceController extends Controller
                 $vatPercentage=$sub_total*$data['vat_ratePercentage'][$i]/100;
                 $outstandignAmount=$outstandignAmount+$sub_total+$vatPercentage;
                 $productData = [
-                    'id'=>$data['purchase_product_id'][$i] ?? null,
+                    'id'=>$data['invoice_product_id'][$i] ?? null,
                     'home_id'=>Auth::user()->home_id,
                     'customer_id'=>$data['customer_id'],
                     'invoice_id' => $data['invoice_id'],
@@ -486,6 +493,192 @@ class InvoiceController extends Controller
             Log::error('Error deleting Invoice Attachments: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function save_reminder(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'reminder_date' => 'required',
+            'user_id' => 'required',
+            'title' => 'required',
+        ],
+        [
+            'reminder_date.required' => 'Reminder Date field is required.',
+            'user_id.required' => 'Reminder email field is required.',
+            'title.required' => 'Title field is required.',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        $notification = $request->has('notification') ? 1 : 0;
+        $sms = $request->has('sms') ? 1 : 0;
+        $email = $request->has('email') ? 1 : 0;
+
+        if ($notification==0 && $sms==0 && $email==0) {
+            return response()->json(['vali_error' => 'Send as field is requird']);
+        }
+        $data=$request->all();
+        $data['notification']=$notification;
+        $data['sms']=$sms;
+        $data['email']=$email;
+        $data['home_id']=Auth::user()->home_id;
+        $data['loginUserId']=Auth::user()->id;
+        $data['invoice_id']=$request->po_id;
+        $data['user_id']=implode(',',$request->user_id);
+        // echo "<pre>";print_r($data);die;
+        try{
+            $reminder=InvoiceReminder::saveReminder($data);
+            if($request->id){
+                return response()->json(['success'=>true,'message'=>'The Reminder has been updated successfully.','data'=>$reminder]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'The Reminder has been saved successfully.','data'=>$reminder]);
+            }
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    
+    }
+    public static function reminder_check($invoice_id){
+        $home_id=Auth::user()->home_id;
+        InvoiceReminder::allInvoiceReminderData($home_id)
+        ->whereNull('invoice_id')
+        ->forceDelete();
+        $current_date=Date('Y-m-d');
+        InvoiceReminder::allInvoiceReminderData($home_id)
+        ->where('invoice_id', $invoice_id)
+        ->whereDate('reminder_date', '<', $current_date)
+        ->update(['status' => 1]);
+        return InvoiceReminder::allInvoiceReminderData($home_id)->where('invoice_id',$invoice_id)->get();
+    }
+    public function delete_invoice_reminder(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            InvoiceReminder::find($request->id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            Log::error('Error deleting Invoice Reminder: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function new_task_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'title' => 'required',
+            'task_type_id' => 'required',
+            'start_date' => 'required',
+            'start_time' => 'required',
+            'end_date' => 'required',
+            'end_time' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        try{
+            if ($request->notify == 1) {
+                $notification = $request->has('notification') ? 1 : 0;
+                $sms = $request->has('sms') ? 1 : 0;
+                $email = $request->has('email') ? 1 : 0;
+                if($notification == 0 && $sms == 0 && $email == 0){
+                    return response()->json(['vali_error' => "The send as field is required."]);
+                }
+            }
+    
+            if (!isset($notification) || !isset($sms) || !isset($email)) {
+                $notification = $sms = $email = null;
+            }
+            $values = [
+                'id'=>$request->id,
+                'invoice_id'=>$request->task_invoice_id,
+                'home_id' => Auth::user()->home_id,
+                'customer_id' => $request->task_customer_id,
+                'user_id' => $request->user_id ?? $request->user_id_timer,
+                'title' => $request->title ?? $request->title_timer,
+                'task_type_id' => $request->task_type_id ?? $request->task_type_timer_id,
+                'start_date' => $request->start_date ?? Carbon::now()->toDateString(),
+                'start_time' => $request->start_time ?? Carbon::now()->toTimeString(),
+                'end_date' => $request->end_date,
+                'end_time' => $request->end_time,
+                'is_recurring' => $request->is_recurring ?? false,
+                'notify' => $request->notify,
+                'notification' => $notification,
+                'sms' => $sms,
+                'email' => $email,
+                'notify_date' => $request->notify_date,
+                'notify_time' => $request->notify_time,
+                'notes' => $request->notes
+            ];
+            $data=InvoiceNewTask::saveReminderNewTask($values);
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>'New Task Successfully Added','data'=>$data]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'New Task Successfully Updated','data'=>$data]);
+            }
+            
+        }catch (\Exception $e) {
+            Log::error('Error saving Invoice New Task: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function getAllInvoiceNewTaskList(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data_newTask=InvoiceNewTask::where(['invoice_id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        $data_array=[];
+        foreach($data_newTask as $val){
+            $ref=Invoice::find($val->invoice_id);
+            $user=User::find($val->user_id);
+            $type=Task_type::find($val->task_type_id);
+            $data_array[]=[
+                'date'=>$val->start_date,
+                'ref'=>$ref->invoice_ref,
+                'user'=>$user->name,
+                'type'=>$type->title,
+                'title'=>$val->title,
+                'notes'=>$val->notes,
+                'created_at'=>$val->created_at,
+                'executed'=>$val->status,
+                'id'=>$val->id,
+                'invoice_id'=>$val->invoice_id,
+                'customer_id'=>$val->customer_id,
+                'user_id'=>$val->user_id,
+                'task_type_id'=>$val->task_type_id,
+                'start_time'=>$val->start_time,
+                'end_date'=>$val->end_date,
+                'end_time'=>$val->end_time,
+                'is_recurring'=>$val->is_recurring,
+                'notify'=>$val->notify,
+                'notify_date'=>$val->notify_date,
+                'notify_time'=>$val->notify_time,
+                'notification'=>$val->notification,
+                'email'=>$val->email,
+                'sms'=>$val->sms,
+
+            ];
+        }
+        return response()->json([
+            'success' => true, 'data' => $data_array, 
+            'pagination' => [
+                    'total' => $data_newTask->total(),
+                    'current_page' => $data_newTask->currentPage(),
+                    'last_page' => $data_newTask->lastPage(),
+                    'per_page' => $data_newTask->perPage(),
+                    'next_page_url' => $data_newTask->nextPageUrl(),
+                    'prev_page_url' => $data_newTask->previousPageUrl(),
+                ]
+        ]);
+    }
+    public function completeNewTaskUrl(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            $table=InvoiceNewTask::find($request->id);
+            $table->status=1;
+            $table->save();
+            return response()->json(['success'=>true,'message'=>'Task Complete','data'=>array()]); 
+        }catch (\Exception $e) {
+            Log::error('Error Complete Invoice New Task: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
     }
 
     
