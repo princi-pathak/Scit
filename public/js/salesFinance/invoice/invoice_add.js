@@ -1,6 +1,10 @@
 $(document).ready(function() {
     // getRegions(document.getElementById('invoiceRegions'));
-    getTags(document.getElementById('invoice_tags'))
+    getTags(document.getElementById('invoice_tags'));
+    getAllNewTaskList(invoice_id, getAllInvoiceNewTaskListUrl);
+    if(reminder_dataCount > 0){
+        $(".setRiminderTable").show();
+    }
 });
 function getTags(tags) {
     $.ajax({
@@ -109,10 +113,10 @@ function get_modal(modal){
         $("#TagModal").modal('show');
     }else if(modal == 8){
         $("#newTaskform")[0].reset();
-        get_supplier_details();
-        $("#modal_label_title").text('Supplier');
-        $("#related_To").text(purchase_ref);
-        $("#task_po_id").val(po_id);
+        get_customer_details();
+        $("#modal_label_title").text('Customer');
+        $("#related_To").text(invoice_ref);
+        $("#task_invoice_id").val(invoice_id);
         $("#NewTaskModal").modal('show');
     }else{
         alert("Please Select Customer");
@@ -985,6 +989,8 @@ var check_paid_amount = 0;
                     document.getElementById('invoice_site_id').innerHTML = site;
                     $("#project_customer_name").text(customerData.name);
                     $("#site_customer_name").text(customerData.name);
+                    $(".customer_name").text(customerData.name);
+                    $("#task_customer_id").val(customer_id);
                     invoice_name = customerData.name;
                     invoicesite_companyName = customerData.contact_name;
                     invoice_address = customerData.address;
@@ -1177,7 +1183,7 @@ var check_paid_amount = 0;
                             <td>${fileName}</td>
                             <td>${mime_type} / ${size}</td>
                             <td>${date}</td>
-                            <td><a href="` + imag_url + `" target="_blank"><i class="fa fa-eye"></i></a> &emsp; <img src="` +delete_image+ `" alt="" class="attachment_delete image_style" data-delete=` + attachment.id + `></td>
+                            <td><div class="d-flex align-items-center"><a href="` + imag_url + `" target="_blank"><i class="fa fa-eye"></i></a> &emsp; <img src="` +delete_image+ `" alt="" class="attachment_delete image_style" data-delete=` + attachment.id + `></div></td>
                         </tr>
                     `);
                 });
@@ -1259,5 +1265,223 @@ $(document).on('click', '.attachment_delete', function() {
                 console.log(data);
             }
         });
+    }
+});
+function openReminderModal(invoice_id = null) {
+    $("#reminderform")[0].reset();
+    $("#reminder_id").val('');
+    $("#clickyesno").removeClass('unclicked');
+    $("#reminder_invoice_id").val(invoice_id);
+    $("#ReminderModal").modal('show');
+}
+function getAllReminder(data){
+    $(".setRiminderTable").show();
+        $("#reminder_data").append(`<tr>
+            <td>` + data.title + `</td>    
+            <td>` + data.reminder_date + `</td>    
+            <td>` + data.reminder_time + `</td>    
+            <td><span class="iconColrRad">Pending</span></td>    
+            <td>
+                <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="` + data.id + `" data-invoice_id="` + data.invoice_id +`" data-title="` + data.title + `" data-user_id="` + data.user_id + `" data-reminder_date="` + data.reminder_date + `" data-reminder_time="` + data.reminder_time + `" data-notification="` + data.notification + `" data-sms="` + data.sms + `" data-email="` + data.email + `" data-notes="` + data.notes + `" data-icon="edit"><i class="material-symbols-outlined">edit</i></a>
+                <a href="javascript:void(0)" class="iconColrRad reminder_delete" data-delete="` + data.id + `"><i class="material-symbols-outlined">close</i></a>
+            </td>    
+        </tr>`);
+}
+$(document).on('click', '.fecth_data', function() {
+    $("#ReminderModal").modal('show');
+    var id = $(this).data('id');
+    var title = $(this).data('title');
+    var user_id = $(this).data('user_id');
+    // console.log(user_id);return false;
+    var reminder_date = $(this).data('reminder_date');
+    var reminder_time = $(this).data('reminder_time');
+    var notification = $(this).data('notification');
+    var sms = $(this).data('sms');
+    var email = $(this).data('email');
+    var notes = $(this).data('notes');
+    var icon = $(this).data('icon');
+    var invoice_id = $(this).data('invoice_id');
+    if (icon === 'eye') {
+        $("#reminder_date").attr('disabled', 'disabled');
+        $("#clickyesno").addClass('unclicked');
+        $("#reminder_notification").attr('disabled', 'disabled');
+        $("#reminder_sms").attr('disabled', 'disabled');
+        $("#reminder_email").attr('disabled', 'disabled');
+        $("#reminder_title").attr('disabled', 'disabled');
+        $("#reminder_notes").attr('disabled', 'disabled');
+    } else {
+        $("#reminder_date").removeAttr('disabled', 'disabled');
+        $("#clickyesno").removeClass('unclicked');
+        $("#reminder_notification").removeAttr('disabled', 'disabled');
+        $("#reminder_sms").removeAttr('disabled', 'disabled');
+        $("#reminder_email").removeAttr('disabled', 'disabled');
+        $("#reminder_title").removeAttr('disabled', 'disabled');
+        $("#reminder_notes").removeAttr('disabled', 'disabled');
+    }
+
+
+    $("#reminder_id").val(id);
+    $("#reminder_date").val(reminder_date);
+    $("#reminder_time").val(reminder_time);
+    $("#reminder_title").val(title);
+    $("#reminder_notes").val(notes);
+    $("#reminder_invoice_id").val(invoice_id);
+
+    $("#reminder_notification").prop('checked', notification == 1);
+    $("#reminder_sms").prop('checked', sms == 1);
+    $("#reminder_email").prop('checked', email == 1);
+
+    if (user_id) {
+        var length = user_id.toString().length;
+        $('.multiselect-dropdown').hide();
+        var userArray = [];
+        if(length > 1){
+            userArray = user_id.toString().split(',');
+        }else{
+            userArray = [user_id.toString()];
+        }
+        $("#reminder_user option").each(function() {
+            $(this).prop('selected', userArray.includes($(this).val()));
+        });
+    } else {
+        $("#reminder_user option").prop('selected', false);
+    }
+    userArray.forEach(function(userId) {
+        $(`#reminder_user option[value="${userId}"]`).prop('selected', true);
+        $(`#reminder_user + .multiselect-container input[type="checkbox"][value="${userId}"]`).prop('checked', true);
+    });
+    MultiselectDropdown();
+
+});
+$(document).on('click', '.reminder_delete', function(){
+    var id = $(this).data('delete');
+    var row = $(this).closest("tr");
+    if (id) {
+        $.ajax({
+            type: "POST",
+            url: invoice_ReminderDeleteUrl,
+            data: {
+                id: id,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.success != true) {
+                    alert("Something went wrong! Please try later");
+                    return false;
+                } else {
+                    row.remove();
+                }
+            }
+        });
+    }
+});
+function getAllNewTask(data){
+    getAllNewTaskList(data.invoice_id, getAllInvoiceNewTaskListUrl);
+}
+function getAllNewTaskList(id, pageUrl) {
+    $.ajax({
+        url: pageUrl,
+        method: 'POST',
+        data: {
+            id: id,
+            _token: token
+        },
+        success: function(response) {
+            // console.log(response);
+            var paginationNewTask = response.pagination;
+            const newTask = response.data;
+            // console.log(newTask);
+            const tbody = $('#newtask_result');
+            tbody.empty();
+            var taskCount = 1;
+            newTask.forEach(task => {
+                const created_at = moment(task.created_at).format('DD/MM/YYYY HH:mm');
+                const date = moment(task.date).format('DD/MM/YYYY HH:mm');
+                var executed = task.executed;
+                // alert(executed)
+                var exe_icon='';
+                if(executed == 0){
+                    exe_icon='-';
+                }else{
+                    exe_icon='<i class="fa fa-check text-success" aria-hidden="true"></i>';
+                }
+                const imag_path = edit_image;
+                tbody.append(`
+                    <tr>
+                        <td>${date}</td>
+                        <td>${task.ref}</td>
+                        <td>${task.user}</td>
+                        <td>${task.type}</td>
+                        <td>${task.title}</td>
+                        <td>${task.notes || ''}</td>
+                        <td>${created_at}</td>
+                        <td>${exe_icon}</td>
+                        <td><img src="${imag_path}" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#NewTaskModal" class="modal_dataTaskFetch image_style" data-id="${task.id}" data-invoice_id="${task.invoice_id}" data-customer_id="${task.customer_id}" data-user_id="${task.user_id}" data-title="${task.title}" data-task_type_id="${task.task_type_id}" data-start_date="${task.date}" data-start_time="${task.start_time}" data-end_date="${task.end_date}" data-end_time="${task.end_time}" data-is_recurring="${task.is_recurring}" data-notify="${task.notify}" data-notify_date="${task.notify_date}" data-notify_time="${task.notify_time}" data-notification="${task.notification}" data-email="${task.email}" data-sms="${task.sms}" data-notes="${task.notes}"></td>
+                    </tr>
+                `);
+                taskCount++;
+            });
+            var paginationControlsNewTask = $("#pagination-controls-New-task");
+            paginationControlsNewTask.empty();
+            if (paginationNewTask.prev_page_url) {
+                paginationControlsNewTask.append('<button type="button" class="profileDrop" onclick="getAllNewTaskList(' + id + ', \'' + paginationNewTask.prev_page_url + '\')">Previous</button>');
+            }
+            if (paginationNewTask.next_page_url) {
+                paginationControlsNewTask.append('<button type="button" class="profileDrop" onclick="getAllNewTaskList(' + id + ', \'' + paginationNewTask.next_page_url + '\')">Next</button>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            // location.reload();
+        }
+    });
+}
+$(document).on('click', '.modal_dataTaskFetch', function() {
+    $("#completeBTN").show();
+    var taskId = $(this).data('id');
+    var task_invoice_id = $(this).data('invoice_id');
+    // alert(task_invoice_id)
+    var task_customer_id = $(this).data('customer_id');
+    var title = $(this).data('title');
+    var userId = $(this).data('user_id');
+    var taskTypeId = $(this).data('task_type_id');
+    var startDate = $(this).data('start_date');
+    var startTime = $(this).data('start_time');
+    var endDate = $(this).data('end_date');
+    var endTime = $(this).data('end_time');
+    var isRecurring = $(this).data('is_recurring');
+    var notify = $(this).data('notify');
+    var notification = $(this).data('notification');
+    var email = $(this).data('email');
+    var sms = $(this).data('sms');
+    var notifyDate = $(this).data('notify_date');
+    var notifyTime = $(this).data('notify_time');
+    var notes = $(this).data('notes');
+
+    get_customer_details();
+    $('#task_id').val(taskId);
+    $('#task_invoice_id').val(task_invoice_id);
+    $('#task_customer_id').val(task_customer_id);
+    $('#task_user_id').val(userId);
+    $('#taskTitle').val(title);
+    $('#taskTypeId').val(taskTypeId);
+    $('#taskStartDate').val(startDate);
+    $('#taskStartTime').val(startTime);
+    $('#taskEndDate').val(endDate).removeAttr('disabled');
+    $('#taskEndTime').val(endTime);
+    $('#notify_date').val(notifyDate);
+    $('#notify_time').val(notifyTime);
+    $('#taskNotesText').val(notes);
+    // $(taskEndDate)
+    if (isRecurring == 1) {
+        $('#isRecurring').prop('checked', true);
+    } else {
+        $('#isRecurring').prop('checked', false);
+    }
+    if (notify == 1) {
+        $('#yeson').prop('checked', true);
+    } else {
+        $('#yeson').prop('checked', false);
     }
 });
