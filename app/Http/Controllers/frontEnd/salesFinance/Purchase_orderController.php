@@ -96,10 +96,12 @@ class Purchase_orderController extends Controller
         $contact_name=array();
         $attachments=array();
         $reminder_data=array();
+        $additional_contact=array();
         if($key){
             $site=Constructor_customer_site::where('customer_id',$purchase_orders->customer_id)->get();
             $contact_name=Customer::find($purchase_orders->customer_id);
             $reminder_data=$this->reminder_check($key);
+            $additional_contact = Constructor_additional_contact::where(['home_id'=> $home_id,'userType'=>2,'customer_id'=>$key,'deleted_at'=>null])->get();
         }
         // echo "<pre>";print_r($reminder_data);die;
         $data['purchase_orders']=$purchase_orders;
@@ -107,7 +109,7 @@ class Purchase_orderController extends Controller
         $data['site']=$site;
         $data['projects']=Project::where(['status'=>1,'home_id'=>$home_id])->get();
         $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
-        $data['additional_contact'] = Constructor_additional_contact::where(['home_id'=> $home_id,'userType'=>2,'customer_id'=>$key,'deleted_at'=>null])->get();
+        $data['additional_contact'] = $additional_contact;
         $data['country']=Country::all_country_list();
         $data['tag'] = Tag::getAllTag($home_id);
         $data['currency']=Currency::where(['status'=>1,'deleted_at'=>null])->get();

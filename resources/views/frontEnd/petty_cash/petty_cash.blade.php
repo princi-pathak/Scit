@@ -20,7 +20,7 @@
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="mt-2">
                     <div class="balance_show">
-                        <h6>Closing Petty Cash balance = <span>£300.39</span></h6>
+                        <h6>Closing Petty Cash balance = <span id="PettyCashbalance">£0</span></h6>
                     </div>
                 </div>
             </div>
@@ -44,48 +44,33 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php 
+                                $total_balance=0;
+                                $cash_out=0;
+                                foreach($cash as $key=>$val){
+                                    $total_balance=$total_balance+$val->balance_bfwd+$val->petty_cashIn;
+                                    $cash_out=$cash_out+$val->cash_out;
+                                ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td>18.03.2023</td>
-                                    <td>£168.55</td>
-                                    <td>£634.00</td>
-                                    <td>£634.00</td>
-                                    <td>LM weekly dinner money</td>
-                                    <td><a href=""><i class="fa-solid fa-eye"></i></a></td>
-                                    <td>yes</td>
-                                    <td>yes</td>
-                                    <td>LH</td>
+                                    <td>{{++$key}}</td>
+                                    <td>{{date('Y-m-d',strtotime($val->cash_date))}}</td>
+                                    <td>£{{$val->balance_bfwd}}</td>
+                                    <td>£{{$val->petty_cashIn}}</td>
+                                    <td>£{{$val->cash_out}}</td>
+                                    <td>{{$val->card_details}}</td>
+                                    <td><a href="{{url('public/images/finance_cash/'.$val->receipt)}}" target="_blank"><i class="fa-solid fa-eye"></i></a></td>
+                                    <td><?php if($val->dext == 1){ echo "Yes";}else{ echo "No"; }?></td>
+                                    <td><?php if($val->invoice_la == 1){ echo "Yes"; }else{ echo "No" ;}?></td>
+                                    <td>{{$val->initial}}</td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>18.03.2023</td>
-                                    <td>£168.55</td>
-                                    <td>£634.00</td>
-                                    <td>£634.00</td>
-                                    <td>LM weekly dinner money</td>
-                                    <td><a href=""><i class="fa-solid fa-eye"></i></a></td>
-                                    <td>yes</td>
-                                    <td>yes</td>
-                                    <td>LH</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>18.03.2023</td>
-                                    <td>£168.55</td>
-                                    <td>£634.00</td>
-                                    <td>£634.00</td>
-                                    <td>LM weekly dinner money</td>
-                                    <td><a href=""><i class="fa-solid fa-eye"></i></a></td>
-                                    <td>yes</td>
-                                    <td>yes</td>
-                                    <td>LH</td>
-                                </tr>
+                                <?php } $total_balanceInCash=$total_balance-$cash_out;?>
                             </tbody>
-                            <tfoot>
+                            <input type="hidden" id="total_balanceInCash" value="{{$total_balanceInCash}}">
+                            <!-- <tfoot>
                                 <tr class="table-light">
                                     <th colspan="10">Total</th>
                                 </tr>
-                            </tfoot>
+                            </tfoot> -->
                         </table>
                     </div>
                 </div>
@@ -93,5 +78,12 @@
         </div>
     </div>
 </section>
-
+<script>
+    // 
+    $(document).ready(function() {
+    var total_balanceInCash=$("#total_balanceInCash").val();
+    $("#PettyCashbalance").text("£"+Number(total_balanceInCash).toFixed(2));
+    // alert(typeof(totalBalanceOnCard));
+});
+</script>
 @include('frontEnd.petty_cash.layout.footer')
