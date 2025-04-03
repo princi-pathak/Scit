@@ -405,6 +405,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/customer_visibleUpdate', 'customer_visibleUpdate');
 			Route::post('/mobile_user_visibleUpdate', 'mobile_user_visibleUpdate');
 			Route::post('/delete_invoice_attachment', 'delete_invoice_attachment');
+			Route::post('/save_reminder', 'save_reminder');
+			Route::post('/delete_invoice_reminder', 'delete_invoice_reminder');
+			Route::post('/new_task_save', 'new_task_save');
+			Route::post('/getAllInvoiceNewTaskList', 'getAllInvoiceNewTaskList');
+			Route::post('/completeNewTaskUrl', 'completeNewTaskUrl');
 			
 		});
 	});
