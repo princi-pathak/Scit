@@ -14,6 +14,10 @@
     .lightRed {
         background: #f38d8d;
     }
+
+    .lightBrown{
+        background-color: #B17F59;
+    }
 </style>
 
 <!--main content start-->
@@ -26,7 +30,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-yellow"> <i class="fa fa-briefcase"></i> </div>
+                                <div class="user-heading alt wdgt-row bg-terques"> <i class="fa fa-briefcase"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Child Management</h1>
@@ -41,7 +45,7 @@
                         <div class="profile-nav alt">
                             <!-- #PoliProcModal -->
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-book"></i></div>
+                                <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-book"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Daily Log</h1>
@@ -55,7 +59,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-wpforms"></i> </div>
+                                <div class="user-heading alt wdgt-row bg-green"> <i class="fa fa-wpforms"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Forms</h1>
@@ -69,7 +73,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row label-daily"> <i class="fa fa-calendar"></i> </div>
+                                <div class="user-heading alt wdgt-row bg-yellow "> <i class="fa fa-calendar"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Calendar</h1>
@@ -80,11 +84,11 @@
                     </div>
                 </a>
                 <?php if ($accessRight === true) { ?>
-                    <a href="{{ url('/rota-dashboard') }}">
+                    <a href="{{ url('/rota-management') }}">
                         <div class="col-md-6">
                             <div class="profile-nav alt">
                                 <div class="panel text-center">
-                                    <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-group"></i> </div>
+                                    <div class="user-heading alt wdgt-row bg-blue"> <i class="fa fa-group"></i> </div>
                                     <div class="panel-body">
                                         <div class="wdgt-value">
                                             <h1 class="count">Rota Management</h1>
@@ -99,7 +103,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-briefcase"></i></div>
+                                <div class="user-heading alt wdgt-row bg-pink"> <i class="fa fa-briefcase"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Jobs Management</h1>
@@ -114,7 +118,7 @@
                     <div class="profile-nav alt">
                         <a data-target="#PoliProcModal" data-toggle="modal" class="MainNavText">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-book"></i></div>
+                                <div class="user-heading alt wdgt-row bg-seagreen"> <i class="fa fa-book"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Policies &<br>Procedures</h1>
@@ -128,7 +132,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-group"></i> </div>
+                                <div class="user-heading alt wdgt-row bg-orange"> <i class="fa fa-group"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Staff<br>Management</h1>
@@ -142,7 +146,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-green"> <i class="fa fa-pencil "></i></div>
+                                <div class="user-heading alt wdgt-row bg-darkgreen"> <i class="fa fa-pencil "></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">System<br>Management</h1>
@@ -156,7 +160,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-pink"> <i class="fa fa-file-text-o"></i> </div>
+                                <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-file-text-o"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">View<br>Reports</h1>
@@ -170,7 +174,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-blue"> <i class="fa fa-cogs"></i></div>
+                                <div class="user-heading alt wdgt-row bg-jamni"> <i class="fa fa-cogs"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">General Admin</h1>
@@ -198,7 +202,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-group"></i></div>
+                                <div class="user-heading alt wdgt-row lightBrown"> <i class="fa fa-child"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Child Register</h1>
@@ -212,7 +216,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-group"></i></div>
+                                <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-money"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Finance</h1>

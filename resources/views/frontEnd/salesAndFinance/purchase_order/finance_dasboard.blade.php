@@ -294,6 +294,14 @@
     .tab_finance.active .profile-nav .panel .wdgt-row {
         background-color: #1f88b5 !important;
     }
+
+    .lightRed {
+        background: #f38d8d;
+    }
+
+    .lightBrown{
+        background-color: #B17F59;
+    }
 </style>
 
 <!--main content start-->
@@ -385,7 +393,7 @@
                                             </div>
                                         </a>
                                     </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Quoting_System">
+                                    <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Quoting_System">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
                                                 <div class="user-heading alt wdgt-row bg-green">
@@ -398,7 +406,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                                         <a href="{{ url('/expenses') }}">
                                             <div class="profile-nav alt">
@@ -451,7 +459,7 @@
                                         <a href="#!">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row bg-themecolor">
+                                                    <div class="user-heading alt wdgt-row bg-yellow">
                                                         <i class="fa fa-bell"></i>
                                                     </div>
                                                     <div class="panel-body">
@@ -462,6 +470,34 @@
                                                 </div>
                                             </div>
                                         </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Day_book">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row bg-green">
+                                                    <i class="fa fa-book"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Day Book</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Fixed_Asset">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row lightBrown">
+                                                <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Fixed Assets</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab_finance-content">
@@ -954,7 +990,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="Quoting_System" data-tab-finance-content>
+                                    <!-- <div id="Quoting_System" data-tab-finance-content>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
@@ -1136,6 +1172,92 @@
                                                                     </div>
                                                                 </a>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div id="Day_book" data-tab-finance-content>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{ url('/petty-cash/expend-card') }}">
+                                                                <div>
+                                                                    <div class="icon icon10">
+                                                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Purchase Day Book</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="">
+                                                                <div>
+                                                                    <div class="icon icon7">
+                                                                        <i class="fa fa-book"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Sales Day Book</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="Fixed_Asset" data-tab-finance-content>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{ url('/petty-cash/expend-card') }}">
+                                                                <div>
+                                                                    <div class="icon icon10">
+                                                                    <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Asset Catetgory</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="">
+                                                                <div>
+                                                                    <div class="icon icon7">
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Depreciation Type</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="">
+                                                                <div>
+                                                                    <div class="icon icon3">
+                                                                    <i class="fa fa-bullseye" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Asset Register</h4>
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
