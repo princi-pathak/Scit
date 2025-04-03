@@ -20,7 +20,7 @@
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="mt-2">
                     <div class="balance_show">
-                        <h6>Closing Balance on Card = <span>£300.39</span></h6>
+                        <h6>Closing Balance on Card = <span id="balanceOnCard">£0</span></h6>
                     </div>
                 </div>
             </div>
@@ -44,51 +44,38 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php 
+                                $previous_date=null; 
+                                $sumBalanceFund=0;
+                                $sumPurchaseCashIn=0;   
+                                foreach($expendCard as $key=>$val){
+                                    $sumPurchaseCashIn=$sumPurchaseCashIn+$val->purchase_amount;
+                                ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td>18.03.2023</td>
-                                    <td>£168.55</td>
-                                    <td>£634.00</td>
-                                    <td>£634.00</td>
-                                    <td>LM weekly dinner money</td>
-                                    <td><a href=""><i class="fa-solid fa-eye"></i></a></td>
-                                    <td>yes</td>
-                                    <td>yes</td>
-                                    <td>LH</td>
+                                    <td>{{++$key}}</td>
+                                    <td>{{date('Y-m-d',strtotime($val->expend_date))}}</td>
+                                    <?php if($previous_date != $val->expend_date){  $sumBalanceFund=$sumBalanceFund+$val->balance_bfwd+$val->fund_added;?>
+                                        <td>£{{$val->balance_bfwd}}</td>
+                                        <td>£{{$val->fund_added}}</td>
+                                    <?php }else{?>
+                                        <td></td>
+                                        <td></td>
+                                    <?php }?>
+                                    <td>£{{$val->purchase_amount}}</td>
+                                    <td>{{$val->card_details}}</td>
+                                    <td><a href="{{url('public/images/finance_petty_cash/'.$val->receipt)}}" target="_blank"><i class="fa-solid fa-eye"></i></a></td>
+                                    <td><?php if($val->dext == 1){ echo "Yes";}else{ echo "No"; }?></td>
+                                    <td><?php if($val->invoice_la == 1){ echo "Yes"; }else{ echo "No" ;}?></td>
+                                    <td>{{$val->initial}}</td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>18.03.2023</td>
-                                    <td>£168.55</td>
-                                    <td>£634.00</td>
-                                    <td>£634.00</td>
-                                    <td>LM weekly dinner money</td>
-                                    <td><a href=""><i class="fa-solid fa-eye"></i></a></td>
-                                    <td>yes</td>
-                                    <td>yes</td>
-                                    <td>LH</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>18.03.2023</td>
-                                    <td>£168.55</td>
-                                    <td>£634.00</td>
-                                    <td>£634.00</td>
-                                    <td>LM weekly dinner money</td>
-                                    <!-- <td>
-                                        <img src="/assets/imagrs/imgad1.png" height="70" alt="">
-                                    </td> -->
-                                    <td><a href=""><i class="fa-solid fa-eye"></i></a></td>
-                                    <td>yes</td>
-                                    <td>yes</td>
-                                    <td>LH</td>
-                                </tr>
+                                <?php } $balanceOnCard=$sumBalanceFund-$sumPurchaseCashIn-$cash;?>
+                                <input type="hidden" id="totalBalanceOnCard" value="{{$balanceOnCard;}}">
                             </tbody>
-                            <tfoot>
+                            <!-- <tfoot>
                                 <tr class="table-light">
                                     <th colspan="10">Total</th>
                                 </tr>
-                            </tfoot>
+                            </tfoot> -->
                         </table>
                     </div>
                 </div>
@@ -96,5 +83,12 @@
         </div>
     </div>
 </section>
+<script>
+$(document).ready(function() {
+    var totalBalanceOnCard=$("#totalBalanceOnCard").val();
+    $("#balanceOnCard").text("£"+Number(totalBalanceOnCard).toFixed(2));
+    // alert(typeof(totalBalanceOnCard));
+});
+</script>
 
 @include('frontEnd.petty_cash.layout.footer')

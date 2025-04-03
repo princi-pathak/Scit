@@ -189,6 +189,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	// Rota Management
 	Route::get('/rota-dashboard', 'App\Http\Controllers\Rota\RotaController@index');
+	Route::get('/rota-management', 'App\Http\Controllers\Rota\RotaController@rota_management_dashboard');
 	Route::get('/rota', 'App\Http\Controllers\Rota\RotaController@create');
 	Route::post('/add-rota-data', 'App\Http\Controllers\Rota\RotaController@store');
 	Route::get('/rota-planner', 'App\Http\Controllers\Rota\RotaController@rota_calender_view');
@@ -472,6 +473,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('expend_card_add','expend_card_add');
 			Route::get('petty-cash-add','petty_cash_add');
 			Route::get('child-register-add','child_register_add');
+			Route::post('saveExpend','saveExpend');
+			Route::post('saveCash','saveCash');
 			
 		});
 	});
