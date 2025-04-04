@@ -5,6 +5,7 @@ use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadContr
 use App\Http\Controllers\backEnd\salesfinance\GeneralController;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteController;
+use App\Http\Controllers\frontEnd\salesFinance\CouncilTaxController as CouncilTaxController;
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
 use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
@@ -534,6 +535,16 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/save-sales-day-book', 'store');
 			Route::post('/sales-day-book/delete/{id}', 'deleteSalesDayBook')->name('salesDayBook.delete');
 			Route::get('/sales-day-book/edit/{id}', 'editSalesDayBook');
+
+		});
+	});
+
+	
+	Route::controller(CouncilTaxController::class)->group(function () {
+		Route::prefix('finance')->group(function () {
+			Route::get('/council-tax', 'index')->name('finance.council-tax');
+			Route::post('/save-council-tax', 'saveCouncilTaxData')->name('finance.saveCouncilTaxData');
+		
 
 		});
 	});

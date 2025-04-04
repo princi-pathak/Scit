@@ -47,9 +47,17 @@
                                 <?php 
                                 $total_balance=0;
                                 $cash_out=0;
+                                $count=0;
+                                $balance_bfwd=0;
+                                $petty_cashIn=0;
                                 foreach($cash as $key=>$val){
                                     $total_balance=$total_balance+$val->balance_bfwd+$val->petty_cashIn;
                                     $cash_out=$cash_out+$val->cash_out;
+                                    $petty_cashIn=$petty_cashIn+$val->petty_cashIn;
+                                    if($count == 0){
+                                        $count=1;
+                                        $balance_bfwd=$val->balance_bfwd;
+                                    }
                                 ?>
                                 <tr>
                                     <td>{{++$key}}</td>
@@ -66,11 +74,15 @@
                                 <?php } $total_balanceInCash=$total_balance-$cash_out;?>
                             </tbody>
                             <input type="hidden" id="total_balanceInCash" value="{{$total_balanceInCash}}">
-                            <!-- <tfoot>
-                                <tr class="table-light">
-                                    <th colspan="10">Total</th>
+                            <tfoot>
+                            <tr class="table-light">
+                                    <th colspan="2">Total</th>
+                                    <th>£{{$balance_bfwd}}</th>
+                                    <th>£{{$petty_cashIn}}</th>
+                                    <th>£{{$cash_out}}</th>
+                                    <th colspan="5"></th>
                                 </tr>
-                            </tfoot> -->
+                            </tfoot>
                         </table>
                     </div>
                 </div>
