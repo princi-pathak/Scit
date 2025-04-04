@@ -44,23 +44,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                $previous_date=null; 
+                                <?php
+                                $enterInLoop=0;
+                                $index=0;
+                                if(!empty($previous_month_data) && $previous_month_data['previousbalanceOnCard'] !=0){ $enterInLoop=1;?>
+
+                                    <tr>
+                                        <td>{{++$index}}</td>
+                                        <td>{{$previous_month_data['prvious_date']}}</td>
+                                        <td>£{{$previous_month_data['previousbalanceOnCard']}}</td>
+                                        <td>£{{$previous_month_data['previousfundAmount']}}</td>
+                                        <td colspan="6"></td>
+                                    </tr>
+                                <?php }?>
+                                <?php
                                 $sumBalanceFund=0;
-                                $sumPurchaseCashIn=0;   
-                                foreach($expendCard as $key=>$val){
+                                $sumPurchaseCashIn=0;
+                                $totalBalancebfwd=0;   
+                                $totalBalanceFund=0; 
+                                $date=null;
+                                foreach($expendCard as $val){
                                     $sumPurchaseCashIn=$sumPurchaseCashIn+$val->purchase_amount;
+                                    $totalBalanceFund=$totalBalanceFund+$val->fund_added;
+                                    if($enterInLoop == 0){
+                                        $totalBalancebfwd=$val->balance_bfwd;
+                                        $enterInLoop=1;
+                                    }
+                                    $db_date=date('m',strtotime($val->expend_date));
                                 ?>
                                 <tr>
-                                    <td>{{++$key}}</td>
+                                    <td>{{++$index}}</td>
                                     <td>{{date('Y-m-d',strtotime($val->expend_date))}}</td>
-                                    <?php if($previous_date != $val->expend_date){  $sumBalanceFund=$sumBalanceFund+$val->balance_bfwd+$val->fund_added;?>
+                                    <?php if($previous_month_data['previousbalanceOnCard'] == 0){if($date != $db_date || $date == null){$date=$db_date;?>
                                         <td>£{{$val->balance_bfwd}}</td>
-                                        <td>£{{$val->fund_added}}</td>
                                     <?php }else{?>
                                         <td></td>
-                                        <td></td>
-                                    <?php }?>
+                                    <?php }}?>
+                                    <td><?php if(isset($val->fund_added) && $val->fund_added !=''){echo '£'.$val->fund_added;}?></td>
                                     <td>£{{$val->purchase_amount}}</td>
                                     <td>{{$val->card_details}}</td>
                                     <td><a href="{{url('public/images/finance_petty_cash/'.$val->receipt)}}" target="_blank"><i class="fa-solid fa-eye"></i></a></td>
@@ -68,14 +88,26 @@
                                     <td><?php if($val->invoice_la == 1){ echo "Yes"; }else{ echo "No" ;}?></td>
                                     <td>{{$val->initial}}</td>
                                 </tr>
-                                <?php } $balanceOnCard=$sumBalanceFund-$sumPurchaseCashIn-$cash;?>
+                                <?php } 
+                                    if($totalBalancebfwd == 0){
+                                        $sum=$totalBalanceFund+$previous_month_data['previousbalanceOnCard'];
+                                    }else{
+                                        $sum=$totalBalanceFund+$totalBalancebfwd;
+                                    }
+                                    $calculation=$sum-$sumPurchaseCashIn;
+                                    $balanceOnCard=$calculation-$cash;
+                                ?>
                                 <input type="hidden" id="totalBalanceOnCard" value="{{$balanceOnCard;}}">
                             </tbody>
-                            <!-- <tfoot>
+                            <tfoot>
                                 <tr class="table-light">
-                                    <th colspan="10">Total</th>
+                                    <th colspan="2">Total</th>
+                                    <th>£{{($totalBalancebfwd) ? $totalBalancebfwd: $previous_month_data['previousbalanceOnCard']}}</th>
+                                    <th>£{{$totalBalanceFund}}</th>
+                                    <th>£{{number_format($sumPurchaseCashIn, 2, '.', '')}}</th>
+                                    <th colspan="5"></th>
                                 </tr>
-                            </tfoot> -->
+                            </tfoot>
                         </table>
                     </div>
                 </div>

@@ -180,7 +180,7 @@ class InvoiceController extends Controller
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
         if(empty($request->product_id) && !isset($request->product_id)){
-            return response()->json(['vali_error' => 'Please add at least one product for purchase order.']);
+            return response()->json(['vali_error' => 'Please add at least one product for Invoice.']);
         }
         try {
             if(!empty($request->purchaseattachment_id)){
@@ -288,7 +288,7 @@ class InvoiceController extends Controller
         $data['overdue_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Overdue')->count();
         $data['paid_invoice']=Invoice::getAllInvoices(Auth::user()->home_id)->where('status','Paid')->count();
         // echo "<pre>";print_r($data['invoice']);die;
-        return view('frontEnd.salesAndFinance.invoice.invoice_list', $data);
+        return view('frontEnd.salesAndFinance.invoice.Invoice_list', $data);
     }
     public function preview(Request $request){
         // echo "<pre>";print_r(Auth::user());die;

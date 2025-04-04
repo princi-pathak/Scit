@@ -163,13 +163,13 @@
         color: #fff !important;
     }
 
-    .top_tabs {
+    /* .top_tabs {
         padding-bottom: 20px;
         display: flex;
         justify-content: end;
         align-items: center;
         gap: 10px;
-    }
+    } */
 
     .notifiNumberRadColor {
         width: 16px;
@@ -195,7 +195,7 @@
     <section class="wrapper">
         <!-- page start-->
         <div class="row">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <div class="top_tabs">
                     <a href="#!" class="profileDrop"> <i class="fa fa-book"></i> My Diary</a>
                     <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#CRMHeaderPopup"><i class="fa fa-database"></i> CRM</a>
@@ -204,7 +204,8 @@
                     <a href="#!" class="profileDrop"><i class="fa fa-bell"></i> Notifications <span class="notifiNumberRadColor">23</span> </a>
                     <a href="#!" class="profileDrop"><i class="fa fa-handshake-o"></i> Partners </a>
                 </div>
-            </div>
+            </div> -->
+            @include('frontEnd.salesAndFinance.jobs.layout.secondheader')
         </div>
         <div class="row">
             <div class="col-md-12">
