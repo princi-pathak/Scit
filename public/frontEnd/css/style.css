@@ -9251,3 +9251,14 @@ ul.pop-notification>li a:hover i {
     margin-left: 0;
     min-height: 89.3vh;
 }
+
+/*Ram css for second header*/
+    .topbaarBtn{
+        display: flex;
+        float: inline-end;
+        align-content: space-between;
+        margin-right: 17px;
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+/*end here*/
