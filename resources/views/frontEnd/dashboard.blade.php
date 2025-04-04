@@ -198,7 +198,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ url('/petty-cash/child_register') }}">
+                <!-- <a href="{{ url('/petty-cash/child_register') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
@@ -211,7 +211,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </a> -->
                 <a href="{{ url('/finance') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">

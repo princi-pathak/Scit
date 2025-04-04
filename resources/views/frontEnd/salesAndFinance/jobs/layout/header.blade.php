@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/extensions/Select/css/select.dataTables.css" />
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/dashboard.css')}}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -74,7 +75,7 @@ $current_url = last(request()->segments());
                             <a href="{{url('sales-finance/dashboard')}}" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}" alt="ewm_logo"></a>
                         </div>
                     </div>
-                    <div class="col-lg-9 px-3 text-end toprigihticon">
+                    <!-- <div class="col-lg-9 px-3 text-end toprigihticon">
                         <?php //if (isset($page) && $page == 'job_index') { 
                         ?>
                         <div class="d-inline-flex align-items-center me-5 topbaarBtn">
@@ -86,17 +87,17 @@ $current_url = last(request()->segments());
                             <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i> Partners </a>
                             <a href="{{url('/')}}" class="profileDrop"> <i class="fa fa-home"> </i> Home </a>
                         </div>
-                        <?php //} else { 
+                        <?php //} else {
                         ?>
-                        <!-- <div class="h-100 d-inline-flex align-items-center me-5">
+                        <div class="h-100 d-inline-flex align-items-center me-5">
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> group</i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> dns</i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> mail </i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i class="material-symbols-outlined"> notifications </i></a>
-                            </div> -->
+                            </div>
                         <?php //} 
                         ?>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
