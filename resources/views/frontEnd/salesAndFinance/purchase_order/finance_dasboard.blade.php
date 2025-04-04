@@ -4,306 +4,6 @@
 
 @section('content')
 
-<style>
-    img {
-        background-color: white;
-        width: 68%;
-        border: 1px solid #ddd;
-        padding: 5px;
-        border-radius: 2px;
-    }
-
-    .left-border {
-        border-right: 1px solid #ddd;
-    }
-
-    .re-generateQR {
-        border: 1px solid #1f88b5;
-        box-shadow: none;
-        color: #fff;
-        background: #1f88b5;
-        padding: 6px 12px;
-        text-align: center;
-        border-radius: 3px;
-        margin-right: 11px;
-        margin-bottom: 20px;
-        transition: all 0.5s;
-        cursor: pointer;
-    }
-
-    .re-generateQR span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-    }
-
-    .re-generateQR span:after {
-        content: '\00bb';
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        right: -10px;
-        transition: 0.5s;
-    }
-
-    .re-generateQR:hover span {
-        padding-right: 20px;
-    }
-
-    .re-generateQR:hover span:after {
-        opacity: 1;
-        right: 0;
-    }
-
-    .view-QR {
-        border: 1px solid #1f88b5;
-        box-shadow: none;
-        color: #fff;
-        background: #1f88b5;
-        padding: 6px 12px;
-        text-align: center;
-        border-radius: 3px;
-        margin-bottom: 20px;
-        transition: all 0.5s;
-        cursor: pointer;
-    }
-
-    .view-QR span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-    }
-
-    .view-QR span:after {
-        content: '\00bb';
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        right: -10px;
-        transition: 0.5s;
-    }
-
-    .view-QR:hover span {
-        padding-right: 20px;
-    }
-
-    .view-QR:hover span:after {
-        opacity: 1;
-        right: 0;
-    }
-
-    #download {
-        width: 68%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-
-    #download button {
-        border: 1px solid #1f88b5;
-        box-shadow: none;
-        color: #fff;
-        background: #1f88b5;
-        padding: 6px 12px;
-        text-align: center;
-        border-radius: 3px;
-        margin-top: 20px;
-        transition: all 0.5s;
-        cursor: pointer;
-    }
-
-    #download button span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-    }
-
-    #download button span:after {
-        content: '\00bb';
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        right: -10px;
-        transition: 0.5s;
-    }
-
-    #download button:hover span {
-        padding-right: 20px;
-    }
-
-    #download button:hover span:after {
-        opacity: 1;
-        right: 0;
-    }
-
-    .set-width {
-        width: 68%;
-    }
-
-    #overview .panel-body {
-        min-height: auto;
-    }
-
-    .tabs_finance {
-        padding: 20px 20px 0 20px;
-    }
-
-    [data-tab-finance-content] {
-        display: none;
-    }
-
-    .active[data-tab-finance-content] {
-        display: block;
-        border-top: 1px solid #ddd;
-        padding: 20px 20px 0 20px;
-    }
-
-    .inner_cards .icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        height: 90px;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-        box-shadow: 0px 0px 20px rgb(0 0 0 / 10%);
-        width: 91px;
-    }
-
-    .inner_cards .card_name {
-        padding: 0px 15px 0 0;
-    }
-
-    .inner_cards a {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .inner_cards .icon.icon1 {
-        background-color: #9466b5;
-    }
-
-    .inner_cards .icon.icon2 {
-        background-color: #99cce3;
-    }
-
-    .inner_cards .icon.icon3 {
-        background-color: #1fb5ad;
-    }
-
-    .inner_cards .icon.icon4 {
-        background-color: #789DBC;
-    }
-
-    .inner_cards .icon.icon5 {
-        background-color: #9466b5;
-    }
-
-    .inner_cards .icon.icon6 {
-        background-color: #89A8B2;
-    }
-
-    .inner_cards .icon.icon7 {
-        background-color: #727D73;
-    }
-
-    .inner_cards .icon.icon8 {
-        background-color: #3674B5;
-    }
-
-    .inner_cards .icon.icon9 {
-        background-color: #FF8A8A;
-    }
-
-    .inner_cards .icon.icon10 {
-        background-color: #B17F59;
-    }
-
-
-    .inner_cards .icon i {
-        font-size: 45px;
-    }
-
-    .inner_cards .card_name h4 {
-        margin-bottom: 0px;
-        margin-top: 0px;
-        font-size: 15px;
-        color: #444;
-        line-height: normal;
-    }
-
-    .inner_cards {
-        box-shadow: 0px 0px 20px rgb(0 0 0 / 10%);
-        position: relative;
-        margin-bottom: 20px;
-        border-radius: 5px;
-    }
-
-    .show_dropdown {
-        position: absolute;
-        background-color: #fff;
-        width: 95%;
-        top: 85px;
-        left: 27px;
-        box-shadow: 0px 0px 20px rgb(0 0 0 / 10%);
-        border-radius: 5px;
-    }
-
-    .show_dropdown a div {
-        padding: 10px;
-        display: flex;
-        gap: 10px;
-        align-items: baseline;
-        border-bottom: 1px solid #ddd;
-        width: 100%;
-    }
-
-    .show_dropdown a div:hover {
-        color: #1f88b5;
-    }
-
-    .show_dropdown a:last-child div {
-        border-bottom: 0;
-    }
-
-    .show_dropdown::before {
-        content: "";
-        border-bottom: 7px solid #fff;
-        border-left: 7px solid transparent;
-        border-right: 7px solid transparent;
-        position: absolute;
-        top: -7px;
-        left: 20px;
-        box-shadow: 0px 0px 20px rgb(0 0 0 / 10%)
-    }
-
-    .wdgt-value {
-        color: #747474;
-    }
-
-    .tab_finance.active .profile-nav .panel .panel-body .wdgt-value h4 {
-        color: #1f88b5;
-    }
-
-    .tab_finance.active .profile-nav .panel .wdgt-row {
-        background-color: #1f88b5 !important;
-    }
-
-    .lightRed {
-        background: #f38d8d;
-    }
-
-    .lightBrown{
-        background-color: #B17F59;
-    }
-</style>
-
 <!--main content start-->
 <section id="main-content">
     <div class="wrapper">
@@ -489,7 +189,7 @@
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
                                                 <div class="user-heading alt wdgt-row lightBrown">
-                                                <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                                    <i class="fa fa-window-maximize" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="panel-body">
                                                     <div class="wdgt-value">
@@ -499,7 +199,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <a href="{{ url('/finance/council-tax') }}" style="text-decoration: none; color: inherit;">
+                                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row lightBrown">
+                                                        <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Council Tax</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
+
                                 <div class="tab_finance-content">
                                     <div id="Invoice" data-tab-finance-content>
                                         <div class="row">
@@ -1223,7 +940,7 @@
                                                             <a href="{{ url('/petty-cash/expend-card') }}">
                                                                 <div>
                                                                     <div class="icon icon10">
-                                                                    <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                                                        <i class="fa fa-window-maximize" aria-hidden="true"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
@@ -1237,7 +954,7 @@
                                                             <a href="">
                                                                 <div>
                                                                     <div class="icon icon7">
-                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
@@ -1251,11 +968,61 @@
                                                             <a href="">
                                                                 <div>
                                                                     <div class="icon icon3">
-                                                                    <i class="fa fa-bullseye" aria-hidden="true"></i>
+                                                                        <i class="fa fa-bullseye" aria-hidden="true"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Asset Register</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="Council_Tax" data-tab-finance-content>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{ url('/petty-cash/expend-card') }}">
+                                                                <div>
+                                                                    <div class="icon icon10">
+                                                                        <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Council Tax 1</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="">
+                                                                <div>
+                                                                    <div class="icon icon7">
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Council Tax 2</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="">
+                                                                <div>
+                                                                    <div class="icon icon3">
+                                                                        <i class="fa fa-bullseye" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Council Tax 3</h4>
                                                                 </div>
                                                             </a>
                                                         </div>
