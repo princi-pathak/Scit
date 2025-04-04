@@ -1,4 +1,4 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header1')
 <style>
     .currency {
         padding: 2px 3px 2px 5px;
