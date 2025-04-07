@@ -60,39 +60,7 @@ if (isset($system_admin_home)) {
 										<p>Days for which location history will be saved</p>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-lg-3 control-label" >Home Type</label>
-									<div class="col-lg-9">
-										<select class="form-control" name="child_type" id="home_type" {{ (isset($del_status)) ? $disabled: '' }}>
-											<option value="">Select Type</option>
-											<option value="residential">Residential</option>
-											<option value="accommodation">Supported Accomodation</option>
-											<!-- <option value="3">Leavers</option> -->
-										</select>
-									</div>
-								</div>
-								<div class="form-group" id="residential_rooms" style="display: none;">
-                                    <label class="col-lg-3 control-label">Residential Rooms Type</label>
-                                    <div class="col-lg-9">
-                                        <select class="form-control" name="child_type" {{ (isset($del_status)) ? $disabled: '' }}>
-                                            <option value="">Select Type</option>
-                                            <option value="1">1 Bed Placement</option>
-                                            <option value="2">2 Bed Placement </option>
-                                            <option value="3">3 Bed Placement </option>
-                                            <option value="4">4 Bed Placement </option>
-                                        </select>
-                                    </div>
-                                </div>
-								<div class="form-group" id="accommodation_rooms" style="display: none;">
-                                    <label class="col-lg-3 control-label">Supported Accomodation Rooms Type</label>
-                                    <div class="col-lg-9">
-                                        <select class="form-control"  name="child_type" {{ (isset($del_status)) ? $disabled: '' }}>
-                                            <option value="">Select Type</option>
-                                            <option value="1">Group Living</option>
-                                            <option value="2">Seperate Flats </option>
-                                        </select>
-                                    </div>
-                                </div>
+								
 								<div class="form-group yes_no_btn">
 									<label class="col-lg-3 control-label">Registered with Ofsted or CIW</label>
 									<div class="col-lg-9 d-flex align-items-center gap-2">
@@ -100,12 +68,6 @@ if (isset($system_admin_home)) {
 										<label for="is_registered1" class="control-label">Yes </label>
 										<input type="radio" name="is_registered" id="is_registered2" value="0" {{ isset($system_admin_home->is_registered) && $system_admin_home->is_registered == 0 ? 'checked' : '' }}>
 										<label for="is_registered2" class=" control-label">No </label>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-lg-3 control-label">Weekly Rate</label>
-									<div class="col-lg-9">
-										<input type="text" name="location_history_duration" class="form-control" placeholder="Location history duration" value="{{ (isset($system_admin_home->location_history_duration)) ? $system_admin_home->location_history_duration : '' }}" maxlength="255">
 									</div>
 								</div>
 								<?php $rota_time_format = (isset($system_admin_home->rota_time_format)) ? $system_admin_home->rota_time_format : ''; ?>

@@ -1,7 +1,6 @@
 @extends('backEnd.layouts.master')
 @section('title',' Child Form')
 @section('content')
-<!-- script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js" -->
 
 <?php
 if (isset($user_info)) {
@@ -15,8 +14,6 @@ if (isset($user_info)) {
             $task = 'View';
         } else {
             $disabled = '';
-
-            
         }
     }
 } else {
@@ -95,27 +92,76 @@ if (isset($user_info)) {
                                         <!-- <input class="form-control default-date-picker" type="text" value="{{ (isset($user_info->date_of_birth)) ? date('d-m-Y',strtotime($user_info->date_of_birth)) : '' }}" placeholder="DD-MM-YYYY" name="date_of_birth" value="" maxlength="10" /> -->
                                     </div>
                                 </div>
+                                <!-- Child type -->
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Child Type</label>
                                     <div class="col-lg-9">
-                                        <select class="form-control" name="child_type" {{ (isset($del_status)) ? $disabled: '' }}>
+                                        <select class="form-control" name="child_type" id="home_type">
                                             <option value="">Select Type</option>
-                                            <option value="1">Residential</option>
-                                            <option value="2">Supported Accomodation</option>
-                                            <option value="3">Leavers</option>
+                                            <option value="residential" {{ isset($user_info->child_type) && $user_info->child_type == "residential" ? "selected" : ''}}>Residential</option>
+                                            <option value="accommodation" {{ isset($user_info->child_type) && $user_info->child_type == "accommodation" ? "selected" : ''}} >Supported Accomodation</option>
+                                            <option value="leavers" {{ isset($user_info->child_type) && $user_info->child_type == "leavers" ? "selected" : ''}}>Leavers</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <!-- Residential rooms -->
+                                <div class="form-group" id="residential_rooms" style="display: none;">
+                                    <label class="col-lg-3 control-label">Residential Rooms Type</label>
+                                    <div class="col-lg-9">
+                                        <select class="form-control" name="room_type">
+                                            <option value="">Select Type </option>
+                                            <option value="1" {{ isset($user_info->room_type) && $user_info->room_type == "1" ? "selected" : '' }}>1 Bed Placement </option>
+                                            <option value="2" {{ isset($user_info->room_type) && $user_info->room_type == "2" ? "selected" : '' }}>2 Bed Placement </option>
+                                            <option value="3" {{ isset($user_info->room_type) && $user_info->room_type == "3" ? "selected" : '' }}>3 Bed Placement </option>
+                                            <option value="4" {{ isset($user_info->room_type) && $user_info->room_type == "4" ? "selected" : '' }}>4 Bed Placement </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Supported Accommodation rooms -->
+                                <div class="form-group" id="accommodation_rooms" style="display: none;">
+                                    <label class="col-lg-3 control-label">Supported Accomodation Rooms Type</label>
+                                    <div class="col-lg-9">
+                                        <select class="form-control" name="room_type">
+                                            <option value="">Select Type</option>
+                                            <option value="1" {{ isset($user_info->room_type) && $user_info->room_type == "1" ? "selected" : '' }}>Group Living</option>
+                                            <option value="2" {{ isset($user_info->room_type) && $user_info->room_type == "2" ? "selected" : '' }}>Seperate Flats </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Weekly Rate</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="weekly_rate" class="form-control" placeholder="Weekly Rate" value="{{ isset($user_info->weekly_rate) ? $user_info->weekly_rate : '' }}" maxlength="255">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Subs </label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="subs" class="form-control" placeholder="Subs" value="{{ isset($user_info->subs) ? $user_info->subs : '' }}" maxlength="255">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Extra </label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="extra" class="form-control" placeholder="Extra" value="{{ isset($user_info->extra) ? $user_info->extra : '' }}" maxlength="255">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Start Date</label>
                                     <div class="col-lg-9">
-                                        <input type="date" name="height" class="form-control" placeholder="Weekly Rate" value="{{ (isset($user_info->height)) ? $user_info->height : '' }}" maxlength="255" {{ (isset($del_status)) ? $disabled: '' }}>
+                                        <input type="text" name="start_date" class="form-control date-of-birth" placeholder="DD-MM-YYYY" value="{{ isset($user_info->start_date) ? $user_info->start_date : '' }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">End Date</label>
                                     <div class="col-lg-9">
-                                        <input type="date" name="height" class="form-control" placeholder="Weekly Rate" value="{{ (isset($user_info->height)) ? $user_info->height : '' }}" maxlength="255" {{ (isset($del_status)) ? $disabled: '' }}>
+                                        <input type="text" name="end_date" class="form-control date-of-birth" value="{{ isset($user_info->end_date) ? $user_info->end_date : '' }}" placeholder="DD-MM-YYYY">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Local Authority </label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="local_authority" class="form-control" placeholder="Local Authority" value="{{ isset($user_info->local_authority) ? $user_info->local_authority : '' }}" maxlength="255">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -374,6 +420,27 @@ if (isset($user_info)) {
 <?php //echo 'm'; die; 
 ?>
 <script>
+   $(document).ready(function() {
+    $('#home_type').change(function() {
+        var selectedType = $(this).val();
+        if (selectedType === 'residential') {
+            $('#residential_rooms').show().find('select').prop('disabled', false);
+            $('#accommodation_rooms').hide().find('select').prop('disabled', true);
+        } else if (selectedType === 'accommodation') {
+            $('#accommodation_rooms').show().find('select').prop('disabled', false);
+            $('#residential_rooms').hide().find('select').prop('disabled', true);
+        } else {
+            $('#residential_rooms, #accommodation_rooms').hide().find('select').prop('disabled', true);
+        }
+    });
+
+    // ✅ Trigger change once on page load to apply correct state
+    $('#home_type').trigger('change');
+});
+ 
+    // before set room type we have to check child type check child type if residential then 1 bed 2 bed shows
+
+
     $(document).ready(function() {
 
         var nowTemp = new Date();

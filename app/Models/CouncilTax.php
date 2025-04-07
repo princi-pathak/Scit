@@ -12,7 +12,6 @@ class CouncilTax extends Model
     protected $table="council_tax";
 
     protected $fillable=[
-        // 'council_tax_id',
         'flat_number',
         'address',
         'post_code',

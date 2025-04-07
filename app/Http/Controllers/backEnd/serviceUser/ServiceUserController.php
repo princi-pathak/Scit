@@ -74,27 +74,34 @@ class ServiceUserController extends Controller
                 $ethnicity_id = $request->ethnicity_id;
             }
             
-            $user                   =  new ServiceUser;
-            $user->name             =  $data['name'];
-            $user->user_name        =  $data['user_name'];
-            $user->home_id          =  $home_id;
-            $user->email            =  $data['email'];
-            $user->password         =  '';
-            $user->phone_no         =  $data['phone_no'];
-            $user->date_of_birth    =  $date_of_birth;
-            $user->section          =  $data['section'];
-            $user->admission_number =  $data['admission_number'];
-            $user->ethnicity_id     =  $ethnicity_id;
-            $user->short_description=  nl2br($data['short_description']);
-            $user->height           =  $data['height'];
-            $user->weight           =  $data['weight'];
-            $user->hair_and_eyes    =  $data['hair_and_eyes'];
-            $user->markings         =  $data['markings'];
-            $user->status           =  $data['status'];
-
-            $user->current_location =  nl2br($data['current_location']);
-            $user->previous_location=  nl2br($data['previous_location']);
-            $user->mobile           =  $data['mobile'];
+            $user                    =  new ServiceUser;
+            $user->name              =  $data['name'];
+            $user->user_name         =  $data['user_name'];
+            $user->home_id           =  $home_id;
+            $user->email             =  $data['email'];
+            $user->password          =  '';
+            $user->phone_no          =  $data['phone_no'];
+            $user->date_of_birth     =  $date_of_birth;
+            $user->child_type        =  $data['child_type'];
+            $user->room_type         =  $data['room_type'];
+            $user->weekly_rate       =  $data['weekly_rate'];
+            $user->subs              =  $data['subs'];
+            $user->extra             =  $data['extra'];
+            $user->start_date        =  date('Y-m-d',strtotime($data['start_date']));
+            $user->local_authority   =  $data['local_authority'];
+            $user->end_date          =  date('Y-m-d',strtotime($data['end_date']));
+            $user->section           =  $data['section'];
+            $user->admission_number  =  $data['admission_number'];
+            $user->ethnicity_id      =  $ethnicity_id;
+            $user->short_description =  nl2br($data['short_description']);
+            $user->height            =  $data['height'];
+            $user->weight            =  $data['weight'];
+            $user->hair_and_eyes     =  $data['hair_and_eyes'];
+            $user->markings          =  $data['markings'];
+            $user->status            =  $data['status'];
+            $user->current_location  =  nl2br($data['current_location']);
+            $user->previous_location =  nl2br($data['previous_location']);
+            $user->mobile            =  $data['mobile'];
             // $user->skype            =  $data['skype'];
             // $user->facebook         =  $data['facebook'];
             // $user->twitter          =  $data['twitter'];
@@ -130,7 +137,6 @@ class ServiceUserController extends Controller
                     foreach($data['social_app'] as $social_data){
 
                         if(!empty($social_data['value'])){
-
                             $su_soc_app                  = new ServiceUserSocialApp;    
                             $su_soc_app->social_app_id   = $social_data['social_app_id'];
                             $su_soc_app->service_user_id = $user->id;
