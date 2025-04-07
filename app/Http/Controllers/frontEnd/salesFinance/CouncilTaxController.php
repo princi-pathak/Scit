@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\CouncilTax;
+use Illuminate\Support\Carbon;
 
 use App\Http\Requests\CouncilTaxRequests;
 
@@ -13,7 +14,9 @@ class CouncilTaxController extends Controller
 {
     
     public function index(){    
-         return view('frontend/salesAndFinance/council_tax/council_tax');
+        $data['councilTaxs'] = CouncilTax::whereNull('deleted_at')->get();
+        // dd($data);   
+        return view('frontEnd/salesAndFinance/council_tax/council_tax', $data);
     }
 
     public function saveCouncilTaxData(CouncilTaxRequests $req){
@@ -33,4 +36,13 @@ class CouncilTaxController extends Controller
         }
 
     }   
+
+    public function destroy($id){
+        $affected =CouncilTax::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        if ($affected) {
+            return response()->json(['message' => 'Deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Record not found or already deleted'], 404);
+        }
+    }
 }

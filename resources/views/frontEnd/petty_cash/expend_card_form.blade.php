@@ -45,7 +45,11 @@
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Balance b/fwd</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control editInput <?php if(isset($expendCard) && $expendCard !=''){ echo "disabled-tab"; }?> " id="balance_bfwd" name="balance_bfwd" <?php if(isset($expendCard) && $expendCard !=''){?> value="{{$expendCard->balance_bfwd}}" <?php }?>>
+                                        <?php if($previous_month_data['previousbalanceOnCard'] == 0){?>
+                                            <input type="text" class="form-control editInput <?php if(isset($expendCard) && $expendCard !=''){ echo "disabled-tab"; }?> " id="balance_bfwd" name="balance_bfwd" <?php if(isset($expendCard) && $expendCard !=''){?> value="{{$expendCard->balance_bfwd}}" <?php }?>>
+                                        <?php }else{?>
+                                            <input type="text" class="form-control editInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_month_data['previousbalanceOnCard']}}">
+                                        <?php }?>
                                     </div>
                                 </div>
                                 <div class="row form-group mb-2">

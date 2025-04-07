@@ -476,6 +476,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('child-register-add','child_register_add');
 			Route::post('saveExpend','saveExpend');
 			Route::post('saveCash','saveCash');
+			Route::post('cash_filter','cash_filter');
+			Route::post('expand_card_filter','expand_card_filter');
 			
 		});
 	});
@@ -527,6 +529,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		});
 	});
 
+	Route::controller(CouncilTaxController::class)->group(function () {
+		Route::prefix('finance')->group(function () {
+			Route::get('/council-tax', 'index')->name('finance.council-tax');
+			Route::post('/save-council-tax', 'saveCouncilTaxData')->name('finance.saveCouncilTaxData');
+			Route::delete('/delete-council-tax/{id}', 'destroy')->name('finance.deleteCouncilTax');
+		});
+	});
 
 	Route::controller(SalesController::class)->group(function () {
 		Route::prefix('sales')->group(function () {
@@ -540,14 +549,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 	
-	Route::controller(CouncilTaxController::class)->group(function () {
-		Route::prefix('finance')->group(function () {
-			Route::get('/council-tax', 'index')->name('finance.council-tax');
-			Route::post('/save-council-tax', 'saveCouncilTaxData')->name('finance.saveCouncilTaxData');
-		
-
-		});
-	});
+	
 
 	Route::controller(PurchaseController::class)->group(function () {
 		Route::prefix('purchase')->group(function () {

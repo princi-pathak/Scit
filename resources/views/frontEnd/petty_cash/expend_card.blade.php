@@ -14,7 +14,15 @@
                         <a href="{{url('petty-cash/expend-card')}}" class="profileDrop button_green" id="active_inactive">Expend card</a>
                         <a href="{{url('petty-cash/petty_cash')}}" class="profileDrop button_green">Cash</a>
                     </div>
-                    <a href="{{url('petty-cash/expend_card_add')}}" class="profileDrop button_green"><i class="fa-solid fa-plus"></i> Add</a>
+                    <div class="d-flex justify-content-end gap-4 align-items-center">
+                        <div class="d-flex justify-content-end gap-2 align-items-center">
+                            <label for="fromDate"> From:</label>
+                            <input type="date" id="fromDate" class="form-control">
+                            <label for="ToDate"> To:</label>
+                            <input type="date" id="ToDate" class="form-control">
+                        </div>
+                        <a href="{{url('petty-cash/expend_card_add')}}" class="profileDrop button_green"><i class="fa-solid fa-plus"></i> Add</a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
@@ -43,7 +51,7 @@
                                     <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="expend_result">
                                 <?php
                                 $enterInLoop=0;
                                 $index=0;
@@ -102,9 +110,9 @@
                             <tfoot>
                                 <tr class="table-light">
                                     <th colspan="2">Total</th>
-                                    <th>£{{($totalBalancebfwd) ? $totalBalancebfwd: $previous_month_data['previousbalanceOnCard']}}</th>
-                                    <th>£{{$totalBalanceFund}}</th>
-                                    <th>£{{number_format($sumPurchaseCashIn, 2, '.', '')}}</th>
+                                    <th id="totalBalancebfwd">£{{($totalBalancebfwd) ? $totalBalancebfwd: $previous_month_data['previousbalanceOnCard']}}</th>
+                                    <th id="totalBalanceFund">£{{$totalBalanceFund}}</th>
+                                    <th id="sumPurchaseCashIn">£{{number_format($sumPurchaseCashIn, 2, '.', '')}}</th>
                                     <th colspan="5"></th>
                                 </tr>
                             </tfoot>
@@ -122,5 +130,10 @@ $(document).ready(function() {
     // alert(typeof(totalBalanceOnCard));
 });
 </script>
+<script>
+    var filterUrl="{{url('petty-cash/expand_card_filter')}}";
+    var token="<?php echo csrf_token();?>";
+</script>
+<script type="text/javascript" src="{{ url('public/js/salesFinance/petty_cash/expend_card.js') }}"></script>
 
 @include('frontEnd.petty_cash.layout.footer')
