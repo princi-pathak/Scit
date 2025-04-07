@@ -405,7 +405,7 @@
                                     <div class="mb-3 row align-items-center">
                                         <label for="inputAddress"
                                             class="col-sm-3 pe-0 col-form-label">Expected Delivery On</label>
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-9">
                                             <?php
                                             $expectedDeliveryDate = isset($purchase_orders) && !empty($purchase_orders->expected_deleveryDate)
                                                 ? $purchase_orders->expected_deleveryDate
@@ -413,9 +413,9 @@
                                             ?>
                                             <input type="date" class="form-control editInput textareaInput" id="purchase_expected_deleveryDate" name="expected_deleveryDate" value="<?php echo $expectedDeliveryDate; ?>">
                                         </div>
-                                        <div class="col-sm-2 calendar_icon">
+                                        <!-- <div class="col-sm-2 calendar_icon">
                                             <i class="fa fa-calendar-alt"></i>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>
@@ -453,12 +453,12 @@
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputTelephone" class="col-sm-3 pe-0 col-form-label">Purchase Date <span class="radStar">*</span></label>
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-9">
                                             <input type="date" class="form-control editInput PurchaseOrdercheckError" id="purchase_purchase_date" name="purchase_date" value="">
                                         </div>
-                                        <div class="col-sm-2 calendar_icon">
+                                        <!-- <div class="col-sm-2 calendar_icon">
                                             <i class="fa fa-calendar-alt"></i>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Reference</label>
@@ -532,12 +532,12 @@
                                     </div>
                                     <div class="mb-3 row align-items-center">
                                         <label for="inputTelephone" class="col-sm-3 pe-0 col-form-label">Payment Due Date</label>
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-9">
                                             <input type="date" class="form-control editInput" id="purchase_payment_due_date" name="payment_due_date" value="">
                                         </div>
-                                        <div class="col-sm-2 calendar_icon">
+                                        <!-- <div class="col-sm-2 calendar_icon">
                                             <i class="fa fa-calendar-alt"></i>
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                     <div class="mb-3 row">
