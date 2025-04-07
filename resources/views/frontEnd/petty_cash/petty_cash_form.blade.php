@@ -1,5 +1,10 @@
 @include('frontEnd.petty_cash.layout.header')
-
+<style>
+    .disabled-tab {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>
 <section class="main_section_page_petty px-3">
     <div class="container-fluid">
         <div class="row">
@@ -39,7 +44,11 @@
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Balance b/fwd</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control editInput" id="balance_bfwd" name="balance_bfwd">
+                                        <?php if($previous_Cash_month_data['total_balanceInCash'] == 0){?>
+                                        <input type="text" class="form-control editInput <?php if(isset($cash) && $cash !=''){ echo "disabled-tab"; }?>" id="balance_bfwd" name="balance_bfwd" <?php if(isset($cash) && $cash !=''){?> value="{{$cash->balance_bfwd}}" <?php }?>>
+                                        <?php }else{?>
+                                        <input type="text" class="form-control editInput disabled-tab" id="balance_bfwd" name="balance_bfwd"  value="{{$previous_Cash_month_data['total_balanceInCash']}}">
+                                        <?php }?>
                                     </div>
                                 </div>
                                 <div class="row form-group mb-2">
@@ -76,7 +85,7 @@
                                         <div class="col-sm-9 col-form-label nq_input">
                                             <input type="radio" name="dext" id="yes" value="1">
                                             <label for="yes">Yes</label>
-                                            <input type="radio" name="dext" id="no" value="0">
+                                            <input type="radio" name="dext" id="no" value="0" checked>
                                             <label for="no">NO</label>
                                         </div>
                                     </div>
@@ -87,7 +96,7 @@
                                         <div class="col-sm-9 col-form-label nq_input">
                                             <input type="radio" name="invoice_la" id="yes2" value="1">
                                             <label for="yes2">Yes</label>
-                                            <input type="radio" name="invoice_la" id="no2" value="0">
+                                            <input type="radio" name="invoice_la" id="no2" value="0" checked>
                                             <label for="no2">NO</label>
                                         </div>
                                     </div>

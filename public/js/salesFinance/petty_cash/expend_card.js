@@ -37,3 +37,48 @@ function save_expend_card(){
         }
     });
 }
+$("#fromDate").change(function() {
+    var startDate = document.getElementById("fromDate").value;
+    var endDate = document.getElementById("ToDate").value;
+
+    if ((Date.parse(endDate) <= Date.parse(startDate))) {
+        alert("Start date should be less than End date");
+        document.getElementById("fromDate").value = "";
+        return false;
+    }
+});
+$("#ToDate").change(function() {
+    var startDate = document.getElementById("fromDate").value;
+    var endDate = document.getElementById("ToDate").value;
+
+    if ((Date.parse(startDate) >= Date.parse(endDate))) {
+        alert("End date should be greater than Start date");
+        document.getElementById("ToDate").value = "";
+        return false;
+    }
+    $.ajax({
+        type: "POST",
+        url: filterUrl,
+        data: {startDate:startDate,endDate:endDate,_token:token},
+        success: function(response) {
+            console.log(response);
+            // return false;
+            if (response.success === true) {
+                if(response.data.length == 0){
+                    $("#expend_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
+                }else{
+                    $("#expend_result").html(response.html_data);
+                }
+                $("#balanceOnCard").text(response.balanceOnCard);
+                $("#sumPurchaseCashIn").text(response.sumPurchaseCashIn);
+                $("#totalBalanceFund").text(response.totalBalanceFund);
+                $("#totalBalancebfwd").text(response.totalBalancebfwd);
+                
+            }
+        },
+        error: function(xhr, status, error) {
+            var errorMessage = xhr.status + ': ' + xhr.statusText;
+            alert('Error - ' + errorMessage + "\nMessage: " + error);
+        }
+    });
+});
