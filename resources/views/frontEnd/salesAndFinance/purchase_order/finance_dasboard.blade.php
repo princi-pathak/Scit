@@ -203,7 +203,7 @@
                                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row lightBrown">
+                                                    <div class="user-heading alt wdgt-row purple-bg">
                                                         <i class="fa fa-window-maximize" aria-hidden="true"></i>
                                                     </div>
                                                     <div class="panel-body">
