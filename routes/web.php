@@ -476,6 +476,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('child-register-add','child_register_add');
 			Route::post('saveExpend','saveExpend');
 			Route::post('saveCash','saveCash');
+			Route::post('cash_filter','cash_filter');
+			Route::post('expand_card_filter','expand_card_filter');
 			
 		});
 	});
