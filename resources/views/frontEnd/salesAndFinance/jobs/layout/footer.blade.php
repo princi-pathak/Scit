@@ -19,6 +19,10 @@
 <script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="{{ url('public/frontEnd/js/developer.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="{{ url('public/frontEnd/js/selectize/selectize.js') }}"></script>
+<script src='https://cdn.form.io/formiojs/formio.full.min.js'></script>
 
 <script>
     function getCustomerList(id) {
