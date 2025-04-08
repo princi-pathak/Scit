@@ -184,7 +184,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ url('/leads') }}">
+                <a href="{{ url('/sales') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">

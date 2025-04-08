@@ -38,7 +38,7 @@ class LeadController extends Controller
 {
     public function leads(){
         // echo 1;die;lead_dasboard
-        return view('frontEnd.salesAndFinance.lead.lead_dasboard');
+        return view('frontEnd.salesAndFinance.common.lead_dasboard');
     }
     public function index(Request $request)
     {

@@ -9253,12 +9253,25 @@ ul.pop-notification>li a:hover i {
 }
 
 /*Ram css for second header*/
-    .topbaarBtn{
-        display: flex;
-        float: inline-end;
-        align-content: space-between;
-        margin-right: 17px;
-        gap: 10px;
-        margin-bottom: 25px;
-    }
+.topbaarBtn {
+    display: flex;
+    float: inline-end;
+    align-content: space-between;
+    margin-right: 17px;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
 /*end here*/
+
+.newJobForm {
+    margin: 0 20px 19px;
+}
+
+.panel {
+    padding-bottom: 1px;
+}
+
+.close {
+    top: 8px;
+}

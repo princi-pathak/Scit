@@ -81,7 +81,7 @@
                                         <a href="{{ url('/petty-cash/child_register') }}">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row bg-purple">
+                                                    <div class="user-heading alt wdgt-row Olive_gray">
                                                         <i class="fa fa-child"></i>
                                                     </div>
                                                     <div class="panel-body">
@@ -143,7 +143,7 @@
                                         <a href="#!">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row bg-darkgreen">
+                                                    <div class="user-heading alt wdgt-row light_yellow">
                                                         <i class="fa fa-bullhorn"></i>
                                                     </div>
                                                     <div class="panel-body">
@@ -188,7 +188,7 @@
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Fixed_Asset">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row lightBrown">
+                                                <div class="user-heading alt wdgt-row light_blue">
                                                     <i class="fa fa-window-maximize" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="panel-body">
@@ -203,8 +203,8 @@
                                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row purple-bg">
-                                                        <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                                    <div class="user-heading alt wdgt-row lavender_pink">
+                                                        <i class="fa fa-university" aria-hidden="true"></i>
                                                     </div>
                                                     <div class="panel-body">
                                                         <div class="wdgt-value">
@@ -216,7 +216,6 @@
                                         </div>
                                     </a>
                                 </div>
-
                                 <div class="tab_finance-content">
                                     <div id="Invoice" data-tab-finance-content>
                                         <div class="row">
@@ -707,201 +706,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div id="Quoting_System" data-tab-finance-content>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon1">
-                                                                        <i class="fa fa-tachometer" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>Dashboard</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="{{url('invoices/add')}}">
-                                                                <div>
-                                                                    <div class="icon icon2">
-                                                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>New Quote</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="{{url('invoices/invoice?key=Draft')}}">
-                                                                <div>
-                                                                    <div class="icon icon3">
-                                                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>Draft Quote</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="{{url('invoices/invoice?key=Outstanding')}}">
-                                                                <div>
-                                                                    <div class="icon icon4">
-                                                                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>Actioned Quote</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="{{url('invoices/invoice?key=Overdue')}}">
-                                                                <div>
-                                                                    <div class="icon icon3">
-                                                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>Call Back Quote</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="{{url('invoices/invoice?key=Paid')}}">
-                                                                <div>
-                                                                    <div class="icon icon6">
-                                                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>Accepted Quote</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon7">
-                                                                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>Converted Quote</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon8">
-                                                                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>Quote Reminders</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <a href="#">
-                                                                <div>
-                                                                    <div class="icon icon9">
-                                                                        <i class="fa fa-search" aria-hidden="true"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card_name">
-                                                                    <h4>Search Quote</h4>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <div class="inner_card_dropdown" data-target="show_inner_card_dropdown5">
-                                                                <a href="javascript:void(0)">
-                                                                    <div>
-                                                                        <div class="icon icon10">
-                                                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card_name">
-                                                                        <h4>Appointment</h4>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                            <div class="show_dropdown show_inner_card_dropdown5 " style="display: none;">
-                                                                <a href="#!">
-                                                                    <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        <span>Sales Appointment </span>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div class="inner_cards">
-                                                            <div class="inner_card_dropdown" data-target="show_inner_card_dropdown6">
-                                                                <a href="javascript:void(0)">
-                                                                    <div>
-                                                                        <div class="icon icon4">
-                                                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card_name">
-                                                                        <h4>Recurring Quote</h4>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                            <div class="show_dropdown show_inner_card_dropdown6 " style="display: none;">
-                                                                <a href="#!">
-                                                                    <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        <span> New Recurring Quote</span>
-                                                                    </div>
-                                                                </a>
-                                                                <a href="#!">
-                                                                    <div>
-                                                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        <span>Recurring Quote</span>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
                                     <div id="Day_book" data-tab-finance-content>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="{{ url('/petty-cash/expend-card') }}">
+                                                            <a href="{{ url('/purchase/purchase-day-book') }}">
                                                                 <div>
                                                                     <div class="icon icon10">
                                                                         <i class="fa fa-book" aria-hidden="true"></i>
@@ -915,7 +726,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="">
+                                                            <a href="{{  url('sales/sales-day-book') }}">
                                                                 <div>
                                                                     <div class="icon icon7">
                                                                         <i class="fa fa-book"></i>
@@ -923,6 +734,20 @@
                                                                 </div>
                                                                 <div class="card_name">
                                                                     <h4>Sales Day Book</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{ url('purchase/purchase-expenses') }}">
+                                                                <div>
+                                                                    <div class="icon icon3">
+                                                                        <i class="fa fa-book"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Purchase Type</h4>
                                                                 </div>
                                                             </a>
                                                         </div>
