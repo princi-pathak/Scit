@@ -330,6 +330,7 @@ class PettyCashController extends Controller
                  }else{
                     $html_data.='<td></td>';
                  }}
+                 $fund_added='';
                  if(isset($val->fund_added) && $val->fund_added !=''){$fund_added= '£'.$val->fund_added;}
                  $html_data.='<td>'. $fund_added .'</td>
                 <td>£'. $val->purchase_amount .'</td>
@@ -346,7 +347,11 @@ class PettyCashController extends Controller
             $sum=$totalBalanceFund+$totalBalancebfwd;
         }
         $calculation=$sum-$sumPurchaseCashIn;
-        $balanceOnCard=$calculation-$cash;
+        if(count($search_data) > 0){
+            $balanceOnCard=$calculation-$cash;
+        }else{
+            $balanceOnCard=0;
+        }
         // echo "<pre>";print_r($html_data);die;
         return response()->json(['success'=>true,'message'=>'Filtered Data','data'=>$search_data,'html_data'=>$html_data,'balanceOnCard'=>$balanceOnCard,'totalBalancebfwd'=>($totalBalancebfwd) ? $totalBalancebfwd: $previous_month_data['previousbalanceOnCard'],'totalBalanceFund'=>$totalBalanceFund,'sumPurchaseCashIn'=>$sumPurchaseCashIn]);
     }
