@@ -237,10 +237,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::post('/check_users_add_in_shift', 'App\Http\Controllers\Rota\RotaController@check_users_add_in_shift');
 
-	// Route::get('/payroll','App\Http\Controllers\Rota\RotaController@payroll');
-	// Route::get('/information_checker','App\Http\Controllers\Rota\RotaController@information_checker');
-	// Route::get('/overtime','App\Http\Controllers\Rota\RotaController@overtime');
-	// Route::get('/payroll_glossary','App\Http\Controllers\Rota\RotaController@payroll_glossary');
+	Route::get('/payroll','App\Http\Controllers\Rota\RotaController@payroll');
+	Route::get('/information_checker','App\Http\Controllers\Rota\RotaController@information_checker');
+	Route::get('/overtime','App\Http\Controllers\Rota\RotaController@overtime');
+	Route::get('/payroll_glossary','App\Http\Controllers\Rota\RotaController@payroll_glossary');
 
 	Route::match(['get', 'post'], '/', 'App\Http\Controllers\frontEnd\DashboardController@dashboard')->name('dashboard');
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
