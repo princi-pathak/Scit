@@ -3205,3 +3205,13 @@ section.main_section_page_petty {
   display: flex;
   align-items: center;
 }
+
+.Additional_Hours .heading {
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.Additional_Hours{
+  padding: 10px 0;
+}
