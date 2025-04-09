@@ -1602,7 +1602,7 @@ class Purchase_orderController extends Controller
     }
     public function finance_dashboard(){
         
-        return view('frontEnd.salesAndFinance.purchase_order.finance_dasboard');
+        return view('frontEnd.salesAndFinance.common.finance_dasboard');
     }
     
 }

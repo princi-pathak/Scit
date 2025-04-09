@@ -1,144 +1,161 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
+@extends('frontEnd.layouts.master')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title','Purchase Expenses')
+<link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+@section('content')
 
-<section class="main_section_page px-3">
+
+<section class="wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 col-lg-4 col-xl-4 ">
-                <div class="pageTitle">
-                    <h3>Purchase Expenses</h3>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-md-4 col-lg-4 col-xl-4 ">
+                            <div class="pageTitle">
+                                <h3>Purchase Expenses</h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="maimTable">
+                                <div class="printExpt">
+                                    <div class="prntExpbtn">
+                                        <a href="#!">Print</a>
+                                        <a href="#!">Export</a>
+                                    </div>
+                                </div>
+                                <div class="markendDelete delete_btn_end">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="jobsection">
+                                                <a href="javascript:void(0)" onclick="openExpensesModal('', 'add')" class="profileDrop">New</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 deleteSelectedRows">
+                                            <div class="jobsection">
+                                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="productDetailTable pt-3">
+                                    <table class="table tablechange mb-0" id="exampleOne">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
+                                                <th>#</th>
+                                                <th>Date</th>
+                                                <th>Expense </th>
+                                                <th>Status </th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($purchase_expenses as $purchase_expense)
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" id="" class="delete_checkbox" value="{{$purchase_expense->id}}">
+                                                </td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $purchase_expense->created_at }}</td>
+                                                <td>{{ $purchase_expense->title }}</td>
+                                                <td>
+                                                    <?php if ($purchase_expense->status == 1) { ?>
+                                                        <span class="grencheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                                    <?php } else { ?>
+                                                        <span class="grayCheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                                    <?php } ?>
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown action_dropdown">
+                                                        <a href="#" class="dropdown-toggle profileDrop" data-toggle="dropdown" aria-expanded="false">
+                                                            <div class="action_drop"><span>Action &nbsp;</span> <i class="fa fa-sort-desc" aria-hidden="true"></i></div>
+                                                        </a>
+                                                        <div class="dropdown-menu">
+                                                            <a href="javascript:void(0)" onclick="openExpensesModal(this, 'edit')" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $purchase_expense->id }}" data-name="{{ $purchase_expense->title }}" data-status="{{ $purchase_expense->status }}">Edit Details</a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="d-inline-flex align-items-center ">
+                                                        <div class="nav-item dropdown">
+                                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-toggle="dropdown">Action</a>
+                                                            <div class="dropdown-menu fade-up m-0">
+                                                                <a href="javascript:void(0)" onclick="openExpensesModal(this, 'edit')" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $purchase_expense->id }}" data-name="{{ $purchase_expense->title }}" data-status="{{ $purchase_expense->status }}">Edit Details</a>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- End off main Table -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <di class="row">
-            <div class="col-lg-12">
-                <div class="maimTable">
-                    <div class="printExpt">
-                        <div class="prntExpbtn">
-                            <a href="#!">Print</a>
-                            <a href="#!">Export</a>
-                        </div>
-                    </div>
-                    <div class="markendDelete">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="jobsection">
-                                    <a href="javascript:void(0)" onclick="openExpensesModal('', 'add')" class="profileDrop">New</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-flex justify-content-end">
-                                <div class="jobsection">
-                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Purchase Expenses Modal start here -->
-                    <div class="modal fade" id="addPurchaseExpensesModel" tabindex="-1" aria-labelledby="purchaseExpesnsesModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content add_Customer">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="purchaseExpesnsesModalLabel"></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <div class="formDtail">
-                                                <div class="col-md-12 col-lg-12 col-xl-12 text-center">
-                                                    <div class="mt-1 mb-0 text-center" id="messagedepreciation_types"></div>
-                                                </div>
-                                                <form id="purchaseExpeneseForm" class="customerForm pt-0">
-                                                    @csrf
-                                                    <input type="hidden" name="purchase_expense_id" id="purchase_expense_id">
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-lg-12 col-xl-12">
-                                                            <div class="formDtail">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Title <span class="radStar ">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" name="title" id="purchase_expense_title">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputProject" class="col-sm-3 col-form-label">Status</label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control editInput selectOptions" id="purchase_expense_status" name="status">
-                                                                            <option value="1">Active</option>
-                                                                            <option value="0">Inactive</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div> <!-- End row -->
-                                </div>
-                                <div class="modal-footer customer_Form_Popup">
-                                    <button type="button" class="profileDrop" id="savePurchaseExpesnsesModal">Save</button>
-                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end here -->
-
-                    <div class="productDetailTable pt-3">
-                        <table class="display tablechange text-center" id="exampleOne">
-                            <thead class="table-light">
-                                <tr>
-                                    <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
-                                    <th>#</th>
-                                    <th>Date</th>
-                                    <th>Expense </th>
-                                    <th>Status </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($purchase_expenses as $purchase_expense)
-                                <tr>
-                                <td><div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$purchase_expense->id}}"></div></td>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $purchase_expense->created_at }}</td>
-                                    <td>{{ $purchase_expense->title }}</td>
-                                    <td>
-                                        <?php if ($purchase_expense->status == 1) { ?>
-                                            <span class="grencheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
-                                        <?php } else { ?>
-                                            <span class="grayCheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
-                                        <?php } ?>
-                                    </td>
-                                    <td>
-                                        <div class="d-inline-flex align-items-center ">
-                                            <div class="nav-item dropdown">
-                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">Action</a>
-                                                <div class="dropdown-menu fade-up m-0">
-                                                    <a href="javascript:void(0)" onclick="openExpensesModal(this, 'edit')" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $purchase_expense->id }}" data-name="{{ $purchase_expense->title }}" data-status="{{ $purchase_expense->status }}">Edit Details</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- End off main Table -->
-            </div>
-    </div>
     </div>
 </section>
 
+<!-- Purchase Expenses Modal start here -->
+<div class="modal fade" id="addPurchaseExpensesModel" tabindex="-1" aria-labelledby="purchaseExpesnsesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="purchaseExpesnsesModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="purchaseExpeneseForm">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="formDtail">
+                                <div class="col-md-12 col-lg-12 col-xl-12 text-center">
+                                    <div class="mt-1 mb-0 text-center" id="messagedepreciation_types"></div>
+                                    <input type="hidden" name="purchase_expense_id" id="purchase_expense_id">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                            <div class="formDtail">
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label text-left">Title <span class="radStar ">*</span></label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control editInput" name="title" id="purchase_expense_title">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="inputProject" class="col-sm-2 col-form-label text-left">Status</label>
+                                                    <div class="col-md-9">
+                                                        <select class="form-control editInput selectOptions" id="purchase_expense_status" name="status">
+                                                            <option value="1">Active</option>
+                                                            <option value="0">Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End row -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="profileDrop" id="savePurchaseExpesnsesModal">Save</button>
+                <button type="button" class="profileDrop gray" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end here -->
 
-@include('frontEnd.salesAndFinance.jobs.layout.footer')
+@endsection
 <script>
-      $("#deleteSelectedRows").on('click', function() {
+    $("#deleteSelectedRows").on('click', function() {
         let ids = [];
 
         $('.delete_checkbox:checked').each(function() {
@@ -184,9 +201,10 @@
             $('#selectAllCheckBoxes').prop('checked', false);
         }
     });
-    $('#selectAllCheckBoxes').on('click', function () {
+    $('#selectAllCheckBoxes').on('click', function() {
         $('.delete_checkbox').prop('checked', $(this).prop('checked'));
-  });
+    });
+
     function openExpensesModal(element, type) {
         console.log(type);
         $("#addPurchaseExpensesModel").modal('show');
