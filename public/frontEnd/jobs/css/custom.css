@@ -206,7 +206,12 @@ h6 {
   background: #e10078 !important;
 }
 
-.profileDrop:hover {
+.profileDrop.gray {
+  background-color: #32323A;
+}
+
+.profileDrop:hover,
+.profileDrop:focus {
   background-color: #32323A;
   color: #fff !important;
 }
@@ -234,6 +239,7 @@ button.profileDrop {
   align-items: center;
   gap: 5px;
   flex-wrap: wrap;
+  margin-bottom: 15px
 }
 
 /* .jobsection a {
@@ -249,7 +255,7 @@ button.profileDrop {
   color: #000;
   font-weight: 600;
   line-height: 20px;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .pageTitle {
@@ -286,7 +292,8 @@ a.overdueJobsFolder i {
 
 .maimTable {
   border: 1px solid #eee;
-  margin-top: 24px;
+  margin-top: 12px;
+  margin-bottom: 15px;
 }
 
 .maimTable div#exampleOne_length {
@@ -887,6 +894,8 @@ section.main_section_page {
 .col-form-label {
   font-size: 12px;
   line-height: 18px;
+  font-weight: 400;
+  margin: 0;
 }
 
 .formicon {
@@ -1004,9 +1013,13 @@ section.main_section_page {
 }
 
 .customer_Form_Popup {
-  padding: 4px 10px;
+  padding: 4px 10px !important;
   margin: 0;
   background-color: #f5f5f5;
+}
+
+.customer_Form_Popup button {
+  margin: 0.5rem;
 }
 
 /* Start popup before popup  */
@@ -2630,6 +2643,7 @@ ul#supplierList {
   -webkit-transform: translateZ(0);
   -webkit-font-smoothing: antialiased;
   color: #333230;
+  min-height: 76.9vh;
 }
 
 .wrapper .custom-tooltip {
@@ -3141,10 +3155,53 @@ section.main_section_page_petty {
   color: #fff;
 }
 
-.button_green{
+.button_green {
   background-color: #1fb5ad;
 }
 
 .green_border {
   border: 2px solid #1fb5ad;
+}
+
+.action_dropdown .dropdown-menu a {
+  display: block;
+  padding: 5px 10px;
+}
+
+.action_dropdown .dropdown-menu a:hover {
+  background-color: #1f88b5;
+  color: #fff;
+}
+
+.action_dropdown .dropdown-menu {
+  min-width: 100px;
+}
+
+.action_dropdown .action_drop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.action_dropdown>a:focus {
+  background-color: #32323A;
+  color: #fff;
+}
+
+.delete_btn_end .deleteSelectedRows {
+  display: flex;
+  justify-content: end;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
 }

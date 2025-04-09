@@ -6,17 +6,22 @@
   <style type="text/css">
     /*09 Aug 2018*/
     .chat_opt {
+      display: flex;
       background: #1f88b5;
       border-radius: 100%;
       bottom: 70px;
       color: #fff;
       font-size: 30px;
-      padding: 10px 20px;
+      padding: 10px;
       position: fixed;
       right: 40px;
       z-index: 999;
       cursor: pointer;
-    }
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+    } 
 
     .chat_opt:hover i {
       color: #fff;
