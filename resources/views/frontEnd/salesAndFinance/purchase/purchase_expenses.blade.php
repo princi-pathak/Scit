@@ -10,20 +10,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel">
-                    <div class="panel-body">
+                    <div class="panel-body pb-0">
                         <div class="col-md-4 col-lg-4 col-xl-4 ">
                             <div class="pageTitle">
                                 <h3>Purchase Expenses</h3>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="maimTable">
-                                <div class="printExpt">
-                                    <div class="prntExpbtn">
-                                        <a href="#!">Print</a>
-                                        <a href="#!">Export</a>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            <div class="Form_Section_New p-0">
                                 <div class="markendDelete delete_btn_end">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -39,7 +35,7 @@
                                     </div>
                                 </div>
 
-                                <div class="productDetailTable pt-3">
+                                <div class="productDetailTable">
                                     <table class="table tablechange mb-0" id="exampleOne">
                                         <thead class="table-light">
                                             <tr>
@@ -103,57 +99,46 @@
 <!-- Purchase Expenses Modal start here -->
 <div class="modal fade" id="addPurchaseExpensesModel" tabindex="-1" aria-labelledby="purchaseExpesnsesModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content add_Customer">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="purchaseExpesnsesModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h4 class="modal-title" id="purchaseExpesnsesModalLabel"></h4>
             </div>
-            <div class="modal-body">
-                <form id="purchaseExpeneseForm">
-                    @csrf
+            <form id="purchaseExpeneseForm">
+                @csrf
+                <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="formDtail">
-                                <div class="col-md-12 col-lg-12 col-xl-12 text-center">
-                                    <div class="mt-1 mb-0 text-center" id="messagedepreciation_types"></div>
-                                    <input type="hidden" name="purchase_expense_id" id="purchase_expense_id">
-                                    <div class="row">
-                                        <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <div class="formDtail">
-                                                <div class="form-group row">
-                                                    <label for="inputName" class="col-sm-2 col-form-label text-left">Title <span class="radStar ">*</span></label>
-                                                    <div class="col-md-9">
-                                                        <input type="text" class="form-control editInput" name="title" id="purchase_expense_title">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="inputProject" class="col-sm-2 col-form-label text-left">Status</label>
-                                                    <div class="col-md-9">
-                                                        <select class="form-control editInput selectOptions" id="purchase_expense_status" name="status">
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="mt-1 mb-0 text-center" id="messagedepreciation_types"></div>
+                                <input type="hidden" name="purchase_expense_id" id="purchase_expense_id">
+                                <div class="row">
+                                    <div class="form-group col-md-12 col-lg-12 col-xl-12">
+                                        <label>Title <span class="radStar ">*</span></label>
+                                        <input type="text" class="form-control editInput" name="title" id="purchase_expense_title">
+                                    </div>
+                                    <div class="form-group col-md-12 col-lg-12 col-xl-12">
+                                        <label>Status</label>
+                                        <select class="form-control editInput selectOptions" id="purchase_expense_status" name="status">
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div> <!-- End row -->
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="profileDrop" id="savePurchaseExpesnsesModal">Save</button>
-                <button type="button" class="profileDrop gray" data-dismiss="modal">Cancel</button>
-            </div>
+                </div>
+                <div class="modal-footer customer_Form_Popup">
+                    <button type="button" class="btn btn-warning" id="savePurchaseExpesnsesModal">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 <!-- end here -->
 
-@endsection
 <script>
     $("#deleteSelectedRows").on('click', function() {
         let ids = [];
@@ -260,5 +245,5 @@
         });
     });
 </script>
-
+@endsection
 <script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/purchaseDayBook.js') }}"></script>

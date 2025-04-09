@@ -5530,7 +5530,8 @@ tr.odd.gradeU td.sorting_1 {
     /*position:fixed;*/
     bottom: 0;
     width: 100%;
-    margin-top: 30px;
+    /* margin-top: 30px; */
+    height: 40px;
 }
 
 .go-top {
