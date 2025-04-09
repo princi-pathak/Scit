@@ -41,7 +41,6 @@ if (isset($user_info)) {
                                         <input type="text" name="name" class="form-control" placeholder="Name" value="{{ (isset($user_info->name)) ? $user_info->name : '' }}" maxlength="255" {{ (isset($del_status)) ? $disabled: '' }}>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Username</label>
                                     <div class="col-lg-9">
@@ -70,7 +69,6 @@ if (isset($user_info)) {
                                         <input type="file" id="img_upload" name="image" val="" {{ (isset($del_status)) ? $disabled: '' }}>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Admission Number</label>
                                     <div class="col-lg-9">
@@ -83,7 +81,6 @@ if (isset($user_info)) {
                                         <input type="text" name="section" class="form-control" placeholder="Section" value="{{ (isset($user_info->section)) ? $user_info->section : '' }}" maxlength="255" {{ (isset($del_status)) ? $disabled: '' }}>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Date of Birth</label>
                                     <div class="col-lg-9">
@@ -99,7 +96,7 @@ if (isset($user_info)) {
                                         <select class="form-control" name="child_type" id="home_type">
                                             <option value="">Select Type</option>
                                             <option value="residential" {{ isset($user_info->child_type) && $user_info->child_type == "residential" ? "selected" : ''}}>Residential</option>
-                                            <option value="accommodation" {{ isset($user_info->child_type) && $user_info->child_type == "accommodation" ? "selected" : ''}} >Supported Accomodation</option>
+                                            <option value="accommodation" {{ isset($user_info->child_type) && $user_info->child_type == "accommodation" ? "selected" : ''}}>Supported Accomodation</option>
                                             <option value="leavers" {{ isset($user_info->child_type) && $user_info->child_type == "leavers" ? "selected" : ''}}>Leavers</option>
                                         </select>
                                     </div>
@@ -228,7 +225,6 @@ if (isset($user_info)) {
                                         </select>
                                     </div>
                                 </div>
-
                                 <?php
                                 if (isset($user_info)) {
                                     //$user_info->current_location = str_replace('<br />',"\r\n",$user_info->current_location);
@@ -338,14 +334,12 @@ if (isset($user_info)) {
                                         <textarea name="drug_n_alcohol_issues" class="form-control" placeholder="Drug & alcohol issues" rows="6" maxlength="2000" {{ (isset($del_status)) ? $disabled: '' }}>{{ (isset($user_info->drug_n_alcohol_issues)) ? $user_info->drug_n_alcohol_issues: '' }}</textarea>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Mental Health Issues</label>
                                     <div class="col-lg-9">
                                         <textarea name="mental_health_issues" class="form-control" placeholder="Mental health issues" rows="6" maxlength="2000" {{ (isset($del_status)) ? $disabled: '' }}>{{ (isset($user_info->mental_health_issues)) ? $user_info->mental_health_issues : '' }}</textarea>
                                     </div>
                                 </div>
-
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-lg-offset-3 col-lg-10">
@@ -415,29 +409,25 @@ if (isset($user_info)) {
     });
 </script>
 
-
-
-<?php //echo 'm'; die; 
-?>
 <script>
-   $(document).ready(function() {
-    $('#home_type').change(function() {
-        var selectedType = $(this).val();
-        if (selectedType === 'residential') {
-            $('#residential_rooms').show().find('select').prop('disabled', false);
-            $('#accommodation_rooms').hide().find('select').prop('disabled', true);
-        } else if (selectedType === 'accommodation') {
-            $('#accommodation_rooms').show().find('select').prop('disabled', false);
-            $('#residential_rooms').hide().find('select').prop('disabled', true);
-        } else {
-            $('#residential_rooms, #accommodation_rooms').hide().find('select').prop('disabled', true);
-        }
+    $(document).ready(function() {
+        $('#home_type').change(function() {
+            var selectedType = $(this).val();
+            if (selectedType === 'residential') {
+                $('#residential_rooms').show().find('select').prop('disabled', false);
+                $('#accommodation_rooms').hide().find('select').prop('disabled', true);
+            } else if (selectedType === 'accommodation') {
+                $('#accommodation_rooms').show().find('select').prop('disabled', false);
+                $('#residential_rooms').hide().find('select').prop('disabled', true);
+            } else {
+                $('#residential_rooms, #accommodation_rooms').hide().find('select').prop('disabled', true);
+            }
+        });
+
+        // ✅ Trigger change once on page load to apply correct state
+        $('#home_type').trigger('change');
     });
 
-    // ✅ Trigger change once on page load to apply correct state
-    $('#home_type').trigger('change');
-});
- 
     // before set room type we have to check child type check child type if residential then 1 bed 2 bed shows
 
 
