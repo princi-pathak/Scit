@@ -39,23 +39,23 @@
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Date</label>
                                     <div class="col-md-8">
-                                        <input type="date" class="form-control editInput" id="date" name="expend_date">
+                                        <input type="date" class="form-control editInput checkInput" id="date" name="expend_date">
                                     </div>
                                 </div>
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Balance b/fwd</label>
                                     <div class="col-md-8">
                                         <?php if($previous_month_data['previousbalanceOnCard'] == 0){?>
-                                            <input type="text" class="form-control editInput <?php if(isset($expendCard) && $expendCard !=''){ echo "disabled-tab"; }?> " id="balance_bfwd" name="balance_bfwd" <?php if(isset($expendCard) && $expendCard !=''){?> value="{{$expendCard->balance_bfwd}}" <?php }?>>
+                                            <input type="text" class="form-control editInput numberInput checkInput <?php if(isset($expendCard) && $expendCard !=''){ echo "disabled-tab"; }?> " id="balance_bfwd" name="balance_bfwd" <?php if(isset($expendCard) && $expendCard !=''){?> value="{{$expendCard->balance_bfwd}}" <?php }?> onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                         <?php }else{?>
-                                            <input type="text" class="form-control editInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_month_data['previousbalanceOnCard']}}">
+                                            <input type="text" class="form-control editInput numberInput checkInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_month_data['previousbalanceOnCard']}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                         <?php }?>
                                     </div>
                                 </div>
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Fund added to card</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control editInput" id="fund_added" name="fund_added">
+                                        <input type="text" class="form-control editInput numberInput" id="fund_added" name="fund_added" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                     </div>
                                 </div>
                             </div>
@@ -63,19 +63,19 @@
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Purchases</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control editInput" id="purchase_amount" name="purchase_amount">
+                                        <input type="text" class="form-control editInput numberInput checkInput" id="purchase_amount" name="purchase_amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                     </div>
                                 </div>
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Card Details</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control editInput" id="card_details" name="card_details">
+                                        <input type="text" class="form-control editInput checkInput" id="card_details" name="card_details">
                                     </div>
                                 </div>
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Receipt</label>
                                     <div class="col-md-8">
-                                        <input type="file" class="form-control editInput" id="receipt" name="receipt">
+                                        <input type="file" class="form-control editInput checkInput" id="receipt" name="receipt" onchange="check_file()">
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                                 <div class="row form-group mb-2">
                                     <label class="col-md-4 col-form-label">Initials</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control editInput" id="initial" name="initial">
+                                        <input type="text" class="form-control editInput checkInput" id="initial" name="initial">
                                     </div>
                                 </div>
                             </div>
