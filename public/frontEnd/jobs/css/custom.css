@@ -239,7 +239,7 @@ button.profileDrop {
   align-items: center;
   gap: 5px;
   flex-wrap: wrap;
-  margin-bottom: 10px
+  margin-bottom: 15px
 }
 
 /* .jobsection a {
@@ -3190,11 +3190,11 @@ section.main_section_page_petty {
   -webkit-overflow-scrolling: touch;
 }
 
-.form-group {
+/* .form-group {
   margin-bottom: 15px;
   display: flex;
   align-items: center;
-}
+} */
 
 .Additional_Hours .heading {
   text-align: center;
@@ -3202,8 +3202,9 @@ section.main_section_page_petty {
   font-size: 14px;
 }
 
-.Additional_Hours{
+.Additional_Hours {
   padding: 10px 0;
+}
 
 thead.table-light {
   background-color: #eee;
@@ -3224,5 +3225,16 @@ tfoot tr.table-light {
   /* margin: 15px 0 10px; */
   border-radius: 5px;
   margin-bottom: 13px;
+}
 
+table.tablechange tbody td a i {
+  font-size: 14px !important;
+}
+
+.white_space_nowrap {
+  white-space: nowrap;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #ddd;
 }
