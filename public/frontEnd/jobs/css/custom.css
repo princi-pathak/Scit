@@ -28,7 +28,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Roboto", sans-serif;
+  font-family: "open sans", sans-serif;
 }
 
 .btn-sm-square {
@@ -239,7 +239,7 @@ button.profileDrop {
   align-items: center;
   gap: 5px;
   flex-wrap: wrap;
-  margin-bottom: 15px
+  margin-bottom: 10px
 }
 
 /* .jobsection a {
@@ -1012,16 +1012,6 @@ section.main_section_page {
   line-height: 30px;
 }
 
-.customer_Form_Popup {
-  padding: 4px 10px !important;
-  margin: 0;
-  background-color: #f5f5f5;
-}
-
-.customer_Form_Popup button {
-  margin: 0.5rem;
-}
-
 /* Start popup before popup  */
 
 .importExportMrgin {
@@ -1106,13 +1096,13 @@ section.main_section_page {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.close {
+/* .close {
   position: absolute;
   top: 4px;
   right: 15px;
   font-size: 24px;
   cursor: pointer;
-}
+} */
 
 .close:hover {
   color: #888;
@@ -2643,7 +2633,7 @@ ul#supplierList {
   -webkit-transform: translateZ(0);
   -webkit-font-smoothing: antialiased;
   color: #333230;
-  min-height: 76.9vh;
+  min-height: calc(100vh - 120px);
 }
 
 .wrapper .custom-tooltip {
@@ -3200,8 +3190,23 @@ section.main_section_page_petty {
   -webkit-overflow-scrolling: touch;
 }
 
-.form-group {
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
+thead.table-light {
+  background-color: #eee;
+  border-top: 1px solid #ddd;
+}
+
+thead.table-light tr th {
+  border-bottom: 0px !important;
+}
+
+tfoot tr.table-light {
+  border-bottom: 1px solid #ddd;
+}
+
+.Form_Section_New {
+  padding: 20px;
+  border: 1px solid #eee;
+  /* margin: 15px 0 10px; */
+  border-radius: 5px;
+  margin-bottom: 13px;
 }
