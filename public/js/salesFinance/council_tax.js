@@ -1,5 +1,5 @@
-document.querySelectorAll('.openModalBtn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
+document.querySelectorAll('.openModalBtn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
         const action = this.getAttribute('data-action');
         const council_tax_id = document.getElementById('council_tax_id');
         const modalTitle = document.getElementById('modalTitle');
@@ -54,19 +54,55 @@ document.querySelectorAll('.openModalBtn').forEach(function(btn) {
     });
 });
 
+function validateCouncilTaxForm() {
+    let isValid = true;
+    $('.text-danger').remove(); // Clear previous errors
+
+    // Helper to show error
+    function showError(field, message) {
+        isValid = false;
+        field.after(`<span class="text-danger">${message}</span>`);
+    }
+
+    // Validate each required field
+    const address = $('[name="address"]');
+    if (!address.val().trim()) showError(address, 'The address field is required.');
+
+    const postCode = $('[name="post_code"]');
+    if (!postCode.val().trim()) showError(postCode, 'The post code field is required.');
+
+    const council = $('[name="council"]');
+    if (!council.val().trim()) showError(council, 'The council field is required.');
+
+    const accountNumber = $('[name="account_number"]');
+    if (!accountNumber.val().trim()) showError(accountNumber, 'The account number field is required.');
+
+    const ownedByOmega = $('[name="owned_by_omega"]:checked');
+    if (ownedByOmega.length === 0) showError($('[name="owned_by_omega"]').last(), 'The owned by omega field is required.');
+
+    const exempt = $('[name="exempt"]:checked');
+    if (exempt.length === 0) showError($('[name="exempt"]').last(), 'The exempt field is required.');
+
+    return isValid;
+}
 
 
-$(document).ready(function() {
-    $("#saveCouncilTax").on("click", function(e) {
+$(document).ready(function () {
+    $("#saveCouncilTax").on("click", function (e) {
         // alert("hii");
         e.preventDefault(); // Prevent default form submission
+
+        if (!validateCouncilTaxForm()) {
+            return false; // Stop if validation fails
+        }
+
         console.log($('#addCouncilTaxForm').serialize());
         $.ajax({
             url: saveData, // Laravel route or API endpoint
             method: "POST",
             data: $('#addCouncilTaxForm').serialize(),
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 if (response.success) {
                     alert("Success: " + response.message);
@@ -78,13 +114,37 @@ $(document).ready(function() {
                     alert("Error: " + response.message);
                 }
             },
-            error: function(xhr) {
-                alert("Something went wrong. Please try again.");
+            error: function (xhr) {
+                // alert("Something went wrong. Please try again.");
+                if (xhr.status === 422) {
+                    // Validation error
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessages = '';
+
+                    // Clear old errors first
+                    $('.text-danger').remove();
+
+                    $.each(errors, function (key, value) {
+                        // Display message under each input field
+                        let inputField = $(`[name="${key}"]`);
+                        if (inputField.length) {
+                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
+                        }
+
+                        // Collect all messages for optional alert box
+                        errorMessages += value[0] + "\n";
+                    });
+
+                    // Optional: show all errors in a single alert box
+                    alert("Please fix the following errors:\n" + errorMessages);
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
             }
         });
     });
 });
-$(document).on('click', '.deleteBtn', function() {
+$(document).on('click', '.deleteBtn', function () {
     var id = $(this).data('id');
 
     if (confirm('Are you sure you want to delete this record?')) {
@@ -94,11 +154,11 @@ $(document).on('click', '.deleteBtn', function() {
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content') // for Laravel CSRF protection
             },
-            success: function(response) {
+            success: function (response) {
                 alert('Record deleted successfully!');
                 location.reload();
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 alert('Something went wrong.');
             }
         });
