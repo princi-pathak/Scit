@@ -3190,6 +3190,21 @@ section.main_section_page_petty {
   -webkit-overflow-scrolling: touch;
 }
 
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.Additional_Hours .heading {
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.Additional_Hours{
+  padding: 10px 0;
+
 thead.table-light {
   background-color: #eee;
   border-top: 1px solid #ddd;
@@ -3209,4 +3224,5 @@ tfoot tr.table-light {
   /* margin: 15px 0 10px; */
   border-radius: 5px;
   margin-bottom: 13px;
+
 }

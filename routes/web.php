@@ -28,6 +28,7 @@ use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
 use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
 use App\Http\Controllers\frontEnd\PettyCashController;
+use App\Http\Controllers\frontEnd\salesFinance\PreInvoiceController;
 
 
 
@@ -479,6 +480,14 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('cash_filter','cash_filter');
 			Route::post('expand_card_filter','expand_card_filter');
 			
+		});
+	});
+
+	// frontend Pre-Invoice
+	Route::controller(PreInvoiceController::class)->group(function(){
+		Route::prefix('finance')->group(function(){
+			Route::get('invoice','index');
+			Route::post('save-pre-invoice','preinvoice_save');
 		});
 	});
 
