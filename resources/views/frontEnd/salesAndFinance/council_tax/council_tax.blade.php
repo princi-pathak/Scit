@@ -51,8 +51,6 @@
                                         <table id="exampleOne" class=" tablechange table" cellspacing="0" width="100%">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <!-- Ram bulk delete -->
-                                                    <!-- <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> All Select</label></th> -->
                                                     <th>#</th>
                                                     <th>Flat number if applicable</th>
                                                     <th>Address</th>
@@ -73,7 +71,6 @@
                                             <tbody>
                                                 @foreach($councilTaxs as $councilTax)
                                                 <tr>
-                                                    <!-- <td></td> -->
                                                     <td>{{ $loop->iteration}}</td>
                                                     <td>{{ $councilTax->flat_number }}</td>
                                                     <td>{{ $councilTax->address }}</td>
@@ -92,52 +89,7 @@
                                                 </tr>
                                                 @endforeach
 
-                                                <!-- <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Flat 1</td>
-                                                    <td>40-42 Kemble Street, Prescot</td>
-                                                    <td>L34 5SQ</td>
-                                                    <td>Knowsley </td>
-                                                    <td>4</td>
-                                                    <td>yes</td>
-                                                    <td></td>
-                                                    <td>yes</td>
-                                                    <td>7600198442</td>
-                                                    <td>18.03.2024</td>
-                                                    <td>01.04.24 - 31.03.25</td>
-                                                    <td>£314 per month</td>
-                                                    <td>Omega office - business rates</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>2</td>
-                                                    <td>Flat 1</td>
-                                                    <td>40-42 Kemble Street, Prescot</td>
-                                                    <td>L34 5SQ</td>
-                                                    <td>Knowsley </td>
-                                                    <td>4</td>
-                                                    <td>yes</td>
-                                                    <td></td>
-                                                    <td>yes</td>
-                                                    <td>7600198442</td>
-                                                    <td>18.03.2024</td>
-                                                    <td>01.04.24 - 31.03.25</td>
-                                                    <td>£314 per month</td>
-                                                    <td>Omega office - business rates</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr> -->
                                             </tbody>
-                                            <!-- <tfoot class="table-light">
-                                                <tr class="table-light">
-                                                    <th colspan="17">Total</th>
-                                                </tr>
-                                            </tfoot> -->
                                         </table>
                                     </div>
                                 </div>
@@ -165,7 +117,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="formDtail">
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label"> Flat number if applicable <span class="radStar">*</span></label>
+                                    <label for="" class="col-sm-3 col-form-label"> Flat number if applicable </label>
                                     <div class="col-sm-8">
                                         <input type="hidden" name="council_tax_id" id="council_tax_id">
                                         <input type="text" class="form-control editInput" id="flat_num" name="flat_number" placeholder="Flat 1">
@@ -178,9 +130,9 @@
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label"> PostCode <span class="radStar">*</span></label>
+                                    <label for="" class="col-sm-3 col-form-label"> Post Code <span class="radStar">*</span></label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control editInput" id="postcode" name="postcode" placeholder="L34 5SQ">
+                                        <input type="text" class="form-control editInput" id="postcode" name="post_code" placeholder="L34 5SQ">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -190,22 +142,22 @@
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label">No of Bedrooms ? <span class="radStar">*</span></label>
+                                    <label for="" class="col-sm-3 col-form-label">No of Bedrooms ? </label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" name="no_of_bedrooms" id="no_of_bedrooms" placeholder="4">
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label">Owned by Omega?</label>
+                                    <label for="" class="col-sm-3 col-form-label">Owned by Omega? <span class="radStar">*</span></label>
                                     <div class="col-sm-8 d-flex align-items-center gap-2">
-                                        <input type="radio" name="ownedByOmega" value="1" id="ownedByOmegayes">
+                                        <input type="radio" name="owned_by_omega" value="1" id="ownedByOmegayes">
                                         <label for="ownedByOmegayes" class="m-0 pt-1">Yes</label>
-                                        <input type="radio" name="ownedByOmega" id="ownedByOmegano" value="0">
+                                        <input type="radio" name="owned_by_omega" id="ownedByOmegano" value="0">
                                         <label for="ownedByOmegano" class="m-0 pt-1">No</label>
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label">Occupancy<span class="radStar">*</span></label>
+                                    <label for="" class="col-sm-3 col-form-label">Occupancy </label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" id="occupancy" name="occupancy" placeholder="2">
                                     </div>
@@ -230,13 +182,13 @@
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label">Last bill<span class="radStar">*</span></label>
+                                    <label for="" class="col-sm-3 col-form-label">Last bill</label>
                                     <div class="col-sm-8">
                                         <input type="date" class="form-control editInput" id="last_bill_date" name="last_bill_date" placeholder="Last bill">
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label">Bill period<span class="radStar">*</span></label>
+                                    <label for="" class="col-sm-3 col-form-label">Bill period </label>
                                     <div class="col-sm-4">
                                         <input type="date" class="form-control editInput" name="bill_period_start_date" id="bill_period_start_date" placeholder="Bill period">
                                     </div>
@@ -245,13 +197,13 @@
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label">Amount paid<span class="radStar">*</span></label>
+                                    <label for="" class="col-sm-3 col-form-label">Amount paid </label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" id="amount_paid" name="amount_paid" placeholder="Amount paid">
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="" class="col-sm-3 col-form-label">Additional Notes<span class="radStar">*</span></label>
+                                    <label for="" class="col-sm-3 col-form-label">Additional Notes </label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" id="additional_notes" name="additional" placeholder="Additional Notes">
                                     </div>

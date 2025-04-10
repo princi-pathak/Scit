@@ -762,7 +762,7 @@
                                                 <div class="row">
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="{{ url('/petty-cash/expend-card') }}">
+                                                            <a href="{{ url('sales-finance/assets/asset-category') }}">
                                                                 <div>
                                                                     <div class="icon icon10">
                                                                         <i class="fa fa-window-maximize" aria-hidden="true"></i>
@@ -776,7 +776,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="">
+                                                            <a href="{{ url('/sales-finance/assets/depreciation-type') }}">
                                                                 <div>
                                                                     <div class="icon icon7">
                                                                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -790,7 +790,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="">
+                                                            <a href="{{ url('sales-finance/assets/asset-register') }}">
                                                                 <div>
                                                                     <div class="icon icon3">
                                                                         <i class="fa fa-bullseye" aria-hidden="true"></i>
