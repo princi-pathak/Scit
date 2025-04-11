@@ -382,7 +382,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
 	});
 
-	// Invoice Section 
+	// Invoice Section  Frontend
 	Route::controller(InvoiceController::class)->group(function () {
 		Route::get('/account_codes', 'account_codes');
 		Route::post('/save_account_code', 'save_account_code')->name('invoice.ajax.saveAccountCode');
@@ -486,10 +486,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	// frontend Pre-Invoice
 	Route::controller(PreInvoiceController::class)->group(function(){
-		Route::prefix('finance')->group(function(){
-			Route::get('invoice','index');
-			Route::post('save-pre-invoice','preinvoice_save');
-		});
+		Route::get('service/invoice/{service_user_id}','index');
+		Route::post('save-pre-invoice','preinvoice_save');
 	});
 
 	// Staff for frontend
@@ -568,7 +566,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::controller(PurchaseController::class)->group(function () {
 		Route::prefix('purchase')->group(function () {
-			Route::get('purchase-expenses', 'purchase_expenses')->name('purchase.purchaseExpenses');
+			Route::get('purchase-type', 'purchase_type')->name('purchase.purchaseExpenses');
 			Route::post('save-purchase-expenses', 'save_purchase_expenses')->name('purchase.purchaseExpensesSave');
 			Route::get('purchase-day-book-reclaim-per', 'purchase_day_book_reclaim_per')->name('purchase.purchaseDayBookReclaimPer');
 			Route::get('reclaimPercantage', 'reclaimPercantage')->name('purchase.reclaimPercantage');

@@ -74,7 +74,7 @@ class PurchaseController extends Controller
         return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
     }
 
-    public function purchase_expenses(){
+    public function purchase_type(){
 
         $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at',  null)->get();
 
@@ -118,6 +118,8 @@ class PurchaseController extends Controller
             'success' => (bool) $excepmt,
             'data' => $residual ? $residual : 0
         ]);
+
+
     }   
 
 }

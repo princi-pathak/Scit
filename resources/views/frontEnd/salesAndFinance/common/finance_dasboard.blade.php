@@ -740,7 +740,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="{{ url('purchase/purchase-expenses') }}">
+                                                            <a href="{{ url('purchase/purchase-type') }}">
                                                                 <div>
                                                                     <div class="icon icon3">
                                                                         <i class="fa fa-book"></i>
