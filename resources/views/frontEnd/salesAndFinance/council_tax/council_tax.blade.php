@@ -19,6 +19,7 @@
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
                                         <a href="#" class="profileDrop openModalBtn" data-action="add" id=""> Add</a>
+                                        <a href="javascript:void(0)" class="profileDrop">Export</a>
                                     </div>
                                 </div>
                             </div>
@@ -57,10 +58,10 @@
                                             <td>{{ $councilTax->exempt }}</td>
                                             <td>{{ $councilTax->account_number }}</td>
                                             <td class="white_space_nowrap">{{ $councilTax->last_bill_date }}</td>
-                                            <td>{{ $councilTax->bill_period_start_date }} - {{ $councilTax->bill_period_end_date }}</td>
+                                            <td class="white_space_nowrap">{{ $councilTax->bill_period_start_date }} - <br> {{ $councilTax->bill_period_end_date }}</td>
                                             <td>{{ $councilTax->amount_paid }}</td>
                                             <td>{{ $councilTax->additional }}</td>
-                                            <td> <a href="#!" class="openModalBtn" data-action="edit" data-id="{{ $councilTax->id }}" data-flat-number="{{ $councilTax->flat_number }}" data-address="{{ $councilTax->address }}" data-post_code="{{ $councilTax->post_code}}" data-council="{{ $councilTax->council }}" data-no_of_bedrooms="{{ $councilTax->no_of_bedrooms }}" data-owned_by_omega="{{ $councilTax->owned_by_omega }}" data-occupancy="{{ $councilTax->occupancy }}" data-exempt="{{ $councilTax->exempt }}" data-account_number="{{ $councilTax->account_number }}" data-last_bill_date="{{ $councilTax->last_bill_date }}" data-bill_period_start_date="{{ $councilTax->bill_period_start_date }}" data-bill_period_end_date="{{ $councilTax->bill_period_end_date }}" data-amount_paid="{{ $councilTax->amount_paid }}" data-additional="{{ $councilTax->additional }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="#!" class="deleteBtn" data-id="{{ $councilTax->id }}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a> </td>
+                                            <td> <a href="#!" class="openModalBtn" data-action="edit" data-id="{{ $councilTax->id }}" data-flat-number="{{ $councilTax->flat_number }}" data-address="{{ $councilTax->address }}" data-post_code="{{ $councilTax->post_code}}" data-council="{{ $councilTax->council }}" data-no_of_bedrooms="{{ $councilTax->no_of_bedrooms }}" data-owned_by_omega="{{ $councilTax->owned_by_omega }}" data-occupancy="{{ $councilTax->occupancy }}" data-exempt="{{ $councilTax->exempt }}" data-account_number="{{ $councilTax->account_number }}" data-last_bill_date="{{ $councilTax->last_bill_date }}" data-bill_period_start_date="{{ $councilTax->bill_period_start_date }}" data-bill_period_end_date="{{ $councilTax->bill_period_end_date }}" data-amount_paid="{{ $councilTax->amount_paid }}" data-additional="{{ $councilTax->additional }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="#!" class="deleteBtn" data-id="{{ $councilTax->id }}"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -78,12 +79,12 @@
 <div class="modal fade" id="AddCouncilTax" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                <h4 class="modal-title" id="modalTitle">Add Council Tax</h4>
-            </div>
             <div id="error-text"></div>
             <form action="" id="addCouncilTaxForm" class="customerForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" id="modalTitle">Add Council Tax</h4>
+                </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
@@ -121,15 +122,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Owned by Omega? <span class="radStar">*</span></label>
-                                    <div class="text-md-right">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="owned_by_omega" value="1" id="ownedByOmegayes">
-                                            <label class="form-check-label" for="ownedByOmegayes">Yes</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="owned_by_omega" value="0" id="ownedByOmegano">
-                                            <label class="form-check-label" for="ownedByOmegano">No</label>
-                                        </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="1" id="ownedByOmegayes">
+                                        <label class="form-check-label m-0" for="ownedByOmegayes">Yes</label>
+                                        <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="0" id="ownedByOmegano">
+                                        <label class="form-check-label m-0" for="ownedByOmegano">No</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -147,41 +144,71 @@
                                         <label class="form-check-label m-0" for="exempt_no">No</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Account number<span class="radStar">*</span></label>
+                                <div>
+                                    <input type="text" class="form-control editInput" id="account_number" name="account_number" placeholder="Account number">
                                 </div>
-                                <div class="form-group">
-                                    <label>Account number<span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" id="account_number" name="account_number" placeholder="Account number">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Last bill</label>
+                                <div>
+                                    <input type="date" class="form-control" name="last_bill_date" id="last_bill_date">
                                 </div>
-                                <div class="form-group">
-                                    <label>Last bill</label>
-                                    <div>
-                                        <input type="date" class="form-control editInput" id="last_bill_date" name="last_bill_date" placeholder="Last bill">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Bill period </label>
-                                    <div class="row">
-                                        <div class="col-sm-6 pe-3">
-                                            <input type="date" class="form-control editInput" name="bill_period_start_date" id="bill_period_start_date" placeholder="Bill period">
+                                <!-- <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                    <input name="last_bill_date" id="last_bill_date" type="text" value="" autocomplete="off" class="form-control">
+
+                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                        <button class="btn btn-primary" type="button" id="openCalendarLastBillBtn">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </button>
+                                    </span>
+                                </div> -->
+                            </div>
+                            <div class="form-group">
+                                <label>Bill period </label>
+                                <div class="row">
+                                    <div class="col-sm-6 pe-3">
+                                        <div>
+                                            <input type="date" class="form-control" name="bill_period_start_date" id="bill_period_start_date">
                                         </div>
-                                        <div class="col-sm-6 ps-3">
-                                            <input type="date" class="form-control editInput" id="bill_period_end_date" name="bill_period_end_date" placeholder="Bill period">
+                                        <!-- <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                            <input name="bill_period_start_date" id="bill_period_start_date" type="text" value="" autocomplete="off" class="form-control" placeholder="Start Date">
+
+                                            <span class="input-group-btn datetime-picker2 btn_height">
+                                                <button class="btn btn-primary" type="button" id="openCalendarBillPeriodStartBtn">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </span>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-sm-6 ps-3">
+                                        <div>
+                                            <input type="date" class="form-control" name="bill_period_end_date" id="bill_period_end_date">
                                         </div>
+                                        <!-- <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                            <input name="bill_period_end_date" id="bill_period_end_date" type="text" value="" autocomplete="off" class="form-control" placeholder="End Date">
+
+                                            <span class="input-group-btn datetime-picker2 btn_height">
+                                                <button class="btn btn-primary" type="button" id="openCalendarBillPeriodEndBtn">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </span>
+                                        </div> -->
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Amount paid </label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" id="amount_paid" name="amount_paid" placeholder="Amount paid">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Amount paid </label>
+                                <div>
+                                    <input type="text" class="form-control editInput" id="amount_paid" name="amount_paid" placeholder="Amount paid">
                                 </div>
-                                <div class="form-group">
-                                    <label>Additional Notes </label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" id="additional_notes" name="additional" placeholder="Additional Notes">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Additional Notes </label>
+                                <div>
+                                    <input type="text" class="form-control editInput" id="additional_notes" name="additional" placeholder="Additional Notes">
                                 </div>
                             </div>
                         </div>
@@ -195,6 +222,45 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        // Last Bill date 
+        $('#last_bill_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            container: '#purchase_day_book_form'
+        });
+
+        $('#openCalendarLastBillBtn').click(function() {
+            $('#last_bill_date').focus();
+        });
+
+        // Bill Period Start Date 
+        $('#bill_period_start_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            container: '#purchase_day_book_form'
+        });
+
+        $('#openCalendarBillPeriodStartBtn').click(function() {
+            $('#bill_period_start_date').focus();
+        });
+
+        // Bill Period End Date 
+        $('#bill_period_end_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            container: '#purchase_day_book_form'
+        });
+
+        $('#openCalendarBillPeriodEndBtn').click(function() {
+            $('#bill_period_end_date').focus();
+        });
+    });
+</script>
 <script src="{{ url('public/js/salesFinance/council_tax.js') }}"></script>
 <script>
     deleteURL = "{{ url('finance/delete-council-tax') }}/";

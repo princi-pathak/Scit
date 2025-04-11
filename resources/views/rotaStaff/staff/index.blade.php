@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
-<!--main content start-->
+<!--main content start--> 
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -20,6 +20,7 @@
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
                                         <a href="" type="button" class="profileDrop" data-toggle="modal" data-target="#purchase_day_book_form">Add</a>
+                                        <a href="javascript:void(0)" class="profileDrop">Export</a>
                                     </div>
                                 </div>
                             </div>
@@ -136,16 +137,15 @@
                                         <input type="text" class="form-control editInput" name="" id="" value="" placeholder="L17 2AW">
                                     </div>
                                 </div>
-                                <div class="form-group datepicker-sttng date-sttng">
+                                <div class="form-group">
                                     <label>DOB</label>
-                                    <!-- <div>
-                                        <input type="date" class="form-control editInput" name="" id="" value="">
-                                    </div> -->
-                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date"> <!-- dpYears -->
-                                        <input name="date_of_birth" type="text" value="" autocomplete="off" size="16" class="form-control date-pick-su">
-                                        <span class="input-group-btn add-on datetime-picker2">
-                                            <input type="text" value="" name="" id="New_dob" autocomplete="off" class="form-control date-btn2">
-                                            <button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="date_of_birth" id="New_dob" type="text" value="" autocomplete="off" class="form-control">
+
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary" type="button" id="openCalendarBtn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
                                         </span>
                                     </div>
                                 </div>
@@ -168,8 +168,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Start Date</label>
-                                    <div>
-                                        <input type="date" class="form-control editInput" name="" id="" value="">
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="date_of_birth" id="Start_Date" type="text" value="" autocomplete="off" class="form-control">
+
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary" type="button" id="openCalendarStartBtn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -244,8 +250,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Leave Date <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="date" class="form-control editInput" name="" id="" value="" placeholder="">
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="date_of_birth" id="Leave_date" type="text" value="" autocomplete="off" class="form-control" placeholder="Leave Date">
+
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary" type="button" id="openCalendarLeaveBtn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -276,15 +288,45 @@
 
 <script>
     $(document).ready(function() {
+        // New Job date 
         $('#New_dob').datepicker({
-            format: 'dd-mm-yyyy'
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            container: '#purchase_day_book_form'
         });
 
-        $('#New_dob').on('change', function() {
-            $('#New_dob').datepicker('hide');
+        $('#openCalendarBtn').click(function() {
+            $('#New_dob').focus();
+        });
+
+        // Start Date 
+        $('#Start_Date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            container: '#purchase_day_book_form'
+        });
+
+        $('#openCalendarStartBtn').click(function() {
+            $('#Start_Date').focus();
+        });
+
+        // Leave Date 
+        $('#Leave_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            container: '#purchase_day_book_form'
+        });
+
+        $('#openCalendarLeaveBtn').click(function() {
+            $('#Leave_date').focus();
         });
     });
 </script>
+
+
 <script>
     const salesDayBook = "{{ url('/purchase/purchase-day-book/delete/') }}";
 </script>

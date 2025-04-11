@@ -3238,3 +3238,29 @@ table.tablechange tbody td a i {
 .border-bottom {
   border-bottom: 1px solid #ddd;
 }
+
+.btn_height button {
+  min-height: 34px;
+}
+
+.btn_height {
+  vertical-align: top;
+}
+
+.percentage_mark .icon {
+  background-color: #f1f1f1;
+  height: 34px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+}
+
+.border-end {
+  border-right: 1px solid #eee;
+}
+
+.border-0{
+  border: 0px !important;
+}
