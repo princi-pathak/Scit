@@ -109,30 +109,4 @@
         </div>
     </div>
 </section>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let vatInput = document.getElementById('vat_input');
-        let netAmountInput = document.getElementById('net_amount');
-        let vatAmountInput = document.getElementById('vat_amount');
-        let grossAmountInput = document.getElementById('gross_amount');
-
-        function calculateTax() {
-            let netAmount = parseFloat(netAmountInput.value) || 0;
-            let selectedOption = vatInput.options[vatInput.selectedIndex];
-            let taxRate = parseFloat(selectedOption.getAttribute('data-tax-rate')) || 0;
-
-            let vatAmount = (netAmount * taxRate) / 100;
-            let grossAmount = netAmount + vatAmount;
-
-            vatAmountInput.value = vatAmount.toFixed(2);
-            grossAmountInput.value = grossAmount.toFixed(2);
-        }
-
-        // Trigger calculation on VAT change or Net Amount change
-        vatInput.addEventListener('change', calculateTax);
-        netAmountInput.addEventListener('input', calculateTax);
-    });
-</script>
-
 @endsection
