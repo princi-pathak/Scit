@@ -140,7 +140,7 @@
                                                                 <label>End Date</label>
                                                                 <input type="date"
                                                                     class="form-control editInput faltpicker_date"
-                                                                    id="currentRateEnd_date" name="currentRateEnd_date[]" onchange="CountDays('currentRateStart_date','currentRateEnd_date','currentRateNo_of_days','currentRateTotalCost','currentRateWeekly_rate')">
+                                                                    id="currentRateEnd_date" name="currentRateEnd_date[]" onchange="CountDays('currentRateStart_date','currentRateEnd_date','currentRateNo_of_days','currentRateTotalCost','currentRateWeekly_rate',null,1)">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -192,7 +192,7 @@
                                                                 <label>End Date</label>
                                                                 <input type="date"
                                                                     class="form-control editInput faltpicker_date"
-                                                                    id="subsEnd_date" name="subsEnd_date[]" onchange="CountDays('subsStart_date','subsEnd_date','subsNo_of_days','subsTotalCost','subsWeeklyRate')">
+                                                                    id="subsEnd_date" name="subsEnd_date[]" onchange="CountDays('subsStart_date','subsEnd_date','subsNo_of_days','subsTotalCost','subsWeeklyRate',null,2)">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -241,7 +241,7 @@
                                                                 <label>End Date </label>
                                                                 <input type="date"
                                                                     class="form-control editInput faltpicker_date" id="additionalHours_End_date"
-                                                                    name="additionalHours_End_date[]">
+                                                                    name="additionalHours_End_date[]" onchange="CountDays('additionalHours_Start_date','additionalHours_End_date','additionalHours_No_of_days','additionalHours_TotalCost','additionalHours_Hourly_rate','additionalHours_HoursPerWeek',3)">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-2">
@@ -253,7 +253,7 @@
                                                             <div class="col-md-6">
                                                                 <label>Hourly rate</label>
                                                                 <input type="text" class="form-control editInput" id="additionalHours_Hourly_rate"
-                                                                    name="additionalHours_Hourly_rate[]">
+                                                                    name="additionalHours_Hourly_rate[]" value="27.13" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3">
@@ -290,7 +290,7 @@
                                                                 <label>End Date </label>
                                                                 <input type="date"
                                                                     class="form-control editInput faltpicker_date" id="additionalExtrasWeekly_End_date"
-                                                                    name="additionalExtrasWeekly_End_date[]" onchange="CountDays('additionalExtrasWeekly_Start_date','additionalExtrasWeekly_End_date','additionalExtrasWeekly_No_of_Days','additionalExtrasWeekly_Total_Cost','additionalExtrasWeekly_Weekly_amount')">
+                                                                    name="additionalExtrasWeekly_End_date[]" onchange="CountDays('additionalExtrasWeekly_Start_date','additionalExtrasWeekly_End_date','additionalExtrasWeekly_No_of_Days','additionalExtrasWeekly_Total_Cost','additionalExtrasWeekly_Weekly_amount',null,4)">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-2">
@@ -332,11 +332,11 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Date</label>
-                                                            <input type="date" class="form-control editInput faltpicker_date" id="additionalExtrasOneOff_Start_date" name="additionalExtrasOneOff_Start_date[]">
+                                                            <input type="date" class="form-control editInput faltpicker_date" id="additionalExtrasOneOff_Start_date" name="additionalExtrasOneOff_Start_date[]" onchange="CountDays('additionalExtrasOneOff_Start_date',null,null,'additionalExtrasOneOff_Total_cost','additionalExtrasOneOff_Amount',null,5)">
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Amount </label>
-                                                            <input type="text" class="form-control editInput" id="additionalExtrasOneOff_End_date" name="additionalExtrasOneOff_End_date[]">
+                                                            <input type="text" class="form-control editInput" id="additionalExtrasOneOff_Amount" name="additionalExtrasOneOff_Amount[]" value="<?php if(isset($child) && $child->extra !=''){echo $child->extra;}?>" readonly>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="heading">Total Cost</label>
@@ -371,46 +371,46 @@
                                                                     <tr>
                                                                         <td>1</td>
                                                                         <td>Accomodation Rate:</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
+                                                                        <td id="accomodationCost">£000</td>
+                                                                        <td id="accomodationVat"></td>
+                                                                        <td id="accomodationTotal">£000</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>2</td>
                                                                         <td>Total Subs</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
+                                                                        <td id="subsCost">£000</td>
+                                                                        <td id="subsVat"></td>
+                                                                        <td id="subsTotal">£000</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>3</td>
                                                                         <td>Total Cost Additional hours</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
+                                                                        <td id="additionalHoursCost">£000</td>
+                                                                        <td id="additionalHoursVat"></td>
+                                                                        <td id="additionalHoursTotal">£000</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>4</td>
                                                                         <td>Additional Extras - weekly</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
+                                                                        <td id="addExtrasWeekCost">£000</td>
+                                                                        <td id="addExtrasWeekVat"></td>
+                                                                        <td id="addExtrasWeekTotal">£000</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>5</td>
                                                                         <td>Additional Extras - one off</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
-                                                                        <td>000</td>
+                                                                        <td id="addExtrasOneoffCost">£000</td>
+                                                                        <td id="addExtrasOneoffVat"></td>
+                                                                        <td id="addExtrasOneoffTotal">£000</td>
                                                                     </tr>
                                                                 </tbody>
                                                                 <tfoot>
                                                                     <tr>
                                                                         <th></th>
                                                                         <th>Total invoice cost</th>
-                                                                        <th>000</th>
-                                                                        <th>000</th>
-                                                                        <th>000</th>
+                                                                        <th id="totalInvoiceCost">£000</th>
+                                                                        <th id="totalInvoiceVat"></th>
+                                                                        <th id="totalInvoiceTotal">£000</th>
                                                                     </tr>
                                                                 </tfoot>
                                                             </table>
@@ -549,20 +549,78 @@
         }
 
     }
-    function CountDays(start_date,end_date,apened_id,total_cost,rate){
-        let startDateStr = document.getElementById(start_date).value;
-        let endDateStr = document.getElementById(end_date).value;
-        if (startDateStr && endDateStr) {
-            let startParts = startDateStr.split('/');
-            let endParts = endDateStr.split('/');
-            let startDate = new Date(startParts[2], startParts[1] - 1, startParts[0]);
-            let endDate = new Date(endParts[2], endParts[1] - 1, endParts[0]);
-            let diffTime = endDate - startDate;
-            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            document.getElementById(apened_id).value = diffDays >= 0 ? diffDays : "Invalid Dates";
-            var rate_value=document.getElementById(rate).value;
-            var calculateTotalCost=rate_value*diffDays;
-            document.getElementById(total_cost).value=calculateTotalCost;
+</script>
+<script>
+    var netCost=0;
+    var netVat=0;
+    var netTotal=0;
+    function CountDays(start_date, end_date = null, apened_id = null, total_cost, rate, hourly_time = null, fieldtype) {
+        
+        var rate_value = parseFloat(document.getElementById(rate).value) || 0;
+        var calculateTotalCost = 0;
+
+        if (end_date) {
+            let startDateStr = document.getElementById(start_date).value;
+            let endDateStr = document.getElementById(end_date).value;
+
+            if (startDateStr && endDateStr) {
+                let startParts = startDateStr.split('/');
+                let endParts = endDateStr.split('/');
+                let startDate = new Date(startParts[2], startParts[1] - 1, startParts[0]);
+                let endDate = new Date(endParts[2], endParts[1] - 1, endParts[0]);
+                let diffTime = endDate - startDate;
+                let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                document.getElementById(apened_id).value = diffDays >= 0 ? diffDays : "Invalid Dates";
+
+                if (hourly_time != null) {
+                    let hourly = document.getElementById(hourly_time).value;
+                    calculateTotalCost = rate_value * hourly;
+                } else {
+                    calculateTotalCost = rate_value * diffDays;
+                }
+
+                document.getElementById(total_cost).value = calculateTotalCost;
+            }
+        } else {
+            calculateTotalCost = rate_value;
+            document.getElementById(total_cost).value = calculateTotalCost;
         }
+
+        calculate_summary(calculateTotalCost, fieldtype);
+    }
+    function calculate_summary(TotalCost,fieldtype){
+        var PreInvoiceVat='<?php if(isset($PreInvoiceVat) && $PreInvoiceVat !=''){ echo $PreInvoiceVat->vat;}?>'
+        let vat = TotalCost * PreInvoiceVat /100;
+        let vatCalculate=TotalCost;
+        if(fieldtype == 1){
+            $("#accomodationCost").text('£'+TotalCost.toFixed(2));
+            $("#accomodationVat").text('£'+vat.toFixed(2));
+            var vatAmount=vatCalculate+vat;
+            $("#accomodationTotal").text('£'+vatAmount.toFixed(2));
+            netVat=netVat+vat;
+            
+        }else if(fieldtype == 2){
+            $("#subsCost").text('£'+TotalCost.toFixed(2));
+            $("#subsTotal").text('£'+TotalCost.toFixed(2));
+        }else if(fieldtype == 3){
+            $("#additionalHoursCost").text('£'+TotalCost.toFixed(2));
+            $("#additionalHoursVat").text('£'+vat.toFixed(2));
+            var vatAmount=vatCalculate+vat;
+            $("#additionalHoursTotal").text('£'+vatAmount.toFixed(2));
+            netVat=netVat+vat;
+            
+        }else if(fieldtype == 4){
+            $("#addExtrasWeekCost").text('£'+TotalCost.toFixed(2));
+            $("#addExtrasWeekTotal").text('£'+TotalCost.toFixed(2));
+        }else if(fieldtype == 5){
+            $("#addExtrasOneoffCost").text('£'+TotalCost.toFixed(2));
+            $("#addExtrasOneoffTotal").text('£'+TotalCost.toFixed(2));
+        }
+        netCost=netCost+TotalCost;
+        netTotal=netVat+netCost;
+        $("#totalInvoiceCost").text('£'+netCost.toFixed(2));
+        $("#totalInvoiceVat").text('£'+netVat.toFixed(2));
+        $("#totalInvoiceTotal").text('£'+netTotal.toFixed(2));
     }
 </script>

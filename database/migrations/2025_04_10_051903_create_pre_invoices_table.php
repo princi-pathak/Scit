@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('no_of_days')->nullable();
             $table->decimal('rate', 10, 2)->comment('type 1,2 then weekly rate, type 3 then hourly rate, type 4 then weekly amount, type 5 then amount');
             $table->decimal('total_cost', 10, 2);
+            $table->integer('hours_per_week')->nullable();
+            $table->string('expenditure_type')->nullable();
             $table->string('vat')->nullable();
             $table->integer('type')->comment('1 Current Rate (per week), 2 Subs (per week), 3 Additional Hours, 4 Additional Extras - weekly, 5 Additional Extras - one off');
             $table->softDeletes();
