@@ -27,8 +27,7 @@
                                     <div class="row">
                                         <div class="col-md-7">
                                             <div class="jobsection">
-                                                <!-- <a href="{{ url('/sales/sales-day-book/add') }}" class="profileDrop">Add</a> -->
-                                                <a href="" type="button" class="profileDrop" data-toggle="modal" data-target="#add_sales_day_book">Add</a>
+                                                <a href="#" class="profileDrop openSalesDayBookModel" data-action="add">Add</a>
                                             </div>
                                         </div>
                                     </div>
@@ -98,7 +97,7 @@
                                                             </div>
                                                         </a>
                                                         <div class="dropdown-menu">
-                                                            <a href="{{ url('sales/sales-day-book/edit/' . $salesBook->id) }}" class="dropdown-item ">Edit</a>
+                                                            <a href="{{ url('sales/sales-day-book/edit/' . $salesBook->id) }}" data-action="edit" class="dropdown-item openSalesDayBookModel">Edit</a>
                                                             <a href="#!" class="dropdown-item deleteBtn" data-id="{{ $salesBook->id }}">Delete</a>
                                                         </div>
                                                     </div>
@@ -129,36 +128,36 @@
 </section>
 
 <!-- Sales Day book Modal start here -->
-<div class="modal fade" id="add_sales_day_book" tabindex="-1" aria-labelledby="add_sales_day_bookLabel" aria-hidden="true">
+<div class="modal fade" id="salesDayBookModel" tabindex="-1" aria-labelledby="add_sales_day_bookLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                <h4 class="modal-title" id="add_sales_day_bookLabel">Sales Day Book</h4>
+                <h4 class="modal-title" id="modalTitle">Sales Day Book</h4>
             </div>
-            <form id="purchaseExpeneseForm">
-                @csrf
+            <form id="salesDayBookForm">
+                <div id="error-div"></div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group">
-                                <input type="hidden" name="sales_day_book_id" value="{{ isset($salesBook->id) ? $salesBook->id : '' }}">
+                                <input type="hidden" name="sales_day_book_id">
                                 <label> Customer <span class="radStar">*</span></label>
-                                <select class="form-control editInput selectOptions" name="customer_id" id="">
+                                <select class="form-control editInput selectOptions" name="customer_id" id="getCustomerList">
                                     <option>Select Customer</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label> Date <span class="radStar">*</span></label>
-                                <input type="Date" class="form-control editInput" value="{{ isset($salesBook->date) ? $salesBook->date : '' }}" name="date" id="Date_input">
+                                <input type="Date" class="form-control editInput" name="date" id="Date_input">
                             </div>
                             <div class="form-group">
                                 <label> Invoice <span class="radStar">*</span></label>
-                                <input type="text" class="form-control editInput" name="invoice_no" value="{{ isset($salesBook->invoice_no) ? $salesBook->invoice_no : '' }}" id="Invoice_input" placeholder="Invoice no.">
+                                <input type="text" class="form-control editInput" name="invoice_no" id="Invoice_input" placeholder="Invoice no.">
                             </div>
                             <div class="form-group">
                                 <label> Net <span class="radStar">*</span></label>
-                                <input type="text" class="form-control editInput" id="net_amount" value="{{ isset($salesBook->netAmount) ? $salesBook->netAmount : '' }}" name="netAmount" placeholder="">
+                                <input type="text" class="form-control editInput" id="net_amount" name="netAmount" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label>VAT <span class="radStar">*</span></label>
@@ -168,17 +167,18 @@
                             </div>
                             <div class="form-group">
                                 <label>Vat Amount </label>
-                                <input type="text" class="form-control editInput" name="vatAmount" id="vat_amount" value="{{ isset($salesBook->vatAmount) ? $salesBook->vatAmount : ''}}" placeholder="" readonly>
+                                <input type="text" class="form-control editInput" name="vatAmount" id="vat_amount" placeholder="" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Gross</label>
-                                <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" value="{{ isset($salesBook->grossAmount) ? $salesBook->grossAmount :  '' }}" placeholder="" readonly>
+                                <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" placeholder="" readonly>
                             </div>
-                        </div> <!-- End row -->
+                        </div> 
+                        <!-- End row -->
                     </div>
                 </div>
                 <div class="modal-footer customer_Form_Popup">
-                    <button type="button" class="btn btn-warning" id="savePurchaseExpesnsesModal">Save</button>
+                    <button type="button" class="btn btn-warning" id="saveSalesDayBookModal">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
@@ -189,7 +189,10 @@
 
 <script>
     const salesDayBook = "{{ url('/sales/sales-day-book/delete/') }}";
+    const customerList =  '{{ route("customer.ajax.getCustomerList") }}';
+    const getTaxRate =  '{{ route("invoice.ajax.getActiveTaxRate") }}';
+    const saveSalesDayBook = "{{ url('sales/save-sales-day-book') }}";
 </script>
 
-@endsection
 <script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/salesDayBook.js') }}"></script>
+@endsection
