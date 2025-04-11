@@ -13,7 +13,7 @@
                     <div class="panel-body pb-0">
                         <div class="col-md-4 col-lg-4 col-xl-4 ">
                             <div class="pageTitle">
-                                <h3>Purchase Expenses</h3>
+                                <h3>Purchase Type</h3>
                             </div>
                         </div>
                     </div>

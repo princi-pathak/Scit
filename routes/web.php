@@ -29,6 +29,7 @@ use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
 use App\Http\Controllers\frontEnd\PettyCashController;
 use App\Http\Controllers\frontEnd\salesFinance\PreInvoiceController;
+use App\Http\Controllers\Rota\StaffController;
 
 
 
@@ -381,7 +382,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
 	});
 
-	// Invoice Section 
+	// Invoice Section  Frontend
 	Route::controller(InvoiceController::class)->group(function () {
 		Route::get('/account_codes', 'account_codes');
 		Route::post('/save_account_code', 'save_account_code')->name('invoice.ajax.saveAccountCode');
@@ -489,6 +490,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('save-pre-invoice','preinvoice_save');
 	});
 
+	// Staff for frontend
+	Route::controller(StaffController::class)->group(function(){
+		Route::get('rota-management/staff','index');
+	});
+
 	Route::controller(CreditNotesController::class)->group(function () {
 		Route::get('credit_notes', 'credit_notes');
 		Route::get('new_credit_notes', 'new_credit_notes');
@@ -560,7 +566,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::controller(PurchaseController::class)->group(function () {
 		Route::prefix('purchase')->group(function () {
-			Route::get('purchase-expenses', 'purchase_expenses')->name('purchase.purchaseExpenses');
+			Route::get('purchase-type', 'purchase_type')->name('purchase.purchaseExpenses');
 			Route::post('save-purchase-expenses', 'save_purchase_expenses')->name('purchase.purchaseExpensesSave');
 			Route::get('purchase-day-book-reclaim-per', 'purchase_day_book_reclaim_per')->name('purchase.purchaseDayBookReclaimPer');
 			Route::get('reclaimPercantage', 'reclaimPercantage')->name('purchase.reclaimPercantage');

@@ -18,6 +18,8 @@ class SalesController extends Controller
     public function index()
     {
         $data['page'] = "dayBook";
+        $data['customers'] = Customer::get_customer_list_Attribute(Auth::user()->home_id, 'ACTIVE');
+        $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
         $data['salesDayBooks'] = SalesDayBook::join('customers', 'customers.id', '=', 'sales_day_books.customer_id')
             ->join('construction_tax_rates', 'construction_tax_rates.id', '=', 'sales_day_books.Vat')
             // ->where('sales_day_books.home_id', Auth::user()->home_id)
@@ -45,11 +47,19 @@ class SalesController extends Controller
         $data['page'] = "dayBook";
         $response = SalesDayBook::updateOrCreate(['id' => $data['sales_day_book_id'] ?? null],  array_merge($data, ['home_id' => Auth::user()->home_id]));
 
-        if (isset($response->id)) {
-            return redirect()->Route('sales.salesDayBook');
+        if(empty($request['sales_day_book_id'])){
+            return response()->json([
+                'success' => (bool) $data,
+                'message' => $data ? "Sales Day Book added successfully! " : 'Failed to save Sales Day Book'
+            ]);
         } else {
-            return redirect()->Route('sales.salesDayBookCreate');
+            return response()->json([
+                'success' => (bool) $data,
+                'message' => $data ? "Sales Day Book edited successfully! " : 'Failed to edit Sales Day Book'
+            ]);
         }
+
+    
     }
 
     public function deleteSalesDayBook($id)

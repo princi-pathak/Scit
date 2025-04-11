@@ -78,6 +78,22 @@
                                             </div>
                                         </a>
                                     </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="{{ url('/rota-management/staff') }}">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row lightBrown">
+                                                    <i class="fa fa-users" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Add Staff</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="tab_finance-content">
                                     <div id="Actions" data-tab-finance-content>
