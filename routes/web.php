@@ -488,6 +488,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(PreInvoiceController::class)->group(function(){
 		Route::get('service/invoice/{service_user_id}','index');
 		Route::post('save-pre-invoice','preinvoice_save');
+		Route::get('service/invoice/preview/{service_user_id}','preview');
 	});
 
 	// Staff for frontend
