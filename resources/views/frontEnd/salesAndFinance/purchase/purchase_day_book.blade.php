@@ -29,7 +29,7 @@
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
                                         <!-- <a href="{{ url('purchase/purchase-day-book/add') }}" class="profileDrop">Add</a> -->
-                                        <a href="" type="button" class="profileDrop" data-toggle="modal" data-target="#purchase_day_book_form">Add</a>
+                                        <a href="#!" type="button" class="profileDrop openPurchaseDayBookModel" data-action="add">Add</a>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                                                             <a href="#!" class="dropdown-item deleteBtn" data-id="{{ $purchaseBook->id }}">Delete</a>
                                                         </div>
                                                     </div> -->
-                                                <a href="#!"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                                                <a href="#!" class="openPurchaseDayBookModel" data-action="edit" data-id="{{ $purchaseBook->id }}" data-supplier_id="{{ $purchaseBook->supplier_id }}" data-date="{{ $purchaseBook->date }}" data-netAmount="{{ $purchaseBook->netAmount }}" data-vat="{{ $purchaseBook->Vat }}" data-grossAmount="{{ $purchaseBook->grossAmount }}" data-reclaim="{{ $purchaseBook->reclaim }}" data-not_reclaim="{{ $purchaseBook->not_reclaim }}" data-expense_type="{{ %purchaseBook->expense_type }}" data-expense_amount="{{ $purchaseBook->expense_amount }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
                                                 <a href="#!"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
@@ -144,9 +144,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                <h4 class="modal-title" id="purchase_day_book_formLabel">Purchase Day Book</h4>
+                <h4 class="modal-title" id="modalTitle"></h4>
             </div>
-            <form id="{{ url('purchase/save-purchase-day-book') }}">
+            <form id="save-purchase-day-book">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -155,7 +155,8 @@
                                 <div class="form-group">
                                     <label for="Supplier_input"> Supplier <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="hidden" name="purchase_day_book_id" value="{{ isset($purchaseBook->id) ? $purchaseBook->id : '' }}">
+                                        <input type="hidden" name="purchase_day_book_id">
+                                        <input type="hidden" id="supplier_id">
                                         <select class="form-control editInput selectOptions" name="supplier_id" id="Supplier_input">
                                             <option>Please Select</option>
                                         </select>
@@ -164,25 +165,25 @@
                                 <div class="form-group">
                                     <label for="Date_input"> Date <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="Date" class="form-control editInput" name="date" value="{{ isset($purchaseBook->date) ? $purchaseBook->date : '' }}" id="Date_input">
+                                        <input type="Date" class="form-control editInput" name="date" id="Date_input">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="net_amount"> Net <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="netAmount" id="net_amount" value="{{ isset($purchaseBook->netAmount) ? $purchaseBook->netAmount : '' }}" placeholder="">
+                                        <input type="text" class="form-control editInput" name="netAmount" id="net_amount" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="gross_amount">Total Amount (to be paid)</label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="" id="totalAmount" value="{{ isset($purchaseBook) ? ($purchaseBook->grossAmount + ($purchaseBook->reclaim ?? 0)) : '' }}" readonly>
+                                        <input type="text" class="form-control editInput" name="" id="totalAmount" readonly>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="expenses"> Expenses <span class="radStar">*</span></label>
                                     <div>
+                                        <input type="hidden" id="expenses_id">
                                         <select class="form-control editInput selectOptions" name="expense_type" id="expenses">
                                             <option>Please Select</option>
                                         </select>
@@ -191,12 +192,13 @@
                                 <div class="form-group">
                                     <label for="rate_input">Expense Amount</label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" value="{{ isset($purchaseBook->expense_amount) ? $purchaseBook->expense_amount :  '' }}" readonly>
+                                        <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="vat_input">VAT <span class="radStar">*</span></label>
                                     <div>
+                                        <input type="hidden" id="tax_id">
                                         <select class="form-control editInput selectOptions" name="Vat" id="vat_input">
                                             <option>-Not Assigned-</option>
                                         </select>
@@ -205,33 +207,34 @@
                                 <div class="form-group">
                                     <label for="vat_amount">VAT Amount</label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="vatAmount" value="{{ isset($purchaseBook->vatAmount) ? $purchaseBook->vatAmount : ''}}" id="vat_amount" readonly>
+                                        <input type="text" class="form-control editInput" name="vatAmount" id="vat_amount" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="gross_amount">Gross</label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" value="{{ isset($purchaseBook->grossAmount) ? $purchaseBook->grossAmount :  '' }}" readonly>
+                                        <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="reclaim_amount"> Reclaim <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="reclaim" id="reclaim_amount" value="{{ isset($purchaseBook->reclaim) ? $purchaseBook->reclaim : ''   }}" placeholder="" readonly>
+                                        <input type="text" class="form-control editInput" name="reclaim" id="reclaim_amount" placeholder="" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="not_claim"> Not Claim <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" value="{{ isset($purchaseBook->not_reclaim) ? $purchaseBook->not_reclaim :  '' }}" placeholder="" readonly>
+                                        <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" placeholder="" readonly>
                                     </div>
                                 </div>
                             </div>
-                        </div> <!-- End row -->
+                        </div> 
+                        <!-- End row -->
                     </div>
                 </div>
                 <div class="modal-footer customer_Form_Popup">
-                    <button type="button" class="btn btn-warning" id="">Save</button>
+                    <button type="button" class="btn btn-warning" id="purchaseDayBook">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
@@ -241,7 +244,12 @@
 <!-- end here -->
 <script>
     const salesDayBook = "{{ url('/purchase/purchase-day-book/delete/') }}";
+    const getSuppliersList = "{{ url('/purchase/getSupplierData') }}";
+    const getPurchaseExpenses = "{{ url('/purchase/getPurchaseExpense') }}"; 
+    const getTaxRate =  '{{ route("invoice.ajax.getActiveTaxRate") }}';
+    const reclaimPercantage = "{{ url('/purchase/purchase-day-book-reclaim-per') }}";
+    const calculatedData = "{{ url('/purchase/reclaimPercantage') }}";
 </script>
 
-@endsection
 <script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/purchaseDayBook.js') }}"></script>
+@endsection

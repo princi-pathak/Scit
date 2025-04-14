@@ -138,9 +138,9 @@
                                 <div class="form-group">
                                     <label>Exempt? Yes/No <span class="radStar">*</span></label>
                                     <div class="d-flex align-items-center gap-2">
-                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="1" id="exempt_yes">
+                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="1" id="exemptyes">
                                         <label class="form-check-label m-0" for="exempt_yes">Yes</label>
-                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="0" id="exempt_no">
+                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="0" id="exemptno">
                                         <label class="form-check-label m-0" for="exempt_no">No</label>
                                     </div>
                                 </div>
@@ -222,45 +222,7 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        // Last Bill date 
-        $('#last_bill_date').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            todayHighlight: true,
-            container: '#purchase_day_book_form'
-        });
 
-        $('#openCalendarLastBillBtn').click(function() {
-            $('#last_bill_date').focus();
-        });
-
-        // Bill Period Start Date 
-        $('#bill_period_start_date').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            todayHighlight: true,
-            container: '#purchase_day_book_form'
-        });
-
-        $('#openCalendarBillPeriodStartBtn').click(function() {
-            $('#bill_period_start_date').focus();
-        });
-
-        // Bill Period End Date 
-        $('#bill_period_end_date').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            todayHighlight: true,
-            container: '#purchase_day_book_form'
-        });
-
-        $('#openCalendarBillPeriodEndBtn').click(function() {
-            $('#bill_period_end_date').focus();
-        });
-    });
-</script>
 <script src="{{ url('public/js/salesFinance/council_tax.js') }}"></script>
 <script>
     deleteURL = "{{ url('finance/delete-council-tax') }}/";
