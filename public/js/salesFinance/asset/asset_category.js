@@ -251,8 +251,8 @@ function searchBtn() {
 
             if (response.success === true) {
                 const tableData = `<div class="productDetailTable asset_layer" style="">
-                <table class="table" id="containerA">
-                  <thead class="table-light">
+                <table class="table border-top mb-5 border-bottom tablechange" id="containerA">
+                  <thead>
                     <tr class="text-center">
                       <th class="col-1"></th>
                       <th class="col-1"></th>
@@ -358,8 +358,7 @@ function searchBtn() {
                       <td colspan="8"></td>
                     </tr>
                     <tr class="total2">
-                      <td></td>
-                      <th class="text-start">NBV Cfwd</th>
+                      <th colspan="2" class="text-start">NBV Cfwd</th>
                       <td class="line">1,162,640</td>
                       <td></td>
                       <td class="line">857,371</td>
@@ -371,8 +370,7 @@ function searchBtn() {
                       <td colspan="8"></td>
                     </tr>
                     <tr class="total2">
-                      <td></td>
-                      <th class="text-start">NBV Bfwd</th>
+                      <th colspan="2" class="text-start">NBV Bfwd</th>
                       <td class="line">1,079,295</td>
                       <td></td>
                       <td class="line">875,401</td>

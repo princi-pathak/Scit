@@ -16,7 +16,7 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
-                                <a href="javascript:void(0)" onclick="openAssetCategoryModal()" class="profileDrop">New</a>
+                                <a href="javascript:void(0)" onclick="openAssetCategoryModal()" class="profileDrop"> <i class="fa fa-plus"></i> Add</a>
                                 <a href="javascript:void(0)" class="profileDrop">Export</a>
                             </div>
                             <div class="productDetailTable mb-4 table-responsive">
@@ -104,8 +104,8 @@
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="saveassetCategoryModal" onclick="saveassetCategoryModal()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-warning" id="saveassetCategoryModal" onclick="saveassetCategoryModal()">Save changes</button>
             </div>
         </div>
     </div>
