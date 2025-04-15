@@ -576,6 +576,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/save-purchase-day-book', 'store');
 			Route::post('/purchase-day-book/delete/{id}', 'deletePurchaseDayBook')->name('purchaseDayBook.delete');
 			Route::get('/purchase-day-book/edit/{id}', 'editPurchaseDayBook');
+			Route::get('/getSupplierData', 'getSupplierData')->name('purchase.getSupplierData');
+			Route::get('/getPurchaseExpense', 'getPurchaseExpense')->name('purchase.getPurchaseExpense');
+			
 		});
 	});
 	

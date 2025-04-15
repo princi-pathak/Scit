@@ -164,3 +164,41 @@ $(document).on('click', '.deleteBtn', function () {
         });
     }
 });
+
+$(document).ready(function() {
+    // Last Bill date 
+    $('#last_bill_date').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        container: '#purchase_day_book_form'
+    });
+
+    $('#openCalendarLastBillBtn').click(function() {
+        $('#last_bill_date').focus();
+    });
+
+    // Bill Period Start Date 
+    $('#bill_period_start_date').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        container: '#purchase_day_book_form'
+    });
+
+    $('#openCalendarBillPeriodStartBtn').click(function() {
+        $('#bill_period_start_date').focus();
+    });
+
+    // Bill Period End Date 
+    $('#bill_period_end_date').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        container: '#purchase_day_book_form'
+    });
+
+    $('#openCalendarBillPeriodEndBtn').click(function() {
+        $('#bill_period_end_date').focus();
+    });
+});

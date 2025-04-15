@@ -63,19 +63,21 @@
                                         </div>
                                     </div>
                                     <!-- fa-hourglass-end  fa-life-ring  fa-hourglass-half  fa-hourglass-start  fa-clock-o  fa-tachometer  fa-sliders   -->
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Petty_Cash">
-                                        <div class="profile-nav alt">
-                                            <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row terques-bg">
-                                                    <i class="fa fa-money"></i>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div class="wdgt-value">
-                                                        <h4 class="count">Petty Cash</h4>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="{{ url('/petty-cash/expend-card') }}">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row terques-bg">
+                                                        <i class="fa fa-money"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Petty Cash</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                                         <a href="{{ url('/petty-cash/child_register') }}">
@@ -670,7 +672,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="Petty_Cash" data-tab-finance-content>
+                                    <!-- <div id="Petty_Cash" data-tab-finance-content>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
@@ -705,7 +707,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div id="Day_book" data-tab-finance-content>
                                         <div class="row">
                                             <div class="col-md-12">

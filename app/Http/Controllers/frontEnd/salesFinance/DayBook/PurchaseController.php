@@ -30,14 +30,14 @@ class PurchaseController extends Controller
         return view('frontEnd.salesAndFinance.purchase.purchase_day_book', $data);
     }
 
-    public function create(){
-        $data['page'] = "dayBook";
-        $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
-        $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
-        $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
-        // dd($data);
-        return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
-    }
+    // public function create(){
+    //     $data['page'] = "dayBook";
+    //     $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
+    //     $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
+    //     $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
+    //     // dd($data);
+    //     return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
+    // }
 
     public function store(PurchaseDayBookRequest $request)
     {
@@ -65,14 +65,14 @@ class PurchaseController extends Controller
         ]);
     }
 
-    public function editPurchaseDayBook($id){
-        $data['purchaseBook'] = PurchaseDayBook::findOrFail($id);
-        // dd($data);
-        $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
-        $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
-        $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
-        return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
-    }
+    // public function editPurchaseDayBook($id){
+    //     $data['purchaseBook'] = PurchaseDayBook::findOrFail($id);
+    //     // dd($data);
+    //     $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
+    //     $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
+    //     $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
+    //     return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
+    // }
 
     public function purchase_type(){
 
@@ -118,9 +118,24 @@ class PurchaseController extends Controller
             'success' => (bool) $excepmt,
             'data' => $residual ? $residual : 0
         ]);
-
-
     }   
+
+    public function getSupplierData(){
+        $data = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data'
+        ]);
+    }
+
+    public function getPurchaseExpense(){
+        $data = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data'
+        ]);
+    }
 
 }
 

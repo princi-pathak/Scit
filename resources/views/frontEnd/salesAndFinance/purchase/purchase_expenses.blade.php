@@ -233,13 +233,30 @@
                     window.location.reload();
                 },
                 error: function(xhr) {
+                    if (xhr.status === 422) {
+                    // Validation error
                     let errors = xhr.responseJSON.errors;
-                    let errorMessage = "<p style='color:red;'>";
-                    $.each(errors, function(key, value) {
-                        errorMessage += value[0] + "<br>";
+                    let errorMessages = '';
+
+                    // Clear old errors first
+                    $('.text-danger').remove();
+
+                    $.each(errors, function (key, value) {
+                        // Display message under each input field
+                        let inputField = $(`[name="${key}"]`);
+                        if (inputField.length) {
+                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
+                        }
+
+                        // Collect all messages for optional alert box
+                        errorMessages += value[0] + "\n";
                     });
-                    errorMessage += "</p>";
-                    alert(errorMessage);
+
+                    // Optional: show all errors in a single alert box
+                    // alert("Please fix the following errors:\n" + errorMessages);
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
                 }
             });
         });

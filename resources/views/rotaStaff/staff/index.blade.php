@@ -19,7 +19,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
-                                        <a href="" type="button" class="profileDrop" data-toggle="modal" data-target="#purchase_day_book_form">Add</a>
+                                        <a href="" type="button" class="profileDrop" data-toggle="modal" data-target="#purchase_day_book_form"> <i class="fa fa-plus"></i> Add</a>
                                         <a href="javascript:void(0)" class="profileDrop">Export</a>
                                     </div>
                                 </div>
