@@ -1,29 +1,29 @@
-// $(document).ready(function () {
-//     $(".deleteBtn").on("click", function () {
-//         let salesBookId = $(this).data("id"); // Get ID from button
-//         let row = $("#row-" + salesBookId); // Select the row
+$(document).ready(function () {
+    $(".deleteBtn").on("click", function () {
+        let salesBookId = $(this).data("id"); // Get ID from button
+        let row = $("#row-" + salesBookId); // Select the row
 
-//         if (confirm("Are you sure you want to delete this record?")) {
-//             $.ajax({
-//                 url: salesDayBook + "/"+ salesBookId,
-//                 type: "POST",
-//                 headers: {
-//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-//                 },
-//                 success: function (response) {
-//                     if (response.success) {
-//                         // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
-//                         alert(response.message);
-//                         window.location.reload();
-//                     }
-//                 },
-//                 error: function () {
-//                     alert("Something went wrong!");
-//                 },
-//             });
-//         }
-//     });
-// });
+        if (confirm("Are you sure you want to delete this record?")) {
+            $.ajax({
+                url: salesDayBook + "/"+ salesBookId,
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function (response) {
+                    if (response.success) {
+                        // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
+                        alert(response.message);
+                        window.location.reload();
+                    }
+                },
+                error: function () {
+                    alert("Something went wrong!");
+                },
+            });
+        }
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     let vatInput = document.getElementById('vat_input');
@@ -49,44 +49,24 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// function getCustomerList() {
-
-//     $.ajax({
-//         url: '{{ route("customer.ajax.getCustomerList") }}',
-//         success: function (response) {
-//             console.log(response.data);
-//             var get_customer_type = document.getElementById('getCustomerList');
-//             // get_customer_type.innerHTML = '';
-
-//             response.data.forEach(user => {
-//                 const option = document.createElement('option');
-//                 option.value = user.id;
-//                 option.text = user.name;
-//                 get_customer_type.appendChild(option);
-//             });
-//         },
-//         error: function (xhr, status, error) {
-//             console.error(error);
-//         }
-//     });
-// }
-
-
 function getCustomerList() {
     $.ajax({
         url: customerList,
         method: 'GET',
         success: function (response) {
             console.log("Customer list data:", response.data);
-
+            const selectedCustomerId = document.getElementById('customer_id').value;
             const customerSelect = document.getElementById('getCustomerList');
-            customerSelect.innerHTML = '<option>Select Customer</option>'; // reset list
+            customerSelect.innerHTML = '<option>Select Customer</option>'; 
 
             if (Array.isArray(response.data)) {
                 response.data.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
                     option.textContent = user.name;
+                    if (selectedCustomerId && user.id == selectedCustomerId) {
+                        option.selected = true;
+                    }
                     customerSelect.appendChild(option);
                 });
             } else {
@@ -109,8 +89,8 @@ function taxRate() {
                 // Iterate over all Account Code dropdowns and populate them
                 document.querySelectorAll('#vat_input').forEach(dropdown => {
                     dropdown.innerHTML = ''; // Clear existing options
-
                     const optionInitial = document.createElement('option');
+                    const preTaxID = document.getElementById('tax_id').value;
                     optionInitial.textContent = "Please Select"; // Use appropriate key from your response
                     optionInitial.value = 0;
                     dropdown.appendChild(optionInitial);
@@ -120,9 +100,9 @@ function taxRate() {
                         option.value = code.id; // Use appropriate key from your response
                         option.textContent = code.name; // Use appropriate key from your response
                         option.setAttribute('data-tax-rate', code.tax_rate);
-                        // if (code.id === 2) {
-                        //     option.selected = true; // Select the option where id = 2
-                        // }
+                        if (preTaxID && code.id == preTaxID) {
+                            option.selected = true;
+                        }
                         dropdown.appendChild(option);
                     });
                 });
@@ -139,43 +119,35 @@ function taxRate() {
 
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.openSalesDayBookModel').forEach(function (btn) {
-        // alert("dfdf");
-        // const action = this.getAttribute('data-action');
-        // const modalTitle = document.getElementById('modalTitle');
+        // alert();
+     
         btn.addEventListener('click', function () {
             getCustomerList();
             taxRate();
+            const action = this.getAttribute('data-action');
+            const modalTitle = document.getElementById('modalTitle');
+            const sales_day_book_id = document.getElementById('sales_day_book_id');
+            const customer_id = document.getElementById('customer_id');
+            const Date_input = document.getElementById('Date_input');
+            const Invoice_input = document.getElementById('Invoice_input');
+            const net_amount = document.getElementById('net_amount');
+            const tax_id = document.getElementById('tax_id');
+            const vat_amount = document.getElementById('vat_amount');
+            const gross_amount = document.getElementById('gross_amount');
+            if (action === 'add') {
+                modalTitle.textContent = 'Add Sales Day Book';
+            } else if (action === 'edit') {
+                modalTitle.textContent = 'Edit Sales Day Book';
+                sales_day_book_id.value = this.getAttribute('data-id');
+                customer_id.value = this.getAttribute('data-customer_id');
+                Date_input.value = this.getAttribute('data-date');
+                Invoice_input.value = this.getAttribute('data-invoice_no');
+                net_amount.value = this.getAttribute('data-netAmount');
+                tax_id.value = this.getAttribute('data-vat');
+                vat_amount.value = this.getAttribute('data-vatAmount');
+                gross_amount.value = this.getAttribute('data-grossAmount');
 
-
-            // if (action === 'add') {
-            //     modalTitle.textContent = 'Add Sales Day Book';
-            // } else if (action === 'edit') {
-            //     modalTitle.textContent = 'Edit Sales Day Book';
-            //     // council_tax_id.value = this.getAttribute('data-id');
-                // flat_num.value = this.getAttribute('data-flat-number');
-                // address.value = this.getAttribute('data-address');
-                // additional_notes.value = this.getAttribute('data-additional');
-                // postcode.value = this.getAttribute('data-post_code');
-                // council.value = this.getAttribute('data-council');
-                // no_of_bedrooms.value = this.getAttribute('data-no_of_bedrooms');
-                // if (this.getAttribute('data-owned_by_omega') == 1) {
-                //     ownedByOmegayes.checked = true;
-                // } else if (this.getAttribute('data-owned_by_omega') == 0) {
-                //     ownedByOmegano.checked = true;
-                // }
-
-                // occupancy.value = this.getAttribute('data-occupancy');
-                // if (this.getAttribute('data-exempt') == 1) {
-                //     exemptno.checked = true;
-                // } else if (this.getAttribute('data-exempt') == 0) {
-                //     exemptyes.checked = true;
-                // }
-                // account_number.value = this.getAttribute('data-account_number');
-                // last_bill_date.value = this.getAttribute('data-last_bill_date');
-                // bill_period_start_date.value = this.getAttribute('data-bill_period_start_date');
-                // bill_period_end_date.value = this.getAttribute('data-bill_period_end_date');
-                // amount_paid.value = this.getAttribute('data-amount_paid');
-            // }
+            }
 
             $('#salesDayBookModel').modal('show');
         });
@@ -199,14 +171,30 @@ $(document).ready(function() {
                 window.location.reload();
             },
             error: function(xhr) {
-                let errors = xhr.responseJSON.errors;
-                let errorMessage = "<p style='color:red;'>";
-                $.each(errors, function(key, value) {
-                    errorMessage += value[0] + "<br>";
-                });
-                errorMessage += "</p>";
-                $("#error-div").html(errorMessage);
-                // alert(errorMessage);
+                if (xhr.status === 422) {
+                    // Validation error
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessages = '';
+
+                    // Clear old errors first
+                    $('.text-danger').remove();
+
+                    $.each(errors, function (key, value) {
+                        // Display message under each input field
+                        let inputField = $(`[name="${key}"]`);
+                        if (inputField.length) {
+                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
+                        }
+
+                        // Collect all messages for optional alert box
+                        errorMessages += value[0] + "\n";
+                    });
+
+                    // Optional: show all errors in a single alert box
+                    // alert("Please fix the following errors:\n" + errorMessages);
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
             }
         });
     });

@@ -40,26 +40,17 @@ class SalesController extends Controller
 
     public function store(SalesDayBookRequest $request)
     {
-
-
         $data = $request->validated();
 
-        $data['page'] = "dayBook";
         $response = SalesDayBook::updateOrCreate(['id' => $data['sales_day_book_id'] ?? null],  array_merge($data, ['home_id' => Auth::user()->home_id]));
 
-        if(empty($request['sales_day_book_id'])){
-            return response()->json([
-                'success' => (bool) $data,
-                'message' => $data ? "Sales Day Book added successfully! " : 'Failed to save Sales Day Book'
-            ]);
+        if ($response->wasRecentlyCreated) {
+            return response()->json([  'success' => true, 'message' => 'Sales day book record created successfully!', 'data' => $response], 201);
+        } elseif ($response->wasChanged()) {
+            return response()->json([  'success' => true, 'message' => 'Sales day book record updated successfully!', 'data' => $response], 200);
         } else {
-            return response()->json([
-                'success' => (bool) $data,
-                'message' => $data ? "Sales Day Book edited successfully! " : 'Failed to edit Sales Day Book'
-            ]);
+            return response()->json([  'success' => false, 'message' => 'No changes made.', 'data' => $response], 200);
         }
-
-    
     }
 
     public function deleteSalesDayBook($id)
