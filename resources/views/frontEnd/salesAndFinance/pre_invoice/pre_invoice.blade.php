@@ -5,6 +5,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @section('content')
 
+<style>
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: pointer !important;
+        background-color: #fff !important;
+        opacity: 1;
+    }
+</style>
 
     <section class="wrapper">
         <div class="container-fluid">
@@ -40,12 +47,12 @@
                                                         class="profileDrop">Delete</a> -->
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 deleteSelectedRows">
+                                            <!-- <div class="col-md-6 deleteSelectedRows">
                                                 <div class="jobsection">
                                                     <a href="javascript:void(0)" id="deleteSelectedRows"
                                                         class="profileDrop">Delete</a>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
 
@@ -53,19 +60,42 @@
                                         <table class="table tablechange mb-0" id="exampleOne">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
+                                                    <!-- <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th> -->
                                                     <th>#</th>
                                                     <th>Name of Young Person</th>
                                                     <th>Home Local Authority</th>
-                                                    <th>Premises</th>
-                                                    <th>Room No.</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
                                                     <th>Current Rate(per week)</th>
                                                     <th>Subs(per week)</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td><?php if(isset($child) && $child !=''){ echo $child->name; }?></td>
+                                                    <td><?php if(isset($child) && $child !=''){ echo $child->local_authority; }?></td>
+                                                    <td><?php if(isset($child) && $child !=''){ echo $child->start_date; }?></td>
+                                                    <td><?php if(isset($child) && $child !=''){ echo $child->end_date; }?></td>
+                                                    <td><?php if(isset($child) && $child !=''){ echo $child->weekly_rate; }?></td>
+                                                    <td><?php if(isset($child) && $child !=''){ echo $child->subs; }?></td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end">
+                                                            <div class="nav-item dropdown">
+                                                                <a href="#!" class="nav-link dropdown-toggle profileDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Action
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-right" style="z-index:9999">
+                                                                    <a href="#!" class="dropdown-item">Edit</a>
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <a href="{{url('/service/invoice/preview/'.$service_user_id)}}" target="_blank" class="dropdown-item">Preview</a>
+                                                                    <div class="dropdown-divider"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -526,18 +556,19 @@
             type: "POST",
             data: $('#preInvoiceForm').serialize(),
             success: function (response) {
-                console.log(response); return false;
-                alert(response.message);
-                window.location.reload();
+                console.log(response);
+                if(response.vali_error){
+                    alert(response.vali_error);
+                    return false;
+                }else{
+                    alert(response.message);
+                    window.location.reload();
+                }
             },
             error: function (xhr) {
-                let errors = xhr.responseJSON.errors;
-                let errorMessage = "<p style='color:red;'>";
-                $.each(errors, function (key, value) {
-                    errorMessage += value[0] + "<br>";
-                });
-                errorMessage += "</p>";
-                alert(errorMessage);
+                let errors = xhr.responseJSON.message;
+                console.log(errors)
+                alert("Something went wrong");
             }
         });
     }
