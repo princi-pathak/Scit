@@ -4,6 +4,23 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
+<style>
+  .searchJobForm {
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+  }
+
+  .form_heading {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    /* border-top: 2px solid #ddd;
+    padding-top: 20px; */
+    text-align: center;
+    font-weight: 600 !important;
+  }
+</style>
+
 <!--main content start-->
 <section class="wrapper">
   <div class="container-fluid">
@@ -16,12 +33,55 @@
           <div class="panel-body">
             <div class="col-lg-12">
               <div class="jobsection justify-content-end">
-                <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="profileDrop">Add</a>
+                <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
+                <a href="javascript:void()" class="profileDrop" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
                 <a href="javascript:void(0)" class="profileDrop">Export</a>
-                <a href="javascript:void(0)" class="profileDrop">Search </a>
+                <div class="searchFilter">
+                  <a href="#!" onclick="hideShowDiv()" class="profileDrop">Search</a>
+                </div>
               </div>
-              
-              <div class="productDetailTable mb-4 table-responsive">
+              <div>
+                <div class="searchJobForm" id="divTohide" style="display:none">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="extraInformationTab">
+                        <form id="search_dataForm" class="p-4">
+                          @csrf
+                          <div class="row justify-content-center">
+                            <div class="col-md-12">
+                              <div class="row form-group pb-0 pageTitleBtn justify-content-center">
+                                <div class="col-md-4">
+                                  <label>Date From:</label>
+                                  <input type="date" class="form-control editInput" id="edd_startDate" name="start_date">
+                                </div>
+                                <div class="col-md-4">
+                                  <label>Date To:</label>
+                                  <input type="date" class="form-control editInput" id="edd_endDate" name="end_date">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="pageTitleBtn justify-content-center">
+                                <a href="javascript:void(0)" onclick="searchBtn()" class="profileDrop px-3">Search </a>
+                                <!-- <button type="submit" class="profileDrop px-3" onclick="return searchBtn()">Search</button> -->
+                                <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="profileDrop px-3">Clear</a>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="extraInformationTab">
+                  <div class="row">
+                    <div class="col-md-12" id="search_data">
+                    </div>
+                  </div>
+                  <!-- Button trigger modal -->
+                </div>
+              </div>
+              <div class="productDetailTable mb-4  table-responsive">
                 <table class="table border-top border-bottom tablechange" id="containerB">
                   <thead>
                     <tr>
@@ -134,6 +194,182 @@
     </div>
   </div>
 </section>
+
+<!-- Fixed Asset Register Modal start here -->
+<div class="modal fade" id="Fixed_Asset_Register" tabindex="-1" aria-labelledby="Fixed_Asset_RegisterLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        <h4 class="modal-title" id="Fixed_Asset_RegisterLabel">Add Fixed Asset Register</h4>
+      </div>
+      <form id="assetRegisterFormData" class="customerForm">
+        <input type="hidden" name="id" id="id" value="">
+        @csrf
+        <div class="modal-body">
+          <div class="">
+            <label class="form_heading border-0 p-0">Home</label>
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Asset Name <span class="radStar">*</span></label>
+                  <input type="text" class="form-control editInput" id="asset_name" name="asset_name" placeholder="Asset Name" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Date <span class="radStar">*</span></label>
+                  <input type="Date" class="form-control editInput" id="date" name="date" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Asset Type <span class="radStar">*</span></label>
+                  <select name="asset_type" id="asset_type" class="form-control editInput">
+
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End  off newJobForm -->
+          <div class="mt-4">
+            <label class="form_heading">Cost</label>
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label>B/fwd</label>
+                  <input type="text" class="form-control editInput numberInput" id="cost_bfwd" name="cost_bfwd" placeholder="00.00" onkeyup="calculate()" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Additions </label>
+                  <input type="text" class="form-control editInput numberInput" id="cost_addition" name="cost_addition" placeholder="00.00" onkeyup="calculate()" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Disposals </label>
+                  <input type="text" class="form-control editInput numberInput" id="cost_disposal" name="cost_disposal" placeholder="Disposals">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label>C/fwd</label>
+                  <input type="text" class="form-control editInput" id="cost_fwd" name="cost_fwd" placeholder="00.00" value="" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End  off newJobForm -->
+          <div class="mt-4">
+            <label class="form_heading">Depreciation</label>
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Type of Depreciation</label>
+                  <select name="depreciation_type" id="depreciation_type" class="form-control editInput" onchange="calculate()">
+
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label>B/fwd</label>
+                  <input type="text" class="form-control editInput numberInput" id="depreciation_bfwd" name="depreciation_bfwd" placeholder="00.00" onkeyup="calculate()" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Disps</label>
+                  <input type="text" class="form-control editInput numberInput" id="depreciation" name="depreciation" placeholder="Disps" onkeyup="calculate()" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Charge</label>
+                  <input type="text" class="form-control editInput" id="charge" name="charge" placeholder="00.00" value="" readonly>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> C/fwd</label>
+                  <input type="text" class="form-control editInput" id="depreciation_cfwd" name="depreciation_cfwd" placeholder="00.00" readonly value="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End  off newJobForm -->
+          <div class="mt-4">
+            <label class="form_heading">N.B.V</label>
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> B/fwd</label>
+                  <input type="text" class="form-control editInput" id="nbv_bfwd" name="nbv_cfwd" placeholder="00.00" readonly value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> C/fwd</label>
+                  <input type="text" class="form-control editInput" id="nbv_cfwd" name="depreciation_cfwd" placeholder="00.00" readonly>
+                </div>
+              </div>
+              <div class="col-md-12 ">
+                <div class="form-group">
+                  <label>NQ</label>
+                  <div class="col-form-label nq_input">
+                    <input type="radio" name="nq" id="yes" value="1">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="nq" id="no" value="0">
+                    <label for="no">NO</label>
+                    <label for="" class="ps-2"><small>(NO CAPITAL ALLOWANCES CLAIM)</small></label>
+                  </div>
+                </div>
+                <!-- <div class="form-group">
+                  <label> Charge</label>
+                  <input type="text" class="form-control editInput" id="charge" name="charge" placeholder="00.00" readonly>
+                </div>
+                <div class="form-group">
+                  <label> Disps</label>
+                    <input type="text" class="form-control editInput numberInput" id="depreciation" name="depreciation" placeholder="Disps" onkeyup="calculate()">
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <!-- End  off newJobForm -->
+        </div>
+        <div class="modal-footer customer_Form_Popup">
+          <a href="javascript:void(0)" onclick="getSaveData()" class="btn btn-warning"> Save</a>
+          <a href="{{url('sales-finance/assets/asset-register')}}" class="btn btn-default"> Back</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end here -->
+
+<script>
+  // search leads show search Filter
+  function hideShowDiv() {
+    let div = document.getElementById("divTohide");
+
+    if (div.style.display === 'none' || div.style.opacity === '0') {
+      div.style.display = 'block';
+      div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
+      div.style.opacity = '1';
+    } else {
+      div.style.height = '0px';
+      div.style.opacity = '0';
+      // Use a timeout to set display to none after the transition
+      setTimeout(() => {
+        div.style.display = 'none';
+      }, 500); // 500ms matches the CSS transition duration
+    }
+  }
+  // end search leads show search Filter js
+</script>
 <script>
   var searchUrl = "{{url('sales-finance/assets/asset-register-search')}}";
   var deleteAssetRegisterUrl = "{{url('sales-finance/assets/asset-register-delete')}}";

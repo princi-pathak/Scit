@@ -3135,14 +3135,17 @@ section.main_section_page_petty {
 }
 
 .balance_show {
-  background: #1fb5ad;
+  background: #e10078;
   padding: 8px;
-  margin: 20px 0;
+  margin: 0 0 20px 0;
+  display: inline-block;
 }
 
 .balance_show h6 {
   margin: 0;
   color: #fff;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .button_green {
@@ -3261,6 +3264,10 @@ table.tablechange tbody td a i {
   border-right: 1px solid #eee;
 }
 
-.border-0{
+.border-0 {
   border: 0px !important;
 }
+.profileDrop#active_inactive{
+  background-color: #32323a;
+}
+

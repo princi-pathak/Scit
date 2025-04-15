@@ -4,8 +4,14 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use DB,Auth;
+use Carbon\Carbon;
 use App\Models\PreInvoiceVat;
+use App\Models\PreInvoice;
+use App\Models\PreSubsInvoice;
+use App\Models\PreInvoiceAdditionalHour;
+use App\Models\PreInvoiceExtrasWeekly;
 
 class PreInvoiceController extends Controller
 {
@@ -13,94 +19,158 @@ class PreInvoiceController extends Controller
         $data['service_user_id']=$service_user_id;
         $data['child'] = DB::table('service_user')->where('id', $service_user_id)->where('is_deleted', '0')->first();
         $data['PreInvoiceVat']=PreInvoiceVat::whereNull('deleted_at')->orderBy('id','desc')->first();
+        $data['PreInvoiceList']=PreInvoice::where('child_id',$service_user_id)->whereNull('deleted_at')->get();
         // echo "<pre>";print_r($data['child']);die;
         return view('frontEnd.salesAndFinance.pre_invoice.pre_invoice',$data);
     }
     public function preinvoice_save(Request $request){
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
         $loggedUserId=Auth::user()->id;
         $home_id=Auth::user()->home_id;
         $child_id=$request->child_id;
+        $validator = Validator::make($request->all(), [
+            'currentRateStart_date' => 'required|array',
+            'currentRateStart_date.*' => 'required|string',
+            'currentRateEnd_date' => 'required|array',
+            'currentRateEnd_date.*' => 'required|string',
+            'currentRateNo_of_days' => 'required|array',
+            'currentRateNo_of_days.*' => 'required|string',
+            'currentRateWeekly_rate' => 'required|array',
+            'currentRateWeekly_rate.*' => 'required|string',
+            'currentRateTotalCost' => 'required|array',
+            'currentRateTotalCost.*' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
         if(isset($request->currentRateStart_date) && count($request->currentRateStart_date) > 0){
             for($i=0;$i<count($request->currentRateStart_date);$i++){
-                $data=[
+                $data1=[
                     'loggedUserId'  =>  $loggedUserId,
                     'home_id'       =>  $home_id,
                     'child_id'      =>  $child_id,
-                    'start_date'    =>  $request->currentRateStart_date[$i],
-                    'end_date'      =>  $request->currentRateEnd_date[$i],
+                    'start_date'    =>  Carbon::createFromFormat('d/m/Y', $request->currentRateStart_date[$i])->format('Y-m-d'),
+                    'end_date'      =>  Carbon::createFromFormat('d/m/Y', $request->currentRateEnd_date[$i])->format('Y-m-d'),
                     'no_of_days'    =>  $request->currentRateNo_of_days[$i],
-                    'rate'          =>  $request->currentRateWeekly_rate[$i],
+                    'current_rate'  =>  $request->currentRateWeekly_rate[$i],
                     'total_cost'    =>  $request->currentRateTotalCost[$i],
-                    'type'          =>  1,
                 ];
-                echo "<pre>";print_r($data);die;
+                try {
+                    $PreInvoice1= PreInvoice::savePreInvoice($data1);
+                    $PreInvoice2=$this->saveSubs($request->all(),$loggedUserId,$home_id,$child_id,$PreInvoice1->id);
+                    $PreInvoice3=$this->saveAdditionalHour($request->all(),$loggedUserId,$home_id,$child_id,$PreInvoice1->id);
+                    $PreInvoice4=$this->saveExtrasWeekly($request->all(),$loggedUserId,$home_id,$child_id,$PreInvoice1->id);
+                } catch (\Exception $e) {
+                    return response()->json(['error' => $e->getMessage()], 500);
+                }
             }
         }
-        if(isset($request->subsStart_date) && count($request->subsStart_date) > 0){
-            for($ii=0;$ii<count($request->subsStart_date);$ii++){
-                $data=[
+        // $PreInvoice5=$this->saveExtrasOneOff($request->all(),$loggedUserId,$home_id,$child_id);
+        return response()->json(['success'=>true,'message'=>'Pre-Invoice Added Successfully']);
+    }
+    public function saveSubs($data,$loggedUserId,$home_id,$child_id,$current_id){
+        // echo "<pre>";print_r($data);die;
+        if(isset($data['subsEnd_date']) && count($data['subsEnd_date']) > 0){
+            for($i2=0;$i2<count($data['subsEnd_date']);$i2++){
+                $data2=[
                     'loggedUserId'  =>  $loggedUserId,
                     'home_id'       =>  $home_id,
                     'child_id'      =>  $child_id,
-                    'start_date'    =>  $request->subsStart_date[$ii],
-                    'end_date'      =>  $request->subsEnd_date[$ii],
-                    'no_of_days'    =>  $request->subsNo_of_days[$ii],
-                    'rate'          =>  $request->subsWeeklyRate[$ii],
-                    'total_cost'    =>  $request->subsTotalCost[$ii],
-                    'type'          =>  2,
+                    'current_id'    =>  $current_id,
+                    'subs_start_date'    =>  Carbon::createFromFormat('d/m/Y', $data['subsStart_date'][$i2])->format('Y-m-d'),
+                    'subs_end_date'      =>  Carbon::createFromFormat('d/m/Y', $data['subsEnd_date'][$i2])->format('Y-m-d'),
+                    'subs_no_of_days'    =>  $data['subsNo_of_days'][$i2],
+                    'subs_rate'          =>  $data['subsWeeklyRate'][$i2],
+                    'subs_total_cost'    =>  $data['subsTotalCost'][$i2],
                 ];
-                echo "<pre>";print_r($data);die;
+                try {
+                    $PreInvoice2= PreSubsInvoice::savePreSubsInvoice($data2);
+                } catch (\Exception $e) {
+                    return response()->json(['error' => $e->getMessage()], 500);
+                }
             }
+            return $PreInvoice2;
         }
-        if(isset($request->additionalHours_HoursPerWeek) && count($request->additionalHours_HoursPerWeek) > 0){
-            for($iii=0;$iii<count($request->additionalHours_HoursPerWeek);$iii++){
-                $data=[
-                    'loggedUserId'  =>  $loggedUserId,
-                    'home_id'       =>  $home_id,
-                    'child_id'      =>  $child_id,
-                    'start_date'    =>  $request->additionalHours_Start_date[$iii],
-                    'end_date'      =>  $request->additionalHours_End_date[$iii],
-                    'no_of_days'    =>  $request->additionalHours_No_of_days[$iii],
-                    'rate'          =>  $request->additionalHours_Hourly_rate[$iii],
-                    'total_cost'    =>  $request->additionalHours_TotalCost[$iii],
-                    'hours_per_week'=>  $request->additionalHours_HoursPerWeek[$iii],
-                    'type'          =>  3,
+        return 0;
+    }
+    public function saveAdditionalHour($data,$loggedUserId,$home_id,$child_id,$current_id){
+        if(isset($data['additionalHours_End_date']) && count($data['additionalHours_End_date']) > 0){
+            for($i3=0;$i3<count($data['additionalHours_End_date']);$i3++){
+                $data3=[
+                    'loggedUserId'          =>  $loggedUserId,
+                    'home_id'               =>  $home_id,
+                    'child_id'              =>  $child_id,
+                    'current_id'            =>  $current_id,
+                    'addHour_start_date'    =>  Carbon::createFromFormat('d/m/Y', $data['additionalHours_Start_date'][$i3])->format('Y-m-d'),
+                    'addHour_end_date'      =>  Carbon::createFromFormat('d/m/Y', $data['additionalHours_End_date'][$i3])->format('Y-m-d'),
+                    'addHour_no_of_days'    =>  $data['additionalHours_No_of_days'][$i3],
+                    'addHour_rate'          =>  $data['additionalHours_Hourly_rate'][$i3],
+                    'addHour_total_cost'    =>  $data['additionalHours_TotalCost'][$i3],
+                    'additional_per_week'   =>  $data['additionalHours_HoursPerWeek'][$i3],
                 ];
-                echo "<pre>";print_r($data);die;
+                // echo "<pre>";print_r($data3);die;
+                try {
+                    $PreInvoice3= PreInvoiceAdditionalHour::savePreInvoiceAdditionalHour($data3);
+                } catch (\Exception $e) {
+                    return response()->json(['error' => $e->getMessage()], 500);
+                }
             }
+            return $PreInvoice3;
         }
-        if(isset($request->additionalExtrasWeekly_ExpenditureType) && count($request->additionalExtrasWeekly_ExpenditureType) > 0){
-            for($iiii=0;$iiii<count($request->additionalExtrasWeekly_ExpenditureType);$iiii){
-                $data=[
-                    'loggedUserId'  =>  $loggedUserId,
-                    'home_id'       =>  $home_id,
-                    'child_id'      =>  $child_id,
-                    'start_date'    =>  $request->additionalExtrasWeekly_Start_date[$iiii],
-                    'end_date'      =>  $request->additionalExtrasWeekly_End_date[$iiii],
-                    'no_of_days'    =>  $request->additionalExtrasWeekly_No_of_Days[$iiii],
-                    'rate'          =>  $request->additionalExtrasWeekly_Weekly_amount[$iiii],
-                    'total_cost'    =>  $request->additionalExtrasWeekly_Total_Cost[$iiii],
-                    'expenditure_type'=>  $request->additionalExtrasWeekly_ExpenditureType[$iiii],
-                    'type'          =>  4,
+        return 0;
+    }
+    public function saveExtrasWeekly($data,$loggedUserId,$home_id,$child_id,$current_id){
+        // echo "<pre>";print_r(count($data['additionalExtrasWeekly_ExpenditureType']));die;
+        if(isset($data['additionalExtrasWeekly_End_date']) && count($data['additionalExtrasWeekly_End_date']) > 0){
+            for($i4=0;$i4<count($data['additionalExtrasWeekly_End_date']);$i4++){
+                $data4=[
+                    'loggedUserId'      =>  $loggedUserId,
+                    'home_id'           =>  $home_id,
+                    'child_id'          =>  $child_id,
+                    'current_id'        => $current_id,
+                    'extras_weekly_start_date'        =>  Carbon::createFromFormat('d/m/Y', $data['additionalExtrasWeekly_Start_date'][$i4])->format('Y-m-d'),
+                    'extras_weekly_end_date'          =>  Carbon::createFromFormat('d/m/Y', $data['additionalExtrasWeekly_End_date'][$i4])->format('Y-m-d'),
+                    'extras_weekly_no_of_days'        =>  $data['additionalExtrasWeekly_No_of_Days'][$i4],
+                    'extras_weekly_amount'            =>  $data['additionalExtrasWeekly_Weekly_amount'][$i4],
+                    'extras_weekly_total_cost'        =>  $data['additionalExtrasWeekly_Total_Cost'][$i4],
+                    'extras_weekly_expenditure_type'  =>  $data['additionalExtrasWeekly_ExpenditureType'][$i4],
                 ];
-                echo "<pre>";print_r($data);die;
+                // echo "<pre>";print_r($data4);die;
+                try {
+                    $PreInvoice4= PreInvoiceExtrasWeekly::savePreInvoiceExtrasWeekly($data4);
+                } catch (\Exception $e) {
+                    return response()->json(['error' => $e->getMessage()], 500);
+                }
             }
+            return $PreInvoice4;
         }
-        if(isset($request->additionalExtrasOneOff_Expediture_type) && count($request->additionalExtrasOneOff_Expediture_type)){
-            for($iiiii=0;$iiiii<count($request->additionalExtrasOneOff_Expediture_type);$iiiii++){
-                $data=[
-                    'loggedUserId'  =>  $loggedUserId,
-                    'home_id'       =>  $home_id,
-                    'child_id'      =>  $child_id,
-                    'start_date'    =>  $request->additionalExtrasOneOff_Start_date[$iiii],
-                    'rate'          =>  $request->additionalExtrasWeekly_Weekly_amount[$iiii],
-                    'total_cost'    =>  $request->additionalExtrasOneOff_Total_cost[$iiii],
-                    'expenditure_type'=>  $request->additionalExtrasOneOff_Expediture_type[$iiii],
-                    'type'          =>  4,
+        return 0;
+    }
+    public function saveExtrasOneOff($data,$loggedUserId,$home_id,$child_id){
+        if(isset($data['additionalExtrasOneOff_Start_date']) && count($data['additionalExtrasOneOff_Start_date']) > 0){
+            for($i5=0;$i5<count($data['additionalExtrasOneOff_Start_date']);$i5++){
+                $data5=[
+                    'loggedUserId'      =>  $loggedUserId,
+                    'home_id'           =>  $home_id,
+                    'child_id'          =>  $child_id,
+                    'start_date'        =>  Carbon::createFromFormat('d/m/Y', $data['additionalExtrasOneOff_Start_date'][$i5])->format('Y-m-d'),
+                    'rate'              =>  $data['additionalExtrasOneOff_Amount'][$i5],
+                    'total_cost'        =>  $data['additionalExtrasOneOff_Total_cost'][$i5],
+                    'expenditure_type'  =>  $data['additionalExtrasOneOff_Expediture_type'][$i5],
+                    'type'              =>  5,
                 ];
-                echo "<pre>";print_r($data);die;
+                // echo "<pre>";print_r($data5);die;
+                try {
+                    $PreInvoice5= PreInvoice::savePreInvoice($data5);
+                } catch (\Exception $e) {
+                    return response()->json(['error' => $e->getMessage()], 500);
+                }
             }
+            return $PreInvoice5;
         }
+        return 0;
+    }
+    public function preview(){
+        echo 12;
     }
 }

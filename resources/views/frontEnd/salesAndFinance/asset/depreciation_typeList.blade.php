@@ -16,7 +16,7 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
-                                    <a href="javascript:void(0)" onclick="opendepreciation_typesModal()" class="profileDrop">New</a>
+                                    <a href="javascript:void(0)" onclick="opendepreciation_typesModal()" class="profileDrop"><i class="fa fa-plus"></i> Add</a>
                                     <a href="javascript:void(0)" class="profileDrop">Export</a>
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                             </div>
@@ -118,8 +118,8 @@
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="savedepreciation_typesModal" onclick="savedepreciation_typesModal()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-warning" id="savedepreciation_typesModal" onclick="savedepreciation_typesModal()">Save changes</button>
             </div>
         </div>
     </div>
