@@ -1,4 +1,49 @@
 $(document).ready(function () {
+
+    $("#savePurchaseDayBook").on("click", function(e) {
+        e.preventDefault(); 
+
+        $.ajax({
+            url: savePurchaseDayBook, 
+            type: "POST",
+            data: $('#save-purchase-day-book').serialize(), // Serialize form data
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                alert(response.message);
+                window.location.reload();
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    // Validation error
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessages = '';
+
+                    // Clear old errors first
+                    $('.text-danger').remove();
+
+                    $.each(errors, function (key, value) {
+                        // Display message under each input field
+                        let inputField = $(`[name="${key}"]`);
+                        if (inputField.length) {
+                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
+                        }
+
+                        // Collect all messages for optional alert box
+                        errorMessages += value[0] + "\n";
+                    });
+
+                    // Optional: show all errors in a single alert box
+                    // alert("Please fix the following errors:\n" + errorMessages);
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+            }
+        });
+    });
+
+
     $(".deleteBtn").on("click", function () {
         let salesBookId = $(this).data("id"); // Get ID from button
         let row = $("#row-" + salesBookId); // Select the row
@@ -125,44 +170,6 @@ function taxRate() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.openPurchaseDayBookModel').forEach(function (btn) {
-
-        btn.addEventListener('click', function () {
-            getSupplierList();
-            getPurchaseExpense();
-            taxRate();
-            const action = this.getAttribute('data-action');
-            const modalTitle = document.getElementById('modalTitle');
-            const purchase_day_book_id = document.getElementById('purchase_day_book_id');
-            const supplier_id = document.getElementById('supplier_id');
-            const Supplier_input = document.getElementById('Supplier_input');
-            const Date_input = document.getElementById('Date_input');
-            const net_amount = document.getElementById('net_amount');
-            const expenses = document.getElementById('expenses');
-            
-            const tax_id = document.getElementById('tax_id');
-            // const vat_amount = document.getElementById('vat_amount');
-            // const gross_amount = document.getElementById('gross_amount');
-            if (action === 'add') {
-                modalTitle.textContent = 'Add Sales Day Book';
-            } else if (action === 'edit') {
-                modalTitle.textContent = 'Edit Sales Day Book';
-                purchase_day_book_id.value = this.getAttribute('data-id');
-                // customer_id.value = this.getAttribute('data-customer_id');
-                // Date_input.value = this.getAttribute('data-date');
-                // Invoice_input.value = this.getAttribute('data-invoice_no');
-                // net_amount.value = this.getAttribute('data-netAmount');
-                // tax_id.value = this.getAttribute('data-vat');
-                // vat_amount.value = this.getAttribute('data-vatAmount');
-                // gross_amount.value = this.getAttribute('data-grossAmount');
-
-            }
-
-            $('#purchase_day_book_form').modal('show');
-        });
-    });
-});
 
 document.addEventListener('DOMContentLoaded', function () {
     let vatInput = document.getElementById('vat_input');
@@ -174,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let reclaim_amount = document.getElementById('reclaim_amount');
     let totalAmountInput = document.getElementById('totalAmount');
     let expensesAmountInput = document.getElementById('expenses_amount');
-
+    let expenses = document.getElementById('expenses');
 
 
     function getCalculatedData() {
@@ -187,13 +194,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("vatAmount", vatAmount);
 
                 let reclaimed = (vatAmount * response.data) / 100;
-
                 console.log("Reclaimed Amount:", reclaimed.toFixed(2));
                 reclaim_amount.value = reclaimed.toFixed(2);
                 var not_claimedAmt = (parseFloat(vatAmount) - parseFloat(reclaimed)).toFixed(2);
                 not_claim.value = not_claimedAmt;
                 totalAmount = parseFloat(grossAmountInput.value) - parseFloat(reclaim_amount.value);
                 totalAmountInput.value = totalAmount.toFixed(2);
+
+                let input = document.getElementById('purchase_day_book_id');
+                if (input.value.trim() !== "") {
+                    console.log("Input has a value:", input.value);
+                    expensesAmountInput.value = not_claimedAmt;
+                }
             }
         });
     }
@@ -223,7 +235,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         vatAmountInput.value = vatAmount.toFixed(2);
         grossAmountInput.value = grossAmount.toFixed(2);
-        expensesAmountInput.value = "";
+        // expenses.value = 
+        // expensesAmountInput.value = "";
     }
 
     // Trigger calculation on VAT change or Net Amount change
@@ -233,6 +246,48 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("expenses").addEventListener("change", function () {
         var not_claimedAmt = not_claim.value;
         expensesAmountInput.value = not_claimedAmt;
+    });
+
+
+    document.querySelectorAll('.openPurchaseDayBookModel').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            getSupplierList();
+            getPurchaseExpense();
+            taxRate();
+            const action = this.getAttribute('data-action');
+            const modalTitle = document.getElementById('modalTitle');
+            const purchase_day_book_id = document.getElementById('purchase_day_book_id');
+            const supplier_id = document.getElementById('supplier_id');
+            const Date_input = document.getElementById('Date_input');
+            const net_amount = document.getElementById('net_amount');
+            const expenses_id = document.getElementById('expenses_id');
+            const expenses_amount = document.getElementById('expenses_amount');
+            const vat_amount = document.getElementById('vat_amount');
+            const not_claim = document.getElementById('not_claim');
+            const gross_amount = document.getElementById('gross_amount');
+            const reclaim_amount = document.getElementById('reclaim_amount');
+            const totalAmount = document.getElementById('totalAmount');
+            const tax_id = document.getElementById('tax_id');
+            if (action === 'add') {
+                modalTitle.textContent = 'Add Purchase Day Book';
+            } else if (action === 'edit') {
+                modalTitle.textContent = 'Edit Purchase Day Book';
+                purchase_day_book_id.value = this.getAttribute('data-id');
+                supplier_id.value = this.getAttribute('data-supplier_id');
+                net_amount.value = this.getAttribute('data-netAmount');
+                Date_input.value = this.getAttribute('data-date');
+                tax_id.value = this.getAttribute('data-vat');
+                gross_amount.value = this.getAttribute('data-grossAmount'); 
+                reclaim_amount.value = this.getAttribute('data-reclaim');
+                expenses_id.value = this.getAttribute('data-expense_type');
+                vat_amount.value = this.getAttribute('data-vatAmount');
+                expenses_amount.value = this.getAttribute('data-expense_amount');
+                not_claim.value =  this.getAttribute('data-not_reclaim');
+                totalAmount.value = parseFloat(this.getAttribute('data-netAmount')) +  parseFloat(this.getAttribute('data-not_reclaim'));
+            }
+
+            $('#purchase_day_book_form').modal('show');
+        });
     });
 
 });
