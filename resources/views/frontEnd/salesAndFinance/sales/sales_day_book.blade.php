@@ -16,11 +16,11 @@
                                 <h3>Sales Day Book</h3>
                             </div>
                         </div>
-                        <div class="col-md-8 col-lg-8 col-xl-8 px-3">
+                        <!-- <div class="col-md-8 col-lg-8 col-xl-8 px-3">
                             <div class="pageTitleBtn">
                                 <a href="#" class="profileDrop">Search Book</a>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-lg-12">
                             <div class="maimTable">
                                 <div class="markendDelete">
@@ -90,7 +90,7 @@
                                                                 </div>
                                                             </div>
                                                         </div> -->
-                                                    <div class="dropdown action_dropdown">
+                                                    <!-- <div class="dropdown action_dropdown">
                                                         <a href="#" class="dropdown-toggle profileDrop" data-toggle="dropdown" aria-expanded="false">
                                                             <div class="action_drop">
                                                                 <span>Action &nbsp;</span> <i class="fa fa-sort-desc" aria-hidden="true"></i>
@@ -100,7 +100,9 @@
                                                             <a href="{{ url('sales/sales-day-book/edit/' . $salesBook->id) }}" data-action="edit" class="dropdown-item openSalesDayBookModel">Edit</a>
                                                             <a href="#!" class="dropdown-item deleteBtn" data-id="{{ $salesBook->id }}">Delete</a>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
+                                                    <a href="#!" class="openSalesDayBookModel" data-action="edit" data-id="{{ $salesBook->id }}" data-customer_id="{{ $salesBook->customer_id }}" data-date="{{ $salesBook->date }}" data-invoice_no="{{ $salesBook->invoice_no }}" data-netAmount="{{ $salesBook->netAmount }}" data-vat="{{ $salesBook->Vat }}" data-vatAmount="{{ $salesBook->vatAmount }}" data-grossAmount="{{ $salesBook->grossAmount }}" ><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                                                    <a href="#!" class="deleteBtn" data-id="{{ $salesBook->id }}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -133,7 +135,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                <h4 class="modal-title" id="modalTitle">Sales Day Book</h4>
+                <h4 class="modal-title" id="modalTitle"></h4>
             </div>
             <form id="salesDayBookForm">
                 <div id="error-div"></div>
@@ -141,8 +143,9 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group">
-                                <input type="hidden" name="sales_day_book_id">
+                                <input type="hidden" name="sales_day_book_id" id="sales_day_book_id">
                                 <label> Customer <span class="radStar">*</span></label>
+                                <input type="hidden" id="customer_id">
                                 <select class="form-control editInput selectOptions" name="customer_id" id="getCustomerList">
                                     <option>Select Customer</option>
                                 </select>
@@ -161,6 +164,7 @@
                             </div>
                             <div class="form-group">
                                 <label>VAT <span class="radStar">*</span></label>
+                                <input type="hidden" id="tax_id">
                                 <select class="form-control editInput selectOptions" name="Vat" id="vat_input">
                                     <option>-Not Assigned-</option>
                                 </select>
