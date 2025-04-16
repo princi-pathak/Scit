@@ -14,4 +14,17 @@ class PreInvoice extends Model
     public static function savePreInvoice($data){
         return self::updateOrCreate(['id' => $data['id'] ?? null], $data);
     }
+
+    public function preInvoiceSubs(){
+        return $this->hasMany(PreSubsInvoice::class, 'current_id', 'id')->whereNull('deleted_at');
+    }
+    public function preInvoiceAdditionalHours(){
+        return $this->hasMany(PreInvoiceAdditionalHour::class, 'current_id', 'id')->whereNull('deleted_at');
+    }
+    public function preInvoiceExtrasWeeklies(){
+        return $this->hasMany(PreInvoiceExtrasWeekly::class, 'current_id', 'id')->whereNull('deleted_at');
+    }
+    public function preInvoiceExtrasOneOffs(){
+        return $this->hasMany(PreInvoiceExtrasOneOff::class, 'current_id', 'id')->whereNull('deleted_at');
+    }
 }
