@@ -3,6 +3,12 @@
 @section('title','Expand Card')
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
+<style>
+    .disabled-tab {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>
 
 <section class="wrapper">
     <div class="container-fluid">
@@ -102,7 +108,7 @@
                                                     } ?></td>
                                                 <td>£{{$val->purchase_amount}}</td>
                                                 <td>{{$val->card_details}}</td>
-                                                <td><a href="{{url('public/images/finance_petty_cash/'.$val->receipt)}}" target="_blank"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td><a href="{{url('public/images/finance_petty_cash/'.$val->receipt)}}" target="_blank"><i class="fa fa-eye"></i></a></td>
                                                 <td><?php if ($val->dext == 1) {
                                                         echo "Yes";
                                                     } else {
@@ -153,7 +159,14 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="expend_cardLabel">Add Expend Card</h4>
             </div>
+            <div calss="row">
+                <div class="col-md-12 col-lg-12 col-xl-12 mt-4">
+                    <div class="mt-1 mb-0 text-center" style="display:none" id="message_save"></div>
+                </div>
+            </div>
             <form id="expend_cardForm">
+                <input type="hidden" id="id" name="id" value="">
+                <input type="hidden" id="last_id" name="last_id" value="<?php if(isset($expendCardLastData) && $expendCardLastData !=''){ echo $expendCardLastData->id; }?>">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -162,17 +175,21 @@
                                 <div class="form-group col-md-12">
                                     <label> Date <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="date" class="form-control editInput" name="expend_date" id="date" value="">
+                                        <input type="date" class="form-control editInput checkInput" name="expend_date" id="date" value="">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label> Balance b/fwd <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput checkInput" id="Balance_b" name="Balance_b">
+                                    <?php if($previous_month_data['previousbalanceOnCard'] == 0){?>
+                                            <input type="text" class="form-control editInput numberInput checkInput <?php if(isset($expendCard) && $expendCard !=''){ echo "disabled-tab"; }?> " id="balance_bfwd" name="balance_bfwd" <?php if(isset($expendCardLastData) && $expendCardLastData !=''){?> value="{{$expendCardLastData->balance_bfwd}}" <?php }?> onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <?php }else{?>
+                                            <input type="text" class="form-control editInput numberInput checkInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_month_data['previousbalanceOnCard']}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <?php }?>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label> Fund added to card <span class="radStar">*</span></label>
+                                    <label> Fund added to card</label>
                                     <div>
                                         <input type="text" class="form-control editInput numberInput" id="fund_added" name="fund_added" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                     </div>
@@ -191,30 +208,42 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>Receipt</label>
-                                    <div>
+                                    <!-- <div>
                                         <input type="file" class="form-control editInput checkInput" id="receipt" name="receipt" onchange="check_file()">
+                                    </div> -->
+                                    <div class="col-md-12 p-0">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-new thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 100px;">
+                                                <img src="" alt="No Image" />
+                                            </div>
+                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 20px;"></div>
+                                            <div>
+                                                <span class="btn btn-white btn-file">
+                                                    <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
+                                                    <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                    <input name="image" type="file" class="default" id="receipt" onchange="check_file()" />
+                                                </span>
+                                                <!-- <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i>Remove</a> -->
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Uploaded to DEXT <span class="radStar">*</span></label>
-                                    <div>
-                                        <div class="col-form-label nq_input">
-                                            <input type="radio" name="dext" id="yes" value="1">
-                                            <label for="yes">Yes</label>
-                                            <input type="radio" name="dext" id="no" value="0" checked>
-                                            <label for="no">NO</label>
-                                        </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <label class="form-check-label m-0" for="yes">Yes</label>
+                                        <input class="form-check-input mt-0" type="radio" name="dext" value="1" id="yes">
+                                        <label class="form-check-label m-0" for="no">No</label>
+                                        <input class="form-check-input mt-0" type="radio" name="dext" value="0" id="no">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Invoice LA</label>
-                                    <div>
-                                        <div class=" col-form-label nq_input">
-                                            <input type="radio" name="invoice_la" id="yes2" value="1">
-                                            <label for="yes2">Yes</label>
-                                            <input type="radio" name="invoice_la" id="no2" value="0" checked>
-                                            <label for="no2">NO</label>
-                                        </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <label class="form-check-label m-0" for="yes2">Yes</label>
+                                        <input class="form-check-input mt-0" type="radio" name="invoice_la" value="1" id="yes2">
+                                        <label class="form-check-label m-0" for="no2">No</label>
+                                        <input class="form-check-input mt-0" type="radio" name="invoice_la" value="0" id="no2">
                                     </div>
                                 </div>
                                 
@@ -229,8 +258,8 @@
                     </div>
                 </div>
                 <div class="modal-footer customer_Form_Popup">
-                    <button type="button" class="btn btn-warning" id="">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="" onclick="save_expend_card()">Save</button>
                 </div>
             </form>
         </div>
