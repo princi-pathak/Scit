@@ -68,7 +68,6 @@ class SalesController extends Controller
 
     public function editSalesDayBook($id){
         $data['salesBook'] = SalesDayBook::findOrFail($id);
-        // dd($data);
         $data['customers'] = Customer::get_customer_list_Attribute(Auth::user()->home_id, 'ACTIVE');
         $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
         return view('frontEnd.salesAndFinance.sales.sales_day_book_form', $data);

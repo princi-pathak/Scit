@@ -128,7 +128,7 @@ $(document).ready(function () {
                         // Display message under each input field
                         let inputField = $(`[name="${key}"]`);
                         if (inputField.length) {
-                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
+                            inputField.after(`<p class="text-danger mb-0">${value[0]}</p>`);
                         }
 
                         // Collect all messages for optional alert box

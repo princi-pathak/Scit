@@ -4,97 +4,68 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
 
+<!--main content start-->
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 p-0">
                 <div class="panel">
-                    <div class="panel-body pb-0">
-                        <div class="col-md-4 col-lg-4 col-xl-4 ">
-                            <div class="pageTitle">
-                                <h3>Purchase Type</h3>
-                            </div>
-                        </div>
-                    </div>
+                    <header class="panel-heading px-5">
+                        <h4>Purchase Type</h4>
+                    </header>
                     <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="Form_Section_New p-0">
-                                <div class="markendDelete delete_btn_end">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="jobsection">
-                                                <a href="javascript:void(0)" onclick="openExpensesModal('', 'add')" class="profileDrop">New</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 deleteSelectedRows">
-                                            <div class="jobsection">
-                                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="productDetailTable">
-                                    <table class="table tablechange mb-0" id="exampleOne">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
-                                                <th>#</th>
-                                                <th>Date</th>
-                                                <th>Expense </th>
-                                                <th>Status </th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($purchase_expenses as $purchase_expense)
-                                            <tr>
-                                                <td>
-                                                    <input type="checkbox" id="" class="delete_checkbox" value="{{$purchase_expense->id}}">
-                                                </td>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $purchase_expense->created_at }}</td>
-                                                <td>{{ $purchase_expense->title }}</td>
-                                                <td>
-                                                    <?php if ($purchase_expense->status == 1) { ?>
-                                                        <span class="grencheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
-                                                    <?php } else { ?>
-                                                        <span class="grayCheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
-                                                    <?php } ?>
-                                                </td>
-                                                <td>
-                                                    <div class="dropdown action_dropdown">
-                                                        <a href="#" class="dropdown-toggle profileDrop" data-toggle="dropdown" aria-expanded="false">
-                                                            <div class="action_drop"><span>Action &nbsp;</span> <i class="fa fa-sort-desc" aria-hidden="true"></i></div>
-                                                        </a>
-                                                        <div class="dropdown-menu">
-                                                            <a href="javascript:void(0)" onclick="openExpensesModal(this, 'edit')" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $purchase_expense->id }}" data-name="{{ $purchase_expense->title }}" data-status="{{ $purchase_expense->status }}">Edit Details</a>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class="d-inline-flex align-items-center ">
-                                                        <div class="nav-item dropdown">
-                                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-toggle="dropdown">Action</a>
-                                                            <div class="dropdown-menu fade-up m-0">
-                                                                <a href="javascript:void(0)" onclick="openExpensesModal(this, 'edit')" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $purchase_expense->id }}" data-name="{{ $purchase_expense->title }}" data-status="{{ $purchase_expense->status }}">Edit Details</a>
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="col-lg-12">
+                            <div class="jobsection justify-content-end">
+                                <a href="javascript:void(0)" onclick="openExpensesModal('', 'add')" class="profileDrop" data-action="add"><i class="fa fa-plus"></i> Add</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                             </div>
-                            <!-- End off main Table -->
+                            <div class="productDetailTable mb-4 table-responsive">
+                                <table class="table border-top border-bottom tablechange display" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
+                                            <th>#</th>
+                                            <th>Date</th>
+                                            <th>Expense </th>
+                                            <th>Status </th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($purchase_expenses as $purchase_expense)
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" id="" class="delete_checkbox" value="{{$purchase_expense->id}}">
+                                            </td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $purchase_expense->created_at }}</td>
+                                            <td>{{ $purchase_expense->title }}</td>
+                                            <td>
+                                                <?php if ($purchase_expense->status == 1) { ?>
+                                                    <span class="grencheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                                <?php } else { ?>
+                                                    <span class="grayCheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                                <?php } ?>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" onclick="openExpensesModal(this, 'edit')" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $purchase_expense->id }}" data-name="{{ $purchase_expense->title }}" data-status="{{ $purchase_expense->status }}"> <i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                        <!-- End off main Table -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
 
 <!-- Purchase Expenses Modal start here -->
 <div class="modal fade" id="addPurchaseExpensesModel" tabindex="-1" aria-labelledby="purchaseExpesnsesModalLabel" aria-hidden="true">
@@ -130,14 +101,19 @@
                     </div>
                 </div>
                 <div class="modal-footer customer_Form_Popup">
-                    <button type="button" class="btn btn-warning" id="savePurchaseExpesnsesModal">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="savePurchaseExpesnsesModal">Save</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- end here -->
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
 
 <script>
     $("#deleteSelectedRows").on('click', function() {
@@ -234,29 +210,29 @@
                 },
                 error: function(xhr) {
                     if (xhr.status === 422) {
-                    // Validation error
-                    let errors = xhr.responseJSON.errors;
-                    let errorMessages = '';
+                        // Validation error
+                        let errors = xhr.responseJSON.errors;
+                        let errorMessages = '';
 
-                    // Clear old errors first
-                    $('.text-danger').remove();
+                        // Clear old errors first
+                        $('.text-danger').remove();
 
-                    $.each(errors, function (key, value) {
-                        // Display message under each input field
-                        let inputField = $(`[name="${key}"]`);
-                        if (inputField.length) {
-                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
-                        }
+                        $.each(errors, function(key, value) {
+                            // Display message under each input field
+                            let inputField = $(`[name="${key}"]`);
+                            if (inputField.length) {
+                                inputField.after(`<span class="text-danger">${value[0]}</span>`);
+                            }
 
-                        // Collect all messages for optional alert box
-                        errorMessages += value[0] + "\n";
-                    });
+                            // Collect all messages for optional alert box
+                            errorMessages += value[0] + "\n";
+                        });
 
-                    // Optional: show all errors in a single alert box
-                    // alert("Please fix the following errors:\n" + errorMessages);
-                } else {
-                    alert("Something went wrong. Please try again.");
-                }
+                        // Optional: show all errors in a single alert box
+                        // alert("Please fix the following errors:\n" + errorMessages);
+                    } else {
+                        alert("Something went wrong. Please try again.");
+                    }
                 }
             });
         });
