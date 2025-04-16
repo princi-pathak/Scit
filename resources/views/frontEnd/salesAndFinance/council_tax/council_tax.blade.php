@@ -229,5 +229,4 @@
     deleteURL = "{{ url('finance/delete-council-tax') }}/";
     saveData = "{{ url('finance/save-council-tax') }}";
 </script>
-
 @endsection
