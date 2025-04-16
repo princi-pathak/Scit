@@ -46,10 +46,12 @@ class PurchaseController extends Controller
         $data['page'] = "dayBook";
         $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null],  array_merge($data, ['home_id' => Auth::user()->home_id]));
 
-        if (isset($response->id)) {
-            return redirect()->Route('purchase.purchaseDayBook');
+        if ($response->wasRecentlyCreated) {
+            return response()->json([  'success' => true, 'message' => 'Purchase day book record created successfully!', 'data' => $response], 201);
+        } elseif ($response->wasChanged()) {
+            return response()->json([  'success' => true, 'message' => 'Purchase day book record updated successfully!', 'data' => $response], 200);
         } else {
-            return redirect()->Route('sales.puchaseDayBookCreate');
+            return response()->json([  'success' => false, 'message' => 'No changes made.', 'data' => $response], 200);
         }
     }
 

@@ -11,31 +11,17 @@
             <div class="col-md-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
-                        <h5>Purchase Day Book</h5>
-                        <!-- <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            <a href="javascript:;" class="fa fa-cog"></a>
-                            <a href="javascript:;" class="fa fa-times"></a>
-                        </span> -->
+                        <h4>Purchase Day Book</h4>
                     </header>
                     <div class="panel-body">
-                        <!-- <div class="col-md-4 col-lg-4 col-xl-4">
-                            <div class="pageTitle">
-                                <h3>Purchase Day Book</h3>
-                            </div>
-                        </div> -->
                         <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
                                         <!-- <a href="{{ url('purchase/purchase-day-book/add') }}" class="profileDrop">Add</a> -->
-                                        <a href="#!" type="button" class="profileDrop openPurchaseDayBookModel" data-action="add">Add</a>
+                                        <a href="#!" type="button" class="profileDrop openPurchaseDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="productDetailTable mb-4">
-                                <table class="table tablechange mb-0" id="containerA">
-                                    <thead class="table-light">
+                            <div class="productDetailTable mb-4 table-responsive">
+                                <table class="table border-top border-bottom tablechange" id="containerA">
+                                    <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Supplier </th>
@@ -108,14 +94,14 @@
                                                             <a href="#!" class="dropdown-item deleteBtn" data-id="{{ $purchaseBook->id }}">Delete</a>
                                                         </div>
                                                     </div> -->
-                                                <a href="#!" class="openPurchaseDayBookModel" data-action="edit" data-id="{{ $purchaseBook->id }}" data-supplier_id="{{ $purchaseBook->supplier_id }}" data-date="{{ $purchaseBook->date }}" data-netAmount="{{ $purchaseBook->netAmount }}" data-vat="{{ $purchaseBook->Vat }}" data-grossAmount="{{ $purchaseBook->grossAmount }}" data-reclaim="{{ $purchaseBook->reclaim }}" data-not_reclaim="{{ $purchaseBook->not_reclaim }}" data-expense_type="{{ %purchaseBook->expense_type }}" data-expense_amount="{{ $purchaseBook->expense_amount }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                                                <a href="#!" class="openPurchaseDayBookModel" data-action="edit" data-id="{{ $purchaseBook->id }}" data-supplier_id="{{ $purchaseBook->supplier_id }}" data-date="{{ $purchaseBook->date }}" data-netAmount="{{ $purchaseBook->netAmount }}" data-vat="{{ $purchaseBook->Vat }}" data-vatAmount="{{ $purchaseBook->vatAmount }}" data-grossAmount="{{ $purchaseBook->grossAmount }}" data-reclaim="{{ $purchaseBook->reclaim }}" data-not_reclaim="{{ $purchaseBook->not_reclaim }}" data-expense_type="{{ $purchaseBook->expense_type }}" data-expense_amount="{{ $purchaseBook->expense_amount }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
                                                 <a href="#!"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
-                                        <tr class="table-light">
+                                        <tr>
                                             <th colspan="3" rowspan="1">Page Sub Total</th>
                                             <th rowspan="1" colspan="1">£{{ number_format($totalNetAmount, 2) }}</th>
                                             <th rowspan="1" colspan="1">£{{ number_format($totalVatAmount, 2) }}</th>
@@ -155,7 +141,7 @@
                                 <div class="form-group">
                                     <label for="Supplier_input"> Supplier <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="hidden" name="purchase_day_book_id">
+                                        <input type="hidden" name="purchase_day_book_id" id="purchase_day_book_id">
                                         <input type="hidden" id="supplier_id">
                                         <select class="form-control editInput selectOptions" name="supplier_id" id="Supplier_input">
                                             <option>Please Select</option>
@@ -234,8 +220,8 @@
                     </div>
                 </div>
                 <div class="modal-footer customer_Form_Popup">
-                    <button type="button" class="btn btn-warning" id="purchaseDayBook">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="savePurchaseDayBook">Save</button>
                 </div>
             </form>
         </div>
@@ -249,6 +235,7 @@
     const getTaxRate =  '{{ route("invoice.ajax.getActiveTaxRate") }}';
     const reclaimPercantage = "{{ url('/purchase/purchase-day-book-reclaim-per') }}";
     const calculatedData = "{{ url('/purchase/reclaimPercantage') }}";
+    const savePurchaseDayBook = "{{ url('purchase/save-purchase-day-book') }}";
 </script>
 
 <script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/purchaseDayBook.js') }}"></script>

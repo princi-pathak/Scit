@@ -8,80 +8,66 @@
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 p-0">
                 <div class="panel">
+                    <header class="panel-heading px-5">
+                        <h4>Sales Day Book</h4>
+                    </header>
                     <div class="panel-body">
-                        <div class="col-md-4 col-lg-4 col-xl-4 ">
-                            <div class="pageTitle">
-                                <h3>Sales Day Book</h3>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-8 col-lg-8 col-xl-8 px-3">
-                            <div class="pageTitleBtn">
-                                <a href="#" class="profileDrop">Search Book</a>
-                            </div>
-                        </div> -->
                         <div class="col-lg-12">
-                            <div class="maimTable">
-                                <div class="markendDelete">
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <div class="jobsection">
-                                                <a href="#" class="profileDrop openSalesDayBookModel" data-action="add">Add</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="productDetailTable">
-                                    <table class="table tablechange mb-0" id="containerA">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Customer </th>
-                                                <th>Date</th>
-                                                <th>Invoice No.</th>
-                                                <th>Net</th>
-                                                <th>VAT</th>
-                                                <th>Gross </th>
-                                                <th>Rate </th>
-                                                <th>Total </th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php
-                                            $totalNetAmount = 0;
-                                            $totalVatAmount = 0;
-                                            $totalGrossAmount = 0;
-                                            $totalFinalAmount = 0;
-                                            @endphp
+                            <div class="jobsection justify-content-end">
+                                <a href="#!" type="button" class="profileDrop openSalesDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
+                            </div>
+                            <div class="productDetailTable mb-4 table-responsive">
+                                <table class="table border-top border-bottom tablechange" id="containerA">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Customer </th>
+                                            <th>Date</th>
+                                            <th>Invoice No.</th>
+                                            <th>Net</th>
+                                            <th>VAT</th>
+                                            <th>Gross </th>
+                                            <th>Rate </th>
+                                            <th>Total </th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                        $totalNetAmount = 0;
+                                        $totalVatAmount = 0;
+                                        $totalGrossAmount = 0;
+                                        $totalFinalAmount = 0;
+                                        @endphp
 
-                                            @foreach($salesDayBooks as $salesBook)
+                                        @foreach($salesDayBooks as $salesBook)
 
-                                            @php
-                                            $netAmount = $salesBook->netAmount ?? 0;
-                                            $vatAmount = $salesBook->vatAmount ?? 0;
-                                            $grossAmount = $salesBook->grossAmount ?? 0;
-                                            $finalAmount = $netAmount + $vatAmount;
+                                        @php
+                                        $netAmount = $salesBook->netAmount ?? 0;
+                                        $vatAmount = $salesBook->vatAmount ?? 0;
+                                        $grossAmount = $salesBook->grossAmount ?? 0;
+                                        $finalAmount = $netAmount + $vatAmount;
 
-                                            $totalNetAmount += $netAmount;
-                                            $totalVatAmount += $vatAmount;
-                                            $totalGrossAmount += $grossAmount;
-                                            $totalFinalAmount += $finalAmount;
-                                            @endphp
+                                        $totalNetAmount += $netAmount;
+                                        $totalVatAmount += $vatAmount;
+                                        $totalGrossAmount += $grossAmount;
+                                        $totalFinalAmount += $finalAmount;
+                                        @endphp
 
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $salesBook->customer_name }}</td>
-                                                <td>{{ $salesBook->date }}</td>
-                                                <td>{{ $salesBook->invoice_no }}</td>
-                                                <td>{{ $salesBook->netAmount }}</td>
-                                                <td>{{ $salesBook->vatAmount }}</td>
-                                                <td>{{ $salesBook->grossAmount }}</td>
-                                                <td>{{ $salesBook->tax_rate_name }}</td>
-                                                <td>{{ $salesBook->netAmount + $salesBook->vatAmount }}</td>
-                                                <td>
-                                                    <!-- <div class="d-flex justify-content-end actionDropdown">
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $salesBook->customer_name }}</td>
+                                            <td>{{ $salesBook->date }}</td>
+                                            <td>{{ $salesBook->invoice_no }}</td>
+                                            <td>{{ $salesBook->netAmount }}</td>
+                                            <td>{{ $salesBook->vatAmount }}</td>
+                                            <td>{{ $salesBook->grossAmount }}</td>
+                                            <td>{{ $salesBook->tax_rate_name }}</td>
+                                            <td>{{ $salesBook->netAmount + $salesBook->vatAmount }}</td>
+                                            <td>
+                                                <!-- <div class="d-flex justify-content-end actionDropdown">
                                                             <div class="nav-item dropdown">
                                                                 <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">Action</a>
                                                                 <div class="dropdown-menu fade-up m-0">
@@ -90,7 +76,7 @@
                                                                 </div>
                                                             </div>
                                                         </div> -->
-                                                    <!-- <div class="dropdown action_dropdown">
+                                                <!-- <div class="dropdown action_dropdown">
                                                         <a href="#" class="dropdown-toggle profileDrop" data-toggle="dropdown" aria-expanded="false">
                                                             <div class="action_drop">
                                                                 <span>Action &nbsp;</span> <i class="fa fa-sort-desc" aria-hidden="true"></i>
@@ -101,27 +87,26 @@
                                                             <a href="#!" class="dropdown-item deleteBtn" data-id="{{ $salesBook->id }}">Delete</a>
                                                         </div>
                                                     </div> -->
-                                                    <a href="#!" class="openSalesDayBookModel" data-action="edit" data-id="{{ $salesBook->id }}" data-customer_id="{{ $salesBook->customer_id }}" data-date="{{ $salesBook->date }}" data-invoice_no="{{ $salesBook->invoice_no }}" data-netAmount="{{ $salesBook->netAmount }}" data-vat="{{ $salesBook->Vat }}" data-vatAmount="{{ $salesBook->vatAmount }}" data-grossAmount="{{ $salesBook->grossAmount }}" ><i class="fa fa-pencil" aria-hidden="true"></i></a> |
-                                                    <a href="#!" class="deleteBtn" data-id="{{ $salesBook->id }}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                                <a href="#!" class="openSalesDayBookModel" data-action="edit" data-id="{{ $salesBook->id }}" data-customer_id="{{ $salesBook->customer_id }}" data-date="{{ $salesBook->date }}" data-invoice_no="{{ $salesBook->invoice_no }}" data-netAmount="{{ $salesBook->netAmount }}" data-vat="{{ $salesBook->Vat }}" data-vatAmount="{{ $salesBook->vatAmount }}" data-grossAmount="{{ $salesBook->grossAmount }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                                                <a href="#!" class="deleteBtn" data-id="{{ $salesBook->id }}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
 
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th colspan="4" rowspan="1">Page Sub Total</th>
-                                                <th rowspan="1" colspan="1">£{{ number_format($totalNetAmount, 2) }}</th>
-                                                <th rowspan="1" colspan="1">£{{ number_format($totalVatAmount, 2) }}</th>
-                                                <th rowspan="1" colspan="2">£{{ number_format($totalGrossAmount, 2) }}</th>
-                                                <th rowspan="1" colspan="2">£{{ number_format($totalFinalAmount, 2) }}</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="4" rowspan="1">Page Sub Total</th>
+                                            <th rowspan="1" colspan="1">£{{ number_format($totalNetAmount, 2) }}</th>
+                                            <th rowspan="1" colspan="1">£{{ number_format($totalVatAmount, 2) }}</th>
+                                            <th rowspan="1" colspan="2">£{{ number_format($totalGrossAmount, 2) }}</th>
+                                            <th rowspan="1" colspan="2">£{{ number_format($totalFinalAmount, 2) }}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
-                            <!-- End off main Table -->
                         </div>
+                        <!-- End off main Table -->
                     </div>
                 </div>
             </div>
@@ -177,13 +162,13 @@
                                 <label>Gross</label>
                                 <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" placeholder="" readonly>
                             </div>
-                        </div> 
+                        </div>
                         <!-- End row -->
                     </div>
                 </div>
                 <div class="modal-footer customer_Form_Popup">
-                    <button type="button" class="btn btn-warning" id="saveSalesDayBookModal">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="saveSalesDayBookModal">Save</button>
                 </div>
             </form>
         </div>
@@ -193,8 +178,8 @@
 
 <script>
     const salesDayBook = "{{ url('/sales/sales-day-book/delete/') }}";
-    const customerList =  '{{ route("customer.ajax.getCustomerList") }}';
-    const getTaxRate =  '{{ route("invoice.ajax.getActiveTaxRate") }}';
+    const customerList = '{{ route("customer.ajax.getCustomerList") }}';
+    const getTaxRate = '{{ route("invoice.ajax.getActiveTaxRate") }}';
     const saveSalesDayBook = "{{ url('sales/save-sales-day-book') }}";
 </script>
 

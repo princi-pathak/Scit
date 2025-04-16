@@ -489,6 +489,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('service/invoice/{service_user_id}','index');
 		Route::post('save-pre-invoice','preinvoice_save');
 		Route::get('service/invoice/preview/{service_user_id}','preview');
+		Route::post('service/invoice/edit_PreInvoice','edit_PreInvoice');
 	});
 
 	// Staff for frontend
@@ -558,12 +559,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/save-sales-day-book', 'store');
 			Route::post('/sales-day-book/delete/{id}', 'deleteSalesDayBook')->name('salesDayBook.delete');
 			Route::get('/sales-day-book/edit/{id}', 'editSalesDayBook');
-
 		});
 	});
-
-	
-	
 
 	Route::controller(PurchaseController::class)->group(function () {
 		Route::prefix('purchase')->group(function () {
@@ -578,7 +575,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/purchase-day-book/edit/{id}', 'editPurchaseDayBook');
 			Route::get('/getSupplierData', 'getSupplierData')->name('purchase.getSupplierData');
 			Route::get('/getPurchaseExpense', 'getPurchaseExpense')->name('purchase.getPurchaseExpense');
-			
 		});
 	});
 	
