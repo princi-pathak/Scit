@@ -1,8 +1,9 @@
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@section('title','Council Tax')
+@section('title','Depreciation Type')
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
+
 
 <!--main content start-->
 <section class="wrapper">
@@ -18,7 +19,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
-                                        <a href="#" class="profileDrop openModalBtn" data-action="add" id=""> Add</a>
+                                        <a href="#" class="profileDrop openModalBtn" data-action="add" id=""><i class="fa fa-plus"></i> Add</a>
                                         <a href="javascript:void(0)" class="profileDrop">Export</a>
                                     </div>
                                 </div>
@@ -61,7 +62,7 @@
                                             <td class="white_space_nowrap">{{ $councilTax->bill_period_start_date }} - <br> {{ $councilTax->bill_period_end_date }}</td>
                                             <td>{{ $councilTax->amount_paid }}</td>
                                             <td>{{ $councilTax->additional }}</td>
-                                            <td> <a href="#!" class="openModalBtn" data-action="edit" data-id="{{ $councilTax->id }}" data-flat-number="{{ $councilTax->flat_number }}" data-address="{{ $councilTax->address }}" data-post_code="{{ $councilTax->post_code}}" data-council="{{ $councilTax->council }}" data-no_of_bedrooms="{{ $councilTax->no_of_bedrooms }}" data-owned_by_omega="{{ $councilTax->owned_by_omega }}" data-occupancy="{{ $councilTax->occupancy }}" data-exempt="{{ $councilTax->exempt }}" data-account_number="{{ $councilTax->account_number }}" data-last_bill_date="{{ $councilTax->last_bill_date }}" data-bill_period_start_date="{{ $councilTax->bill_period_start_date }}" data-bill_period_end_date="{{ $councilTax->bill_period_end_date }}" data-amount_paid="{{ $councilTax->amount_paid }}" data-additional="{{ $councilTax->additional }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="#!" class="deleteBtn" data-id="{{ $councilTax->id }}"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
+                                            <td> <a href="#!" class="openModalBtn" data-action="edit" data-id="{{ $councilTax->id }}" data-flat-number="{{ $councilTax->flat_number }}" data-address="{{ $councilTax->address }}" data-post_code="{{ $councilTax->post_code}}" data-council="{{ $councilTax->council }}" data-no_of_bedrooms="{{ $councilTax->no_of_bedrooms }}" data-owned_by_omega="{{ $councilTax->owned_by_omega }}" data-occupancy="{{ $councilTax->occupancy }}" data-exempt="{{ $councilTax->exempt }}" data-account_number="{{ $councilTax->account_number }}" data-last_bill_date="{{ $councilTax->last_bill_date }}" data-bill_period_start_date="{{ $councilTax->bill_period_start_date }}" data-bill_period_end_date="{{ $councilTax->bill_period_end_date }}" data-amount_paid="{{ $councilTax->amount_paid }}" data-additional="{{ $councilTax->additional }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="#!" class="deleteBtn" data-id="{{ $councilTax->id }}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -123,10 +124,10 @@
                                 <div class="form-group">
                                     <label>Owned by Omega? <span class="radStar">*</span></label>
                                     <div class="d-flex align-items-center gap-2">
-                                        <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="1" id="ownedByOmegayes">
                                         <label class="form-check-label m-0" for="ownedByOmegayes">Yes</label>
-                                        <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="0" id="ownedByOmegano">
+                                        <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="1" id="ownedByOmegayes">
                                         <label class="form-check-label m-0" for="ownedByOmegano">No</label>
+                                        <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="0" id="ownedByOmegano">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -138,10 +139,10 @@
                                 <div class="form-group">
                                     <label>Exempt? Yes/No <span class="radStar">*</span></label>
                                     <div class="d-flex align-items-center gap-2">
-                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="1" id="exemptyes">
                                         <label class="form-check-label m-0" for="exempt_yes">Yes</label>
-                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="0" id="exemptno">
+                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="1" id="exemptyes">
                                         <label class="form-check-label m-0" for="exempt_no">No</label>
+                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="0" id="exemptno">
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +217,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-warning" id="saveCouncilTax">Save changes</button>
+                    <button type="button" class="btn btn-warning" id="saveCouncilTax">Save</button>
                 </div>
             </form>
         </div>

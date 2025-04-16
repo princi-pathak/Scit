@@ -30,12 +30,12 @@ class CouncilTaxRequests extends FormRequest
             'no_of_bedrooms' => 'nullable|string|max:255',
             'owned_by_omega' => 'required|boolean',
             'occupancy' => 'nullable|string|max:255',
-            'exempt' => 'required|boolean', 
-            'account_number' => 'required|string|max:255', 
-            'last_bill_date' => 'nullable|date', 
-            'bill_period_start_date' => 'nullable|date', 
-            'bill_period_end_date' => 'nullable|date', 
-            'amount_paid' => 'nullable|string|max:255' , 
+            'exempt' => 'required|boolean',
+            'account_number' => 'required|string|max:255',
+            'last_bill_date' => 'nullable|date',
+            'bill_period_start_date' => 'nullable|date',
+            'bill_period_end_date' => 'nullable|date',
+            'amount_paid' => 'nullable|string|max:255',
             'additional' => 'nullable|string|max:255',
         ];
     }

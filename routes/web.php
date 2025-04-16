@@ -558,12 +558,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/save-sales-day-book', 'store');
 			Route::post('/sales-day-book/delete/{id}', 'deleteSalesDayBook')->name('salesDayBook.delete');
 			Route::get('/sales-day-book/edit/{id}', 'editSalesDayBook');
-
 		});
 	});
-
-	
-	
 
 	Route::controller(PurchaseController::class)->group(function () {
 		Route::prefix('purchase')->group(function () {
@@ -578,7 +574,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/purchase-day-book/edit/{id}', 'editPurchaseDayBook');
 			Route::get('/getSupplierData', 'getSupplierData')->name('purchase.getSupplierData');
 			Route::get('/getPurchaseExpense', 'getPurchaseExpense')->name('purchase.getPurchaseExpense');
-			
 		});
 	});
 	
