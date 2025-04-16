@@ -13,93 +13,75 @@
     }
 </style>
 
-    <section class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <div class="col-md-4 col-lg-4 col-xl-4 ">
-                                <div class="pageTitle">
-                                    <h3>Pre Invoice</h3>
-                                </div>
+<!--main content start-->
+<section class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <div class="panel">
+                    <header class="panel-heading px-5">
+                        <h4>Pre Invoice</h3>
+                    </header>
+                    <div class="panel-body">
+                        <div class="col-lg-12">
+                            <div class="jobsection justify-content-end delete_btn_end">
+                                <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
+                                <a href="javascript:void(0)" onclick="openInvoiceModal('add')"  class="profileDrop"> <i class="fa fa-plus"></i> Add</a>
+                                <a href="javascript:void(0)" class="profileDrop">Export</a>
+                                <!-- <a href="#!" class="profileDrop" id="active_inactive" >Current Rate (per week)</a>
+                                <a href="#!" class="profileDrop" id="active_inactive" >Subs (per week)</a>
+                                <a href="#!" class="profileDrop" id="active_inactive" >Additional Hours</a>
+                                <a href="#!" class="profileDrop" id="active_inactive" >Additional Extras - weekly</a>
+                                <a href="#!" class="profileDrop" id="active_inactive" >Additional Extras - one off</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows"
+                                    class="profileDrop">Delete</a> -->
                             </div>
-                            <div class="col-lg-12">
-                                <div class="maimTable">
-                                    <!-- <div class="printExpt">
-                                        <div class="prntExpbtn">
-                                            <a href="#!">Print</a>
-                                            <a href="#!">Export</a>
-                                        </div>
-                                    </div> -->
-                                    <div class="markendDelete delete_btn_end">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="jobsection">
-                                                    <a href="javascript:void(0)" onclick="openInvoiceModal('', 'add')"
-                                                        class="profileDrop">New</a>
-                                                    <!-- <a href="#!" class="profileDrop" id="active_inactive" >Current Rate (per week)</a>
-                                                    <a href="#!" class="profileDrop" id="active_inactive" >Subs (per week)</a>
-                                                    <a href="#!" class="profileDrop" id="active_inactive" >Additional Hours</a>
-                                                    <a href="#!" class="profileDrop" id="active_inactive" >Additional Extras - weekly</a>
-                                                    <a href="#!" class="profileDrop" id="active_inactive" >Additional Extras - one off</a>
-                                                    <a href="javascript:void(0)" id="deleteSelectedRows"
-                                                        class="profileDrop">Delete</a> -->
-                                                </div>
-                                            </div>
-                                            <!-- <div class="col-md-6 deleteSelectedRows">
-                                                <div class="jobsection">
-                                                    <a href="javascript:void(0)" id="deleteSelectedRows"
-                                                        class="profileDrop">Delete</a>
-                                                </div>
-                                            </div> -->
-                                        </div>
-                                    </div>
-
-                                    <div class="productDetailTable pt-3">
-                                        <table class="table tablechange mb-0" id="exampleOne">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <!-- <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th> -->
-                                                    <th>#</th>
-                                                    <th>Name of Young Person</th>
-                                                    <th>Home Local Authority</th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Current Rate(per week)</th>
-                                                    <th>Subs(per week)</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><?php if(isset($child) && $child !=''){ echo $child->name; }?></td>
-                                                    <td><?php if(isset($child) && $child !=''){ echo $child->local_authority; }?></td>
-                                                    <td><?php if(isset($child) && $child !=''){ echo $child->start_date; }?></td>
-                                                    <td><?php if(isset($child) && $child !=''){ echo $child->end_date; }?></td>
-                                                    <td><?php if(isset($child) && $child !=''){ echo $child->weekly_rate; }?></td>
-                                                    <td><?php if(isset($child) && $child !=''){ echo $child->subs; }?></td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <div class="nav-item dropdown">
-                                                                <a href="#!" class="nav-link dropdown-toggle profileDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    Action
-                                                                </a>
-                                                                <div class="dropdown-menu dropdown-menu-right" style="z-index:9999">
-                                                                    <a href="#!" class="dropdown-item">Edit</a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                    <a href="{{url('/service/invoice/preview/'.$service_user_id)}}" target="_blank" class="dropdown-item">Preview</a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                </div>
-                                                            </div>
+                            <div class="productDetailTable mb-4 table-responsive">
+                                <table class="table border-top border-bottom tablechange" id="exampleOne">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th> -->
+                                            <th>#</th>
+                                            <th>Name of Young Person</th>
+                                            <th>Home Local Authority</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Current Rate(per week)</th>
+                                            <th>Subs(per week)</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><?php if(isset($child) && $child !=''){ echo $child->name; }?></td>
+                                            <td><?php if(isset($child) && $child !=''){ echo $child->local_authority; }?></td>
+                                            <td><?php if(isset($child) && $child !=''){ echo $child->start_date; }?></td>
+                                            <td><?php if(isset($child) && $child !=''){ echo $child->end_date; }?></td>
+                                            <td><?php if(isset($child) && $child !=''){ echo $child->weekly_rate; }?></td>
+                                            <td><?php if(isset($child) && $child !=''){ echo $child->subs; }?></td>
+                                            <td>
+                                            <a href="javascript:void(0)"  class="openModalBtn"><i class="fa fa-pencil edit_data" data-child_id="{{ $service_user_id }}"></i></a> |
+                                            <a href="{{url('/service/invoice/preview/'.$service_user_id)}}" target="_blank" class="openModalBtn"><i class="fa fa-eye" ></i></a>
+                                            </td>
+                                            <!-- <td>
+                                                <div class="d-flex justify-content-end">
+                                                    <div class="nav-item dropdown">
+                                                        <a href="#!" class="nav-link dropdown-toggle profileDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Action
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right" style="z-index:9999">
+                                                            <a href="javascript:void(0)" class="dropdown-item edit_data ps-3" data-child_id="{{ $service_user_id }}">Edit</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="{{url('/service/invoice/preview/'.$service_user_id)}}" target="_blank" class="dropdown-item ps-3">Preview</a>
+                                                            <div class="dropdown-divider"></div>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                                    </div>
+                                                </div>
+                                            </td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
                                 <!-- End off main Table -->
                             </div>
                         </div>
@@ -111,10 +93,10 @@
     <!-- Pre Invoice Add Modal start here -->
     <div class="modal fade" id="addPreInvoiceModel" tabindex="-1" aria-labelledby="preInvoiceModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content add_Customer">
+            <div class="modal-content ">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                    <h5 class="modal-title" id="preInvoiceModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title" id="preInvoiceModalLabel"></h5>
                 </div>
                 <div class="modal-body">
                     <form id="preInvoiceForm">
@@ -124,40 +106,13 @@
                                 <div class="formDtail">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                         <div class="mt-1 mb-0" id="messagedepreciation_types"></div>
-                                        <input type="hidden" name="id" id="id">
                                         <input type="hidden" name="child_id" id="child_id" value="<?php if(isset($service_user_id)){ echo $service_user_id;}?>">
+                                        <input type="hidden" name="vat" id="vat" value="<?php if(isset($PreInvoiceVat) && $PreInvoiceVat !=''){ echo $PreInvoiceVat->vat;}?>">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-12 col-xl-12">
                                                 <div class="formDtail">
-                                                    <!-- <div class="mb-3">
-                                                        <label>Child Initials & Name</label>
-                                                        <input type="text" class="form-control editInput" id="name" name="name">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label>Local Authority</label>
-                                                        <input type="text" class="form-control editInput" id="local_authority" name="local_authority">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label>Flat/Room</label>
-                                                        <input type="text" class="form-control editInput" id="flat_room" name="flat_room">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label>Address</label>
-                                                        <input type="text" class="form-control editInput" id="address" name="address">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label>DOB</label>
-                                                        <input type="date" class="form-control editInput" id="dob" name="dob">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label>Social Worker</label>
-                                                        <input type="text" class="form-control editInput" id="social_worker" name="social_worker">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label>Email</label>
-                                                        <input type="email" class="form-control editInput" id="email" name="email">
-                                                    </div> -->
                                                     <div class="mb-2 Additional_Hours">
+                                                    <input type="hidden" name="current_week_id[]" id="current_week_id">
                                                         <label class="heading d-block mb-3">Current Rate (per week)</label>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
@@ -192,25 +147,12 @@
                                                                     <input type="text" readonly
                                                                         class="form-control editInput" id="currentRateTotalCost" name="currentRateTotalCost[]">
                                                                 </div>
-                                                                <!-- <div class="col-sm-1">
-                                                                    <a href="javascript:void(0)" class="formicon"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#supplierPop">
-                                                                        <i class="fa fa-plus"></i></a>
-                                                                </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 Additional_Hours">
                                                         <label class="heading d-block mb-3">Subs (per week)</label>
-                                                        <!-- <div class="mb-3">
-                                                            <label>Subs</label>
-                                                            <input type="text" class="form-control editInput" id="subs" name="subs">
-                                                        </div> -->
-                                                        <!-- <div class="mb-3">
-                                                            <label>Extras</label>
-                                                                <input type="text" class="form-control editInput" id="extras" name="extras">
-                                                        </div> -->
+                                                        <input type="hidden" name="subs_week_id[]" id="subs_week_id">
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
                                                                 <label>Start Date</label>
@@ -244,17 +186,12 @@
                                                                     <input type="text" readonly
                                                                         class="form-control editInput" id="subsTotalCost" name="subsTotalCost[]">
                                                                 </div>
-                                                                <!-- <div class="col-sm-1">
-                                                                    <a href="javascript:void(0)" class="formicon"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#supplierPop">
-                                                                        <i class="fa fa-plus"></i></a>
-                                                                </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 Additional_Hours">
                                                         <label class="heading d-block">Additional Hours</label>
+                                                        <input type="hidden" name="additionalHours_id[]" id="additionalHours_id">
                                                         <div class="mb-3">
                                                             <label>Hours per week </label>
                                                             <input type="text" class="form-control editInput" id="additionalHours_HoursPerWeek"
@@ -293,17 +230,12 @@
                                                                     <input type="text" readonly
                                                                         class="form-control editInput" id="additionalHours_TotalCost" name="additionalHours_TotalCost[]">
                                                                 </div>
-                                                                <!-- <div class="col-sm-1">
-                                                                    <a href="javascript:void(0)" class="formicon"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#supplierPop">
-                                                                        <i class="fa fa-plus"></i></a>
-                                                                </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 Additional_Hours">
                                                         <label class="heading d-block">Additional Extras - weekly:</label>
+                                                        <input type="hidden" name="extras_weekly_id[]" id="extras_weekly_id">
                                                         <div class="mb-3">
                                                             <label>Expenditure Type</label>
                                                             <input type="text" class="form-control editInput" id="additionalExtrasWeekly_ExpenditureType"
@@ -344,17 +276,12 @@
                                                                     <input type="text" readonly
                                                                         class="form-control editInput" id="additionalExtrasWeekly_Total_Cost" name="additionalExtrasWeekly_Total_Cost[]">
                                                                 </div>
-                                                                <!-- <div class="col-sm-1">
-                                                                    <a href="javascript:void(0)" class="formicon"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#supplierPop">
-                                                                        <i class="fa fa-plus"></i></a>
-                                                                </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 Additional_Hours">
                                                         <label class="heading d-block">Additional Extras - one off:</label>
+                                                        <input type="hidden" name="oneoff_id[]" id="oneoff_id">
                                                         <div class="mb-3">
                                                             <label>Expenditure Type</label>
                                                             <input type="text" class="form-control editInput" id="additionalExtrasOneOff_Expediture_type"
@@ -375,12 +302,6 @@
                                                                     <input type="text" readonly
                                                                         class="form-control editInput" id="additionalExtrasOneOff_Total_cost" name="additionalExtrasOneOff_Total_cost[]">
                                                                 </div>
-                                                                <!-- <div class="col-sm-1">
-                                                                    <a href="javascript:void(0)" class="formicon"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#supplierPop">
-                                                                        <i class="fa fa-plus"></i></a>
-                                                                </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -446,27 +367,6 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="mb-3">
-                                                        <label>Additional Extras - weekly <span class="radStar">*</span></label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control editInput" id="additional_extras_weekly1" name="additional_extras_weekly[]">
-                                                        </div>
-                                                        <div class="col-sm-1">
-                                                            <a href="javascript:void(0)" class="formicon" data-bs-toggle="modal" data-bs-target="#supplierPop">
-                                                                <i class="fa fa-plus"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label>Additional Extras - one off <span class="radStar">*</span></label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control editInput" id="additional_extras_oneoff1" name="additional_extras_oneoff[]">
-                                                        </div>
-                                                        <div class="col-sm-1">
-                                                            <a href="javascript:void(0)" class="formicon" data-bs-toggle="modal" data-bs-target="#supplierPop">
-                                                                <i class="fa fa-plus"></i></a>
-                                                        </div>
-                                                    </div> -->
-
                                                 </div>
                                             </div>
                                         </div>
@@ -477,9 +377,9 @@
                     </form>
                 </div>
                 <div class="modal-footer customer_Form_Popup">
-                    <button type="button" class="profileDrop" id="savePreInvoiceModal"
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="savePreInvoiceModal"
                         onclick="savePreInvoiceModal()">Save</button>
-                    <button type="button" class="profileDrop gray" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -542,9 +442,15 @@
         $('.delete_checkbox').prop('checked', $(this).prop('checked'));
     });
 
-    function openInvoiceModal(element, type) {
+    function openInvoiceModal(type) {
         $("#addPreInvoiceModel").modal('show');
         if (type === 'add') {
+            document.getElementById("preInvoiceForm").reset();
+            $("#current_week_id").val('');
+            $("#subs_week_id").val('');
+            $("#additionalHours_id").val('');
+            $("#extras_weekly_id").val('');
+            $("#oneoff_id").val('');
             $("#preInvoiceModalLabel").text("Add New Pre-Invoice");
         } else {
             $("#preInvoiceModalLabel").text("Edit Pre-Invoice");
@@ -560,13 +466,19 @@
                 if(response.vali_error){
                     alert(response.vali_error);
                     return false;
-                }else{
+                }else if(response.success === true){
                     alert(response.message);
+                    $("#addPreInvoiceModel").modal('hide');
                     window.location.reload();
+                }else{
+                    console.log("No response");
+                    alert("Something went wrong");
+                    return false;
                 }
             },
             error: function (xhr) {
-                let errors = xhr.responseJSON.message;
+                console.log(xhr);
+                let errors = xhr.responseJSON.error;
                 console.log(errors)
                 alert("Something went wrong");
             }
@@ -653,5 +565,109 @@
         $("#totalInvoiceCost").text('£'+netCost.toFixed(2));
         $("#totalInvoiceVat").text('£'+netVat.toFixed(2));
         $("#totalInvoiceTotal").text('£'+netTotal.toFixed(2));
+    }
+</script>
+<script>
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('edit_data')) {
+            var child_id = event.target.getAttribute('data-child_id');
+            var token='<?php echo csrf_token();?>';
+            var url=`{{ url('service/invoice/edit_PreInvoice') }}`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                },
+                body: JSON.stringify({ child_id: child_id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // return false;
+                if(data.success === true){
+                    openInvoiceModal('edit');
+                    var current_ratePerWeek=data.data;
+                    var current_week_id=[];
+                    var subs_week_id=[];
+                    var additionalHours_id=[];
+                    var extras_weekly_id=[];
+                    var oneoff_id=[];
+                    current_ratePerWeek.forEach(function(current) {
+                        // alert(current.current_rate);
+                        var current_date=getDateFormat(current.start_date,current.end_date);
+                        $("#currentRateStart_date").val(current_date.start_date);
+                        $("#currentRateEnd_date").val(current_date.end_date);
+                        current_week_id.push(current.id);
+                        $("#current_week_id").val(current_week_id);
+                        CountDays('currentRateStart_date','currentRateEnd_date','currentRateNo_of_days','currentRateTotalCost','currentRateWeekly_rate',null,1);
+
+                        var pre_invoice_subs=current.pre_invoice_subs;
+                        pre_invoice_subs.forEach(function(subs){
+                            var subs_date=getDateFormat(subs.subs_start_date,subs.subs_end_date);
+                            $("#subsStart_date").val(subs_date.start_date);
+                            $("#subsEnd_date").val(subs_date.end_date);
+                            subs_week_id.push(subs.id);
+                            $("#subs_week_id").val(subs_week_id);
+                            CountDays('subsStart_date','subsEnd_date','subsNo_of_days','subsTotalCost','subsWeeklyRate',null,2)
+                        });
+
+                        var pre_invoice_additional_hours=current.pre_invoice_additional_hours;
+                        pre_invoice_additional_hours.forEach(function(hours){
+                            $("#additionalHours_HoursPerWeek").val(hours.addHour_no_of_days);
+                            var hours_date=getDateFormat(hours.addHour_start_date,hours.addHour_end_date);
+                            $("#additionalHours_Start_date").val(hours_date.start_date);
+                            $("#additionalHours_End_date").val(hours_date.end_date);
+                            additionalHours_id.push(hours.id);
+                            $("#additionalHours_id").val(additionalHours_id);
+                            CountDays('additionalHours_Start_date','additionalHours_End_date','additionalHours_No_of_days','additionalHours_TotalCost','additionalHours_Hourly_rate','additionalHours_HoursPerWeek',3);
+                        });
+
+                        var pre_invoice_extras_weeklies=current.pre_invoice_extras_weeklies;
+                        pre_invoice_extras_weeklies.forEach(function(weeklies){
+                            $("#additionalExtrasWeekly_ExpenditureType").val(weeklies.extras_weekly_expenditure_type);
+                            var weeklies_date=getDateFormat(weeklies.extras_weekly_start_date,weeklies.extras_weekly_end_date);
+                            $("#additionalExtrasWeekly_Start_date").val(weeklies_date.start_date);
+                            $("#additionalExtrasWeekly_End_date").val(weeklies_date.end_date);
+                            extras_weekly_id.push(weeklies.id);
+                            $("#extras_weekly_id").val(extras_weekly_id);
+                            CountDays('additionalExtrasWeekly_Start_date','additionalExtrasWeekly_End_date','additionalExtrasWeekly_No_of_Days','additionalExtrasWeekly_Total_Cost','additionalExtrasWeekly_Weekly_amount',null,4);
+                        });
+
+                        var pre_invoice_extras_one_offs=current.pre_invoice_extras_one_offs;
+                        pre_invoice_extras_one_offs.forEach(function(oneOff){
+                            $("#additionalExtrasOneOff_Expediture_type").val(oneOff.extras_oneoff_expenditure_type);
+                            var oneOff_date=getDateFormat(oneOff.extras_oneoff_start_date,'');
+                            $("#additionalExtrasOneOff_Start_date").val(oneOff_date.start_date);
+                            oneoff_id.push(oneOff.id);
+                            $("#oneoff_id").val(oneoff_id);
+                            CountDays('additionalExtrasOneOff_Start_date',null,null,'additionalExtrasOneOff_Total_cost','additionalExtrasOneOff_Amount',null,5);
+                        });
+                    });
+                    // location.reload();
+                }else{
+                    alert("Something went wrong");
+                    return false;
+                }
+                
+            })
+            .catch(error => {
+                console.error("Error: ",error);
+            });
+        }
+    });
+    function getDateFormat(start_date,end_date = null){
+        var originalDate = start_date;
+        var parts = originalDate.split("-");
+        var formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0];
+
+        var originalDate1 = end_date;
+        var parts1 = originalDate1.split("-");
+        var formattedDate1 = parts1[2] + '/' + parts1[1] + '/' + parts1[0];
+        var data = {
+            start_date: formattedDate,
+            end_date: formattedDate1
+        };
+        return data;
     }
 </script>
