@@ -23,14 +23,30 @@
                             <div class="jobsection justify-content-between align-items-center">
                                 <div class="jobsection mb-0">
                                     <a href="{{url('petty-cash/expend-card')}}" class="profileDrop" id="active_inactive">Expend card</a>
-                                    <a href="{{url('petty-cash/petty_cash')}}" class="profileDrop">Petty Cash</a>
+                                    <a href="{{url('petty-cash/petty_cash')}}" class="profileDrop">Cash</a>
                                 </div>
                                 <div class="d-flex justify-content-end gap-4 align-items-center">
                                     <div class="d-flex justify-content-end gap-2 align-items-center">
                                         <label for="fromDate" class="mb-0"> From:</label>
-                                        <input type="date" id="fromDate" class="form-control">
+                                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                            <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control">
+
+                                            <span class="input-group-btn datetime-picker2 btn_height">
+                                                <button class="btn btn-primary" type="button" id="openCalendarBtn">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </span>
+                                        </div>
                                         <label for="ToDate" class="mb-0"> To:</label>
-                                        <input type="date" id="ToDate" class="form-control">
+                                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                            <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control">
+
+                                            <span class="input-group-btn datetime-picker2 btn_height">
+                                                <button class="btn btn-primary" type="button" id="openCalendarBtn1">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
                                     <!-- <a href="{{url('petty-cash/expend_card_add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
                                     <a href="javascript:void()" class="profileDrop" data-toggle="modal" data-target="#expend_card"><i class="fa fa-plus"></i> Add</a>
@@ -214,14 +230,14 @@
                                     <div class="col-md-12 p-0">
                                         <div class="fileupload fileupload-new" data-provides="fileupload">
                                             <div class="fileupload-new thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 100px;">
-                                                <img src="" alt="No Image" />
+                                                <img src="{{url('public/images/noimage.jpg')}}" alt="No Image" />
                                             </div>
                                             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 20px;"></div>
                                             <div>
                                                 <span class="btn btn-white btn-file">
                                                     <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
                                                     <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                                    <input name="image" type="file" class="default" id="receipt" onchange="check_file()" />
+                                                    <input name="receipt" type="file" class="default" id="receipt" onchange="check_file()" />
                                                 </span>
                                                 <!-- <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i>Remove</a> -->
                                             </div>
@@ -234,7 +250,7 @@
                                         <label class="form-check-label m-0" for="yes">Yes</label>
                                         <input class="form-check-input mt-0" type="radio" name="dext" value="1" id="yes">
                                         <label class="form-check-label m-0" for="no">No</label>
-                                        <input class="form-check-input mt-0" type="radio" name="dext" value="0" id="no">
+                                        <input class="form-check-input mt-0" type="radio" name="dext" value="0" id="no" checked>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -243,7 +259,7 @@
                                         <label class="form-check-label m-0" for="yes2">Yes</label>
                                         <input class="form-check-input mt-0" type="radio" name="invoice_la" value="1" id="yes2">
                                         <label class="form-check-label m-0" for="no2">No</label>
-                                        <input class="form-check-input mt-0" type="radio" name="invoice_la" value="0" id="no2">
+                                        <input class="form-check-input mt-0" type="radio" name="invoice_la" value="0" id="no2" checked>
                                     </div>
                                 </div>
                                 
@@ -283,7 +299,29 @@
     var saveUrl="{{url('petty-cash/saveExpend')}}";
     var redirectUrl="{{url('petty-cash/expend-card')}}";
 </script>
+<script>
+    
+    $(document).ready(function() {
+        $('#fromDate').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
 
+        $('#openCalendarBtn').click(function() {
+            $('#fromDate').focus();
+        });
+        $('#ToDate').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('#openCalendarBtn1').click(function() {
+            $('#ToDate').focus();
+        });
+});
+</script>
 
 <script type="text/javascript" src="{{ url('public/js/salesFinance/petty_cash/expend_card.js') }}"></script>
 

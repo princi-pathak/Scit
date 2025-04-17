@@ -236,17 +236,17 @@ class PettyCashController extends Controller
     }
     public function cash_filter(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $startDate=$request->startDate;
-        $endDate=$request->endDate;
+        $startDate=Carbon::parse($request->startDate)->format('Y-m-d');
+        $endDate=Carbon::parse($request->endDate)->format('Y-m-d');
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $query = Cash::getAllCash($home_id,$user_id);
         if ($request->filled('startDate') && $request->filled('endDate')) {
             $query->whereBetween('cash_date', [$startDate, $endDate]);
         }
-        $previous_Cash_month_data=$this->previous_Cash_month_data($home_id,$user_id);
         $search_data = $query->get();
         // echo "<pre>";print_r($search_data);die;
+        $previous_Cash_month_data=$this->previous_Cash_month_data($home_id,$user_id);
         $total_balance=0;
         $cash_out=0;
         $count=0;
@@ -291,8 +291,8 @@ class PettyCashController extends Controller
     }
     public function expand_card_filter(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $startDate=$request->startDate;
-        $endDate=$request->endDate;
+        $startDate=Carbon::parse($request->startDate)->format('Y-m-d');
+        $endDate=Carbon::parse($request->endDate)->format('Y-m-d');
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
 
