@@ -17,12 +17,16 @@ class PettyCashController extends Controller
     public function expend_card(){
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
-        // $data['expendCard']=ExpendCard::getAllExpendCard($home_id,$user_id)->get();
         $data['previous_month_data']=$this->previous_month_data($home_id,$user_id);
-        // $data['expendCard'] = ExpendCard::getAllExpendCard($home_id, $user_id)
-        // ->whereMonth('expend_date', now()->month)
-        // ->whereYear('expend_date', now()->year)
-        // ->orderBy('id','desc')->first();
+        $data['expendCardLastData'] = ExpendCard::getAllExpendCard($home_id, $user_id)
+        ->whereMonth('expend_date', now()->month)
+        ->whereYear('expend_date', now()->year)
+        ->orderBy('id','desc')->first();
+        $data['expendCardLastData'] = ExpendCard::getAllExpendCard($home_id, $user_id)
+        ->whereMonth('expend_date', now()->month)
+        ->whereYear('expend_date', now()->year)
+        ->orderBy('id','desc')->first();
+
         $data['expendCard'] = ExpendCard::getAllExpendCard($home_id, $user_id)
         ->whereMonth('expend_date', now()->month)
         ->whereYear('expend_date', now()->year)
@@ -40,6 +44,11 @@ class PettyCashController extends Controller
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $data['cash']=Cash::getAllCash($home_id,$user_id)->get();
+        $data['previous_Cash_month_data']=$this->previous_Cash_month_data($home_id,$user_id);
+        $data['cashLastId'] = Cash::getAllCash($home_id, $user_id)
+        ->whereMonth('cash_date', now()->month)
+        ->whereYear('cash_date', now()->year)
+        ->orderBy('id','desc')->first();
         return view('frontEnd.petty_cash.petty_cash',$data);
     }
     public function child_register(){
@@ -227,8 +236,8 @@ class PettyCashController extends Controller
     }
     public function cash_filter(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $startDate=$request->startDate;
-        $endDate=$request->endDate;
+        $startDate=Carbon::parse($request->startDate)->format('Y-m-d');
+        $endDate=Carbon::parse($request->endDate)->format('Y-m-d');
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $query = Cash::getAllCash($home_id,$user_id);
@@ -237,32 +246,40 @@ class PettyCashController extends Controller
         }
         $search_data = $query->get();
         // echo "<pre>";print_r($search_data);die;
+        $previous_Cash_month_data=$this->previous_Cash_month_data($home_id,$user_id);
         $total_balance=0;
         $cash_out=0;
         $count=0;
         $balance_bfwd=0;
         $petty_cashIn=0;
         $html_data='';
+        $date=null;
         foreach($search_data as $key=>$val){
-            $total_balance=$total_balance+$val->balance_bfwd+$val->petty_cashIn;
             $cash_out=$cash_out+$val->cash_out;
             $petty_cashIn=$petty_cashIn+$val->petty_cashIn;
             if($count == 0){
                 $count=1;
                 $balance_bfwd=$val->balance_bfwd;
+                $total_balance=$val->balance_bfwd;
             }
+            $total_balance=$total_balance+$val->petty_cashIn;
             $dext='';
             $invoice_la='';
             if($val->dext == 1){ $dext= "Yes";}else{ $dext= "No"; }
             if($val->invoice_la == 1){ $invoice_la= "Yes"; }else{ $invoice_la= "No" ;}
+            $db_date=date('m',strtotime($val->cash_date));
             $html_data.='<tr>
                             <td>'. ++$key .'</td>
-                            <td>'. date("Y-m-d",strtotime($val->cash_date)) .'</td>
-                            <td>£'. $val->balance_bfwd .'</td>
-                            <td>£'. $val->petty_cashIn .'</td>
+                            <td>'. date("Y-m-d",strtotime($val->cash_date)) .'</td>';
+                            if($previous_Cash_month_data['total_balanceInCash'] == 0){if($date != $db_date || $date == null){$date=$db_date;
+                                $html_data.='<td>£'. $val->balance_bfwd .'</td>';
+                            }else{
+                                $html_data.='<td></td>';
+                            }}
+                            $html_data.='<td>£'. $val->petty_cashIn .'</td>
                             <td>£'. $val->cash_out .'</td>
                             <td>'. $val->card_details .'</td>
-                            <td><a href="'.url("public/images/finance_cash/".$val->receipt) .'" target="_blank"><i class="fa-solid fa-eye"></i></a></td>
+                            <td><a href="'.url("public/images/finance_cash/".$val->receipt) .'" target="_blank"><i class="fa fa-eye"></i></a></td>
                             <td>'. $dext .'</td>
                             <td>'. $invoice_la .'</td>
                             <td>'. $val->initial .'</td>
@@ -270,12 +287,12 @@ class PettyCashController extends Controller
 
         }
         $total_balanceInCash=$total_balance-$cash_out;
-        return response()->json(['success'=>true,'message'=>'Filtered Data','data'=>$search_data,'html_data'=>$html_data,'total_balance'=>$total_balance,'cash_out'=>$cash_out,'balance_bfwd'=>$balance_bfwd,'petty_cashIn'=>$petty_cashIn,'total_balanceInCash'=>$total_balanceInCash]);
+        return response()->json(['success'=>true,'message'=>'Filtered Data','data'=>$search_data,'html_data'=>$html_data,'total_balance'=>$balance_bfwd,'cash_out'=>$cash_out,'balance_bfwd'=>$balance_bfwd,'petty_cashIn'=>$petty_cashIn,'total_balanceInCash'=>$total_balanceInCash]);
     }
     public function expand_card_filter(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $startDate=$request->startDate;
-        $endDate=$request->endDate;
+        $startDate=Carbon::parse($request->startDate)->format('Y-m-d');
+        $endDate=Carbon::parse($request->endDate)->format('Y-m-d');
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
 
@@ -335,7 +352,7 @@ class PettyCashController extends Controller
                  $html_data.='<td>'. $fund_added .'</td>
                 <td>£'. $val->purchase_amount .'</td>
                 <td>'. $val->card_details .'</td>
-                <td><a href="'. url("public/images/finance_petty_cash/".$val->receipt) .'" target="_blank"><i class="fa-solid fa-eye"></i></a></td>
+                <td><a href="'. url("public/images/finance_petty_cash/".$val->receipt) .'" target="_blank"><i class="fa fa-eye"></i></a></td>
                 <td>'. $dext .'</td>
                 <td>'. $invoice_la .'</td>
                 <td>'. $val->initial .'</td>

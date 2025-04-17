@@ -859,7 +859,7 @@ var check_paid_amount = 0;
         $('.InvoicecheckError').each(function() {
             if ($(this).val() === '' || $(this).val() == null) {
                 $(this).css('border', '1px solid red');
-                $(this).focus();
+                // $(this).focus();
                 return false;
             } else {
                 $(this).css('border', '');

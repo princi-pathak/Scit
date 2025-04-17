@@ -81,11 +81,11 @@ $("#ToDate").change(function() {
                 }else{
                     $("#cash_result").html(response.html_data);
                 }
-                $("#PettyCashbalance").text(response.total_balanceInCash);
-                $("#total_balance").text(response.total_balance);
-                $("#petty_cashIn").text(response.petty_cashIn);
-                $("#cash_out").text(response.cash_out);
-                $("#total_balance").text(response.total_balance);
+                $("#PettyCashbalance").text('£'+response.total_balanceInCash);
+                $("#total_balance").text('£'+response.total_balance);
+                $("#petty_cashIn").text('£'+response.petty_cashIn);
+                $("#cash_out").text('£'+response.cash_out);
+                $("#total_balance").text('£'+response.total_balance);
                 
             }
         },

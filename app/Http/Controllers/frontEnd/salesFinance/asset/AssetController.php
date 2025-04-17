@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontEnd\salesFinance\asset;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\DepreciationType;
 use App\Models\AssetCategory;
 use App\Models\AssetRegistration;
@@ -21,6 +22,8 @@ class AssetController extends Controller
 
         $data['page']='assets';
         $data['list']=AssetRegistration::getAllAssetRegistration()->get();
+        $data['AssetCategoryList']=AssetCategory::getAllAssetCategory()->where('status',1)->get();
+        $data['DepreciationTypeList']=DepreciationType::getDepreciationType()->where('status',1)->get();
         return view('frontEnd.salesAndFinance.asset.assetRegisterList',$data);
     }
     public function asset_regiser_add(Request $request){
@@ -107,9 +110,11 @@ class AssetController extends Controller
     }
     public function asset_register_search(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        $startDate=Carbon::parse($request->start_date)->format('Y-m-d');
+        $endDate=Carbon::parse($request->end_date)->format('Y-m-d');
         $query = AssetRegistration::getAllAssetRegistration();
         if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween('date', [$request->start_date, $request->end_date]);
+            $query->whereBetween('date', [$startDate, $endDate]);
         }
         $list = $query->get();
         return response()->json(['success' => true,'message'=>'Search List.', 'data' => $list]);

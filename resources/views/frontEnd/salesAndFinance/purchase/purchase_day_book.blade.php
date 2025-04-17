@@ -167,21 +167,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="expenses"> Expenses <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="hidden" id="expenses_id">
-                                        <select class="form-control editInput selectOptions" name="expense_type" id="expenses">
-                                            <option>Please Select</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="rate_input">Expense Amount</label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label for="vat_input">VAT <span class="radStar">*</span></label>
                                     <div>
                                         <input type="hidden" id="tax_id">
@@ -212,6 +197,22 @@
                                     <label for="not_claim"> Not Claim <span class="radStar">*</span></label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" placeholder="" readonly>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="expenses"> Expenses <span class="radStar">*</span></label>
+                                    <div>
+                                        <input type="hidden" id="expenses_id">
+                                        <select class="form-control editInput selectOptions" name="expense_type" id="expenses">
+                                            <option>Please Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rate_input">Expense Amount</label>
+                                    <div>
+                                        <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" readonly>
                                     </div>
                                 </div>
                             </div>
