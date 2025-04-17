@@ -1,3 +1,6 @@
+$(document).ready(function(){
+    calculate();
+});
 $(document).on('input', '.numberInput', function () {
     let val = $(this).val().replace(/[^0-9.]/g, '');
     if ((val.match(/\./g) || []).length > 1) {
@@ -381,7 +384,7 @@ function searchBtn() {
                   </tbody>
                 </table>
               </div>`;
-                $("#search_data").append(tableData);
+                $("#containerB").append(tableData);
 
                 // $("#search_data").show();
 
