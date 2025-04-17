@@ -34,145 +34,6 @@
                         <div class="tab-content tasi-tab">
                             <div id="overview" class="tab-pane active">
                                 <div class="row tabs_finance">
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Invoice">
-                                        <div class="profile-nav alt">
-                                            <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row purple-bg">
-                                                    <i class="fa fa-file-text-o"></i>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div class="wdgt-value">
-                                                        <h4 class="count">Invoice</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Purchase_Order">
-                                        <div class="profile-nav alt">
-                                            <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row lightRed">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div class="wdgt-value">
-                                                        <h4 class="count">Purchase Order</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- fa-hourglass-end  fa-life-ring  fa-hourglass-half  fa-hourglass-start  fa-clock-o  fa-tachometer  fa-sliders   -->
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                        <a href="{{ url('/petty-cash/expend-card') }}">
-                                            <div class="profile-nav alt">
-                                                <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row terques-bg">
-                                                        <i class="fa fa-money"></i>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <div class="wdgt-value">
-                                                            <h4 class="count">Petty Cash</h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                        <a href="{{ url('/petty-cash/child_register') }}">
-                                            <div class="profile-nav alt">
-                                                <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row Olive_gray">
-                                                        <i class="fa fa-child"></i>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <div class="wdgt-value">
-                                                            <h4 class="count">Child Register</h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Quoting_System">
-                                        <div class="profile-nav alt">
-                                            <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row bg-green">
-                                                    <i class="fa fa-file-text"></i>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div class="wdgt-value">
-                                                        <h4 class="count">Quoting System</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                        <a href="{{ url('/expenses') }}">
-                                            <div class="profile-nav alt">
-                                                <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row bg-blue">
-                                                        <i class="fa fa-calculator"></i>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <div class="wdgt-value">
-                                                            <h4 class="count">Expenses</h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                        <a href="#!">
-                                            <div class="profile-nav alt">
-                                                <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row bg-pink">
-                                                        <i class="fa fa-cogs"></i>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <div class="wdgt-value">
-                                                            <h4 class="count">Business Integrations</h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                        <a href="#!">
-                                            <div class="profile-nav alt">
-                                                <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row light_yellow">
-                                                        <i class="fa fa-bullhorn"></i>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <div class="wdgt-value">
-                                                            <h4 class="count">Marketing</h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                        <a href="#!">
-                                            <div class="profile-nav alt">
-                                                <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row bg-yellow">
-                                                        <i class="fa fa-bell"></i>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <div class="wdgt-value">
-                                                            <h4 class="count">EworksPay</h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Day_book">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
@@ -217,7 +78,151 @@
                                             </div>
                                         </div>
                                     </a>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="{{ url('/petty-cash/expend-card') }}">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row terques-bg">
+                                                        <i class="fa fa-money"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Petty Cash</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="{{ url('/expenses') }}">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row bg-blue">
+                                                        <i class="fa fa-calculator"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Expenses</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Purchase_Order">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row lightRed">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Purchase Order</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Invoice">
+                                    <div class="profile-nav alt">
+                                        <div class="panel text-center">
+                                            <div class="user-heading alt wdgt-row purple-bg">
+                                                <i class="fa fa-file-text-o"></i>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="wdgt-value">
+                                                    <h4 class="count">Invoice</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- fa-hourglass-end  fa-life-ring  fa-hourglass-half  fa-hourglass-start  fa-clock-o  fa-tachometer  fa-sliders   -->
+
+                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="{{ url('/petty-cash/child_register') }}">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row Olive_gray">
+                                                        <i class="fa fa-child"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Child Register</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div> -->
+                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Quoting_System">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row bg-green">
+                                                    <i class="fa fa-file-text"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Quoting System</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                    <a href="#!">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row bg-pink">
+                                                    <i class="fa fa-cogs"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Business Integrations</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                    <a href="#!">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row light_yellow">
+                                                    <i class="fa fa-bullhorn"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Marketing</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                    <a href="#!">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row bg-yellow">
+                                                    <i class="fa fa-bell"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">EworksPay</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+
+
                                 <div class="tab_finance-content">
                                     <div id="Invoice" data-tab-finance-content>
                                         <div class="row">

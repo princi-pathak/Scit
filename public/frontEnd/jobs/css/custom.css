@@ -3271,3 +3271,7 @@ table.tablechange tbody td a i {
   background-color: #32323a;
 }
 
+div.dt-container select.dt-input {
+  padding: 4px;
+  margin-right: 10px;
+}

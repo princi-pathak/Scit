@@ -29,14 +29,14 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Flat number if applicable</th>
+                                            <th>Flat number <br> if applicable</th>
                                             <th>Address</th>
                                             <th>PostCode</th>
                                             <th>Council</th>
                                             <th>No of Bedrooms?</th>
                                             <th>Owned by Omega?</th>
                                             <th>Occupancy</th>
-                                            <th>Exempt? Yes/No</th>
+                                            <th>Exempt? <br>Yes/No</th>
                                             <th>Account number</th>
                                             <th>Last bill</th>
                                             <th>Bill period</th>
@@ -59,10 +59,10 @@
                                             <td>{{ $councilTax->exempt }}</td>
                                             <td>{{ $councilTax->account_number }}</td>
                                             <td class="white_space_nowrap">{{ $councilTax->last_bill_date }}</td>
-                                            <td class="white_space_nowrap">{{ $councilTax->bill_period_start_date }} - <br> {{ $councilTax->bill_period_end_date }}</td>
+                                            <td class="white_space_nowrap">{{ $councilTax->bill_period_start_date }} - {{ $councilTax->bill_period_end_date }}</td>
                                             <td>{{ $councilTax->amount_paid }}</td>
                                             <td>{{ $councilTax->additional }}</td>
-                                            <td> <a href="#!" class="openModalBtn" data-action="edit" data-id="{{ $councilTax->id }}" data-flat-number="{{ $councilTax->flat_number }}" data-address="{{ $councilTax->address }}" data-post_code="{{ $councilTax->post_code}}" data-council="{{ $councilTax->council }}" data-no_of_bedrooms="{{ $councilTax->no_of_bedrooms }}" data-owned_by_omega="{{ $councilTax->owned_by_omega }}" data-occupancy="{{ $councilTax->occupancy }}" data-exempt="{{ $councilTax->exempt }}" data-account_number="{{ $councilTax->account_number }}" data-last_bill_date="{{ $councilTax->last_bill_date }}" data-bill_period_start_date="{{ $councilTax->bill_period_start_date }}" data-bill_period_end_date="{{ $councilTax->bill_period_end_date }}" data-amount_paid="{{ $councilTax->amount_paid }}" data-additional="{{ $councilTax->additional }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="#!" class="deleteBtn" data-id="{{ $councilTax->id }}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a> </td>
+                                            <td> <a href="#!" class="openModalBtn" data-action="edit" data-id="{{ $councilTax->id }}" data-flat-number="{{ $councilTax->flat_number }}" data-address="{{ $councilTax->address }}" data-post_code="{{ $councilTax->post_code}}" data-council="{{ $councilTax->council }}" data-no_of_bedrooms="{{ $councilTax->no_of_bedrooms }}" data-owned_by_omega="{{ $councilTax->owned_by_omega }}" data-occupancy="{{ $councilTax->occupancy }}" data-exempt="{{ $councilTax->exempt }}" data-account_number="{{ $councilTax->account_number }}" data-last_bill_date="{{ $councilTax->last_bill_date }}" data-bill_period_start_date="{{ $councilTax->bill_period_start_date }}" data-bill_period_end_date="{{ $councilTax->bill_period_end_date }}" data-amount_paid="{{ $councilTax->amount_paid }}" data-additional="{{ $councilTax->additional }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="#!" class="deleteBtn" data-id="{{ $councilTax->id }}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

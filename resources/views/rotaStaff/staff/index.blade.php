@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
-<!--main content start--> 
+<!--main content start-->
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -40,8 +40,8 @@
                                             <th>Start Date </th>
                                             <th>Job Role</th>
                                             <th>NIN</th>
-                                            <th>Starter Declaration (HMRC Starter Form Completed)</th>
-                                            <th>Probation End Date (6 months) Passed/Extended</th>
+                                            <th>Starter Declaration <br>(HMRC Starter Form Completed)</th>
+                                            <th>Probation End Date <br>(6 months) Passed/Extended</th>
                                             <th>After Probation Enrolled in Private Medical</th>
                                             <th>Student Loan</th>
                                             <th>DBS Clear?</th>
@@ -107,41 +107,40 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="formDtail">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label> House Assigned <span class="radStar">*</span></label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="" id="" value="" placeholder="Aries">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label> Surname <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" placeholder="Daniels" name="" value="" id="">
+                                        <input type="text" class="form-control editInput" placeholder="Daniels" name="surname" value="" id="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label> Forename <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="" id="" value="" placeholder="Jesse">
+                                        <input type="text" class="form-control editInput" name="surname" id="" value="" placeholder="Jesse">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="" id="" value="" placeholder="34/36 Gresford Avenue">
+                                        <input type="text" class="form-control editInput" name="address" id="" value="" placeholder="34/36 Gresford Avenue">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label> Post Code <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="" id="" value="" placeholder="L17 2AW">
+                                        <input type="text" class="form-control editInput" name="postCode" id="" value="" placeholder="L17 2AW">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>DOB</label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
                                         <input name="date_of_birth" id="New_dob" type="text" value="" autocomplete="off" class="form-control">
-
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary" type="button" id="openCalendarBtn">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -152,24 +151,38 @@
                                 <div class="form-group">
                                     <label>Bank Details, Acct Number & Sort Code <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="" id="" value="" placeholder="83903674 04-00-75">
+                                        <input type="text" class="form-control editInput" name="accountNumber" id="" value="" placeholder="83903674 04-00-75">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status <span class="radStar">*</span></label>
+                                    <div>
+                                        <select class="form-control editInput" name="status" id="">
+                                            <option value="">Please Select</option>
+                                            <option value="residential">Residential</option>
+                                            <option value="supported_accomodation">Supported Accomodation</option>
+                                            <option value="parental">Parental</option>
+                                            <option value="foundations_for_life">Foundations for life</option>
+                                            <option value="office_staff">Office Staff</option>
+                                            <option value="leavers">Leavers</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Rate of Pay (£)</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="time" class="form-control editInput" name="" id="" value="">
+                                            <input type="test" class="form-control editInput" name="" id="" value="">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="time" class="form-control editInput" name="" id="" value="">
+                                            <input type="text" class="form-control editInput" name="" id="" value="">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Start Date</label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="date_of_birth" id="Start_Date" type="text" value="" autocomplete="off" class="form-control">
+                                        <input name="start_date" id="Start_Date" type="text" value="" autocomplete="off" class="form-control">
 
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary" type="button" id="openCalendarStartBtn">
@@ -273,7 +286,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> <!-- End row -->
+                        </div> 
+                        <!-- End row -->
                     </div>
                 </div>
                 <div class="modal-footer customer_Form_Popup">
@@ -324,12 +338,9 @@
             $('#Leave_date').focus();
         });
     });
-</script>
-
-
-<script>
     const salesDayBook = "{{ url('/purchase/purchase-day-book/delete/') }}";
 </script>
+
 
 @endsection
 <script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/purchaseDayBook.js') }}"></script>
