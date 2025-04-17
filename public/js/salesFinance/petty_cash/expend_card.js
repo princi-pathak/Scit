@@ -83,10 +83,10 @@ $("#ToDate").change(function() {
                 }else{
                     $("#expend_result").html(response.html_data);
                 }
-                $("#balanceOnCard").text(response.balanceOnCard);
-                $("#sumPurchaseCashIn").text(response.sumPurchaseCashIn);
-                $("#totalBalanceFund").text(response.totalBalanceFund);
-                $("#totalBalancebfwd").text(response.totalBalancebfwd);
+                $("#balanceOnCard").text('£'+response.balanceOnCard);
+                $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
+                $("#totalBalanceFund").text('£'+response.totalBalanceFund);
+                $("#totalBalancebfwd").text('£'+response.totalBalancebfwd);
                 
             }
         },
