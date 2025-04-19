@@ -251,155 +251,76 @@ function searchBtn() {
         success: function (response) {
 
             console.log(response);
+            // return false;
 
             if (response.success === true) {
-                const tableData = `<div class="productDetailTable asset_layer" style="">
-                <table class="table border-top mb-5 border-bottom tablechange" id="containerA">
-                  <thead>
-                    <tr class="text-center">
-                      <th class="col-1"></th>
-                      <th class="col-1"></th>
-                      <th class="col-1">Total</th>
-                      <th class="col-1"></th>
-                      <th class="col-1">Property</th>
-                      <th class="col-1">Household</th>
-                      <th class="col-1">F&F</th>
-                      <th class="col-1">Motor Vehicle</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th colspan="8">Cost</th>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-start">Bfwd</td>
-                      <td>1,334,736</td>
-                      <td></td>
-                      <td>901,506</td>
-                      <td>163,814</td>
-                      <td>102,164</td>
-                      <td>167,252</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-start">Additions</td>
-                      <td>276,688</td>
-                      <td></td>
-                      <td>-</td>
-                      <td>40,065</td>
-                      <td>100,083</td>
-                      <td>136,540</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-start">Disposals</td>
-                      <td>70,149</td>
-                      <td></td>
-                      <td>-</td>
-                      <td>- 159</td>
-                      <td>-</td>
-                      <td>- 69,990</td>
-                    </tr>
-                    <tr class="total">
-                      <td></td>
-                      <td class="text-start">Cfwd</td>
-                      <td class="line">1,541,275</td>
-                      <td></td>
-                      <td class="line">901,506</td>
-                      <td class="line">203,720</td>
-                      <td class="line">202,247</td>
-                      <td class="line">233,802</td>
-                    </tr>
-                    <tr>
-                      <td colspan="8"></td>
-                    </tr>
-                    <tr>
-                      <th colspan="8">Depreciation</th>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-start">Bfwd</td>
-                      <td>255,441</td>
-                      <td></td>
-                      <td>26,105</td>
-                      <td>107,375</td>
-                      <td>74,817</td>
-                      <td>47,144</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-start">Charge For Year</td>
-                      <td>140,732</td>
-                      <td></td>
-                      <td>18,030</td>
-                      <td>31,831</td>
-                      <td>36,306</td>
-                      <td>54,565</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-start">Eliminated on disposals</td>
-                      <td>17,538</td>
-                      <td></td>
-                      <td>-</td>
-                      <td>- 40</td>
-                      <td>-</td>
-                      <td>- 17,498</td>
-                    </tr>
-                    <tr class="total">
-                      <td></td>
-                      <td class="text-start">Cfwd</td>
-                      <td class="line">378,635</td>
-                      <td></td>
-                      <td class="line">44,136</td>
-                      <td class="line">139,166</td>
-                      <td class="line">111,123</td>
-                      <td class="line">84,211</td>
-                    </tr>
-                    <tr>
-                      <td colspan="8"></td>
-                    </tr>
-                    <tr class="total2">
-                      <th colspan="2" class="text-start">NBV Cfwd</th>
-                      <td class="line">1,162,640</td>
-                      <td></td>
-                      <td class="line">857,371</td>
-                      <td class="line">64,554</td>
-                      <td class="line">91,124</td>
-                      <td class="line">149,591</td>
-                    </tr>
-                    <tr>
-                      <td colspan="8"></td>
-                    </tr>
-                    <tr class="total2">
-                      <th colspan="2" class="text-start">NBV Bfwd</th>
-                      <td class="line">1,079,295</td>
-                      <td></td>
-                      <td class="line">875,401</td>
-                      <td class="line">56,440</td>
-                      <td class="line">27,347</td>
-                      <td class="line">120,108</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>`;
-                $("#containerB").append(tableData);
+                var data=response.data;
+                var table=document.getElementById('assetRegisterList');
+                if(data.length === 0){
+                    $("#footer_table").hide();
+                    table.innerHTML="<tr><td class='text text-center text-danger'>Data Not Found</td></tr>";
+                }else{
+                    table.innerHTML='';
+                    let cost_bfwd = 0, cost_disposal = 0, cost_addition = 0, cost_fwd = 0;
+                    let depreciation_bfwd = 0, depreciation = 0, charge = 0, depreciation_cfwd = 0;
+                    let nbv_bfwd = 0, nbv_cfwd = 0;
+                    let tableData = '';
+                    data.forEach(function(val, key) {
+                    cost_bfwd += val.cost_bfwd;
+                    cost_disposal += val.cost_disposal;
+                    cost_addition += val.cost_addition;
+                    cost_fwd += val.cost_fwd;
+                    depreciation_bfwd += val.depreciation_bfwd;
+                    depreciation += val.depreciation;
+                    charge += val.charge;
+                    depreciation_cfwd += val.depreciation_cfwd;
+                    nbv_bfwd += val.nbv_bfwd;
+                    nbv_cfwd += val.nbv_cfwd;
 
-                // $("#search_data").show();
+                    tableData += `<tr>
+                        <td>${key + 1}</td>
+                        <td>${val.asset_name}</td>
+                        <td>${new Date(val.date).toLocaleDateString('en-GB')}</td>
+                        <td>${val.cost_bfwd ? '£' + val.cost_bfwd : ''}</td>
+                        <td>${val.cost_disposal ? '£' + val.cost_disposal : ''}</td>
+                        <td>${val.cost_addition ? '£' + val.cost_addition : ''}</td>
+                        <td>${val.cost_fwd ? '£' + val.cost_fwd : ''}</td>
+                        <td>${val.depreciation_bfwd ? '£' + val.depreciation_bfwd : ''}</td>
+                        <td>${val.depreciation ? '£' + val.depreciation : ''}</td>
+                        <td>${val.charge ? '£' + val.charge : ''}</td>
+                        <td>${val.depreciation_cfwd ? '£' + val.depreciation_cfwd : ''}</td>
+                        <td>${val.nbv_bfwd ? '£' + val.nbv_bfwd : ''}</td>
+                        <td>${val.nbv_cfwd ? '£' + val.nbv_cfwd : ''}</td>
+                        <td>
+                        <a href="sales-finance/assets/asset-register-edit?key=${btoa(val.id)}" class="openModalBtn">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a> |
+                        <a href="#!" class="register_delete" data-id="${val.id}">
+                            <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                        </a>
+                        </td>
+                    </tr>`;
+                    });
 
-                // alert(typeof(response.cost_bfwd))
-                // $("#assetRegisterList").html(response.html_data);
-                // $("#cost_bfwd").text("£"+response.cost_bfwd.toFixed(2));
-                // $("#cost_disposal").text("£"+response.cost_disposal.toFixed(2));
-                // $("#cost_addition").text("£"+response.cost_addition.toFixed(2));
-                // $("#cost_fwd").text("£"+response.cost_fwd.toFixed(2));
-                // $("#depreciation_bfwd").text("£"+response.depreciation_bfwd.toFixed(2));
-                // $("#depreciation").text("£"+response.depreciation.toFixed(2));
-                // $("#charge").text("£"+response.charge.toFixed(2));
-                // $("#depreciation_cfwd").text("£"+response.depreciation_cfwd.toFixed(2));
-                // $("#nbv_bfwd").text("£"+response.nbv_bfwd.toFixed(2));
-                // $("#nbv_cfwd").text("£"+response.nbv_cfwd.toFixed(2));
+                    $("#assetRegisterList").append(tableData);
+                    
+                    
+
+                    // $("#search_data").show();
+                    $("#footer_table").show();
+                    // alert(typeof(response.cost_bfwd))
+                    // $("#assetRegisterList").html(response.html_data);
+                    $("#tablecost_bfwd").text("£"+response.cost_bfwd.toFixed(2));
+                    $("#tablecost_disposal").text("£"+response.cost_disposal.toFixed(2));
+                    $("#tablecost_addition").text("£"+response.cost_addition.toFixed(2));
+                    $("#tablecost_fwd").text("£"+response.cost_fwd.toFixed(2));
+                    $("#tabledepreciation_bfwd").text("£"+response.depreciation_bfwd.toFixed(2));
+                    $("#tabledepreciation").text("£"+response.depreciation.toFixed(2));
+                    $("#tablecharge").text("£"+response.charge.toFixed(2));
+                    $("#tabledepreciation_cfwd").text("£"+response.depreciation_cfwd.toFixed(2));
+                    $("#tablenbv_bfwd").text("£"+response.nbv_bfwd.toFixed(2));
+                    $("#tablenbv_cfwd").text("£"+response.nbv_cfwd.toFixed(2));
+                }
             } else {
                 alert("Something went wrong");
                 return false;
