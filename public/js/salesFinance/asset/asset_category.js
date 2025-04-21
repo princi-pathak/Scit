@@ -258,7 +258,7 @@ function searchBtn() {
                 var table=document.getElementById('assetRegisterList');
                 if(data.length === 0){
                     $("#footer_table").hide();
-                    table.innerHTML="<tr><td class='text text-center text-danger'>Data Not Found</td></tr>";
+                    table.innerHTML="<tr><td class='text text-center text-danger' colspan='15'>Data Not Found</td></tr>";
                 }else{
                     table.innerHTML='';
                     let cost_bfwd = 0, cost_disposal = 0, cost_addition = 0, cost_fwd = 0;
