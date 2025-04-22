@@ -36,7 +36,7 @@
                         <label>Start Date <span class="radStar ">*</span></label>
                         <!-- <input type="date" class="form-control editInput ProjectcheckError"  id="project_start_date" name="start_date"> -->
                         <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                            <input name="start_date" id="project_start_date" type="text" value="" autocomplete="off" class="form-control ProjectcheckError">
+                            <input name="project_start_date" id="project_start_date" type="text" value="" autocomplete="off" class="form-control ProjectcheckError">
                             <span class="input-group-btn datetime-picker2 btn_height">
                                 <button class="btn btn-primary" type="button" id="openCalendarProjectStartDate">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -48,7 +48,7 @@
                         <label>End Date <span class="radStar ">*</span></label>
                         <!-- <input type="date" class="form-control editInput ProjectcheckError" id="project_end_date" name="end_date"> -->
                         <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                            <input name="end_date" id="project_end_date" type="text" value="" autocomplete="off" class="form-control ProjectcheckError">
+                            <input name="project_end_date" id="project_end_date" type="text" value="" autocomplete="off" class="form-control ProjectcheckError">
                             <span class="input-group-btn datetime-picker2 btn_height">
                                 <button class="btn btn-primary" type="button" id="openCalendarProjectEndDate">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -59,12 +59,12 @@
                     <div class="mb-3">
                         <label>Project Value </label>
                         <div class="row">
-                            <div class="col-md-1 pe-0">
+                            <div class="col-sm-1 pe-0">
                                 <div class="tag_box text-center">
                                     <span style="padding:3px">£</span>
                                 </div>
                             </div>
-                            <div class="col-md-11">
+                            <div class="col-sm-11">
                                 <input type="text" class="form-control editInput textareaInput" id="project_value" name="project_value" value="0">
                             </div>
                         </div>
@@ -89,28 +89,34 @@
         </div>
     </div>
 </div>
-
 <script>
-    
-        $('#project_start_date').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            todayHighlight: true
-        });
+    $('#project_start_date').datetimepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        minView: 2
+    });
 
-        $('#openCalendarProjectStartDate').click(function() {
-            $('#project_start_date').focus();
-        });
-        $('#project_end_date').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            todayHighlight: true
-        });
+    $('#openCalendarProjectStartDate').click(function() {
+        $('#project_start_date').focus();
+    });
+    $('#project_end_date').datetimepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        minView: 2
+    });
 
-        $('#openCalendarProjectEndDate').click(function() {
-            $('#project_end_date').focus();
-        });
+    $('#openCalendarProjectEndDate').click(function() {
+        $('#project_end_date').focus();
+    });
+
+    $("#project_modal").scroll(function() {
+        $('#project_start_date').datetimepicker('place');
+        $('#project_end_date').datetimepicker('place');
+    });
 </script>
+
 
 <script>
     function save_project(){

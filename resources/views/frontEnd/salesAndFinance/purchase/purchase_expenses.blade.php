@@ -1,6 +1,6 @@
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@section('title','Purchase Expenses')
+@section('title','Purchase Expenses Type')
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
@@ -13,7 +13,7 @@
             <div class="col-md-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
-                        <h4>Purchase Type</h4>
+                        <h4>Purchase Expenses Type</h4>
                     </header>
                     <div class="panel-body">
                         <div class="col-lg-12">
@@ -28,9 +28,9 @@
                                             <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
                                             <th>#</th>
                                             <th>Date</th>
-                                            <th>Expense </th>
+                                            <th>Expense Type </th>
                                             <th>Status </th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -178,10 +178,10 @@
             document.getElementById("purchase_expense_status").value = "";
 
             // Set modal title for "Add"
-            document.getElementById("purchaseExpesnsesModalLabel").textContent = "Add Purchase Expenses";
+            document.getElementById("purchaseExpesnsesModalLabel").textContent = "Add Purchase Expenses Type";
 
         } else if (type === "edit") {
-            document.getElementById("purchaseExpesnsesModalLabel").textContent = "Edit Purchase Expenses";
+            document.getElementById("purchaseExpesnsesModalLabel").textContent = "Edit Purchase Expenses Type";
 
             let id = element.dataset.id;
             let name = element.dataset.name;

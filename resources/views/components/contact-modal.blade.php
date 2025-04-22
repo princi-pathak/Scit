@@ -10,14 +10,14 @@
                 <form id="contact_form">
                     @csrf
                     <div class="row">
-                        <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="mb-2">
+                        <div class="col-sm-6 col-lg-6 col-xl-6">
+                            <div class="mb-3">
                                 <label id="contactLabel"></label>
                                 <p id="contact_customer_name"></p>
                             </div>
                             <input type="hidden" id="contact_customer_id" name="customer_id">
                             <input type="hidden" id="userType" name="userType">
-                            <div class="mb-2" id="contact_billing_radio">
+                            <div class="mb-3" id="contact_billing_radio">
                                 <label>Default Billing</label>
                                 <div>
                                     <div class="form-check form-check-inline">
@@ -33,14 +33,14 @@
                                     <input type="hidden" id="default_billing" name="default_billing" value="0">
                                 </div>
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>Contact Name <span class="radStar ">*</span></label>
                                 <input type="text" class="form-control editInput" id="contact_contact_name" name="contact_name">
                             </div>
-                            <div class="mb-2" id="contact_job_title_field">
+                            <div class="mb-3" id="contact_job_title_field">
                                 <label>Job Title (Position)</label>
                                 <div class="row">
-                                    <div class="col-md-10 pe-0">
+                                    <div class="col-sm-10 pe-0">
                                         <select class="form-control editInput selectOptions get_job_title_result"
                                             id="contact_job_titile_id" name="job_title_id">
                                             <option selected disabled>Please Select</option>
@@ -49,21 +49,21 @@
                                             <?php }?>
                                         </select>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-sm-2">
                                         <a href="javascript:void(0)" class="formicon" onclick="openjobTitleModal('contact_job_titile_id')">
                                         <i class="fa fa-plus-square"></i></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>Email</label>
                                 <input type="text" class="form-control editInput" id="contact_email" name="email" onchange="CheckContactEmail()">
                                 <span style="color:red" id="CheckContactEmailErr"></span>
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>Telephone</label>
                                 <div class="row">
-                                    <div class="col-md-4 pe-0">
+                                    <div class="col-sm-4 pe-0">
                                         <select class="form-control editInput selectOptions" id="contact_telephone_code" name="telephone_country_code">
                                             <option selected disabled>Please Select</option>
                                             @foreach($country as $contacttelCode)
@@ -71,17 +71,17 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control editInput"
                                             id="contact_phone" name="telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             <span style="color:red;display:none" id="CheckContactTelephoneErr">Please enter 10 digit number</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>Mobile</label>
                                 <div class="row">
-                                    <div class="col-md-4 pe-0">
+                                    <div class="col-sm-4 pe-0">
                                         <select class="form-control editInput selectOptions" id="contact_mobile_code" name="mobile_country_code">
                                             <option selected disabled>Please Select</option>
                                             @foreach($country as $contactmobCode)
@@ -89,19 +89,19 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" id="contact_mobile" name="mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             <span style="color:red;display:none" id="CheckContactMobileErr">Please enter 10 digit number</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>Fax</label>
                                 <input type="text" class="form-control editInput" id="contact_fax" name="fax">
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="mb-2">
+                        <div class="col-sm-6 col-lg-6 col-xl-6">
+                            <div class="mb-3">
                                 <label>Address Details</label>
                                 <div class="d-flex">same as default
                                     <div class="form-check form-check-inline ms-2">
@@ -109,23 +109,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>Address <span class="radStar ">*</span></label>
                                 <textarea class="form-control textareaInput" id="contact_address" name="address" rows="3"></textarea>
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>City</label>
                                 <input type="text" class="form-control editInput" id="contact_city" name="city">
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>County</label>
                                 <input type="text" class="form-control editInput" id="contact_country_input" name="country">
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>Pincode</label>
                                 <input type="text" class="form-control editInput" id="contact_pincode" name="postcode">
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label>Country</label>
                                 <select class="form-control editInput selectOptions"
                                     id="contact_country_id" name="country_id">

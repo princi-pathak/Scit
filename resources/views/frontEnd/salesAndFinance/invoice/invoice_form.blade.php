@@ -9,7 +9,7 @@
         pointer-events: none;
         opacity: 0.5;
     }
-    .input_style table tbody textarea{
+    /* .input_style table tbody textarea{
         resize: none;
         overflow: hidden;
     }
@@ -21,7 +21,7 @@
     }
     .unclicked {
         pointer-events: none;
-    }
+    } */
 </style>
 <section class="wrapper">
     <div class="container-fluid">
@@ -395,9 +395,11 @@
                                 <!-- Separate section start -->
                                 <div class="row separate_section">
                                     <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center">  Item Details</h3>
-                                    <div class="col-sm-7">
-                                        <div class="mb-3 row">
-                                            <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
+                                    <div class="col-sm-12">
+                                        <div class="mb-3 row d-flex align-items-center">
+                                            <div class="col-sm-2">
+                                                <label for="inputCountry" class="col-form-label">Select product</label>
+                                            </div>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control editInput" id="search-product" placeholder="Type to add product">
                                                 <div class="parent-container"></div>
