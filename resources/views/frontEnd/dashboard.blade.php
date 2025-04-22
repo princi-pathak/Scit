@@ -83,7 +83,6 @@
                         </div>
                     </div>
                 </a>
-                <?php if ($accessRight === true) { ?>
                     <a href="{{ url('/rota-management') }}">
                         <div class="col-md-6">
                             <div class="profile-nav alt">
@@ -97,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                    </a> <?php } ?>
+                    </a> 
                 <!-- Ram 14/06/2024 here code for job -->
                 <a href="{{ url('/sales-finance/dashboard') }}">
                     <div class="col-md-6">
