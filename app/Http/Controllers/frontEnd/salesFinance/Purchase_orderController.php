@@ -494,7 +494,12 @@ class Purchase_orderController extends Controller
     }
     public function draft_purchase_order(Request $request){
         $home_id=Auth::user()->home_id;
-        $lastSegment = $request->list_mode;
+        $key=collect(explode('/', trim($request->path(), '/')))->last();
+        $lastSegment = $key;
+        if($key === 'draft_purchase_order'){
+            $lastSegment = '';
+        }
+        
         $segment_check=$this->check_segment_purchaseOrder($lastSegment);
         // echo "<pre>"; print_r($segment_check);die;
         $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>$segment_check['status']])->get();
