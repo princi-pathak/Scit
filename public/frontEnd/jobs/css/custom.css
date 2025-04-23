@@ -3273,6 +3273,11 @@ table.tablechange tbody td a i {
   background-color: #32323a;
 }
 
+
+div.dt-container select.dt-input {
+  padding: 4px;
+  margin-right: 10px;
+}
 .separate_section {
   padding: 15px;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
@@ -3323,4 +3328,5 @@ label {
 .datetimepicker table {
   margin: 0;
   font-size: 14px;
+
 }
