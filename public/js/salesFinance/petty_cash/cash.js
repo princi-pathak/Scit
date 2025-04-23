@@ -60,10 +60,12 @@ $("#fromDate").change(function() {
     }
 });
 $("#ToDate").change(function() {
-    var startDate = document.getElementById("fromDate").value;
-    var endDate = document.getElementById("ToDate").value;
+    var startDateStr = document.getElementById("fromDate").value;
+    var endDateStr = document.getElementById("ToDate").value;
+    var startDate = parseDateDMY(startDateStr);
+    var endDate = parseDateDMY(endDateStr);
 
-    if ((Date.parse(startDate) >= Date.parse(endDate))) {
+    if ((Date.parse(startDate) > Date.parse(endDate))) {
         alert("End date should be greater than Start date");
         document.getElementById("ToDate").value = "";
         return false;
@@ -71,7 +73,7 @@ $("#ToDate").change(function() {
     $.ajax({
         type: "POST",
         url: filterUrl,
-        data: {startDate:startDate,endDate:endDate,_token:token},
+        data: {startDate:startDateStr,endDate:endDateStr,_token:token},
         success: function(response) {
             console.log(response);
             // return false;
@@ -95,6 +97,10 @@ $("#ToDate").change(function() {
         }
     });
 });
+function parseDateDMY(dateStr) {
+    var parts = dateStr.split("-");
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+}
 function check_file() {
     const fileInput = document.getElementById('receipt');
     const filePath = fileInput.value;

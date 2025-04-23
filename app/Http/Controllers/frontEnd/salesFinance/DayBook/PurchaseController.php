@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\frontend\salesFinance\DayBook;
 
 use App\Http\Controllers\Controller;
-use App\Models\Construction_tax_rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Supplier;

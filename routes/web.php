@@ -495,6 +495,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	// Staff for frontend
 	Route::controller(StaffController::class)->group(function(){
 		Route::get('rota-management/staff','index');
+		Route::post('rota/staff-add','store');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {
