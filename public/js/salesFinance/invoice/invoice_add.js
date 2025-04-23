@@ -31,10 +31,21 @@ function bgColorChange(button) {
     $("#taskHideShow").hide();
     if (button == 1) {
         $("#taskHideShow").show();
-        $("#task_active_inactive").css('background-color', '#474747');
+        $("#task_active_inactive").removeClass('btn-default2').addClass('btn-warning');
+        $("#recurring_active_inactive").removeClass('btn-warning').addClass('btn-default2');
+        // $("#task_active_inactive").css('background-color', '#57c8f1');
+        // $("#task_active_inactive").css('border-color', '#57c8f1');
+        // $("#task_active_inactive").css('color', '#fff');
+        // $("#recurring_active_inactive").css('background-color', '#a1a1a1');
     } else {
         $("#recurringHideShow").show();
-        $("#recurring_active_inactive").css('background-color', '#474747');
+        $("#recurring_active_inactive").removeClass('btn-default2').addClass('btn-warning');
+        $("#task_active_inactive").removeClass('btn-warning').addClass('btn-default2');
+        // $("#recurring_active_inactive").css('background-color', '#57c8f1');
+        // $("#recurring_active_inactive").css('color', '#fff');
+        // $("#task_active_inactive").css('background-color', '#a1a1a1');
+        // $("#task_active_inactive").css('border-color', '#a1a1a1');
+
     }
 }
     //Text Editer

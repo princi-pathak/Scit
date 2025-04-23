@@ -185,7 +185,7 @@
                     <?php } ?>
                   </tbody>
                   <tfoot>
-                    <tr>
+                    <tr id="footer_table">
                       <th></th>
                       <th></th>
                       <th>Total:</th>
@@ -408,7 +408,7 @@
         todayHighlight: true
     });
     $(document).on('click', '#openCalendarBtn',function() {
-        $('#fromDate').focus();
+        $('#edd_startDate').focus();
     });
     $('#edd_endDate').datepicker({
         format: 'dd-mm-yyyy',
@@ -416,7 +416,7 @@
         todayHighlight: true
     });
     $('#openCalendarBtn1').click(function() {
-        $('#fromDate').focus();
+        $('#edd_endDate').focus();
     });
 });
 </script>
