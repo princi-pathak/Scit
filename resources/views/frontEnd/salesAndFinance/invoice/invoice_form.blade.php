@@ -9,7 +9,7 @@
         pointer-events: none;
         opacity: 0.5;
     }
-    .input_style table tbody textarea{
+    /* .input_style table tbody textarea{
         resize: none;
         overflow: hidden;
     }
@@ -21,7 +21,7 @@
     }
     .unclicked {
         pointer-events: none;
-    }
+    } */
 </style>
 <section class="wrapper">
     <div class="container-fluid">
@@ -44,7 +44,7 @@
                                 <input type="hidden" name="id" value="<?php if(isset($invoice) && $invoice !=''){echo $invoice->id;}?>">
                                 <!-- Separate section start -->
                                 <div class="row separate_section">
-                                    <h4 class="contTitle"><i class="fa fa-angle-double-right"></i> Customer / Billing Details </h4>
+                                    <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center"> Customer / Billing Details </h3>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
                                             <label>Customer <span class="radStar">*</span></label>
@@ -161,7 +161,7 @@
                                 </div>
                                 <!-- Separate section start -->
                                 <div class="row separate_section">
-                                    <h4 class="contTitle"><i class="fa fa-angle-double-right"></i> Site / Delivery Details </h4>
+                                    <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center"> Site / Delivery Details </h3>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
                                             <label>Site</label>
@@ -262,7 +262,7 @@
                                 </div>
                                 <!-- Separate section start -->
                                 <div class="row separate_section">
-                                    <h4 class="contTitle"><i class="fa fa-angle-double-right"></i> Invoice Details</h4>
+                                    <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center"> Invoice Details</h3>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                        <div class="mb-3">
                                             <label>Invoice Type</label>
@@ -345,7 +345,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label>
-                                                <a href="javascript:void(0)" onclick="openReminderModal(<?php if (isset($invoice) && $invoice != '') { echo $invoice->id; } ?>)" class="profileDrop pink"> <i class="fa fa-clock-o"></i> Set Reminder </a>
+                                                <a href="javascript:void(0)" onclick="openReminderModal(<?php if (isset($invoice) && $invoice != '') { echo $invoice->id; } ?>)" class="btn btn-green"> <i class="fa fa-clock-o"></i> Set Reminder </a>
                                             </label>
                                             <div class="setRiminderTable" style="display:none">
                                                 <div class="table-responsive productDetailTable ">
@@ -394,10 +394,12 @@
                                 </div>
                                 <!-- Separate section start -->
                                 <div class="row separate_section">
-                                    <h4 class="contTitle"> <i class="fa fa-angle-double-right"></i> Item Details</h4>
-                                    <div class="col-sm-7">
-                                        <div class="mb-3 row">
-                                            <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
+                                    <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center">  Item Details</h3>
+                                    <div class="col-sm-12">
+                                        <div class="mb-3 row d-flex align-items-center">
+                                            <div class="col-sm-2">
+                                                <label for="inputCountry" class="col-form-label">Select product</label>
+                                            </div>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control editInput" id="search-product" placeholder="Type to add product">
                                                 <div class="parent-container"></div>
@@ -514,7 +516,7 @@
                                 </div>
                                 <!-- Separate section start -->
                                 <div class="row separate_section">
-                                    <h4 class="contTitle mb-0"><i class="fa fa-angle-double-right"></i> Notes</h4>
+                                    <h3 class="m-t-0 clr-blue fnt-20 text-center mb-0"> Notes</h3>
                                     <div class="col-sm-4">
                                         <div>
                                             <h4 class="contTitle text-left mb-0">Customer Notes <span class="afterPlusText"> Will be included in invoive </span></h4>
@@ -538,15 +540,15 @@
                                 </div>
                                 <!-- Separate section start -->
                                 <div class="row separate_section">
-                                    <h4 class="contTitle"> <i class="fa fa-angle-double-right"></i> Attachments</h4>
+                                    <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center">  Attachments</h3>
                                     <div class="col-sm-12">
                                         <div class="py-4">
                                             <div class="jobsection">
-                                                <a href="javascript:void(0)" onclick="get_modal(6)" class="profileDrop">New Attachments</a>
-                                                <a href="javascript:void(0)" class="profileDrop">Upload Multi Attachment</a>
-                                                <a href="javascript:void(0)" class="profileDrop">Preview Attachment(s)</a>
-                                                <a href="javascript:void(0)" class="profileDrop">Download Attachment(s)</a>
-                                                <a href="javascript:void(0)" class="profileDrop">Delete Attachment(s)</a>
+                                                <a href="javascript:void(0)" onclick="get_modal(6)" class="btn btn-default2">New Attachments</a>
+                                                <a href="javascript:void(0)" class="btn btn-default2">Upload Multi Attachment</a>
+                                                <a href="javascript:void(0)" class="btn btn-default2">Preview Attachment(s)</a>
+                                                <a href="javascript:void(0)" class="btn btn-default2">Download Attachment(s)</a>
+                                                <a href="javascript:void(0)" class="btn btn-default2">Delete Attachment(s)</a>
                                             </div>
                                         </div>
                                         @if(isset($invoice) && $invoice !='')
@@ -579,15 +581,15 @@
                                 </div>
                                 <!-- Separate section start -->
                                 <div class="row separate_section">
-                                    <h4 class="contTitle"><i class="fa fa-angle-double-right"></i> Tasks</h4>
+                                    <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center"> Tasks</h3>
                                     <div class="col-sm-12">
                                         <div class="d-flex justify-content-between">
                                             <div class="jobsection">
-                                                <a href="#!" class="profileDrop bgColour" id="task_active_inactive" style="background-color:#474747" onclick="bgColorChange(1)">Tasks</a>
-                                                <a href="#!" class="profileDrop bgColour" id="recurring_active_inactive" onclick="bgColorChange(2)">Recurring Tasks</a>
+                                                <a href="#!" class="btn btn-warning bgColour" id="task_active_inactive" onclick="bgColorChange(1)">Tasks</a>
+                                                <a href="#!" class="btn btn-default2 bgColour" id="recurring_active_inactive" onclick="bgColorChange(2)">Recurring Tasks</a>
                                             </div>
                                             <div class="jobsection">
-                                                <a href="javascript:void(0)" onclick="get_modal(8)" class="profileDrop <?php if(isset($invoice) && $invoice ==''){ echo "disabled-tab"; }?>">New Tasks</a>
+                                                <a href="javascript:void(0)" onclick="get_modal(8)" class="btn btn-default2 <?php if(isset($invoice) && $invoice ==''){ echo "disabled-tab"; }?>">New Tasks</a>
                                             </div>
                                         </div>
                                         <div id="taskHideShow">
@@ -638,8 +640,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pageTitleBtn">
-                                        <a href="javascript:void(0)" onclick="save_all_data()" class="profileDrop"><i class="fa fa-floppy-disk"></i> Save</a>
-                                        <a href="#" class="profileDrop"><i class="fa fa-arrow-left"></i> Back</a>
+                                        <a href="javascript:void(0)" onclick="save_all_data()" class="btn btn-warning"><i class="fa fa-floppy-o"></i> Save</a>
+                                        <a href="#" class="btn btn-default2 ms-3"><i class="fa fa-arrow-left"></i> Back</a>
                                         <!-- <a href="#" class="profileDrop"><i class="fa fa-arrow-left"></i> Action</a> -->
                                     </div>
                                 </div>
