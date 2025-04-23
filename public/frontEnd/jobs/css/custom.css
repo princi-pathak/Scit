@@ -902,7 +902,8 @@ section.main_section_page {
   font-size: 22px;
   padding-top: 5px;
   display: inline-block;
-  color: #1f88b5;
+  /* color: #1f88b5; */
+  color: #1ca59e;
 }
 
 .selectOptions option {
@@ -3267,10 +3268,16 @@ table.tablechange tbody td a i {
 .border-0 {
   border: 0px !important;
 }
-.profileDrop#active_inactive{
+
+.profileDrop#active_inactive {
   background-color: #32323a;
 }
 
+
+div.dt-container select.dt-input {
+  padding: 4px;
+  margin-right: 10px;
+}
 .separate_section {
   padding: 15px;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
@@ -3283,6 +3290,43 @@ label {
   font-weight: 600;
   font-family: "open sans", sans-serif;
 }
-.taxt_blue{
+
+.taxt_blue {
   color: #1f88b5 !important;
+}
+
+.btn-default2 {
+  background-color: #a1a1a1;
+  color: #fff !important;
+}
+
+.btn-default2:hover {
+  background-color: #a1a1a1;
+  color: #fff !important;
+}
+
+.btn-warning {
+  background-color: #57c8f1 !important;
+  border-color: #57c8f1 !important;
+  color: #FFFFFF !important;
+}
+
+
+.btn-green {
+  background-color: #1ca59e !important;
+  border-color: #1ca59e !important;
+  color: #FFFFFF !important;
+}
+
+.datepicker-sttng .add-on .btn {
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.datetimepicker table {
+  margin: 0;
+  font-size: 14px;
+
 }

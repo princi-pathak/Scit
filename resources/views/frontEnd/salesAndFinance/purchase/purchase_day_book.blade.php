@@ -95,7 +95,7 @@
                                                         </div>
                                                     </div> -->
                                                 <a href="#!" class="openPurchaseDayBookModel" data-action="edit" data-id="{{ $purchaseBook->id }}" data-supplier_id="{{ $purchaseBook->supplier_id }}" data-date="{{ $purchaseBook->date }}" data-netAmount="{{ $purchaseBook->netAmount }}" data-vat="{{ $purchaseBook->Vat }}" data-vatAmount="{{ $purchaseBook->vatAmount }}" data-grossAmount="{{ $purchaseBook->grossAmount }}" data-reclaim="{{ $purchaseBook->reclaim }}" data-not_reclaim="{{ $purchaseBook->not_reclaim }}" data-expense_type="{{ $purchaseBook->expense_type }}" data-expense_amount="{{ $purchaseBook->expense_amount }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
-                                                <a href="#!"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                                <a href="#!"><i class="fa fa-trash radStar" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach

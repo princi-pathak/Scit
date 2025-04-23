@@ -302,19 +302,21 @@
 <script>
     
     $(document).ready(function() {
-        $('#fromDate').datepicker({
+        $('#fromDate').datetimepicker({
             format: 'dd-mm-yyyy',
             autoclose: true,
-            todayHighlight: true
+            todayHighlight: true,
+            minView: 2
         });
 
         $('#openCalendarBtn').click(function() {
             $('#fromDate').focus();
         });
-        $('#ToDate').datepicker({
+        $('#ToDate').datetimepicker({
             format: 'dd-mm-yyyy',
             autoclose: true,
-            todayHighlight: true
+            todayHighlight: true,
+            minView: 2
         });
 
         $('#openCalendarBtn1').click(function() {
