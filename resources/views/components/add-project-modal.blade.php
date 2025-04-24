@@ -60,8 +60,8 @@
                         <label>Project Value </label>
                         <div class="row">
                             <div class="col-sm-1 pe-0">
-                                <div class="tag_box text-center">
-                                    <span style="padding:3px">£</span>
+                                <div class="tag_box">
+                                    <span>£</span>
                                 </div>
                             </div>
                             <div class="col-sm-11">

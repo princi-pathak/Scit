@@ -94,11 +94,6 @@ ul#projectList {
     height: 156px;
     overflow: auto;
 }
-.tag_box{
-    background: #f5f5f5;
-    display: grid;
-    border: 1px solid #dee2e6;
-}
 
 </style>
 <section class="main_section_page px-3">

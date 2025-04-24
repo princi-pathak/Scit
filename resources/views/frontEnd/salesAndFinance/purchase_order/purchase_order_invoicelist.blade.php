@@ -112,11 +112,6 @@
         overflow: auto;
     }
 
-    .tag_box {
-        background: #f5f5f5;
-        display: grid;
-        border: 1px solid #dee2e6;
-    }
     .multiselect-dropdown{
         height:auto;
     }

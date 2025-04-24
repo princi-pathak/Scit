@@ -111,12 +111,6 @@
         height: 156px;
         overflow: auto;
     }
-
-    .tag_box {
-        background: #f5f5f5;
-        display: grid;
-        border: 1px solid #dee2e6;
-    }
     .multiselect-dropdown{
         height:auto;
     }
@@ -564,8 +558,8 @@
                                         <div class="mb-2 row">
                                             <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid <span class="radStar">*</span></label>
                                             <div class="col-sm-1">
-                                                <div class="tag_box text-center">
-                                                    <span style="padding:3px">£</span>
+                                                <div class="tag_box">
+                                                    <span>£</span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-8">

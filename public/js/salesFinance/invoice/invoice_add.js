@@ -463,7 +463,7 @@ function selectProduct(id) {
                 row.appendChild(spanCheckboxCell);
 
                 const deleteCell = document.createElement('td');
-                deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;cursor: pointer;"></i>';
+                deleteCell.innerHTML = '<i class="fa fa-trash-o deleteRow" style="color: red;cursor: pointer; font-size: 20px;"></i>';
                 deleteCell.addEventListener('click', function() {
                     removeRow(this);
                 });
@@ -714,7 +714,7 @@ function getProductDetail(id,url){
                     row.appendChild(spanCheckboxCell);
 
                     const deleteCell = document.createElement('td');
-                    deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
+                    deleteCell.innerHTML = '<i class="fa fa-trash-o deleteRow" style="color: red; font-size: 20px;"></i>';
                     deleteCell.addEventListener('click', function() {
                         removeRow(this, product.id);
                     });

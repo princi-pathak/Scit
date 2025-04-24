@@ -22,7 +22,9 @@
     .unclicked {
         pointer-events: none;
     } */
+    
 </style>
+
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -57,7 +59,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-2">
                                                     <a href="javascript:void(0)" class="formicon" onclick="get_modal(1)"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
@@ -73,7 +75,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-2">
                                                     <a href="javascript:void(0)" class="formicon" onclick="get_modal(2)"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
@@ -89,7 +91,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-2">
                                                     <a href="javascript:void(0)" onclick="get_modal(3)" class="formicon"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
@@ -453,7 +455,7 @@
                                                             <div class="tableplusBTN">
                                                                 <span>Account Code </span>
                                                                 <span class="plusandText ps-3">
-                                                                    <a href="javascript:void(0)" class="formicon pt-0" onclick="openAccountCodeModal(null)"> <i class="fa fa-plus-square"></i> </a>
+                                                                    <a href="javascript:void(0)" class="formicon" onclick="openAccountCodeModal(null)"> <i class="fa fa-plus-square"></i> </a>
                                                                 </span>
                                                             </div>
                                                         </th>
@@ -769,16 +771,27 @@ var reminder_dataCount='<?php echo count($reminder_data);?>'
         var id='{{$invoice->id}}';
         getProductDetail(id, '{{ url("invoices/getInvoiceProductDetail") }}');
         getAttachment(id, '{{ url("invoices/getInvoiceAllAttachmens") }}');
-        <?php }?>
+    <?php }?>
     </script>
 
 <script>
-    $('.tab-menu li a').on('click', function() {
-        var target = $(this).attr('data-rel');
-        $('.tab-menu li a').removeClass('active');
-        $(this).addClass('active');
-        $("#" + target).fadeIn('slow').siblings(".tab-box").hide();
+    $('.tab-menu li a').on('click', function () {
+        var $this = $(this);
+        var target = $this.attr('data-rel');
+        
+        // find the closest tab-menu
+        var $tabMenu = $this.closest('.tab-menu');
+        var $tabContentContainer = $this.closest('.tab-teaser, .tab-container'); // adjust container if needed
+
+        $tabMenu.find('li a').removeClass('active');
+        $this.addClass('active');
+
+        // Show the related tab-box inside the same section
+        $tabContentContainer.find(".tab-box").hide();
+        $tabContentContainer.find("#" + target).fadeIn('slow');
+
         return false;
     });
 </script>
+
 @endsection

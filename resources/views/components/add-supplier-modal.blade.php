@@ -1,10 +1,3 @@
-<style>
-    .tag_box{
-        background: #f5f5f5;
-        display: grid;
-        border: 1px solid #dee2e6;
-    }
-</style>
 <div class="modal fade" id="supplierPop" tabindex="-1" aria-labelledby="aupplierModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content add_Customer">
@@ -87,8 +80,8 @@
                                 <div class="mb-2 row">
                                     <label for="supplier_website" class="col-sm-3 col-form-label">Website</label>
                                     <div class="col-sm-2">
-                                        <div class="tag_box text-center">
-                                            <span style="padding:3px">http://</span> 
+                                        <div class="tag_box">
+                                            <span>http://</span> 
                                         </div>
                                     </div>
                                     <div class="col-sm-7">
@@ -167,8 +160,8 @@
                                 <div class="mb-3 row">
                                     <label for="supplier_creadit_limit" class="col-sm-3 col-form-label">Credit Limit</label>
                                     <div class="col-sm-1">
-                                        <div class="tag_box text-center">
-                                            <span style="padding:3px">£</span>
+                                        <div class="tag_box">
+                                            <span>£</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-8">

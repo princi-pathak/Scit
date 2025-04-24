@@ -24,23 +24,23 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title fs-5" id="productModalBACLabel">Product List</h4>
             </div>
-            <div class="modal-body ">
-                <div class="modal-body ">
-                    <div class="tab-teaser">
-                        <div class="tab-menu">
-                            <ul>
-                                <li><a href="javascript:void(0)" class="active btn" data-rel="Product">Product(s) <span class="productCount" id="productCount"></span></a></li>
+            <div class="modal-body">
+                <div class="tab-teaser">
+                    <div class="tab-menu">
+                        <ul>
+                            <li><a href="javascript:void(0)" class="active btn" data-rel="Product">Product(s) <span class="productCount" id="productCount"></span></a></li>
 
-                                <li><a href="javascript:void(0)" data-rel="Service" class="btn">Service(s) <span class="productCount" id="serviceCount"></span></a></li>
+                            <li><a href="javascript:void(0)" data-rel="Service" class="btn">Service(s) <span class="productCount" id="serviceCount"></span></a></li>
 
-                                <li><a href="javascript:void(0)" data-rel="Consumable" class="btn">Consumable(s) <span class="productCount" id="consumableCount"></span></a></li>
+                            <li><a href="javascript:void(0)" data-rel="Consumable" class="btn">Consumable(s) <span class="productCount" id="consumableCount"></span></a></li>
 
-                                <li><a href="javascript:void(0)" data-rel="ProductGroup" class="btn">Product Group(s) <span class="productCount" id="groupCount"></span></a></li>
-                            </ul>
-                        </div>
-                        <div class="tab-main-box">
-                            <div class="tab-box" id="Product" style="display:block;">
-                                <div class="py-4">
+                            <li><a href="javascript:void(0)" data-rel="ProductGroup" class="btn">Product Group(s) <span class="productCount" id="groupCount"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-main-box">
+                        <div class="tab-box" id="Product" style="display:block;">
+                            <div class="row">
+                                <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <input type="hidden" id="selectedProductIds" name="product_ids" value="[]">
@@ -49,12 +49,14 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control editInput" placeholder="Search Term" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                                <button class="btn btn-outline-secondary editInput profileDrop" type="button" id="button-addon2">Search</button>
-                                            </div>
+                                            <input type="text" class="form-control editInput" placeholder="Search Term" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-12 my-3">
                                     <div id="alphabeticListHolder">
                                         <ul class="alphabeticList">
                                             <li><a href="#" class="alphabeticLink" data-term="all" data-search_mode="ALL">All</a></li>
@@ -69,35 +71,33 @@
                                         <br class="clear">
                                     </div>
                                 </div>
-
-                                <div class="row">
+                                <div class="col-sm-12">
                                     <div class="pagecounter pb-2">
                                         <h6>1-1 of 1 product(s) </h6>
                                     </div>
                                 </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="setProductInTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Category </th>
+                                                    <th>Product</th>
+                                                    <th>Description </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="insrt_product_and_detail">
 
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="productDetailTable">
-                                            <table class="table" id="setProductInTable">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th>Code</th>
-                                                        <th>Category </th>
-                                                        <th>Product</th>
-                                                        <th>Description </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="insrt_product_and_detail">
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-box" id="Service">
-                                <div class="py-4">
+                        </div>
+                        <div class="tab-box" id="Service">
+                            <div class="row">
+                                <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <select class="form-control editInput selectOptions" id="product_categories">
@@ -105,12 +105,14 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control editInput" placeholder="Search Term" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                                <button class="btn btn-outline-secondary editInput profileDrop" type="button" id="button-addon2">Search</button>
-                                            </div>
+                                            <input type="text" class="form-control editInput" placeholder="Search Term" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-12 my-3">
                                     <div id="alphabeticListHolder">
                                         <ul class="alphabeticList">
                                             <li><a href="#" class="alphabeticLink" data-term="all" data-search_mode="ALL">All</a></li>
@@ -125,34 +127,32 @@
                                         <br class="clear">
                                     </div>
                                 </div>
-
-                                <div class="row">
+                                <div class="col-sm-12">
                                     <div class="pagecounter pb-2">
                                         <h6>1-1 of 1 product(s) </h6>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="productDetailTable">
-                                            <table class="table" id="setServiceInTable">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th>Code</th>
-                                                        <th>Category </th>
-                                                        <th>Product</th>
-                                                        <th>Description </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="insrt_product_and_detail">
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="setServiceInTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Category </th>
+                                                    <th>Product</th>
+                                                    <th>Description </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="insrt_product_and_detail">
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-box" id="Consumable">
-                                <div class="py-4">
+                        </div>
+                        <div class="tab-box" id="Consumable">
+                            <div class="row">
+                                <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <select class="form-control editInput selectOptions" id="product_categories">
@@ -160,12 +160,14 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control editInput" placeholder="Search Term" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                                <button class="btn btn-outline-secondary editInput profileDrop" type="button" id="button-addon2">Search</button>
-                                            </div>
+                                            <input type="text" class="form-control editInput" placeholder="Search Term" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-12 my-3">
                                     <div id="alphabeticListHolder">
                                         <ul class="alphabeticList">
                                             <li><a href="#" class="alphabeticLink" data-term="all" data-search_mode="ALL">All</a></li>
@@ -180,42 +182,42 @@
                                         <br class="clear">
                                     </div>
                                 </div>
-
-                                <div class="row">
+                                <div class="col-sm-12">
                                     <div class="pagecounter pb-2">
                                         <h6>1-1 of 1 product(s) </h6>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="productDetailTable">
-                                            <table class="table" id="setConsumableInTable">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th>Code</th>
-                                                        <th>Category </th>
-                                                        <th>Product</th>
-                                                        <th>Description </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="insrt_product_and_detail">
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="setConsumableInTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Category </th>
+                                                    <th>Product</th>
+                                                    <th>Description </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="insrt_product_and_detail">
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-box" id="ProductGroup">
-                                <div class="py-4">
+                        </div>
+                        <div class="tab-box" id="ProductGroup">
+                            <div class="row">
+                                <div class="col-sm-12">
                                     <div class="row">
-                                        <div class="col-lg-7">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control editInput" placeholder="Search Term" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                                <button class="btn btn-outline-secondary editInput profileDrop" type="button" id="button-addon2">Search</button>
-                                            </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control editInput" placeholder="Search Term" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-12 my-3">
                                     <div id="alphabeticListHolder">
                                         <ul class="alphabeticList">
                                             <li><a href="#" class="alphabeticLink" data-term="all" data-search_mode="ALL">All</a></li>
@@ -230,28 +232,24 @@
                                         <br class="clear">
                                     </div>
                                 </div>
-
-                                <div class="row">
+                                <div class="col-sm-12">
                                     <div class="pagecounter pb-2">
                                         <h6>1-1 of 1 product(s) </h6>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="productDetailTable">
-                                            <table class="table" id="setGroupInTable">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th>Product Group</th>
-                                                        <th>Description </th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="insrt_product_and_detail">
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="setGroupInTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Product Group</th>
+                                                    <th>Description </th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="insrt_product_and_detail">
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -486,12 +484,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                        </div> -->
                 </div>
             </div>
             <!-- end modal body -->
             <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <!-- <button type="button" class="btn profileDrop" id="listAllProduct">Save changes</button> -->
             </div>
         </div>
