@@ -176,7 +176,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a href="#!" class="formicon"><i class="fa fa-plus-square"></i></a>
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(9)"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -441,7 +441,6 @@
                                             </div>
                                         </div>
                                     </div> -->
-
                                     <div class="col-sm-12">
                                         <div class="productDetailTable table-responsive input_style">
                                             <table class="table border-top border-bottom" id="result">
@@ -772,4 +771,14 @@ var reminder_dataCount='<?php echo count($reminder_data);?>'
         getAttachment(id, '{{ url("invoices/getInvoiceAllAttachmens") }}');
         <?php }?>
     </script>
+
+<script>
+    $('.tab-menu li a').on('click', function() {
+        var target = $(this).attr('data-rel');
+        $('.tab-menu li a').removeClass('active');
+        $(this).addClass('active');
+        $("#" + target).fadeIn('slow').siblings(".tab-box").hide();
+        return false;
+    });
+</script>
 @endsection

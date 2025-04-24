@@ -153,11 +153,11 @@
                         </div>
                     </div>
                     <a href="{{ url('draft_purchase_order') }}" class="profileDrop" <?php if ($status['status'] == 1) { ?>id="active_inactive" <?php } ?>>Draft <span>({{$draftCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}" class="profileDrop" <?php if ($status['status'] == 2) { ?>id="active_inactive" <?php } ?>>Awaiting Approval<span>({{$awaitingApprovalCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=Approved') }}" class="profileDrop" <?php if ($status['status'] == 3) { ?>id="active_inactive" <?php } ?>>Approved<span>({{$approvedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}" class="profileDrop" <?php if ($status['status'] == 8) { ?>id="active_inactive" <?php } ?>>Rejected<span>({{$rejectedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="profileDrop" <?php if ($status['status'] == 4) { ?>id="active_inactive" <?php } ?>>Actioned<span>({{$actionedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="profileDrop" <?php if ($status['status'] == 5) { ?>id="active_inactive" <?php } ?>>Paid<span>({{$paidCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order/AwaitingApprivalPurchaseOrders') }}" class="profileDrop" <?php if ($status['status'] == 2) { ?>id="active_inactive" <?php } ?>>Awaiting Approval<span>({{$awaitingApprovalCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order/Approved') }}" class="profileDrop" <?php if ($status['status'] == 3) { ?>id="active_inactive" <?php } ?>>Approved<span>({{$approvedCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order/Rejected') }}" class="profileDrop" <?php if ($status['status'] == 8) { ?>id="active_inactive" <?php } ?>>Rejected<span>({{$rejectedCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order/Actioned') }}" class="profileDrop" <?php if ($status['status'] == 4) { ?>id="active_inactive" <?php } ?>>Actioned<span>({{$actionedCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order/Paid') }}" class="profileDrop" <?php if ($status['status'] == 5) { ?>id="active_inactive" <?php } ?>>Paid<span>({{$paidCount}})</span></a>
 
                 </div>
             </div>

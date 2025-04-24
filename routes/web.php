@@ -397,7 +397,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/dashborad', 'dashboard');
 			Route::get('/add', 'create');
 			Route::post('/invoice_save', 'invoice_save');
-			Route::get('/invoice', 'invoice');
+			Route::get('/invoice/Draft', 'invoice');
+			Route::get('/invoice/Outstanding', 'invoice');
+			Route::get('/invoice/Overdue', 'invoice');
+			Route::get('/invoice/Paid', 'invoice');
 			Route::get('/preview', 'preview');
 			Route::get('/print', 'preview');
 			Route::get('/edit', 'create');
@@ -433,6 +436,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/purchase_order_new_task_save', 'purchase_order_new_task_save');
 		Route::post('/getAllNewTaskList', 'getAllNewTaskList');
 		Route::get('/draft_purchase_order', 'draft_purchase_order');
+		Route::get('/draft_purchase_order/AwaitingApprivalPurchaseOrders', 'draft_purchase_order');
+		Route::get('/draft_purchase_order/Approved', 'draft_purchase_order');
+		Route::get('/draft_purchase_order/Rejected', 'draft_purchase_order');
+		Route::get('/draft_purchase_order/Actioned', 'draft_purchase_order');
+		Route::get('/draft_purchase_order/Paid', 'draft_purchase_order');
 		Route::post('/searchPurchaseOrders', 'searchPurchaseOrders');
 		Route::post('/searchDepartment', 'searchDepartment');
 		Route::post('/searchTag', 'searchTag');
