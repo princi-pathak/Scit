@@ -79,7 +79,7 @@
                                         </a>
                                     </div>
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                        <a href="{{ url('/rota-management/staff') }}">
+                                        <a href="{{ url('/rota/staff') }}">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
                                                     <div class="user-heading alt wdgt-row lightBrown">

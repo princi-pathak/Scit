@@ -10,12 +10,14 @@ class StaffWorker extends Model
     use HasFactory;
 
     protected $fillable=[
+        'home_id',
         'surname',
         'forename',
         'address',
         'postCode',
         'DOB',
-        'bank_details',
+        'account_num',
+        'sort_code',
         'status',
         'rate_of_pay',
         'level',
