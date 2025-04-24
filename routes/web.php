@@ -502,7 +502,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	// Staff for frontend
 	Route::controller(StaffController::class)->group(function(){
-		Route::get('rota-management/staff','index');
+		Route::get('rota/staff','index');
 		Route::post('rota/staff-add','store');
 	});
 

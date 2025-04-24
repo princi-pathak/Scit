@@ -22,12 +22,14 @@ class StaffWorkerRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'home_id' => 'nullable|string|max:255',
             'surname' => 'required|string|max:255',
             'forename' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'postCode' => 'required|string|max:10',
             'DOB' => 'required|date',
-            'bank_details' => 'required|string|max:255',
+            'account_num' => 'required|string|max:20',
+            'sort_code' => 'required|string|max:8',
             'status' => 'nullable|in:residential,supported_accomodation,parental,foundations_for_life,office_staff,leavers',
             'rate_of_pay' => 'required|numeric|min:0',
             'level' => 'nullable|in:qualified,unqualified',
@@ -45,7 +47,7 @@ class StaffWorkerRequest extends FormRequest
             'student_loan' => 'nullable|in:no_student_loan,postgraduate,plan_1,plan_2,plan_4',
             'leave_date' => 'nullable|date|after:start_date',
             'email' => 'required|email|max:255',
-            'mobile' => 'required|string|max:15',
+            'mobile' => 'nullable|string|max:15',
             'deleted_at' => 'nullable|date'
         ];
     }
