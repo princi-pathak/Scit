@@ -441,7 +441,7 @@
                                                 <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                 <hr class="dropdown-divider">
                                                 @endif
-                                                <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
+                                                <a href="{{url('purchase_order/duplicate?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                 <hr class="dropdown-divider">
                                                 @if($status['status'] != 8 && $status['status'] != 1 )
                                                 <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>

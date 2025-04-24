@@ -142,7 +142,7 @@
                                 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Items">
                                     <div class="profile-nav alt">
                                         <div class="panel text-center">
-                                            <div class="user-heading alt wdgt-row light_yellow">
+                                            <div class="user-heading alt wdgt-row grayish_green">
                                                 <i class="fa fa-archive"></i>
                                             </div>
                                             <div class="panel-body">

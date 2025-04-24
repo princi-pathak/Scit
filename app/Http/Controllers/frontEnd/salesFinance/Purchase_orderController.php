@@ -88,8 +88,8 @@ class Purchase_orderController extends Controller
         $user_id=Auth::user()->id;
         $home_table=Home::find($home_id);
         $data['company_name']=Admin::find($home_table->admin_id)->company;
-        $key=base64_decode($request->key) ?: base64_decode($request->duplicate);
-        $data['duplicate']=base64_decode($request->duplicate);
+        $key=base64_decode($request->key);
+        $data['duplicate']=base64_decode($request->key);
         $data['key']=$key;
         $purchase_orders=PurchaseOrder::find($key);
         $site=array();

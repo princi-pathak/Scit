@@ -1251,6 +1251,9 @@
             },
             success: function(response) {
                 // console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 const data = response.data;
                 $('#purchase_contact_id').removeAttr('disabled');
                 var contactSelect = document.getElementById("purchase_contact_id");
