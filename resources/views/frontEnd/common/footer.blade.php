@@ -135,7 +135,7 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/1.1.6/choices.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="{{ url('/public/js/datepicker.js') }}"></script>
+<!-- <script src="{{ url('/public/js/datepicker.js') }}"></script> -->
 <script>
 // Date Pikker INCLUDE JQUERY & JQUERY UI 1.12.1
     // $( function() {

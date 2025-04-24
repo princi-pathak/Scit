@@ -2,12 +2,8 @@
 
 namespace App\Services\Rota;
 
-use Illuminate\Support\Facades\DB;
-
-use Illuminate\Support\Carbon;
-
-
 use App\Models\Rota\StaffWorker;
+use Illuminate\Support\Carbon;
 
 class StaffWorkerService
 {
@@ -38,51 +34,12 @@ class StaffWorkerService
     }
     public function getStaffWorkerData($homeId)
     {
-        return StaffWorker::where('home_id', $homeId)->get();
+        return StaffWorker::where('home_id', $homeId)->where('deleted_at', null)->get();
     }
-    public function getStaffWorkerDataById($id)
+    public function deleteStaffWorkerData($id)
     {
-        return StaffWorker::find($id);
+        return StaffWorker::where('id', $id)->update(['deleted_at' => now()]);
     }
-    // public function deleteStaffWorkerData($id)
-    // {
-    //     return StaffWorker::where('id', $id)->delete();
-    // }
-    // public function updateStaffWorkerData($id, $data)
-    // {
-    //     return StaffWorker::where('id', $id)->update($data);
-    // }
-    // public function getStaffWorkerList($homeId)
-    // {
-    //     return StaffWorker::where('home_id', $homeId)->get();
-    // }
-    // public function getStaffWorkerListById($id)
-    // {
-    //     return StaffWorker::where('id', $id)->first();
-    // }
-    // public function getStaffWorkerListByHomeId($homeId)
-    // {
-    //     return StaffWorker::where('home_id', $homeId)->get();
-    // }
-    // public function getStaffWorkerListByStatus($homeId, $status)
-    // {
-    //     return StaffWorker::where('home_id', $homeId)->where('status', $status)->get();
-    // }
-    // public function getStaffWorkerListByStatusAndHomeId($homeId, $status)
-    // {
-    //     return StaffWorker::where('home_id', $homeId)->where('status', $status)->get();
-    // }
-    // public function getStaffWorkerListByStatusAndHomeIdAndDate($homeId, $status, $date)
-    // {
-    //     return StaffWorker::where('home_id', $homeId)->where('status', $status)->where('created_at', '>=', $date)->get();
-    // }
-    // public function getStaffWorkerListByStatusAndHomeIdAndDateAndTime($homeId, $status, $date, $time)
-    // {
-    //     return StaffWorker::where('home_id', $homeId)->where('status', $status)->where('created_at', '>=', $date)->where('created_at', '<=', $time)->get();
-    // }
-    // public function getStaffWorkerListByStatusAndHomeIdAndDateAndTimeAndName($homeId, $status, $date, $time, $name)
-    // {
-    //     return StaffWorker::where('home_id', $homeId)->where('status', $status)->where('created_at', '>=', $date)->where('created_at', '<=', $time)->where('name', 'like', '%' . $name . '%')->get();
-    // }
+   
    
 }

@@ -504,6 +504,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(StaffController::class)->group(function(){
 		Route::get('rota/staff','index');
 		Route::post('rota/staff-add','store');
+		Route::delete('rota/staff-delete/{id}','destroy');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {
