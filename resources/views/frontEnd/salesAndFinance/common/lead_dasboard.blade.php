@@ -199,7 +199,7 @@
                                                 <div class="row">
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="#">
+                                                            <a href="{{ url('/quote/dashboard') }}">
                                                                 <div>
                                                                     <div class="icon icon1">
                                                                         <i class="fa fa-tachometer" aria-hidden="true"></i>
@@ -213,7 +213,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="{{url('invoices/add')}}">
+                                                            <a href="{{ url('/quote/add') }}">
                                                                 <div>
                                                                     <div class="icon icon2">
                                                                         <i class="fa fa-plus-square" aria-hidden="true"></i>
@@ -227,7 +227,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="{{url('invoices/invoice?key=Draft')}}">
+                                                            <a href="{{ url('/quote/draft') }}">
                                                                 <div>
                                                                     <div class="icon icon3">
                                                                         <i class="fa fa-floppy-o" aria-hidden="true"></i>
@@ -241,7 +241,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="{{url('invoices/invoice?key=Outstanding')}}">
+                                                            <a href="{{ url('/quote/actioned') }}">
                                                                 <div>
                                                                     <div class="icon icon4">
                                                                         <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
@@ -255,7 +255,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="{{url('invoices/invoice?key=Overdue')}}">
+                                                            <a href="{{ url('/quote/callBack') }}">
                                                                 <div>
                                                                     <div class="icon icon3">
                                                                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -269,7 +269,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="{{url('invoices/invoice?key=Paid')}}">
+                                                            <a href="{{ url('/quote/accepted') }}">
                                                                 <div>
                                                                     <div class="icon icon6">
                                                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
@@ -311,7 +311,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
-                                                            <a href="#">
+                                                            <a href="{{ url('quote/search') }}">
                                                                 <div>
                                                                     <div class="icon icon9">
                                                                         <i class="fa fa-search" aria-hidden="true"></i>

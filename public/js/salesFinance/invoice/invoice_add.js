@@ -129,6 +129,14 @@ function get_modal(modal){
         $("#related_To").text(invoice_ref);
         $("#task_invoice_id").val(invoice_id);
         $("#NewTaskModal").modal('show');
+    }else if(modal == 9){
+        if (customer_id == '' || customer_id == null) {
+            alert("Please select Customer");
+            return false;
+        } else {
+            $("#site_form")[0].reset();
+            $("#site_modal").modal('show');
+        }
     }else{
         alert("Please Select Customer");
         return false;

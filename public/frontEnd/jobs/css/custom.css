@@ -3273,11 +3273,11 @@ table.tablechange tbody td a i {
   background-color: #32323a;
 }
 
-
 div.dt-container select.dt-input {
   padding: 4px;
   margin-right: 10px;
 }
+
 .separate_section {
   padding: 15px;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
@@ -3329,4 +3329,58 @@ label {
   margin: 0;
   font-size: 14px;
 
+}
+
+
+/* custom tabs css */
+.tab-teaser .tab-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.tab-teaser .tab-menu ul li {
+  max-width: 100%;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.tab-teaser .tab-menu ul li a {
+  display: inline-block;
+  display: block;
+  transition: 0.5s all;
+  background-color: #b0b5b9;
+  border-color: #b0b5b9;
+  color: #fff;
+}
+
+.tab-teaser .tab-menu ul li a.active {
+  background-color: #57c8f1;
+  border-color: #57c8f1;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.tab-teaser .tab-box {
+  display: none;
+}
+
+.tab-teaser .tab-menu ul li a.active .productCount {
+  background-color: #ffffff;
+  color: #57c8f1;
+}
+
+.tab-teaser .tab-menu ul li a .productCount {
+  background-color: #fff;
+  color: #b0b5b9;
+}
+
+.tab-teaser .tab-main-box {
+  padding: 23px 0;
+  border-top: 1px solid #e2e2e4;
+  margin-top: 25px;
 }

@@ -1,5 +1,5 @@
 <style>
-    .generate-button {
+    /* .generate-button {
         height: 32px;
         padding: 0px 9px;
         background: #0877bd;
@@ -9,7 +9,7 @@
     .generate-button:hover {
         background-color: #0877bd;
         border-color: #0877bd;
-    }
+    } */
 
     .producthidemessage {
         display: none
@@ -120,11 +120,11 @@
                             <div class="mb-3">
                                 <label>Product Code </label>
                                 <div class="row">
-                                    <div class="col-sm-7">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" id="product_code" placeholder="Product Code" name="product_code" value="">
                                     </div>
-                                    <div class="col-sm-5 ps-0">
-                                        <button type="button" class="btn btn-primary generate-button"
+                                    <div class="col-sm-4 ps-0">
+                                        <button type="button" class="btn btn-primary"
                                             id="generateproductcode">Generate</button>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                             </div>
                             <div class="mb-3">
                                 <label>Markup</label>
-                                <input type="text" class="form-control editInput" id="margin" name="margin" value="">
+                                <input type="text" class="form-control editInput" id="Markup" name="Markup" value="">
                             </div>
                             <div class="mb-3">
                                 <label>Price <span class="radStar ">*</span></label>
@@ -230,6 +230,21 @@
                             </div>
                             <div class="mb-3">
                                 <label>Attachment</label>
+                                <!-- <div class="col-md-12 p-0">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-new thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 100px;">
+                                                <img src="{{url('public/images/noimage.jpg')}}" alt="No Image" />
+                                            </div>
+                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 20px;"></div>
+                                            <div>
+                                                <span class="btn btn-white btn-file">
+                                                    <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
+                                                    <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                    <input name="attachment" type="file" class="default" id="attachment"  onclick="uploadproductimage()"  />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div> -->
                                 <input type="file" class="form-control editInput" id="attachment" name="attachment">
                                 <input type="button" class="profileDrop productuploadedit" onclick="uploadproductimage()" value="Upload Image">
                             </div>
