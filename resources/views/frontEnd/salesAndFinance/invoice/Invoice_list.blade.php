@@ -151,10 +151,10 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ url('invoices/invoice?key=draft') }}" class="profileDrop" id="active_inactive">Draft <span>({{$draft_invoice}})</span></a>
-                    <a href="{{ url('invoices/invoice?key=Outstanding') }}" class="profileDrop" >Outstanding<span>({{$outstanding_invoice}})</span></a>
-                    <a href="{{ url('invoices/invoice?key=Overdue') }}" class="profileDrop">Overdue<span>({{$overdue_invoice}})</span></a>
-                    <a href="{{ url('invoices/invoice?key=Paid') }}" class="profileDrop">Paid<span>({{$paid_invoice}})</span></a>
+                    <a href="{{ url('invoices/invoice/Draft') }}" class="profileDrop" <?php if($key_mode === 'Draft'){ echo 'id="active_inactive"';}?>>Draft <span>({{$draft_invoice}})</span></a>
+                    <a href="{{ url('invoices/invoice/Outstanding') }}" class="profileDrop" <?php if($key_mode === 'Outstanding'){ echo 'id="active_inactive"';}?>>Outstanding<span>({{$outstanding_invoice}})</span></a>
+                    <a href="{{ url('invoices/invoice/Overdue') }}" class="profileDrop" <?php if($key_mode === 'Overdue'){ echo 'id="active_inactive"';}?>>Overdue<span>({{$overdue_invoice}})</span></a>
+                    <a href="{{ url('invoices/invoice/Paid') }}" class="profileDrop" <?php if($key_mode === 'Paid'){ echo 'id="active_inactive"';}?>>Paid<span>({{$paid_invoice}})</span></a>
 
                 </div>
             </div>
