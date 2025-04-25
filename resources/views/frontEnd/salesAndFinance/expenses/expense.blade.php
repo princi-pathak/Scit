@@ -704,7 +704,11 @@
         var vat_amount=$("#vat_amount").val();
         var gross_amount=$("#gross_amount").val();
         var expense_date=$("#expense_date").val();
-        
+        var id=$("#id").val();
+        var url="{{url('expense_save')}}";
+        if(id !=''){
+            url="{{url('expense_edit')}}";
+        }
         if(title == ''){
             $("#title").css('border','1px solid red');
             return false;
@@ -732,7 +736,7 @@
         }else {
             $.ajax({
             type: "POST",
-            url: "{{url('expense_save')}}",
+            url: url,
             data: new FormData($("#form_data")[0]),
             async: false,
             contentType: false,

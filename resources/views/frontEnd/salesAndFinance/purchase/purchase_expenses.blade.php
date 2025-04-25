@@ -199,9 +199,13 @@
     $(document).ready(function() {
         $("#savePurchaseExpesnsesModal").on("click", function(e) {
             e.preventDefault(); // Prevent page reload
-
+            var id=$("#purchase_expense_id").val();
+            var saveUrl="{{ url('purchase/save-purchase-expenses') }}";
+            if(id !=''){
+                saveUrl="{{ url('purchase/edit-purchase-expenses') }}";
+            }
             $.ajax({
-                url: "{{ url('purchase/save-purchase-expenses') }}", // Laravel route
+                url: saveUrl, // Laravel route
                 type: "POST",
                 data: $('#purchaseExpeneseForm').serialize(), // Serialize form data
                 success: function(response) {

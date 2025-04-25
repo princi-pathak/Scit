@@ -195,6 +195,7 @@
 </script>
 <script>
     var assetCatSaveUrl = "{{url('sales-finance/assets/asset-category-save')}}";
+    var assetCatEditUrl = "{{url('sales-finance/assets/asset-category-edit')}}";
 </script>
 <script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}" defer></script>
 @endsection

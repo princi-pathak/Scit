@@ -209,6 +209,7 @@
 </script>
 <script>
     var assetDepreciationTypeSaveUrl = "{{url('sales-finance/assets/depreciation-type-save')}}";
+    var assetDepreciationTypeEditUrl = "{{url('sales-finance/assets/depreciation-type-edit')}}";
 </script>
 <script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}" defer></script>
 @endsection

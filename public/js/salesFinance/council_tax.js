@@ -95,10 +95,15 @@ $(document).ready(function () {
         if (!validateCouncilTaxForm()) {
             return false; // Stop if validation fails
         }
+        var id=$("#council_tax_id").val();
+        var url=saveData;
+        if(id !=''){
+            url=editData;
+        }
 
         console.log($('#addCouncilTaxForm').serialize());
         $.ajax({
-            url: saveData, // Laravel route or API endpoint
+            url: url, // Laravel route or API endpoint
             method: "POST",
             data: $('#addCouncilTaxForm').serialize(),
             dataType: "json",
