@@ -22,7 +22,7 @@
     .unclicked {
         pointer-events: none;
     } */
-    
+
 </style>
 
 <section class="wrapper">
@@ -37,8 +37,10 @@
                         <h4>New Invoice</h4>
                         @endif
                     </header>
-                    <div class="col-md-4 col-lg-4 col-xl-4">
-                        <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-12">
@@ -545,11 +547,11 @@
                                     <div class="col-sm-12">
                                         <div class="py-4">
                                             <div class="jobsection">
-                                                <a href="javascript:void(0)" onclick="get_modal(6)" class="btn btn-default2">New Attachments</a>
-                                                <a href="javascript:void(0)" class="btn btn-default2">Upload Multi Attachment</a>
-                                                <a href="javascript:void(0)" class="btn btn-default2">Preview Attachment(s)</a>
-                                                <a href="javascript:void(0)" class="btn btn-default2">Download Attachment(s)</a>
-                                                <a href="javascript:void(0)" class="btn btn-default2">Delete Attachment(s)</a>
+                                                <a href="javascript:void(0)" onclick="get_modal(6)" class="btn btn-primary">New Attachments</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary">Upload Multi Attachment</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary">Preview Attachment(s)</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary">Download Attachment(s)</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary">Delete Attachment(s)</a>
                                             </div>
                                         </div>
                                         @if(isset($invoice) && $invoice !='')

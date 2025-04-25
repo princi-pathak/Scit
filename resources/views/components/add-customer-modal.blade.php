@@ -5,8 +5,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="customerModalLabel">Add Customer</h4>
             </div>
-            <div id="alert_message_customer" class="alert alert-success mt-3" style="display:none"></div>
             <div class="modal-body">
+            <div id="alert_message_customer" class="alert alert-success mt-3" style="display:none"></div>
                 <form class="customerForm" id="AddCustomerModal">
                     <div class="row">
                         <div class="col-md-6 col-lg-6 col-xl-6">

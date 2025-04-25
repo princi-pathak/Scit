@@ -6,8 +6,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <div class="alert alert-success mt-3" id="alert_message_supplier" style="display:none"></div>
             <div class="modal-body">
+                <div class="alert alert-success" id="alert_message_supplier" style="display:none"></div>
                 <form id="supplier_form_data">
                     @csrf
                     <div class="row">

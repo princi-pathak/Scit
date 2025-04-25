@@ -5,10 +5,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="thirdModalLabel">Add Project</h4>
             </div>
-            <div class="alert alert-success mt-3" id="alert_message_project" style="display:none"></div>
             <form id="project_form">
                 @csrf
                 <div class="modal-body">
+                    <div class="alert alert-success" id="alert_message_project" style="display:none"></div>
                     <input type="hidden" name="home_id" id="project_home_id" value="{{Auth::user()->home_id}}">
                     <div class="mb-3">
                         <label>Project Ref</label>

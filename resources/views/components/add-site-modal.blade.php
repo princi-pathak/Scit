@@ -5,8 +5,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="customerModalLabel">Add Site Address</h4>
             </div>
-            <div class="alert alert-success mt-3" id="alert_message_site" style="display:none"></div>
             <div class="modal-body">
+                <div class="alert alert-success" id="alert_message_site" style="display:none"></div>
                 <form id="site_form">
                     @csrf
                     <div class="row">
