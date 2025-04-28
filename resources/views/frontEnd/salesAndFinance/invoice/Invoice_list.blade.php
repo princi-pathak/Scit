@@ -138,19 +138,19 @@
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 p-0">
+            <div class="col-sm-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
                         <h4>{{ucfirst($key_mode)}} Invoices</h4>
                     </header>
                     <div class="panel-body">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 mt-4">
                             <div class="jobsection justify-content-end">
                                 <a href="{{url('purchase-orders-search')}}" class="btn btn-default2"> Search Invoices</a>
                                 <a href="{{url('purchase-order-statements')}}" class="btn btn-default2">Account Statements</a>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 mb-4">
                             <div class="jobsection">
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link btn btn-default2" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
@@ -161,17 +161,17 @@
                                         <a href="#!" class="dropdown-item">Email</a> -->
                                     </div>
                                 </div>
-                                <a href="{{ url('invoices/invoice/Draft') }}" class="btn btn-default2" <?php if($key_mode === 'Draft'){ echo 'id="active_inactive"';}?>>Draft <span>({{$draft_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Outstanding') }}" class="btn btn-default2" <?php if($key_mode === 'Outstanding'){ echo 'id="active_inactive"';}?>>Outstanding <span>({{$outstanding_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Overdue') }}" class="btn btn-default2" <?php if($key_mode === 'Overdue'){ echo 'id="active_inactive"';}?>>Overdue <span>({{$overdue_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Paid') }}" class="btn btn-default2" <?php if($key_mode === 'Paid'){ echo 'id="active_inactive"';}?>>Paid <span>({{$paid_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Draft') }}" class="btn btn-default2" <?php if ($key_mode === 'Draft') { echo 'id="active_inactive"'; } ?>>Draft <span>({{$draft_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Outstanding') }}" class="btn btn-default2" <?php if ($key_mode === 'Outstanding') { echo 'id="active_inactive"'; } ?>>Outstanding <span>({{$outstanding_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Overdue') }}" class="btn btn-default2" <?php if ($key_mode === 'Overdue') {  echo 'id="active_inactive"';} ?>>Overdue <span>({{$overdue_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Paid') }}" class="btn btn-default2" <?php if ($key_mode === 'Paid') { echo 'id="active_inactive"'; } ?>>Paid <span>({{$paid_invoice}})</span></a>
                                 <div class="searchFilter">
                                     <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
                                 </div>
                                 <div class="searchJobForm" id="divTohide" style="display:none">
                                     <form id="search_dataForm" class="p-4">
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-sm-3">
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Invoice Ref:</label>
                                                     <input type="text" class="form-control editInput" id="po_ref">
@@ -193,7 +193,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-sm-3">
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Supplier:</label>
                                                     <div class="position-relative">
@@ -205,29 +205,29 @@
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">PO Date From:</label>
                                                     <div class="row">
-                                                        <div class="col-md-6">
+                                                        <div class="col-sm-6">
                                                             <input type="date" class="form-control editInput" id="po_startDate">
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-sm-6">
                                                             <input type="date" class="form-control editInput" id="po_endDate">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2"><a href="#!" class="tutor-student-tooltip-col">EDD From:
-                                                        <span class="tutor-student-tooltiptext3">Expedcted Delivery Date</span></a>
+                                                            <span class="tutor-student-tooltiptext3">Expedcted Delivery Date</span></a>
                                                     </label>
-                                                   <div class="row">
-                                                        <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
                                                             <input type="date" class="form-control editInput" id="edd_startDate">
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-sm-6">
                                                             <input type="date" class="form-control editInput" id="edd_endDate">
                                                         </div>
-                                                   </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-sm-3">
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Customer:</label>
                                                     <div class="position-relative">
@@ -253,7 +253,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-sm-3">
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Project:</label>
                                                     <div class="position-relative">
@@ -273,7 +273,7 @@
                                                     <input type="text" class="form-control editInput" id="delivery_status">
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mt-4">
+                                            <div class="col-sm-12 mt-4">
                                                 <div class="jobsection justify-content-center">
                                                     <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-default2 px-3">Search </a>
                                                     <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default2 px-3">Clear</a>
@@ -285,12 +285,12 @@
                             </div>
                             <div class="jobsection">
                                 <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
-                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Purchase Order</a>                                    
-                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Invoice</a>                                    
+                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Purchase Order</a>
+                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Invoice</a>
                                 <a href="javascript:void(0)" id="bulkInvoiceReceived" class="btn btn-default2">Change To Invoice</a>
                                 <div class=" d-inline-flex align-items-center">
                                     <div class="dropdown">
-                                        <a href="#!" class="btn btn-default2" data-toggle="dropdown" aria-expanded="false">Email Purchase Order 
+                                        <a href="#!" class="btn btn-default2" data-toggle="dropdown" aria-expanded="false">Email Purchase Order
                                             <i class="fa fa-caret-down"></i>
                                         </a>
                                         <div class="dropdown-menu fade-up m-0">
@@ -300,13 +300,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-5">
+                                <!-- <div class="col-sm-5">
                                     <div class="pageTitleBtn p-0">
                                         <a href="#" class="btn btn-default2"> <i class="material-symbols-outlined"> settings </i></a>        
                                     </div>
                                 </div> -->
                             </div>
-                            <div class="table-responsive productDetailTable  mb-4">
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive productDetailTable">
                                 <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -329,87 +331,89 @@
                                     </thead>
 
                                     <tbody id="search_data">
-                                        <?php 
-                                        $all_subTotalAmount=0;
-                                        $all_vatTotalAmount=0;
-                                        $all_TotalAmount=0;
-                                        $outstandingAmountTotal=0;
-                                            foreach($invoice as $key=>$val){
-                                                $sub_total=0;
-                                                $vat=0;
-                                                $total=0;
-                                                foreach($val->invoiceProducts as $product){
-                                                    $price=$product->price*$product->qty;
-                                                    $sub_total=$sub_total+$price;
-                                                    $percentage=$product->price*$product->vat/100;
-                                                    $vat=$vat+$percentage;
-                                                    $total=$total+$sub_total+$vat;
-                                                }
-                                                $all_subTotalAmount = $all_subTotalAmount + $sub_total;
-                                                $all_vatTotalAmount = $all_vatTotalAmount + $vat;
-                                                $all_TotalAmount = $all_TotalAmount + $total;
-                                                $outstandingAmountTotal = $outstandingAmountTotal + $val->outstanding;
+                                        <?php
+                                        $all_subTotalAmount = 0;
+                                        $all_vatTotalAmount = 0;
+                                        $all_TotalAmount = 0;
+                                        $outstandingAmountTotal = 0;
+                                        foreach ($invoice as $key => $val) {
+                                            $sub_total = 0;
+                                            $vat = 0;
+                                            $total = 0;
+                                            foreach ($val->invoiceProducts as $product) {
+                                                $price = $product->price * $product->qty;
+                                                $sub_total = $sub_total + $price;
+                                                $percentage = $product->price * $product->vat / 100;
+                                                $vat = $vat + $percentage;
+                                                $total = $total + $sub_total + $vat;
+                                            }
+                                            $all_subTotalAmount = $all_subTotalAmount + $sub_total;
+                                            $all_vatTotalAmount = $all_vatTotalAmount + $vat;
+                                            $all_TotalAmount = $all_TotalAmount + $total;
+                                            $outstandingAmountTotal = $outstandingAmountTotal + $val->outstanding;
                                         ?>
-                                        <tr>
-                                            <td><div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div></td>
-                                            <td>{{++$key}}</td>
-                                            <td>{{$val->invoice_ref}}</td>
-                                            <td>{{$val->invoice_date}}</td>
-                                            <td>{{$val->customers->name}}</td>
-                                            <td></td>
-                                            <td>
-                                                @if(isset($val->sites) && !empty($val->sites))
+                                            <tr>
+                                                <td>
+                                                    <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div>
+                                                </td>
+                                                <td>{{++$key}}</td>
+                                                <td>{{$val->invoice_ref}}</td>
+                                                <td>{{$val->invoice_date}}</td>
+                                                <td>{{$val->customers->name}}</td>
+                                                <td></td>
+                                                <td>
+                                                    @if(isset($val->sites) && !empty($val->sites))
                                                     {{$val->sites->site_name}}<br>
                                                     {{$val->sites->address}}
-                                                @else
+                                                    @else
                                                     {{$val->customers->name}}<br>
                                                     {{$val->customers->address}}
-                                                @endif
-                                            </td>
-                                            <td>£{{$sub_total}}.00</td>
-                                            <td>£{{$vat}}.00</td>
-                                            <td>£{{$total}}.00</td>
-                                            <td>£{{$val->outstanding}}</td>
-                                            <td>{{ucfirst($key_mode)}}</td>
-                                            <td>
-                                                @if($val->is_printed == 1)
+                                                    @endif
+                                                </td>
+                                                <td>£{{$sub_total}}.00</td>
+                                                <td>£{{$vat}}.00</td>
+                                                <td>£{{$total}}.00</td>
+                                                <td>£{{$val->outstanding}}</td>
+                                                <td>{{ucfirst($key_mode)}}</td>
+                                                <td>
+                                                    @if($val->is_printed == 1)
                                                     <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
-                                                @else
+                                                    @else
                                                     -
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($val->is_emailed == 1)
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($val->is_emailed == 1)
                                                     <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
-                                                @else
+                                                    @else
                                                     -
-                                                @endif
-                                            </td>
-                                            <td>
-                                            <div class="d-flex justify-content-end">
-                                                    <div class="nav-item dropdown">
-                                                        <a href="#!" class="nav-link dropdown-toggle btn btn-default2" data-toggle="dropdown" aria-expanded="false">
-                                                            Action <i class="fa fa-caret-down"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu fade-up m-0" style="z-index:9999">
-                                                            <a href="javascript:void(0)" class="dropdown-item">Send SMS</a>
-                                                            <a href="{{url('invoices/edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
-                                                            <a href="{{url('invoices/preview?key=')}}{{base64_encode($val->id)}}&url=preview" target="_blank" class="dropdown-item">Preview</a>
-                                                            <a href="{{url('invoices/print?key=')}}{{base64_encode($val->id)}}&url=print" target="_blank" class="dropdown-item">Print</a>
-                                                            <a href="javascript:void(0)" class="dropdown-item">Email</a>
-                                                            <a href="#!" target="_blank" class="dropdown-item">Duplicate</a>
-                                                            <a href="javascript:void(0)" class="dropdown-item">Change To Invoice</a>
-                                                            <a href="javascript:void(0)" class="dropdown-item">Cancel Invoice</a>
-                                                            <a href="#!" class="dropdown-item">CRM / History</a>
-                                                            <a href="#!" class="dropdown-item">Start Timer</a>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <div class="nav-item dropdown">
+                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-default2" data-toggle="dropdown" aria-expanded="false">
+                                                                Action <i class="fa fa-caret-down"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu fade-up m-0" style="z-index:9999">
+                                                                <a href="javascript:void(0)" class="dropdown-item">Send SMS</a>
+                                                                <a href="{{url('invoices/edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
+                                                                <a href="{{url('invoices/preview?key=')}}{{base64_encode($val->id)}}&url=preview" target="_blank" class="dropdown-item">Preview</a>
+                                                                <a href="{{url('invoices/print?key=')}}{{base64_encode($val->id)}}&url=print" target="_blank" class="dropdown-item">Print</a>
+                                                                <a href="javascript:void(0)" class="dropdown-item">Email</a>
+                                                                <a href="#!" target="_blank" class="dropdown-item">Duplicate</a>
+                                                                <a href="javascript:void(0)" class="dropdown-item">Change To Invoice</a>
+                                                                <a href="javascript:void(0)" class="dropdown-item">Cancel Invoice</a>
+                                                                <a href="#!" class="dropdown-item">CRM / History</a>
+                                                                <a href="#!" class="dropdown-item">Start Timer</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php }?>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
-                                
+
                                     <tr class="calcualtionShowHide">
                                         <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
                                         <th colspan="13"></th>
@@ -421,7 +425,6 @@
                                         <td id="Tabletotal_amount">£{{$all_TotalAmount}}.00</td>
                                         <td id="Tableoutstanding_amount" colspan="8">£{{$outstandingAmountTotal}}.00</td>
                                     </tr>
-                                    
                                 </table>
                             </div>
                         </div>

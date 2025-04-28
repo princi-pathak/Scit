@@ -11,13 +11,11 @@
         color: #168fdb;
     }
 
-    /* .addProduvtBg.costUpdatePop a.udateBtn{
-
-    } */
+    /* .addProduvtBg.costUpdatePop a.udateBtn{} */
 </style>
 
 <!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
-<div class="modal fade" id="productModalBAC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="productModalBACLabel" aria-hidden="true">
+<div class="modal fade" id="productModalBAC" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="productModalBACLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -77,9 +75,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <div class="productDetailTable">
-                                        <table class="table" id="setProductInTable">
-                                            <thead class="table-light">
+                                    <div class="table-responsive productDetailTable">
+                                        <table id="setProductInTable" class="table border-top border-bottom tablechange" cellspacing="0">
+                                            <thead>
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Category </th>
@@ -133,9 +131,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <div class="productDetailTable">
-                                        <table class="table" id="setServiceInTable">
-                                            <thead class="table-light">
+                                    <div class="table-responsive productDetailTable">
+                                        <table id="setServiceInTable" class="table border-top border-bottom tablechange" cellspacing="0">
+                                            <thead>
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Category </th>
@@ -188,9 +186,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <div class="productDetailTable">
-                                        <table class="table" id="setConsumableInTable">
-                                            <thead class="table-light">
+                                    <div class="table-responsive productDetailTable">
+                                        <table id="setConsumableInTable" class="table border-top border-bottom tablechange" cellspacing="0">
+                                            <thead>
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Category </th>
@@ -238,9 +236,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <div class="productDetailTable">
-                                        <table class="table" id="setGroupInTable">
-                                            <thead class="table-light">
+                                    <div class="table-responsive productDetailTable">
+                                        <table id="setGroupInTable" class="table border-top border-bottom tablechange" cellspacing="0">
+                                            <thead>
                                                 <tr>
                                                     <th>Product Group</th>
                                                     <th>Description </th>
@@ -505,9 +503,9 @@
             </div>
             <div class="modal-body">
                 <h4 class="contTitle text-start">Product</h4>
-                <div class="productDetailTable mt-2">
-                    <table class="table" id="containerA">
-                        <thead class="table-light">
+                <div class="table-responsive productDetailTable">
+                    <table id="containerA" class="table border-top border-bottom tablechange" cellspacing="0">
+                        <thead>
                             <tr>
                                 <th>Group Code</th>
                                 <th>Group Product </th>
@@ -547,9 +545,9 @@
                 </div>
 
                 <div class="costProdut">
-                    <div class="productDetailTable">
-                        <table class="table" id="containerA">
-                            <thead class="table-light">
+                    <div class="table-responsive productDetailTable">
+                        <table id="containerA" class="table border-top border-bottom tablechange" cellspacing="0">
+                            <thead>
                                 <tr>
                                     <th>Code</th>
                                     <th>Product </th>
