@@ -45,12 +45,12 @@ $(document).ready(function () {
 
 
     $(".deleteBtn").on("click", function () {
-        let salesBookId = $(this).data("id"); // Get ID from button
-        let row = $("#row-" + salesBookId); // Select the row
+        let purchaseBookId = $(this).data("id"); // Get ID from button
+        let row = $("#row-" + purchaseBookId); // Select the row
 
         if (confirm("Are you sure you want to delete this record?")) {
             $.ajax({
-                url: salesDayBook + "/" + salesBookId,
+                url: purchaseDayBook + "/" + purchaseBookId,
                 type: "POST",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -152,7 +152,7 @@ function taxRate() {
                     response.data.forEach(code => {
                         const option = document.createElement('option');
                         option.value = code.id; // Use appropriate key from your response
-                        option.textContent = code.name; // Use appropriate key from your response
+                        option.textContent = code.name +" ("+code.tax_rate +"%) "; // Use appropriate key from your response
                         option.setAttribute('data-tax-rate', code.tax_rate);
                         if (preTaxID && code.id == preTaxID) {
                             option.selected = true;

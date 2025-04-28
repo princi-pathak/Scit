@@ -27,11 +27,11 @@
                                             <th>Date</th>
                                             <th>Invoice No.</th>
                                             <th>Net</th>
-                                            <th>VAT</th>
+                                            <th>VAT</th>    
                                             <th>Gross </th>
                                             <th>Rate </th>
                                             <th>Total </th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -137,7 +137,7 @@
                             </div>
                             <div class="form-group">
                                 <label> Date <span class="radStar">*</span></label>
-                                <input type="Date" class="form-control editInput" name="date" id="Date_input">
+                                <input type="text" class="form-control " name="date" id="Date_input">
                             </div>
                             <div class="form-group">
                                 <label> Invoice <span class="radStar">*</span></label>
@@ -145,7 +145,7 @@
                             </div>
                             <div class="form-group">
                                 <label> Net <span class="radStar">*</span></label>
-                                <input type="text" class="form-control editInput" id="net_amount" name="netAmount" placeholder="">
+                                <input type="text" class="form-control editInput" id="net_amount" name="netAmount" placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                             </div>
                             <div class="form-group">
                                 <label>VAT <span class="radStar">*</span></label>

@@ -20,7 +20,7 @@
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
                                         <a href="#" class="profileDrop openModalBtn" data-action="add" id=""><i class="fa fa-plus"></i> Add</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Export</a>
+                                        <!-- <a href="javascript:void(0)" class="profileDrop">Export</a> -->
                                     </div>
                                 </div>
                             </div>
@@ -29,14 +29,14 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Flat number <br> if applicable</th>
+                                            <th>Flat number <br> (if applicable)</th>
                                             <th>Address</th>
                                             <th>PostCode</th>
                                             <th>Council</th>
-                                            <th>No of Bedrooms?</th>
-                                            <th>Owned by Omega?</th>
+                                            <th>No of Bedrooms</th>
+                                            <th>Owned by Omega</th>
                                             <th>Occupancy</th>
-                                            <th>Exempt? <br>Yes/No</th>
+                                            <th>Exempt </th>
                                             <th>Account number</th>
                                             <th>Last bill</th>
                                             <th>Bill period</th>
@@ -54,9 +54,9 @@
                                             <td>{{ $councilTax->post_code }}</td>
                                             <td>{{ $councilTax->council }}</td>
                                             <td>{{ $councilTax->no_of_bedrooms }}</td>
-                                            <td>{{ $councilTax->owned_by_omega }}</td>
+                                            <td>{{ $councilTax->owned_by_omega == 1 ? 'Yes' : 'No' }}</td>
                                             <td>{{ $councilTax->occupancy }}</td>
-                                            <td>{{ $councilTax->exempt }}</td>
+                                            <td>{{ $councilTax->exempt == 1 ? 'Yes' : 'No' }}</td>
                                             <td>{{ $councilTax->account_number }}</td>
                                             <td class="white_space_nowrap">{{ $councilTax->last_bill_date }}</td>
                                             <td class="white_space_nowrap">{{ $councilTax->bill_period_start_date }} - {{ $councilTax->bill_period_end_date }}</td>
@@ -91,7 +91,7 @@
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="formDtail">
                                 <div class="form-group">
-                                    <label> Flat number if applicable </label>
+                                    <label> Flat number (if applicable) </label>
                                     <div>
                                         <input type="hidden" name="council_tax_id" id="council_tax_id">
                                         <input type="text" class="form-control editInput" id="flat_num" name="flat_number" placeholder="Flat 1">
@@ -116,13 +116,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>No of Bedrooms ? </label>
+                                    <label>No of Bedrooms </label>
                                     <div>
-                                        <input type="text" class="form-control editInput" name="no_of_bedrooms" id="no_of_bedrooms" placeholder="4">
+                                        <input type="text" class="form-control editInput" name="no_of_bedrooms" id="no_of_bedrooms" placeholder="4" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Owned by Omega? <span class="radStar">*</span></label>
+                                    <label>Owned by Omega <span class="radStar">*</span></label>
                                     <div class="d-flex align-items-center gap-2">
                                         <label class="form-check-label m-0" for="ownedByOmegayes">Yes</label>
                                         <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="1" id="ownedByOmegayes">
@@ -137,7 +137,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Exempt? Yes/No <span class="radStar">*</span></label>
+                                    <label>Exempt <span class="radStar">*</span></label>
                                     <div class="d-flex align-items-center gap-2">
                                         <label class="form-check-label m-0" for="exempt_yes">Yes</label>
                                         <input class="form-check-input mt-0" type="radio" name="exempt" value="1" id="exemptyes">
@@ -149,32 +149,29 @@
                             <div class="form-group">
                                 <label>Account number<span class="radStar">*</span></label>
                                 <div>
-                                    <input type="text" class="form-control editInput" id="account_number" name="account_number" placeholder="Account number">
+                                    <input type="text" class="form-control editInput" id="account_number" name="account_number" placeholder="Account number" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Last bill</label>
                                 <div>
-                                    <input type="date" class="form-control" name="last_bill_date" id="last_bill_date">
+                                    <!-- <input type="date" class="form-control" name="last_bill_date" id="last_bill_date"> -->
                                 </div>
-                                <!-- <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                    <input name="last_bill_date" id="last_bill_date" type="text" value="" autocomplete="off" class="form-control">
+                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                    <input name="last_bill_date" id="last_bill_date" type="text" value="" autocomplete="off" class="form-control" placeholder="Last Bill Date">
 
                                     <span class="input-group-btn datetime-picker2 btn_height">
                                         <button class="btn btn-primary" type="button" id="openCalendarLastBillBtn">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </button>
                                     </span>
-                                </div> -->
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Bill period </label>
                                 <div class="row">
                                     <div class="col-sm-6 pe-3">
-                                        <div>
-                                            <input type="date" class="form-control" name="bill_period_start_date" id="bill_period_start_date">
-                                        </div>
-                                        <!-- <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
                                             <input name="bill_period_start_date" id="bill_period_start_date" type="text" value="" autocomplete="off" class="form-control" placeholder="Start Date">
 
                                             <span class="input-group-btn datetime-picker2 btn_height">
@@ -182,13 +179,10 @@
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </button>
                                             </span>
-                                        </div> -->
+                                        </div>
                                     </div>
                                     <div class="col-sm-6 ps-3">
-                                        <div>
-                                            <input type="date" class="form-control" name="bill_period_end_date" id="bill_period_end_date">
-                                        </div>
-                                        <!-- <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
                                             <input name="bill_period_end_date" id="bill_period_end_date" type="text" value="" autocomplete="off" class="form-control" placeholder="End Date">
 
                                             <span class="input-group-btn datetime-picker2 btn_height">
@@ -196,14 +190,15 @@
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </button>
                                             </span>
-                                        </div> -->
+                                        </div>
                                     </div>
+                                    <div id="dateError"> </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Amount paid </label>
                                 <div>
-                                    <input type="text" class="form-control editInput" id="amount_paid" name="amount_paid" placeholder="Amount paid">
+                                    <input type="text" class="form-control editInput" id="amount_paid" name="amount_paid" placeholder="Amount paid" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                 </div>
                             </div>
                             <div class="form-group">

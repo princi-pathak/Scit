@@ -60,7 +60,7 @@
 
                                         @foreach($staffWorkers as $key => $staffData)
                                         <tr>
-                                            <td></td>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $staffData->surname }}</td>
                                             <td>{{ $staffData->forename }}</td>
                                             <td>{{ $staffData->address }}</td>

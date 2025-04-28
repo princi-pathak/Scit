@@ -98,7 +98,7 @@ function taxRate() {
                     response.data.forEach(code => {
                         const option = document.createElement('option');
                         option.value = code.id; // Use appropriate key from your response
-                        option.textContent = code.name; // Use appropriate key from your response
+                        option.textContent = code.name +" ("+code.tax_rate +"%) "; // Use appropriate key from your response
                         option.setAttribute('data-tax-rate', code.tax_rate);
                         if (preTaxID && code.id == preTaxID) {
                             option.selected = true;
@@ -155,6 +155,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 $(document).ready(function() {
+
+    $('#Date_input').datepicker({
+        format: 'dd-mm-yyyy'
+    });
+    $('#Date_input').on('change', function () {
+        $('#Date_input').datepicker('hide');
+    });
+
+    $("#salesDayBookModel").scroll(function () {
+        $('#Date_input').datepicker('place');
+    });
+
     $("#saveSalesDayBookModal").on("click", function(e) {
         // alert();
         e.preventDefault(); // Prevent page reload

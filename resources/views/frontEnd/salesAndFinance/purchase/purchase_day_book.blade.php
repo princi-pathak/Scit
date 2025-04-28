@@ -15,10 +15,10 @@
                     </header>
                     <div class="panel-body">
                         <div class="col-lg-12">
-                                    <div class="jobsection justify-content-end">
-                                        <!-- <a href="{{ url('purchase/purchase-day-book/add') }}" class="profileDrop">Add</a> -->
-                                        <a href="#!" type="button" class="profileDrop openPurchaseDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
-                                    </div>
+                            <div class="jobsection justify-content-end">
+                                <!-- <a href="{{ url('purchase/purchase-day-book/add') }}" class="profileDrop">Add</a> -->
+                                <a href="#!" type="button" class="profileDrop openPurchaseDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
+                            </div>
                             <div class="productDetailTable mb-4 table-responsive">
                                 <table class="table border-top border-bottom tablechange" id="containerA">
                                     <thead>
@@ -95,7 +95,7 @@
                                                         </div>
                                                     </div> -->
                                                 <a href="#!" class="openPurchaseDayBookModel" data-action="edit" data-id="{{ $purchaseBook->id }}" data-supplier_id="{{ $purchaseBook->supplier_id }}" data-date="{{ $purchaseBook->date }}" data-netAmount="{{ $purchaseBook->netAmount }}" data-vat="{{ $purchaseBook->Vat }}" data-vatAmount="{{ $purchaseBook->vatAmount }}" data-grossAmount="{{ $purchaseBook->grossAmount }}" data-reclaim="{{ $purchaseBook->reclaim }}" data-not_reclaim="{{ $purchaseBook->not_reclaim }}" data-expense_type="{{ $purchaseBook->expense_type }}" data-expense_amount="{{ $purchaseBook->expense_amount }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
-                                                <a href="#!"><i class="fa fa-trash radStar" aria-hidden="true"></i></a>
+                                                <a href="#!" class="deleteBtn" data-id="{{ $purchaseBook->id }}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -199,7 +199,7 @@
                                         <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" placeholder="" readonly>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="expenses"> Expenses <span class="radStar">*</span></label>
                                     <div>
@@ -216,7 +216,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <!-- End row -->
                     </div>
                 </div>
@@ -230,10 +230,10 @@
 </div>
 <!-- end here -->
 <script>
-    const salesDayBook = "{{ url('/purchase/purchase-day-book/delete/') }}";
+    const purchaseDayBook = "{{ url('/purchase/purchase-day-book/delete/') }}";
     const getSuppliersList = "{{ url('/purchase/getSupplierData') }}";
-    const getPurchaseExpenses = "{{ url('/purchase/getPurchaseExpense') }}"; 
-    const getTaxRate =  '{{ route("invoice.ajax.getActiveTaxRate") }}';
+    const getPurchaseExpenses = "{{ url('/purchase/getPurchaseExpense') }}";
+    const getTaxRate = '{{ route("invoice.ajax.getActiveTaxRate") }}';
     const reclaimPercantage = "{{ url('/purchase/purchase-day-book-reclaim-per') }}";
     const calculatedData = "{{ url('/purchase/reclaimPercantage') }}";
     const savePurchaseDayBook = "{{ url('purchase/save-purchase-day-book') }}";

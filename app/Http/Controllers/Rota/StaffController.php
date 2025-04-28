@@ -37,9 +37,8 @@ class StaffController extends Controller
 
         // dd($validated);
         try {
-            // $response = StaffWorker::create($validated);
+            $this->staffWorkerService->saveStaffWorkerData($validated, Auth::user()->home_id);
             if($validated['staff_id'] === null){
-                $this->staffWorkerService->saveStaffWorkerData($validated, Auth::user()->home_id);
                 return response()->json(['status' => 'success', 'message' => 'Form submitted successfully!']);
             }else{
                 return response()->json(['status' => 'success', 'message' => 'Form updated successfully!']);
