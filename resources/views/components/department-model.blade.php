@@ -1,9 +1,9 @@
 <div class="modal fade" id="departmentPop" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content add_Customer">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Department - Add</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title" id="customerModalLabel">Department - Add</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -12,33 +12,27 @@
                         <form id="department_form_data" class="customerForm">
                             @csrf
                             <input type="hidden" name="id" id="id">
-                            <div class="mb-2 row">
-                                <label for="inputName" class="col-sm-3 col-form-label">Department <span class="radStar ">*</span></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Department" id="department_title" name="title">
-                                </div>
+                            <div class="mb-3">
+                                <label class="col-form-label mb-2">Department <span class="radStar ">*</span></label>
+                                <input type="text" class="form-control editInput textareaInput" placeholder="Enter Department" id="department_title" name="title">
                             </div>
 
-                            <div class="mb-2 row">
-                                <label for="inputProject"
-                                    class="col-sm-3 col-form-label">Status</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control editInput selectOptions" id="department_status" name="status">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
-                                </div>
+                            <div class="mb-3">
+                                <label class="col-form-label mb-2">Status</label>
+                                <select class="form-control editInput selectOptions" id="department_status" name="status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
                             </div>
                         </form>
                     </div>
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer customer_Form_Popup">
-
-                <button type="button" class="profileDrop" onclick="save_department()">Save</button>
                 <!-- <button type="button" class="profileDrop" id="save_dataClose">Save &
                     Close</button> -->
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" onclick="save_department()">Save</button>
             </div>
         </div>
     </div>

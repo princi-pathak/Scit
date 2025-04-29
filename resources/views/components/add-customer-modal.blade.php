@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>Address <span class="radStar ">*</span></label>
-                                    <textarea class="form-control textareaInput CustomercheckError" placeholder="Enter Customer Address" id="cuatomer_address" name="address" rows="3"></textarea>
+                                    <textarea class="form-control textareaInput CustomercheckError" placeholder="Enter Customer Address" id="cuatomer_address" name="address" rows="1"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label>City</label>

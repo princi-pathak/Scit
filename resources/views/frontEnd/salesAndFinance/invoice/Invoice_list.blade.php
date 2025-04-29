@@ -134,6 +134,10 @@
         background-color: #f8f9fa;
         color: #212529;
     }
+    .searchJobForm {
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+}
 </style>
 <section class="wrapper">
     <div class="container-fluid">
@@ -377,14 +381,14 @@
                                                 <td>{{ucfirst($key_mode)}}</td>
                                                 <td>
                                                     @if($val->is_printed == 1)
-                                                    <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
+                                                    <span class="grencheck"><i class="fa fa-check-circle"></i></span>
                                                     @else
                                                     -
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if($val->is_emailed == 1)
-                                                    <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
+                                                    <span class="grencheck"><i class="fa fa-check-circle"></i></span>
                                                     @else
                                                     -
                                                     @endif
@@ -392,10 +396,10 @@
                                                 <td>
                                                     <div class="d-flex justify-content-end">
                                                         <div class="nav-item dropdown">
-                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-default2" data-toggle="dropdown" aria-expanded="false">
+                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
                                                                 Action <i class="fa fa-caret-down"></i>
                                                             </a>
-                                                            <div class="dropdown-menu fade-up m-0" style="z-index:9999">
+                                                            <div class="dropdown-menu dropdown-menu-right fade-up m-0" style="z-index:9999">
                                                                 <a href="javascript:void(0)" class="dropdown-item">Send SMS</a>
                                                                 <a href="{{url('invoices/edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                                 <a href="{{url('invoices/preview?key=')}}{{base64_encode($val->id)}}&url=preview" target="_blank" class="dropdown-item">Preview</a>
@@ -434,7 +438,10 @@
         </div>
     </div>
 </section>
+
+
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
 <script>
     // search leads show search Filter
     function hideShowDiv() {
@@ -455,7 +462,6 @@
     }
     // end search leads show search Filter js
 </script>
-
 <script>
     $("#deleteSelectedRows").on('click', function() {
         let ids = [];
@@ -1552,4 +1558,5 @@
         $("#bulkRecordPaymentModal").modal('show');
     });
 </script>
+
 @endsection

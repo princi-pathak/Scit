@@ -333,7 +333,7 @@
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
                                             <label class="col-form-label mb-2">Invoice Ref</label>
-                                            <input type="text" class="form-control-plaintext border-0 editInput" value="<?php if (isset($invoice) && $invoice->invoice_ref != '') { echo $invoice->invoice_ref; }else{ echo 'Invoice Ref ###'; } ?>" readonly>
+                                            <input type="text" class="form-control border-0 editInput" value="<?php if (isset($invoice) && $invoice->invoice_ref != '') { echo $invoice->invoice_ref; }else{ echo 'Invoice Ref ###'; } ?>" readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label class="col-form-label mb-2">Tags</label>
@@ -405,7 +405,7 @@
                                                 <label for="inputCountry" class="col-form-label">Select product</label>
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control editInput" id="search-product" placeholder="Type to add product">
+                                                <input type="text" class="form-control editInput textareaInput" id="search-product" placeholder="Type to add product">
                                                 <div class="parent-container"></div>
                                             </div>
                                             <div class="col-sm-7">
@@ -457,7 +457,7 @@
                                                             <div class="tableplusBTN">
                                                                 <span>Account Code </span>
                                                                 <span class="plusandText ps-3">
-                                                                    <a href="javascript:void(0)" class="formicon" onclick="openAccountCodeModal(null)"> <i class="fa fa-plus-square"></i> </a>
+                                                                    <a href="javascript:void(0)" class="formicon p-0" onclick="openAccountCodeModal(null)"> <i class="fa fa-plus-square"></i> </a>
                                                                 </span>
                                                             </div>
                                                         </th>
@@ -470,7 +470,7 @@
                                                             <div class="tableplusBTN">
                                                                 <span>VAT(%) </span>
                                                                 <span class="plusandText ps-3">
-                                                                    <a href="javascript:void(0)" class="formicon pt-0" onclick="get_modal(5)"> <i class="fa fa-plus-square"></i> </a>
+                                                                    <a href="javascript:void(0)" class="formicon p-0" onclick="get_modal(5)"> <i class="fa fa-plus-square"></i> </a>
                                                                 </span>
                                                             </div>
                                                         </th>
