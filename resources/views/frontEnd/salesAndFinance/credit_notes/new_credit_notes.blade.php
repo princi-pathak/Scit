@@ -9,7 +9,7 @@
     margin-right: 5px;
 }
 .calendar_icon {
-    color:red; 
+    color:#e10078; 
     display: flex;
     align-items: center;
 }
@@ -81,8 +81,7 @@ ul#purchase_qoute_refList {
                                         @csrf
                                         <input type="hidden" id="credit_id" name="id" value="<?php if(isset($credit_note)){echo $credit_note->id;}?>">
                                         <div class="mb-3 row">
-                                            <label for="" class="col-sm-3 col-form-label">Supplier
-                                                <span class="radStar">*</span></label>
+                                            <label for="" class="col-sm-3 col-form-label">Supplier <span class="radStar">*</span></label>
                                             <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions CreditNotescheckError" id="credit_supplier_id" name="supplier_id" onchange="get_supplier_details()">
                                                     <option selected disabled>Select Supplier</option>

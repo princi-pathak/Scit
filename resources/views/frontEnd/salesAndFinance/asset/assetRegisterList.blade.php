@@ -1,0 +1,426 @@
+@extends('frontEnd.layouts.master')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title','Fixed Asset Register')
+<link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+@section('content')
+
+<style>
+  .searchJobForm {
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+  }
+
+  .form_heading {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    /* border-top: 2px solid #ddd;
+    padding-top: 20px; */
+    text-align: center;
+    font-weight: 600 !important;
+  }
+</style>
+
+<!--main content start-->
+<section class="wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 p-0">
+        <div class="panel">
+          <header class="panel-heading px-5">
+            <h4>Fixed Asset Register</h4>
+          </header>
+          <div class="panel-body">
+            <div class="col-lg-12">
+              <div class="jobsection justify-content-end">
+                <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
+                <a href="javascript:void(0)" class="profileDrop" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
+                <a href="javascript:void(0)" class="profileDrop">Export</a>
+                <div class="searchFilter">
+                  <a href="#!" onclick="hideShowDiv()" class="profileDrop">Search</a>
+                </div>
+              </div>
+              <div>
+                <div class="searchJobForm" id="divTohide" style="display:none">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="extraInformationTab">
+                        <form id="search_dataForm" class="p-4">
+                          @csrf
+                          <div class="row justify-content-center">
+                            <div class="col-md-12">
+                              <div class="row form-group pb-0 pageTitleBtn justify-content-center">
+                                <div class="col-md-4">
+                                    <label>Date From:</label>
+                                    <!-- <input type="date" class="form-control editInput" id="edd_startDate" name="start_date"> -->
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="start_date" id="edd_startDate" type="text" value="" autocomplete="off" class="form-control">
+
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary" type="button" id="openCalendarBtn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Date To:</label>
+                                    <!-- <input type="date" class="form-control editInput" id="edd_endDate" name="end_date"> -->
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control">
+
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary" type="button" id="openCalendarBtn1">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="pageTitleBtn justify-content-center">
+                                <a href="javascript:void(0)" onclick="searchBtn()" class="profileDrop px-3">Search </a>
+                                <!-- <button type="submit" class="profileDrop px-3" onclick="return searchBtn()">Search</button> -->
+                                <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="profileDrop px-3">Clear</a>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="extraInformationTab">
+                  <div class="row">
+                    <div class="col-md-12" id="search_data">
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+              <div class="productDetailTable mb-4  table-responsive">
+                <table class="table border-top border-bottom tablechange" id="containerB">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th class="border-end">Asset Name</th>
+                      <th class="border-end">Date</th>
+                      <th colspan="4" class="border-end">Cost</th>
+                      <th colspan="4" class="border-end">Depreciation</th>
+                      <th colspan="2">N.B.V</th>
+                      <th colspan="2">Action</th>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <th class=""></th>
+                      <th class="border-end"></th>
+                      <th>B/fwd</th>
+                      <th>Additions</th>
+                      <th>Disposals</th>
+                      <th class="border-end">C/fwd</th>
+                      <th>B/fwd</th>
+                      <th>Disps</th>
+                      <th>Charge</th>
+                      <th class="border-end">C/fwd</th>
+                      <th>B/fwd</th>
+                      <th colspan="2" class="text-start">C/fwd</th>
+                    </tr>
+                  </thead>
+                  <tbody id="assetRegisterList">
+                    <?php
+                    $cost_bfwd = 0;
+                    $cost_disposal = 0;
+                    $cost_addition = 0;
+                    $cost_fwd = 0;
+                    $depreciation_bfwd = 0;
+                    $depreciation = 0;
+                    $charge = 0;
+                    $depreciation_cfwd = 0;
+                    $nbv_bfwd = 0;
+                    $nbv_cfwd = 0;
+                    foreach ($list as $key => $val) {
+                      $cost_bfwd = $cost_bfwd + $val->cost_bfwd;
+                      $cost_disposal = $cost_disposal + $val->cost_disposal;
+                      $cost_addition = $cost_addition + $val->cost_addition;
+                      $cost_fwd = $cost_fwd + $val->cost_fwd;
+                      $depreciation_bfwd = $depreciation_bfwd + $val->depreciation_bfwd;
+                      $depreciation = $depreciation + $val->depreciation;
+                      $charge = $charge + $val->charge;
+                      $depreciation_cfwd = $depreciation_cfwd + $val->depreciation_cfwd;
+                      $nbv_bfwd = $nbv_bfwd + $val->nbv_bfwd;
+                      $nbv_cfwd = $nbv_cfwd + $val->nbv_cfwd;
+                    ?>
+                      <tr>
+                        <td>{{++$key}}</td>
+                        <td>{{$val->asset_name}}</td>
+                        <td>{{ date('d/m/Y', strtotime($val->date)) }}</td>
+                        <td>{{ $val->cost_bfwd ? '£' . $val->cost_bfwd : '' }}</td>
+                        <td>{{ $val->cost_disposal ? '£' . $val->cost_disposal : ''}}</td>
+                        <td>{{ $val->cost_addition ? '£' . $val->cost_addition : ''}}</td>
+                        <td>{{ $val->cost_fwd ? '£' . $val->cost_fwd : ''}}</td>
+                        <td>{{ $val->depreciation_bfwd  ? '£' . $val->depreciation_bfwd : ''}}</td>
+                        <td>{{ $val->depreciation  ? '£' . $val->depreciation : ''}}</td>
+                        <td>{{ $val->charge  ? '£' . $val->charge : ''}}</td>
+                        <td>{{ $val->depreciation_cfwd  ? '£' . $val->depreciation_cfwd : ''}}</td>
+                        <td>{{ $val->nbv_bfwd  ? '£' . $val->nbv_bfwd : ''}}</td>
+                        <td>{{ $val->nbv_cfwd  ? '£' . $val->nbv_cfwd : ''}}</td>
+                        <td> <a href="{{url('sales-finance/assets/asset-register-edit?key=' . base64_encode($val->id))}}" class="openModalBtn"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                          <a href="#!" class="register_delete" data-id="{{$val->id}}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                        </td>
+                        <!-- <td>
+                          <div class="d-flex justify-content-end">
+                            <div class="nav-item dropdown">
+                              <a href="#!" class="nav-link dropdown-toggle profileDrop" data-toggle="dropdown" aria-expanded="false">
+                                Action
+                              </a>
+                              <div class="dropdown-menu fade-up m-0" style="z-index:9999">
+                                <a href="{{url('sales-finance/assets/asset-register-edit?key=' . base64_encode($val->id))}}" class="dropdown-item">Edit</a>
+                                <hr class="dropdown-divider">
+                                <a href="javascript:void(0)" data-id="{{$val->id}}" class="dropdown-item register_delete">Delete</a>
+                              </div>
+                            </div>
+                          </div>
+                        </td> -->
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                  <tfoot>
+                    <tr id="footer_table">
+                      <th></th>
+                      <th></th>
+                      <th>Total:</th>
+                      <th id="tablecost_bfwd">£{{number_format($cost_bfwd, 2)}}</th>
+                      <th id="tablecost_disposal">£{{number_format($cost_disposal,2)}}</th>
+                      <th id="tablecost_addition">£{{number_format($cost_addition,2)}}</th>
+                      <th id="tablecost_fwd">£{{number_format($cost_fwd,2)}}</th>
+                      <th id="tabledepreciation_bfwd">£{{number_format($depreciation_bfwd,2)}}</th>
+                      <th id="tabledepreciation">£{{number_format($depreciation,2)}}</th>
+                      <th id="tablecharge">£{{number_format($charge,2)}}</th>
+                      <th id="tabledepreciation_cfwd">£{{number_format($depreciation_cfwd,2)}}</th>
+                      <th id="tablenbv_bfwd">£{{number_format($nbv_bfwd,2)}}</th>
+                      <th id="tablenbv_cfwd" colspan="2" class="text-start">£{{number_format($nbv_cfwd,2)}}</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Button trigger modal -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fixed Asset Register Modal start here -->
+<div class="modal fade" id="Fixed_Asset_Register" tabindex="-1" aria-labelledby="Fixed_Asset_RegisterLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        <h4 class="modal-title" id="Fixed_Asset_RegisterLabel">Add Fixed Asset Register</h4>
+      </div>
+      <div calss="row">
+          <div class="col-md-12 col-lg-12 col-xl-12 mt-4">
+              <div class="mt-1 mb-0 text-center" style="display:none" id="message_save"></div>
+          </div>
+      </div>
+      <form id="assetRegisterFormData" class="customerForm">
+        <input type="hidden" name="id" id="id" value="">
+        @csrf
+        <div class="modal-body">
+          <div class="">
+            <label class="form_heading border-0 p-0">Home</label>
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Asset Name <span class="radStar">*</span></label>
+                  <input type="text" class="form-control editInput" id="asset_name" name="asset_name" placeholder="Asset Name" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Date <span class="radStar">*</span></label>
+                  <input type="Date" class="form-control editInput" id="date" name="date" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Asset Type <span class="radStar">*</span></label>
+                  <select name="asset_type" id="asset_type" class="form-control editInput">
+                    <?php foreach($AssetCategoryList as $cat){?>
+                      <option value="{{$cat->id}}">{{$cat->name}}</option>
+                    <?php }?>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End  off newJobForm -->
+          <div class="mt-4">
+            <label class="form_heading">Cost</label>
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label>B/fwd</label>
+                  <input type="text" class="form-control editInput numberInput" id="cost_bfwd" name="cost_bfwd" placeholder="00.00" onkeyup="calculate()" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Additions </label>
+                  <input type="text" class="form-control editInput numberInput" id="cost_addition" name="cost_addition" placeholder="00.00" onkeyup="calculate()" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Disposals </label>
+                  <input type="text" class="form-control editInput numberInput" id="cost_disposal" name="cost_disposal" placeholder="Disposals" onkeyup="calculate()">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label>C/fwd</label>
+                  <input type="text" class="form-control editInput" id="cost_fwd" name="cost_fwd" placeholder="00.00" value="" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End  off newJobForm -->
+          <div class="mt-4">
+            <label class="form_heading">Depreciation</label>
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Type of Depreciation</label>
+                  <select name="depreciation_type" id="depreciation_type" class="form-control editInput" onchange="calculate()">
+                    <?php foreach($DepreciationTypeList as $type){?>
+                      <option value="{{$type->id}}" data-attr="{{$type->percentage}}" <?php if(isset($register) && $register->depreciation_type ==$type->id){echo "selected";}?>>{{$type->percentage}} (%)</option>
+                    <?php }?>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label>B/fwd</label>
+                  <input type="text" class="form-control editInput numberInput" id="depreciation_bfwd" name="depreciation_bfwd" placeholder="00.00" onkeyup="calculate()" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Disps</label>
+                  <input type="text" class="form-control editInput numberInput" id="depreciation" name="depreciation" placeholder="Disps" onkeyup="calculate()" value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> Charge</label>
+                  <input type="text" class="form-control editInput" id="charge" name="charge" placeholder="00.00" value="" readonly>
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> C/fwd</label>
+                  <input type="text" class="form-control editInput" id="depreciation_cfwd" name="depreciation_cfwd" placeholder="00.00" readonly value="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End  off newJobForm -->
+          <div class="mt-4">
+            <label class="form_heading">N.B.V</label>
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> B/fwd</label>
+                  <input type="text" class="form-control editInput" id="nbv_bfwd" name="nbv_cfwd" placeholder="00.00" readonly value="">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label> C/fwd</label>
+                  <input type="text" class="form-control editInput" id="nbv_cfwd" name="nbv_cfwd" placeholder="00.00" readonly>
+                </div>
+              </div>
+              <div class="col-md-12 ">
+                <div class="form-group">
+                  <label>NQ</label>
+                  <div class="col-form-label nq_input">
+                    <input type="radio" name="nq" id="yes" value="1">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="nq" id="no" value="0">
+                    <label for="no">NO</label>
+                    <label for="" class="ps-2"><small>(NO CAPITAL ALLOWANCES CLAIM)</small></label>
+                  </div>
+                </div>
+                <!-- <div class="form-group">
+                  <label> Charge</label>
+                  <input type="text" class="form-control editInput" id="charge" name="charge" placeholder="00.00" readonly>
+                </div>
+                <div class="form-group">
+                  <label> Disps</label>
+                    <input type="text" class="form-control editInput numberInput" id="depreciation" name="depreciation" placeholder="Disps" onkeyup="calculate()">
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <!-- End  off newJobForm -->
+        </div>
+        <div class="modal-footer customer_Form_Popup">
+          <a href="javascript:void(0)" onclick="getSaveData()" class="btn btn-warning"> Save</a>
+          <a href="{{url('sales-finance/assets/asset-register')}}" class="btn btn-default"> Back</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end here -->
+
+<script>
+  // search leads show search Filter
+  function hideShowDiv() {
+    let div = document.getElementById("divTohide");
+
+    if (div.style.display === 'none' || div.style.opacity === '0') {
+      div.style.display = 'block';
+      div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
+      div.style.opacity = '1';
+    } else {
+      div.style.height = '0px';
+      div.style.opacity = '0';
+      // Use a timeout to set display to none after the transition
+      setTimeout(() => {
+        div.style.display = 'none';
+      }, 500); // 500ms matches the CSS transition duration
+    }
+  }
+  // end search leads show search Filter js
+</script>
+<script>
+  var searchUrl = "{{url('sales-finance/assets/asset-register-search')}}";
+  var deleteAssetRegisterUrl = "{{url('sales-finance/assets/asset-register-delete')}}";
+  var assetSaveUrl = "{{ url('sales-finance/assets/asset-regiser-save') }}";
+  var redirectUrl = "{{url('sales-finance/assets/asset-register')}}";
+  $(document).ready(function(){
+    $('#edd_startDate').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true
+    });
+    $(document).on('click', '#openCalendarBtn',function() {
+        $('#edd_startDate').focus();
+    });
+    $('#edd_endDate').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true
+    });
+    $('#openCalendarBtn1').click(function() {
+        $('#edd_endDate').focus();
+    });
+});
+</script>
+
+<script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}" defer></script>
+@endsection
+<!-- <script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}"></script> -->

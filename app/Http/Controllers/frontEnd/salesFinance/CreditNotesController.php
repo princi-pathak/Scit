@@ -42,6 +42,7 @@ class CreditNotesController extends Controller
         
         // echo "<pre>";print_r($data['list']);die;
         // $data['list']=array();
+        $data['page']="finance";
         return view('frontEnd.salesAndFinance.credit_notes.credit_notes_list',$data);
     }
     private function check_segment_CreditNote($lastSegment=null){
@@ -66,6 +67,7 @@ class CreditNotesController extends Controller
         $data['suppliers']=Supplier::allGetSupplier($home_id,$user_id)->where('status',1)->get();
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         $data['additional_contact'] = Constructor_additional_contact::where(['home_id'=> $home_id,'userType'=>2,'customer_id'=>$key,'deleted_at'=>null])->get();
+        $data['page']="finance";
         return view('frontEnd.salesAndFinance.credit_notes.new_credit_notes',$data);
     }
     public function credit_notes_save(CreditNotes $request){
@@ -427,13 +429,13 @@ class CreditNotesController extends Controller
                     'po_id'=>$purchase_order_id[$i],
                     'credit_id'=>$credit_id,
                     'amount_paid'=>$amount[$i],
-                    'product_id'=>$request->product_id,
+                    // 'product_id'=>$request->product_id,
                     'supplier_id'=>$request->supplier_id,
                     'date'=>$request->date,
                 ];
                 try{
-                    $saveData=CreditNoteAllocate::saveCreditAllocate($data);
-                    $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
+                    // $saveData=CreditNoteAllocate::saveCreditAllocate($data);
+                    $this->update_outstandingAmount($amount[$i],$purchase_order_id[$i],$credit_id);
                 }catch (\Exception $e) {
                     return response()->json(['error' => $e->getMessage()], 500);
                 }
@@ -442,6 +444,7 @@ class CreditNotesController extends Controller
         }
     }
     private function update_outstandingAmount($total_amount,$purchase_order_id,$credit_id){
+        // echo "yha";die;
         $tableCreditNote=CreditNote::find($credit_id);
         $creditAmount=$tableCreditNote->balance_credit;
         $final_amountCredit=$creditAmount-$total_amount;
@@ -450,8 +453,7 @@ class CreditNotesController extends Controller
             $tableCreditNote->status=2;
         }
         $tableCreditNote->save();
-        for($i=0;$i<count($purchase_order_id);$i++){
-            $tablePurchaseOrder=PurchaseOrder::find($purchase_order_id[$i]);
+            $tablePurchaseOrder=PurchaseOrder::find($purchase_order_id);
             $orderAmount=$tablePurchaseOrder->outstanding_amount;
             $final_amountOrder=$orderAmount-$total_amount;
             $tablePurchaseOrder->outstanding_amount=$final_amountOrder;
@@ -459,6 +461,5 @@ class CreditNotesController extends Controller
                 $tablePurchaseOrder->status=5;
             }
             $tablePurchaseOrder->save();
-        }
     }
 }

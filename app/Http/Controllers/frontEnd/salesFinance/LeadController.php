@@ -36,6 +36,10 @@ use App\Models\Week;
 
 class LeadController extends Controller
 {
+    public function leads(){
+        // echo 1;die;lead_dasboard
+        return view('frontEnd.salesAndFinance.common.lead_dasboard');
+    }
     public function index(Request $request)
     {
         $data['page'] = "leads";
@@ -149,7 +153,6 @@ class LeadController extends Controller
 
     public function edit($id)
     {
-
         $page = 'leads';
         $lead = Customer::getCustomerLeads($id);
         // dd($lead);

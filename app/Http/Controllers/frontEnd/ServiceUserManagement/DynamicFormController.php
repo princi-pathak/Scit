@@ -443,16 +443,13 @@ class DynamicFormController extends Controller
                                     <ul class="pop-notification" type="none">
                                         <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
                                         <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                        <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book </a> </li>
+                                        <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
                                         <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
                                         <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>
                                     </ul>
                                 </div>
                             </span>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>  ';
@@ -498,9 +495,7 @@ class DynamicFormController extends Controller
             // echo "<pre>"; print_r($check_log_record); die;
             if (!empty($check_log_record)) {
                 foreach ($check_log_record as $key => $log_record) {
-                    $su_log_yp = ServiceUserLogBook::where('log_book_id', $log_record['id'])
-                        ->where('service_user_id', $data['s_user_id'])
-                        ->first();
+                    $su_log_yp = ServiceUserLogBook::where('log_book_id', $log_record['id'])->where('service_user_id', $data['s_user_id'])->first();
                     // echo "<pre>"; print_r($su_log_yp); die;
 
                     if (!empty($su_log_yp)) {
@@ -517,20 +512,23 @@ class DynamicFormController extends Controller
                     }
                 }
             }
-            $category_data = CategoryFrontEnd::where('id',$data['s_category_id'])->first();
 
+            $s_category_id = $data['s_category_id'] ?? null;
+            $category_data = $s_category_id ? CategoryFrontEnd::where('id', $s_category_id)->first() : null;
+            
             $log_book                  = new LogBook;
-            $log_book->dynamic_form_id = $data['dyn_form_id'];
+            $log_book->dynamic_form_id = $data['dyn_form_id'] ?? null;
             $log_book->home_id         = Auth::user()->home_id;
             $log_book->user_id         = Auth::user()->id;
-            $log_book->title           = $dyn_form->title;
+            $log_book->title           = $dyn_form->title ?? null;
             $log_book->date            = date('Y-m-d H:i:s');
-            $log_book->details         = $dyn_form->details;
-            $log_book->category_id     = $data['s_category_id'];
-            $log_book->category_name   = $category_data->name;
-            $log_book->category_icon   = $category_data->icon;
-            $log_book->logType         = $data['logtype'];
+            $log_book->details         = $dyn_form->details ?? null;
+            $log_book->category_id     = $s_category_id;
+            $log_book->category_name   = $category_data ? $category_data->name : null;
+            $log_book->category_icon   = $category_data ? $category_data->icon : null;
+            $log_book->logType         = $data['logtype'] ?? null;
             $log_book->save();
+            
 
             $su_log_record                  = new ServiceUserLogBook;
             $su_log_record->user_id         = Auth::user()->id;

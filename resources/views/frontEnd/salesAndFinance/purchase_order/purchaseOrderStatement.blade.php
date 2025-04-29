@@ -126,7 +126,7 @@ ul#supplierList {
                     </div>
                     <div class="markendDelete">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <div class="jobsection d-flex">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                 </div>
@@ -212,8 +212,14 @@ ul#supplierList {
             alert("Please choose both date");
             return false;
         }
+        var url="";
+        if(type==1){
+            url="{{ url('searchPurchaseOrdersStatements') }}";
+        }else{
+            url="{{ url('searchPurchaseOrdersStatementsOutstanding') }}"
+        }
         $.ajax({
-            url: "{{ url('searchPurchaseOrdersStatements') }}",
+            url: url,
             method: 'post',
             data: {
                 type:type,
@@ -248,7 +254,7 @@ ul#supplierList {
                 // $('#exampleOne').DataTable();
                 $('#exampleOne').DataTable({
                     order: [
-                        [1, 'asc']
+                        // [1, 'asc']
                     ],
                     language: {
                         paginate: {
@@ -257,7 +263,7 @@ ul#supplierList {
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: red; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",
@@ -343,9 +349,9 @@ ul#supplierList {
                                 li.name = item.name;
                                 li.className = "editInput";
                                 ul.appendChild(li);
-                                const hr = document.createElement('hr');
+                                // const hr = document.createElement('hr');
                                 // hr.className='dropdown-divider';
-                                ul.appendChild(hr);
+                                // ul.appendChild(hr);
                             });
 
                             div.appendChild(ul);

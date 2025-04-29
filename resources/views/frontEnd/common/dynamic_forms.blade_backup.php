@@ -294,8 +294,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child:
-                                </label>
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child:</label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         <select name="s_user_id" class="select-field form-control" required id="records_list" style="width:100%;">
@@ -319,8 +318,10 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             </div>
         </div>
     </div>
+    
 </div>
 <!-- Su Daily Log Book Modal End -->
+
 <!-- dynamic form script start -->
 <script>
     $(document).ready(function() {

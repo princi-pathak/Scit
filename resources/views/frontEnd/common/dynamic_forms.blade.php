@@ -5,7 +5,7 @@
 </style>
 <?php
 $home_id = Auth::user()->home_id;
-$service_users = App\ServiceUser::where('home_id', $home_id)->get()->toArray();
+$service_users = App\ServiceUser::where('home_id', $home_id)->where('is_deleted', 0)->get()->toArray();
 $dynamic_forms = App\DynamicFormBuilder::getFormList();
 $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 ?>
@@ -62,9 +62,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                                             $this_location_id = App\DynamicFormLocation::getLocationIdByTag('top_profile_btn');
                                             foreach ($dynamic_forms as $value) {
-
                                                 $location_ids_arr = explode(',', $value['location_ids']);
-
                                                 if (in_array($this_location_id, $location_ids_arr)) {
                                             ?>
                                                     <option value="{{ $value['id'] }}"> {{ ucfirst($value['title']) }} </option>
@@ -292,9 +290,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="">
                             {{-- sourabh --}}
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Category:
-                                </label>
+                            <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Category: </label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         <select name="s_category_id" class="select-field form-control" required id="category_list" style="width:100%;">
@@ -308,7 +305,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             {{-- sourabh --}}
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                 <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child:
@@ -794,7 +791,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
         $(document).on('click', '.dyn-form-filler', function()
         {
-
             var previous_model_id = $(this).closest('.modal').attr('id');
             var dynamic_form_id = $(this).attr('id');
             var form_id = $(this).closest('form').attr('id');
@@ -890,14 +886,9 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             return false;
         });
 
-
-
-
         function dyn_form_filler(){
 
         }
-
-
 
         $(document).on('click', '#DynFormViewModal .previous_modal_btn', function() {
             var previous_modal_id = $(this).attr('pre_modal');
@@ -927,6 +918,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 $('.dpYears').datepicker('place')
             });
             seteditvalueeditable = false;
+            viewdatawithvalueFormio();
             //attr('pre_modal');
             return false;
         });
@@ -1134,7 +1126,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
 
         $('.sbt-su-dyn-frm-log').click(function() {
-
+            alert("save");
             var dyn_form_id = $('input[name=\'dyn_form_id\']').val();
             var s_user_id = $('select[name=\'s_user_id\']').val();
             var s_category_id = $('select[name=\'s_category_id\']').val();
@@ -1196,6 +1188,16 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         setTimeout(function() {
                             $('.popup_success').fadeOut()
                         }, 5000);
+
+                        if(logtype==1){
+                            window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;   
+                        }else if(logtype==2){
+                            window.location.href = "{{ url('/service/weekly-logs?key=') }}" + s_user_id;   
+                        }else if(logtype==3){
+                            window.location.href = "{{ url('/service/monthly-logs?key=') }}" + s_user_id;   
+                        }
+
+
                         $('.dyn-logged-btn').click();
 
                     } else {
