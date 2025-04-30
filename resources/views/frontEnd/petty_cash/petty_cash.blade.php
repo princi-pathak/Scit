@@ -293,6 +293,7 @@
     var filterUrl = "{{url('petty-cash/cash_filter')}}";
     var token = "<?php echo csrf_token(); ?>";
     var saveUrl="{{url('petty-cash/saveCash')}}";
+    var editUrl="{{url('petty-cash/editCash')}}";
     var redirectUrl="{{url('petty-cash/petty_cash')}}";
 </script>
 <script>

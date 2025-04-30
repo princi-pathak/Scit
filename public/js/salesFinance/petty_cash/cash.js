@@ -9,12 +9,17 @@ function saveCash(){
             $(this).css('border','');
         }
     });
+    var id=$("#id").val();
+    var url=saveUrl;
+    if(id !=''){
+        url=editUrl;
+    }
     if(error == 1){
         return false;
     }else{
         $.ajax({
             type: "POST",
-            url: saveUrl,
+            url: url,
             data: new FormData($("#cashForm")[0]),
             async: false,
             contentType: false,
