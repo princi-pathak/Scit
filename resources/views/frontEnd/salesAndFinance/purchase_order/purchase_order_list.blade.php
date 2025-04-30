@@ -1,4 +1,8 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
+@extends('frontEnd.layouts.master')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title','Purchase Order')
+<link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+@section('content')
 <style>
     .currency {
         padding: 2px 3px 2px 5px;
@@ -14,7 +18,7 @@
     }
 
     #active_inactive {
-        background-color: #474747;
+        background-color: #57c8f1;
     }
 
     .tutor-student-tooltip-col {
@@ -112,387 +116,362 @@
         overflow: auto;
     }
 
-    .tag_box {
-        background: #f5f5f5;
-        display: grid;
-        border: 1px solid #dee2e6;
+    .dropdown-item {
+        padding: 6px 15px;
+        font-size: 13px;
+        color: #212529;
+        text-align: inherit;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        background-color: transparent;
+        border: 0;
+        border-radius: 0;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+
+    .searchJobForm {
+        border: 1px solid #eee;
+        margin-bottom: 20px;
+        margin-top: 20px;
     }
 </style>
-<section class="main_section_page px-3">
+
+<section class="wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 col-lg-4 col-xl-4 ">
-                <div class="pageTitle">
-                    <h3>{{$status['page_heading']}}</h3>
-                </div>
-            </div>
-            <div class="col-md-8 col-lg-8 col-xl-8 px-3">
-                <div class="pageTitleBtn">
-                    <a href="{{url('purchase-orders-search')}}" class="profileDrop"> Search Purchase Orders</a>
-                    <a href="{{url('purchase-order-invoices')}}" class="profileDrop"> Invoice Received</a>
-                    <a href="{{url('purchase-order-statements')}}" class="profileDrop"> Statements</a>
-                </div>
-            </div>
-        </div>
-
-
-            <div class="row">
-                <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-                    <div class="jobsection">
-                        <div class="d-inline-flex align-items-center ">
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                    New
-                                </a>
-                                <div class="dropdown-menu fade-up m-0">
-                                    <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
-                                    <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
-                                    <!-- <a href="#!" class="dropdown-item">Print</a>
+            <div class="col-sm-12 p-0">
+                <div class="panel">
+                    <header class="panel-heading px-5">
+                        <h4>{{$status['page_heading']}}</h4>
+                    </header>
+                    <div class="panel-body">
+                        <div class="col-lg-12 mt-4">
+                            <div class="jobsection justify-content-end">
+                                <a href="{{url('purchase-orders-search')}}" class="btn btn-default2"> Search Purchase Orders</a>
+                                <a href="{{url('purchase-order-invoices')}}" class="btn btn-default2"> Invoice Received</a>
+                                <a href="{{url('purchase-order-statements')}}" class="btn btn-default2"> Statements</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-4">
+                            <div class="jobsection">
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link btn btn-default2" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
+                                    <div class="dropdown-menu fade-up m-0">
+                                        <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
+                                        <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
+                                        <!-- <a href="#!" class="dropdown-item">Print</a>
                                     <a href="#!" class="dropdown-item">Email</a> -->
+                                    </div>
+                                </div>
+                                <a href="{{ url('draft_purchase_order') }}" class="btn btn-default2" <?php if ($status['status'] == 1) { ?>id="active_inactive" <?php } ?>>Draft <span>({{$draftCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/AwaitingApprivalPurchaseOrders') }}" class="btn btn-default2" <?php if ($status['status'] == 2) { ?>id="active_inactive" <?php } ?>>Awaiting Approval <span>({{$awaitingApprovalCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/Approved') }}" class="btn btn-default2" <?php if ($status['status'] == 3) { ?>id="active_inactive" <?php } ?>>Approved <span>({{$approvedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/Rejected') }}" class="btn btn-default2" <?php if ($status['status'] == 8) { ?>id="active_inactive" <?php } ?>>Rejected <span>({{$rejectedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/Actioned') }}" class="btn btn-default2" <?php if ($status['status'] == 4) { ?>id="active_inactive" <?php } ?>>Actioned <span>({{$actionedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/Paid') }}" class="btn btn-default2" <?php if ($status['status'] == 5) { ?>id="active_inactive" <?php } ?>>Paid <span>({{$paidCount}})</span></a>
                             </div>
-                        </div>
-                    </div>
-                    <a href="{{ url('draft_purchase_order') }}" class="profileDrop" <?php if ($status['status'] == 1) { ?>id="active_inactive" <?php } ?>>Draft <span>({{$draftCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order/AwaitingApprivalPurchaseOrders') }}" class="profileDrop" <?php if ($status['status'] == 2) { ?>id="active_inactive" <?php } ?>>Awaiting Approval<span>({{$awaitingApprovalCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order/Approved') }}" class="profileDrop" <?php if ($status['status'] == 3) { ?>id="active_inactive" <?php } ?>>Approved<span>({{$approvedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order/Rejected') }}" class="profileDrop" <?php if ($status['status'] == 8) { ?>id="active_inactive" <?php } ?>>Rejected<span>({{$rejectedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order/Actioned') }}" class="profileDrop" <?php if ($status['status'] == 4) { ?>id="active_inactive" <?php } ?>>Actioned<span>({{$actionedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order/Paid') }}" class="profileDrop" <?php if ($status['status'] == 5) { ?>id="active_inactive" <?php } ?>>Paid<span>({{$paidCount}})</span></a>
-
-                </div>
-            </div>
-
-        </div>
-        <di class="row">
-            <div class="col-lg-12">
-                <div class="maimTable">
-                    <div class="printExpt">
-                        <div class="prntExpbtn">
-                            <a href="#!">Print</a>
-                            <a href="#!">Export</a>
-                        </div>
-                        <div class="searchFilter">
-                            <a href="#!" onclick="hideShowDiv()" class="hidebtn">Show Search Filter</a>
-                        </div>
-
-                    </div>
-
-                    <div class="searchJobForm" id="divTohide" style="display:none">
-                        <form id="search_dataForm" class="p-4">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">PO Ref:</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control editInput" id="po_ref">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">Department:</label>
-                                        <div class="col-md-8 position-relative">
-                                            <input type="text" class="form-control editInput" id="department">
-                                            <input type="hidden" id="selectedDeptId" name="selectedDeptId">
-                                            <div class="parent-container department-container"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">Tag:</label>
-                                        <div class="col-md-8 position-relative">
-                                            <input type="text" class="form-control editInput" id="tag">
-                                            <input type="hidden" id="selectedTagtId" name="selectedTagtId">
-                                            <div class="parent-container tag-container"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group mb-2">
-
-                                        <label class="col-md-4 col-form-label text-end ">
-                                            <a href="#!" class="tutor-student-tooltip-col">
-                                                EDD From:
-
-                                                <span class="tutor-student-tooltiptext3">Expedcted Delivery Date</span>
-                                            </a>
-                                        </label>
-
-                                        <div class="col-md-4">
-                                            <input type="date" class="form-control editInput" id="edd_startDate">
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <input type="date" class="form-control editInput" id="edd_endDate">
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">Supplier:</label>
-                                        <div class="col-md-8 position-relative">
-                                            <input type="text" class="form-control editInput" id="supplier">
-                                            <input type="hidden" id="selectedsupplierId" name="selectedsupplierId">
-                                            <div class="parent-container supplier-container"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">PO Date From:</label>
-                                        <div class="col-md-4">
-                                            <input type="date" class="form-control editInput" id="po_startDate">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="date" class="form-control editInput" id="po_endDate">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">Customer:</label>
-                                        <div class="col-md-8 position-relative">
-                                            <input type="text" class="form-control editInput" id="customer">
-                                            <input type="hidden" id="selectedCustomerId" name="selectedCustomerId">
-                                            <div class="parent-container customer-container"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">Created By:</label>
-                                        <div class="col-md-8 position-relative">
-                                            <input type="text" class="form-control editInput" id="created_by">
-                                            <input type="hidden" id="selectedcreatedById" name="selectedcreatedById">
-                                            <div class="parent-container createdBy-container"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">PO Posted:</label>
-                                        <div class="col-md-8">
-                                            <select class="form-control editInput selectOptions" id="po_posted">
-                                                <option selected disabled>--Any--</option>
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">Project:</label>
-                                        <div class="col-md-8 position-relative">
-                                            <input type="text" class="form-control editInput" id="project">
-                                            <input type="hidden" id="selectedProjectId" name="selectedProjectId">
-                                            <div class="parent-container project-container"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">Keywords:</label>
-                                        <div class="col-md-8 position-relative">
-                                            <input type="text" class="form-control editInput" id="keywords">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group mb-2">
-                                        <label class="col-md-4 col-form-label text-end">Delivery Status:</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control editInput" id="delivery_status">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="pageTitleBtn justify-content-center">
-                                        <a href="javascript:void(0)" onclick="searchBtn()" class="profileDrop px-3">Search </a>
-                                        <a href="javascript:void(0)" onclick="clearBtn()" class="profileDrop px-3">Clear</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="markendDelete">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="jobsection">
-                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                    <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="profileDrop">Preview Purchase Order</a>
-                                    @if($status['status'] == 3 || $status['status'] == 4 || $status['status'] == 5)
-                                    <div class=" d-inline-flex align-items-center">
+                            <div class="jobsection">
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
+                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Purchase Order</a>
+                                @if($status['status'] == 3 || $status['status'] == 4 || $status['status'] == 5)
+                                <div class=" d-inline-flex align-items-center">
                                     <div class="nav-item dropdown">
-                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Email Purchase Order
-                                            </a>
-                                            <div class="dropdown-menu fade-up m-0">
-                                                <a href="javascript:void(0)" class="dropdown-item email_sendCheck" onclick="email_sendCheck(1)">Send As Single Email</a>
-                                                <hr class="dropdown-divider emialSend" style="display:none">
-                                                <a href="javascript:void(0)" class="dropdown-item emialSend email_sendCheck" onclick="email_sendCheck(2)" style="display:none">Send As Multiple Emails</a>
+                                        <a href="#!" class="nav-link dropdown-toggle btn btn-default2" data-toggle="dropdown" aria-expanded="false">
+                                            Email Purchase Order <i class="fa fa-caret-down"></i>
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0">
+                                            <a href="javascript:void(0)" class="dropdown-item email_sendCheck" onclick="email_sendCheck(1)">Send As Single Email</a>
+                                            <hr class="dropdown-divider emialSend" style="display:none">
+                                            <a href="javascript:void(0)" class="dropdown-item emialSend email_sendCheck" onclick="email_sendCheck(2)" style="display:none">Send As Multiple Emails</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0)" id="bulkInvoiceReceived" class="btn btn-default2">Invoice Received</a>
+                                @if($status['status'] != 5)
+                                <a href="javascript:void(0)" id="BulkRecordPaymentBTN" class="btn btn-default2">Record Payment</a>
+                                @endif
+                                @endif
+                                <a href="javascript:void(0)" id="approveBtn" class="btn btn-default2">Approve</a>
+                                <div class="searchFilter">
+                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="searchJobForm" id="divTohide" style="display:none">
+                                <form id="search_dataForm" class="p-4">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">PO Ref:</label>
+                                                <input type="text" class="form-control editInput" id="po_ref">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">Department:</label>
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control editInput" id="department">
+                                                    <input type="hidden" id="selectedDeptId" name="selectedDeptId">
+                                                    <div class="parent-container department-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">Tag:</label>
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control editInput" id="tag">
+                                                    <input type="hidden" id="selectedTagtId" name="selectedTagtId">
+                                                    <div class="parent-container tag-container"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">Supplier:</label>
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control editInput" id="supplier">
+                                                    <input type="hidden" id="selectedsupplierId" name="selectedsupplierId">
+                                                    <div class="parent-container supplier-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">PO Date From:</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="date" class="form-control editInput" id="po_startDate">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="date" class="form-control editInput" id="po_endDate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">
+                                                    <a href="#!" class="tutor-student-tooltip-col">EDD From:<span class="tutor-student-tooltiptext3">Expedcted Delivery Date</span>
+                                                    </a>
+                                                </label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="date" class="form-control editInput" id="edd_startDate">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="date" class="form-control editInput" id="edd_endDate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">Customer:</label>
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control editInput" id="customer">
+                                                    <input type="hidden" id="selectedCustomerId" name="selectedCustomerId">
+                                                    <div class="parent-container customer-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">Created By:</label>
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control editInput" id="created_by">
+                                                    <input type="hidden" id="selectedcreatedById" name="selectedcreatedById">
+                                                    <div class="parent-container createdBy-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">PO Posted:</label>
+                                                <select class="form-control editInput selectOptions" id="po_posted">
+                                                    <option selected disabled>--Any--</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">Project:</label>
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control editInput" id="project">
+                                                    <input type="hidden" id="selectedProjectId" name="selectedProjectId">
+                                                    <div class="parent-container project-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">Keywords:</label>
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control editInput" id="keywords">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label mb-2">Delivery Status:</label>
+                                                <input type="text" class="form-control editInput" id="delivery_status">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-4">
+                                            <div class="jobsection justify-content-center">
+                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-default2">Search </a>
+                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default2">Clear</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="javascript:void(0)" id="bulkInvoiceReceived" class="profileDrop">Invoice Received</a>
-                                    @if($status['status'] != 5)
-                                    <a href="javascript:void(0)" id="BulkRecordPaymentBTN" class="profileDrop">Record Payment</a>
-                                    @endif
-                                    @endif
-                                    <a href="javascript:void(0)" id="approveBtn" class="profileDrop">Approve</a>
-                                </div>
+                                </form>
                             </div>
-                            <!-- <div class="col-md-5">
-                                    <div class="pageTitleBtn p-0">
-                                        <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>        
-                                    </div>
-                                </div> -->
                         </div>
-                    </div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive productDetailTable">
+                                <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAllCheckBoxes"></th>
+                                            <th>#</th>
+                                            <th>PO Ref</th>
+                                            <th>Date</th>
+                                            <th>Due Date</th>
+                                            <th>Supplier</th>
+                                            <th>Customer</th>
+                                            <th>Delivery</th>
+                                            <th>Sub Total</th>
+                                            <th>VAT</th>
+                                            <th>Total </th>
+                                            <th>Outstanding </th>
+                                            <th>Status</th>
+                                            <th>Delivery</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
 
-                    <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAllCheckBoxes"></th>
-                                <th>#</th>
-                                <th>PO Ref</th>
-                                <th>Date</th>
-                                <th>Due Date</th>
-                                <th>Supplier</th>
-                                <th>Customer</th>
-                                <th>Delivery</th>
-                                <th>Sub Total</th>
-                                <th>VAT</th>
-                                <th>Total </th>
-                                <th>Outstanding </th>
-                                <th>Status</th>
-                                <th>Delivery</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                                    <tbody id="search_data">
+                                        <?php
+                                        $all_subTotalAmount = 0;
+                                        $all_vatTotalAmount = 0;
+                                        $all_TotalAmount = 0;
+                                        $outstandingAmountTotal = 0;
+                                        ?>
+                                        @foreach($list as $val)
+                                        <?php
+                                        $customer = App\Models\Customer::find($val->customer_id);
+                                        $sub_total_amount = 0;
+                                        $total_amount = 0;
+                                        $vat_amount = 0;
+                                        $purchaseProductId = 0;
+                                        $product_id = 0;
+                                        $vat = 0;
+                                        foreach ($val->purchaseOrderProducts as $product) {
+                                            $purchaseProductId = $product->id;
+                                            $product_id = $product->product_id;
+                                            $qty = $product->qty * $product->price;
+                                            $sub_total_amount = $sub_total_amount + $qty;
+                                            $vat = $qty * $product->vat / 100;
+                                            $vat_amount = $vat_amount + $vat;
+                                            $total_amount = $total_amount + $vat + $qty;
+                                        }
+                                        $all_subTotalAmount = $all_subTotalAmount + $sub_total_amount;
+                                        $all_vatTotalAmount = $all_vatTotalAmount + $vat_amount;
+                                        $all_TotalAmount = $all_TotalAmount + $total_amount;
+                                        $outstandingAmountTotal = $outstandingAmountTotal + $val->outstanding_amount;
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div>
+                                            </td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$val->purchase_order_ref}}</td>
+                                            <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
+                                            <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
+                                            <td>{{$val->suppliers->name}} <input type="hidden" value="{{$val->suppliers->email}}" class="supplierEmail" id="supplierEmail{{$val->id}}"> </td>
+                                            <td>{{$customer->name ?? ''}}</td>
+                                            <td>{{$val->city}}</td>
+                                            <td>£{{$sub_total_amount}}</td>
+                                            <td>£{{$vat_amount}}</td>
+                                            <td>£{{$total_amount}}</td>
+                                            <td>£{{$val->outstanding_amount}}</td>
+                                            <td>{{$status['list_status']}}</td>
+                                            <td>
+                                                @if( $status['status'] != 1)
+                                                @if($val->delivery_status == 1)
+                                                <span class="grencheck"><i class="fa-solid fa-check"></i></span>
+                                                @elseif($val->delivery_status == 2)
+                                                <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red"><span class="" style="color:#FFCC66"><i class="fa-solid fa-check"></i></span><span class="tutor-student-tooltiptext3">Part Delivered</span></a>
+                                                @else
+                                                <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
+                                                @endif
 
-                        <tbody id="search_data">
-                            <?php
-                            $all_subTotalAmount = 0;
-                            $all_vatTotalAmount = 0;
-                            $all_TotalAmount = 0;
-                            $outstandingAmountTotal = 0;
-                            ?>
-                            @foreach($list as $val)
-                            <?php
-                            $customer = App\Models\Customer::find($val->customer_id);
-                            $sub_total_amount = 0;
-                            $total_amount = 0;
-                            $vat_amount = 0;
-                            $purchaseProductId = 0;
-                            $product_id=0;
-                            $vat = 0;
-                            foreach ($val->purchaseOrderProducts as $product) {
-                                $purchaseProductId = $product->id;
-                                $product_id = $product->product_id;
-                                $qty = $product->qty * $product->price;
-                                $sub_total_amount = $sub_total_amount + $qty;
-                                $vat = $qty * $product->vat / 100;
-                                $vat_amount = $vat_amount + $vat;
-                                $total_amount = $total_amount + $vat + $qty;
-                            }
-                            $all_subTotalAmount = $all_subTotalAmount + $sub_total_amount;
-                            $all_vatTotalAmount = $all_vatTotalAmount + $vat_amount;
-                            $all_TotalAmount = $all_TotalAmount + $total_amount;
-                            $outstandingAmountTotal = $outstandingAmountTotal + $val->outstanding_amount;
-                            ?>
-                            <tr>
-                                <td>
-                                    <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div>
-                                </td>
-                                <td>{{$loop->iteration}}</td>
-                                <td>{{$val->purchase_order_ref}}</td>
-                                <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
-                                <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
-                                <td>{{$val->suppliers->name}} <input type="hidden" value="{{$val->suppliers->email}}" class="supplierEmail" id="supplierEmail{{$val->id}}"> </td>
-                                <td>{{$customer->name ?? ''}}</td>
-                                <td>{{$val->city}}</td>
-                                <td>£{{$sub_total_amount}}</td>
-                                <td>£{{$vat_amount}}</td>
-                                <td>£{{$total_amount}}</td>
-                                <td>£{{$val->outstanding_amount}}</td>
-                                <td>{{$status['list_status']}}</td>
-                                <td>
-                                @if( $status['status'] != 1)
-                                    @if($val->delivery_status == 1)
-                                    <span class="grencheck"><i class="fa-solid fa-check"></i></span>
-                                    @elseif($val->delivery_status == 2)
-                                    <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red"><span class="" style="color:#FFCC66"><i class="fa-solid fa-check"></i></span><span class="tutor-student-tooltiptext3">Part Delivered</span></a>
-                                    @else
-                                    <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
-                                    @endif
-                                @else
-                                -
-                                @endif
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-end">
-                                        <div class="nav-item dropdown">
-                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Action
-                                            </a>
-                                            <div class="dropdown-menu fade-up m-0" style="z-index:9999">
-                                                @if( $status['status'] != 1 && $status['status'] != 2)
-                                                <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
-                                                <hr class="dropdown-divider">
-                                                @endif
-                                                <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
-                                                <hr class="dropdown-divider">
-                                                @if( $status['status'] != 1 && $status['status'] != 2)
-                                                <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Print</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
-                                                <hr class="dropdown-divider">
-                                                @endif
+                                                @else
+                                                -
+
                                                 <a href="{{url('purchase_order/duplicate?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                 <hr class="dropdown-divider">
                                                 @if($status['status'] != 8 && $status['status'] != 1 )
                                                 <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
                                                 <hr class="dropdown-divider">
-                                                @endif
-                                                @if($status['status'] == 1 || $status['status'] == 2)
-                                                <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
-                                                <hr class="dropdown-divider">
-                                                @endif
-                                                @if($status['status'] != 5 && $status['status'] != 1 && $status['status'] != 2)
-                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}},{{$val->supplier_id}})" class="dropdown-item">Record Payment</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
-                                                <hr class="dropdown-divider">
-                                                @endif
-                                                @if($status['status'] == 8 || $status['status'] == 4 || $status['status'] == 5 || $status['status'] == 3)
-                                                    @if($val->delivery_status !=1)
-                                                    <a href="#!" class="dropdown-item">Cancel Purchase Order</a>
-                                                    <hr class="dropdown-divider">
-                                                    @endif
-                                                @endif
-                                                <a href="#!" class="dropdown-item">CRM / History</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#!" class="dropdown-item">Start Timer</a>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        @if(count($list)>0)
-                        <tr class="calcualtionShowHide">
-                            <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
-                            <th colspan="12"></th>
-                        </tr>
-                        <tr class="calcualtionShowHide">
-                            <td colspan="8"></td>
 
-                            <td id="Tablesub_total_amount">£{{$all_subTotalAmount}}</td>
-                            <td id="Tablevat_amount">£{{$all_vatTotalAmount}}</td>
-                            <td id="Tabletotal_amount">£{{$all_TotalAmount}}</td>
-                            <td id="Tableoutstanding_amount" colspan="8">£{{$outstandingAmountTotal}}</td>
-                        </tr>
-                        @endif
-                    </table>
-
-                </div> <!-- End off main Table -->
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-end">
+                                                    <div class="dropdown">
+                                                        <a href="#!" class="dropdown-toggle btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                                            Action <i class="fa fa-caret-down"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right fade-up m-0" style="z-index:9999">
+                                                            @if( $status['status'] != 1 && $status['status'] != 2)
+                                                            <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
+                                                            @endif
+                                                            <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
+                                                            <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
+                                                            @if( $status['status'] != 1 && $status['status'] != 2)
+                                                            <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Print</a>
+                                                            <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
+                                                            @endif
+                                                            <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
+                                                            @if($status['status'] != 8 && $status['status'] != 1 )
+                                                            <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
+                                                            @endif
+                                                            @if($status['status'] == 1 || $status['status'] == 2)
+                                                            <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
+                                                            @endif
+                                                            @if($status['status'] != 5 && $status['status'] != 1 && $status['status'] != 2)
+                                                            <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}},{{$val->supplier_id}})" class="dropdown-item">Record Payment</a>
+                                                            <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
+                                                            @endif
+                                                            @if($status['status'] == 8 || $status['status'] == 4 || $status['status'] == 5 || $status['status'] == 3)
+                                                            @if($val->delivery_status !=1)
+                                                            <a href="#!" class="dropdown-item">Cancel Purchase Order</a>
+                                                            @endif
+                                                            @endif
+                                                            <a href="#!" class="dropdown-item">CRM / History</a>
+                                                            <a href="#!" class="dropdown-item">Start Timer</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                    @if(count($list)>0)
+                                    <tr class="calcualtionShowHide">
+                                        <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
+                                        <th colspan="12"></th>
+                                    </tr>
+                                    <tr class="calcualtionShowHide">
+                                        <td colspan="8"></td>
+                                        <td id="Tablesub_total_amount">£{{$all_subTotalAmount}}</td>
+                                        <td id="Tablevat_amount">£{{$all_vatTotalAmount}}</td>
+                                        <td id="Tabletotal_amount">£{{$all_TotalAmount}}</td>
+                                        <td id="Tableoutstanding_amount" colspan="8">£{{$outstandingAmountTotal}}</td>
+                                    </tr>
+                                    @endif
+                                </table>
+                            </div>
+                            <!-- End off main Table -->
+                        </div>
+                    </div>
+                </div>
             </div>
-        </di>
+        </div>
     </div>
 </section>
 <!-- Approve Model Start Here -->
@@ -501,7 +480,7 @@
         <div class="modal-content add_Customer">
             <div class="modal-header">
                 <h5 class="modal-title" id="customerModalLabel">Authorise Purchase Order</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -565,8 +544,8 @@
             </div>
             <div class="modal-footer customer_Form_Popup">
 
-                <button type="button" class="profileDrop" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default2" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
+                <button type="button" class="btn btn-default2" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -579,7 +558,7 @@
         <div class="modal-content add_Customer">
             <div class="modal-header">
                 <h5 class="modal-title" id="crecordDeliveryModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -615,8 +594,8 @@
             </div>
             <div class="modal-footer customer_Form_Popup">
 
-                <button type="button" class="profileDrop" id="saverecordDeliveryModal" onclick="saverecordDeliveryModal()">Save</button>
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default2" id="saverecordDeliveryModal" onclick="saverecordDeliveryModal()">Save</button>
+                <button type="button" class="btn btn-default2" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -628,7 +607,7 @@
         <div class="modal-content add_Customer">
             <div class="modal-header">
                 <h5 class="modal-title" id="recordPaymentModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -671,8 +650,8 @@
                                         <div class="mb-2 row">
                                             <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid <span class="radStar">*</span></label>
                                             <div class="col-sm-1">
-                                                <div class="tag_box text-center">
-                                                    <span style="padding:3px">£</span>
+                                                <div class="tag_box">
+                                                    <span>£</span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-8">
@@ -721,8 +700,8 @@
             </div>
             <div class="modal-footer customer_Form_Popup">
 
-                <button type="button" class="profileDrop" id="saverecordPaymentModal" onclick="saverecordPaymentModal()">Save</button>
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default2" id="saverecordPaymentModal" onclick="saverecordPaymentModal()">Save</button>
+                <button type="button" class="btn btn-default2" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -781,24 +760,42 @@
     selectBoxsubject="selectBoxsubject"
     body="emailbody"
     saveButtonId="emailSave"
-    saveUrl="{{url('purchaseOrderEmailSave')}}"
-     />
-<x-bulk-invoice-received 
+    saveUrl="{{url('purchaseOrderEmailSave')}}" />
+<x-bulk-invoice-received
     bulInvoiceModalId="bulkInvoiceReceivedModal"
     modalTitle="bulkInvoiceReceivedModalLabel"
     bulInvoiceformId="bulkInvoiceReceivedForm"
     bulInvoiceId="bulkInvoiceReceivedId"
-    saveButtonId="bulkInvoiceReceivedsave"
-/>
+    saveButtonId="bulkInvoiceReceivedsave" />
 
-<x-bulk-record-payment 
+<x-bulk-record-payment
     bulkRecordPaymentModalId="bulkRecordPaymentModal"
     modalTitle="bulkRecordPaymentModalLabel"
     bulkRecordPaymentformId="bulkRecordPaymentForm"
     bulkRecordPaymentId="bulkRecordPayemntId"
-    saveButtonId="bulkRecordPaymentsave"
-/>
+    saveButtonId="bulkRecordPaymentsave" />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
+<script>
+    // search leads show search Filter
+    function hideShowDiv() {
+        let div = document.getElementById("divTohide");
+
+        if (div.style.display === 'none' || div.style.opacity === '0') {
+            div.style.display = 'block';
+            div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
+            div.style.opacity = '1';
+        } else {
+            div.style.height = '0px';
+            div.style.opacity = '0';
+            // Use a timeout to set display to none after the transition
+            setTimeout(() => {
+                div.style.display = 'none';
+            }, 500); // 500ms matches the CSS transition duration
+        }
+    }
+    // end search leads show search Filter js
+</script>
 
 <script>
     $("#deleteSelectedRows").on('click', function() {
@@ -848,47 +845,51 @@
         }
         shoeHideEmailSend();
     });
-    $('#selectAllCheckBoxes').on('click', function () {
+    $('#selectAllCheckBoxes').on('click', function() {
         $('.delete_checkbox').prop('checked', $(this).prop('checked'));
-        shoeHideEmailSend(); 
-  });
-  function shoeHideEmailSend(){
-    if($('.delete_checkbox:checked').length>1){
-        $('.emialSend').show();
-    }else{
-        $('.emialSend').hide();
-    }
-  }
-  $("#preview_purchase_orderBoxes").on('click', function(){
-    let previewids = [];
-    var name='';
-    let error=0;
-    $('.delete_checkbox:checked').each(function() {
-        const row = $(this).closest('tr');
-        const supplierName = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
-        if(name == ''){
-            name=supplierName;
+        shoeHideEmailSend();
+    });
+
+    function shoeHideEmailSend() {
+        if ($('.delete_checkbox:checked').length > 1) {
+            $('.emialSend').show();
+        } else {
+            $('.emialSend').hide();
         }
-        if(name !== supplierName){
-            error=1;
+    }
+    $("#preview_purchase_orderBoxes").on('click', function() {
+        let previewids = [];
+        var name = '';
+        let error = 0;
+        $('.delete_checkbox:checked').each(function() {
+            const row = $(this).closest('tr');
+            const supplierName = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
+            if (name == '') {
+                name = supplierName;
+            }
+            if (name !== supplierName) {
+                error = 1;
+                return false;
+            }
+            previewids.push($(this).val());
+        });
+        if (error) {
+            alert("Sorry, you cannot preview purchase orders for multiple customers.");
             return false;
         }
-        previewids.push($(this).val());
+        if (previewids.length == 0) {
+            alert("Please select at least one purchase order for preview.");
+            return false;
+        } else {
+            // location.href="<?php echo url('preview-purchase-orders?key='); ?>"+previewids;
+            window.open("<?php echo url('preview-purchase-orders?key='); ?>" + previewids, "_blank");
+        }
     });
-    if(error){
-        alert("Sorry, you cannot preview purchase orders for multiple customers.");
-        return false;
-    }
-    if (previewids.length == 0) {
-        alert("Please select at least one purchase order for preview.");
-        return false;
-    }else{
-        // location.href="<?php echo url('preview-purchase-orders?key=');?>"+previewids;
-        window.open("<?php echo url('preview-purchase-orders?key=');?>" + previewids, "_blank");
-    }
-  });
-  $("#approveBtn").on('click',function(){
-    let approveids = [];
+    $("#approveBtn").on('click', function() {
+        let approveids = [];
+
+        $('.delete_checkbox:checked').each(function() {
+            approveids.push($(this).val());
 
     $('.delete_checkbox:checked').each(function() {
         approveids.push($(this).val());
@@ -925,46 +926,80 @@
         .catch(error => {
             // $('.catsuccessdanger').text('There was an error submitting the form.');
             console.error("Error: ",error);
+
         });
-    }
-  });
-  function email_sendCheck(type){
+        if (approveids.length == 0) {
+            alert("Please select at least one purchase order for approval.");
+        } else {
+            var token = '<?php echo csrf_token(); ?>';
+            // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
+            var url = `{{ url('purchase_order_approveMultiple') }}`;
+            fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify({
+                        approveids: approveids
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // return false;
+                    if (data.success === true) {
+                        location.reload();
+                    } else {
+                        alert("Something went wrong");
+                        return false;
+                    }
+
+                })
+                .catch(error => {
+                    // $('.catsuccessdanger').text('There was an error submitting the form.');
+                    console.error("Error: ", error);
+                });
+        }
+    });
+
+    function email_sendCheck(type) {
         let emailids = [];
-        var name='';
-        var ref='';
-        let error=0;
-        var SupplierEmail='';
+        var name = '';
+        var ref = '';
+        let error = 0;
+        var SupplierEmail = '';
         $('.delete_checkbox:checked').each(function() {
             const row = $(this).closest('tr');
             var supplierNameEmail = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
             ref = row.get(0).querySelector('td:nth-child(3)').textContent.trim();
-            SupplierEmail = $('#supplierEmail'+$(this).val()).val();
-            
-            if(name == ''){
-                name=supplierNameEmail;
+            SupplierEmail = $('#supplierEmail' + $(this).val()).val();
+
+            if (name == '') {
+                name = supplierNameEmail;
             }
-            if(name !== supplierNameEmail){
-                error=1;
+            if (name !== supplierNameEmail) {
+                error = 1;
                 return false;
             }
             emailids.push($(this).val());
         });
-        if(error){
+        if (error) {
             alert("Sorry, you cannot email purchase orders for multiple suppliers.");
             return false;
         }
         if (emailids.length == 0) {
             alert("Please select at least one purchase order for Email.");
             return false;
-        }else{
-            // window.open("<?php echo url('preview-purchase-orders?key=');?>" + emailids, "_blank");
+        } else {
+            // window.open("<?php echo url('preview-purchase-orders?key='); ?>" + emailids, "_blank");
             $("#emailformId")[0].reset();
             $("#dropdownButton").html('');
             $("#dropdownButton").append('<span class="optext">' + SupplierEmail + '&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
             $("#selectedToEmail").val(SupplierEmail);
             $("#email_modalTitle").text("Email Purchase Order");
             $("#emailsubject").val("Purchase Order from The Contructor - {PO_REF}");
-            if(type == 1){
+            if (type == 1) {
                 $("#emailsubject").val("Purchase Order from The Contructor - " + ref);
             }
             $("#email_po_id").val(emailids);
@@ -979,8 +1014,8 @@
             `;
             editor.setData(message);
             $("#emailModal").modal('show');
-            }
-  }
+        }
+    }
 </script>
 <script>
     function clearBtn() {
@@ -1823,10 +1858,10 @@
                 var paginationControlsProductDetail = $("#pagination-controls-recordDelivery");
                 paginationControlsProductDetail.empty();
                 if (paginationProductDetails.prev_page_url) {
-                    paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                    paginationControlsProductDetail.append('<button type="button" class="btn btn-default2" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
                 }
                 if (paginationProductDetails.next_page_url) {
-                    paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                    paginationControlsProductDetail.append('<button type="button" class="btn btn-default2" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
                 }
             },
             error: function(xhr, status, error) {
@@ -1835,7 +1870,7 @@
             }
         });
     }
-    document.addEventListener('input', function (event) {
+    document.addEventListener('input', function(event) {
         if (event.target.classList.contains('already_deliver') || event.target.classList.contains('receive_more')) {
             const row = event.target.closest('tr');
             const qty = parseInt(row.querySelector('.qty').value, 10);
@@ -1895,7 +1930,7 @@
 
     }
 
-    function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, product_id, outstandingAmount,supplier_id) {
+    function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, product_id, outstandingAmount, supplier_id) {
         // alert(outstandingAmount)
         $("#purchaseOrderRecordDate").text(po_ref + ' On ' + date);
         $("#recordPayment_po_id").val(id);
@@ -2033,21 +2068,21 @@
         editor.setData(message);
         $("#emailModal").modal('show');
     }
-    function getAllPurchaseInvices(data){
+
+    function getAllPurchaseInvices(data) {
         location.reload();
     }
-$('#bulkInvoiceReceived').on('click', function(){
-    const tableBody = document.querySelector(`#bulkInvoiceReceived_result tbody`);
-    tableBody.innerHTML='';
-    tableBody.innerHTML='<tr><td colspan="9" class="text text-danger text-center" id="norecorderror">Sorry, no records to show</td> </tr>';
-    $("#bulkInvoiceReceivedModal").modal('show');
-});
-$('#BulkRecordPaymentBTN').on('click', function(){
-    const tableBody = document.querySelector(`#bulkRecordPayment_result tbody`);
-    tableBody.innerHTML='';
-    tableBody.innerHTML='<tr><td colspan="8" class="text text-danger text-center" id="norecorderrorRecordPayment">Sorry, no records to show</td> </tr>';
-    $("#bulkRecordPaymentModal").modal('show');
-});
-
+    $('#bulkInvoiceReceived').on('click', function() {
+        const tableBody = document.querySelector(`#bulkInvoiceReceived_result tbody`);
+        tableBody.innerHTML = '';
+        tableBody.innerHTML = '<tr><td colspan="9" class="text text-danger text-center" id="norecorderror">Sorry, no records to show</td> </tr>';
+        $("#bulkInvoiceReceivedModal").modal('show');
+    });
+    $('#BulkRecordPaymentBTN').on('click', function() {
+        const tableBody = document.querySelector(`#bulkRecordPayment_result tbody`);
+        tableBody.innerHTML = '';
+        tableBody.innerHTML = '<tr><td colspan="8" class="text text-danger text-center" id="norecorderrorRecordPayment">Sorry, no records to show</td> </tr>';
+        $("#bulkRecordPaymentModal").modal('show');
+    });
 </script>
-@include('frontEnd.salesAndFinance.jobs.layout.footer')
+@endsection
