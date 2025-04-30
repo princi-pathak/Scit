@@ -104,116 +104,113 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label> Post Code <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" id="postcode" name="post_code" placeholder="L34 5SQ">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label> Council <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" id="council" name="council" placeholder="Knowsley">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>No of Bedrooms </label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="no_of_bedrooms" id="no_of_bedrooms" placeholder="4" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" >
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Owned by Omega <span class="radStar">*</span></label>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <label class="form-check-label m-0" for="ownedByOmegayes">Yes</label>
-                                        <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="1" id="ownedByOmegayes">
-                                        <label class="form-check-label m-0" for="ownedByOmegano">No</label>
-                                        <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="0" id="ownedByOmegano">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Occupancy </label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" id="occupancy" name="occupancy" placeholder="2">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Exempt <span class="radStar">*</span></label>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <label class="form-check-label m-0" for="exempt_yes">Yes</label>
-                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="1" id="exemptyes">
-                                        <label class="form-check-label m-0" for="exempt_no">No</label>
-                                        <input class="form-check-input mt-0" type="radio" name="exempt" value="0" id="exemptno">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Account number<span class="radStar">*</span></label>
-                                <div>
-                                    <input type="text" class="form-control editInput" id="account_number" name="account_number" placeholder="Account number" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Last bill</label>
-                                <div>
-                                    <!-- <input type="date" class="form-control" name="last_bill_date" id="last_bill_date"> -->
-                                </div>
-                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                    <input name="last_bill_date" id="last_bill_date" type="text" value="" autocomplete="off" class="form-control" placeholder="Last Bill Date">
-
-                                    <span class="input-group-btn datetime-picker2 btn_height">
-                                        <button class="btn btn-primary" type="button" id="openCalendarLastBillBtn">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Bill period </label>
-                                <div class="row">
-                                    <div class="col-sm-6 pe-3">
-                                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                            <input name="bill_period_start_date" id="bill_period_start_date" type="text" value="" autocomplete="off" class="form-control" placeholder="Start Date">
-
-                                            <span class="input-group-btn datetime-picker2 btn_height">
-                                                <button class="btn btn-primary" type="button" id="openCalendarBillPeriodStartBtn">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </button>
-                                            </span>
+                                    <div class="row">
+                                        <div class="col-sm-6 pe-3">
+                                            <label> Post Code <span class="radStar">*</span></label>
+                                            <input type="text" class="form-control editInput" id="postcode" name="post_code" placeholder="L34 5SQ">
+                                        </div>
+                                        <div class="col-sm-6 ps-3">
+                                            <label> Council <span class="radStar">*</span></label>
+                                            <input type="text" class="form-control editInput" id="council" name="council" placeholder="Knowsley">
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 ps-3">
-                                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                            <input name="bill_period_end_date" id="bill_period_end_date" type="text" value="" autocomplete="off" class="form-control" placeholder="End Date">
-
-                                            <span class="input-group-btn datetime-picker2 btn_height">
-                                                <button class="btn btn-primary" type="button" id="openCalendarBillPeriodEndBtn">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </button>
-                                            </span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 pe-3">
+                                            <label>No of Bedrooms </label>
+                                            <input type="text" class="form-control editInput" name="no_of_bedrooms" id="no_of_bedrooms" placeholder="4" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                        </div>
+                                        <div class="col-sm-6 ps-3">
+                                            <label>Occupancy </label>
+                                            <input type="text" class="form-control editInput" id="occupancy" name="occupancy" placeholder="2">
                                         </div>
                                     </div>
-                                    <div id="dateError"> </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Amount paid </label>
-                                <div>
-                                    <input type="text" class="form-control editInput" id="amount_paid" name="amount_paid" placeholder="Amount paid" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 pe-3">
+                                            <label>Owned by Omega <span class="radStar">*</span></label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <label class="form-check-label m-0" for="ownedByOmegayes">Yes</label>
+                                                <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="1" id="ownedByOmegayes">
+                                                <label class="form-check-label m-0" for="ownedByOmegano">No</label>
+                                                <input class="form-check-input mt-0" type="radio" name="owned_by_omega" value="0" id="ownedByOmegano">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 ps-3">
+                                            <label>Exempt <span class="radStar">*</span></label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <label class="form-check-label m-0" for="exempt_yes">Yes</label>
+                                                <input class="form-check-input mt-0" type="radio" name="exempt" value="1" id="exemptyes">
+                                                <label class="form-check-label m-0" for="exempt_no">No</label>
+                                                <input class="form-check-input mt-0" type="radio" name="exempt" value="0" id="exemptno">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Additional Notes </label>
-                                <div>
-                                    <input type="text" class="form-control editInput" id="additional_notes" name="additional" placeholder="Additional Notes">
+                                <div class="form-group">
+                                    <label>Account number<span class="radStar">*</span></label>
+                                    <div>
+                                        <input type="text" class="form-control editInput" id="account_number" name="account_number" placeholder="Account number" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last bill</label>
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="last_bill_date" id="last_bill_date" type="text" value="" autocomplete="off" class="form-control" placeholder="Last Bill Date">
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary" type="button" id="openCalendarLastBillBtn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Bill period </label>
+                                    <div class="row">
+                                        <div class="col-sm-6 pe-3">
+                                            <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                <input name="bill_period_start_date" id="bill_period_start_date" type="text" value="" autocomplete="off" class="form-control" placeholder="Start Date">
+                                                <span class="input-group-btn datetime-picker2 btn_height">
+                                                    <button class="btn btn-primary" type="button" id="openCalendarBillPeriodStartBtn">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 ps-3">
+                                            <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                <input name="bill_period_end_date" id="bill_period_end_date" type="text" value="" autocomplete="off" class="form-control" placeholder="End Date">
+                                                <span class="input-group-btn datetime-picker2 btn_height">
+                                                    <button class="btn btn-primary" type="button" id="openCalendarBillPeriodEndBtn">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div id="dateError"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Amount paid </label>
+                                    <div>
+                                        <input type="text" class="form-control editInput" id="amount_paid" name="amount_paid" placeholder="Amount paid" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Additional Notes </label>
+                                    <div>
+                                        <input type="text" class="form-control editInput" id="additional_notes" name="additional" placeholder="Additional Notes">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-warning" id="saveCouncilTax">Save</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-warning" id="saveCouncilTax">Save</button>
+                    </div>
             </form>
         </div>
     </div>

@@ -20,7 +20,7 @@
                                 <a href="#!" type="button" class="profileDrop openPurchaseDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
                             </div>
                             <div class="productDetailTable mb-4 table-responsive">
-                                <table class="table border-top border-bottom tablechange" id="containerA">
+                                <table class="table border-top border-bottom tablechange" id="purchaseDayBookTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -79,7 +79,7 @@
                                             <td>{{ $purchaseBook->tax_rate_name }}</td>
                                             <td>£{{ ($purchaseBook->netAmount + $purchaseBook->vatAmount) - $purchaseBook->reclaim    }}</td>
                                             <td>{{ $purchaseBook->reclaim ? '£' . $purchaseBook->reclaim : '' }}</td>
-                                            <td>{{ $purchaseBook->not_reclaim }}</td>
+                                            <td>{{ $purchaseBook->not_reclaim ? '£'.$purchaseBook->not_reclaim : '' }}</td>
                                             <td>{{ $purchaseBook->title }}</td>
                                             <td>{{ $purchaseBook->expense_amount ? '£' . $purchaseBook->expense_amount : '' }}</td>
                                             <td>
@@ -100,7 +100,7 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                    <tfoot>
+                                    <!-- <tfoot>
                                         <tr>
                                             <th colspan="3" rowspan="1">Page Sub Total</th>
                                             <th rowspan="1" colspan="1">£{{ number_format($totalNetAmount, 2) }}</th>
@@ -112,7 +112,7 @@
                                             <th rowspan="1" colspan="1">£{{ number_format($totalExpense, 2) }}</th>
                                             <th></th>
                                         </tr>
-                                    </tfoot>
+                                    </tfoot> -->
                                 </table>
                             </div>
                             <!-- End off main Table -->
@@ -151,7 +151,7 @@
                                 <div class="form-group">
                                     <label for="Date_input"> Date <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="Date" class="form-control editInput" name="date" id="Date_input">
+                                        <input type="text" class="form-control editInput" name="date" id="Date_input">
                                     </div>
                                 </div>
                                 <div class="form-group">

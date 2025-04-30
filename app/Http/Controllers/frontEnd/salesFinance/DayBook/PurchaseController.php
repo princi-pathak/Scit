@@ -42,8 +42,11 @@ class PurchaseController extends Controller
     {
         $data = $request->validated();
 
-        $data['page'] = "dayBook";
-        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null],  array_merge($data, ['home_id' => Auth::user()->home_id]));
+
+        $convertedDate = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
+        $data['date'] = $convertedDate;
+        $data['home_id'] = Auth::user()->home_id;
+        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null], $data);
 
         if ($response->wasRecentlyCreated) {
             return response()->json([  'success' => true, 'message' => 'Purchase day book record created successfully!', 'data' => $response], 201);

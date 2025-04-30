@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
+
 <!--main content start-->
 <section class="wrapper">
     <div class="container-fluid">
@@ -19,7 +20,7 @@
                                 <a href="#!" type="button" class="profileDrop openSalesDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
                             </div>
                             <div class="productDetailTable mb-4 table-responsive">
-                                <table class="table border-top border-bottom tablechange" id="containerA">
+                                <table class="table border-top border-bottom tablechange" id="salesDayBookTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -94,7 +95,7 @@
                                         @endforeach
 
                                     </tbody>
-                                    <tfoot>
+                                    <!-- <tfoot>
                                         <tr>
                                             <th colspan="4" rowspan="1">Page Sub Total</th>
                                             <th rowspan="1" colspan="1">£{{ number_format($totalNetAmount, 2) }}</th>
@@ -102,7 +103,7 @@
                                             <th rowspan="1" colspan="2">£{{ number_format($totalGrossAmount, 2) }}</th>
                                             <th rowspan="1" colspan="2">£{{ number_format($totalFinalAmount, 2) }}</th>
                                         </tr>
-                                    </tfoot>
+                                    </tfoot> -->
                                 </table>
                             </div>
                         </div>
@@ -175,6 +176,8 @@
     </div>
 </div>
 <!-- end here -->
+
+
 
 <script>
     const salesDayBook = "{{ url('/sales/sales-day-book/delete/') }}";

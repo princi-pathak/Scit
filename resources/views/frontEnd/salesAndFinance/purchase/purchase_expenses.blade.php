@@ -4,7 +4,6 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
-<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
 
 <!--main content start-->
 <section class="wrapper">
@@ -55,7 +54,6 @@
         </div>
     </div>
 </section>
-<script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
 
 <!-- Purchase Expenses Modal start here -->
 <div class="modal fade" id="addPurchaseExpensesModel" tabindex="-1" aria-labelledby="purchaseExpesnsesModalLabel" aria-hidden="true">
@@ -100,9 +98,8 @@
 </div>
 <!-- end here -->
 <script>
-    $(document).ready(function() {
-        $('#myTable').DataTable();
-    });
+  
+
 
     $(".deleteBtn").on("click", function () {
             // alert();

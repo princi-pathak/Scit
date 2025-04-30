@@ -210,4 +210,18 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#salesDayBookTable').DataTable({
+        dom: 'Blfrtip',   // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export', // Optional: change button text
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]  // Only export column 0 and 2
+                }
+            }
+        ]
+    });
+    
 });
