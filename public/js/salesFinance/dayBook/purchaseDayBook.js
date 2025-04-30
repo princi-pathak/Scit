@@ -1,19 +1,8 @@
-$(document).ready(function () {
+let allPurchaseData = [];
 
-    $('#purchaseDayBookTable').DataTable({
-        dom: 'Blfrtip',   // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export', // Optional: change button text
-                bom: true,
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]  // Only export column 0 and 2
-                }
-            }
-        ]
-    });
+$(document).ready(function() {
 
+    taxRate(document.getElementById('getDataOnTax'));
     $('#Date_input').datepicker({
         format: 'dd-mm-yyyy'
     });
@@ -24,6 +13,112 @@ $(document).ready(function () {
     $("#purchase_day_book_form").scroll(function () {
         $('#Date_input').datepicker('place');
     });
+
+
+    const table = $('#purchaseDayBookTable').DataTable({
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export',
+                bom: true,
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                }
+            }
+        ]
+    });
+    
+
+    const selectedVatId = document.getElementById('getDataOnTax').value;
+    loadPurchaseDayBookData(selectedVatId);
+    // Load all data initially
+
+    function loadPurchaseDayBookData(selectedTaxRate) {
+        $.ajax({
+            url: getPurchaseDayBook,
+            method: 'GET',
+            data: {
+                tax_rate: selectedTaxRate  // only pass if filtering is needed
+            },
+            success: function(response) {
+                console.log("response.data", response.data);
+                allPurchaseData = response.data;
+                populateTable(allPurchaseData);
+            },
+            error: function(xhr) {
+                console.error("Error loading data", xhr);
+            }
+        });
+    }
+  
+
+    // Handle dropdown filter
+    $('#getDataOnTax').on('change', function() {
+        // const selectedTaxRate = $('#getDataOnTax option:selected').data('tax-rate');
+        const selectedVatId = $(this).val();
+        loadPurchaseDayBookData(selectedVatId);
+        if (typeof selectedTaxRate === 'undefined' || selectedTaxRate === 0) {
+            populateTable(allPurchaseData);
+        } else {
+            const filtered = allPurchaseData.filter(item => parseFloat(item.tax_rate) === parseFloat(selectedTaxRate));
+            populateTable(filtered);
+        }
+    });
+
+    // Render data into the table
+    function populateTable(data) {
+        table.clear();
+
+        data.forEach((item, index) => {
+            const netAmount = parseFloat(item.netAmount ?? 0);
+            const vatAmount = parseFloat(item.vatAmount ?? 0);
+            const grossAmount = parseFloat(item.grossAmount ?? 0);
+            const reclaim = parseFloat(item.reclaim ?? 0);
+            const notReclaim = parseFloat(item.not_reclaim ?? 0);
+            const expenseAmount = parseFloat(item.expense_amount ?? 0);
+            const finalAmount = netAmount + vatAmount;
+
+            const actions = `
+                <a href="#!" class="openPurchaseDayBookModel"
+                    data-action="edit"
+                    data-id="${item.id}"
+                    data-supplier_id="${item.supplier_id}"
+                    data-date="${item.date}"
+                    data-netAmount="${item.netAmount}"
+                    data-vat="${item.Vat}"
+                    data-vatAmount="${item.vatAmount}"
+                    data-grossAmount="${item.grossAmount}"
+                    data-reclaim="${item.reclaim}"
+                    data-not_reclaim="${item.not_reclaim}"
+                    data-expense_type="${item.expense_type}"
+                    data-expense_amount="${item.expense_amount}">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a> |
+                <a href="#!" class="deleteBtn" data-id="${item.id}">
+                    <i class="fa fa-trash radStar" aria-hidden="true"></i>
+                </a>
+            `;
+
+            table.row.add([
+                index + 1,
+                item.customer_name ?? '',
+                item.date ?? '',
+                item.netAmount ?? '',
+                item.vatAmount ?? '',
+                '£' + (item.grossAmount ?? ''),
+                item.tax_rate_name ?? '',
+                '£' + ((netAmount + vatAmount) - reclaim).toFixed(2),
+                reclaim ? '£' + reclaim : '',
+                notReclaim ? '£' + notReclaim : '',
+                item.title ?? '',
+                expenseAmount ? '£' + expenseAmount : '',
+                actions
+            ]);
+        });
+
+        table.draw();
+    }
 
     $("#savePurchaseDayBook").on("click", function (e) {
         e.preventDefault();
@@ -67,7 +162,6 @@ $(document).ready(function () {
             }
         });
     });
-
 
     $(".deleteBtn").on("click", function () {
         let purchaseBookId = $(this).data("id"); // Get ID from button
@@ -159,32 +253,37 @@ function getPurchaseExpense() {
     });
 }
 
-function taxRate() {
+
+function taxRate(dropdown) {
     $.ajax({
         url: getTaxRate,
         method: 'GET',
         success: function (response) {
             console.log("response.data", response.data);
             if (Array.isArray(response.data)) {
-                // Iterate over all Account Code dropdowns and populate them
-                document.querySelectorAll('#vat_input').forEach(dropdown => {
-                    dropdown.innerHTML = ''; // Clear existing options
-                    const optionInitial = document.createElement('option');
-                    const preTaxID = document.getElementById('tax_id').value;
-                    optionInitial.textContent = "Please Select"; // Use appropriate key from your response
-                    optionInitial.value = 0;
-                    dropdown.appendChild(optionInitial);
-                    // Append new options
-                    response.data.forEach(code => {
-                        const option = document.createElement('option');
-                        option.value = code.id; // Use appropriate key from your response
-                        option.textContent = code.name + " (" + code.tax_rate + "%) "; // Use appropriate key from your response
-                        option.setAttribute('data-tax-rate', code.tax_rate);
-                        if (preTaxID && code.id == preTaxID) {
-                            option.selected = true;
-                        }
-                        dropdown.appendChild(option);
-                    });
+                // const dropdown = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
+                if (!dropdown) {
+                    console.error("Element with ID not found");
+                    return;
+                }
+
+                dropdown.innerHTML = ''; // Clear existing options
+
+                const optionInitial = document.createElement('option');
+                const preTaxID = document.getElementById('tax_id').value;
+                optionInitial.textContent = "Please Select";
+                optionInitial.value = 0;
+                dropdown.appendChild(optionInitial);
+
+                response.data.forEach(code => {
+                    const option = document.createElement('option');
+                    option.value = code.id;
+                    option.textContent = code.name + " (" + code.tax_rate + "%)";
+                    option.setAttribute('data-tax-rate', code.tax_rate);
+                    if (preTaxID && code.id == preTaxID) {
+                        option.selected = true;
+                    }
+                    dropdown.appendChild(option);
                 });
             } else {
                 console.error("Invalid response format");
@@ -195,6 +294,7 @@ function taxRate() {
         }
     });
 }
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -274,12 +374,10 @@ document.addEventListener('DOMContentLoaded', function () {
         expensesAmountInput.value = not_claimedAmt;
     });
 
-
     document.querySelectorAll('.openPurchaseDayBookModel').forEach(function (btn) {
         btn.addEventListener('click', function () {
             getSupplierList();
             getPurchaseExpense();
-            taxRate();
             const action = this.getAttribute('data-action');
             const modalTitle = document.getElementById('modalTitle');
             const purchase_day_book_id = document.getElementById('purchase_day_book_id');
@@ -311,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 not_claim.value = this.getAttribute('data-not_reclaim');
                 totalAmount.value = parseFloat(this.getAttribute('data-netAmount')) + parseFloat(this.getAttribute('data-not_reclaim'));
             }
-
+            taxRate(document.getElementById('vat_input'));
             $('#purchase_day_book_form').modal('show');
         });
     });

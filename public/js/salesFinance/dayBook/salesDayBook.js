@@ -1,11 +1,224 @@
 $(document).ready(function () {
+
+    taxRate(document.getElementById('getDataOnTax'));
+
+    $('#Date_input').datepicker({
+        format: 'dd-mm-yyyy'
+    });
+
+    $('#Date_input').on('change', function () {
+        $('#Date_input').datepicker('hide');
+    });
+
+    $("#salesDayBookModel").scroll(function () {
+        $('#Date_input').datepicker('place');
+    });
+
+    const table = $('#salesDayBookTable').DataTable({
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export',
+                bom: true,
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                }
+            }
+        ]
+    });
+
+
+    const selectedVatId = document.getElementById('getDataOnTax').value;
+    loadSalesDayBookData(selectedVatId);
+    // Load all data initially
+
+    function loadSalesDayBookData(selectedTaxRate) {
+        $.ajax({
+            url: getSalesDayBook,
+            method: 'GET',
+            data: {
+                tax_rate: selectedTaxRate  // only pass if filtering is needed
+            },
+            success: function (response) {
+                console.log("response.data", response.data);
+                allSalesData = response.data;
+                renderSalesDayBook(allSalesData);
+            },
+            error: function (xhr) {
+                console.error("Error loading data", xhr);
+            }
+        });
+    }
+
+    $('#getDataOnTax').on('change', function () {
+        // const selectedTaxRate = $('#getDataOnTax option:selected').data('tax-rate');
+        const selectedVatId = $(this).val();
+        loadSalesDayBookData(selectedVatId);
+        if (typeof selectedTaxRate === 'undefined' || selectedTaxRate === 0) {
+            renderSalesDayBook(allSalesData);
+        } else {
+            const filtered = allSalesData.filter(item => parseFloat(item.tax_rate) === parseFloat(selectedTaxRate));
+            renderSalesDayBook(filtered);
+        }
+    });
+
+    // function renderSalesDayBook(data) {
+    //     table.clear();
+
+    //     data.forEach((item, index) => {
+    //         const netAmount = parseFloat(item.netAmount ?? 0);
+    //         const vatAmount = parseFloat(item.vatAmount ?? 0);
+    //         const grossAmount = parseFloat(item.grossAmount ?? 0);
+    //         const reclaim = parseFloat(item.reclaim ?? 0);
+    //         const notReclaim = parseFloat(item.not_reclaim ?? 0);
+    //         const expenseAmount = parseFloat(item.expense_amount ?? 0);
+    //         const finalAmount = netAmount + vatAmount;
+
+    //         const actions = `
+    //             <a href="#!" class="openPurchaseDayBookModel"
+    //                 data-action="edit"
+    //                 data-id="${item.id}"
+    //                 data-supplier_id="${item.supplier_id}"
+    //                 data-date="${item.date}"
+    //                 data-netAmount="${item.netAmount}"
+    //                 data-vat="${item.Vat}"
+    //                 data-vatAmount="${item.vatAmount}"
+    //                 data-grossAmount="${item.grossAmount}"
+    //                 data-reclaim="${item.reclaim}"
+    //                 data-not_reclaim="${item.not_reclaim}"
+    //                 data-expense_type="${item.expense_type}"
+    //                 data-expense_amount="${item.expense_amount}">
+    //                 <i class="fa fa-pencil" aria-hidden="true"></i>
+    //             </a> |
+    //             <a href="#!" class="deleteBtn" data-id="${item.id}">
+    //                 <i class="fa fa-trash radStar" aria-hidden="true"></i>
+    //             </a>
+    //         `;
+
+    //         table.row.add([
+    //             index + 1,
+    //             item.customer_name ?? '',
+    //             item.date ?? '',
+    //             item.netAmount ?? '',
+    //             item.vatAmount ?? '',
+    //             '£' + (item.grossAmount ?? ''),
+    //             item.tax_rate_name ?? '',
+    //             '£' + ((netAmount + vatAmount) - reclaim).toFixed(2),
+    //             reclaim ? '£' + reclaim : '',
+    //             notReclaim ? '£' + notReclaim : '',
+    //             item.title ?? '',
+    //             expenseAmount ? '£' + expenseAmount : '',
+    //             actions
+    //         ]);
+    //     });
+
+    //     table.draw();
+    // }
+
+
+    function renderSalesDayBook(data) {
+        table.clear();
+
+        data.forEach((item, index) => {
+            const netAmount = parseFloat(item.netAmount ?? 0);
+            const vatAmount = parseFloat(item.vatAmount ?? 0);
+            const grossAmount = parseFloat(item.grossAmount ?? 0);
+            const finalAmount = netAmount + vatAmount;
+
+            // totalNetAmount += netAmount;
+            // totalVatAmount += vatAmount;
+            // totalGrossAmount += grossAmount;
+            // totalFinalAmount += finalAmount;
+
+            const actions = `<a href="#!" class="openSalesDayBookModel"
+                           data-action="edit"
+                           data-id="${item.id}"
+                           data-customer_id="${item.customer_id}"
+                           data-date="${item.date}"
+                           data-invoice_no="${item.invoice_no}"
+                           data-netAmount="${item.netAmount}"
+                           data-vat="${item.Vat}"
+                           data-vatAmount="${item.vatAmount}"
+                           data-grossAmount="${item.grossAmount}">
+                           <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a> |
+                        <a href="#!" class="deleteBtn" data-id="${item.id}">
+                           <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                        </a>
+        `;
+
+
+            table.row.add([
+                index + 1,
+                item.customer_name ?? '',
+                item.date ?? '',
+                item.invoice_no ?? '',
+                '£' + item.netAmount ?? '',
+                '£' + (item.vatAmount ?? ''),
+                '£' + (item.grossAmount ?? ''),
+                item.tax_rate_name ?? '',
+                item.finalAmount ?? '',
+                actions
+            ]);
+
+        });
+        table.draw();
+
+    }
+
+
+    $("#saveSalesDayBookModal").on("click", function (e) {
+        // alert();
+        e.preventDefault(); // Prevent page reload
+
+        $.ajax({
+            url: saveSalesDayBook, // Laravel route
+            type: "POST",
+            data: $('#salesDayBookForm').serialize(), // Serialize form data
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                alert(response.message);
+                window.location.reload();
+            },
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    // Validation error
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessages = '';
+
+                    // Clear old errors first
+                    $('.text-danger').remove();
+
+                    $.each(errors, function (key, value) {
+                        // Display message under each input field
+                        let inputField = $(`[name="${key}"]`);
+                        if (inputField.length) {
+                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
+                        }
+
+                        // Collect all messages for optional alert box
+                        errorMessages += value[0] + "\n";
+                    });
+
+                    // Optional: show all errors in a single alert box
+                    // alert("Please fix the following errors:\n" + errorMessages);
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+            }
+        });
+    });
+
     $(".deleteBtn").on("click", function () {
         let salesBookId = $(this).data("id"); // Get ID from button
         let row = $("#row-" + salesBookId); // Select the row
 
         if (confirm("Are you sure you want to delete this record?")) {
             $.ajax({
-                url: salesDayBook + "/"+ salesBookId,
+                url: salesDayBook + "/" + salesBookId,
                 type: "POST",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -48,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function () {
     netAmountInput.addEventListener('input', calculateTax);
 });
 
-
 function getCustomerList() {
     $.ajax({
         url: customerList,
@@ -57,7 +269,7 @@ function getCustomerList() {
             console.log("Customer list data:", response.data);
             const selectedCustomerId = document.getElementById('customer_id').value;
             const customerSelect = document.getElementById('getCustomerList');
-            customerSelect.innerHTML = '<option>Select Customer</option>'; 
+            customerSelect.innerHTML = '<option>Select Customer</option>';
 
             if (Array.isArray(response.data)) {
                 response.data.forEach(user => {
@@ -79,48 +291,51 @@ function getCustomerList() {
     });
 }
 
-function taxRate() {
+function taxRate(dropdown) {
     $.ajax({
         url: getTaxRate,
         method: 'GET',
-        success: function(response) {
+        success: function (response) {
             console.log("response.data", response.data);
             if (Array.isArray(response.data)) {
-                // Iterate over all Account Code dropdowns and populate them
-                document.querySelectorAll('#vat_input').forEach(dropdown => {
-                    dropdown.innerHTML = ''; // Clear existing options
-                    const optionInitial = document.createElement('option');
-                    const preTaxID = document.getElementById('tax_id').value;
-                    optionInitial.textContent = "Please Select"; // Use appropriate key from your response
-                    optionInitial.value = 0;
-                    dropdown.appendChild(optionInitial);
-                    // Append new options
-                    response.data.forEach(code => {
-                        const option = document.createElement('option');
-                        option.value = code.id; // Use appropriate key from your response
-                        option.textContent = code.name +" ("+code.tax_rate +"%) "; // Use appropriate key from your response
-                        option.setAttribute('data-tax-rate', code.tax_rate);
-                        if (preTaxID && code.id == preTaxID) {
-                            option.selected = true;
-                        }
-                        dropdown.appendChild(option);
-                    });
+                // const dropdown = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
+                if (!dropdown) {
+                    console.error("Element with ID not found");
+                    return;
+                }
+
+                dropdown.innerHTML = ''; // Clear existing options
+
+                const optionInitial = document.createElement('option');
+                const preTaxID = document.getElementById('tax_id').value;
+                optionInitial.textContent = "Please Select";
+                optionInitial.value = 0;
+                dropdown.appendChild(optionInitial);
+
+                response.data.forEach(code => {
+                    const option = document.createElement('option');
+                    option.value = code.id;
+                    option.textContent = code.name + " (" + code.tax_rate + "%)";
+                    option.setAttribute('data-tax-rate', code.tax_rate);
+                    if (preTaxID && code.id == preTaxID) {
+                        option.selected = true;
+                    }
+                    dropdown.appendChild(option);
                 });
             } else {
                 console.error("Invalid response format");
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.openSalesDayBookModel').forEach(function (btn) {
         // alert();
-     
+
         btn.addEventListener('click', function () {
             getCustomerList();
             taxRate();
@@ -152,76 +367,4 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#salesDayBookModel').modal('show');
         });
     });
-});
-
-$(document).ready(function() {
-
-    $('#Date_input').datepicker({
-        format: 'dd-mm-yyyy'
-    });
-    $('#Date_input').on('change', function () {
-        $('#Date_input').datepicker('hide');
-    });
-
-    $("#salesDayBookModel").scroll(function () {
-        $('#Date_input').datepicker('place');
-    });
-
-    $("#saveSalesDayBookModal").on("click", function(e) {
-        // alert();
-        e.preventDefault(); // Prevent page reload
-
-        $.ajax({
-            url: saveSalesDayBook, // Laravel route
-            type: "POST",
-            data: $('#salesDayBookForm').serialize(), // Serialize form data
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                alert(response.message);
-                window.location.reload();
-            },
-            error: function(xhr) {
-                if (xhr.status === 422) {
-                    // Validation error
-                    let errors = xhr.responseJSON.errors;
-                    let errorMessages = '';
-
-                    // Clear old errors first
-                    $('.text-danger').remove();
-
-                    $.each(errors, function (key, value) {
-                        // Display message under each input field
-                        let inputField = $(`[name="${key}"]`);
-                        if (inputField.length) {
-                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
-                        }
-
-                        // Collect all messages for optional alert box
-                        errorMessages += value[0] + "\n";
-                    });
-
-                    // Optional: show all errors in a single alert box
-                    // alert("Please fix the following errors:\n" + errorMessages);
-                } else {
-                    alert("Something went wrong. Please try again.");
-                }
-            }
-        });
-    });
-
-    $('#salesDayBookTable').DataTable({
-        dom: 'Blfrtip',   // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export', // Optional: change button text
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]  // Only export column 0 and 2
-                }
-            }
-        ]
-    });
-    
 });
