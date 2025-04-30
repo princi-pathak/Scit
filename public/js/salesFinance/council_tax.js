@@ -36,13 +36,14 @@ document.querySelectorAll('.openModalBtn').forEach(function (btn) {
             } else if (this.getAttribute('data-owned_by_omega') == 0) {
                 ownedByOmegano.checked = true;
             }
-
             occupancy.value = this.getAttribute('data-occupancy');
+
             if (this.getAttribute('data-exempt') == 1) {
-                exemptno.checked = true;
-            } else if (this.getAttribute('data-exempt') == 0) {
                 exemptyes.checked = true;
+            } else if (this.getAttribute('data-exempt') == 0) {
+                exemptno.checked = true;
             }
+            
             account_number.value = this.getAttribute('data-account_number');
             last_bill_date.value = this.getAttribute('data-last_bill_date');
             bill_period_start_date.value = this.getAttribute('data-bill_period_start_date');
@@ -53,6 +54,30 @@ document.querySelectorAll('.openModalBtn').forEach(function (btn) {
         $('#AddCouncilTax').modal('show');
     });
 });
+
+const startDateInput = document.getElementById('bill_period_start_date');
+const endDateInput = document.getElementById('bill_period_end_date');
+
+startDateInput.addEventListener('change', function () {
+  const startDate = new Date(this.value);
+  
+  if (this.value) {
+    // Enable end date input and set min to start date
+    endDateInput.disabled = false;
+    endDateInput.min = this.value;
+
+    // Optional: Clear previously selected end date if it's before the new start date
+    if (new Date(endDateInput.value) < startDate) {
+      endDateInput.value = '';
+    }
+  } else {
+    // If start date is cleared, disable end date again
+    endDateInput.disabled = true;
+    endDateInput.value = '';
+    endDateInput.min = '';
+  }
+});
+
 
 function validateCouncilTaxForm() {
     let isValid = true;
@@ -65,23 +90,119 @@ function validateCouncilTaxForm() {
     }
 
     // Validate each required field
-    const address = $('[name="address"]');
-    if (!address.val().trim()) showError(address, 'The address field is required.');
+    // const address = $('[name="address"]');
+    // if (!address.val().trim()) showError(address, 'The address field is required.');
 
-    const postCode = $('[name="post_code"]');
-    if (!postCode.val().trim()) showError(postCode, 'The post code field is required.');
+    // const postCode = $('[name="post_code"]');
+    // if (!postCode.val().trim()) showError(postCode, 'The post code field is required.');
 
-    const council = $('[name="council"]');
-    if (!council.val().trim()) showError(council, 'The council field is required.');
+    // const council = $('[name="council"]');
+    // if (!council.val().trim()) showError(council, 'The council field is required.');
 
-    const accountNumber = $('[name="account_number"]');
-    if (!accountNumber.val().trim()) showError(accountNumber, 'The account number field is required.');
+    // const accountNumber = $('[name="account_number"]');
+    // if (!accountNumber.val().trim()) showError(accountNumber, 'The account number field is required.');
+
+    // Account number validation
+    const accountNumberField =  $('[name="account_number"]');
+    const accountNumber = parseInt(accountNumberField.val(), 20);
+    if (!accountNumberField.val().trim()) {
+        showError(accountNumberField, 'The account number field is required.');
+    } else if (isNaN(accountNumber) || accountNumber < 0) {
+        showError(accountNumberField, 'The account number must be a positive integer.');
+    } 
+    // else if (accountNumber > 20) {
+    //     showError(accountNumberField, 'The account number must be less than or equal to 20.');
+    // } 
 
     const ownedByOmega = $('[name="owned_by_omega"]:checked');
     if (ownedByOmega.length === 0) showError($('[name="owned_by_omega"]').last(), 'The owned by omega field is required.');
 
     const exempt = $('[name="exempt"]:checked');
     if (exempt.length === 0) showError($('[name="exempt"]').last(), 'The exempt field is required.');
+
+    // Bill period validation
+    const startDateField = $('#bill_period_start_date');
+    const endDateField = $('#bill_period_end_date');
+    const startDate = new Date(startDateField.val());
+    const endDate = new Date(endDateField.val());
+
+    if (!startDateField.val().trim()) {
+        showError(startDateField, 'The start date is required.');
+    }
+
+    if (!endDateField.val().trim()) {
+        showError(endDateField, 'The end date is required.');
+    } else if (startDateField.val() && endDate <= startDate) {
+        showError(endDateField, 'The end date must be after the start date.');
+    }
+
+    // Last bill date validation
+    const lastBillDateField = $('#last_bill_date');
+    const lastBillDate = new Date(lastBillDateField.val());
+    if (!lastBillDateField.val().trim()) {
+        showError(lastBillDateField, 'The last bill date is required.');
+    } else if (lastBillDateField.val() && lastBillDate > new Date()) {
+        showError(lastBillDateField, 'The last bill date cannot be in the future.');
+    }
+
+    // Amount paid validation
+    const amountPaidField = $('#amount_paid');
+    const amountPaid = parseFloat(amountPaidField.val());
+    if (!amountPaidField.val().trim()) {
+        showError(amountPaidField, 'The amount paid field is required.');
+    } else if (isNaN(amountPaid) || amountPaid < 0) {
+        showError(amountPaidField, 'The amount paid must be a positive number.');
+    }
+
+    // Flat number validation
+    const flatNumField = $('#flat_num');
+    if (!flatNumField.val().trim()) {
+        showError(flatNumField, 'The flat number field is required.');
+    } else if (flatNumField.val().length > 10) {
+        showError(flatNumField, 'The flat number must be less than 10 characters.');
+    }
+
+    // No of bedrooms validation
+    const noOfBedroomsField = $('#no_of_bedrooms');
+    const noOfBedrooms = parseInt(noOfBedroomsField.val(), 10);
+    if (!noOfBedroomsField.val().trim()) {
+        showError(noOfBedroomsField, 'The number of bedrooms field is required.');
+    } else if (isNaN(noOfBedrooms) || noOfBedrooms < 0) {
+        showError(noOfBedroomsField, 'The number of bedrooms must be a positive integer.');
+    } else if (noOfBedrooms > 10) {
+        showError(noOfBedroomsField, 'The number of bedrooms must be less than or equal to 10.');
+    }
+
+    // Address validation
+    const addressField = $('#address');
+    if (!addressField.val().trim()) {
+        showError(addressField, 'The address field is required.');
+    } else if (addressField.val().length > 100) {
+        showError(addressField, 'The address must be less than 100 characters.');
+    }
+
+    // Postcode validation
+    const postcodeField = $('#postcode');
+    if (!postcodeField.val().trim()) {
+        showError(postcodeField, 'The postcode field is required.');
+    } else if (postcodeField.val().length > 10) {
+        showError(postcodeField, 'The postcode must be less than 10 characters.');
+    }
+
+    // Council validation
+    const councilField = $('#council');
+    if (!councilField.val().trim()) {
+        showError(councilField, 'The council field is required.');
+    } else if (councilField.val().length > 50) {
+        showError(councilField, 'The council must be less than 50 characters.');
+    }
+
+
+    // Additional notes validation
+    const additionalNotesField = $('#additional_notes');
+    if (additionalNotesField.val().length > 200) {
+        showError(additionalNotesField, 'The additional notes must be less than 200 characters.');
+    }
 
     return isValid;
 }
@@ -165,16 +286,15 @@ $(document).on('click', '.deleteBtn', function () {
     }
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Last Bill date 
     $('#last_bill_date').datepicker({
         format: 'dd-mm-yyyy',
         autoclose: true,
         todayHighlight: true,
-        container: '#purchase_day_book_form'
     });
 
-    $('#openCalendarLastBillBtn').click(function() {
+    $('#openCalendarLastBillBtn').click(function () {
         $('#last_bill_date').focus();
     });
 
@@ -183,10 +303,9 @@ $(document).ready(function() {
         format: 'dd-mm-yyyy',
         autoclose: true,
         todayHighlight: true,
-        container: '#purchase_day_book_form'
     });
 
-    $('#openCalendarBillPeriodStartBtn').click(function() {
+    $('#openCalendarBillPeriodStartBtn').click(function () {
         $('#bill_period_start_date').focus();
     });
 
@@ -195,10 +314,10 @@ $(document).ready(function() {
         format: 'dd-mm-yyyy',
         autoclose: true,
         todayHighlight: true,
-        container: '#purchase_day_book_form'
     });
 
-    $('#openCalendarBillPeriodEndBtn').click(function() {
+    $('#openCalendarBillPeriodEndBtn').click(function () {
         $('#bill_period_end_date').focus();
     });
 });
+

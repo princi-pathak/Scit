@@ -23,6 +23,7 @@ class StaffWorkerRequest extends FormRequest
     {
         return [
             'home_id' => 'nullable|string|max:255',
+            'staff_id' => 'nullable|integer',
             'surname' => 'required|string|max:255',
             'forename' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -46,8 +47,8 @@ class StaffWorkerRequest extends FormRequest
             'dbs_service_update' => 'nullable|boolean',
             'student_loan' => 'nullable|in:no_student_loan,postgraduate,plan_1,plan_2,plan_4',
             'leave_date' => 'nullable|date|after:start_date',
-            'email' => 'required|email|max:255',
-            'mobile' => 'nullable|string|max:15',
+            'email' => 'nullable|email|max:255',
+            'mobile' => 'nullable|integer|min:11',
             'deleted_at' => 'nullable|date'
         ];
     }

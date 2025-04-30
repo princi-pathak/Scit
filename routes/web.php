@@ -504,6 +504,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(StaffController::class)->group(function(){
 		Route::get('rota/staff','index');
 		Route::post('rota/staff-add','store');
+		Route::delete('rota/staff-delete/{id}','destroy');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {
@@ -576,6 +577,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('purchase-type', 'purchase_type')->name('purchase.purchaseExpenses');
 			Route::post('save-purchase-expenses', 'save_purchase_expenses')->name('purchase.purchaseExpensesSave');
 			Route::get('purchase-day-book-reclaim-per', 'purchase_day_book_reclaim_per')->name('purchase.purchaseDayBookReclaimPer');
+			Route::post('/purchase-expenses/delete/{id}', 'deletePurchaseExpenses')->name('deletePurchaseExpenses.delete');
 			Route::get('reclaimPercantage', 'reclaimPercantage')->name('purchase.reclaimPercantage');
 			Route::get('/purchase-day-book', 'index')->name('purchase.purchaseDayBook');
 			Route::get('/purchase-day-book/add', 'create')->name('purchase.purchaseDayBookCreate');
