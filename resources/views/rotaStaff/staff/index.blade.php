@@ -20,7 +20,7 @@
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
                                         <a href="javaScript:void(0)" type="button" class="profileDrop openAddStaffModel" data-action="add"> <i class="fa fa-plus"></i> Add</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Export</a>
+                                        <!-- <a href="javascript:void(0)" class="profileDrop">Export</a> -->
                                     </div>
                                 </div>
                             </div>
@@ -57,10 +57,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     
+
                                         @foreach($staffWorkers as $key => $staffData)
-                                        <tr>  
-                                            <td></td>
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $staffData->surname }}</td>
                                             <td>{{ $staffData->forename }}</td>
                                             <td>{{ $staffData->address }}</td>
@@ -73,7 +73,7 @@
                                             <td class="white_space_nowrap">{{ \Carbon\Carbon::parse($staffData->start_date)->format('d-m-Y') }}</td>
                                             <td>{{ $staffData->job_role }}</td>
                                             <td>{{ $staffData->NIN }}</td>
-                                            <td>@if($staffData->starter_declaration == 1 ) Yes-A @elseif($staffData->starter_declaration == 2) Yes-B @elseif($staffData->starter_declaration == 3) Yes-C @else No @endif</td>                                                  
+                                            <td>@if($staffData->starter_declaration == 1 ) Yes-A @elseif($staffData->starter_declaration == 2) Yes-B @elseif($staffData->starter_declaration == 3) Yes-C @else No @endif</td>
                                             <td>{{ \Carbon\Carbon::parse($staffData->probation_start_date)->format('d-m-Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($staffData->probation_end_date)->format('d-m-Y')  }}</td>
                                             <td>{{ \Carbon\Carbon::parse($staffData->probation_renew_date)->format('d-m-Y')  }}</td>
@@ -86,8 +86,8 @@
                                             <td>{{ $staffData->email }}</td>
                                             <td>{{ $staffData->mobile }}</td>
                                             <td>
-                                                <a href="#!" class="openModalBtn openAddStaffModel" data-action="edit"  data-staff="{{ json_encode($staffData) }}"  data-id="{{ $staffData->id }}" data-surname="{{ $staffData->surname }}" data-forename="{{ $staffData->forename }}" data-address="{{ $staffData->address }}" data-postCode="{{ $staffData->postCode }}" data-dob="{{ $staffData->dob }}" data-account_num="{{ $staffData->account_num }}" data-sort_code="{{ $staffData->sort_code }}" data-rate_of_pay="{{ $staffData->rate_of_pay }}" data-level="{{ $staffData->level}}" data-start_date="{{ $staffData->start_date }}" data-job_title="{{ $staffData->job_title }}" data-NIN="{{ $staffData->NIN }}" data-starter_declaration="{{ $staffData->starter_declaration }}" data-probation_start_date = "{{ $staffData->probation_start_date }}" data-probation_end_date="{{ $staffData->probation_end_date }}" data-probation_renew_date="{{ $staffData->probation_renew_date }}" data-after_probation_enrolled="{{ $staffData->after_probation_enrolled }}" data-student_loan="{{ $staffData->student_loan }}" data-dbs_clear="{{ $staffData->dbs_clear }}" data-dbs_number="{{ $staffData->dbs_number }}" data-dbs_update_service="{{ $staffData->dbs_update_service }}" data-leave_date="{{ $staffData->leave_date }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
-                                                <a href="#!" class="deleteBtn"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                                <a href="#!" class="openModalBtn openAddStaffModel" data-action="edit" data-staff="{{ json_encode($staffData) }}" data-id="{{ $staffData->id }}" data-surname="{{ $staffData->surname }}" data-forename="{{ $staffData->forename }}" data-address="{{ $staffData->address }}" data-postCode="{{ $staffData->postCode }}" data-dob="{{ $staffData->dob }}" data-account_num="{{ $staffData->account_num }}" data-sort_code="{{ $staffData->sort_code }}" data-rate_of_pay="{{ $staffData->rate_of_pay }}" data-level="{{ $staffData->level}}" data-start_date="{{ $staffData->start_date }}" data-job_title="{{ $staffData->job_title }}" data-NIN="{{ $staffData->NIN }}" data-starter_declaration="{{ $staffData->starter_declaration }}" data-probation_start_date="{{ $staffData->probation_start_date }}" data-probation_end_date="{{ $staffData->probation_end_date }}" data-probation_renew_date="{{ $staffData->probation_renew_date }}" data-after_probation_enrolled="{{ $staffData->after_probation_enrolled }}" data-student_loan="{{ $staffData->student_loan }}" data-dbs_clear="{{ $staffData->dbs_clear }}" data-dbs_number="{{ $staffData->dbs_number }}" data-dbs_update_service="{{ $staffData->dbs_update_service }}" data-leave_date="{{ $staffData->leave_date }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                                                <a href="#!" onclick="deleteStaff({{ $staffData->id }})" class="deleteBtn"><i class="fa fa-trash radStar" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -145,9 +145,9 @@
                                 <div class="form-group">
                                     <label>Date of Birth</label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="DOB" id="DOB" type="text" autocomplete="off" class="form-control calenderDiv">
+                                        <input name="DOB" id="DOB" type="text" autocomplete="off" class="form-control">
                                         <span class="input-group-btn datetime-picker2 btn_height">
-                                            <button class="btn btn-primary openCalendarBtn" type="button" id="openCalendarBtn">
+                                            <button class="btn btn-primary openCalendarBtn" type="button" id="">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </button>
                                         </span>
@@ -185,20 +185,20 @@
                                             <input type="test" class="form-control editInput" name="rate_of_pay" id="rate_of_pay">
                                         </div>
                                         <div class="col-md-6">
-                                             <select class="form-control editInput" name="level" id="level">
+                                            <select class="form-control editInput" name="level" id="level">
                                                 <option value="">Select Level</option>
                                                 <option value="qualified">Qualified</option>
                                                 <option value="unqualified">Unqualified</option>
-                                             </select>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Start Date</label>
+                                    <label>Start Date <span class="radStar">*</span></label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="start_date" id="start_Date" type="text" autocomplete="off" class="form-control calenderDiv">
+                                        <input name="start_date" id="start_Date" type="text" autocomplete="off" class="form-control">
                                         <span class="input-group-btn datetime-picker2 btn_height">
-                                            <button class="btn btn-primary openCalendarBtn" type="button" id="openCalendarStartBtn">
+                                            <button class="btn btn-primary openCalendarBtn" type="button" id="">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </button>
                                         </span>
@@ -231,13 +231,13 @@
                                     <label>Probation End Date (6 months) Passed/Extended <span class="radStar">*</span></label>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input type="text" class="form-control editInput calenderDiv" name="probation_start_date" id="probation_start_date">
+                                            <input type="text" class="form-control editInput " name="probation_start_date" id="probation_start_date">
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" class="form-control editInput calenderDiv" name="probation_end_date" id="probation_end_date">
+                                            <input type="text" class="form-control editInput " name="probation_end_date" id="probation_end_date">
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" class="form-control editInput calenderDiv" name="probation_renew_date" id="probation_renew_date">
+                                            <input type="text" class="form-control editInput" name="probation_renew_date" id="probation_renew_date">
                                         </div>
                                     </div>
                                 </div>
@@ -281,7 +281,7 @@
                                 </div>
                                 <!-- On DBS Update Service? -->
                                 <div class="form-group">
-                                    <label>On DBS Update Service? <span class="radStar">*</span></label>
+                                    <label>On DBS Update Service? </label>
                                     <div class="d-flex align-items-center gap-2">
                                         <input class="form-check-input mt-0" type="radio" name="dbs_service_update" value="1" id="DBS_Update_yes">
                                         <label class="form-check-label m-0" for="DBS_Update_yes">Yes</label>
@@ -292,7 +292,7 @@
                                 <div class="form-group">
                                     <label>Leave Date </label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="leave_date" id="leave_date" type="text" autocomplete="off" class="form-control calenderDiv" placeholder="Leave Date">
+                                        <input name="leave_date" id="leave_date" type="text" autocomplete="off" class="form-control" placeholder="Leave Date">
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary openCalendarBtn" type="button" id="openCalendarLeaveBtn">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -313,7 +313,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <!-- End row -->
                     </div>
                 </div>
@@ -329,6 +329,7 @@
 
 <script>
     const addStaffWorker = "{{ url('/rota/staff-add') }}";
+    const deleteStaffWorker = "{{ url('/rota/staff-delete') }}";
 </script>
 
 <script type="text/javascript" src="{{ url('public/js/rota/add_staff_worker.js') }}"></script>

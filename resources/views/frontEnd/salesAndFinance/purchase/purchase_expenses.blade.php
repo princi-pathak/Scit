@@ -4,7 +4,6 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
-<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
 
 <!--main content start-->
 <section class="wrapper">
@@ -19,13 +18,12 @@
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
                                 <a href="javascript:void(0)" onclick="openExpensesModal('', 'add')" class="profileDrop" data-action="add"><i class="fa fa-plus"></i> Add</a>
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                <!-- <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a> -->
                             </div>
                             <div class="productDetailTable mb-4 table-responsive">
                                 <table class="table border-top border-bottom tablechange display" id="myTable">
                                     <thead>
                                         <tr>
-                                            <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
                                             <th>#</th>
                                             <th>Date</th>
                                             <th>Expense Type </th>
@@ -36,21 +34,12 @@
                                     <tbody>
                                         @foreach($purchase_expenses as $purchase_expense)
                                         <tr>
-                                            <td>
-                                                <input type="checkbox" id="" class="delete_checkbox" value="{{$purchase_expense->id}}">
-                                            </td>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $purchase_expense->created_at }}</td>
+                                            <td>{{ $purchase_expense->created_at->format('d-m-Y') }}</td>
                                             <td>{{ $purchase_expense->title }}</td>
+                                            <td> {{ $purchase_expense->status == 1 ? 'Active' : 'Inactive' }}</td>
                                             <td>
-                                                <?php if ($purchase_expense->status == 1) { ?>
-                                                    <span class="grencheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
-                                                <?php } else { ?>
-                                                    <span class="grayCheck" onclick="status_change({{$purchase_expense->id}},{{$purchase_expense->status}})"><i class="fa-solid fa-circle-check"></i></span>
-                                                <?php } ?>
-                                            </td>
-                                            <td>
-                                                <a href="javascript:void(0)" onclick="openExpensesModal(this, 'edit')" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $purchase_expense->id }}" data-name="{{ $purchase_expense->title }}" data-status="{{ $purchase_expense->status }}"> <i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                <a href="javascript:void(0)" onclick="openExpensesModal(this, 'edit')" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $purchase_expense->id }}" data-name="{{ $purchase_expense->title }}" data-status="{{ $purchase_expense->status }}"> <i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="#!" class="deleteBtn" data-id="{{ $purchase_expense->id }}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -65,7 +54,6 @@
         </div>
     </div>
 </section>
-<script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
 
 <!-- Purchase Expenses Modal start here -->
 <div class="modal fade" id="addPurchaseExpensesModel" tabindex="-1" aria-labelledby="purchaseExpesnsesModalLabel" aria-hidden="true">
@@ -110,62 +98,40 @@
 </div>
 <!-- end here -->
 <script>
-    $(document).ready(function () {
-        $('#myTable').DataTable();
+  
+
+
+    $(".deleteBtn").on("click", function () {
+            // alert();
+        let purchaseExpense = $(this).data("id"); // Get ID from button
+        let row = $("#row-" + purchaseExpense); // Select the row
+
+        if (confirm("Are you sure you want to delete this record?")) {
+            $.ajax({
+                url: "{{ url('purchase/purchase-expenses/delete') }}" + "/"+ purchaseExpense,
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function (response) {
+                    if (response.success) {
+                        // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
+                        alert(response.message);
+                        window.location.reload();
+                    }
+                },
+                error: function () {
+                    alert("Something went wrong!");
+                },
+            });
+        }
     });
+
+
 </script>
 
 <script>
-    $("#deleteSelectedRows").on('click', function() {
-        let ids = [];
-
-        $('.delete_checkbox:checked').each(function() {
-            ids.push($(this).val());
-        });
-        if (ids.length == 0) {
-            alert("Please check the checkbox for delete");
-        } else {
-            if (confirm("Are you sure to delete?")) {
-                // console.log(ids);
-                var token = '<?php echo csrf_token(); ?>'
-                var model = 'PurchaseExpenses';
-                $.ajax({
-                    type: "POST",
-                    url: "{{url('/bulk_delete')}}",
-                    data: {
-                        ids: ids,
-                        model: model,
-                        _token: token
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        if (data) {
-                            location.reload();
-                        } else {
-                            alert("Something went wrong");
-                        }
-                        // return false;
-                    },
-                    error: function(xhr, status, error) {
-                        var errorMessage = xhr.status + ': ' + xhr.statusText;
-                        alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
-                    }
-                });
-            }
-        }
-
-    });
-    $('.delete_checkbox').on('click', function() {
-        if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
-            $('#selectAllCheckBoxes').prop('checked', true);
-        } else {
-            $('#selectAllCheckBoxes').prop('checked', false);
-        }
-    });
-    $('#selectAllCheckBoxes').on('click', function() {
-        $('.delete_checkbox').prop('checked', $(this).prop('checked'));
-    });
-
+    // Function to open the modal for adding or editing purchase expenses
     function openExpensesModal(element, type) {
         console.log(type);
         $("#addPurchaseExpensesModel").modal('show');
@@ -191,7 +157,6 @@
             document.getElementById("purchase_expense_id").value = id;
             document.getElementById("purchase_expense_title").value = name;
             document.getElementById("purchase_expense_status").value = status;
-
         }
 
     }
@@ -243,4 +208,3 @@
     });
 </script>
 @endsection
-<script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/purchaseDayBook.js') }}"></script>

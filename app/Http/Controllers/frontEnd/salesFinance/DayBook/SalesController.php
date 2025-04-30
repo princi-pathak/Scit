@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\frontend\salesFinance\DayBook;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Construction_tax_rate;
@@ -17,7 +16,6 @@ class SalesController extends Controller
 {
     public function index()
     {
-        $data['page'] = "dayBook";
         $data['customers'] = Customer::get_customer_list_Attribute(Auth::user()->home_id, 'ACTIVE');
         $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
         $data['salesDayBooks'] = SalesDayBook::join('customers', 'customers.id', '=', 'sales_day_books.customer_id')
@@ -41,8 +39,10 @@ class SalesController extends Controller
     public function store(SalesDayBookRequest $request)
     {
         $data = $request->validated();
-
-        $response = SalesDayBook::updateOrCreate(['id' => $data['sales_day_book_id'] ?? null],  array_merge($data, ['home_id' => Auth::user()->home_id]));
+        $convertedDate = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
+        $data['date'] = $convertedDate;
+        $data['home_id'] = Auth::user()->home_id;
+        $response = SalesDayBook::updateOrCreate(['id' => $data['sales_day_book_id'] ?? null],  $data);
 
         if ($response->wasRecentlyCreated) {
             return response()->json([  'success' => true, 'message' => 'Sales day book record created successfully!', 'data' => $response], 201);
