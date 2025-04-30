@@ -441,7 +441,7 @@
                                                 <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                 <hr class="dropdown-divider">
                                                 @endif
-                                                <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
+                                                <a href="{{url('purchase_order/duplicate?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                 <hr class="dropdown-divider">
                                                 @if($status['status'] != 8 && $status['status'] != 1 )
                                                 <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
@@ -911,6 +911,9 @@
         .then(data => {
             console.log(data);
             // return false;
+            if (isAuthenticated(data) == false) {
+                return false;
+            }
             if(data.success === true){
                 location.reload();
             }else{
@@ -1062,6 +1065,9 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 var table = $('#exampleOne').DataTable();
                 table.destroy();
                 if (response.data.length > 0) {
@@ -1158,6 +1164,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         deptdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'dept_container';
@@ -1237,6 +1246,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         tagdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'tag_container';
@@ -1315,6 +1327,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         supplierdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'supplier_container';
@@ -1393,6 +1408,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         customerdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'customer_container';
@@ -1471,6 +1489,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         createdbydivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'cretedby_container';
@@ -1549,6 +1570,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         projectdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'project_container';
@@ -1637,6 +1661,9 @@
             processData: false,
             success: function(response) {
                 console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -1681,6 +1708,9 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 var data = response.data[0];
                 const tableBody = document.querySelector(`#recordDelivery_result tbody`);
                 tableBody.innerHTML = '';
@@ -1835,6 +1865,9 @@
                 processData: false,
                 success: function(response) {
                     console.log(response);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (response.vali_error) {
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1927,6 +1960,9 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);

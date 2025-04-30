@@ -1,6 +1,12 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
+@extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<section class="main_section_page px-3">
+@section('title','New Invoice')
+<link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+@section('content')
+
+
+<!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
+<section class="wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
@@ -14,7 +20,7 @@
 
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
-                    <a href="#" class="profileDrop" onclick="additemsCatagoryModal(1)">Add</a>
+                    <a href="#" class="profileDrop btn-green" onclick="additemsCatagoryModal(1)"><i class="fa fa-plus"></i> Add </a>
                 </div>
             </div>
 
@@ -35,7 +41,7 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="jobsection">
-                                    <input type="button" class="btn profileDrop" id="getCheckedValues" value="Delete">
+                                    <input type="button" class="btn profileDrop btn-warning" id="getCheckedValues" value="Delete">
                                     <span class="alert text-danger text-center deletemsg"></span>
                                 </div>
                             </div>
@@ -92,7 +98,7 @@
                                     <td>
                                         <div class="pageTitleBtn p-0">
                                             <div class="nav-item dropdown">
-                                                <a href="#" class="nav-link dropdown-toggle profileDrop"
+                                                <a href="#" class="nav-link dropdown-toggle profileDrop btn-warning"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     Action </a>
                                                 <div class="dropdown-menu fade-up m-0">
@@ -220,4 +226,4 @@
 </script>
 
 @include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
-@include('frontEnd.salesAndFinance.jobs.layout.footer')
+@endsection

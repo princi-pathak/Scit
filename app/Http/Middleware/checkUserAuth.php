@@ -92,7 +92,7 @@ class checkUserAuth
                 $path = preg_replace('/\d/', '', $path);
                 // print_r($path); die;
                 //paths that does not need permssions
-                $allowed_path = array('send-modify-request','bug-report','bug-report/add','notif/response');
+                $allowed_path = array('send-modify-request','bug-report','bug-report/add','notif/response','ajax.getCountriesList');
                 //,'/general/petty_cash/check-balance'
                 //if requested path is not one of them that don't need permission. then check it for permission 
                 if(!in_array($path, $allowed_path)) {

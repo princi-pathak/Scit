@@ -12,12 +12,17 @@ function save_expend_card(){
             $(this).css('border','');
         }
     });
+    var id=$("#id").val();
+    var url=saveUrl;
+    if(id != ''){
+        url=editUrl;
+    }
     if(error == 1){
         return false;
     }else{
         $.ajax({
             type: "POST",
-            url: saveUrl,
+            url: url,
             data: new FormData($("#expend_cardForm")[0]),
             async: false,
             contentType: false,
