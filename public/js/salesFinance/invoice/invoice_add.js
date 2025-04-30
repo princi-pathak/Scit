@@ -81,6 +81,7 @@ function bgColorChange(button) {
 
 function get_modal(modal){
     var customer_id=$("#invoice_customer_id").val();
+    // alert(customer_id)
     if(modal == 1){  
         $("#AddCustomerModal")[0].reset();
         $("#job_title_plusIcon").hide();

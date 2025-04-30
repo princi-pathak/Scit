@@ -81,13 +81,21 @@ Array.prototype.slice.call(forms)
                 var formData = new FormData(form);
                 var productCategorytype = $('#productCategorytype').val();
                 var category_name = $('#category_name').val();
-                fetch('{{ route("item.saveProductCategoryData") }}', {
+                var id=$("#productCategoryID").val();
+                var url='{{ route("item.saveProductCategoryData") }}';
+                if(id !=''){
+                    url='{{ route("item.editProductCategoryData") }}';
+                }
+                fetch(url, {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                    console.log(data);
+                   if (isAuthenticated(data) == false) {
+                        return false;
+                    }
                    if(data.success==0){
                     $('.cathidemessagedanger').css('display','block');
                     $('.catsuccessdanger').text(data.message);

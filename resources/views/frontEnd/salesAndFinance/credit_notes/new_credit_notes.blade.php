@@ -65,7 +65,7 @@ ul#purchase_qoute_refList {
                 <div class="col-md-4 col-lg-4 col-xl-4 px-3">
                     <div class="pageTitleBtn">
                         <a href="javascript:void(0)" onclick="save_all_data()" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                        <a href="{{url('credit_notes?list_mode=Approved')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                        <a href="{{url('credit_notes/Approved')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
                         <!-- <a href="#" class="profileDrop dropdown-toggle"><i class="fa-solid fa-gear"></i> Actions</a> -->
                     </div>
                 </div>
