@@ -297,6 +297,7 @@
 </script>
 <script>
     var saveUrl="{{url('petty-cash/saveExpend')}}";
+    var editUrl="{{url('petty-cash/editExpend')}}";
     var redirectUrl="{{url('petty-cash/expend-card')}}";
 </script>
 <script>

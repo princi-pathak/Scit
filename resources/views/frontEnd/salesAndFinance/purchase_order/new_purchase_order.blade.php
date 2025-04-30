@@ -1145,6 +1145,9 @@
             },
             success: function(response) {
                 // console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 const data = response.data;
                 $('#purchase_contact_id').removeAttr('disabled');
                 var contactSelect = document.getElementById("purchase_contact_id");
@@ -1247,6 +1250,9 @@
             success: function(data) {
                 console.log(data);
                 // return false;
+                if (isAuthenticated(data) == false) {
+                    return false;
+                }
                 $('#purchase_project_id').removeAttr('disabled');
                 $('#purchase_site_id').removeAttr('disabled');
                 if (data.customers && data.customers.length > 0) {
@@ -1310,6 +1316,9 @@
             success: function(response) {
                 // console.log(response.data);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (id == 0) {
                     $("#purchase_user_name").val(purchase_user_name);
                     $("#purchase_company_name").val(purchase_company_name);
@@ -1506,6 +1515,9 @@
                 processData: false,
                 success: function(response) {
                     console.log(response);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (response.vali_error) {
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1557,6 +1569,9 @@
                 processData: false,
                 success: function(response) {
                     // console.log(response);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (response.vali_error) {
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1619,6 +1634,9 @@
             },
             success: function(data) {
                 // console.log(data);return false;
+                if (isAuthenticated(data) == false) {
+                    return false;
+                }
                 const tableBody = document.querySelector(`#result tbody`);
 
                 if (data.length === 0) {
@@ -1843,6 +1861,9 @@
                 },
                 success: function(data) {
                     // console.log(data);
+                    if (isAuthenticated(data) == false) {
+                        return false;
+                    }
                     if (data.success != true) {
                         alert("Something went wrong! Please try later");
                         return false;
@@ -1936,6 +1957,9 @@
             },
             success: function(response) {
                 // console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response) {
                     const vat_value = Number(response.data);
                     const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value = vat_value;
@@ -1982,6 +2006,9 @@
                     success: function(response) {
                         // console.log(response);
                         // $('#results').html(response);
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         divList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'container'; // Optional: Add a class to the div for styling
@@ -2071,6 +2098,9 @@
             },
             success: function(response) {
                 // console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 var paginationAttachment = response.pagination;
                 var data = response.data.data;
                 // const attachments = response.data.data[0].po_attachments || [];
@@ -2131,6 +2161,9 @@
             },
             success: function(response) {
                 console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 var data = response.data[0];
                 const tableBody = document.querySelector(`#result tbody`);
                 var purchase_order_products = data.product_details.purchase_order_products;
@@ -2382,6 +2415,9 @@
             },
             success: function(response) {
                 // console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 var paginationNewTask = response.pagination;
                 const newTask = response.data;
                 // console.log(newTask);
@@ -2495,6 +2531,9 @@
                     },
                     success: function(data) {
                         // console.log(data);
+                        if (isAuthenticated(data) == false) {
+                            return false;
+                        }
                         if (data) {
                             location.reload();
                         } else {
@@ -2532,6 +2571,9 @@
                 },
                 success: function(data) {
                     // console.log(data);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                 }
             });
         }
@@ -2588,6 +2630,9 @@
                 success: function(response) {
                     // console.log(response);
                     // return false;
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     purchase_qoute_refdivList.innerHTML = "";
                     const div = document.createElement('div');
                     div.className = 'purchase_qoute_ref_container';
@@ -2668,6 +2713,9 @@
                 success: function(response) {
                     // console.log(response);
                     // return false;
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     purchase_job_refdivList.innerHTML = "";
                     const div = document.createElement('div');
                     div.className = 'purchase_job_ref_container';
@@ -2836,6 +2884,9 @@
                 console.log(response);
                 //return false;
                 // var data=response.list_data.data;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 var data = response.list_data;
                 const tableBody = document.querySelector(`#supplier_invoice_table tbody`);
                 if (data.length === 0) {
@@ -2971,6 +3022,9 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.len > 0) {
                     $("#PaymentsPaid").show();
                     $("#payment_paid_result").html(response.data);
@@ -3001,6 +3055,9 @@
                 },
                 success: function(data) {
                     console.log(data);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (data.success === true) {
                         location.reload();
                     } else {
@@ -3043,6 +3100,9 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);

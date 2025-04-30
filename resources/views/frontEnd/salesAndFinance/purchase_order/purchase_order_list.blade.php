@@ -398,8 +398,16 @@
                                                 @else
                                                 <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
                                                 @endif
+
                                                 @else
                                                 -
+
+                                                <a href="{{url('purchase_order/duplicate?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
+                                                <hr class="dropdown-divider">
+                                                @if($status['status'] != 8 && $status['status'] != 1 )
+                                                <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
+                                                <hr class="dropdown-divider">
+
                                                 @endif
                                             </td>
                                             <td>
@@ -882,6 +890,43 @@
 
         $('.delete_checkbox:checked').each(function() {
             approveids.push($(this).val());
+
+    $('.delete_checkbox:checked').each(function() {
+        approveids.push($(this).val());
+    });
+    if (approveids.length == 0) {
+        alert("Please select at least one purchase order for approval.");
+    }else{
+        var token='<?php echo csrf_token();?>';
+        // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
+        var url=`{{ url('purchase_order_approveMultiple') }}`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({ approveids: approveids })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // return false;
+            if (isAuthenticated(data) == false) {
+                return false;
+            }
+            if(data.success === true){
+                location.reload();
+            }else{
+                alert("Something went wrong");
+                return false;
+            }
+            
+        })
+        .catch(error => {
+            // $('.catsuccessdanger').text('There was an error submitting the form.');
+            console.error("Error: ",error);
+
         });
         if (approveids.length == 0) {
             alert("Please select at least one purchase order for approval.");
@@ -1055,6 +1100,9 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 var table = $('#exampleOne').DataTable();
                 table.destroy();
                 if (response.data.length > 0) {
@@ -1151,6 +1199,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         deptdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'dept_container';
@@ -1230,6 +1281,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         tagdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'tag_container';
@@ -1308,6 +1362,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         supplierdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'supplier_container';
@@ -1386,6 +1443,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         customerdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'customer_container';
@@ -1464,6 +1524,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         createdbydivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'cretedby_container';
@@ -1542,6 +1605,9 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         projectdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'project_container';
@@ -1630,6 +1696,9 @@
             processData: false,
             success: function(response) {
                 console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -1674,6 +1743,9 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 var data = response.data[0];
                 const tableBody = document.querySelector(`#recordDelivery_result tbody`);
                 tableBody.innerHTML = '';
@@ -1828,6 +1900,9 @@
                 processData: false,
                 success: function(response) {
                     console.log(response);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (response.vali_error) {
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1920,6 +1995,9 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);

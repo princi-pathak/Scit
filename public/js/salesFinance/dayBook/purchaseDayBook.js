@@ -1,20 +1,45 @@
 $(document).ready(function () {
 
-    $("#savePurchaseDayBook").on("click", function(e) {
-        e.preventDefault(); 
+    $('#purchaseDayBookTable').DataTable({
+        dom: 'Blfrtip',   // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export', // Optional: change button text
+                bom: true,
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]  // Only export column 0 and 2
+                }
+            }
+        ]
+    });
+
+    $('#Date_input').datepicker({
+        format: 'dd-mm-yyyy'
+    });
+    $('#Date_input').on('change', function () {
+        $('#Date_input').datepicker('hide');
+    });
+
+    $("#purchase_day_book_form").scroll(function () {
+        $('#Date_input').datepicker('place');
+    });
+
+    $("#savePurchaseDayBook").on("click", function (e) {
+        e.preventDefault();
 
         $.ajax({
-            url: savePurchaseDayBook, 
+            url: savePurchaseDayBook,
             type: "POST",
             data: $('#save-purchase-day-book').serialize(), // Serialize form data
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 alert(response.message);
                 window.location.reload();
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 if (xhr.status === 422) {
                     // Validation error
                     let errors = xhr.responseJSON.errors;
@@ -45,12 +70,12 @@ $(document).ready(function () {
 
 
     $(".deleteBtn").on("click", function () {
-        let salesBookId = $(this).data("id"); // Get ID from button
-        let row = $("#row-" + salesBookId); // Select the row
+        let purchaseBookId = $(this).data("id"); // Get ID from button
+        let row = $("#row-" + purchaseBookId); // Select the row
 
         if (confirm("Are you sure you want to delete this record?")) {
             $.ajax({
-                url: salesDayBook + "/" + salesBookId,
+                url: purchaseDayBook + "/" + purchaseBookId,
                 type: "POST",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -68,6 +93,7 @@ $(document).ready(function () {
             });
         }
     });
+
 });
 
 
@@ -152,7 +178,7 @@ function taxRate() {
                     response.data.forEach(code => {
                         const option = document.createElement('option');
                         option.value = code.id; // Use appropriate key from your response
-                        option.textContent = code.name; // Use appropriate key from your response
+                        option.textContent = code.name + " (" + code.tax_rate + "%) "; // Use appropriate key from your response
                         option.setAttribute('data-tax-rate', code.tax_rate);
                         if (preTaxID && code.id == preTaxID) {
                             option.selected = true;
@@ -235,8 +261,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         vatAmountInput.value = vatAmount.toFixed(2);
         grossAmountInput.value = grossAmount.toFixed(2);
-        // expenses.value = 
-        // expensesAmountInput.value = "";
+        expenses.value = '';
+        expensesAmountInput.value = "";
     }
 
     // Trigger calculation on VAT change or Net Amount change
@@ -277,13 +303,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 net_amount.value = this.getAttribute('data-netAmount');
                 Date_input.value = this.getAttribute('data-date');
                 tax_id.value = this.getAttribute('data-vat');
-                gross_amount.value = this.getAttribute('data-grossAmount'); 
+                gross_amount.value = this.getAttribute('data-grossAmount');
                 reclaim_amount.value = this.getAttribute('data-reclaim');
                 expenses_id.value = this.getAttribute('data-expense_type');
                 vat_amount.value = this.getAttribute('data-vatAmount');
                 expenses_amount.value = this.getAttribute('data-expense_amount');
-                not_claim.value =  this.getAttribute('data-not_reclaim');
-                totalAmount.value = parseFloat(this.getAttribute('data-netAmount')) +  parseFloat(this.getAttribute('data-not_reclaim'));
+                not_claim.value = this.getAttribute('data-not_reclaim');
+                totalAmount.value = parseFloat(this.getAttribute('data-netAmount')) + parseFloat(this.getAttribute('data-not_reclaim'));
             }
 
             $('#purchase_day_book_form').modal('show');

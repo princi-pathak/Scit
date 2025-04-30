@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Rota;
 
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -36,14 +35,28 @@ class StaffController extends Controller
     public function store(StaffWorkerRequest $request){
         $validated = $request->validated();
 
+        // dd($validated);
         try {
             $this->staffWorkerService->saveStaffWorkerData($validated, Auth::user()->home_id);
-            // $response = StaffWorker::create($validated);
-            return response()->json(['status' => 'success', 'message' => 'Form submitted successfully!']);
+            if($validated['staff_id'] === null){
+                return response()->json(['status' => 'success', 'message' => 'Form submitted successfully!']);
+            }else{
+                return response()->json(['status' => 'success', 'message' => 'Form updated successfully!']);
+            }
         } catch (Exception $e) {
             Log::error('Form submission failed: ' . $e->getMessage());
             return response()->json(['status' => 'error', 'message' => 'Something went wrong while saving. Please try again.']);
         }
 
+    }
+
+    public function destroy($id){
+        try {
+            $this->staffWorkerService->deleteStaffWorkerData($id);
+            return response()->json(['status' => 'success', 'message' => 'Staff deleted successfully!']);
+        } catch (Exception $e) {
+            Log::error('Staff deletion failed: ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong while deleting. Please try again.']);
+        }
     }
 }
