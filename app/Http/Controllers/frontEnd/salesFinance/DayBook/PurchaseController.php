@@ -42,8 +42,11 @@ class PurchaseController extends Controller
     {
         $data = $request->validated();
 
-        $data['page'] = "dayBook";
-        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null],  array_merge($data, ['home_id' => Auth::user()->home_id]));
+
+        $convertedDate = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
+        $data['date'] = $convertedDate;
+        $data['home_id'] = Auth::user()->home_id;
+        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null], $data);
 
         if ($response->wasRecentlyCreated) {
             return response()->json([  'success' => true, 'message' => 'Purchase day book record created successfully!', 'data' => $response], 201);
@@ -66,6 +69,21 @@ class PurchaseController extends Controller
         ]);
     }
 
+    
+    public function deletePurchaseExpenses($id ){
+        $purchaseExpenses = PurchaseExpenses::findOrFail($id);
+        $purchaseExpenses->deleted_at = Carbon::now(); // Update deleted_at with current timestamp
+        $purchaseExpenses->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Record deleted successfully!',
+            'deleted_at' => $purchaseExpenses->deleted_at->format('Y-m-d H:i:s')
+        ]);
+    }
+
+    
+
     // public function editPurchaseDayBook($id){
     //     $data['purchaseBook'] = PurchaseDayBook::findOrFail($id);
     //     // dd($data);
@@ -86,6 +104,7 @@ class PurchaseController extends Controller
 
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
+            'status' => 'required|boolean',
         ]);
 
         $data = PurchaseExpenses::updateOrCreate(['id' => $request['purchase_expense_id']], $validatedData);
@@ -93,12 +112,12 @@ class PurchaseController extends Controller
         if(empty($request['purchase_expense_id'])){
             return response()->json([
                 'success' => (bool) $data,
-                'message' => $data ? "Purchase expenses added successfully! " : 'Failed to save purchase expenses'
+                'message' => $data ? "Purchase expenses type added successfully! " : 'Failed to save purchase expenses type'
             ]);
         } else {
             return response()->json([
                 'success' => (bool) $data,
-                'message' => $data ? "Purchase expenses edited successfully! " : 'Failed to edit purchase expenses'
+                'message' => $data ? "Purchase expenses type edited successfully! " : 'Failed to edit purchase expenses type'
             ]);
         }
     }

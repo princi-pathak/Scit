@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\frontend\salesFinance;
 
 use App\Http\Controllers\Controller;
-// use Illuminate\Http\Request;
 
 use App\Models\CouncilTax;
 use Illuminate\Support\Carbon;

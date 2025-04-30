@@ -96,10 +96,17 @@ function getSaveData() {
 }
 function openAssetCategoryModal() {
     $("#assetCategoryModalLabel").text("Add Asset Category");
+    $("#assetCategoryForm")[0].reset();
+    $("#id").val('');
     $("#assetCategoryModal").modal('show');
 }
 function saveassetCategoryModal() {
     var name = $("#name").val();
+    var id=$("#id").val();
+    var cat_url=assetCatSaveUrl;
+    if(id !=''){
+        cat_url=assetCatEditUrl;
+    }
     if (name == '') {
         $("#name").css('border', '1px solid red');
         return false;
@@ -107,7 +114,7 @@ function saveassetCategoryModal() {
         $("#name").css('border', '');
         $.ajax({
             type: "POST",
-            url: assetCatSaveUrl,
+            url: cat_url,
             data: new FormData($("#assetCategoryForm")[0]),
             async: false,
             contentType: false,
@@ -175,6 +182,11 @@ $(document).on('click', '.depreciation_typeModal_dataFetch', function () {
 function savedepreciation_typesModal() {
     var name = $("#name").val();
     var percentage = $("#percentage").val();
+    var id=$("#id").val();
+    var assetDepreciationTypeUrl=assetDepreciationTypeSaveUrl;
+    if(id !=''){
+        assetDepreciationTypeUrl=assetDepreciationTypeEditUrl;
+    }
     if (name == '') {
         $("#name").css('border', '1px solid red');
         return false;
@@ -187,7 +199,7 @@ function savedepreciation_typesModal() {
         $("#percentage").css('border', '');
         $.ajax({
             type: "POST",
-            url: assetDepreciationTypeSaveUrl,
+            url: assetDepreciationTypeUrl,
             data: new FormData($("#depreciation_typesForm")[0]),
             async: false,
             contentType: false,

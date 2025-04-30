@@ -21,7 +21,7 @@
       justify-content: center;
       height: 50px;
       width: 50px;
-    } 
+    }
 
     .chat_opt:hover i {
       color: #fff;
@@ -124,6 +124,12 @@
   <link href="{{ url('public/frontEnd/css/dyslexia/dyslexia_developer.css') }}" rel="stylesheet">
   @endif
 
+  <!-- Datatable css -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+
   <link href="{{ url('public/frontEnd/css/margins-min.css') }}" rel="stylesheet">
   <!-- For stylish select box -->
   <link href="{{ url('public/frontEnd/css/bootstrap-select.css') }}" rel="stylesheet">
@@ -155,6 +161,13 @@
   <script src="{{ url('public/frontEnd/js/clamp/clamp.js') }}"></script>
 
   <script src="{{ url('public/frontEnd/js/angularjs/angular1.4.8.min.js') }}"></script>
+
+  <!-- Datatables js -->
+  <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
   <!-- file for sticky(gritter) notifications -->
   <link href="{{ url('public/frontEnd/js/gritter/jquery.gritter.css') }}" rel="stylesheet">
@@ -208,6 +221,8 @@
   <script src="{{ url('public/frontEnd/js/scripts.js') }}"></script>
   <script src="{{ url('public/frontEnd/js/developer.js') }}"></script>
   <script src="{{ url('public/frontEnd/js/advanced-form.js') }}"></script>
+
+
 
 
   <!-- VALIDATION FILES -->

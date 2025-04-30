@@ -425,6 +425,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/departments', 'departments');
 		Route::post('/save_department', 'save_department');
 		Route::get('/purchase_order', 'purchase_order');
+		Route::get('/purchase_order/duplicate', 'purchase_order');
 		Route::post('/purchase_order_save', 'purchase_order_save');
 		Route::get('/purchase_order_edit', 'purchase_order');
 		Route::post('/purchase_order_attachment_save', 'purchase_order_attachment_save');
@@ -485,7 +486,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('petty-cash-add','petty_cash_add');
 			Route::get('child-register-add','child_register_add');
 			Route::post('saveExpend','saveExpend');
+			Route::post('editExpend','saveExpend');
 			Route::post('saveCash','saveCash');
+			Route::post('editCash','saveCash');
 			Route::post('cash_filter','cash_filter');
 			Route::post('expand_card_filter','expand_card_filter');
 			
@@ -504,6 +507,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(StaffController::class)->group(function(){
 		Route::get('rota/staff','index');
 		Route::post('rota/staff-add','store');
+		Route::delete('rota/staff-delete/{id}','destroy');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {
@@ -528,7 +532,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('asset-regiser-add','asset_regiser_add');
 			Route::post('asset-regiser-save','asset_regiser_save');
 			Route::post('asset-category-save','asset_category_save');
+			Route::post('asset-category-edit','asset_category_save');
 			Route::post('depreciation-type-save','depreciation_type_save');
+			Route::post('depreciation-type-edit','depreciation_type_save');
 			Route::get('asset-register-edit','asset_regiser_add');
 			Route::post('asset-register-delete','asset_register_delete');
 		});
@@ -557,6 +563,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::prefix('finance')->group(function () {
 			Route::get('/council-tax', 'index')->name('finance.council-tax');
 			Route::post('/save-council-tax', 'saveCouncilTaxData')->name('finance.saveCouncilTaxData');
+			Route::post('/edit-council-tax', 'saveCouncilTaxData');
 			Route::delete('/delete-council-tax/{id}', 'destroy')->name('finance.deleteCouncilTax');
 		});
 	});
@@ -575,7 +582,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::prefix('purchase')->group(function () {
 			Route::get('purchase-type', 'purchase_type')->name('purchase.purchaseExpenses');
 			Route::post('save-purchase-expenses', 'save_purchase_expenses')->name('purchase.purchaseExpensesSave');
+			Route::post('edit-purchase-expenses', 'save_purchase_expenses');
 			Route::get('purchase-day-book-reclaim-per', 'purchase_day_book_reclaim_per')->name('purchase.purchaseDayBookReclaimPer');
+			Route::post('/purchase-expenses/delete/{id}', 'deletePurchaseExpenses')->name('deletePurchaseExpenses.delete');
 			Route::get('reclaimPercantage', 'reclaimPercantage')->name('purchase.reclaimPercantage');
 			Route::get('/purchase-day-book', 'index')->name('purchase.purchaseDayBook');
 			Route::get('/purchase-day-book/add', 'create')->name('purchase.purchaseDayBookCreate');
@@ -2101,6 +2110,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('find_job', 'find_job');
 			Route::post('find_appointment', 'find_appointment');
 			Route::post('expense_save', 'expense_save');
+			Route::post('expense_edit', 'expense_save');
 			Route::post('expense_image_delete', 'expense_image_delete');
 			Route::post('expense_delete', 'expense_delete');
 			Route::post('expense_reject', 'expense_reject');
