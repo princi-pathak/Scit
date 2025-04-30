@@ -134,10 +134,6 @@
         background-color: #f8f9fa;
         color: #212529;
     }
-    .searchJobForm {
-    border: 1px solid #eee;
-    margin-bottom: 20px;
-}
 </style>
 <section class="wrapper">
     <div class="container-fluid">
@@ -165,10 +161,18 @@
                                         <a href="#!" class="dropdown-item">Email</a> -->
                                     </div>
                                 </div>
-                                <a href="{{ url('invoices/invoice/Draft') }}" class="btn btn-default2" <?php if ($key_mode === 'Draft') { echo 'id="active_inactive"'; } ?>>Draft <span>({{$draft_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Outstanding') }}" class="btn btn-default2" <?php if ($key_mode === 'Outstanding') { echo 'id="active_inactive"'; } ?>>Outstanding <span>({{$outstanding_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Overdue') }}" class="btn btn-default2" <?php if ($key_mode === 'Overdue') {  echo 'id="active_inactive"';} ?>>Overdue <span>({{$overdue_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Paid') }}" class="btn btn-default2" <?php if ($key_mode === 'Paid') { echo 'id="active_inactive"'; } ?>>Paid <span>({{$paid_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Draft') }}" class="btn btn-default2" <?php if ($key_mode === 'Draft') {
+                                                                                                            echo 'id="active_inactive"';
+                                                                                                        } ?>>Draft <span>({{$draft_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Outstanding') }}" class="btn btn-default2" <?php if ($key_mode === 'Outstanding') {
+                                                                                                                    echo 'id="active_inactive"';
+                                                                                                                } ?>>Outstanding <span>({{$outstanding_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Overdue') }}" class="btn btn-default2" <?php if ($key_mode === 'Overdue') {
+                                                                                                                echo 'id="active_inactive"';
+                                                                                                            } ?>>Overdue <span>({{$overdue_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Paid') }}" class="btn btn-default2" <?php if ($key_mode === 'Paid') {
+                                                                                                            echo 'id="active_inactive"';
+                                                                                                        } ?>>Paid <span>({{$paid_invoice}})</span></a>
                                 <div class="searchFilter">
                                     <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
                                 </div>

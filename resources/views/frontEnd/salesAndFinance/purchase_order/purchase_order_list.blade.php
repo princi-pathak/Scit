@@ -134,12 +134,6 @@
         background-color: #f8f9fa;
         color: #212529;
     }
-
-    .searchJobForm {
-        border: 1px solid #eee;
-        margin-bottom: 20px;
-        margin-top: 20px;
-    }
 </style>
 
 <section class="wrapper">
@@ -204,7 +198,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="searchJobForm" id="divTohide" style="display:none">
+                            <div class="searchJobForm mt-0" id="divTohide" style="display:none">
                                 <form id="search_dataForm" class="p-4">
                                     <div class="row">
                                         <div class="col-md-3">
@@ -319,154 +313,147 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="table-responsive productDetailTable">
-                                <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAllCheckBoxes"></th>
-                                            <th>#</th>
-                                            <th>PO Ref</th>
-                                            <th>Date</th>
-                                            <th>Due Date</th>
-                                            <th>Supplier</th>
-                                            <th>Customer</th>
-                                            <th>Delivery</th>
-                                            <th>Sub Total</th>
-                                            <th>VAT</th>
-                                            <th>Total </th>
-                                            <th>Outstanding </th>
-                                            <th>Status</th>
-                                            <th>Delivery</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
+                            <div class="maimTable">
+                                <div class="table-responsive productDetailTable">
+                                    <table id="myTable" class="table " cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="white_space_nowrap">
+                                                <th><input type="checkbox" id="selectAllCheckBoxes"></th>
+                                                <th>#</th>
+                                                <th>PO Ref</th>
+                                                <th>Date</th>
+                                                <th>Due Date</th>
+                                                <th>Supplier</th>
+                                                <th>Customer</th>
+                                                <th>Delivery</th>
+                                                <th>Sub Total</th>
+                                                <th>VAT</th>
+                                                <th>Total </th>
+                                                <th>Outstanding </th>
+                                                <th>Status</th>
+                                                <th>Delivery</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
 
-                                    <tbody id="search_data">
-                                        <?php
-                                        $all_subTotalAmount = 0;
-                                        $all_vatTotalAmount = 0;
-                                        $all_TotalAmount = 0;
-                                        $outstandingAmountTotal = 0;
-                                        ?>
-                                        @foreach($list as $val)
-                                        <?php
-                                        $customer = App\Models\Customer::find($val->customer_id);
-                                        $sub_total_amount = 0;
-                                        $total_amount = 0;
-                                        $vat_amount = 0;
-                                        $purchaseProductId = 0;
-                                        $product_id = 0;
-                                        $vat = 0;
-                                        foreach ($val->purchaseOrderProducts as $product) {
-                                            $purchaseProductId = $product->id;
-                                            $product_id = $product->product_id;
-                                            $qty = $product->qty * $product->price;
-                                            $sub_total_amount = $sub_total_amount + $qty;
-                                            $vat = $qty * $product->vat / 100;
-                                            $vat_amount = $vat_amount + $vat;
-                                            $total_amount = $total_amount + $vat + $qty;
-                                        }
-                                        $all_subTotalAmount = $all_subTotalAmount + $sub_total_amount;
-                                        $all_vatTotalAmount = $all_vatTotalAmount + $vat_amount;
-                                        $all_TotalAmount = $all_TotalAmount + $total_amount;
-                                        $outstandingAmountTotal = $outstandingAmountTotal + $val->outstanding_amount;
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div>
-                                            </td>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$val->purchase_order_ref}}</td>
-                                            <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
-                                            <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
-                                            <td>{{$val->suppliers->name}} <input type="hidden" value="{{$val->suppliers->email}}" class="supplierEmail" id="supplierEmail{{$val->id}}"> </td>
-                                            <td>{{$customer->name ?? ''}}</td>
-                                            <td>{{$val->city}}</td>
-                                            <td>£{{$sub_total_amount}}</td>
-                                            <td>£{{$vat_amount}}</td>
-                                            <td>£{{$total_amount}}</td>
-                                            <td>£{{$val->outstanding_amount}}</td>
-                                            <td>{{$status['list_status']}}</td>
-                                            <td>
-                                                @if( $status['status'] != 1)
-                                                @if($val->delivery_status == 1)
-                                                <span class="grencheck"><i class="fa-solid fa-check"></i></span>
-                                                @elseif($val->delivery_status == 2)
-                                                <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red"><span class="" style="color:#FFCC66"><i class="fa-solid fa-check"></i></span><span class="tutor-student-tooltiptext3">Part Delivered</span></a>
-                                                @else
-                                                <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
-                                                @endif
-
-                                                @else
-                                                -
-
-                                                <a href="{{url('purchase_order/duplicate?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
-                                                <hr class="dropdown-divider">
-                                                @if($status['status'] != 8 && $status['status'] != 1 )
-                                                <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
-                                                <hr class="dropdown-divider">
-
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="d-flex justify-content-end">
-                                                    <div class="dropdown">
-                                                        <a href="#!" class="dropdown-toggle btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
-                                                            Action <i class="fa fa-caret-down"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right fade-up m-0" style="z-index:9999">
-                                                            @if( $status['status'] != 1 && $status['status'] != 2)
-                                                            <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
-                                                            @endif
-                                                            <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
-                                                            <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
-                                                            @if( $status['status'] != 1 && $status['status'] != 2)
-                                                            <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Print</a>
-                                                            <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
-                                                            @endif
-                                                            <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
-                                                            @if($status['status'] != 8 && $status['status'] != 1 )
-                                                            <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
-                                                            @endif
-                                                            @if($status['status'] == 1 || $status['status'] == 2)
-                                                            <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
-                                                            @endif
-                                                            @if($status['status'] != 5 && $status['status'] != 1 && $status['status'] != 2)
-                                                            <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}},{{$val->supplier_id}})" class="dropdown-item">Record Payment</a>
-                                                            <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
-                                                            @endif
-                                                            @if($status['status'] == 8 || $status['status'] == 4 || $status['status'] == 5 || $status['status'] == 3)
-                                                            @if($val->delivery_status !=1)
-                                                            <a href="#!" class="dropdown-item">Cancel Purchase Order</a>
-                                                            @endif
-                                                            @endif
-                                                            <a href="#!" class="dropdown-item">CRM / History</a>
-                                                            <a href="#!" class="dropdown-item">Start Timer</a>
+                                        <tbody id="search_data">
+                                            <?php
+                                            $all_subTotalAmount = 0;
+                                            $all_vatTotalAmount = 0;
+                                            $all_TotalAmount = 0;
+                                            $outstandingAmountTotal = 0;
+                                            ?>
+                                            @foreach($list as $val)
+                                            <?php
+                                            $customer = App\Models\Customer::find($val->customer_id);
+                                            $sub_total_amount = 0;
+                                            $total_amount = 0;
+                                            $vat_amount = 0;
+                                            $purchaseProductId = 0;
+                                            $product_id = 0;
+                                            $vat = 0;
+                                            foreach ($val->purchaseOrderProducts as $product) {
+                                                $purchaseProductId = $product->id;
+                                                $product_id = $product->product_id;
+                                                $qty = $product->qty * $product->price;
+                                                $sub_total_amount = $sub_total_amount + $qty;
+                                                $vat = $qty * $product->vat / 100;
+                                                $vat_amount = $vat_amount + $vat;
+                                                $total_amount = $total_amount + $vat + $qty;
+                                            }
+                                            $all_subTotalAmount = $all_subTotalAmount + $sub_total_amount;
+                                            $all_vatTotalAmount = $all_vatTotalAmount + $vat_amount;
+                                            $all_TotalAmount = $all_TotalAmount + $total_amount;
+                                            $outstandingAmountTotal = $outstandingAmountTotal + $val->outstanding_amount;
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div>
+                                                </td>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$val->purchase_order_ref}}</td>
+                                                <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
+                                                <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
+                                                <td>{{$val->suppliers->name}} <input type="hidden" value="{{$val->suppliers->email}}" class="supplierEmail" id="supplierEmail{{$val->id}}"> </td>
+                                                <td>{{$customer->name ?? ''}}</td>
+                                                <td>{{$val->city}}</td>
+                                                <td>£{{$sub_total_amount}}</td>
+                                                <td>£{{$vat_amount}}</td>
+                                                <td>£{{$total_amount}}</td>
+                                                <td>£{{$val->outstanding_amount}}</td>
+                                                <td>{{$status['list_status']}}</td>
+                                                <td>
+                                                    @if( $status['status'] != 1)
+                                                    @if($val->delivery_status == 1)
+                                                    <span class="grencheck"><i class="fa fa-check"></i></span>
+                                                    @elseif($val->delivery_status == 2)
+                                                    <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red"><span class="" style="color:#FFCC66"><i class="fa fa-check"></i></span><span class="tutor-student-tooltiptext3">Part Delivered</span></a>
+                                                    @else
+                                                    <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
+                                                    @endif
+                                                    @else
+                                                    -
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <div class="dropdown">
+                                                            <a href="#!" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                                                Action <i class="fa fa-caret-down"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right fade-up m-0" style="z-index:9999">
+                                                                @if( $status['status'] != 1 && $status['status'] != 2)
+                                                                <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
+                                                                @endif
+                                                                <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
+                                                                <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
+                                                                @if( $status['status'] != 1 && $status['status'] != 2)
+                                                                <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Print</a>
+                                                                <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
+                                                                @endif
+                                                                <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
+                                                                @if($status['status'] != 8 && $status['status'] != 1 )
+                                                                <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
+                                                                @endif
+                                                                @if($status['status'] == 1 || $status['status'] == 2)
+                                                                <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
+                                                                @endif
+                                                                @if($status['status'] != 5 && $status['status'] != 1 && $status['status'] != 2)
+                                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}},{{$val->supplier_id}})" class="dropdown-item">Record Payment</a>
+                                                                <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
+                                                                @endif
+                                                                @if($status['status'] == 8 || $status['status'] == 4 || $status['status'] == 5 || $status['status'] == 3)
+                                                                @if($val->delivery_status !=1)
+                                                                <a href="#!" class="dropdown-item">Cancel Purchase Order</a>
+                                                                @endif
+                                                                @endif
+                                                                <a href="#!" class="dropdown-item">CRM / History</a>
+                                                                <a href="#!" class="dropdown-item">Start Timer</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                        @if(count($list)>0)
+                                        <tr class="calcualtionShowHide">
+                                            <th colspan="3"> <label class="col-form-label p-0">Page Sub Total:</label></th>
+                                            <th colspan="11"></th>
                                         </tr>
-                                        @endforeach
-                                    </tbody>
-                                    @if(count($list)>0)
-                                    <tr class="calcualtionShowHide">
-                                        <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
-                                        <th colspan="12"></th>
-                                    </tr>
-                                    <tr class="calcualtionShowHide">
-                                        <td colspan="8"></td>
-                                        <td id="Tablesub_total_amount">£{{$all_subTotalAmount}}</td>
-                                        <td id="Tablevat_amount">£{{$all_vatTotalAmount}}</td>
-                                        <td id="Tabletotal_amount">£{{$all_TotalAmount}}</td>
-                                        <td id="Tableoutstanding_amount" colspan="8">£{{$outstandingAmountTotal}}</td>
-                                    </tr>
-                                    @endif
-                                </table>
+                                        <tr class="calcualtionShowHide">
+                                            <td colspan="8"></td>
+
+                                            <td id="Tablesub_total_amount">£{{$all_subTotalAmount}}</td>
+                                            <td id="Tablevat_amount">£{{$all_vatTotalAmount}}</td>
+                                            <td id="Tabletotal_amount">£{{$all_TotalAmount}}</td>
+                                            <td id="Tableoutstanding_amount" colspan="8">£{{$outstandingAmountTotal}}</td>
+                                        </tr>
+                                        @endif
+                                    </table>
+                                </div>
+                                <!-- End off main Table -->
                             </div>
-                            <!-- End off main Table -->
                         </div>
                     </div>
                 </div>
@@ -476,76 +463,69 @@
 </section>
 <!-- Approve Model Start Here -->
 <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content add_Customer">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Authorise Purchase Order</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h4 class="modal-title" id="customerModalLabel">Authorise Purchase Order</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="text-center mt-3" id="message_approveModal" style="display:none"></div>
                     <div class="col-md-12 col-lg-12 col-xl-12">
-                        <div class="formDtail">
-                            <form id="approveForm" class="customerForm pt-0">
-                                @csrf
-                                <input type="hidden" name="id" id="id">
-                                <input type="hidden" name="po_id" id="po_id">
-                                <div class="row">
-                                    <label for="inputName" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-form-label">Would you like to notify anyone that this purchase order '<span id="purchaseOrderRef"></span>' has been approved?</label>
+                        <form id="approveForm">
+                            @csrf
+                            <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="po_id" id="po_id">
+                            <div class="mb-2">
+                                <label class="mb-2 col-form-label">Would you like to notify anyone that this purchase order '<span id="purchaseOrderRef"></span>' has been approved?</label>
+                            </div>
+                            <div class="mb-2">
+                                <label class=" mb-2 col-form-label">Notify?</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="notify_radio" id="radioNo" value="0" checked="">
+                                    <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
                                 </div>
-                                <div class="mb-2 row">
-                                    <label for="inputName" class="col-md-3 col-lg-3 col-xl-3 col-sm-3 col-form-label">Notify?</label>
-                                    <div class="col-sm-9">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="notify_radio" id="radioNo" value="0" checked="">
-                                            <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="notify_radio" value="1" id="radioYes">
-                                            <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
-                                        </div>
-                                    </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="notify_radio" value="1" id="radioYes">
+                                    <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
                                 </div>
+                            </div>
 
-                                <div class="mb-2 row notificationHideShow" style="display:none">
-                                    <label for="inputProject"
-                                        class="col-sm-3 col-form-label">Notify Who?</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" id="notifywhoUser" name="notify_user_id">
-                                            <option value=""></option>
-                                            <option value="{{Auth::user()->id}}">Me - {{Auth::user()->email}} / {{Auth::user()->phone_no ?? 'No Mobile'}}</option>
-                                            @foreach($users as $value)
-                                            @if($value->id != Auth::user()->id)
-                                            <option value="{{ $value->id }}">{{ $value->name }} - {{$value->email}} / {{$value->phone_no ?? 'No Mobile'}}</option>
-                                            @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
+                            <div class="mb-2 notificationHideShow" style="display:none">
+                                <label class="mb-2 col-form-label">Notify Who?</label>
+                                <select class="form-control editInput selectOptions" id="notifywhoUser" name="notify_user_id">
+                                    <option value=""></option>
+                                    <option value="{{Auth::user()->id}}">Me - {{Auth::user()->email}} / {{Auth::user()->phone_no ?? 'No Mobile'}}</option>
+                                    @foreach($users as $value)
+                                    @if($value->id != Auth::user()->id)
+                                    <option value="{{ $value->id }}">{{ $value->name }} - {{$value->email}} / {{$value->phone_no ?? 'No Mobile'}}</option>
+                                    @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-2 notificationHideShow" style="display:none">
+                                <label class="mb-2 col-form-label">Send As <span class="radStar ">*</span> </label>
+                                <div>
+                                    <label for="purchase_notify_who1" class="editInput">
+                                        <input type="checkbox" name="notification" id="purchase_notify_who1" value="1" checked=""> Notification (User Only)
+                                    </label>
+                                    <label for="purchase_notify_who2" class="editInput">
+                                        <input type="checkbox" name="sms" id="purchase_notify_who2" value="1"> SMS
+                                    </label>
+                                    <label for="purchase_notify_who3" class="editInput">
+                                        <input type="checkbox" name="email" id="purchase_notify_who3" value="1" checked=""> Email
+                                    </label>
                                 </div>
-                                <div class="mb-2 row notificationHideShow" style="display:none">
-                                    <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
-                                    <div class="col-sm-9">
-                                        <label for="purchase_notify_who1" class="editInput">
-                                            <input type="checkbox" name="notification" id="purchase_notify_who1" value="1" checked=""> Notification (User Only)
-                                        </label>
-                                        <label for="purchase_notify_who2" class="editInput">
-                                            <input type="checkbox" name="sms" id="purchase_notify_who2" value="1"> SMS
-                                        </label>
-                                        <label for="purchase_notify_who3" class="editInput">
-                                            <input type="checkbox" name="email" id="purchase_notify_who3" value="1" checked=""> Email
-                                        </label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer customer_Form_Popup">
 
-                <button type="button" class="btn btn-default2" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
                 <button type="button" class="btn btn-default2" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
             </div>
         </div>
     </div>
@@ -554,48 +534,45 @@
 <!-- End here -->
 <!-- Record Delivery Modal start here -->
 <div class="modal fade" id="recordDeliveryModal" tabindex="-1" aria-labelledby="recordDeliveryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content add_Customer">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="crecordDeliveryModalLabel"></h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h4 class="modal-title" id="crecordDeliveryModalLabel"></h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="text-center mt-3" id="message_recordDeliveryModal" style="display:none"></div>
                     <div class="col-md-12 col-lg-12 col-xl-12">
-                        <div class="formDtail">
-                            <form id="recordDeliveryForm" class="customerForm pt-0">
-                                <input type="hidden" name="po_id" id="recordDelivery_po_id">
-                                @csrf
-                                <div class="col-sm-12">
-                                    <div class="productDetailTable input_style">
-                                        <table class="table" id="recordDelivery_result">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th class="col-1">Code</th>
-                                                    <th class="col-2">Product</th>
-                                                    <th class="col-2">Description</th>
-                                                    <th class="col-2">Price</th>
-                                                    <th class="col-1">Qty</th>
-                                                    <th class="col-2">Allredy Delivered</th>
-                                                    <th class="col-2">Receive More</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        <div id="pagination-controls-recordDelivery"></div>
-                                    </div>
+                        <form id="recordDeliveryForm">
+                            <input type="hidden" name="po_id" id="recordDelivery_po_id">
+                            @csrf
+                            <div class="col-sm-12">
+                                <div class="productDetailTable input_style">
+                                    <table class="table" id="recordDelivery_result">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="col-1">Code</th>
+                                                <th class="col-2">Product</th>
+                                                <th class="col-2">Description</th>
+                                                <th class="col-2">Price</th>
+                                                <th class="col-1">Qty</th>
+                                                <th class="col-2">Allredy Delivered</th>
+                                                <th class="col-2">Receive More</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <div id="pagination-controls-recordDelivery"></div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer customer_Form_Popup">
-
-                <button type="button" class="btn btn-default2" id="saverecordDeliveryModal" onclick="saverecordDeliveryModal()">Save</button>
                 <button type="button" class="btn btn-default2" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="saverecordDeliveryModal" onclick="saverecordDeliveryModal()">Save</button>
             </div>
         </div>
     </div>
@@ -603,105 +580,102 @@
 <!-- end here -->
 <!-- Record Payment Modal start here -->
 <div class="modal fade" id="recordPaymentModal" tabindex="-1" aria-labelledby="recordPaymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content add_Customer">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="recordPaymentModalLabel"></h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title" id="recordPaymentModalLabel"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="text-center mt-3" id="message_recordPaymentModal" style="display:none"></div>
                     <div class="col-md-12 col-lg-12 col-xl-12">
-                        <div class="formDtail">
-                            <form id="recordPaymentForm" class="customerForm pt-0">
-                                <input type="hidden" name="po_id" id="recordPayment_po_id">
-                                <!-- <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id"> -->
-                                <input type="hidden" name="supplier_id" id="recordPayment_ppurchaseSupplier_id">
-                                <input type="hidden" name="record_type" value="1">
-                                <input type="hidden" name="total_amount" id="recordPayment_total_amount" value="">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Purchase Order</label>
-                                            <div class="col-sm-9">
-                                                <p id="purchaseOrderRecordDate"></p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Supplier</label>
-                                            <div class="col-sm-9">
-                                                <p id="record_supplierName"></p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Purchase Order Total</label>
-                                            <div class="col-sm-9">
-                                                <p id="record_TotalAmount"></p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                            <div class="col-sm-9">
-                                                <p id="record_OutstandingAmount"></p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid <span class="radStar">*</span></label>
-                                            <div class="col-sm-1">
-                                                <div class="tag_box">
-                                                    <span>£</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control editInput textareaInput" id="record_AmountPaid" name="record_amount_paid">
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Payment Date <span class="radStar ">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="date" id="record_PaymentDate" name="record_payment_date" class="form-control editInput">
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputProject" class="col-sm-3 col-form-label">Payment Type <span class="radStar ">*</span></label>
-                                            <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions" id="record_PaymentType" name="record_payment_type">
-                                                    @foreach($paymentTypeList as $type)
-                                                    <option value="{{$type->id}}">{{$type->title}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <a href="javascript:void(0)" class="formicon" onclick="openPaymentTypeModal()"><i class="fa-solid fa-square-plus"></i></a>
-                                            </div>
+                        <form id="recordPaymentForm">
+                            <input type="hidden" name="po_id" id="recordPayment_po_id">
+                            <!-- <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id"> -->
+                            <input type="hidden" name="supplier_id" id="recordPayment_ppurchaseSupplier_id">
+                            <input type="hidden" name="record_type" value="1">
+                            <input type="hidden" name="total_amount" id="recordPayment_total_amount" value="">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="mb-2 row">
+                                        <label for="inputAddress" class="mb-2 col-form-label">Purchase Order</label>
+                                        <div class="col-sm-9">
+                                            <p id="purchaseOrderRecordDate"></p>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Reference</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control editInput textareaInput" placeholder="Reference (if any)" id="record_Reference" name="record_reference">
+                                    <div class="mb-2 row">
+                                        <label for="inputAddress" class="mb-2 col-form-label">Supplier</label>
+                                        <div class="col-sm-9">
+                                            <p id="record_supplierName"></p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputAddress" class="mb-2 col-form-label">Purchase Order Total</label>
+                                        <div class="col-sm-9">
+                                            <p id="record_TotalAmount"></p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputAddress" class="mb-2 col-form-label">Outstanding Amount</label>
+                                        <div class="col-sm-9">
+                                            <p id="record_OutstandingAmount"></p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputAddress" class="mb-2 col-form-label">Amount Paid <span class="radStar">*</span></label>
+                                        <div class="col-sm-1">
+                                            <div class="tag_box">
+                                                <span>£</span>
                                             </div>
                                         </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Description</label>
-                                            <div class="col-sm-9">
-                                                <textarea class="form-control textareaInput CustomercheckError" id="record_Description" name="record_description" rows="10" maxlength="500"></textarea>
-                                            </div>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control editInput textareaInput" id="record_AmountPaid" name="record_amount_paid">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputAddress" class="mb-2 col-form-label">Payment Date <span class="radStar ">*</span></label>
+                                        <div class="col-sm-9">
+                                            <input type="date" id="record_PaymentDate" name="record_payment_date" class="form-control editInput">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputProject" class="mb-2 col-form-label">Payment Type <span class="radStar ">*</span></label>
+                                        <div class="col-sm-7">
+                                            <select class="form-control editInput selectOptions" id="record_PaymentType" name="record_payment_type">
+                                                @foreach($paymentTypeList as $type)
+                                                <option value="{{$type->id}}">{{$type->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a href="javascript:void(0)" class="formicon" onclick="openPaymentTypeModal()"><i class="fa fa-square-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="mb-2 row">
+                                        <label for="inputAddress" class="mb-2 col-form-label">Reference</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control editInput textareaInput" placeholder="Reference (if any)" id="record_Reference" name="record_reference">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputAddress" class="mb-2 col-form-label">Description</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control textareaInput CustomercheckError" id="record_Description" name="record_description" rows="10" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer customer_Form_Popup">
-
-                <button type="button" class="btn btn-default2" id="saverecordPaymentModal" onclick="saverecordPaymentModal()">Save</button>
                 <button type="button" class="btn btn-default2" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="saverecordPaymentModal" onclick="saverecordPaymentModal()">Save</button>
             </div>
         </div>
     </div>
@@ -886,136 +860,138 @@
         }
     });
     $("#approveBtn").on('click', function() {
-        let approveids = [];
+                let approveids = [];
 
-        $('.delete_checkbox:checked').each(function() {
-            approveids.push($(this).val());
+                $('.delete_checkbox:checked').each(function() {
+                            approveids.push($(this).val());
 
-    $('.delete_checkbox:checked').each(function() {
-        approveids.push($(this).val());
-    });
-    if (approveids.length == 0) {
-        alert("Please select at least one purchase order for approval.");
-    }else{
-        var token='<?php echo csrf_token();?>';
-        // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
-        var url=`{{ url('purchase_order_approveMultiple') }}`;
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': token
-            },
-            body: JSON.stringify({ approveids: approveids })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            // return false;
-            if (isAuthenticated(data) == false) {
-                return false;
-            }
-            if(data.success === true){
-                location.reload();
-            }else{
-                alert("Something went wrong");
-                return false;
-            }
-            
-        })
-        .catch(error => {
-            // $('.catsuccessdanger').text('There was an error submitting the form.');
-            console.error("Error: ",error);
+                            $('.delete_checkbox:checked').each(function() {
+                                approveids.push($(this).val());
+                            });
+                            if (approveids.length == 0) {
+                                alert("Please select at least one purchase order for approval.");
+                            } else {
+                                var token = '<?php echo csrf_token(); ?>';
+                                // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
+                                var url = `{{ url('purchase_order_approveMultiple') }}`;
+                                fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': token
+                                        },
+                                        body: JSON.stringify({
+                                            approveids: approveids
+                                        })
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log(data);
+                                        // return false;
+                                        if (isAuthenticated(data) == false) {
+                                            return false;
+                                        }
+                                        if (data.success === true) {
+                                            location.reload();
+                                        } else {
+                                            alert("Something went wrong");
+                                            return false;
+                                        }
 
-        });
-        if (approveids.length == 0) {
-            alert("Please select at least one purchase order for approval.");
-        } else {
-            var token = '<?php echo csrf_token(); ?>';
-            // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
-            var url = `{{ url('purchase_order_approveMultiple') }}`;
-            fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    },
-                    body: JSON.stringify({
-                        approveids: approveids
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    // return false;
-                    if (data.success === true) {
-                        location.reload();
-                    } else {
-                        alert("Something went wrong");
-                        return false;
-                    }
+                                    })
+                                    .catch(error => {
+                                        // $('.catsuccessdanger').text('There was an error submitting the form.');
+                                        console.error("Error: ", error);
 
-                })
-                .catch(error => {
-                    // $('.catsuccessdanger').text('There was an error submitting the form.');
-                    console.error("Error: ", error);
-                });
-        }
-    });
+                                    });
+                                if (approveids.length == 0) {
+                                    alert("Please select at least one purchase order for approval.");
+                                } else {
+                                    var token = '<?php echo csrf_token(); ?>';
+                                    // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
+                                    var url = `{{ url('purchase_order_approveMultiple') }}`;
+                                    fetch(url, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': token
+                                            },
+                                            body: JSON.stringify({
+                                                approveids: approveids
+                                            })
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            console.log(data);
+                                            // return false;
+                                            if (data.success === true) {
+                                                location.reload();
+                                            } else {
+                                                alert("Something went wrong");
+                                                return false;
+                                            }
 
-    function email_sendCheck(type) {
-        let emailids = [];
-        var name = '';
-        var ref = '';
-        let error = 0;
-        var SupplierEmail = '';
-        $('.delete_checkbox:checked').each(function() {
-            const row = $(this).closest('tr');
-            var supplierNameEmail = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
-            ref = row.get(0).querySelector('td:nth-child(3)').textContent.trim();
-            SupplierEmail = $('#supplierEmail' + $(this).val()).val();
+                                        })
+                                        .catch(error => {
+                                            // $('.catsuccessdanger').text('There was an error submitting the form.');
+                                            console.error("Error: ", error);
+                                        });
+                                }
+                            });
 
-            if (name == '') {
-                name = supplierNameEmail;
-            }
-            if (name !== supplierNameEmail) {
-                error = 1;
-                return false;
-            }
-            emailids.push($(this).val());
-        });
-        if (error) {
-            alert("Sorry, you cannot email purchase orders for multiple suppliers.");
-            return false;
-        }
-        if (emailids.length == 0) {
-            alert("Please select at least one purchase order for Email.");
-            return false;
-        } else {
-            // window.open("<?php echo url('preview-purchase-orders?key='); ?>" + emailids, "_blank");
-            $("#emailformId")[0].reset();
-            $("#dropdownButton").html('');
-            $("#dropdownButton").append('<span class="optext">' + SupplierEmail + '&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
-            $("#selectedToEmail").val(SupplierEmail);
-            $("#email_modalTitle").text("Email Purchase Order");
-            $("#emailsubject").val("Purchase Order from The Contructor - {PO_REF}");
-            if (type == 1) {
-                $("#emailsubject").val("Purchase Order from The Contructor - " + ref);
-            }
-            $("#email_po_id").val(emailids);
-            $("#defaultOption").text('Default Purchase Order');
-            const editor = CKEDITOR.instances['emailbody'];
-            const message = `
+                        function email_sendCheck(type) {
+                            let emailids = [];
+                            var name = '';
+                            var ref = '';
+                            let error = 0;
+                            var SupplierEmail = '';
+                            $('.delete_checkbox:checked').each(function() {
+                                const row = $(this).closest('tr');
+                                var supplierNameEmail = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
+                                ref = row.get(0).querySelector('td:nth-child(3)').textContent.trim();
+                                SupplierEmail = $('#supplierEmail' + $(this).val()).val();
+
+                                if (name == '') {
+                                    name = supplierNameEmail;
+                                }
+                                if (name !== supplierNameEmail) {
+                                    error = 1;
+                                    return false;
+                                }
+                                emailids.push($(this).val());
+                            });
+                            if (error) {
+                                alert("Sorry, you cannot email purchase orders for multiple suppliers.");
+                                return false;
+                            }
+                            if (emailids.length == 0) {
+                                alert("Please select at least one purchase order for Email.");
+                                return false;
+                            } else {
+                                // window.open("<?php echo url('preview-purchase-orders?key='); ?>" + emailids, "_blank");
+                                $("#emailformId")[0].reset();
+                                $("#dropdownButton").html('');
+                                $("#dropdownButton").append('<span class="optext">' + SupplierEmail + '&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+                                $("#selectedToEmail").val(SupplierEmail);
+                                $("#email_modalTitle").text("Email Purchase Order");
+                                $("#emailsubject").val("Purchase Order from The Contructor - {PO_REF}");
+                                if (type == 1) {
+                                    $("#emailsubject").val("Purchase Order from The Contructor - " + ref);
+                                }
+                                $("#email_po_id").val(emailids);
+                                $("#defaultOption").text('Default Purchase Order');
+                                const editor = CKEDITOR.instances['emailbody'];
+                                const message = `
                 Hello,<br>
                 Please find attached purchase order.<br><br><br><br><br>
                 Regards,<br>
                 The Contructor<br><br>
                 Thanks for using SCITS
             `;
-            editor.setData(message);
-            $("#emailModal").modal('show');
-        }
-    }
+                                editor.setData(message);
+                                $("#emailModal").modal('show');
+                            }
+                        }
 </script>
 <script>
     function clearBtn() {
