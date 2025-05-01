@@ -152,6 +152,7 @@
                                 <a href="#!" class="btn btn-default2"> Statements</a>
                             </div>
                         </div>
+
                         <div class="col-lg-12">
                             <div class="jobsection">
                                 <div class="d-inline-flex align-items-center ">
@@ -163,13 +164,14 @@
                                         </div> -->
                                     </div>
                                 </div>
-                                <a href="{{ url('credit_notes?list_mode=Approved') }}" class="btn btn-default2" <?php if ($status['status'] == 1) { ?>id="active_inactive" <?php } ?>>Approved <span>({{$approvedtCount}})</span></a>
-                                <a href="{{ url('credit_notes?list_mode=Paid') }}" class="btn btn-default2" <?php if ($status['status'] == 2) { ?>id="active_inactive" <?php } ?>>Paid <span>({{$paidCount}})</span></a>
-                                <a href="{{ url('credit_notes?list_mode=Cancelled') }}" class="btn btn-default2" <?php if ($status['status'] == 0) { ?>id="active_inactive" <?php } ?>>Cancelled <span>({{$cancelledCount}})</span></a>
+                                <a href="{{ url('credit_notes/Approved') }}" class="profileDrop" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Approved <span>({{$approvedtCount}})</span></a>
+                                <a href="{{ url('credit_notes/Paid') }}" class="profileDrop" <?php if($status['status'] == 2){?>id="active_inactive"<?php }?>>Paid<span>({{$paidCount}})</span></a>
+                                <a href="{{ url('credit_notes/Cancelled') }}" class="profileDrop" <?php if($status['status'] == 0){?>id="active_inactive"<?php }?>>Cancelled<span>({{$cancelledCount}})</span></a>
                                 <div class="searchFilter">
                                     <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
                                 </div>
                                 <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
+
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -867,45 +869,41 @@
     }
 </script>
 <script>
-    //     flatpickr(".dateField", {
-    //     dateFormat: "d/m/Y",
-    // }); 
-    function cancelCreditFunction(id, credit_ref) {
-        if (confirm("Are you sure you want to cancel credit note '" + credit_ref + "'?")) {
-            $.ajax({
-                type: "POST",
-                url: "{{url('/cancelCreditNote')}}",
-                data: {
-                    id: id,
-                    credit_ref: credit_ref,
-                    _token: '{{csrf_token()}}'
-                },
-                success: function(response) {
-                    // console.log(response);return false;
-                    if (response.vali_error) {
-                        alert(response.vali_error);
-                        $(window).scrollTop(0);
-                        return false;
-                    } else if (response.success === true) {
-                        // $(window).scrollTop(0);
-                        // $('#message_recordPaymentModal').addClass('success-message').text(response.message).show();
-                        // setTimeout(function() {
-                        //     $('#message_recordPaymentModal').removeClass('success-message').text('').hide();
 
-                        // }, 3000);
-                        location.reload();
-                    } else if (response.success === false) {
-                        // $('#message_recordPaymentModal').addClass('error-message').text(response.message).show();
-                        // setTimeout(function() {
-                        //     $('#error-message').text('').fadeOut();
-                        // }, 3000);
-                        alert("Something went wrong pleae try later!");
-                        return false;
-                    }
-                },
-                error: function(xhr, status, error) {
-                    var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    alert('Error - ' + errorMessage + "\nMessage: " + error);
+//     flatpickr(".dateField", {
+//     dateFormat: "d/m/Y",
+// }); 
+function cancelCreditFunction(id,credit_ref){
+    if(confirm("Are you sure you want to cancel credit note '"+credit_ref +"'?")){
+        $.ajax({
+            type: "POST",
+            url: "{{url('/cancelCreditNote')}}",
+            data: {id:id,credit_ref:credit_ref,_token:'{{csrf_token()}}'},
+            success: function(response) {
+                // console.log(response);return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
+            if(response.vali_error){
+                    alert(response.vali_error);
+                    $(window).scrollTop(0);
+                    return false;
+                }else if(response.success === true){
+                    // $(window).scrollTop(0);
+                    // $('#message_recordPaymentModal').addClass('success-message').text(response.message).show();
+                    // setTimeout(function() {
+                    //     $('#message_recordPaymentModal').removeClass('success-message').text('').hide();
+                        
+                    // }, 3000);
+                    location.reload();
+                }else if(response.success === false){
+                    // $('#message_recordPaymentModal').addClass('error-message').text(response.message).show();
+                    // setTimeout(function() {
+                    //     $('#error-message').text('').fadeOut();
+                    // }, 3000);
+                    alert("Something went wrong pleae try later!");
+                    return false;
+
                 }
             });
         }

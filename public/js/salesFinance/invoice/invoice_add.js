@@ -79,6 +79,7 @@ CKEDITOR.replace('invoice_terms_notes', editor_config);
 CKEDITOR.replace('invoice_internal_notes', editor_config);
 //Text Editer
 
+
 function get_modal(modal) {
     var customer_id = $("#invoice_customer_id").val();
     if (modal == 1) {

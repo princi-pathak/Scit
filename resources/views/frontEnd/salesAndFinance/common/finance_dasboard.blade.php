@@ -412,37 +412,37 @@
                                                                 </a>
                                                             </div>
                                                             <div class="show_dropdown show_inner_card_dropdown2 " style="display: none;">
-                                                                <a href="#!">
+                                                                <a href="{{url('new_credit_notes')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                                         <span> New Credit Note</span>
                                                                     </div>
                                                                 </a>
-                                                                <a href="#!">
+                                                                <a href="{{url('credit_notes/Approved')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                                                        <span>Draft Credit Note</span>
+                                                                        <span>Approved Credit Note</span>
                                                                     </div>
                                                                 </a>
-                                                                <a href="#!">
+                                                                <!-- <a href="{{url('new_credit_notes')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                                         <span> Awaiting Approval Credit Note</span>
                                                                     </div>
                                                                 </a>
-                                                                <a href="#!">
+                                                                <a href="{{url('new_credit_notes')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                                         <span>Approval Credit Note</span>
                                                                     </div>
-                                                                </a>
-                                                                <a href="#!">
+                                                                </a> -->
+                                                                <a href="{{url('credit_notes/Paid')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                                         <span>Paid Credit Note</span>
                                                                     </div>
                                                                 </a>
-                                                                <a href="#!">
+                                                                <a href="{{url('credit_notes/Cancelled')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                                         <span>Cancelled Credit Note</span>
@@ -460,7 +460,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-sm-6">
+                                                    <!-- <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
                                                             <a href="#">
                                                                 <div>
@@ -473,7 +473,7 @@
                                                                 </div>
                                                             </a>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="col-md-3 col-sm-6">
                                                         <div class="inner_cards">
                                                             <a href="{{url('purchase_order')}}">
@@ -665,19 +665,19 @@
                                                                         <span> New Credit Note </span>
                                                                     </div>
                                                                 </a>
-                                                                <a href="{{url('credit_notes?list_mode=Approved')}}">
+                                                                <a href="{{url('credit_notes/Approved')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                                         <span> Approval Credit Note</span>
                                                                     </div>
                                                                 </a>
-                                                                <a href="{{url('credit_notes?list_mode=Paid')}}">
+                                                                <a href="{{url('credit_notes/Paid')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                                         <span> Paid Credit Note</span>
                                                                     </div>
                                                                 </a>
-                                                                <a href="{{url('credit_notes?list_mode=Cancelled')}}">
+                                                                <a href="{{url('credit_notes/Cancelled')}}">
                                                                     <div>
                                                                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                                         <span> Cancelled Credit Note</span>
