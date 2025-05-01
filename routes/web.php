@@ -577,6 +577,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/save-sales-day-book', 'store');
 			Route::post('/sales-day-book/delete/{id}', 'deleteSalesDayBook')->name('salesDayBook.delete');
 			Route::get('/sales-day-book/edit/{id}', 'editSalesDayBook');
+			Route::get('/get-sales-day-book/data', 'getSalesDayBook');
 		});
 	});
 
@@ -591,6 +592,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/purchase-day-book', 'index')->name('purchase.purchaseDayBook');
 			Route::get('/purchase-day-book/add', 'create')->name('purchase.purchaseDayBookCreate');
 			Route::post('/save-purchase-day-book', 'store');
+			Route::get('/purchase-daybook/data', 'getPurchaseDayBook');   
 			Route::post('/purchase-day-book/delete/{id}', 'deletePurchaseDayBook')->name('purchaseDayBook.delete');
 			Route::get('/purchase-day-book/edit/{id}', 'editPurchaseDayBook');
 			Route::get('/getSupplierData', 'getSupplierData')->name('purchase.getSupplierData');

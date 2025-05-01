@@ -1,10 +1,3 @@
-<style>
-    .tag_box {
-        background: #f5f5f5;
-        display: grid;
-        border: 1px solid #dee2e6;
-    }
-</style>
 <div class="modal fade" id="{{ $modalId }}" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -30,8 +23,8 @@
                                         <input type="text" class="form-control editInput VatTaxcheckError" id="{{ $taxRate }}" name="tax_rate" value="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46">
                                     </div>
                                     <div class="col-sm-2">
-                                        <div class="tag_box text-center">
-                                            <span style="padding:3px">%</span>
+                                        <div class="tag_box">
+                                            <span>%</span>
                                         </div>
                                     </div>
                                 </div>

@@ -22,7 +22,9 @@
     .unclicked {
         pointer-events: none;
     } */
+
 </style>
+
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -35,8 +37,10 @@
                         <h4>New Invoice</h4>
                         @endif
                     </header>
-                    <div class="col-md-4 col-lg-4 col-xl-4">
-                        <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-12">
@@ -47,7 +51,7 @@
                                     <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center"> Customer / Billing Details </h3>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label>Customer <span class="radStar">*</span></label>
+                                            <label class="col-form-label mb-2">Customer <span class="radStar">*</span></label>
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <select class="form-control editInput selectOptions InvoicecheckError" id="invoice_customer_id" name="customer_id" onchange="get_customer_details()">
@@ -57,13 +61,13 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-2">
                                                     <a href="javascript:void(0)" class="formicon" onclick="get_modal(1)"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Project</label>
+                                            <label class="col-form-label mb-2">Project</label>
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <select class="form-control editInput selectOptions" <?php if (!isset($invoice) && $invoice == '') {echo 'disabled';} ?> id="invoice_project_id" name="project_id">
@@ -73,13 +77,13 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-2">
                                                     <a href="javascript:void(0)" class="formicon" onclick="get_modal(2)"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Contact</label>
+                                            <label class="col-form-label mb-2">Contact</label>
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <select class="form-control editInput selectOptions" <?php if (!isset($invoice) && $invoice == '') {echo 'disabled';} ?> id="invoice_contact_id" name="contact_id">
@@ -89,37 +93,37 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-2">
                                                     <a href="javascript:void(0)" onclick="get_modal(3)" class="formicon"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Name <span class="radStar">*</span></label>
+                                            <label class="col-form-label mb-2">Name <span class="radStar">*</span></label>
                                             <input type="text" class="form-control editInput InvoicecheckError" value="<?php if (isset($invoice) && $invoice->name != '') {echo $invoice->name; } ?>" name="name" id="invoice_name">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label>Address <span class="radStar">*</span></label>
+                                            <label class="col-form-label mb-2">Address <span class="radStar">*</span></label>
                                             <textarea class="form-control textareaInput InvoicecheckError" name="address" id="invoice_address" rows="1" placeholder="75 Cope Road Mall Park USA"><?php if (isset($invoice) && $invoice->address != '') {echo $invoice->address; } ?></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label>City</label>
+                                            <label class="col-form-label mb-2">City</label>
                                             <input type="text" class="form-control editInput" value="<?php if (isset($invoice) && $invoice->city != '') {echo $invoice->city; } ?>" name="city" id="invoice_city">
                                         </div>
                                         <div class="mb-3">
-                                            <label>County</label>
+                                            <label class="col-form-label mb-2">County</label>
                                             <input type="text" class="form-control editInput" value="<?php if (isset($invoice) && $invoice->county != '') {echo $invoice->county; } ?>" name="county" id="invoice_county">
                                         </div>
                                         <div class="mb-3">
-                                            <label>Postcode</label>
+                                            <label class="col-form-label mb-2">Postcode</label>
                                             <input type="text" class="form-control editInput" placeholder="Postcode" name="postcode" id="invoice_Postcode" value="<?php if (isset($invoice) && $invoice->postcode != '') {echo $invoice->postcode; } ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label for="inputTelephone">Telephone</label>
+                                            <label class="col-form-label mb-2">Telephone</label>
                                             <div class="row">
                                                 <div class="col-sm-3 pe-0">
                                                     <select class="form-control editInput selectOptions" id="invoice_telephoneCode" name="telephone_code">
@@ -136,7 +140,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Mobile</label>
+                                            <label class="col-form-label mb-2">Mobile</label>
                                             <div class="row">
                                                 <div class="col-sm-3 pe-0">
                                                     <select class="form-control editInput selectOptions" name="invoice_mobile_code" id="invoice_mobile_code">
@@ -153,7 +157,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="inputEmail">Email</label>
+                                            <label class="col-form-label mb-2">Email</label>
                                             <input type="text" class="form-control editInput" id="invoice_email" name="email"  value="<?php if (isset($invoice) && $invoice->email != '') {echo $invoice->email; } ?>" onchange="invoice_check_email()">
                                                 <span style="color:red" id="invoiceemailErr"></span>
                                         </div>
@@ -164,7 +168,7 @@
                                     <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center"> Site / Delivery Details </h3>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label>Site</label>
+                                            <label class="col-form-label mb-2">Site</label>
                                             <div class="row">
                                                 <div class="col-sm-10">
                                                     <select class="form-control editInput selectOptions" id="invoice_site_id" name="site_delivery_add_id" <?php if (!isset($invoice) && $invoice == '') {echo 'disabled';} ?> onchange="siteDetail()">
@@ -181,7 +185,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Region</label>
+                                            <label class="col-form-label mb-2">Region</label>
                                             <div class="row">
                                                 <div class="col-sm-10">
                                                     <select class="form-control editInput selectOptions" id="invoiceRegions" name="region">
@@ -197,35 +201,35 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label> Name</label>
+                                            <label class="col-form-label mb-2"> Name</label>
                                             <input type="text" class="form-control editInput" id="invoice_siteName" name="site_name" value="<?php if (isset($invoice) && $invoice->site_name != '') { echo $invoice->site_name; } ?>">
                                         </div>
                                         <div class="mb-3">
-                                            <label>Company</label>
+                                            <label class="col-form-label mb-2">Company</label>
                                             <input type="text" class="form-control editInput" id="invoicesite_companyName" name="company_name" value="<?php if (isset($invoice) && $invoice->company_name != '') { echo $invoice->company_name; } ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label>Address</label>
+                                            <label class="col-form-label mb-2">Address</label>
                                             <textarea class="form-control textareaInput" name="site_address" id="invoice_site_address" rows="1"  placeholder="75 Cope Road Mall Park USA"><?php if (isset($invoice) && $invoice->site_address != '') { echo $invoice->site_address; } ?></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label>City</label>
+                                            <label class="col-form-label mb-2">City</label>
                                             <input type="text" class="form-control editInput" id="invoice_site_city" name="site_city" value="<?php if (isset($invoice) && $invoice->site_city != '') { echo $invoice->site_city; } ?>">
                                         </div>
                                         <div class="mb-3">
-                                            <label>County</label>
+                                            <label class="col-form-label mb-2">County</label>
                                             <input type="text" class="form-control editInput" id="invoice_site_county" name="site_county" placeholder="Site County" value="<?php if (isset($invoice) && $invoice->site_county != '') { echo $invoice->site_county; } ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label>Postcode</label>
+                                            <label class="col-form-label mb-2">Postcode</label>
                                             <input type="text" class="form-control editInput" id="invoice_site_postcode" name="site_postcode" value="<?php if (isset($invoice) && $invoice->site_postcode != '') { echo $invoice->site_postcode; } ?>">
                                         </div>
                                         <div class="mb-3">
-                                            <label>Telephone</label>
+                                            <label class="col-form-label mb-2">Telephone</label>
                                             <div class="row">
                                                 <div class="col-sm-3 pe-0">
                                                     <select class="form-control editInput selectOptions" id="invoice_siteTelephoneCode" name="site_telephone_code">
@@ -242,7 +246,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Mobile</label>
+                                            <label class="col-form-label mb-2">Mobile</label>
                                             <div class="row">
                                                 <div class="col-sm-3 pe-0">
                                                     <select class="form-control editInput selectOptions" id="invoice_siteMobileCode" name="site_mobile_code">
@@ -265,35 +269,35 @@
                                     <h3 class="m-t-0 m-b-20 clr-blue fnt-20 text-center"> Invoice Details</h3>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                        <div class="mb-3">
-                                            <label>Invoice Type</label>
+                                            <label class="col-form-label mb-2">Invoice Type</label>
                                             <select class="form-control editInput selectOptions" id="invoce_type" name="invoice_type">
                                                 <option value="1" <?php if (isset($invoice) && $invoice->invoice_type == 1) { echo 'selected'; } ?>>Service</option>
                                                 <option value="2" <?php if (isset($invoice) && $invoice->invoice_type == 2) { echo 'selected'; } ?>>Product</option>
                                             </select>
                                        </div>
                                        <div class="mb-3">
-                                           <label>Customer Ref</label>
+                                           <label class="col-form-label mb-2">Customer Ref</label>
                                            <input type="text" class="form-control editInput textareaInput" name="customer_ref" id="invoice_customer_ref" placeholder="Customer Ref if any" value="<?php if (isset($invoice) && $invoice->invoice_type == 2) { echo 'selected'; } ?>">
                                        </div>
                                        <div class="mb-3">
-                                           <label>Customer Job Ref</label>
+                                           <label class="col-form-label mb-2">Customer Job Ref</label>
                                            <input type="text" class="form-control editInput textareaInput" id="invoice_customer_job_ref" name="customer_job_ref" placeholder="Customer Job if any" value="<?php if (isset($invoice) && $invoice->invoice_type == 2) { echo 'selected'; } ?>">
                                        </div>
                                        <div class="mb-3">
-                                            <label>Purch. Order Ref</label>
+                                            <label class="col-form-label mb-2">Purch. Order Ref</label>
                                             <input type="text" class="form-control editInput textareaInput" id="invoice_purchase_order_ref" name="purchase_order_ref" placeholder="Purchase Order Ref if any" value="<?php if (isset($invoice) && $invoice->invoice_type == 2) { echo 'selected'; } ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label>Invoice Date <span class="radStar">*</span> </label>
+                                            <label class="col-form-label mb-2">Invoice Date <span class="radStar">*</span> </label>
                                             <input type="date" class="form-control editInput InvoicecheckError" id="invoice_date" name="invoice_date" placeholder="" value="<?php if (isset($invoice) && $invoice->invoice_date != '') { echo $invoice->invoice_date; } ?>">
                                             <!-- <div class="col-sm-2">
                                                 <a href="#!" class="formicon"><i class="fa fa-plus-square"></i></a>
                                             </div> -->
                                         </div>
                                         <div class="mb-3">
-                                            <label>Payment Terms</label>
+                                            <label class="col-form-label mb-2">Payment Terms</label>
                                             <div class="row">
                                                 <div class="col-sm-10">
                                                     <select class="form-control editInput selectOptions" id="invoice_payment_terms" name="payment_terms">
@@ -309,14 +313,14 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Due Date <span class="radStar">*</span></label>
+                                            <label class="col-form-label mb-2">Due Date <span class="radStar">*</span></label>
                                             <input type="date" class="form-control editInput InvoicecheckError" id="invoice_due_date" name="due_date" placeholder="" value="<?php if (isset($invoice) && $invoice->due_date != '') { echo $invoice->due_date; } ?>">
                                             <!-- <div class="col-sm-2">
                                                 <a href="#!" class="formicon"><i class="fa fa-plus-square"></i></a>
                                             </div> -->
                                         </div>
                                         <div class="mb-3">
-                                            <label>Status</label>
+                                            <label class="col-form-label mb-2">Status</label>
                                             <select class="form-control editInput selectOptions" id="invoice_status" name="status">
                                                 <option value="Draft">Draft</option>
                                                 <option value="Invoiced">Invoiced</option>
@@ -328,11 +332,11 @@
                                     </div>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label>Invoice Ref</label>
-                                            <input type="text" class="form-control-plaintext border-0 editInput" value="<?php if (isset($invoice) && $invoice->invoice_ref != '') { echo $invoice->invoice_ref; }else{ echo 'Invoice Ref ###'; } ?>" readonly>
+                                            <label class="col-form-label mb-2">Invoice Ref</label>
+                                            <input type="text" class="form-control border-0 editInput" value="<?php if (isset($invoice) && $invoice->invoice_ref != '') { echo $invoice->invoice_ref; }else{ echo 'Invoice Ref ###'; } ?>" readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Tags</label>
+                                            <label class="col-form-label mb-2">Tags</label>
                                             <div class="row">
                                                 <div class="col-sm-10">
                                                     <select class="form-control editInput selectOptions" id="invoice_tags" name="tags">
@@ -344,8 +348,8 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label>
-                                                <a href="javascript:void(0)" onclick="openReminderModal(<?php if (isset($invoice) && $invoice != '') { echo $invoice->id; } ?>)" class="btn btn-green"> <i class="fa fa-clock-o"></i> Set Reminder </a>
+                                            <label class="col-form-label mb-2">
+                                                <a href="javascript:void(0)" onclick="openReminderModal(<?php if (isset($invoice) && $invoice != '') { echo $invoice->id; } ?>)" class="btn btn-primary"> <i class="fa fa-clock-o"></i> Set Reminder </a>
                                             </label>
                                             <div class="setRiminderTable" style="display:none">
                                                 <div class="table-responsive productDetailTable ">
@@ -401,7 +405,7 @@
                                                 <label for="inputCountry" class="col-form-label">Select product</label>
                                             </div>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control editInput" id="search-product" placeholder="Type to add product">
+                                                <input type="text" class="form-control editInput textareaInput" id="search-product" placeholder="Type to add product">
                                                 <div class="parent-container"></div>
                                             </div>
                                             <div class="col-sm-7">
@@ -453,7 +457,7 @@
                                                             <div class="tableplusBTN">
                                                                 <span>Account Code </span>
                                                                 <span class="plusandText ps-3">
-                                                                    <a href="javascript:void(0)" class="formicon pt-0" onclick="openAccountCodeModal(null)"> <i class="fa fa-plus-square"></i> </a>
+                                                                    <a href="javascript:void(0)" class="formicon p-0" onclick="openAccountCodeModal(null)"> <i class="fa fa-plus-square"></i> </a>
                                                                 </span>
                                                             </div>
                                                         </th>
@@ -466,7 +470,7 @@
                                                             <div class="tableplusBTN">
                                                                 <span>VAT(%) </span>
                                                                 <span class="plusandText ps-3">
-                                                                    <a href="javascript:void(0)" class="formicon pt-0" onclick="get_modal(5)"> <i class="fa fa-plus-square"></i> </a>
+                                                                    <a href="javascript:void(0)" class="formicon p-0" onclick="get_modal(5)"> <i class="fa fa-plus-square"></i> </a>
                                                                 </span>
                                                             </div>
                                                         </th>
@@ -543,11 +547,11 @@
                                     <div class="col-sm-12">
                                         <div class="py-4">
                                             <div class="jobsection">
-                                                <a href="javascript:void(0)" onclick="get_modal(6)" class="btn btn-default2">New Attachments</a>
-                                                <a href="javascript:void(0)" class="btn btn-default2">Upload Multi Attachment</a>
-                                                <a href="javascript:void(0)" class="btn btn-default2">Preview Attachment(s)</a>
-                                                <a href="javascript:void(0)" class="btn btn-default2">Download Attachment(s)</a>
-                                                <a href="javascript:void(0)" class="btn btn-default2">Delete Attachment(s)</a>
+                                                <a href="javascript:void(0)" onclick="get_modal(6)" class="btn btn-primary">New Attachments</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary">Upload Multi Attachment</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary">Preview Attachment(s)</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary">Download Attachment(s)</a>
+                                                <a href="javascript:void(0)" class="btn btn-primary">Delete Attachment(s)</a>
                                             </div>
                                         </div>
                                         @if(isset($invoice) && $invoice !='')
@@ -769,16 +773,27 @@ var reminder_dataCount='<?php echo count($reminder_data);?>'
         var id='{{$invoice->id}}';
         getProductDetail(id, '{{ url("invoices/getInvoiceProductDetail") }}');
         getAttachment(id, '{{ url("invoices/getInvoiceAllAttachmens") }}');
-        <?php }?>
+    <?php }?>
     </script>
 
 <script>
-    $('.tab-menu li a').on('click', function() {
-        var target = $(this).attr('data-rel');
-        $('.tab-menu li a').removeClass('active');
-        $(this).addClass('active');
-        $("#" + target).fadeIn('slow').siblings(".tab-box").hide();
+    $('.tab-menu li a').on('click', function () {
+        var $this = $(this);
+        var target = $this.attr('data-rel');
+        
+        // find the closest tab-menu
+        var $tabMenu = $this.closest('.tab-menu');
+        var $tabContentContainer = $this.closest('.tab-teaser, .tab-container'); // adjust container if needed
+
+        $tabMenu.find('li a').removeClass('active');
+        $this.addClass('active');
+
+        // Show the related tab-box inside the same section
+        $tabContentContainer.find(".tab-box").hide();
+        $tabContentContainer.find("#" + target).fadeIn('slow');
+
         return false;
     });
 </script>
+
 @endsection
