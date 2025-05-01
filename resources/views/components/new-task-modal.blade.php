@@ -393,10 +393,10 @@
                 <!-- tab -->
             </div>
             <div class="modal-footer customer_Form_Popup">
-                <a href="#" class="btn btn-warning crmNewBtn" id="{{ $saveButtonId }}"> Save</a>
                 <a href="#" class="btn btn-warning crmNewBtn" id="completeBTN" style="display:none"> Complete</a>
                 <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-warning crmNewBtn" id="{{ $saveButtonId }}"> Save</a>
             </div>
         </div>
     </div>

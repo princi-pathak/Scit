@@ -280,9 +280,13 @@
         });
         console.log(tableData);
         // return false;
+        var url="{{url('/item/catalogues_save')}}";
+        if(catalogue_id !=''){
+            url="{{url('/item/catalogues_edit')}}";
+        }
        
         $.ajax({
-            url: "{{url('/item/catalogues_save')}}",
+            url: url,
             type: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',

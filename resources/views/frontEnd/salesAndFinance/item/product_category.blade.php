@@ -136,6 +136,9 @@
                     _token: token
                 },
                 success: function(data) {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     location.reload();
                 }
 
@@ -165,6 +168,9 @@
                     },
                     success: function(data) {
                         console.log(data);
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
 
                         location.reload();
                     }
