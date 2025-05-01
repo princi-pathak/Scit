@@ -325,7 +325,12 @@ Array.prototype.slice.call(forms)
                 var formData = new FormData(form);
                 var producttype = $('#producttype').val();
                 var productname = $('#productname').val();
-                fetch('{{ route("item.saveproductdata") }}', {
+                var id=$("#productID").val();
+                var url='{{ route("item.saveproductdata") }}';
+                if(id !=''){
+                    url='{{ route("item.editproductdata") }}';
+                }
+                fetch(url, {
                     method: 'POST',
                     body: formData
                 })

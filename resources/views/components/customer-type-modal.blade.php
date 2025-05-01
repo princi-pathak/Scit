@@ -2,13 +2,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="thirdModalLabel">Add Customer Type</h4>
             </div>
-            <div id="alert_message_customer_type" style="display:none" class="alert alert-success mt-3"></div>
             <form id="customer_type_form">
                 @csrf
-            <div class="modal-body">
+                <div class="modal-body">
+                    <div id="alert_message_customer_type" style="display:none" class="alert alert-success"></div>
                     <input type="hidden" id="customer_type_home_id" name="home_id" value="{{Auth::user()->home_id;}}">
                     <div class="mb-3">
                         <label>Customer Type <span class="radStar ">*</span></label>

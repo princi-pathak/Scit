@@ -53,11 +53,12 @@
                         </div>
                     </div>
 
-                    <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
+                    <table id="myTable" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll">
-                                    <label for="selectAll"> </label></th>
+                                    <label for="selectAll"> </label>
+                                </th>
                                 <th>#</th>
                                 <th>Product Category</th>
                                 <th>Level</th>
@@ -70,48 +71,48 @@
 
                         <tbody>
                             @php
-                                $i = 1;
+                            $i = 1;
                             @endphp
                             @foreach ($product_categories_list as $category_value)
-                                <tr>
-                                    <td class="text-center"><input type="checkbox" class="checkproductcategory"
-                                            name="checkproductcategory{{ $i }}"
-                                            id="checkproductcategory{{ $i }}"
-                                            value="{{ $category_value['id'] }}"
-                                            @if ($category_value['number_of_children'] != 0) disabled @endif></td>
-                                    <td>{{ $i }}</td>
-                                    <td>{{ $category_value['product_name'] }}</td>
-                                    <td>{{ $category_value['level'] }}</td>
-                                    <td>{{ $category_value['number_of_products'] }}</td>
-                                    <td>{{ $category_value['number_of_children'] }}</td>
-                                    <td>
-                                        @if ($category_value['status'] == 1)
-                                            <span class="grencheck"
-                                                onclick="changestatus({{ $category_value['id'] }},0)"><i
-                                                    class="fa-solid fa-circle-check"></i></span>
-                                        @else
-                                            <span class="graycheck"
-                                                onclick="changestatus({{ $category_value['id'] }},1)"><i
-                                                    class="fa-solid fa-circle-check"></i></span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="pageTitleBtn p-0">
-                                            <div class="nav-item dropdown">
-                                                <a href="#" class="nav-link dropdown-toggle profileDrop btn-warning"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Action </a>
-                                                <div class="dropdown-menu fade-up m-0">
-                                                    <a href="#" class="dropdown-item col-form-label" onclick="edititemsCatagoryModal('{{ $category_value['id'] }}','{{ $category_value['product_name'] }}','{{ $category_value['cat_id'] }}','{{ $category_value['status'] }}')">Edit
-                                                        Details</a>
-                                                </div>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="checkproductcategory"
+                                        name="checkproductcategory{{ $i }}"
+                                        id="checkproductcategory{{ $i }}"
+                                        value="{{ $category_value['id'] }}"
+                                        @if ($category_value['number_of_children'] !=0) disabled @endif></td>
+                                <td>{{ $i }}</td>
+                                <td>{{ $category_value['product_name'] }}</td>
+                                <td>{{ $category_value['level'] }}</td>
+                                <td>{{ $category_value['number_of_products'] }}</td>
+                                <td>{{ $category_value['number_of_children'] }}</td>
+                                <td>
+                                    @if ($category_value['status'] == 1)
+                                    <span class="grencheck"
+                                        onclick="changestatus({{ $category_value['id'] }},0)"><i
+                                            class="fa-solid fa-circle-check"></i></span>
+                                    @else
+                                    <span class="graycheck"
+                                        onclick="changestatus({{ $category_value['id'] }},1)"><i
+                                            class="fa-solid fa-circle-check"></i></span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="pageTitleBtn p-0">
+                                        <div class="nav-item dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle profileDrop btn-warning"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                Action </a>
+                                            <div class="dropdown-menu fade-up m-0">
+                                                <a href="#" class="dropdown-item col-form-label" onclick="edititemsCatagoryModal('{{ $category_value['id'] }}','{{ $category_value['product_name'] }}','{{ $category_value['cat_id'] }}','{{ $category_value['status'] }}')">Edit
+                                                    Details</a>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
-                                @php
-                                    $i++;
-                                @endphp
+                                    </div>
+                                </td>
+                            </tr>
+                            @php
+                            $i++;
+                            @endphp
                             @endforeach
                         </tbody>
                     </table>
@@ -127,13 +128,17 @@
         if (confirm("Are you sure want to change the status?")) {
             $.ajax({
                 type: 'POST',
-                url: '{{ route('item.changeProductCategoryStatus') }}',
+                url: '{{ route('
+                item.changeProductCategoryStatus ') }}',
                 data: {
                     id: id,
                     status: status,
                     _token: token
                 },
                 success: function(data) {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     location.reload();
                 }
 
@@ -148,20 +153,24 @@
         //alert("Checked values: " + checkedValues.join(", "));
         var id = checkedValues.join(", ");
         var token = "<?= csrf_token() ?>";
-        if(id==""){
+        if (id == "") {
             $('.deletemsg').text("Please select product category");
             return false;
-        }else{
+        } else {
             if (confirm("Are you sure want to delete this?")) {
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('item.delete_product_category') }}',
+                    url: '{{ route('
+                    item.delete_product_category ') }}',
                     data: {
                         id: id,
                         _token: token
                     },
                     success: function(data) {
                         console.log(data);
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
 
                         location.reload();
                     }
@@ -184,7 +193,7 @@
         });
     });
 
-    checkboxes.forEach(checkbox => {       
+    checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             $('.deletemsg').text("");
             if (!this.checked) {
@@ -199,7 +208,7 @@
 </script>
 
 <script>
-    function edititemsCatagoryModal(id,name,catid,status,th){
+    function edititemsCatagoryModal(id, name, catid, status, th) {
         // alert(id);
         // alert(name);
         // alert(catid);
@@ -214,7 +223,7 @@
     }
 </script>
 <script>
-    function additemsCatagoryModal(th){
+    function additemsCatagoryModal(th) {
         //alert();
         $('#category_name').val('');
         $('#parentcategory').val('');

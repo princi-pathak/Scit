@@ -511,7 +511,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {
-		Route::get('credit_notes', 'credit_notes');
+		Route::get('credit_notes/Approved', 'credit_notes');
+		Route::get('credit_notes/Paid', 'credit_notes');
+		Route::get('credit_notes/Cancelled', 'credit_notes');
 		Route::get('new_credit_notes', 'new_credit_notes');
 		Route::post('credit_notes_save', 'credit_notes_save');
 		Route::get('credit_note_edit', 'new_credit_notes');
@@ -575,6 +577,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/save-sales-day-book', 'store');
 			Route::post('/sales-day-book/delete/{id}', 'deleteSalesDayBook')->name('salesDayBook.delete');
 			Route::get('/sales-day-book/edit/{id}', 'editSalesDayBook');
+			Route::get('/get-sales-day-book/data', 'getSalesDayBook');
 		});
 	});
 
@@ -589,6 +592,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/purchase-day-book', 'index')->name('purchase.purchaseDayBook');
 			Route::get('/purchase-day-book/add', 'create')->name('purchase.purchaseDayBookCreate');
 			Route::post('/save-purchase-day-book', 'store');
+			Route::get('/purchase-daybook/data', 'getPurchaseDayBook');   
 			Route::post('/purchase-day-book/delete/{id}', 'deletePurchaseDayBook')->name('purchaseDayBook.delete');
 			Route::get('/purchase-day-book/edit/{id}', 'editPurchaseDayBook');
 			Route::get('/getSupplierData', 'getSupplierData')->name('purchase.getSupplierData');
@@ -756,6 +760,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		Route::get('/item/catalogues', 'index')->name('catalogues.index');
 		Route::post('/item/catalogues_save', 'catalogues_save');
+		Route::post('/item/catalogues_edit', 'catalogues_save');
 		Route::post('item/ProductCataloguePriceList', 'ProductCataloguePriceList');
 		Route::post('item/ProductCataloguePriceDelete', 'ProductCataloguePriceDelete');
 	});
@@ -763,6 +768,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(FrontendProductCategoryController::class)->group(function () {
 		Route::get('/item/product_categories', 'index')->name('item.index');
 		Route::post('/item/add_product_category', 'saveProductCategoryData')->name('item.saveProductCategoryData');
+		Route::post('/item/edit_product_category', 'saveProductCategoryData')->name('item.editProductCategoryData');
 		Route::post('/item/change_product_category_status', 'changeProductCategoryStatus')->name('item.changeProductCategoryStatus');
 		Route::post('/item/delete_product_category', 'deleteProductCategory')->name('item.delete_product_category');
 		Route::get('/item/get_product_categories', 'getCategoriesList')->name('item.ajax.getCategoriesList');
@@ -803,6 +809,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/taxratelist', 'taxratelist')->name('taxratelist');
 		Route::post('/account_code', 'account_code')->name('account_code');
 		Route::post('/saveproductdata', 'saveproductdata')->name('saveproductdata');
+		Route::post('/editproductdata', 'saveproductdata')->name('editproductdata');
 		Route::post('/changeProductStatus', 'changeProductStatus')->name('changeProductStatus');
 		Route::post('/deleteProduct', 'deleteProduct')->name('deleteProduct');
 		Route::post('/getproductdata', 'getproductdata')->name('getproductdata');
@@ -827,6 +834,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		// post routes
 		Route::post('/saveProductGroup', 'saveProductGroup')->name('ajax.saveProductGroup');
+		Route::post('/editProductGroup', 'saveProductGroup')->name('ajax.editProductGroup');
 		Route::post('/ProductGroupProductsList', 'ProductGroupProductsList');
 		Route::post('/ProductGroupProductsdetails', 'ProductGroupProductsdetails');
 	});
