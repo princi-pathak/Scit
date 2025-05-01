@@ -5,10 +5,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="thirdModalLabel">{{ $modalTitle }}</h4>
             </div>
-            <div class="text-center mt-3" id="message_reminderModal" style="display:none"></div>
             <form id="{{ $reminderformId }}">
                 @csrf
                 <div class="modal-body">
+                    <div class="text-center mt-3" id="message_reminderModal" style="display:none"></div>
                     <input type="hidden" name="id" id="{{ $reminderId }}" value="">
                     <input type="hidden" name="po_id" id="{{ $hiddenForeignId }}" value="">
                     <div class="mb-3">

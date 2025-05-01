@@ -1,9 +1,9 @@
 <div class="modal fade" id="{{ $bulInvoiceModalId }}" tabindex="-1" aria-labelledby="recordDeliveryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content add_Customer">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="{{ $modalTitle }}">Bulk Invoice Received</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title" id="{{ $modalTitle }}">Bulk Invoice Received</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -72,8 +72,8 @@
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="profileDrop" id="{{ $saveButtonId }}" onclick="saveBulkInvoiceModal()">Save</button>
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="{{ $saveButtonId }}" onclick="saveBulkInvoiceModal()">Save</button>
             </div>
         </div>
     </div>

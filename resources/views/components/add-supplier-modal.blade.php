@@ -36,9 +36,10 @@
                                         <select class="form-control editInput selectOptions" id="supplier_telephone_code_id" name="telephone_code_id">
                                             <option selected disabled>Please Select</option>
                                             @foreach($country as $teleCode)
-                                            <option value="{{$teleCode->id}}" <?php if ($teleCode->id == 230) {
-                                                                                    echo 'selected';
-                                                                                } ?>>+{{$teleCode->code}} - {{$teleCode->name}}</option>
+                                            <option value="{{$teleCode->id}}"
+                                                <?php if ($teleCode->id == 230) {
+                                                    echo 'selected';
+                                                } ?>>+{{$teleCode->code}} - {{$teleCode->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -56,9 +57,10 @@
                                         <select class="form-control editInput selectOptions" id="supplier_mobile_code_id" name="mobile_code_id">
                                             <option selected disabled>Please Select</option>
                                             @foreach($country as $mobCode)
-                                            <option value="{{$mobCode->id}}" <?php if ($mobCode->id == 230) {
-                                                                                    echo 'selected';
-                                                                                } ?>>+{{$mobCode->code}} - {{$mobCode->name}}</option>
+                                            <option value="{{$mobCode->id}}"
+                                                <?php if ($mobCode->id == 230) {
+                                                    echo 'selected';
+                                                } ?>>+{{$mobCode->code}} - {{$mobCode->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -116,11 +118,12 @@
                                 <select class="form-control editInput selectOptions" id="supplier_country_id" name="country_id">
                                     <option selected disabled>Select Country</option>
                                     <?php foreach ($country as $countryval) { ?>
-                                        <option value="{{$countryval->code}}" <?php if (isset($supplier) && $supplier->country_id == $countryval->id) {
-                                                                                    echo 'selected';
-                                                                                } else if ($countryval->id == 230) {
-                                                                                    echo 'selected';
-                                                                                } ?>>{{$countryval->name}} ({{$countryval->code}})</option>
+                                        <option value="{{$countryval->code}}"
+                                            <?php if (isset($supplier) && $supplier->country_id == $countryval->id) {
+                                                echo 'selected';
+                                            } else if ($countryval->id == 230) {
+                                                echo 'selected';
+                                            } ?>>{{$countryval->name}} ({{$countryval->code}})</option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -145,11 +148,12 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Credit Limit" name="creadit_limit" id="supplier_creadit_limit" value="<?php if (isset($supplier) && $supplier != '') {
-                                                                                                                                                                                                                echo $supplier->creadit_limit;
-                                                                                                                                                                                                            } else {
-                                                                                                                                                                                                                echo '0.00';
-                                                                                                                                                                                                            } ?>" oninput="suppliervalidateDecimal(this)" maxlength="8">
+                                        <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Credit Limit" name="creadit_limit" id="supplier_creadit_limit"
+                                            value="<?php if (isset($supplier) && $supplier != '') {
+                                                        echo $supplier->creadit_limit;
+                                                    } else {
+                                                        echo '0.00';
+                                                    } ?>" oninput="suppliervalidateDecimal(this)" maxlength="8">
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +168,7 @@
             <div class="modal-footer customer_Form_Popup">
                 <!-- <button type="button" class="profileDrop" onclick="save_supplierClose()">Save &
                     Close</button> -->
-                <button type="button" class="btn btn-dedault" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-warning" onclick="save_supplier()">Save</button>
             </div>
         </div>

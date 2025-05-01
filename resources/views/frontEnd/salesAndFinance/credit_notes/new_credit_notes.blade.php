@@ -57,6 +57,54 @@
         min-height: 50px;
     }
 </style>
+
+<section class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 p-0">
+                <div class="panel">
+                    <header class="panel-heading px-5">
+                        <?php if (isset($credit_note->credit_ref) && $credit_note->credit_ref != '') { ?>
+                            <h4>{{$credit_note->credit_ref}}</h4>
+                        <?php } else { ?>
+                            <h4>New Credit Note</h4>
+                        <?php } ?>
+                    </header>
+                    <div class="panel-body">
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                        </div>
+                        <div class="col-lg-12">
+                            <form class="customerForm" id="credit_form">
+                                @csrf
+                                <div class="row separate_section">
+                                    <h4 class="m-t-0 m-b-20 clr-blue fnt-20 text-center">Supplier Details</h4>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <input type="hidden" id="credit_id" name="id"
+                                            value="<?php if (isset($credit_note)) {
+                                                        echo $credit_note->id;
+                                                    } ?>">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Supplier <span class="radStar">*</span></label>
+                                            <div class="row">
+                                                <div class="col-sm-9">
+                                                    <select class="form-control editInput selectOptions CreditNotescheckError" id="credit_supplier_id" name="supplier_id" onchange="get_supplier_details()">
+                                                        <option selected disabled>Select Supplier</option>
+                                                        <?php foreach ($suppliers as $suppval) { ?>
+                                                            <option value="{{$suppval->id}}"
+                                                                <?php if (isset($credit_note) && $credit_note->supplier_id == $suppval->id) {
+                                                                    echo 'selected';
+                                                                } ?>>{{$suppval->name}}</option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <a href="#!" class="formicon" data-toggle="modal" data-target="#customerPop"><i class="fa fa-plus-square"></i></a>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <a href="#!" class="formicon"><i class="fa fa-clock-o"></i></a>
+                                                </div>
+
 <div class="main_wrapper">
     <section class="main_section_page px-3">
         <div class="container-fluid">
@@ -106,192 +154,198 @@
                                                     data-bs-target="#customerPop"><i
                                                         class="fa-solid fa-square-plus"></i></a>
                                             </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Contact</label>
-                                                <div class="col-sm-7">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Contact</label>
+                                            <div class="row">
+                                                <div class="col-sm-10">
                                                     <select class="form-control editInput selectOptions" id="credit_contact_id" name="contact_id">
                                                         <option selected disabled>Select Supplier First</option>
                                                         @foreach($additional_contact as $addContact)
-                                                        <option value="{{$addContact->id}}" <?php if (isset($credit_note) && $credit_note->contact_id == $addContact->id) {
-                                                                                                echo 'selected';
-                                                                                            } ?>>{{$addContact->contact_name}}</option>
+                                                        <option value="{{$addContact->id}}"
+                                                            <?php if (isset($credit_note) && $credit_note->contact_id == $addContact->id) {
+                                                                echo 'selected';
+                                                            } ?>>{{$addContact->contact_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon"><i
-                                                            class="fa fa-plus-square"></i></a>
+                                                    <a href="#!" class="formicon"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Name <span
-                                                        class="radStar">*</span></label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput CreditNotescheckError" id="credit_name" name="name" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                                                                                                    echo $credit_note->name;
-                                                                                                                                                                } ?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Email</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="credit_email"
-                                                        name="email" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                echo $credit_note->email;
-                                                                            } ?>" onchange="credit_check_email()">
-                                                    <span style="color:red" id="creditemailErr"></span>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Telephone</label>
-                                                <div class="col-sm-2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Name <span class="radStar">*</span></label>
+                                            <input type="text" class="form-control editInput CreditNotescheckError" id="credit_name" name="name"
+                                                value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                            echo $credit_note->name;
+                                                        } ?>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Email</label>
+                                            <input type="text" class="form-control editInput" id="credit_email" name="email"
+                                                value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                            echo $credit_note->email;
+                                                        } ?>" onchange="credit_check_email()">
+                                            <span style="color:red" id="creditemailErr"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Telephone</label>
+                                            <div class="row">
+                                                <div class="col-sm-3">
                                                     <select class="form-control editInput selectOptions" id="credit_tele_code" name="telephone_code">
                                                         @foreach($country as $Codeval)
-                                                        <option value="{{$Codeval->id}}" <?php if (isset($credit_note) && $credit_note->telephone_code == $Codeval->id) {
-                                                                                                echo 'selcted';
-                                                                                            } else if ($Codeval->id == 230) {
-                                                                                                echo 'selected';
-                                                                                            } ?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
+                                                        <option value="{{$Codeval->id}}"
+                                                            <?php if (isset($credit_note) && $credit_note->telephone_code == $Codeval->id) {
+                                                                echo 'selcted';
+                                                            } else if ($Codeval->id == 230) {
+                                                                echo 'selected';
+                                                            } ?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-7">
-                                                    <input type="text" class="form-control editInput" id="credit_telephone" name="telephone" placeholder="Telephone" onkeypress="return event.charCode>=48&&event.charCode<=57 && value.length<10" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                                                                                                                                                                                                echo $credit_note->telephone;
-                                                                                                                                                                                                                                                            } ?>">
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput" id="credit_telephone" name="telephone" placeholder="Telephone" onkeypress="return event.charCode>=48&&event.charCode<=57 && value.length<10"
+                                                        value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                                    echo $credit_note->telephone;
+                                                                } ?>">
                                                 </div>
                                             </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Mobile</label>
-                                                <div class="col-sm-2">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Mobile</label>
+                                            <div class="row">
+                                                <div class="col-sm-3">
                                                     <select class="form-control editInput selectOptions" id="credit_mobile_code" name="mobile_code">
                                                         @foreach($country as $Codeval)
-                                                        <option value="{{$Codeval->id}}" <?php if (isset($credit_note) && $credit_note->mobile_code == $Codeval->id) {
-                                                                                                echo 'selcted';
-                                                                                            } else if ($Codeval->id == 230) {
-                                                                                                echo 'selected';
-                                                                                            } ?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
+                                                        <option value="{{$Codeval->id}}"
+                                                            <?php if (isset($credit_note) && $credit_note->mobile_code == $Codeval->id) {
+                                                                echo 'selcted';
+                                                            } else if ($Codeval->id == 230) {
+                                                                echo 'selected';
+                                                            } ?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-sm-7">
+                                                <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput" id="credit_mobile"
-                                                        name="mobile" placeholder="Mobile" onkeypress="return event.charCode>=48&&event.charCode<=57 && value.length<10" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                                                                                                                    echo $credit_note->mobile;
-                                                                                                                                                                                } ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-lg-4 col-xl-4">
-                                        <div class="formDtail">
-                                            <h4 class="contTitle">Address Details</h4>
-
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Address <span
-                                                        class="radStar">*</span></label>
-                                                <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput CreditNotescheckError" name="address" id="credit_address"
-                                                        rows="3" placeholder=""><?php if (isset($credit_note) && $credit_note != '') {
-                                                                                    echo $credit_note->address;
-                                                                                } ?></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">City</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="credit_city" name="city" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                                                                                echo $credit_note->city;
-                                                                                                                                            } ?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">County</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="credit_county"
-                                                        name="county" placeholder="County" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                                        echo $credit_note->county;
-                                                                                                    } ?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Postcode
-                                                </label>
-                                                <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                        id="credit_post_code" name="post_code" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                                            echo $credit_note->post_code;
-                                                                                                        } ?>">
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="plusandText">
-                                                        <a href="#!" class="formicon"><i
-                                                                class="fa-solid fa-magnifying-glass-location"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-lg-4 col-xl-4">
-                                        <div class="formDtail">
-                                            <h4 class="contTitle">Credit Note Details</h4>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Credit Note
-                                                    Ref</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control-plaintext editInput" id="credit_ref"
+                                                        name="mobile" placeholder="Mobile" onkeypress="return event.charCode>=48&&event.charCode<=57 && value.length<10"
                                                         value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                    echo $credit_note->credit_ref;
-                                                                } else {
-                                                                    echo 'Auto generate';
-                                                                } ?>" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Date
-                                                    <span class="radStar">*</span></label>
-                                                <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput textareaInput CreditNotescheckError" id="credit_date" name="date" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                                                                                                                    echo $credit_note->date;
-                                                                                                                                                                                } ?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Supplier
-                                                    Ref</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                        id="credit_supplier_ref" name="supplier_ref" placeholder="" value="<?php if (isset($credit_note) && $credit_note != '') {
-                                                                                                                                echo $credit_note->supplier_ref;
-                                                                                                                            } ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-3 row">
-                                                <label for="" class="col-sm-3 col-form-label">Status</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control editInput selectOptions" id="credit_status" name="status">
-                                                        <option value="1" <?php if (isset($credit_note) && $credit_note->status == 1) {
-                                                                                echo 'selected';
-                                                                            } ?>>Approved</option>
-                                                        <option value="2" disabled <?php if (isset($credit_note) && $credit_note->status == 2) {
-                                                                                        echo 'selected';
-                                                                                    } ?>>Paid</option>
-                                                        <option value="0" disabled <?php if (isset($credit_note) && $credit_note->status == 0) {
-                                                                                        echo 'selected';
-                                                                                    } ?>>Cancelled</option>
-                                                    </select>
+                                                                    echo $credit_note->mobile;
+                                                                } ?>">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row separate_section">
+                                    <h4 class="m-t-0 m-b-20 clr-blue fnt-20 text-center">Address Details</h4>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Address <span class="radStar">*</span></label>
+                                            <textarea class="form-control textareaInput CreditNotescheckError" name="address" id="credit_address" rows="3" placeholder="">
+                                                <?php if (isset($credit_note) && $credit_note != '') {
+                                                    echo $credit_note->address;
+                                                } ?>
+                                            </textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">City</label>
+                                            <input type="text" class="form-control editInput" id="credit_city" name="city"
+                                                value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                            echo $credit_note->city;
+                                                        } ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">County</label>
+                                            <input type="text" class="form-control editInput" id="credit_county"
+                                                name="county" placeholder="County"
+                                                value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                            echo $credit_note->county;
+                                                        } ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Postcode</label>
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control editInput textareaInput"
+                                                        id="credit_post_code" name="post_code"
+                                                        value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                                    echo $credit_note->post_code;
+                                                                } ?>">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="plusandText">
+                                                        <a href="#!" class="formicon"><i class="fa fa-search"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row separate_section">
+                                    <h4 class="m-t-0 m-b-20 clr-blue fnt-20 text-center">Credit Note Details</h4>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Credit Note Ref</label>
+                                            <input type="text" class="form-control editInput" id="credit_ref"
+                                                value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                            echo $credit_note->credit_ref;
+                                                        } else {
+                                                            echo 'Auto generate';
+                                                        } ?>" readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Date <span class="radStar">*</span></label>
+                                            <input type="date" class="form-control editInput textareaInput CreditNotescheckError" id="credit_date" name="date"
+                                                value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                            echo $credit_note->date;
+                                                        } ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Supplier Ref</label>
+                                            <input type="text" class="form-control editInput textareaInput"
+                                                id="credit_supplier_ref" name="supplier_ref" placeholder=""
+                                                value="<?php if (isset($credit_note) && $credit_note != '') {
+                                                            echo $credit_note->supplier_ref;
+                                                        } ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label class="mb-2 col-form-label">Status</label>
+                                            <select class="form-control editInput selectOptions" id="credit_status" name="status">
+                                                <option value="1"
+                                                    <?php if (isset($credit_note) && $credit_note->status == 1) {
+                                                        echo 'selected';
+                                                    } ?>>Approved</option>
+                                                <option value="2" disabled
+                                                    <?php if (isset($credit_note) && $credit_note->status == 2) {
+                                                        echo 'selected';
+                                                    } ?>>Paid</option>
+                                                <option value="0" disabled
+                                                    <?php if (isset($credit_note) && $credit_note->status == 0) {
+                                                        echo 'selected';
+                                                    } ?>>Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row separate_section">
                                     <div class="col-sm-12">
                                         <h4 class="m-t-0 m-b-20 clr-blue fnt-20 text-center">Item Details</h4>
-                                        <div class="mb-3 row">
+                                        <div class="mb-3 row d-flex align-items-center">
                                             <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control editInput textareaInput" id="search-product" placeholder="Type to add product">
@@ -389,7 +443,7 @@
                                     <div class="row mt-3">
                                         <div class="col-sm-6">
                                             <div class="">
-                                                <h4 class="contTitle text-start">Supplier Notes <small>(Will be included in
+                                                <h4 class="contTitle text-left mb-0">Supplier Notes <small>(Will be included in
                                                         credit note)</small></h4>
                                                 <div class="mt-3">
                                                     <textarea cols="40" rows="5" id="supplier_notes" name="supplier_notes"><?php if (isset($credit_note) && $credit_note != '') {
@@ -400,7 +454,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="">
-                                                <h4 class="contTitle text-start">Internal Notes</h4>
+                                                <h4 class="contTitle text-left mb-0">Internal Notes</h4>
                                                 <div class="mt-3">
                                                     <textarea cols="40" rows="5" id="internal_notes" name="internal_notes"><?php if (isset($credit_note) && $credit_note != '') {
                                                                                                                                 echo $credit_note->internal_notes;
@@ -412,19 +466,12 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="row">
-                                <!-- <div class="col-md-4 col-lg-4 col-xl-4 ">
-                                    <div class="pageTitle">
-                                        <h3>New Jobs</h3>
-                                    </div>
-                                </div> -->
-                                <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-                                    <div class="pageTitleBtn">
-                                        <a href="javascript:void(0)" onclick="save_all_data()" class="btn btn-warning"><i class="fa fa-floppy-o"></i> Save</a>
-                                        <a href="{{url('credit_notes?list_mode=Approved')}}" class="btn btn-default2 ms-3"><i class="fa fa-arrow-left"></i> Back</a>
-                                        <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Action</a> -->
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12 px-3">
+                            <div class="pageTitleBtn">
+                                <a href="javascript:void(0)" onclick="save_all_data()" class="btn btn-warning"><i class="fa fa-floppy-o"></i> Save</a>
+                                <a href="{{url('credit_notes?list_mode=Approved')}}" class="btn btn-default2 ms-3"><i class="fa fa-arrow-left"></i> Back</a>
+                                <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Action</a> -->
                             </div>
                         </div>
                     </div>
@@ -457,6 +504,27 @@
 <!-- End here -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
+<script>
+    $('.tab-menu li a').on('click', function () {
+        var $this = $(this);
+        var target = $this.attr('data-rel');
+        
+        // find the closest tab-menu
+        var $tabMenu = $this.closest('.tab-menu');
+        var $tabContentContainer = $this.closest('.tab-teaser, .tab-container'); // adjust container if needed
+
+        $tabMenu.find('li a').removeClass('active');
+        $this.addClass('active');
+
+        // Show the related tab-box inside the same section
+        $tabContentContainer.find(".tab-box").hide();
+        $tabContentContainer.find("#" + target).fadeIn('slow');
+
+        return false;
+    });
+</script>
+
 <script>
     //Text Editer
 

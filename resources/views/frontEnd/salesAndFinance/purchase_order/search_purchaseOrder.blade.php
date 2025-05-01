@@ -119,6 +119,7 @@
     .multiselect-dropdown {
         height: auto;
     }
+
     .dropdown-item {
         padding: 6px 15px;
         font-size: 13px;
@@ -158,7 +159,7 @@
                             <div class="jobsection">
                                 <div class="d-inline-flex align-items-center">
                                     <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle btn btn-default2" data-toggle="dropdown" aria-expanded="false">  New <i class="fa fa-caret-down"></i></a>
+                                        <a href="#" class="nav-link dropdown-toggle btn btn-default2" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu fade-up m-0">
                                             <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
                                             <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
@@ -179,8 +180,8 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="searchJobForm" id="divTohide">
-                                <form id="search_dataForm">
+                            <div class="searchJobForm mt-0" id="divTohide">
+                                <form id="search_dataForm" class="p-4">
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="mb-3">
@@ -352,7 +353,7 @@
                                     </tr>
                                 </table>
                             </div>
-                        </div> 
+                        </div>
                         <!-- End off main Table -->
                     </div>
                 </div>
@@ -362,79 +363,70 @@
 </section>
 <!-- Approve Model Start Here -->
 <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content add_Customer">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Authorise Purchase Order</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h4 class="modal-title" id="customerModalLabel">Authorise Purchase Order</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="text-center mt-3" id="message_approveModal" style="display:none"></div>
                     <div class="col-sm-12 col-lg-12 col-xl-12">
-                        <div class="formDtail">
-                            <form id="approveForm" class="customerForm pt-0">
-                                @csrf
-                                <input type="hidden" name="id" id="id">
-                                <input type="hidden" name="po_id" id="po_id">
-                                <div class="row">
-                                    <label for="inputName" class="col-sm-12 col-lg-12 col-xl-12 col-sm-12 col-form-label">Would you like to notify anyone that this purchase order '<span id="purchaseOrderRef"></span>' has been approved?</label>
-                                </div>
-                                <div class="mb-2 row">
-                                    <label for="inputName" class="col-sm-3 col-lg-3 col-xl-3 col-sm-3 col-form-label">Notify?</label>
-                                    <div class="col-sm-9">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="notify_radio" id="radioNo" value="0" checked="">
-                                            <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="notify_radio" value="1" id="radioYes">
-                                            <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-2 row notificationHideShow" style="display:none">
-                                    <label for="inputProject"
-                                        class="col-sm-3 col-form-label">Notify Who?</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" id="notifywhoUser" name="notify_user_id">
-                                            <option value=""></option>
-                                            <option value="{{Auth::user()->id}}">Me - {{Auth::user()->email}} / {{Auth::user()->phone_no ?? 'No Mobile'}}</option>
-                                            @foreach($users as $value)
-                                            @if($value->id != Auth::user()->id)
-                                            <option value="{{ $value->id }}">{{ $value->name }} - {{$value->email}} / {{$value->phone_no ?? 'No Mobile'}}</option>
-                                            @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="mb-2 row notificationHideShow" style="display:none">
-                                    <label class="col-sm-3 col-form-label">Send As <span class="radStar ">*</span> </label>
-                                    <div class="col-sm-9">
-                                        <label for="purchase_notify_who1" class="editInput">
-                                            <input type="checkbox" name="notification" id="purchase_notify_who1" value="1" checked=""> Notification (User Only)
-                                        </label>
-                                        <label for="purchase_notify_who2" class="editInput">
-                                            <input type="checkbox" name="sms" id="purchase_notify_who2" value="1"> SMS
-                                        </label>
-                                        <label for="purchase_notify_who3" class="editInput">
-                                            <input type="checkbox" name="email" id="purchase_notify_who3" value="1" checked=""> Email
-                                        </label>
-                                    </div>
-                                </div>
-                            </form>
+                        <form id="approveForm">
+                            @csrf
+                            <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="po_id" id="po_id">
+                            <label class=" mb-2 col-form-label">Would you like to notify anyone that this purchase order '<span id="purchaseOrderRef"></span>' has been approved?</label>
+                    </div>
+                    <div class="mb-2">
+                        <label class="mb-2 col-form-label">Notify?</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="notify_radio" id="radioNo" value="0" checked="">
+                            <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="notify_radio" value="1" id="radioYes">
+                            <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
                         </div>
                     </div>
-                </div> <!-- End row -->
-            </div>
-            <div class="modal-footer customer_Form_Popup">
 
-                <button type="button" class="btn btn-default2" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
-                <button type="button" class="btn btn-default2" data-bs-dismiss="modal">Cancel</button>
-            </div>
+                    <div class="mb-2 notificationHideShow" style="display:none">
+                        <label class="mb-2 col-form-label">Notify Who?</label>
+                        <select class="form-control editInput selectOptions" id="notifywhoUser" name="notify_user_id">
+                            <option value=""></option>
+                            <option value="{{Auth::user()->id}}">Me - {{Auth::user()->email}} / {{Auth::user()->phone_no ?? 'No Mobile'}}</option>
+                            @foreach($users as $value)
+                            @if($value->id != Auth::user()->id)
+                            <option value="{{ $value->id }}">{{ $value->name }} - {{$value->email}} / {{$value->phone_no ?? 'No Mobile'}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-2  notificationHideShow" style="display:none">
+                        <label class="mb-2 col-form-label">Send As <span class="radStar ">*</span> </label>
+                        <div>
+                            <label for="purchase_notify_who1" class="editInput">
+                                <input type="checkbox" name="notification" id="purchase_notify_who1" value="1" checked=""> Notification (User Only)
+                            </label>
+                            <label for="purchase_notify_who2" class="editInput">
+                                <input type="checkbox" name="sms" id="purchase_notify_who2" value="1"> SMS
+                            </label>
+                            <label for="purchase_notify_who3" class="editInput">
+                                <input type="checkbox" name="email" id="purchase_notify_who3" value="1" checked=""> Email
+                            </label>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div> <!-- End row -->
+        </div>
+        <div class="modal-footer customer_Form_Popup">
+            <button type="button" class="btn btn-default2" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-warning" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
         </div>
     </div>
+</div>
 </div>
 
 <!-- End here -->
@@ -450,31 +442,29 @@
                 <div class="row">
                     <div class="text-center mt-3" id="message_recordDeliveryModal" style="display:none"></div>
                     <div class="col-sm-12 col-lg-12 col-xl-12">
-                        <div class="formDtail">
-                            <form id="recordDeliveryForm" class="customerForm pt-0">
-                                <input type="hidden" name="po_id" id="recordDelivery_po_id">
-                                @csrf
-                                <div class="col-sm-12">
-                                    <div class="productDetailTable">
-                                        <table class="table" id="recordDelivery_result">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Code</th>
-                                                    <th>Product</th>
-                                                    <th>Description</th>
-                                                    <th>Price</th>
-                                                    <th>Qty</th>
-                                                    <th>Allredy Delivered</th>
-                                                    <th>Receive More</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        <div id="pagination-controls-recordDelivery"></div>
-                                    </div>
+                        <form id="recordDeliveryForm">
+                            <input type="hidden" name="po_id" id="recordDelivery_po_id">
+                            @csrf
+                            <div class="col-sm-12">
+                                <div class="productDetailTable">
+                                    <table class="table" id="recordDelivery_result">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Product</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Qty</th>
+                                                <th>Allredy Delivered</th>
+                                                <th>Receive More</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <div id="pagination-controls-recordDelivery"></div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div> <!-- End row -->
             </div>
@@ -500,7 +490,7 @@
                     <div class="text-center mt-3" id="message_recordPaymentModal" style="display:none"></div>
                     <div class="col-sm-12 col-lg-12 col-xl-12">
                         <div class="formDtail">
-                            <form id="recordPaymentForm" class="customerForm pt-0">
+                            <form id="recordPaymentForm">
                                 <input type="hidden" name="po_id" id="recordPayment_po_id">
                                 <input type="hidden" name="recordPayment_ppurchaseProduct" id="recordPayment_ppurchaseProduct">
                                 @csrf

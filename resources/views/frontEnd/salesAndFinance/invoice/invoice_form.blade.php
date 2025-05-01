@@ -522,7 +522,7 @@
                                     <h3 class="m-t-0 clr-blue fnt-20 text-center mb-0"> Notes</h3>
                                     <div class="col-sm-4">
                                         <div>
-                                            <h4 class="contTitle text-left mb-0">Customer Notes <span class="afterPlusText"> Will be included in invoive </span></h4>
+                                            <h4 class="contTitle text-left mb-0">Customer Notes <small> ( Will be included in invoive) </small></h4>
                                             <textarea cols="40" rows="5" id="invoice_customer_notes" name="customer_notes" class="form-control"></textarea>
                                         </div>
                                     </div>

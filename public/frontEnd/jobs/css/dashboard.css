@@ -807,3 +807,9 @@
 .grayish_green {
   background-color: #727D73;
 }
+
+.searchJobForm {
+  border: 1px solid #eee;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
