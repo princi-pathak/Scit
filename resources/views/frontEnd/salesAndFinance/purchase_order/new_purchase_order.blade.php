@@ -362,6 +362,8 @@
                                                     <label class="col-form-label mb-2">Reference</label>
                                                     <input type="text" class="form-control editInput textareaInput" id="purchase_reference" name="reference" placeholder="Reference(if any)" value="<?php if (isset($purchase_orders) && $purchase_orders->reference != '') { echo $purchase_orders->reference; } ?>">
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Quote Ref</label>
                                                     <div class="row">
@@ -377,8 +379,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Job Ref</label>
                                                     <div class="row">
@@ -396,8 +396,8 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Invoice Ref</label>
-                                                <div class="row">
-                                                    <div class="col-sm-10">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
                                                             <input type="text" class="form-control editInput textareaInput" id="purchase_invoice_ref" name="invoice_ref" placeholder="Invoice Ref, if any" value="<?php if (isset($purchase_orders) && $purchase_orders->invoice_ref != '') { echo $purchase_orders->invoice_ref; } ?>">
                                                         </div>
                                                         <div class="col-sm-2">
@@ -405,14 +405,13 @@
                                                                 <i class="fa fa-search"></i>
                                                             </div>
                                                         </div>
-                                                </div>
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Payment Terms</label>
                                                     <div class="row">
                                                         <div class="col-sm-8">
                                                             <select class="form-control editInput selectOptions" id="purchase_payment_terms" name="payment_terms" onchange="updateDueDate()">
-
                                                                 </option>
                                                                 <?php for ($i = 0; $i <= 90; $i++) { ?>
                                                                     <option value="{{$i}}" <?php if (isset($purchase_orders) && $purchase_orders->payment_terms == $i) { echo 'selected'; } ?>>{{$i}}</option>
@@ -425,6 +424,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Payment Due Date</label>
                                                     <input type="date" class="form-control editInput" id="purchase_payment_due_date" name="payment_due_date" value="">
@@ -432,8 +433,6 @@
                                                         <i class="fa fa-calendar-alt"></i>
                                                     </div> -->
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Status</label>
                                                     <select class="form-control editInput selectOptions" id="purchase_status" name="status">
@@ -464,16 +463,19 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 mt-4">
                                                     <label class="col-form-label mb-2">
                                                         <a href="javascript:void(0)" onclick="openReminderModal(<?php if (isset($purchase_orders) && $purchase_orders != '') {echo $purchase_orders->id; } ?>)" class="btn btn-primary"> <i class="fa fa-clock-o"></i> Set Reminder </a>
                                                     </label>
-
                                                 </div>
+                                        <!-- </form> -->
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 mt-4">
                                                 <div class="setRiminderTable" style="display:none">
                                                     <div class="table-responsive productDetailTable ">
                                                         <table class="table border-top border-bottom" id="">
                                                             <thead>
+                                                                <tr>
                                                                     <th>Title </th>
                                                                     <th>Date </th>
                                                                     <th>Time</th>
@@ -501,8 +503,8 @@
                                                                     @else
                                                                     <td><span class="iconColrRad">Pending</span></td>
                                                                     <td>
-                                                                        <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="{{$reminderVal->id}}" data-title="{{$reminderVal->title}}" data-user_id="{{$reminderVal->user_id}}" data-reminder_date="{{$reminderVal->reminder_date}}" data-reminder_time="{{$reminderVal->reminder_time}}" data-notification="{{$reminderVal->notification}}" data-sms="{{$reminderVal->sms}}" data-email="{{$reminderVal->email}}" data-notes="{{$reminderVal->notes}}" data-icon="edit"><i class="material-symbols-outlined">edit</i></a>
-                                                                        <a href="javascript:void(0)" class="iconColrRad"><i class="material-symbols-outlined">close</i></a>
+                                                                        <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="{{$reminderVal->id}}" data-title="{{$reminderVal->title}}" data-user_id="{{$reminderVal->user_id}}" data-reminder_date="{{$reminderVal->reminder_date}}" data-reminder_time="{{$reminderVal->reminder_time}}" data-notification="{{$reminderVal->notification}}" data-sms="{{$reminderVal->sms}}" data-email="{{$reminderVal->email}}" data-notes="{{$reminderVal->notes}}" data-icon="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> | 
+                                                                        <a href="javascript:void(0)" class="iconColrRad"><i class="fa fa-times" aria-hidden="true"></i></a>
                                                                     </td>
                                                                     @endif
                                                                 </tr>
@@ -511,7 +513,6 @@
                                                         </table>
                                                     </div>
                                                 </div>
-                                        <!-- </form> -->
                                             </div>
                                         </div>
                                     </div>
@@ -2796,8 +2797,8 @@
             <td>` + data.reminder_time + `</td>    
             <td><span class="iconColrRad">Pending</span></td>    
             <td>
-                <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="` + data.id + `" data-title="` + data.title + `" data-user_id="` + data.user_id + `" data-reminder_date="` + data.reminder_date + `" data-reminder_time="` + data.reminder_time + `" data-notification="` + data.notification + `" data-sms="` + data.sms + `" data-email="` + data.email + `" data-notes="` + data.notes + `" data-icon="edit"><i class="material-symbols-outlined">edit</i></a>
-                <a href="javascript:void(0)" class="iconColrRad"><i class="material-symbols-outlined">close</i></a>
+                <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="` + data.id + `" data-title="` + data.title + `" data-user_id="` + data.user_id + `" data-reminder_date="` + data.reminder_date + `" data-reminder_time="` + data.reminder_time + `" data-notification="` + data.notification + `" data-sms="` + data.sms + `" data-email="` + data.email + `" data-notes="` + data.notes + `" data-icon="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> | 
+                <a href="javascript:void(0)" class="iconColrRad"><i class="fa fa-times" aria-hidden="true"></i></a>
             </td>    
         </tr>`);
     }

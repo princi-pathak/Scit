@@ -1,6 +1,6 @@
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@section('title','Invoices')
+@section('title','Purchase order Statements')
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 <style>
@@ -97,6 +97,7 @@
                                 <div class="searchFilter">
                                     <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
                                 </div>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -136,14 +137,6 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="jobsection">
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
-                            </div>
-                            <!-- <div class="col-sm-5">
-                                    <div class="pageTitleBtn p-0">
-                                        <a href="#" class="btn btn-default2"> <i class="material-symbols-outlined"> settings </i></a>        
-                                    </div>
-                                </div> -->
                         </div>
                         <div class="col-lg-12">
                             <div class="table-responsive productDetailTable">
