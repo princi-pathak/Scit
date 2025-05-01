@@ -1,14 +1,3 @@
-<style>
-    .tag_box {
-        background: #f5f5f5;
-        display: flex;
-        border: 1px solid #dee2e6;
-        min-height: 34px;
-        justify-content: center;
-        align-items: center;
-    }
-</style>
-
 <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -16,8 +5,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="customerModalLabel">Add Customer</h4>
             </div>
-            <div id="alert_message_customer" class="alert alert-success mt-3" style="display:none"></div>
             <div class="modal-body">
+            <div id="alert_message_customer" class="alert alert-success mt-3" style="display:none"></div>
                 <form class="customerForm" id="AddCustomerModal">
                     <div class="row">
                         <div class="col-md-6 col-lg-6 col-xl-6">
@@ -115,8 +104,8 @@
                                     <label>Website</label>
                                     <div class="row">
                                         <div class="col-md-3 pe-0">
-                                            <div class="tag_box text-center">
-                                                <span style="padding:3px">http://</span>
+                                            <div class="tag_box">
+                                                <span>http://</span>
                                             </div>
                                         </div>
                                         <div class="col-md-9">
@@ -152,12 +141,12 @@
                                 <div class="mb-3">
                                     <label for="inputCounty">Credit Limit</label>
                                     <div class="row">
-                                        <div class="col-md-3 pe-0">
-                                            <div class="tag_box text-center">
-                                                <span style="padding:3px">£</span>
+                                        <div class="col-md-2 pe-0">
+                                            <div class="tag_box">
+                                                <span>£</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-10">
                                             <input type="text" class="form-control editInput textareaInput" placeholder="Enter Credit Limit" id="customer_credit_limit" name="credit_limit" oninput="customervalidateDecimal(this)">
                                         </div>
                                     </div>
@@ -216,7 +205,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>Address <span class="radStar ">*</span></label>
-                                    <textarea class="form-control textareaInput CustomercheckError" placeholder="Enter Customer Address" id="cuatomer_address" name="address" rows="3"></textarea>
+                                    <textarea class="form-control textareaInput CustomercheckError" placeholder="Enter Customer Address" id="cuatomer_address" name="address" rows="1"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label>City</label>
