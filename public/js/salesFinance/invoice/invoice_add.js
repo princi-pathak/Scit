@@ -1505,3 +1505,7 @@ $(document).on('click', '.modal_dataTaskFetch', function () {
         $('#yeson').prop('checked', false);
     }
 });
+
+function getAllproject(data){
+    $("#invoice_project_id").append(data);
+}
