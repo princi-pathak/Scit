@@ -120,7 +120,7 @@
                                 <div class="user-heading alt wdgt-row bg-seagreen"> <i class="fa fa-book"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
-                                        <h1 class="count">Policies &<br>Procedures</h1>
+                                        <h1 class="count">Policies & Procedures</h1>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                                 <div class="user-heading alt wdgt-row bg-orange"> <i class="fa fa-group"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
-                                        <h1 class="count">Staff<br>Management</h1>
+                                        <h1 class="count">Staff Management</h1>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
                                 <div class="user-heading alt wdgt-row bg-darkgreen"> <i class="fa fa-pencil "></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
-                                        <h1 class="count">System<br>Management</h1>
+                                        <h1 class="count">System Management</h1>
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +162,7 @@
                                 <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-file-text-o"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
-                                        <h1 class="count">View<br>Reports</h1>
+                                        <h1 class="count">View Reports</h1>
                                     </div>
                                 </div>
                             </div>

@@ -109,18 +109,63 @@
                                             // $('#itemsCatagoryModal').modal('hide');
                                         }
 
-                                    });
-                                }
-                                // Show success message
-                                //alert('Form submitted successfully!'); // Replace with your own success message display logic
-                            })
-                            .catch(error => {
-                                // Handle error
-                                //console.error('Error:', error);
-                                //alert('There was an error submitting the form.');
-                                $('.catsuccessdanger').text('There was an error submitting the form.');
-                            });
+                // Here you can handle form submission using AJAX
+                var formData = new FormData(form);
+                var productCategorytype = $('#productCategorytype').val();
+                var category_name = $('#category_name').val();
+                var id=$("#productCategoryID").val();
+                var url='{{ route("item.saveProductCategoryData") }}';
+                if(id !=''){
+                    url='{{ route("item.editProductCategoryData") }}';
+                }
+                fetch(url, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                   console.log(data);
+                   if (isAuthenticated(data) == false) {
+                        return false;
                     }
+                   if(data.success==0){
+                    $('.cathidemessagedanger').css('display','block');
+                    $('.catsuccessdanger').text(data.message);
+                    $(".catsuccessdanger").show('slow' , 'linear').delay(3000).fadeOut();
+                   }else{
+                    $('.cathidemessage').css('display','block');
+                    $('.catsuccess').text(data.message);
+                    $(".catsuccess").show('slow' , 'linear').delay(3000).fadeOut(function(){
+                        if(productCategorytype!=2){
+                            location.reload();
+                        }else{                                                       
+                            $('#productcategorylist').append($('<option>', {
+                                value: data.lastid,
+                                text: category_name
+                            }));
+                            $('#productcategorylist').val(data.lastid);
+                            $('#itemsCatagoryModal').modal('hide');
+                            // var $newOption = $('<option>', {
+                            //     value: data.lastid, // Assuming `data.lastid` contains the new ID
+                            //     text: category_name // The name of the new category
+                            // });
+                            // $('#productcategorylist').append($newOption).val(data.lastid); // Append and set as selected
+                            // $('#itemsCatagoryModal').modal('hide');
+                        }
+                        
+                    });
+                   }
+                    // Show success message
+                    //alert('Form submitted successfully!'); // Replace with your own success message display logic
+                })
+                .catch(error => {
+                    // Handle error
+                    //console.error('Error:', error);
+                    //alert('There was an error submitting the form.');
+                    $('.catsuccessdanger').text('There was an error submitting the form.');
+                });
+            }
+
 
                     form.classList.add('was-validated');
                 }, false);

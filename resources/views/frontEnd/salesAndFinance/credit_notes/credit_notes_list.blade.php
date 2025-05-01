@@ -128,9 +128,9 @@ ul#projectList {
                                 </div> -->
                             </div>
                         </div>
-                        <a href="{{ url('credit_notes?list_mode=Approved') }}" class="profileDrop" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Approved <span>({{$approvedtCount}})</span></a>
-                        <a href="{{ url('credit_notes?list_mode=Paid') }}" class="profileDrop" <?php if($status['status'] == 2){?>id="active_inactive"<?php }?>>Paid<span>({{$paidCount}})</span></a>
-                        <a href="{{ url('credit_notes?list_mode=Cancelled') }}" class="profileDrop" <?php if($status['status'] == 0){?>id="active_inactive"<?php }?>>Cancelled<span>({{$cancelledCount}})</span></a>
+                        <a href="{{ url('credit_notes/Approved') }}" class="profileDrop" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Approved <span>({{$approvedtCount}})</span></a>
+                        <a href="{{ url('credit_notes/Paid') }}" class="profileDrop" <?php if($status['status'] == 2){?>id="active_inactive"<?php }?>>Paid<span>({{$paidCount}})</span></a>
+                        <a href="{{ url('credit_notes/Cancelled') }}" class="profileDrop" <?php if($status['status'] == 0){?>id="active_inactive"<?php }?>>Cancelled<span>({{$cancelledCount}})</span></a>
                         
                     </div>
                 </div>
@@ -824,6 +824,9 @@ function cancelCreditFunction(id,credit_ref){
             data: {id:id,credit_ref:credit_ref,_token:'{{csrf_token()}}'},
             success: function(response) {
                 // console.log(response);return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
             if(response.vali_error){
                     alert(response.vali_error);
                     $(window).scrollTop(0);

@@ -323,10 +323,15 @@
         });
 
         console.log(products);
+        var id=$("#id").val();
+        var url='{{ route("item.ajax.saveProductGroup") }}';
+        if(id !=''){
+            url='{{ route("item.ajax.editProductGroup") }}';
+        }
 
         FormData = $('#add_product_group_form').serialize();
         $.ajax({
-            url: '{{ route("item.ajax.saveProductGroup") }}',
+            url: url,
             method: 'Post',
             data: {
                 FormData: FormData,
@@ -337,6 +342,9 @@
             success: function(response) {
                 // Show the message div
                 console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 const messageDiv = document.getElementById('message');
                 messageDiv.style.display = 'block';
 
@@ -412,6 +420,9 @@
                     success: function(response) {
                         console.log(response);
                         // $('#results').html(response);
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
                         divList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'container'; // Optional: Add a class to the div for styling
@@ -466,6 +477,9 @@
             },
             success: function(response) {
                 console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 productGroupTable(response.data, 'productListTable');
             },
             error: function(xhr, status, error) {
@@ -691,6 +705,9 @@
             },
             success: function(response) {
                 console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 const tableBody = document.querySelector(`#productListTable tbody`);
                 if (response.data.length === 0) {
                     const noDataRow = document.createElement('tr');
@@ -820,6 +837,9 @@
                 data: {ids:ids,model:model,_token:token},
                 success: function(data) {
                     console.log(data);
+                    if (isAuthenticated(data) == false) {
+                        return false;
+                    }
                     if(data){
                         location.reload();
                     }else{
