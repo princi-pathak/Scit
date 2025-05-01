@@ -3279,7 +3279,7 @@ div.dt-container select.dt-input {
 }
 
 .separate_section {
-  padding: 15px;
+  /* padding: 15px; */
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   margin-bottom: 20px;
 }
