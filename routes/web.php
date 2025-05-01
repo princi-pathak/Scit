@@ -30,6 +30,8 @@ use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
 use App\Http\Controllers\frontEnd\PettyCashController;
 use App\Http\Controllers\frontEnd\salesFinance\PreInvoiceController;
 use App\Http\Controllers\Rota\StaffController;
+use App\Http\Controllers\backEnd\salesfinance\DayBook\PurchaseBackendController;
+use App\Http\Controllers\backEnd\salesfinance\DayBook\SalesBackendController;
 
 
 
@@ -2139,6 +2141,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		});
 	});
 	// end
+	Route::controller(PurchaseBackendController::class)->group((function(){
+		Route::prefix('sales-finance/purchase')->group(function(){
+			Route::get('/purchase-day-book','index');
+			Route::get('/purchase-day-book-add','create');
+			Route::get('/purchase-type','purchase_type');
+			Route::get('/purchase-type-add','purchase_type_add');
+		});
+	}));
+	Route::controller(SalesBackendController::class)->group((function(){
+		Route::prefix('sales-finance/sales')->group(function(){
+			Route::get('/sales-day-book','index');
+			Route::get('/sales-day-book-add','create');
+		});
+	}));
 });
 
 //super admin path
