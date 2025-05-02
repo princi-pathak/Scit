@@ -12,7 +12,6 @@
   <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>
   <!--Core CSS -->
 
-
   <link href="{{ url('public/backEnd/css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ url('public/backEnd/css/bootstrap/bootstrap-reset.css') }}" rel="stylesheet">
   
@@ -26,9 +25,9 @@
 
   <!-- Users table CSS Files -->
 
-  <!-- <link href="{{ url('public/backEnd/css/font-awesome.css') }}" rel="stylesheet" />
+  <link href="{{ url('public/backEnd/css/font-awesome.css') }}" rel="stylesheet" />
     <link href="{{ url('public/backEnd/css/DT_bootstrap.css') }}" rel="stylesheet" />
-    <link href="{{ url('public/backEnd/css/margins-min.css') }}" rel="stylesheet"> -->
+    <link href="{{ url('public/backEnd/css/margins-min.css') }}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="{{ url('public/backEnd/css/style.css') }}" rel="stylesheet">
@@ -109,6 +108,9 @@
   <script src="{{ url('public/backEnd/js/jquery.scrollTo.min.js') }}"></script>
   <script src="{{ url('public/backEnd/js/jquery.slimscroll.js') }}"></script>
   <script src="{{ url('public/backEnd/js/jquery.nicescroll.js') }}"></script>
+  <script src="{{ url('public/backEnd/js/jquery.dataTables.js') }}"></script>
+  <script src="{{ url('public/backEnd/js/DT_bootstrap.js') }}"></script>
+  <script src="{{ url('public/backEnd/js/table-editable.js') }}"></script>
 
   <!--Easy Pie Chart-->
   <!-- <script src="{{ url('public/backEnd/js/jquery.easypiechart.js') }}"></script> -->
