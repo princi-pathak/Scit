@@ -104,55 +104,6 @@
                                                 <div class="col-sm-1">
                                                     <a href="#!" class="formicon"><i class="fa fa-clock-o"></i></a>
                                                 </div>
-
-<div class="main_wrapper">
-    <section class="main_section_page px-3">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 col-lg-4 col-xl-4 ">
-                    <div class="pageTitle">
-                    <?php if(isset($credit_note->credit_ref) && $credit_note->credit_ref!=''){?>
-                        <h3>{{$credit_note->credit_ref}}</h3>
-                    <?php }else{?>
-                        <h3>New Credit Note</h3>
-                    <?php }?>
-                    </div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xl-4">
-                    <div class="mt-1 mb-0 text-center" id="message_save"></div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 px-3">
-                    <div class="pageTitleBtn">
-                        <a href="javascript:void(0)" onclick="save_all_data()" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                        <a href="{{url('credit_notes/Approved')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
-                        <!-- <a href="#" class="profileDrop dropdown-toggle"><i class="fa-solid fa-gear"></i> Actions</a> -->
-                    </div>
-                </div>
-            </div>
-        <form class="customerForm" id="credit_form">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="newJobForm">
-                        <div class="row">
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="formDtail">
-                                    <h4 class="contTitle">Supplier Details</h4>
-                                        @csrf
-                                        <input type="hidden" id="credit_id" name="id" value="<?php if(isset($credit_note)){echo $credit_note->id;}?>">
-                                        <div class="mb-3 row">
-                                            <label for="" class="col-sm-3 col-form-label">Supplier <span class="radStar">*</span></label>
-                                            <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions CreditNotescheckError" id="credit_supplier_id" name="supplier_id" onchange="get_supplier_details()">
-                                                    <option selected disabled>Select Supplier</option>
-                                                    <?php foreach($suppliers as $suppval){?>
-                                                        <option value="{{$suppval->id}}" <?php if(isset($credit_note) && $credit_note->supplier_id == $suppval->id){echo 'selected';}?>>{{$suppval->name}}</option>
-                                                    <?php }?>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <a href="#!" class="formicon" data-bs-toggle="modal"
-                                                    data-bs-target="#customerPop"><i
-                                                        class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                         <div class="mb-3">
