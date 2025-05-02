@@ -117,8 +117,6 @@
 </div>
 <!-- end here -->
 
-
-
 <script>
     const salesDayBook = "{{ url('/sales/sales-day-book/delete/') }}";
     const customerList = '{{ route("customer.ajax.getCustomerList") }}';

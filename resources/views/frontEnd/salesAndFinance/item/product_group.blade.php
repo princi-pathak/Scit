@@ -1,6 +1,9 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
-
+@extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title','Product Group')
+<link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+@section('content')
+
 <style>
     .parent-container {
         position: absolute;
@@ -11,7 +14,7 @@
         text-align: center;
     }
 </style>
-<section class="main_section_page px-3 pt-0">
+<!-- <section class="wrapper">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-lg-4 col-xl-4 ">
@@ -21,280 +24,273 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-            <div class="jobsection">
-                <a href="javascript:void(0)" class="profileDrop" onclick="open_productgroupmodal()">Add</a>
-            </div>
-        </div>
+    <div class="row"> -->
+    <section class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <div class="panel">
+                        <header class="panel-heading px-5">
+                            <h4>Product Group </h4>
+                        </header>
+
+                        <div class="panel-body">
+                            <div class="col-md-12 col-lg-12 col-xl-12 px-3">
+                                <div class="jobsection justify-content-end">
+                                    <a href="javascript:void(0)" class="btn btn-green" onclick="open_productgroupmodal()"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
+                                                    <span class="text-danger text-center deletemsg"></span>
+                                </div>
+                            </div>
 
 
-        <!--Start Import/Export Popup -->
-        {{-- <div id="importExportpopup" class="importExportMrgin">
-            <div class="popup-content">
-                <div class="popupTitle">
-                    <span class="">Import/Export - Product</span>
-                    <span class="close" id="closeimportExportPopup">&times;</span>
-                </div>
-                <div class="contantbodypopup">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
-                        <div class="card">
-                            <form id="msform">
-                                <!-- progressbar -->
-                                <ul id="progressbar">
-                                    <li class="active" id="account"><strong>Import/Export</strong></li>
-                                    <li id="personal"><strong>Action</strong></li>
-                                    <li id="payment"><strong>Upload</strong></li>
-                                    <li id="confirm"><strong>Summary</strong></li>
-                                </ul>
+                            <!--Start Import/Export Popup -->
+                            {{-- <div id="importExportpopup" class="importExportMrgin">
+                                <div class="popup-content">
+                                    <div class="popupTitle">
+                                        <span class="">Import/Export - Product</span>
+                                        <span class="close" id="closeimportExportPopup">&times;</span>
+                                    </div>
+                                    <div class="contantbodypopup">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
+                                            <div class="card">
+                                                <form id="msform">
+                                                    <!-- progressbar -->
+                                                    <ul id="progressbar">
+                                                        <li class="active" id="account"><strong>Import/Export</strong></li>
+                                                        <li id="personal"><strong>Action</strong></li>
+                                                        <li id="payment"><strong>Upload</strong></li>
+                                                        <li id="confirm"><strong>Summary</strong></li>
+                                                    </ul>
 
-                                <fieldset>
-                                    <div class="form-card">
-                                        <div class="newJobForm p-3 mb-3">
-                                            <h4 class="contTitle text-start">Import Templates</h4>
-                                            <label class="col-form-label">Download an empty template to add new products or prices</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="importTemp">Product & price <a href="#!"> <span class="material-symbols-outlined">download</span></a></label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="importTemp"> Supplier & price <a href="#!"> <span class="material-symbols-outlined">download</span> </a> </label>
-                                                </div>
+                                                    <fieldset>
+                                                        <div class="form-card">
+                                                            <div class="newJobForm p-3 mb-3">
+                                                                <h4 class="contTitle text-start">Import Templates</h4>
+                                                                <label class="col-form-label">Download an empty template to add new products or prices</label>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <label class="importTemp">Product & price <a href="#!"> <span class="material-symbols-outlined">download</span></a></label>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label class="importTemp"> Supplier & price <a href="#!"> <span class="material-symbols-outlined">download</span> </a> </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="newJobForm p-3">
+                                                                <h4 class="contTitle text-start">Import</h4>
+                                                            </div>
+                                                        </div>
+                                                        <input type="button" name="next" class="next action-button" value="Next" />
+                                                    </fieldset>
+
+                                                    <fieldset>
+                                                        <div class="form-card">
+                                                            <label class="fieldlabels">First Name: *</label> <input type="text" />
+                                                        </div>
+                                                        <input type="button" name="next" class="next action-button" value="Next" />
+                                                        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                                    </fieldset>
+
+
+                                                    <fieldset>
+                                                        <div class="form-card">
+                                                            <label class="fieldlabels">Upload Your Photo:</label>
+                                                            <input type="file" name="pic" accept="image/*">
+                                                        </div> 
+                                                        <input type="button" name="next" class="next action-button" value="Submit" /> 
+                                                        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                                    </fieldset>
+
+
+                                                    <fieldset>
+                                                        <div class="form-card">
+                                                            <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
+                                                            </div> <br><br>
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-7 text-center">
+                                                                    <h5 class="purple-text text-center">You Have Successfully Signed Up </h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                                    </fieldset>
+                                                </form>
                                             </div>
                                         </div>
-                                        <div class="newJobForm p-3">
-                                            <h4 class="contTitle text-start">Import</h4>
-                                        </div>
-                                    </div>
-                                    <input type="button" name="next" class="next action-button" value="Next" />
-                                </fieldset>
-
-                                <fieldset>
-                                    <div class="form-card">
-                                        <label class="fieldlabels">First Name: *</label> <input type="text" />
-                                    </div>
-                                    <input type="button" name="next" class="next action-button" value="Next" />
-                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                                </fieldset>
-
-
-                                <fieldset>
-                                    <div class="form-card">
-                                        <label class="fieldlabels">Upload Your Photo:</label>
-                                        <input type="file" name="pic" accept="image/*">
-                                    </div> 
-                                    <input type="button" name="next" class="next action-button" value="Submit" /> 
-                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                                </fieldset>
-
-
-                                <fieldset>
-                                    <div class="form-card">
-                                        <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
-                                        <div class="row justify-content-center">
-                                            <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
-                                        </div> <br><br>
-                                        <div class="row justify-content-center">
-                                            <div class="col-7 text-center">
-                                                <h5 class="purple-text text-center">You Have Successfully Signed Up </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- End off Import/Export Popup -->
-
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="maimTable mt-2">
-                <div class="printExpt">
-                    <div class="prntExpbtn">
-                        <a href="#!">Print</a>
-                        <a href="#!">Export</a>
-                    </div>
-                    <div class="searchFilter">
-                        <a href="#!">Show Search Filter</a>
-                    </div>
-                </div>
-                <div class="markendDelete">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="jobsection">
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                <span class="alert text-danger text-center deletemsg"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> </label></th>
-                            <th>#</th>
-                            <th>Product Group</th>
-                            <th>Description</th>
-                            <th>Cost Price</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($productGroups as $productGroup)
-                        <tr>
-                            <td class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$productGroup->id}}"></td>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $productGroup->name }}</td>
-                            <td>{{ $productGroup->description }}</td>
-                            <td>{{ $productGroup->cost }}</td>
-                            <td>{{ $productGroup->price }}</td>
-                            <td>
-                                @if($productGroup->status == 1)
-                                    <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
-                                @else
-                                    <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>
-                                @endif
-                            </td>
-                            <td>
-                                <div class="d-inline-flex align-items-center ">
-                                    <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                            Action
-                                        </a>
-                                        <div class="dropdown-menu fade-up m-0">
-                                            <a href="javascript:void(0)" class="dropdown-item fetch_data" data-id="{{$productGroup->id}}" data-home_id="{{$productGroup->home_id}}" data-name="{{$productGroup->name}}" data-description="{{$productGroup->description}}" data-code="{{$productGroup->code}}" data-cost="{{$productGroup->cost}}" data-price="{{$productGroup->price}}" data-status="{{$productGroup->status}}">Edit Details</a>
-                                        </div>
                                     </div>
                                 </div>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-            </div>
-            <!-- End off main Table -->
-        </div>
-    </di>
-</div>
-</section>
+                            </div> --}}
+                            <!-- End off Import/Export Popup -->
 
 
-<!-- ********************************** -->
-<div class="modal fade" id="itemsCatagoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="itemsCatagoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title fs-5" id="itemsCatagoryModalLabel">Product Groups</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body ">
-                <div class="contantbodypopup p-0">
-                    <div class="" id="message"></div>
-                    <form action="" id="add_product_group_form">
-                        <input type="hidden" id="id" name="id">
-                        <div class="row pt-3">
-                            <div class="col-lg-6">
-                                <div class="mb-2 row">
-                                    <label for="inputCity" class="col-sm-4 col-form-label">Product Group <span class="radStar">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control editInput" name="name" id="name" value="">
-                                    </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <label for="inputCity" class="col-sm-4 col-form-label">Description</label>
-                                    <div class="col-sm-8">
-                                        <textarea class="form-control textareaInput" name="description" id="description" rows="3" placeholder=""></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-2 row">
-                                    <label for="inputCity" class="col-sm-3 col-form-label">Code</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" id="code" name="code" value="">
-                                    </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control editInput selectOptions" status="status" id="status">
-                                            <option> Active </option>
-                                            <option> Inactive </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <label for="inputCity" class="col-sm-3 col-form-label">Cost Price</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="cost" id="costPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="0.00">
-                                    </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <label for="inputCity" class="col-sm-3 col-form-label">Price</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" id="productPrice" name="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="0.00">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <h4 class="contTitle text-start mb-2 mt-2">Product Details</h4>
-                                <div class="mb-3 row">
-                                    <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control editInput" id="search-product" placeholder="Type to add product">
-                                        <div class="parent-container"></div>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="plusandText">
-                                            <span class="afterPlusText"> (Type to add product or <a href="javascript:void(0)" onclick="openProductListModal();" id="proClickHerePopup">Click here</a> to view all product)</span>
-                                        </div>
-
-                                        <!--Start (Type to add product or Popup -->
-                                        @include('components.product-list')
-                                        <!-- End off (Type to add product or Popup -->
-                                    </div>
-                                </div>
-                                <div class="productDetailTable">
-                                    <table class="table" id="productListTable">
-                                        <thead class="table-light">
+                            <div class="col-lg-12">
+                                <div class="maimTable mt-2">
+                                    <table id="myTable" class="display tablechange" cellspacing="0" width="100%">
+                                        <thead>
                                             <tr>
-                                                <th>Code</th>
-                                                <th>Product </th>
+                                                <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> </label></th>
+                                                <th>#</th>
+                                                <th>Product Group</th>
+                                                <th>Description</th>
                                                 <th>Cost Price</th>
-                                                <th>Price </th>
-                                                <th>Qty</th>
-                                                <th>Amount </th>
-                                                <th>Delete</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody id="product_group_products_list">
-
+                                        <tbody>
+                                            @foreach($productGroups as $productGroup)
+                                            <tr>
+                                                <td class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$productGroup->id}}"></td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $productGroup->name }}</td>
+                                                <td>{{ $productGroup->description }}</td>
+                                                <td>{{ $productGroup->cost }}</td>
+                                                <td>{{ $productGroup->price }}</td>
+                                                <td>
+                                                    @if($productGroup->status == 1)
+                                                        <span class="grencheck"><i class="fa fa-check-circle"></i></span>
+                                                    @else
+                                                        <span class="grayCheck"><i class="fa fa-check-circle"></i></span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="d-inline-flex align-items-center ">
+                                                        <div class="nav-item dropdown">
+                                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                                Action
+                                                            </a>
+                                                            <div class="dropdown-menu fade-up m-0">
+                                                                <a href="javascript:void(0)" class="dropdown-item fetch_data" data-id="{{$productGroup->id}}" data-home_id="{{$productGroup->home_id}}" data-name="{{$productGroup->name}}" data-description="{{$productGroup->description}}" data-code="{{$productGroup->code}}" data-cost="{{$productGroup->cost}}" data-price="{{$productGroup->price}}" data-status="{{$productGroup->status}}">Edit Details</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
-                                        <tfoot class="table totlepayment add_table_insrt33" id="containerA">
                                     </table>
+
                                 </div>
+                                <!-- End off main Table -->
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div> <!-- end modal body -->
-            <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn profileDrop" onclick="saveProductGroup()">Save</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ********************************** -->
+    <div class="modal fade" id="itemsCatagoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="itemsCatagoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="itemsCatagoryModalLabel">Product Groups</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ">
+                    <div class="contantbodypopup p-0">
+                        <div class="" id="message"></div>
+                        <form action="" id="add_product_group_form">
+                            <input type="hidden" id="id" name="id">
+                            <div class="row pt-3">
+                                <div class="col-lg-6">
+                                    <div class="mb-2 row">
+                                        <label for="inputCity" class="col-sm-4 col-form-label">Product Group <span class="radStar">*</span></label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control editInput" name="name" id="name" value="">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputCity" class="col-sm-4 col-form-label">Description</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control textareaInput" name="description" id="description" rows="3" placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-2 row">
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Code</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control editInput" id="code" name="code" value="">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control editInput selectOptions" status="status" id="status">
+                                                <option> Active </option>
+                                                <option> Inactive </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Cost Price</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control editInput" name="cost" id="costPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="0.00">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Price</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control editInput" id="productPrice" name="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="0.00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <h4 class="contTitle text-start mb-2 mt-2">Product Details</h4>
+                                    <div class="mb-3 row">
+                                        <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control editInput" id="search-product" placeholder="Type to add product">
+                                            <div class="parent-container"></div>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div class="plusandText">
+                                                <span class="afterPlusText"> (Type to add product or <a href="javascript:void(0)" onclick="openProductListModal();" id="proClickHerePopup">Click here</a> to view all product)</span>
+                                            </div>
+
+                                            <!--Start (Type to add product or Popup -->
+                                            @include('components.product-list')
+                                            <!-- End off (Type to add product or Popup -->
+                                        </div>
+                                    </div>
+                                    <div class="productDetailTable">
+                                        <table class="table" id="productListTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Product </th>
+                                                    <th>Cost Price</th>
+                                                    <th>Price </th>
+                                                    <th>Qty</th>
+                                                    <th>Amount </th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="product_group_products_list">
+
+                                            </tbody>
+                                            <tfoot class="table totlepayment add_table_insrt33" id="containerA">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> <!-- end modal body -->
+                <div class="modal-footer customer_Form_Popup">
+                    <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn profileDrop" onclick="saveProductGroup()">Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- ***************************************** -->
-</div>
+    <!-- ***************************************** -->
+
 
 <script>
     function saveProductGroup() {
@@ -864,4 +860,8 @@ $('.delete_checkbox').on('click', function() {
     }
 });
  </script> 
-@include('frontEnd.salesAndFinance.jobs.layout.footer')
+ 
+
+@include('frontEnd.salesAndFinance.item.common.addcataloguemodal')
+
+@endsection
