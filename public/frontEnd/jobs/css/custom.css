@@ -24,7 +24,7 @@ label,
 a,
 h1,
 h2,
-h3,  
+h3,
 h4,
 h5,
 h6 {
@@ -892,7 +892,7 @@ section.main_section_page {
 }
 
 .col-form-label {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
   font-weight: 400;
   margin: 0;
@@ -3137,7 +3137,7 @@ section.main_section_page_petty {
 }
 
 .balance_show {
-  background: #e10078;
+  background: #b0b5b9;
   padding: 8px;
   margin: 0 0 20px 0;
   display: inline-block;
@@ -3270,8 +3270,9 @@ table.tablechange tbody td a i {
   border: 0px !important;
 }
 
-.profileDrop#active_inactive {
-  background-color: #32323a;
+#active_inactive {
+  background-color: #b0b5b9 !important;
+  border-color: #b0b5b9 !important;
 }
 
 div.dt-container select.dt-input {
@@ -3398,3 +3399,38 @@ label {
 .modal-lg {
   width: 900px !important;
 }
+
+.productDetailTable .dt-buttons {
+  padding: 15px;
+  /* position: absolute;
+  top: -16px;
+  right: 206px; */
+}
+
+.productDetailTable label {
+  margin: 0;
+}
+
+.productDetailTable .dt-buttons button {
+  background: #57c8f1;
+  color: #fff;
+  border-color: #57c8f1;
+  border-radius: 5px;
+  /* font-size: 13px; */
+}
+
+.productDetailTable .dt-buttons button:hover {
+  background: #57c8f1 !important;
+  color: #fff !important;
+  border-color: #57c8f1 !important;
+  border-radius: 5px;
+}
+
+/* div.dataTables_wrapper {
+  position: unset;
+}
+
+.dataTables_wrapper {
+  position: unset;
+  clear: both;
+} */

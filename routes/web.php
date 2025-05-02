@@ -32,6 +32,7 @@ use App\Http\Controllers\frontEnd\salesFinance\PreInvoiceController;
 use App\Http\Controllers\Rota\StaffController;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\PurchaseBackendController;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\SalesBackendController;
+use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
 
 
 
@@ -2153,6 +2154,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::prefix('sales-finance/sales')->group(function(){
 			Route::get('/sales-day-book','index');
 			Route::get('/sales-day-book-add','create');
+		});
+	}));
+	Route::controller(CouncilBackendController::class)->group((function(){
+		Route::prefix('finance')->group(function(){
+			Route::get('/council-tax','index');
+			Route::get('/council-tax-add','create');
 		});
 	}));
 });

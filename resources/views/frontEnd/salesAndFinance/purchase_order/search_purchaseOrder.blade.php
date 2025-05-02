@@ -150,16 +150,16 @@
                     <div class="panel-body">
                         <div class="col-lg-12 mt-4">
                             <div class="jobsection justify-content-end">
-                                <a href="#!" class="btn btn-warning"> Search Purchase Orders</a>
-                                <a href="#!" class="btn btn-default2"> Invoice Received</a>
-                                <a href="#!" class="btn btn-default2 dropdown-toggle"> Statements</a>
+                                <a href="#!" class="btn btn-default"> Search Purchase Orders</a>
+                                <a href="#!" class="btn btn-warning"> Invoice Received</a>
+                                <a href="#!" class="btn btn-warning dropdown-toggle"> Statements</a>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-4">
                             <div class="jobsection">
                                 <div class="d-inline-flex align-items-center">
                                     <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle btn btn-default2" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
+                                        <a href="#" class="nav-link dropdown-toggle btn btn-warning" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu fade-up m-0">
                                             <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
                                             <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
@@ -168,14 +168,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="{{ url('draft_purchase_order') }}" class="btn btn-default2">Draft <span>({{$draftCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}" class="btn btn-default2">Awaiting Approval <span>({{$awaitingApprovalCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=Approved') }}" class="btn btn-default2">Approved <span>({{$approvedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}" class="btn btn-default2">Rejected <span>({{$rejectedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="btn btn-default2">Actioned <span>({{$actionedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="btn btn-default2">Paid <span>({{$paidCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order') }}" class="btn btn-warning">Draft <span>({{$draftCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}" class="btn btn-warning">Awaiting Approval <span>({{$awaitingApprovalCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=Approved') }}" class="btn btn-warning">Approved <span>({{$approvedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}" class="btn btn-warning">Rejected <span>({{$rejectedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="btn btn-warning">Actioned <span>({{$actionedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="btn btn-warning">Paid <span>({{$paidCount}})</span></a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="btn btn-primary hidebtn">Search</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="btn btn-warning hidebtn">Search</a>
                                 </div>
                             </div>
                         </div>
@@ -293,23 +293,24 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="jobsection justify-content-center">
-                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-default2 px-3">Search </a>
-                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default2 px-3">Clear</a>
+                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning px-3">Search </a>
+                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default px-3">Clear</a>
                                             </div>
                                         </div>
+                                        
                                     </div>
                                 </form>
                             </div>
                             <div style="display:none" id="showHideTable">
                                 <div class="markendDelete">
                                     <div class="jobsection">
-                                        <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
-                                        <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Purchase Order</a>
-                                        <a href="javascript:void(0)" id="approveBtn" class="btn btn-default2">Approve</a>
+                                        <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
+                                        <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-warning">Preview Purchase Order</a>
+                                        <a href="javascript:void(0)" id="approveBtn" class="btn btn-warning">Approve</a>
                                     </div>
                                     <!-- <div class="col-sm-5">
                                         <div class="pageTitleBtn p-0">
-                                            <a href="#" class="btn btn-default2"> <i class="material-symbols-outlined"> settings </i></a>        
+                                            <a href="#" class="btn btn-warning"> <i class="material-symbols-outlined"> settings </i></a>        
                                         </div>
                                     </div> -->
                                 </div>
@@ -422,7 +423,7 @@
             </div> <!-- End row -->
         </div>
         <div class="modal-footer customer_Form_Popup">
-            <button type="button" class="btn btn-default2" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-warning" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
         </div>
     </div>
@@ -636,27 +637,6 @@
     saveUrl="{{url('purchaseOrderEmailSave')}}" />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script src="{{url('public/backEnd/js/multiselect.js')}}"></script>
-
-<script>
-    // search leads show search Filter
-    function hideShowDiv() {
-        let div = document.getElementById("divTohide");
-
-        if (div.style.display === 'none' || div.style.opacity === '0') {
-            div.style.display = 'block';
-            div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
-            div.style.opacity = '1';
-        } else {
-            div.style.height = '0px';
-            div.style.opacity = '0';
-            // Use a timeout to set display to none after the transition
-            setTimeout(() => {
-                div.style.display = 'none';
-            }, 500); // 500ms matches the CSS transition duration
-        }
-    }
-    // end search leads show search Filter js
-</script>
 
 <script>
     $("#deleteSelectedRows").on('click', function() {

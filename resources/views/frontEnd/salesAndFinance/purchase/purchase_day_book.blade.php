@@ -16,12 +16,12 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
+                                <a href="#!" type="button" class="btn btn-warning openPurchaseDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
                                 <div>
                                     <select name="" class="form-control editInput selectOptions" id="getDataOnTax">
                                         <option value="0">Please Select</option>
                                     </select>
                                 </div>
-                                <a href="#!" type="button" class="profileDrop openPurchaseDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
                             </div>
                             <div class="maimTable productDetailTable mb-4 table-responsive">
                                 <table class="table border-top border-bottom tablechange" id="purchaseDayBookTable">
