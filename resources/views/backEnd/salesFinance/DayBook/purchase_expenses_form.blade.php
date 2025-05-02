@@ -10,23 +10,41 @@
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Purchase Expenses Add
+                        Purchase Expenses Type Add
                     </header>
+                    @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+
+                    @if(session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <div class="panel-body">
                         <div class="position-center">
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal" action="{{ url('admin/sales-finance/purchase/save-purchase-expenses-type') }}" role="form">
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Title</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="" placeholder="Title">
+                                        <input type="text" name="title" class="form-control" id="" value="{{ isset($purchase_expenses) ? $purchase_expenses->title : '' }}" placeholder="Title">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Status</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control">
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
+                                        <select class="form-control" name="status">
+                                            <option value="1" {{ isset($purchase_expenses) && $purchase_expenses->status == 1 ? 'selected' : '' }}>Active</option>
+                                            <option value="0" {{ isset($purchase_expenses) && $purchase_expenses->status == 0 ? 'selected' : '' }}>Inactive</option>
                                         </select>
                                     </div>
                                 </div>
