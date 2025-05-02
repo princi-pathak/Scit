@@ -29,9 +29,10 @@
                 @if($super_admin == 'S')
 
                 <li class="sub-menu">
-                    <a href="{{ url('admin/migrations') }}" class="<?php if (($page == 'company_manager' || $page == 'system-admins') || ($page == 'supr_migrations') || ($page == 'super_admin_user') || ($page == 'file_category_name') || ($page == 'social-app') || ($page == 'ethnicity') || ($page == 'company_charges')) {
-                                                                        echo 'active';
-                                                                    } ?>">
+                    <a href="{{ url('admin/migrations') }}"
+                        class="<?php if (($page == 'company_manager' || $page == 'system-admins') || ($page == 'supr_migrations') || ($page == 'super_admin_user') || ($page == 'file_category_name') || ($page == 'social-app') || ($page == 'ethnicity') || ($page == 'company_charges')) {
+                                    echo 'active';
+                                } ?>">
                         <i class="fa fa-university"></i>
                         <span>Super Admin</span>
                     </a>
@@ -99,9 +100,10 @@
                 @endif
 
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if (($page == 'users') || ($page == 'service-users') || ($page == 'daily_records') || ($page == 'risks') || ($page == 'earning_scheme') || ($page == 'earning_scheme_label') || ($page == 'incentive_earning_scheme') || ($page == 'service-users-care-history') || ($page == 'care_team') || ($page == 'moods') || ($page == 'support_ticket') || ($page == 'placement_plan') || ($page == 'form-builder') || ($page == 'label') || ($page == 'categories') || ($page == 'su_migration_form') || ($page == 'modification-request') || ($page == 'living_skill') || ($page == 'education-training') || ($page == 'mfc') || ($page == 'incident-report') || ($page == 'contact-us') || ($page == 'daily-record-scores') || ($page == 'system-guide') || ($page == 'external-service') || ($page == 'su-dynamic-form') || ($page == 'file_manager') || ($page == 'user-task') || ($page == 'user-sick-leave') || ($page == 'user-annual-leave') || ($page == 'service-user-my-money-history') || ($page == 'service-user-my-money-request') || ($page == 'service-users-log-book') || ($page == 'service-users-living-skill') || ($page == 'service-users-rmp') || ($page == 'service-users-risk') || ($page == 'service-users-earn-schm') || ($page == 'service-users-bmp') || $page == 'agents' || $page == 'managers') {
-                                                        echo 'active';
-                                                    } ?>">
+                    <a href="javascript:;"
+                        class="<?php if (($page == 'users') || ($page == 'service-users') || ($page == 'daily_records') || ($page == 'risks') || ($page == 'earning_scheme') || ($page == 'earning_scheme_label') || ($page == 'incentive_earning_scheme') || ($page == 'service-users-care-history') || ($page == 'care_team') || ($page == 'moods') || ($page == 'support_ticket') || ($page == 'placement_plan') || ($page == 'form-builder') || ($page == 'label') || ($page == 'categories') || ($page == 'su_migration_form') || ($page == 'modification-request') || ($page == 'living_skill') || ($page == 'education-training') || ($page == 'mfc') || ($page == 'incident-report') || ($page == 'contact-us') || ($page == 'daily-record-scores') || ($page == 'system-guide') || ($page == 'external-service') || ($page == 'su-dynamic-form') || ($page == 'file_manager') || ($page == 'user-task') || ($page == 'user-sick-leave') || ($page == 'user-annual-leave') || ($page == 'service-user-my-money-history') || ($page == 'service-user-my-money-request') || ($page == 'service-users-log-book') || ($page == 'service-users-living-skill') || ($page == 'service-users-rmp') || ($page == 'service-users-risk') || ($page == 'service-users-earn-schm') || ($page == 'service-users-bmp') || $page == 'agents' || $page == 'managers') {
+                                    echo 'active';
+                                } ?>">
                         <i class="fa fa-laptop"></i>
                         <span>System Management</span>
                     </a>
@@ -114,39 +116,31 @@
                                     } ?>"><a href="{{ url('admin/service-users') }}">Childs</a></li>
 
                         <li class="{{ ($page == 'agents') ? 'active' : '' }}"><a href="{{ url('admin/agents') }}">Agent</a></li>
-
                         <li class="{{ ($page == 'daily_records') ? 'active' : '' }}"><a href="{{ url('admin/daily-record') }}">Daily Log</a></li>
-
                         <li class="{{ ($page == 'daily-record-scores') ? 'active' : '' }}"><a href="{{ url('admin/daily-record-scores') }}">Daily Log Scores</a></li>
-
                         <li class="{{ ($page == 'education-training') ? 'active' : '' }}"><a href="{{ url('admin/education-trainings') }}">Education Records</a></li>
-
                         <li class="{{ ($page == 'living_skill') ? 'active' : '' }}"><a href="{{ url('admin/living-skill') }}"> Independent Living Skills </a></li>
                         <!-- <li class="{{ ($page == 'mfc') ? 'active' : '' }}"><a href="{{ url('admin/mfc-records') }}">MFC</a></li> -->
-
                         <li class="{{ ($page == 'risks') ? 'active' : '' }}"><a href="{{ url('admin/risk') }}">Risks</a></li>
                         <li class="{{ ($page == 'earning_scheme') || ($page == 'incentive_earning_scheme') ? 'active' : '' }}"><a href="{{ url('admin/earning-scheme') }}">Earning Scheme </a></li>
                         <li class="{{ ($page == 'earning_scheme_label') ? 'active' : '' }}"><a href="{{ url('admin/earning-scheme-labels') }}">Earning Scheme Labels</a></li>
                         <li class="{{ ($page == 'form-builder') || ($page == 'form-builder') ? 'active' : '' }}"><a href="{{ url('admin/form-builder') }}">Form Builder </a></li>
-
                         <li class="{{ ($page == 'label') ? 'active' : '' }}"><a href="{{ url('admin/labels') }}">Labels</a></li>
                         <li class="{{ ($page == 'categories') ? 'active' : '' }}"><a href="{{ url('admin/categories') }}">Log Category Labels</a></li>
-
                         <li class="{{ ($page == 'support_ticket') ? 'active' : '' }}"><a href="{{ url('admin/support-ticket') }}">Support Ticket</a></li>
                         <li class="{{ ($page == 'modification-request') ? 'active' : '' }}"><a href="{{ url('admin/modification-requests') }}">Modification Requests</a></li>
                         <!-- <li class="{{ ($page == 'contact-us') ? 'active' : '' }}"><a href="{{ url('admin/contact-us') }}"> Contact-us </a></li> -->
                         <li class="{{ ($page == 'system-guide') ? 'active' : '' }}"><a href="{{ url('admin/system-guide-category') }}"> System Guide </a></li>
-
                         <li class="{{ ($page == 'managers') ? 'active' : '' }}"><a href="{{ url('admin/managers')}}"> Managers </a></li>
-
                         <!-- <li class="{{ ($page == 'placement_plan') ? 'active' : '' }}"><a href="{{ url('admin/placement-plan') }}">Placement Plan</a></li> -->
                     </ul>
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if (($page == 'care_team_job_title') || ($page == 'mood_title')  || ($page == 'access_levels')  || ($page == 'rota_shift') || ($page == 'homelist') || ($page == 'policies')) {
-                                                        echo 'active';
-                                                    } ?>">
+                    <a href="javascript:;"
+                        class="<?php if (($page == 'care_team_job_title') || ($page == 'mood_title')  || ($page == 'access_levels')  || ($page == 'rota_shift') || ($page == 'homelist') || ($page == 'policies')) {
+                                    echo 'active';
+                                } ?>">
                         <i class="fa fa-home"></i>
                         <span>Home Management</span>
                     </a>
@@ -202,9 +196,10 @@
                 </li>
                 <!-- Sales and Finanace -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense')) {
-                                                        echo 'active';
-                                                    } ?>">
+                    <a href="javascript:;"
+                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page = 'dayBook') || ($page = 'salesDayBook') || ($page = 'purchaseExpenese')) {
+                                    echo 'active';
+                                } ?>">
                         <i class="fa fa-cogs"></i>
                         <span>Sales & Finance</span>
                     </a>
@@ -214,13 +209,28 @@
                         <li class="{{ ($page == 'invoices') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Invoices </a></li>
                         <li class="{{ ($page == 'purchase_orders') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/purchase-order/purchase_orders') }}">Purchase Orders </a></li>
                         <li class="{{ ($page == 'Expense') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/expense') }}">Expenses </a></li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:void(0)"
+                                <?php if (($page == 'dayBook') || ($page == 'salesDayBook') || ($page == 'purchaseExpenese')) {
+                                    echo 'class="active" style="color:#1fb5ad"';
+                                } ?>><span>Vat Quater</span></a>
+                            <ul class="sub pdlft">
+
+                                <li class="{{ ($page == 'dayBook') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/purchase/purchase-day-book') }}"> Purchase Day Book </a></li>
+                                <li class="{{ ($page == 'salesDayBook') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/sales/sales-day-book') }}"> Sales Day Book </a></li>
+                                <li class="{{ ($page == 'purchaseExpenese') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/purchase/purchase-type') }}"> Purchase Expenses Type </a></li>
+
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <!-- Jobs -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if (($page == 'jobs_list') || ($page == 'work_flow_list') || ($page == 'product_list') || ($page == 'project_list') || ($page == 'product_category') || ($page == 'account_codes') || ($page == 'tax_rate') || ($page == 'customer_list') || ($page == 'supplier_list') || ($page == 'job_recurring_list') || ($page == 'catalogue') || ($page == 'product_group')) {
-                                                        echo 'active';
-                                                    } ?>">
+                    <a href="javascript:;"
+                        class="<?php if (($page == 'jobs_list') || ($page == 'work_flow_list') || ($page == 'product_list') || ($page == 'project_list') || ($page == 'product_category') || ($page == 'account_codes') || ($page == 'tax_rate') || ($page == 'customer_list') || ($page == 'supplier_list') || ($page == 'job_recurring_list') || ($page == 'catalogue') || ($page == 'product_group')) {
+                                    echo 'active';
+                                } ?>">
                         <i class="fa fa-briefcase"></i>
                         <span>Jobs</span>
                     </a>
@@ -238,17 +248,19 @@
                 </li>
                 <!-- Setting Section Start -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if (($page == 'tags') || ($page == 'task_type') || ($page == 'regions') || ($page == 'payment_types') || ($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title') || ($page == 'customer_type') || ($page == 'attachment_types')) {
-                                                        echo 'active';
-                                                    } ?>">
+                    <a href="javascript:;"
+                        class="<?php if (($page == 'tags') || ($page == 'task_type') || ($page == 'regions') || ($page == 'payment_types') || ($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title') || ($page == 'customer_type') || ($page == 'attachment_types')) {
+                                    echo 'active';
+                                } ?>">
                         <i class="fa fa-cogs"></i>
                         <span>Setting</span>
                     </a>
                     <ul class="sub">
                         <li class="sub-menu">
-                            <a href="javascript:void(0)" <?php if (($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type')) {
-                                                                echo 'class="active" style="color:#1fb5ad"';
-                                                            } ?>>
+                            <a href="javascript:void(0)"
+                                <?php if (($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type')) {
+                                    echo 'class="active" style="color:#1fb5ad"';
+                                } ?>>
                                 <i class="fa fa-bullhorn"></i> <span>Leads</span>
                             </a>
                             <ul class="sub pdlft">
@@ -261,9 +273,10 @@
                         </li>
 
                         <li class="sub-menu">
-                            <a href="javascript:void(0)" <?php if (($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title')) {
-                                                                echo 'class="active" style="color:#1fb5ad"';
-                                                            } ?>>
+                            <a href="javascript:void(0)"
+                                <?php if (($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title')) {
+                                    echo 'class="active" style="color:#1fb5ad"';
+                                } ?>>
                                 <i class="fa fa-road"></i><span>Jobs</span>
                             </a>
                             <ul class="sub pdlft">
@@ -275,9 +288,10 @@
                         </li>
 
                         <li class="sub-menu">
-                            <a href="javascript:void(0)" <?php if (($page == 'customer_type')) {
-                                                                echo 'class="active" style="color:#1fb5ad"';
-                                                            } ?>>
+                            <a href="javascript:void(0)"
+                                <?php if (($page == 'customer_type')) {
+                                    echo 'class="active" style="color:#1fb5ad"';
+                                } ?>>
                                 <i class="fa fa-users"></i><span>Customers</span>
                             </a>
                             <ul class="sub pdlft">
@@ -286,9 +300,10 @@
                         </li>
 
                         <li class="sub-menu">
-                            <a href="javascript:void(0)" <?php if (($page == 'crm_section_type')) {
-                                                                echo 'class="active" style="color:#1fb5ad"';
-                                                            } ?>>
+                            <a href="javascript:void(0)"
+                                <?php if (($page == 'crm_section_type')) {
+                                    echo 'class="active" style="color:#1fb5ad"';
+                                } ?>>
                                 <i class="fa fa-comments"></i> <span>CRM</span>
                             </a>
                             <ul class="sub pdlft">
@@ -297,9 +312,10 @@
                         </li>
 
                         <li class="sub-menu">
-                            <a href="javascript:void(0)" <?php if (($page == 'tags') || ($page == 'task_type') || ($page == 'regions') || ($page == 'payment_types') || ($page == 'attachment_types')) {
-                                                                echo 'class="active" style="color:#1fb5ad"';
-                                                            } ?>>
+                            <a href="javascript:void(0)"
+                                <?php if (($page == 'tags') || ($page == 'task_type') || ($page == 'regions') || ($page == 'payment_types') || ($page == 'attachment_types')) {
+                                    echo 'class="active" style="color:#1fb5ad"';
+                                } ?>>
                                 <i class="fa fa-list-ul"></i><span>General</span>
                             </a>
                             <ul class="sub pdlft">
@@ -316,16 +332,16 @@
 
                 <!-- Contact Section Start -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if (($page == 'customers') || ($page == 'Suppliers')) {
-                                                        echo 'active';
-                                                    } ?>"><i class="fa fa-cogs"></i><span>Contacts</span></a>
+                    <a href="javascript:;"
+                        class="<?php if (($page == 'customers') || ($page == 'Suppliers')) {
+                                    echo 'active';
+                                } ?>"><i class="fa fa-cogs"></i><span>Contacts</span></a>
                     <ul class="sub">
                         <li class="{{ ($page == 'customers') ? 'active' : '' }}"><a href="{{ url('admin/customers') }}">Customers </a></li>
                         <li class="{{ ($page == 'Suppliers') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Suppliers </a></li>
                     </ul>
                 </li>
                 <!-- Contact Section End -->
-
             </ul>
         </div>
         <!-- sidebar menu end-->
