@@ -333,6 +333,9 @@
                 processData: false,
                 success: function(response) {
                     console.log(response);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (response.vali_error) {
                         alert(response.vali_error);
                         $(window).scrollTop(0);

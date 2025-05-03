@@ -55,79 +55,35 @@
     </div>
 </div>
 <script>
-    (function() {
-        'use strict';
+    (function () {
+'use strict';
 
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation');
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+var forms = document.querySelectorAll('.needs-validation');
 
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function(form) {
-                form.addEventListener('submit', function(event) {
-                    // Check if the form is valid
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    } else {
-                        // Prevent the default form submission
-                        event.preventDefault();
-
-                        // Here you can handle form submission using AJAX
-                        var formData = new FormData(form);
-                        var productCategorytype = $('#productCategorytype').val();
-                        var category_name = $('#category_name').val();
-                        fetch('{{ route("item.saveProductCategoryData") }}', {
-                                method: 'POST',
-                                body: formData
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log(data);
-                                if (data.success == 0) {
-                                    $('.cathidemessagedanger').css('display', 'block');
-                                    $('.catsuccessdanger').text(data.message);
-                                    $(".catsuccessdanger").show('slow', 'linear').delay(3000).fadeOut();
-                                } else {
-                                    $('.cathidemessage').css('display', 'block');
-                                    $('.catsuccess').text(data.message);
-                                    $(".catsuccess").show('slow', 'linear').delay(3000).fadeOut(function() {
-                                        if (productCategorytype != 2) {
-                                            location.reload();
-                                        } else {
-                                            $('#productcategorylist').append($('<option>', {
-                                                value: data.lastid,
-                                                text: category_name
-                                            }));
-                                            $('#productcategorylist').val(data.lastid);
-                                            $('#itemsCatagoryModal').modal('hide');
-                                            // var $newOption = $('<option>', {
-                                            //     value: data.lastid, // Assuming `data.lastid` contains the new ID
-                                            //     text: category_name // The name of the new category
-                                            // });
-                                            // $('#productcategorylist').append($newOption).val(data.lastid); // Append and set as selected
-                                            // $('#itemsCatagoryModal').modal('hide');
-                                        }
+// Loop over them and prevent submission
+Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            // Check if the form is valid
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                // Prevent the default form submission
+                event.preventDefault();
 
                 // Here you can handle form submission using AJAX
                 var formData = new FormData(form);
                 var productCategorytype = $('#productCategorytype').val();
                 var category_name = $('#category_name').val();
-                var id=$("#productCategoryID").val();
-                var url='{{ route("item.saveProductCategoryData") }}';
-                if(id !=''){
-                    url='{{ route("item.editProductCategoryData") }}';
-                }
-                fetch(url, {
+                fetch('{{ route("item.saveProductCategoryData") }}', {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                    console.log(data);
-                   if (isAuthenticated(data) == false) {
-                        return false;
-                    }
                    if(data.success==0){
                     $('.cathidemessagedanger').css('display','block');
                     $('.catsuccessdanger').text(data.message);
@@ -166,9 +122,8 @@
                 });
             }
 
-
-                    form.classList.add('was-validated');
-                }, false);
-            });
-    })();
+            form.classList.add('was-validated');
+        }, false);
+    });
+})();
 </script>

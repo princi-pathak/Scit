@@ -1008,6 +1008,7 @@ function get_customer_details() {
                 }
                 document.getElementById('invoice_site_id').innerHTML = site;
                 $("#project_customer_name").text(customerData.name);
+                $("#contact_customer_name").text(customerData.name);
                 $("#site_customer_name").text(customerData.name);
                 $(".customer_name").text(customerData.name);
                 $("#task_customer_id").val(customer_id);
@@ -1508,4 +1509,24 @@ $(document).on('click', '.modal_dataTaskFetch', function () {
 
 function getAllproject(data){
     $("#invoice_project_id").append(data);
+}
+function getAllCusomer(data){
+    $("#invoice_customer_id").append(data);
+}
+function getAllCustomerType(data){
+    $("#customer_type_id").append(data);
+}
+function GetAllContact(data){
+    $("#invoice_contact_id").append(data);
+}
+function getAllsite(data){
+    $("#invoice_site_id").append(data);
+}
+function getAllAccountCodeList(data){
+    var accList = data.data;
+    $('.accountCode_id').append('<option value="' + accList.id + '">' + accList.name + '</option>');
+}
+function getAllVatTaxRate(data) {
+    var vatList = data.data;
+    $(".vat_id").append('<option value="' + vatList.id + '">' + vatList.name + '</option>');
 }
