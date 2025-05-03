@@ -207,6 +207,7 @@
   <!--Core js-->
   <script src="{{ url('public/frontEnd/js/bs3/bootstrap.min.js') }}"></script>
   <script src="{{ url('public/frontEnd/js/hover-dropdown.js') }}"></script>
+  <script src="{{ url('public/frontEnd/jobs/js/custom.js')}}"></script>
   <!--<script src="{{ url('public/frontEnd/js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js" type="text/javascript"></script>
 
