@@ -2,6 +2,9 @@
 @section('title',' Purchase Expenses')
 @section('content')
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+
 <!--main content start-->
 <section id="main-content">
     <div class="wrapper">
@@ -11,13 +14,19 @@
             <div class="col-sm-12">
                 <div class="panel">
                     <header class="panel-heading">
-                        Purchase Expenses
-                        <!-- <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            <a href="javascript:;" class="fa fa-cog"></a>
-                            <a href="javascript:;" class="fa fa-times"></a>
-                        </span> -->
+                        Purchase Expenses Type
                     </header>
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
                             <div class="clearfix clearfix_space">
@@ -28,13 +37,6 @@
                                 </div>
                                 <div class="btn-group">
                                     <button class="btn btn-default"> Export </button>
-                                    <!-- <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="#">Print</a></li>
-                                        <li><a href="#">Save as PDF</a></li>
-                                        <li><a href="#">Export to Excel</a></li>
-                                    </ul> -->
                                 </div>
                             </div>
                             <div class="space15"></div>
@@ -49,20 +51,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($purchase_expenses as $key => $value)
                                     <tr class="">
-                                        <td>1</td>
-                                        <td>08-04-2025</td>
-                                        <td>54</td>
-                                        <td>Active</td>
-                                        <td><a class="edit" href="javascript:;"><i class="fa fa-edit"></i></a> | <a class="delete" href="javascript:;"><i class="fa fa-trash-o"></i></a></td>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
+                                        <td>{{ $value->title }}</td>
+                                        <td>
+                                            <button class="btn btn-xs change-status" data-id="{{ $value->id }}" data-status="{{ $value->status }}">
+                                                @if($value->status == 1)
+                                                <span class="label label-success">Active</span>
+                                                @else
+                                                <span class="label label-danger">Inactive</span>
+                                                @endif
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('admin/sales-finance/purchase/purchase-expenses-type-edit/'.$value->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                            <a href="{{ url('admin/sales-finance/purchase/purchase-expenses-type-delete/'.$value->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                        </td>
                                     </tr>
-                                    <tr class="">
-                                        <td>2</td>
-                                        <td>08-04-2025</td>
-                                        <td>65</td>
-                                        <td>Active</td>
-                                        <td><a class="edit" href="javascript:;"><i class="fa fa-edit"></i></a> | <a class="delete" href="javascript:;"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -73,4 +81,42 @@
         <!-- page end-->
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.change-status').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const recordId = this.getAttribute('data-id');
+                const currentStatus = this.getAttribute('data-status');
+                const newStatus = currentStatus == 1 ? 0 : 1;
+
+                if (confirm('Are you sure you want to change the status?')) {
+                    fetch(`{{ url('/admin/sales-finance/purchase/change-status/') }}/${recordId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                status: newStatus
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Status updated successfully!');
+                                location.reload();
+                            } else {
+                                alert('Failed to update status.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred. Please try again.');
+                        });
+                }
+            });
+        });
+    });
+</script>
 @endsection
