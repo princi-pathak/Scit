@@ -164,7 +164,7 @@
                                 <a href="{{ url('credit_notes/Paid') }}" class="btn btn-warning" <?php if($status['status'] == 2){?>id="active_inactive"<?php }?>>Paid<span>({{$paidCount}})</span></a>
                                 <a href="{{ url('credit_notes/Cancelled') }}" class="btn btn-warning" <?php if($status['status'] == 0){?>id="active_inactive"<?php }?>>Cancelled<span>({{$cancelledCount}})</span></a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-warning">Search</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-warning">Show Search Filter</a>
                                 </div>
                                 <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
 
@@ -297,21 +297,16 @@
                                                 @if($status['status'] == 1)
                                                 <td>
                                                     <div class="d-flex justify-content-end">
-                                                        <div class="nav-item dropdown">
-                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                Action
+                                                        <div class="dropdown">
+                                                            <a href="#!" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                                                Action <i class="fa fa-caret-down"></i>
                                                             </a>
-                                                            <div class="dropdown-menu fade-up m-0">
+                                                            <div class="dropdown-menu dropdown-menu-right fade-up m-0">
                                                                 <a href="{{url('credit_note_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
-                                                                <hr class="dropdown-divider">
                                                                 <a href="{{url('credit_preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
-                                                                <hr class="dropdown-divider">
                                                                 <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->credit_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
-                                                                <hr class="dropdown-divider">
                                                                 <a href="javascript:void(0)" onclick="openAllocateModal({{$val->id}},'{{$val->credit_ref}}',{{$val->supplier_id}},'{{$val->suppliers->name}}',{{$val->balance_credit}},{{$product_id}},'{{$val->date}}')" class="dropdown-item">Allocate</a>
-                                                                <hr class="dropdown-divider">
                                                                 <a href="javascript:void(0)" onclick="cancelCreditFunction({{$val->id}},'{{$val->credit_ref}}')" class="dropdown-item">Cancel Credit Note</a>
-                                                                <hr class="dropdown-divider">
                                                                 <a href="#!" class="dropdown-item">CRM / History</a>
                                                             </div>
                                                         </div>
@@ -320,21 +315,16 @@
                                                 @else
                                                 <td>
                                                     <div class="d-flex justify-content-end">
-                                                        <div class="nav-item dropdown">
-                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                Action
+                                                        <div class="dropdown">
+                                                            <a href="#!" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                                                Action <i class="fa fa-caret-down"></i>
                                                             </a>
-                                                            <div class="dropdown-menu fade-up m-0">
+                                                            <div class="dropdown-menu dropdown-menu-right fade-up m-0">
                                                                 <a href="{{url('credit_note_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
-                                                                <hr class="dropdown-divider">
                                                                 <a href="{{url('credit_preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
-                                                                <hr class="dropdown-divider">
                                                                 <a href="#!" class="dropdown-item">Print</a>
-                                                                <hr class="dropdown-divider">
                                                                 <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->credit_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
-                                                                <!-- <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Cancel Credit Note</a> -->
-                                                                <hr class="dropdown-divider">
+                                                                <!--  <a href="#!" class="dropdown-item">Cancel Credit Note</a> -->
                                                                 <a href="#!" class="dropdown-item">CRM / History</a>
                                                             </div>
                                                         </div>
