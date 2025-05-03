@@ -19,7 +19,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
-                                        <a href="#" class="profileDrop openModalBtn" data-action="add" id=""><i class="fa fa-plus"></i> Add</a>
+                                        <a href="javascript:void(0)" class="btn btn-warning openModalBtn" data-action='add' id=''><i class="fa fa-plus"></i> Add</a>
                                         <!-- <a href="javascript:void(0)" class="profileDrop">Export</a> -->
                                     </div>
                                 </div>
@@ -207,10 +207,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-warning" id="saveCouncilTax">Save</button>
-                    </div>
+                </div>
+                <div class="modal-footer customer_Form_Popup">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning" id="saveCouncilTax">Save</button>
+                </div>
             </form>
         </div>
     </div>

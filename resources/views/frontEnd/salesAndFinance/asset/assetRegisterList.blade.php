@@ -33,11 +33,11 @@
           <div class="panel-body">
             <div class="col-lg-12">
               <div class="jobsection justify-content-end">
-                <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
-                <a href="javascript:void(0)" class="profileDrop" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
-                <a href="javascript:void(0)" class="profileDrop">Export</a>
+                <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a> -->
+                <a href="javascript:void(0)" class="btn btn-warning" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
+                <a href="javascript:void(0)" class="btn btn-warning">Export</a>
                 <div class="searchFilter">
-                  <a href="#!" onclick="hideShowDiv()" class="profileDrop">Search</a>
+                  <a href="#!" onclick="hideShowDiv()" class="btn btn-warning">Search</a>
                 </div>
               </div>
               <div>
@@ -51,38 +51,38 @@
                             <div class="col-md-12">
                               <div class="row form-group pb-0 pageTitleBtn justify-content-center">
                                 <div class="col-md-4">
-                                    <label>Date From:</label>
-                                    <!-- <input type="date" class="form-control editInput" id="edd_startDate" name="start_date"> -->
-                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="start_date" id="edd_startDate" type="text" value="" autocomplete="off" class="form-control">
+                                  <label>Date From:</label>
+                                  <!-- <input type="date" class="form-control editInput" id="edd_startDate" name="start_date"> -->
+                                  <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                    <input name="start_date" id="edd_startDate" type="text" value="" autocomplete="off" class="form-control">
 
-                                        <span class="input-group-btn datetime-picker2 btn_height">
-                                            <button class="btn btn-primary" type="button" id="openCalendarBtn">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </button>
-                                        </span>
-                                    </div>
+                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                      <button class="btn btn-primary" type="button" id="openCalendarBtn">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                      </button>
+                                    </span>
+                                  </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label>Date To:</label>
-                                    <!-- <input type="date" class="form-control editInput" id="edd_endDate" name="end_date"> -->
-                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control">
+                                  <label>Date To:</label>
+                                  <!-- <input type="date" class="form-control editInput" id="edd_endDate" name="end_date"> -->
+                                  <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                    <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control">
 
-                                        <span class="input-group-btn datetime-picker2 btn_height">
-                                            <button class="btn btn-primary" type="button" id="openCalendarBtn1">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </button>
-                                        </span>
-                                    </div>
+                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                      <button class="btn btn-primary" type="button" id="openCalendarBtn1">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                      </button>
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-12">
                               <div class="pageTitleBtn justify-content-center">
-                                <a href="javascript:void(0)" onclick="searchBtn()" class="profileDrop px-3">Search </a>
-                                <!-- <button type="submit" class="profileDrop px-3" onclick="return searchBtn()">Search</button> -->
-                                <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="profileDrop px-3">Clear</a>
+                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning px-3">Search </a>
+                                <!-- <button type="submit" class="btn btn-warning px-3" onclick="return searchBtn()">Search</button> -->
+                                <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="btn btn-warning px-3">Clear</a>
                               </div>
                             </div>
                           </div>
@@ -170,7 +170,7 @@
                         <!-- <td>
                           <div class="d-flex justify-content-end">
                             <div class="nav-item dropdown">
-                              <a href="#!" class="nav-link dropdown-toggle profileDrop" data-toggle="dropdown" aria-expanded="false">
+                              <a href="#!" class="nav-link dropdown-toggle btn btn-warning" data-toggle="dropdown" aria-expanded="false">
                                 Action
                               </a>
                               <div class="dropdown-menu fade-up m-0" style="z-index:9999">
@@ -221,9 +221,9 @@
         <h4 class="modal-title" id="Fixed_Asset_RegisterLabel">Add Fixed Asset Register</h4>
       </div>
       <div calss="row">
-          <div class="col-md-12 col-lg-12 col-xl-12 mt-4">
-              <div class="mt-1 mb-0 text-center" style="display:none" id="message_save"></div>
-          </div>
+        <div class="col-md-12 col-lg-12 col-xl-12 mt-4">
+          <div class="mt-1 mb-0 text-center" style="display:none" id="message_save"></div>
+        </div>
       </div>
       <form id="assetRegisterFormData" class="customerForm">
         <input type="hidden" name="id" id="id" value="">
@@ -248,9 +248,9 @@
                 <div class="form-group">
                   <label> Asset Type <span class="radStar">*</span></label>
                   <select name="asset_type" id="asset_type" class="form-control editInput">
-                    <?php foreach($AssetCategoryList as $cat){?>
+                    <?php foreach ($AssetCategoryList as $cat) { ?>
                       <option value="{{$cat->id}}">{{$cat->name}}</option>
-                    <?php }?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -294,9 +294,11 @@
                 <div class="form-group">
                   <label> Type of Depreciation</label>
                   <select name="depreciation_type" id="depreciation_type" class="form-control editInput" onchange="calculate()">
-                    <?php foreach($DepreciationTypeList as $type){?>
-                      <option value="{{$type->id}}" data-attr="{{$type->percentage}}" <?php if(isset($register) && $register->depreciation_type ==$type->id){echo "selected";}?>>{{$type->percentage}} (%)</option>
-                    <?php }?>
+                    <?php foreach ($DepreciationTypeList as $type) { ?>
+                      <option value="{{$type->id}}" data-attr="{{$type->percentage}}" <?php if (isset($register) && $register->depreciation_type == $type->id) {
+                                                                                        echo "selected";
+                                                                                      } ?>>{{$type->percentage}} (%)</option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -377,48 +379,28 @@
 <!-- end here -->
 
 <script>
-  // search leads show search Filter
-  function hideShowDiv() {
-    let div = document.getElementById("divTohide");
-
-    if (div.style.display === 'none' || div.style.opacity === '0') {
-      div.style.display = 'block';
-      div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
-      div.style.opacity = '1';
-    } else {
-      div.style.height = '0px';
-      div.style.opacity = '0';
-      // Use a timeout to set display to none after the transition
-      setTimeout(() => {
-        div.style.display = 'none';
-      }, 500); // 500ms matches the CSS transition duration
-    }
-  }
-  // end search leads show search Filter js
-</script>
-<script>
   var searchUrl = "{{url('sales-finance/assets/asset-register-search')}}";
   var deleteAssetRegisterUrl = "{{url('sales-finance/assets/asset-register-delete')}}";
   var assetSaveUrl = "{{ url('sales-finance/assets/asset-regiser-save') }}";
   var redirectUrl = "{{url('sales-finance/assets/asset-register')}}";
-  $(document).ready(function(){
+  $(document).ready(function() {
     $('#edd_startDate').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        todayHighlight: true
+      format: 'dd-mm-yyyy',
+      autoclose: true,
+      todayHighlight: true
     });
-    $(document).on('click', '#openCalendarBtn',function() {
-        $('#edd_startDate').focus();
+    $(document).on('click', '#openCalendarBtn', function() {
+      $('#edd_startDate').focus();
     });
     $('#edd_endDate').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        todayHighlight: true
+      format: 'dd-mm-yyyy',
+      autoclose: true,
+      todayHighlight: true
     });
     $('#openCalendarBtn1').click(function() {
-        $('#edd_endDate').focus();
+      $('#edd_endDate').focus();
     });
-});
+  });
 </script>
 
 <script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}" defer></script>

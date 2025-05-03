@@ -16,9 +16,9 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
-                                    <a href="javascript:void(0)" onclick="opendepreciation_typesModal()" class="profileDrop"><i class="fa fa-plus"></i> Add</a>
-                                    <a href="javascript:void(0)" class="profileDrop">Export</a>
-                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                    <a href="javascript:void(0)" onclick="opendepreciation_typesModal()" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="javascript:void(0)" class="btn btn-warning">Export</a>
+                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
                             </div>
                             <div class="productDetailTable mb-4 table-responsive">
                                 <div class="alert success-message text-center" id="msg" style="display:none;height:50px">

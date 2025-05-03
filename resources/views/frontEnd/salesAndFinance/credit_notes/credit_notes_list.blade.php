@@ -17,10 +17,6 @@
         cursor: pointer;
     }
 
-    #active_inactive {
-        background-color: #57c8f1;
-    }
-
     .tutor-student-tooltip-col {
         position: relative;
         color: #000;
@@ -147,9 +143,9 @@
                     <div class="panel-body">
                         <div class="col-lg-12 mt-4">
                             <div class="jobsection justify-content-end">
-                                <a href="#!" class="btn btn-default2"> Search Purchase Orders</a>
-                                <a href="#!" class="btn btn-default2"> Invoice Received</a>
-                                <a href="#!" class="btn btn-default2"> Statements</a>
+                                <a href="#!" class="btn btn-warning"> Search Purchase Orders</a>
+                                <a href="#!" class="btn btn-warning"> Invoice Received</a>
+                                <a href="#!" class="btn btn-warning"> Statements</a>
                             </div>
                         </div>
 
@@ -157,20 +153,20 @@
                             <div class="jobsection">
                                 <div class="d-inline-flex align-items-center ">
                                     <div class="dropdown">
-                                        <a href="{{url('new_credit_notes')}}" class="btn btn-default2"> New</a>
+                                        <a href="{{url('new_credit_notes')}}" class="btn btn-warning"> New</a>
                                         <!-- <div class="dropdown-menu fade-up m-0">
                                             <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
                                             <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
                                         </div> -->
                                     </div>
                                 </div>
-                                <a href="{{ url('credit_notes/Approved') }}" class="profileDrop" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Approved <span>({{$approvedtCount}})</span></a>
-                                <a href="{{ url('credit_notes/Paid') }}" class="profileDrop" <?php if($status['status'] == 2){?>id="active_inactive"<?php }?>>Paid<span>({{$paidCount}})</span></a>
-                                <a href="{{ url('credit_notes/Cancelled') }}" class="profileDrop" <?php if($status['status'] == 0){?>id="active_inactive"<?php }?>>Cancelled<span>({{$cancelledCount}})</span></a>
+                                <a href="{{ url('credit_notes/Approved') }}" class="btn btn-warning" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Approved <span>({{$approvedtCount}})</span></a>
+                                <a href="{{ url('credit_notes/Paid') }}" class="btn btn-warning" <?php if($status['status'] == 2){?>id="active_inactive"<?php }?>>Paid<span>({{$paidCount}})</span></a>
+                                <a href="{{ url('credit_notes/Cancelled') }}" class="btn btn-warning" <?php if($status['status'] == 0){?>id="active_inactive"<?php }?>>Cancelled<span>({{$cancelledCount}})</span></a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-warning">Search</a>
                                 </div>
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
 
                             </div>
                         </div>
@@ -227,16 +223,16 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="jobsection justify-content-center">
-                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-default2">Search </a>
-                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default2">Clear</a>
+                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning">Search </a>
+                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default">Clear</a>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="maimTable">
+                            <div class="maimTable productDetailTable ">
                                 <div class="table-responsive">
-                                    <table id="myTable" class="display tablechange" cellspacing="0" width="100%">
+                                    <table id="myTable" class="table border-top" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
@@ -302,7 +298,7 @@
                                                 <td>
                                                     <div class="d-flex justify-content-end">
                                                         <div class="nav-item dropdown">
-                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-default2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 Action
                                                             </a>
                                                             <div class="dropdown-menu fade-up m-0">
@@ -325,7 +321,7 @@
                                                 <td>
                                                     <div class="d-flex justify-content-end">
                                                         <div class="nav-item dropdown">
-                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-default2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <a href="#!" class="nav-link dropdown-toggle btn btn-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 Action
                                                             </a>
                                                             <div class="dropdown-menu fade-up m-0">
