@@ -3412,10 +3412,9 @@ label {
 }
 
 .productDetailTable .dt-buttons button {
-  background: #57c8f1;
-  color: #fff;
-  border-color: #57c8f1;
-  border-radius: 5px;
+  background: #57c8f1 !important;
+  color: #fff !important;
+  border-color: #57c8f1 !important;
   /* font-size: 13px; */
 }
 
@@ -3423,7 +3422,6 @@ label {
   background: #57c8f1 !important;
   color: #fff !important;
   border-color: #57c8f1 !important;
-  border-radius: 5px;
 }
 
 /* div.dataTables_wrapper {

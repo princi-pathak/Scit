@@ -18,13 +18,13 @@
                         <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="jobsection justify-content-end">
+                                    <div class="jobsection justify-content-end mb-0">
                                         <a href="javascript:void(0)" class="btn btn-warning openModalBtn" data-action='add' id=''><i class="fa fa-plus"></i> Add</a>
                                         <!-- <a href="javascript:void(0)" class="profileDrop">Export</a> -->
                                     </div>
                                 </div>
                             </div>
-                            <div class="productDetailTable mb-4 table-responsive">
+                            <div class="maimtable productDetailTable mb-4 table-responsive">
                                 <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
