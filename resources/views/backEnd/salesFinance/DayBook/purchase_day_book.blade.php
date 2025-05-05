@@ -17,24 +17,36 @@
                             <a href="javascript:;" class="fa fa-times"></a>
                         </span> -->
                     </header>
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
                             <div class="clearfix clearfix_space">
+                                <div class="col-lg-3 col-sm-3">
+                                    <select class="form-control" name="tax_rate" id="vat_input">
+                                        <option value="">Please Select</option>
+                                    </select>
+                                </div>
+
                                 <div class="btn-group">
                                     <a href="{{url('admin/sales-finance/purchase/purchase-day-book-add')}}" id="editable-sample_new" class="btn btn-primary">
                                         Add New <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
-                                <div class="btn-group">
+
+                                <!-- <div class="btn-group">
                                     <button class="btn btn-default"> Export </button>
-                                    <!-- <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="#">Print</a></li>
-                                        <li><a href="#">Save as PDF</a></li>
-                                        <li><a href="#">Export to Excel</a></li>
-                                    </ul> -->
-                                </div>
+                                </div> -->
                             </div>
                             <div class="space15"></div>
                             <table class="table table-striped table-hover table-bordered" id="editable-sample">
@@ -56,36 +68,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($purchase_day_book as $key => $value)
                                     <tr class="">
-                                        <th>1</th>
-                                        <td>Abhishek</td>
-                                        <td>2025-04-08</td>
-                                        <td>500.00</td>
-                                        <td>100.00</td>
-                                        <td>$600.00</td>
-                                        <td>VAT 20</td>
-                                        <td>$600.00</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>54</td>
-                                        <td></td>
-                                        <td><a class="edit" href="javascript:;"><i class="fa fa-edit"></i></a> | <a class="delete" href="javascript:;"><i class="fa fa-trash-o"></i></a></td>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $value->customer_name }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
+                                        <td>{{ $value->netAmount }}</td>
+                                        <td>{{ $value->vatAmount }}</td>
+                                        <td>{{ $value->grossAmount }}</td>
+                                        <td>{{ $value->tax_rate_name }}</td>
+                                        <td>{{ $value->grossAmount - $value->reclaim  }}</td>
+                                        <td>{{ $value->reclaim }}</td>
+                                        <td>{{ $value->not_reclaim }}</td>
+                                        <td>{{ $value->title  }}</td>
+                                        <td>{{ $value->expense_amount }}</td>
+                                        <td>
+                                            <a href="{{ url('admin/sales-finance/purchase/purchase-day-book-edit/'.$value->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                            <a href="{{ url('admin/sales-finance/purchase/purchase-day-book-delete/'.$value->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                        </td>
                                     </tr>
-                                    <tr class="">
-                                        <th>2</th>
-                                        <td>Abhishek</td>
-                                        <td>2025-04-08</td>
-                                        <td>500.00</td>
-                                        <td>100.00</td>
-                                        <td>$600.00</td>
-                                        <td>VAT 20</td>
-                                        <td>$600.00</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>54</td>
-                                        <td></td>
-                                        <td><a class="edit" href="javascript:;"><i class="fa fa-edit"></i></a> | <a class="delete" href="javascript:;"><i class="fa fa-trash-o"></i></a></td>
+                                    @endforeach
+                                    @if($purchase_day_book->isEmpty())
+                                    <tr>
+                                        <td colspan="13" class="text-center">No records found</td>
                                     </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -96,4 +103,55 @@
         <!-- page end-->
     </div>
 </section>
+
+<script>
+    $(document).ready(function() {
+        const vatInputValue = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
+        taxRate(vatInputValue);
+    });
+
+
+
+
+    function taxRate(dropdown) {
+        $.ajax({
+            url: '{{ url("admin/sales-finance/purchase/getTaxRate") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("response.data", response.data);
+                if (Array.isArray(response.data)) {
+                    // const dropdown = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
+                    if (!dropdown) {
+                        console.error("Element with ID not found");
+                        return;
+                    }
+
+                    dropdown.innerHTML = ''; // Clear existing options
+
+                    const optionInitial = document.createElement('option');
+                    // const preTaxID = document.getElementById('tax_id').value;
+                    optionInitial.textContent = "Please Select";
+                    optionInitial.value = 0;
+                    dropdown.appendChild(optionInitial);
+
+                    response.data.forEach(code => {
+                        const option = document.createElement('option');
+                        option.value = code.id;
+                        option.textContent = code.name + " (" + code.tax_rate + "%)";
+                        option.setAttribute('data-tax-rate', code.tax_rate);
+                        // if (preTaxID && code.id == preTaxID) {
+                        //     option.selected = true;
+                        // }
+                        dropdown.appendChild(option);
+                    });
+                } else {
+                    console.error("Invalid response format");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
 @endsection

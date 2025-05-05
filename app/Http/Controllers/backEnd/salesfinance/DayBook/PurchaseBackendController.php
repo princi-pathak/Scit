@@ -8,29 +8,32 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Supplier;
 use App\Models\Construction_tax_rate;
 use App\Models\PurchaseExpenses;
-use Illuminate\Support\Carbon;
 use App\Http\Requests\Daybook\PurchaseDayBookRequest;
-use App\Models\DayBook\PurchaseDayBook;
+use App\Services\DayBook\PurchaseDayBookService;
 use App\Home;
+use App\Models\DayBook\PurchaseDayBook;
+
+use Illuminate\Support\Facades\Log;
 use App\Models\DayBook\SalesDayBook;
+
 class PurchaseBackendController extends Controller
 {
-    public function index()
+
+    protected $purchaseDayBookService;
+
+    public function __construct(PurchaseDayBookService $purchaseService)
     {
-        $data['page'] = "dayBook";
-        return view('backEnd.salesFinance.DayBook.purchase_day_book', $data);
+        $this->purchaseDayBookService = $purchaseService;
     }
+    
+    // Purchase Expenses Type 
     public function purchase_type()
     {
         $data['page'] = "purchaseExpenese";
         $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->get();
         return view('backEnd.salesFinance.DayBook.purchase_expenses', $data);
     }
-    public function create()
-    {
-        $data['page'] = "dayBook";
-        return view('backEnd.salesFinance.DayBook.purchase_day_book_form', $data);
-    }
+
     public function purchase_type_add()
     {
         $data['page'] = "purchaseExpenese";
@@ -62,7 +65,6 @@ class PurchaseBackendController extends Controller
             }
         }
     }
-
     public function changeStatus(Request $request)
     {
         $data = PurchaseExpenses::find($request->id);
@@ -74,7 +76,6 @@ class PurchaseBackendController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to change status']);
         }
     }
-
     public function deletePurchaseExpensesType($id)
     {
         try {
@@ -92,7 +93,50 @@ class PurchaseBackendController extends Controller
         return view('backEnd.salesFinance.DayBook.purchase_expenses_form', $data);
     }
 
-    public function getSupplierData(){
+
+
+
+    // Puchase Day Book
+    public function index(Request $request)
+    {
+        $data['page'] = "dayBook";
+        $home_id =Auth::user()->home_id;
+        $data['purchase_day_book'] = $this->purchaseDayBookService->getPurchaseDayBook($home_id, $request);
+        // dd($data);
+
+        return view('backEnd.salesFinance.DayBook.purchase_day_book', $data);
+    }
+  
+    public function create()
+    {
+        $data['page'] = "dayBook";
+        return view('backEnd.salesFinance.DayBook.purchase_day_book_form', $data);
+    }
+    
+    public function edit($id)
+    {
+        $data['page'] = "dayBook";
+        $data['purchase_day_book'] = PurchaseDayBook::findOrFail($id);
+        return view('backEnd.salesFinance.DayBook.purchase_day_book_form', $data);
+    }
+
+    public function purchaseDayBookEdit($id)
+    {
+        $data['page'] = "dayBook";
+        $data['purchase_day_book'] = PurchaseDayBook::findOrFail($id);
+        return view('backEnd.salesFinance.DayBook.purchase_day_book_form', $data);
+    }
+    public function purchaseDayBookDelete($id)
+    {
+        $purchaseBook = PurchaseDayBook::findOrFail($id);
+        $purchaseBook->deleted_at = now();
+        $purchaseBook->save();
+
+        return redirect()->back()->with('success', 'Purchase day book deleted successfully.');
+    }
+
+    public function getSupplierData()
+    {
         $data = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
 
         return response()->json([
@@ -101,7 +145,8 @@ class PurchaseBackendController extends Controller
         ]);
     }
 
-    public function getPurchaseExpense(){
+    public function getPurchaseExpense()
+    {
         $data = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
         return response()->json([
             'success' => (bool) $data,
@@ -109,7 +154,8 @@ class PurchaseBackendController extends Controller
         ]);
     }
 
-    public function getActiveTaxRate(){
+    public function getActiveTaxRate()
+    {
         $data = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
 
         return response()->json([
@@ -120,38 +166,43 @@ class PurchaseBackendController extends Controller
 
     public function store(PurchaseDayBookRequest $request)
     {
-        $data = $request->validated();
-        $data['page'] = "dayBook";
-        $convertedDate = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
-        $data['date'] = $convertedDate;
-        $data['home_id'] = Auth::user()->home_id;
-        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null], $data);
 
-        if ($response->wasRecentlyCreated) {
-            return response()->json([  'success' => true, 'message' => 'Purchase day book record created successfully!', 'data' => $response], 201);
-        } elseif ($response->wasChanged()) {
-            return response()->json([  'success' => true, 'message' => 'Purchase day book record updated successfully!', 'data' => $response], 200);
-        } else {
-            return response()->json([  'success' => false, 'message' => 'No changes made.', 'data' => $response], 200);
+        $data = $request->validated();
+        $data['home_id'] = Auth::user()->home_id;    
+        $data['page'] = "dayBook";
+        try {
+            $record = $this->purchaseDayBookService->save($data);
+        } catch (\Exception $e) {
+            Log::error('PurchaseDayBook save error: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+                'data' => $data, // optional: log the input data
+            ]);
+            return redirect()->back()->withInput()->with('error', 'Unable to save purchase day book.');
         }
+
+        return redirect()->route('backend.purchase_day_book.index')
+            ->with('success', $record->wasRecentlyCreated ? 'Created!' : 'Updated!');
     }
 
-    public function purchase_day_book_reclaim_per(){
+    public function purchase_day_book_reclaim_per()
+    {
         return Home::where('id', Auth::user()->home_id)->value('is_registered');
     }
-    
-    public function reclaimPercantage(){
+
+    public function reclaimPercantage()
+    {
 
         $excepmt = SalesDayBook::Where('Vat', 1)->whereNull('deleted_at')->sum('netAmount');
         $standard = SalesDayBook::Where('Vat', 2)->whereNull('deleted_at')->sum('netAmount');
 
-        $residual = (($standard) / ($standard + $excepmt))*100;
+        $residual = (($standard) / ($standard + $excepmt)) * 100;
         // $reclaim  = round($residual, 2); 
 
         return response()->json([
             'success' => (bool) $excepmt,
             'data' => $residual ? $residual : 0
         ]);
-    }  
-    
+    }
 }

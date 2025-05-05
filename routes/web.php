@@ -2084,8 +2084,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	// Backend DayBook Purchse Controller
 	Route::controller(PurchaseBackendController::class)->group((function(){
 		Route::prefix('sales-finance/purchase')->group(function(){
-			Route::get('/purchase-day-book','index');
-			Route::get('/purchase-day-book-add','create');
+			Route::get('/purchase-day-book','index')->name('backend.purchase_day_book.index');
+			Route::get('/purchase-day-book-edit/{id}','purchaseDayBookEdit')->name('backend.purchase_day_book.edit');
+			Route::get('/purchase-day-book-delete/{id}','purchaseDayBookDelete')->name('backend.purchase_day_book.delete');
+			Route::get('/purchase-day-book-add','create')->name('backend.purchase_day_book.create');
 			Route::post('/purchase-day-book-save','store')->name('backend.purchase_day_book.store');
 			Route::get('/purchase-type','purchase_type')->name('backend.purchase_expenses_type');
 			Route::get('/purchase-type-add','purchase_type_add')->name('backend.purchase_expenses_type_add');

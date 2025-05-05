@@ -9,6 +9,8 @@ use App\Models\Supplier;
 use Illuminate\Support\Carbon;
 use App\Models\PurchaseExpenses;
 
+use App\Services\DayBook\PurchaseDayBookService;
+
 use App\Http\Requests\Daybook\PurchaseDayBookRequest;
 use App\Models\DayBook\PurchaseDayBook;
 use App\Models\DayBook\SalesDayBook;
@@ -53,15 +55,17 @@ class PurchaseController extends Controller
     //     return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
     // }
 
-    public function store(PurchaseDayBookRequest $request)
+    public function store(PurchaseDayBookRequest $request, PurchaseDayBookService $service)
     {
+
         $data = $request->validated();
-
-
-        $convertedDate = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
-        $data['date'] = $convertedDate;
-        $data['home_id'] = Auth::user()->home_id;
-        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null], $data);
+        $data['home_id'] = Auth::user()->home_id;    
+       
+        try {
+            $response = $service->save($request->validated());
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Unable to save purchase day book.');
+        }
 
         if ($response->wasRecentlyCreated) {
             return response()->json([  'success' => true, 'message' => 'Purchase day book record created successfully!', 'data' => $response], 201);
