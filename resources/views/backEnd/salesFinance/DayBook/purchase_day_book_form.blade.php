@@ -10,13 +10,32 @@
                     <header class="panel-heading">
                         Purchase Day Book Add
                     </header>
+                    @if (session('success'))
+                    <div class="aalert alert-success alert-dismissible fade show">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+
+                    @if (session('info'))
+                    <div class="alert alert-info alert-dismissible fade show">
+                        {{ session('info') }}
+                    </div>
+                    @endif
                     <div class="panel-body">
                         <div class="position-center">
                             <form class="form-horizontal" method="post" action="{{ route('backend.purchase_day_book.store') }}" role="form">
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Supplier</label>
                                     <div class="col-lg-10">
-                                        <input type="hidden" id="supplier_id">
+                                        @csrf
+                                        <input type="hidden" id="purchase_day_book_id" name="purchase_day_book_id" value="{{ isset($purchase_day_book) ? $purchase_day_book->id : '' }}">
+                                        <input type="hidden" id="supplier_id" value="{{ isset($purchase_day_book) ? $purchase_day_book->supplier_id : '' }}">
                                         <select class="form-control" id="Supplier_input" name="supplier_id">
                                             <option value="">Select Supplier</option>
                                         </select>
@@ -25,25 +44,25 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Date</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="Date_input" placeholder="Date">
+                                        <input type="text" class="form-control" name="date" id="Date_input" value="{{ isset($purchase_day_book) ? \Carbon\Carbon::parse($purchase_day_book->date)->format('d-m-Y') : '' }}" placeholder="Date">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Net</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="net_amount" placeholder="Net">
+                                        <input type="text" class="form-control" name="netAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->netAmount : '' }}" id="net_amount" placeholder="Net">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Total Amount (to be paid)</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="totalAmount" placeholder="Total Amount (to be paid)">
+                                        <input type="text" class="form-control" id="totalAmount" value="{{ isset($purchase_day_book) ? ($purchase_day_book->grossAmount - $purchase_day_book->reclaim) : ''}}" placeholder="Total Amount (to be paid)">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT</label>
                                     <div class="col-lg-10">
-                                        <input type="hidden" id="tax_id">
+                                        <input type="hidden" id="tax_id" value="{{ isset($purchase_day_book) ? $purchase_day_book->Vat : '' }}">
                                         <select class="form-control" id="vat_input" name="Vat">
                                             <option value="">Select VAT</option>
                                         </select>
@@ -52,32 +71,32 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="vat_amount" placeholder="VAT Amount">
+                                        <input type="text" class="form-control" name="vatAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->vatAmount : '' }}" id="vat_amount" placeholder="VAT Amount">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="gross_amount" placeholder="Gross">
+                                        <input type="text" class="form-control" name="grossAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->grossAmount : '' }}" id="gross_amount" placeholder="Gross">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Reclaim</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="reclaim_amount" placeholder="Reclaim">
+                                        <input type="text" class="form-control" name="reclaim" value="{{ isset($purchase_day_book) ? $purchase_day_book->reclaim : ''}}" id="reclaim_amount" placeholder="Reclaim">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Not Claim</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="not_claim" placeholder="Not Claim">
+                                        <input type="text" class="form-control" name="not_reclaim" id="not_claim" value="{{ isset($purchase_day_book) ? $purchase_day_book->not_reclaim : '' }}" placeholder="Not Claim">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Expenses</label>
                                     <div class="col-lg-10">
-                                        <input type="hidden" id="expenses_id">
-                                        <select class="form-control" id="expenses" name="expenses_id">
+                                        <input type="hidden" id="expenses_id" value="{{ isset($purchase_day_book) ? $purchase_day_book->expense_type : '' }}">
+                                        <select class="form-control" id="expenses" name="expense_type">
                                             <option value="">Select Expenses</option>
                                         </select>
                                     </div>
@@ -85,7 +104,7 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Expense Amount</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="expenses_amount" placeholder="Expense Amount">
+                                        <input type="text" class="form-control" name="expense_amount" value="{{ isset($purchase_day_book) ? $purchase_day_book->expense_amount : '' }}" id="expenses_amount" placeholder="Expense Amount">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -107,6 +126,15 @@
 @endsection
 
 <script>
+    
+   setTimeout(function() {
+        // Hide all alerts after 3 seconds
+        document.querySelectorAll('.alert').forEach(function(alert) {
+            alert.style.display = 'none';
+        });
+    }, 3000); // 3000 milliseconds = 3 seconds
+
+
     document.addEventListener("DOMContentLoaded", function() {
 
         // Initialize the datepicker
@@ -121,9 +149,9 @@
             $('#Date_input').datepicker('place');
         });
 
-
         getSupplierList();
         getPurchaseExpense();
+
         const vatInputValue = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
         taxRate(vatInputValue);
 
@@ -150,12 +178,11 @@
         function getCalculatedData() {
             $.ajax({
                 type: "GET",
-                url: calculatedData,
+                url: "{{ url('admin/sales-finance/purchase/reclaimPercantage') }}",
                 success: function(response) {
                     console.log("reclaimPercantage ", response.data);
                     var vatAmount = vatAmountInput.value;
                     console.log("vatAmount", vatAmount);
-
                     let reclaimed = (vatAmount * response.data) / 100;
                     console.log("Reclaimed Amount:", reclaimed.toFixed(2));
                     reclaim_amount.value = reclaimed.toFixed(2);
@@ -175,20 +202,22 @@
 
         function calculateTax() {
             let netAmount = parseFloat(netAmountInput.value) || 0;
+            // console.log("Net Amount:", netAmount);
             let selectedOption = vatInput.options[vatInput.selectedIndex];
+            // console.log("Selected Option:", selectedOption);
             let taxRate = parseFloat(selectedOption.getAttribute('data-tax-rate')) || 0;
-
+            // console.log("Tax Rate:", taxRate);
             let vatAmount = (netAmount * taxRate) / 100;
             let grossAmount = netAmount + vatAmount;
-
+            // console.log("Gross Amount:", grossAmount);
             $.ajax({
                 type: "GET",
-                url: reclaimPercantage,
+                url: "{{ url('admin/sales-finance/purchase/purchase-day-book-reclaim-per') }}",
                 data: '',
                 success: function(data) {
                     console.log("Response ", data);
-                    if (data == "0") {
-                        getCalculatedData(); // Now this function is defined and accessible
+                    if (data == "0") { // check Home is not registered
+                        getCalculatedData();
                     } else if (data == "1") {
                         not_claim.value = vat_amount.value;
                         reclaim_amount.value = totalAmountInput.value = "00.00";
@@ -206,6 +235,10 @@
         vatInput.addEventListener('change', calculateTax);
         netAmountInput.addEventListener('input', calculateTax);
 
+        document.getElementById("expenses").addEventListener("change", function() {
+            var not_claimedAmt = not_claim.value;
+            expensesAmountInput.value = not_claimedAmt;
+        });
     });
 
 
