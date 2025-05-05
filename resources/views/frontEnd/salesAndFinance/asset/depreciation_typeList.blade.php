@@ -20,7 +20,7 @@
                                     <a href="javascript:void(0)" class="btn btn-warning">Export</a>
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
                             </div>
-                            <div class="productDetailTable mb-4 table-responsive">
+                            <div class="maimtable productDetailTable mb-4 table-responsive">
                                 <div class="alert success-message text-center" id="msg" style="display:none;height:50px">
                                     <p id="status_meesage"></p>
                                 </div>
