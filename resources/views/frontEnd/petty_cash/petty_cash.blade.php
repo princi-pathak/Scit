@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="table-responsive productDetailTable  mb-4">
+                            <div class="table-responsive productDetailTable maimtable  mb-4">
                                 <table id="" class="table border-top border-bottom tablechange" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -297,6 +297,34 @@
 </script>
 <script>
     $(document).ready(function() {
+
+        var today = new Date;
+        $('#log-book-datetimepicker').datetimepicker({
+            format: 'dd-mm-yyyy',
+            // endDate: today,
+            // minView : 2
+
+        }).on("change.dp", function(e) {
+            var currentdate = $(this).data("datetimepicker").getDate();
+            var newFormat = currentdate.getDate() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getFullYear() + " " + currentdate.getHours() + ":" + currentdate.getMinutes();
+            $('.log-book-datetime').val(newFormat);
+        });
+
+        $('#log-book-datetimepicker').on('click', function() {
+            $('#log-book-datetimepicker').datetimepicker('show');
+        });
+
+        $("#logBookModal").scroll(function() {
+            $('#log-book-datetimepicker').datetimepicker('place')
+        });
+
+        $('#log-book-datetimepicker').on('change', function() {
+            $('#log-book-datetimepicker').datetimepicker('hide');
+        });
+    });
+</script>
+<!-- <script>
+    $(document).ready(function() {
         // New Job date 
         // $('#ToDate').datepicker({
         //     format: 'dd-mm-yyyy',
@@ -323,7 +351,7 @@
             $('#ToDate').focus();
         });
     });
-</script>
+</script> -->
 <script type="text/javascript" src="{{ url('public/js/salesFinance/petty_cash/cash.js') }}"></script>
 
 @endsection

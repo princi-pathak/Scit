@@ -99,7 +99,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a href="#!" class="formicon" data-toggle="modal" data-target="#customerPop"><i class="fa fa-plus-square"></i></a>
+                                                    <a href="javascript:void(0)" class="formicon" data-toggle="modal" data-target="#supplierPop"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <a href="#!" class="formicon"><i class="fa fa-clock-o"></i></a>
@@ -121,7 +121,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon"><i class="fa fa-plus-square"></i></a>
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_model(1)"><i class="fa fa-plus-square"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -436,6 +436,7 @@
 
 @include('components.add-supplier-modal')
 @include('components.contact-modal')
+@include('components.job-title-model')
 @include('components.product-list')
 @include('components.account-code')
 @include('frontEnd.salesAndFinance.item.common.addproductmodal')

@@ -98,7 +98,7 @@
                   </div>
                 </div> -->
               </div>
-              <div class="productDetailTable mb-4  table-responsive">
+              <div class="maimtable productDetailTable mb-4  table-responsive">
                 <table class="table border-top border-bottom tablechange" id="containerB">
                   <thead>
                     <tr>

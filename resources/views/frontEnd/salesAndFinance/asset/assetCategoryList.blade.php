@@ -19,7 +19,7 @@
                                 <a href="javascript:void(0)" onclick="openAssetCategoryModal()" class="btn btn-warning"> <i class="fa fa-plus"></i> Add</a>
                                 <a href="javascript:void(0)" class="btn btn-warning">Export</a>
                             </div>
-                            <div class="productDetailTable mb-4 table-responsive">
+                            <div class="maimtable productDetailTable mb-4 table-responsive">
                                 <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
