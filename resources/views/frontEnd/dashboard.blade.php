@@ -177,6 +177,48 @@
                         </div>
                     </div>
                 </a>
+                <a href="{{ url('/sales') }}">
+                    <div class="col-md-6">
+                        <div class="profile-nav alt">
+                            <div class="panel text-center">
+                                <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-briefcase"></i></div>
+                                <div class="panel-body">
+                                    <div class="wdgt-value">
+                                        <h1 class="count">Sales</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- <a href="{{ url('/petty-cash/child_register') }}">
+                    <div class="col-md-6">
+                        <div class="profile-nav alt">
+                            <div class="panel text-center">
+                                <div class="user-heading alt wdgt-row lightBrown"> <i class="fa fa-child"></i></div>
+                                <div class="panel-body">
+                                    <div class="wdgt-value">
+                                        <h1 class="count">Child Register</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a> -->
+                <a href="{{ url('/finance') }}">
+                    <div class="col-md-6">
+                        <div class="profile-nav alt">
+                            <div class="panel text-center">
+                                <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-money"></i></div>
+                                <div class="panel-body">
+                                    <div class="wdgt-value">
+                                        <h1 class="count">Finance</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
 
             @include('frontEnd.common.sidebar_dashboard')
