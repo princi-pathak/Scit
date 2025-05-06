@@ -14,6 +14,45 @@ $(document).ready(function () {
         $('#Date_input').datepicker('place');
     });
 
+    // const table = $('#salesDayBookTable').DataTable({
+    //     dom: 'Blfrtip',
+    //     buttons: [
+    //         {
+    //             extend: 'csv',
+    //             text: 'Export',
+    //             bom: true,
+    //             exportOptions: {
+    //                 columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    //             }
+    //         }
+    //     ],
+    //     footerCallback: function (row, data, start, end, display) {
+    //         var api = this.api();
+    
+    //         var intVal = function (i) {
+    //             return typeof i === 'string'
+    //                 ? parseFloat(i.replace(/[£,]/g, '')) || 0
+    //                 : typeof i === 'number'
+    //                 ? i
+    //                 : 0;
+    //         };
+    
+    //         // Columns to total: netAmount (4), vatAmount (5), grossAmount (6)
+    //         var columnsToTotal = [4, 5, 6];
+    
+    //         columnsToTotal.forEach(function (colIdx) {
+    //             var total = api
+    //                 .column(colIdx, { page: 'current' })
+    //                 .data()
+    //                 .reduce(function (a, b) {
+    //                     return intVal(a) + intVal(b);
+    //                 }, 0);
+    
+    //             $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
+    //         });
+    //     }
+    // });
+
     const table = $('#salesDayBookTable').DataTable({
         dom: 'Blfrtip',
         buttons: [
@@ -22,12 +61,37 @@ $(document).ready(function () {
                 text: 'Export',
                 bom: true,
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             }
-        ]
+        ],
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+    
+            // Helper to parse £ values
+            var intVal = function (i) {
+                return typeof i === 'string'
+                    ? parseFloat(i.replace(/[£,]/g, '')) || 0
+                    : typeof i === 'number'
+                    ? i
+                    : 0;
+            };
+    
+            // Columns to total: Net Amount (4), VAT Amount (5), Gross Amount (6)
+            [4, 5, 6].forEach(function (colIdx) {
+                var total = api
+                    .column(colIdx, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+    
+                // Update footer cell
+                $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
+            });
+        }
     });
-
+    
 
     const selectedVatId = document.getElementById('getDataOnTax').value;
     loadSalesDayBookData(selectedVatId);
@@ -158,7 +222,7 @@ $(document).ready(function () {
                 '£' + (item.vatAmount ?? ''),
                 '£' + (item.grossAmount ?? ''),
                 item.tax_rate_name ?? '',
-                item.finalAmount ?? '',
+                // item.finalAmount ?? '',
                 actions
             ]);
 
