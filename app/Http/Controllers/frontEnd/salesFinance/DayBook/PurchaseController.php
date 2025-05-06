@@ -18,6 +18,14 @@ use App\Home;
 
 class PurchaseController extends Controller
 {
+    
+    protected $purchaseDayBookService;
+
+    public function __construct(PurchaseDayBookService $purchaseService)
+    {
+        $this->purchaseDayBookService = $purchaseService;
+    }
+
     public function index(){
         $data['page'] = "dayBook";
     
@@ -25,21 +33,9 @@ class PurchaseController extends Controller
     }
 
     public function getPurchaseDayBook(Request $request){
+        $home_id = Auth::user()->home_id;
+        $purchaseDayBooks = $this->purchaseDayBookService->getPurchaseDayBook($home_id, $request);
 
-        $query = PurchaseDayBook::join('suppliers', 'suppliers.id', '=', 'purchase_day_books.supplier_id')
-        ->join('construction_tax_rates', 'construction_tax_rates.id', '=', 'purchase_day_books.Vat')
-        ->leftjoin('purchase_expenses', 'purchase_expenses.id', '=', 'purchase_day_books.expense_type')
-        ->where('purchase_day_books.home_id', Auth::user()->home_id)
-        ->select('purchase_day_books.*', 'suppliers.name as customer_name', 'construction_tax_rates.name as tax_rate_name', 'purchase_expenses.title')
-        ->whereNull('purchase_day_books.deleted_at')
-        ->orderBy('purchase_day_books.created_at', 'desc');
-
-        if ($request->has('tax_rate') && $request->tax_rate != 0) {
-            $query->where('purchase_day_books.Vat', $request->tax_rate);
-        }
-
-        $purchaseDayBooks = $query->get();
-      
         return response()->json([
             'success' => (bool) $purchaseDayBooks,
             'data' => $purchaseDayBooks ? $purchaseDayBooks : 'No data'

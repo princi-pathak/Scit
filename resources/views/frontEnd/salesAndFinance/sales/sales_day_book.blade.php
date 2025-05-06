@@ -36,14 +36,26 @@
                                             <th>VAT</th>
                                             <th>Gross </th>
                                             <th>Rate </th>
-                                            <th>Total </th>
+                                            <!-- <th>Total </th> -->
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     
-
                                     </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th style="text-align:right">Total:</th>
+                                        <th></th> 
+                                        <th></th> 
+                                        <th></th> 
+                                        <th></th> 
+                                        <th></th> 
+                                        <th></th> 
+                                        <th></th> 
+                                        <th></th>
+                                        <!-- <th></th> -->
+                                    </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
