@@ -100,11 +100,18 @@ class PurchaseBackendController extends Controller
     public function index(Request $request)
     {
         $data['page'] = "dayBook";
-        $home_id =Auth::user()->home_id;
-        $data['purchase_day_book'] = $this->purchaseDayBookService->getPurchaseDayBook($home_id, $request);
-        // dd($data);
-
         return view('backEnd.salesFinance.DayBook.purchase_day_book', $data);
+    }
+
+    public function getPurchaseDayBook(Request $request){
+
+        $home_id =Auth::user()->home_id;
+        $purchaseDayBooks = $this->purchaseDayBookService->getPurchaseDayBook($home_id, $request);
+
+        return response()->json([
+            'success' => (bool) $purchaseDayBooks,
+            'data' => $purchaseDayBooks ? $purchaseDayBooks : 'No data'
+        ]);
     }
   
     public function create()
@@ -132,7 +139,11 @@ class PurchaseBackendController extends Controller
         $purchaseBook->deleted_at = now();
         $purchaseBook->save();
 
-        return redirect()->back()->with('success', 'Purchase day book deleted successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Record deleted successfully!',
+            'deleted_at' => $purchaseBook->deleted_at->format('Y-m-d H:i:s')
+        ]);
     }
 
     public function getSupplierData()
@@ -183,7 +194,7 @@ class PurchaseBackendController extends Controller
         }
 
         return redirect()->route('backend.purchase_day_book.index')
-            ->with('success', $record->wasRecentlyCreated ? 'Created!' : 'Updated!');
+            ->with('success', $record->wasRecentlyCreated ? 'Record Created!' : 'Record Updated!');
     }
 
     public function purchase_day_book_reclaim_per()
