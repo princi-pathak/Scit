@@ -328,6 +328,10 @@
             var status = $("#modal_status").val();
             var home_id = '<?php echo $home_id; ?>'
             var id = $("#id").val();
+            var url="{{url('/job_type_appointment_save')}}";
+            if(id !=''){
+                url="{{url('/job_type_appointment_edit')}}";
+            }
             var message;
             if (id == '') {
                 message = "Added Successfully Done";
@@ -340,7 +344,7 @@
             } else {
                 $.ajax({
                     type: "POST",
-                    url: "{{url('/job_type_appointment_save')}}",
+                    url: url,
                     data: {
                         id: id,
                         home_id: home_id,
@@ -419,7 +423,7 @@
             var model = "Construction_job_appointment_type";
             $.ajax({
                 type: "POST",
-                url: "{{url('/status_change')}}",
+                url: "{{url('/jobAppointmentType_status_change')}}",
                 data: {
                     id: id,
                     status: status,

@@ -201,11 +201,13 @@
                 var home_id = '<?php echo $home_id;?>';
                 var id = $("#id").val();
                 var message;
-
+                var url;
                 if (id == '') {
                     message = "Added Successfully Done";
+                    url='{{ url("/save_account_code") }}';
                 } else {
                     message = "Edited Successfully Done";
+                    url='{{ url("/edit_account_code") }}';
                 }
                  if (name == '') {
                     $("#name").addClass('addError');
@@ -213,7 +215,7 @@
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: '{{ url("/save_account_code") }}',
+                        url: url,
                         data: {id: id, home_id: home_id, name: name,departmental_code:departmental_code, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
@@ -260,7 +262,7 @@
             var model="Construction_account_code";
             $.ajax({
                 type: "POST",
-                url: "{{url('/status_change')}}",
+                url: "{{url('/account_code_status_change')}}",
                 data: {id:id,status:status,model:model,_token:token},
                 success: function(data) {
                     console.log(data);

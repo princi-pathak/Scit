@@ -195,11 +195,13 @@
                 var status = $.trim($('#statusModal option:selected').val());
                 var id = $("#id").val();
                 var message;
-
+                var url;
                 if (id == '') {
                     message = "Added Successfully Done";
+                    url='{{ url("/save_department") }}';
                 } else {
                     message = "Edited Successfully Done";
+                    url='{{ url("/edit_department") }}';
                 }
                  if (title == '') {
                     $("#title").addClass('addError');
@@ -211,7 +213,7 @@
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: '{{ url("/save_department") }}',
+                        url: url,
                         data: {id: id, title: title, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
@@ -256,7 +258,7 @@
             var model="Department";
             $.ajax({
                 type: "POST",
-                url: "{{url('/status_change')}}",
+                url: "{{url('/Department_status_change')}}",
                 data: {id:id,status:status,model:model,_token:token},
                 success: function(data) {
                     console.log(data);
