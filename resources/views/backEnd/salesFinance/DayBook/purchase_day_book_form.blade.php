@@ -307,7 +307,7 @@
 
     function taxRate(dropdown) {
         $.ajax({
-            url: '{{ url("admin/sales-finance/purchase/getTaxRate") }}',
+            url: '{{ url("admin/sales-finance/sales/getTaxRate") }}',
             method: 'GET',
             success: function(response) {
                 console.log("response.data", response.data);

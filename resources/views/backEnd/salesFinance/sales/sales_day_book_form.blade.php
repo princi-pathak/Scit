@@ -10,62 +10,70 @@
             <div class="col-lg-12">
                 <div class="panel">
                     <header class="panel-heading">
-                       Sales Day Book Add
+                        Sales Day Book Add
                     </header>
+                    @if (session('success'))
+                    <div class="aalert alert-success alert-dismissible fade show">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        {{ session('error') }}
+                    </div>
+                    @endif
                     <div class="panel-body">
                         <div class="position-center">
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal" action="{{ url('/admin/sales-finance/sales/save-sales-day-book') }}" role="form">
+                                @csrf
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Customer</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control">
+                                        <input type="hidden" id="sales_day_book_id" name="sales_day_book_id">
+                                        <input type="hidden" id="customer_id" name="customer_id">
+                                        <select class="form-control" id="getCustomerList" name="customer_id">
                                             <option value="">Select Customer</option>
-                                            <option value="1">Customer 1</option>
-                                            <option value="2">Customer 2</option>
-                                            <option value="3">Customer 3</option>
                                         </select>
-                                        <!-- <p class="help-block">Example block-level help text here.</p> -->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Date</label>
                                     <div class="col-lg-10">
-                                        <input type="Date" class="form-control" id="" >
+                                        <input type="text" class="form-control" id="Date_input" name="date" placeholder="Date">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Invoice</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="" placeholder="Invoice">
+                                        <input type="text" class="form-control" id="Invoice_input" placeholder="Invoice no." name="invoice_no">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Net</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="" placeholder="Net">
+                                        <input type="text" class="form-control" placeholder="Net Amount" name="netAmount" id="net_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control">
+                                        <input type="hidden" class="form-control" id="tax_id" name="tax_id" placeholder="Tax ID">
+                                        <select class="form-control" id="vat_input" name="vat">
                                             <option value="">Select VAT</option>
-                                            <option value="1">VAT 1</option>
-                                            <option value="2">VAT 2</option>
-                                            <option value="3">VAT 3</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="" placeholder="VAT Amount">
+                                        <input type="text" class="form-control" placeholder="VAT Amount" name="vat_amount" id="vat_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="" placeholder="Gross">
+                                        <input type="text" class="form-control" placeholder="Gross" name="gross_amount" id="gross_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -83,5 +91,122 @@
         <!-- page end-->
     </div>
 </section>
+<script>
+    $(document).ready(function() {
+        $('#Date_input').datepicker({
+            format: 'dd-mm-yyyy'
+        });
 
+        $('#Date_input').on('change', function() {
+            $('#Date_input').datepicker('hide');
+        });
+
+        $("#salesDayBookModel").scroll(function() {
+            $('#Date_input').datepicker('place');
+        });
+        getCustomerList();
+        const vatInputValue = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
+        taxRate(vatInputValue);
+    });
+    
+        document.addEventListener('DOMContentLoaded', function () {
+    let vatInput = document.getElementById('vat_input');
+    let netAmountInput = document.getElementById('net_amount');
+    let vatAmountInput = document.getElementById('vat_amount');
+    let grossAmountInput = document.getElementById('gross_amount');
+
+    function calculateTax() {
+        let netAmount = parseFloat(netAmountInput.value) || 0;
+        let selectedOption = vatInput.options[vatInput.selectedIndex];
+        let taxRate = parseFloat(selectedOption.getAttribute('data-tax-rate')) || 0;
+
+        let vatAmount = (netAmount * taxRate) / 100;
+        let grossAmount = netAmount + vatAmount;
+
+        vatAmountInput.value = vatAmount.toFixed(2);
+        grossAmountInput.value = grossAmount.toFixed(2);
+    }
+
+    // Trigger calculation on VAT change or Net Amount change
+    vatInput.addEventListener('change', calculateTax);
+    netAmountInput.addEventListener('input', calculateTax);
+});
+
+    function getCustomerList() {
+        $.ajax({
+            url: '{{ url("admin/getCustomerList") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("Customer list data:", response.data);
+                const selectedCustomerId = document.getElementById('customer_id').value;
+                const customerSelect = document.getElementById('getCustomerList');
+                customerSelect.innerHTML = '<option>Select Customer</option>';
+
+                if (Array.isArray(response.data)) {
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.textContent = user.name;
+                        if (selectedCustomerId && user.id == selectedCustomerId) {
+                            option.selected = true;
+                        }
+                        customerSelect.appendChild(option);
+                    });
+                } else {
+                    console.warn("response.data is not an array");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+            }
+        });
+
+
+
+    }
+
+    
+   
+    function taxRate(dropdown) {
+        $.ajax({
+            url: '{{ url("admin/sales-finance/sales/getTaxRate") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("response.data", response.data);
+                if (Array.isArray(response.data)) {
+                    // const dropdown = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
+                    if (!dropdown) {
+                        console.error("Element with ID not found");
+                        return;
+                    }
+
+                    dropdown.innerHTML = ''; // Clear existing options
+
+                    const optionInitial = document.createElement('option');
+                    const preTaxID = document.getElementById('tax_id').value;
+                    optionInitial.textContent = "Please Select";
+                    optionInitial.value = 0;
+                    dropdown.appendChild(optionInitial);
+
+                    response.data.forEach(code => {
+                        const option = document.createElement('option');
+                        option.value = code.id;
+                        option.textContent = code.name + " (" + code.tax_rate + "%)";
+                        option.setAttribute('data-tax-rate', code.tax_rate);
+                        if (preTaxID && code.id == preTaxID) {
+                            option.selected = true;
+                        }
+                        dropdown.appendChild(option);
+                    });
+                } else {
+                    console.error("Invalid response format");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
+<!-- <script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/salesDayBook.js') }}"></script> -->
 @endsection
