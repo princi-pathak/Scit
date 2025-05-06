@@ -195,11 +195,13 @@
             var home_id = '<?php echo $home_id; ?>';
             var id = $("#id").val();
             var message;
-
+            var url;
             if (id == '') {
                 message = "Added Successfully Done";
+                url='{{ url("/save_tax_rate") }}';
             } else {
                 message = "Edited Successfully Done";
+                url='{{ url("/edit_tax_rate") }}';
             }
             if (name == '') {
                 $("#name").addClass('addError');
@@ -211,7 +213,7 @@
             } else {
                 $.ajax({
                     type: "POST",
-                    url: '{{ url("/save_tax_rate") }}',
+                    url: url,
                     data: {
                         id: id,
                         home_id: home_id,
@@ -268,7 +270,7 @@
             var model = "Construction_tax_rate";
             $.ajax({
                 type: "POST",
-                url: "{{url('/status_change')}}",
+                url: "{{url('/tax_rate_status_change')}}",
                 data: {
                     id: id,
                     status: status,

@@ -297,6 +297,7 @@ $(document).ready(function () {
         format: 'dd-mm-yyyy',
         autoclose: true,
         todayHighlight: true,
+        endDate: new Date()
     });
 
     $('#openCalendarLastBillBtn').click(function () {

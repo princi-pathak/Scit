@@ -42,7 +42,23 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-
+                                    <tfoot>
+                                        <tr>
+                                            <th style="text-align:right">Total:</th>
+                                            <th></th> <!-- Net Amount -->
+                                            <th></th> <!-- Net Amount -->
+                                            <th></th> <!-- Net Amount -->
+                                            <th></th> <!-- VAT Amount -->
+                                            <th></th> <!-- Gross Amount -->
+                                            <th></th> <!-- Tax Rate -->
+                                            <th></th> <!-- Final Amount -->
+                                            <th></th> <!-- Reclaim -->
+                                            <th></th> <!-- Not Reclaim -->
+                                            <th></th> <!-- Title -->
+                                            <th></th> <!-- Expense Amount -->
+                                            <th></th> <!-- Actions -->
+                                        </tr>
+                                    </tfoot>
 
                                 </table>
                             </div>

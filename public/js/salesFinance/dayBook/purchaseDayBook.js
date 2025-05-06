@@ -26,8 +26,35 @@ $(document).ready(function() {
                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                 }
             }
-        ]
+        ],
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+    
+            // Helper to parse numbers safely
+            var intVal = function (i) {
+                return typeof i === 'string'
+                    ? parseFloat(i.replace(/[£,]/g, '')) || 0
+                    : typeof i === 'number'
+                    ? i
+                    : 0;
+            };
+    
+            // Columns to total: netAmount (3), vatAmount (4), grossAmount (5), finalAmount (7), reclaim (8), notReclaim (9), expenseAmount (11)
+            var columnsToTotal = [3, 4, 5, 7, 8, 9, 11];
+    
+            columnsToTotal.forEach(function (colIdx) {
+                var total = api
+                    .column(colIdx, { page: 'current' }) // only current page; remove this if you want all pages
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+    
+                $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
+            });
+        }
     });
+    
     
 
     const selectedVatId = document.getElementById('getDataOnTax').value;
@@ -163,31 +190,57 @@ $(document).ready(function() {
         });
     });
 
-    $(".deleteBtn").on("click", function () {
-        let purchaseBookId = $(this).data("id"); // Get ID from button
-        let row = $("#row-" + purchaseBookId); // Select the row
+    // $(".deleteBtn").on("click", function () {
+    //     alert($(this).data("id"));
+    //     let purchaseBookId = $(this).data("id"); // Get ID from button
+    //     let row = $("#row-" + purchaseBookId); // Select the row
 
-        if (confirm("Are you sure you want to delete this record?")) {
-            $.ajax({
-                url: purchaseDayBook + "/" + purchaseBookId,
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                success: function (response) {
-                    if (response.success) {
-                        // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
-                        alert(response.message);
-                        window.location.reload();
-                    }
-                },
-                error: function () {
-                    alert("Something went wrong!");
-                },
-            });
-        }
-    });
+    //     if (confirm("Are you sure you want to delete this record?")) {
+    //         $.ajax({
+    //             url: purchaseDayBook + "/" + purchaseBookId,
+    //             type: "POST",
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    //             },
+    //             success: function (response) {
+    //                 if (response.success) {
+    //                     // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
+    //                     alert(response.message);
+    //                     window.location.reload();
+    //                 }
+    //             },
+    //             error: function () {
+    //                 alert("Something went wrong!");
+    //             },
+    //         });
+    //     }
+    // });
 
+});
+
+
+$(document).on("click", ".deleteBtn", function () {
+    alert($(this).data("id"));
+    let purchaseBookId = $(this).data("id");
+
+    if (confirm("Are you sure you want to delete this record?")) {
+        $.ajax({
+            url: purchaseDayBook + "/" + purchaseBookId,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                alert("Something went wrong!");
+            },
+        });
+    }
 });
 
 
@@ -398,16 +451,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 modalTitle.textContent = 'Edit Purchase Day Book';
                 purchase_day_book_id.value = this.getAttribute('data-id');
                 supplier_id.value = this.getAttribute('data-supplier_id');
-                net_amount.value = this.getAttribute('data-netAmount');
                 Date_input.value = this.getAttribute('data-date');
+                net_amount.value = this.getAttribute('data-netAmount');
                 tax_id.value = this.getAttribute('data-vat');
-                gross_amount.value = this.getAttribute('data-grossAmount');
+                vat_amount.value = this.getAttribute('data-vatamount');
+                gross_amount.value = this.getAttribute('data-grossamount');
                 reclaim_amount.value = this.getAttribute('data-reclaim');
-                expenses_id.value = this.getAttribute('data-expense_type');
-                vat_amount.value = this.getAttribute('data-vatAmount');
-                expenses_amount.value = this.getAttribute('data-expense_amount');
                 not_claim.value = this.getAttribute('data-not_reclaim');
-                totalAmount.value = parseFloat(this.getAttribute('data-netAmount')) + parseFloat(this.getAttribute('data-not_reclaim'));
+                expenses_id.value = this.getAttribute('data-expense_type');
+                expenses_amount.value = this.getAttribute('data-expense_amount');
+                totalAmount.value = parseFloat(this.getAttribute('data-netamount')) + parseFloat(this.getAttribute('data-not_reclaim'));
             }
             taxRate(document.getElementById('vat_input'));
             $('#purchase_day_book_form').modal('show');
