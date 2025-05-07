@@ -62,7 +62,7 @@
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="productDetailTable mb-4  table-responsive">
-                                <table class="table border-top border-bottom tablechange" id="" cellspacing="0">
+                                <table class="table border-top border-bottom tablechange" id="expend_cash_table" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>#</th>

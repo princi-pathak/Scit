@@ -22,6 +22,10 @@
 <script>
   $(document).ready(function() {
     $('#myTable').DataTable();
+    // $('#expend_cash_table').DataTable();
+    // $("#expend_cash_table").append(
+    //   $('<tfoot/>').append( $("#expend_cash_table thead tr").clone() )
+    // );
   });
 
 
