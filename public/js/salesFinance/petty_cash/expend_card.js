@@ -1,5 +1,43 @@
 $(document).ready(function() {
+    const table = $('#expend_cash_table').DataTable({
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export',
+                bom: true,
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                }
+            }
+        ],
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
     
+            // Helper to parse numbers safely
+            var intVal = function (i) {
+                return typeof i === 'string'
+                    ? parseFloat(i.replace(/[£,]/g, '')) || 0
+                    : typeof i === 'number'
+                    ? i
+                    : 0;
+            };
+    
+            // Columns to total: netAmount (3), vatAmount (4), grossAmount (5), finalAmount (7), reclaim (8), notReclaim (9), expenseAmount (11)
+            var columnsToTotal = [3, 4, 5, 7, 8, 9, 11];
+    
+            columnsToTotal.forEach(function (colIdx) {
+                var total = api
+                    .column(colIdx, { page: 'current' }) // only current page; remove this if you want all pages
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+    
+                $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
+            });
+        }
+    });
 });
 function save_expend_card(){
     var error=0;

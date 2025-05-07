@@ -90,7 +90,12 @@
                                                 <td>{{$previous_month_data['prvious_date']}}</td>
                                                 <td>£{{$previous_month_data['previousbalanceOnCard']}}</td>
                                                 <td>£{{$previous_month_data['previousfundAmount']}}</td>
-                                                <td colspan="6"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                         <?php } ?>
                                         <?php
