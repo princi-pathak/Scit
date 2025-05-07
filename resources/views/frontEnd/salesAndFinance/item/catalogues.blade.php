@@ -1,40 +1,60 @@
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@section('title','Product')
+@section('title','Catalogues')
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
+<style>
+    .dropdown-item {
+        padding: 6px 15px;
+        font-size: 13px;
+        color: #212529;
+        text-align: inherit;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        background-color: transparent;
+        border: 0;
+        border-radius: 0;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+</style>
+
+
+<!--main content start-->
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
-                        <h4>Product </h4>
+                        <h4>Catalogues </h4>
                     </header>
-
                     <div class="panel-body">
                         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                             <div class="jobsection justify-content-end">
-                                <a href="javascript:void(0)" class="btn btn-green" onclick="itemsAddCatalogueModal(1)"> <i class="fa fa-plus"></i> Add</a>
+                                <a href="javascript:void(0)" class="btn btn-warning" onclick="itemsAddCatalogueModal(1)"> <i class="fa fa-plus"></i> Add</a>
                                 <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
                             </div>
                         </div>
-
                         <div class="col-lg-12">
-                            <div class="maimTable mt-2">
-                              
-                                <table id="myTable" class="display tablechange" cellspacing="0" width="100%">
+                            <div class="maimTable productDetailTable mb-4 table-responsive">
+                                <table id="myTable" class="table border-top border-bottom" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
-                                            <th class="" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> </label></th>
+                                            <th><input type="checkbox" id="selectAll"> <label for="selectAll"> </label></th>
                                             <th>#</th>
                                             <th>Catalogue</th>
                                             <th>Type</th>
                                             <th>Item Count</th>
                                             <th>Created On</th>
                                             <th>Status</th>
-                                            <th></th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
 
@@ -49,19 +69,19 @@
                                             <td>{{$val->created_at}}</td>
                                             <td>
                                                 @if($val->status == 1)
-                                                <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
+                                                <span class="grencheck"><i class="fa fa-check-circle"></i></span>
                                                 @else
-                                                <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>
+                                                <span class="grayCheck"><i class="fa fa-check-circle"></i></span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <div class="pageTitleBtn p-0">
-                                                    <div class="nav-item dropdown">
-                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Action
+                                                    <div class="dropdown">
+                                                        <a href="#" class="btn btn-sm btn-primary" data-toggle="dropdown" aria-expanded="false">
+                                                            Action <i class="fa fa-caret-down"></i>
                                                         </a>
-                                                        <div class="dropdown-menu fade-up m-0">
-                                                            <a href="javascript:void(0)" class="dropdown-item col-form-label fetch_data" data-id="{{$val->id}}" data-name="{{$val->name}}" data-catalogue_type="{{$val->catalogue_type}}" data-status="{{$val->status}}" data-description="{{$val->description}}">Edit</a>
+                                                        <div class="dropdown-menu dropdown-menu-right fade-up m-0">
+                                                            <a href="javascript:void(0)" class="dropdown-item fetch_data" data-id="{{$val->id}}" data-name="{{$val->name}}" data-catalogue_type="{{$val->catalogue_type}}" data-status="{{$val->status}}" data-description="{{$val->description}}">Edit</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -78,6 +98,7 @@
         </div>
     </div>
 </section>
+
 <script>
     $("#deleteSelectedRows").on('click', function() {
         let ids = [];

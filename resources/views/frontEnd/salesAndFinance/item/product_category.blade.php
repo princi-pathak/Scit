@@ -25,14 +25,12 @@
                             </div>
                             
                         </div>
-
-<<<<<<< HEAD
                     
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="maimTable mt-2">
 
 
-                                <table id="myTable" class="display tablechange" cellspacing="0" width="100%">
+                                <!-- <table id="myTable" class="display tablechange" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll">
@@ -89,8 +87,7 @@
                                         @endphp
                                         @endforeach
                                     </tbody>
-                                </table>
-=======
+                                </table> -->
                     <table id="myTable" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -127,18 +124,18 @@
                                     @if ($category_value['status'] == 1)
                                     <span class="grencheck"
                                         onclick="changestatus({{ $category_value['id'] }},0)"><i
-                                            class="fa-solid fa-circle-check"></i></span>
+                                            class="fa fa-check-circle"></i></span>
                                     @else
                                     <span class="graycheck"
                                         onclick="changestatus({{ $category_value['id'] }},1)"><i
-                                            class="fa-solid fa-circle-check"></i></span>
+                                            class="fa fa-check-circle"></i></span>
                                     @endif
                                 </td>
                                 <td>
                                     <div class="pageTitleBtn p-0">
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle profileDrop btn-warning"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                        <div class="dropdown">
+                                            <a href="#" class="btn btn-warning"
+                                                data-toggle="dropdown" aria-expanded="false">
                                                 Action </a>
                                             <div class="dropdown-menu fade-up m-0">
                                                 <a href="#" class="dropdown-item col-form-label" onclick="edititemsCatagoryModal('{{ $category_value['id'] }}','{{ $category_value['product_name'] }}','{{ $category_value['cat_id'] }}','{{ $category_value['status'] }}')">Edit
@@ -154,7 +151,6 @@
                             @endforeach
                         </tbody>
                     </table>
->>>>>>> a42732a25813af8670125eee71055ba75e892fda
 
                             </div> <!-- End off main Table -->
                         </div>
@@ -170,8 +166,7 @@
         if (confirm("Are you sure want to change the status?")) {
             $.ajax({
                 type: 'POST',
-                url: '{{ route('
-                item.changeProductCategoryStatus ') }}',
+                url: '{{ route("item.changeProductCategoryStatus") }}',
                 data: {
                     id: id,
                     status: status,
@@ -202,8 +197,7 @@
             if (confirm("Are you sure want to delete this?")) {
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('
-                    item.delete_product_category ') }}',
+                    url: '{{ route("item.delete_product_category") }}',
                     data: {
                         id: id,
                         _token: token
