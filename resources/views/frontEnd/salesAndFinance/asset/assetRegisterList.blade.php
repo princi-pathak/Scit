@@ -369,8 +369,8 @@
           <!-- End  off newJobForm -->
         </div>
         <div class="modal-footer customer_Form_Popup">
-          <a href="javascript:void(0)" onclick="getSaveData()" class="btn btn-warning"> Save</a>
           <a href="{{url('sales-finance/assets/asset-register')}}" class="btn btn-default"> Back</a>
+          <a href="javascript:void(0)" onclick="getSaveData()" class="btn btn-warning"> Save</a>
         </div>
       </form>
     </div>

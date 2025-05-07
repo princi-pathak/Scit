@@ -118,8 +118,8 @@
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" id="savedepreciation_typesModal" onclick="savedepreciation_typesModal()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="savedepreciation_typesModal" onclick="savedepreciation_typesModal()">Save</button>
             </div>
         </div>
     </div>

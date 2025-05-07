@@ -116,7 +116,7 @@
                                                 <div class="col-sm-9 pe-2">
                                                     <input type="text" class="form-control" placeholder="Your Catalogue" name="email">
                                                 </div>
-                                                <button type="button" class=" col-sm-3 btn btn-warning">Search</button>
+                                                <button type="button" class=" col-sm-3 btn btn-primary">Search</button>
                                             </div>
                                         </form>
                                     </div>
@@ -138,7 +138,7 @@
                                 <!-- <div class="border mt-2"></div> -->
                                 <div class="col-lg-12">
                                     <div class="maimTable productDetailTable mb-4 table-responsive">
-                                        <table class="table border-top border-bottom cataloguetable" cellspacing="0" width="100%">
+                                        <table class="table border-top border-bottom" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>Code</th>

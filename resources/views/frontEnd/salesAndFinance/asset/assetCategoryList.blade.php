@@ -104,8 +104,8 @@
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" id="saveassetCategoryModal" onclick="saveassetCategoryModal()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="saveassetCategoryModal" onclick="saveassetCategoryModal()">Save</button>
             </div>
         </div>
     </div>
