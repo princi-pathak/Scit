@@ -1,12 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadController;
-use App\Http\Controllers\backEnd\salesfinance\GeneralController;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteController;
 use App\Http\Controllers\frontEnd\salesFinance\CouncilTaxController as CouncilTaxController;
-use App\Http\Controllers\backEnd\superAdmin\HomeController;
+use App\Http\Controllers\frontEnd\salesFinance\item\ProductCategoryController as FrontendProductCategoryController;
 use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
 use App\Http\Controllers\frontEnd\salesFinance\DayBook\SalesController;
@@ -15,21 +13,27 @@ use App\Http\Controllers\frontEnd\salesFinance\GeneralSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
 use App\Http\Controllers\frontEnd\salesFinance\Purchase_orderController;
-use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
-use App\Http\Controllers\frontEnd\salesFinance\item\ProductCategoryController as FrontendProductCategoryController;
 use App\Http\Controllers\frontEnd\salesFinance\item\ProductController;
 use App\Http\Controllers\frontEnd\salesFinance\item\ProductGroupController;
 use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
-use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\JobController;
 use App\Http\Controllers\frontEnd\salesFinance\CreditNotesController;
-use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
-use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
-use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
 use App\Http\Controllers\frontEnd\PettyCashController;
+use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
 use App\Http\Controllers\frontEnd\salesFinance\PreInvoiceController;
 use App\Http\Controllers\Rota\StaffController;
+
+// Backend Controllers
+use App\Http\Controllers\backEnd\superAdmin\HomeController;
+use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadController;
+use App\Http\Controllers\backEnd\CustomerController as BackendCustomerController;
+use App\Http\Controllers\backEnd\salesfinance\GeneralController;
+use App\Http\Controllers\backEnd\ManagersController;
+use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
+use App\Http\Controllers\backEnd\salesfinance\InvoiceController as BackendInvoiceController;
+use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
+use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\PurchaseBackendController;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\SalesBackendController;
 use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
@@ -301,21 +305,15 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/product_modal_list', 'product_modal_list');
 	});
 
-
 	Route::get('/get-appointment-type', 'App\Http\Controllers\frontEnd\salesFinance\JobController@getActiveJobAppointment')->name('job.ajax.jobAppointment');
 
-	// Customer
-	Route::get('/customer_add_edit', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
-	Route::post('/customer_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit_save');
-	Route::get('/add_currency', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@add_currency');
-	Route::post('/default_address', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@default_address');
-	Route::post('/save_contact', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_contact');
-	Route::post('/delete_contact', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_contact');
-	Route::post('/save_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_site');
-	Route::post('/delete_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_site');
-	Route::post('/save_login', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_login');
-	Route::post('/delete_login', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_login');
-	Route::get('/customers', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@active_customer');
+	
+	// end here
+	// CRM Section Controller
+	Route::get('/complaint_type', [CrmSectionController::class, 'complaint_type']);
+
+	// Frontend Action Controller
+	Route::post('/bulk_delete', 'App\Http\Controllers\ActionController@bulk_delete');
 	Route::post('/status_change', 'App\Http\Controllers\ActionController@status_change');
 	Route::post('/task_type_status_change', 'App\Http\Controllers\ActionController@status_change');
 	Route::post('/region_status_change', 'App\Http\Controllers\ActionController@status_change');
@@ -337,14 +335,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/Department_status_change', 'App\Http\Controllers\ActionController@status_change');
 	Route::post('/account_code_status_change', 'App\Http\Controllers\ActionController@status_change');
 	Route::post('/tax_rate_status_change', 'App\Http\Controllers\ActionController@status_change');
-	Route::get('/customer_type', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type');
-	Route::post('/save_customer_type', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_customer_type');
-	Route::post('/edit_customer_type', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_customer_type');
-	Route::post('/customer_type_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type_edit_form');
-	// end here
-	// CRM Section Controller
-	Route::get('/complaint_type', [CrmSectionController::class, 'complaint_type']);
-	Route::post('/bulk_delete', 'App\Http\Controllers\ActionController@bulk_delete');
+
 	// Supplier Section
 	Route::controller(SupplierController::class)->group(function () {
 		Route::get('/suppliers', 'index');
@@ -371,6 +362,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/searchExpenses', 'searchExpenses');
 	});
 
+	// Forontend Customer Controller
 	Route::controller(CustomerController::class)->group(function () {
 		Route::post('save_crm_customer_call', 'save_crm_customer_call');
 		Route::post('get_all_crm_customer_call', 'get_all_crm_customer_call');
@@ -392,6 +384,36 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('GetFullHistory', 'GetFullHistory');
 		Route::post('getAllSite', 'getAllSite');
 		Route::post('getAllLogin', 'getAllLogin');
+		Route::post('customer_type_edit_form', 'customer_type_edit_form');
+		Route::post('edit_customer_type', 'save_customer_type');
+		Route::post('save_customer_type', 'save_customer_type');
+		Route::get('/customer_type', 'customer_type');
+		Route::get('/customers', 'active_customer');
+		Route::post('/delete_login', 'delete_login');
+		Route::post('/save_login', 'save_login');
+		Route::post('/delete_site', 'delete_site');
+		Route::post('/save_site', 'save_site');
+		Route::post('/delete_contact', 'delete_contact');
+		Route::post('/save_contact', 'save_contact');
+		Route::post('/default_address', 'default_address');
+		Route::get('/add_currency', 'add_currency');
+		Route::post('/customer_add_edit_save', 'customer_add_edit_save');
+		Route::get('/customer_add_edit', 'customer_add_edit');
+		
+		Route::prefix('customers')->group(function () {
+			Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
+			Route::get('/getCustomerList', 'getCustomerList')->name('customer.ajax.getCustomerList');
+			Route::post('/getCustomerDetails', 'getCustomerDetails')->name('customer.ajax.getCustomerDetails');
+			Route::post('/SaveCustomerContactData', 'SaveCustomerContactData')->name('customer.ajax.SaveCustomerContactData');
+			Route::get('/getCustomerJobTitle', 'getCustomerJobTitle')->name('customer.ajax.getCustomerJobTitle');
+			Route::post('/saveJobTitle', 'saveJobTitle')->name('customer.ajax.saveJobTitle');
+			Route::post('/saveCustomerSiteAddress', 'saveCustomerSiteAddress')->name('customer.ajax.saveCustomerSiteAddress');
+			Route::post('/getCustomerBillingAddress', 'getCustomerBillingAddress')->name('customer.ajax.getCustomerBillingAddress');
+			Route::post('/getCustomerBillingAddressData', 'getCustomerBillingAddressData')->name('customer.ajax.getCustomerBillingAddressData');
+			Route::post('/getCustomerSiteAddress', 'getCustomerSiteAddress')->name('customer.ajax.getCustomerSiteAddress');
+			Route::post('/getCustomerSiteDetails', 'getCustomerSiteDetails')->name('customer.ajax.getCustomerSiteDetails');
+		});
+
 	});
 
 	// Frontend Controller for setting in General section 
@@ -414,7 +436,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
 	});
 
-	// Invoice Section  Frontend
+	// Frontend Invoice Controller
 	Route::controller(InvoiceController::class)->group(function () {
 		Route::get('/account_codes', 'account_codes');
 		Route::post('/save_account_code', 'save_account_code')->name('invoice.ajax.saveAccountCode');
@@ -458,6 +480,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(Purchase_orderController::class)->group(function () {
 		Route::get('/departments', 'departments');
 		Route::post('/save_department', 'save_department');
+		Route::post('/edit_department', 'save_department');
 		Route::get('/purchase_order', 'purchase_order');
 		Route::get('/purchase_order/duplicate', 'purchase_order');
 		Route::post('/purchase_order_save', 'purchase_order_save');
@@ -577,23 +600,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		
 	});
 
-	// Forontend Customer Controller
-	Route::controller(CustomerController::class)->group(function () {
-		Route::prefix('customers')->group(function () {
-			Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
-			Route::get('/getCustomerList', 'getCustomerList')->name('customer.ajax.getCustomerList');
-			Route::post('/getCustomerDetails', 'getCustomerDetails')->name('customer.ajax.getCustomerDetails');
-			Route::post('/SaveCustomerContactData', 'SaveCustomerContactData')->name('customer.ajax.SaveCustomerContactData');
-			Route::get('/getCustomerJobTitle', 'getCustomerJobTitle')->name('customer.ajax.getCustomerJobTitle');
-			Route::post('/saveJobTitle', 'saveJobTitle')->name('customer.ajax.saveJobTitle');
-			Route::post('/saveCustomerSiteAddress', 'saveCustomerSiteAddress')->name('customer.ajax.saveCustomerSiteAddress');
-			Route::post('/getCustomerBillingAddress', 'getCustomerBillingAddress')->name('customer.ajax.getCustomerBillingAddress');
-			Route::post('/getCustomerBillingAddressData', 'getCustomerBillingAddressData')->name('customer.ajax.getCustomerBillingAddressData');
-			Route::post('/getCustomerSiteAddress', 'getCustomerSiteAddress')->name('customer.ajax.getCustomerSiteAddress');
-			// Route::post('/getCustomerSiteData', 'getCustomerSiteData')->name('customer.ajax.getCustomerSiteData');
-			Route::post('/getCustomerSiteDetails', 'getCustomerSiteDetails')->name('customer.ajax.getCustomerSiteDetails');
-		});
-	});
+
 
 	Route::controller(CouncilTaxController::class)->group(function () {
 		Route::prefix('finance')->group(function () {
@@ -1604,7 +1611,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	// Job Recurring Start
 	Route::match(['get', 'post'], '/job_recurring_list', 'App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 
-	// end here
+	// Backend Job Controller
 	Route::match(['get', 'post'], '/job_title', 'App\Http\Controllers\backEnd\JobsController@job_title');
 	Route::get('/job_title_add', 'App\Http\Controllers\backEnd\JobsController@job_title_add');
 	Route::post('/job_title_save', 'App\Http\Controllers\backEnd\JobsController@job_title_save');
@@ -1621,24 +1628,28 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/job_rejection_category_status_change', 'App\Http\Controllers\backEnd\JobsController@job_rejection_category_status_change');
 	Route::post('/job_rejection_category_delete', 'App\Http\Controllers\backEnd\JobsController@job_rejection_category_delete');
 
-	Route::match(['get', 'post'], '/customers', 'App\Http\Controllers\backEnd\CustomerController@customers');
-	Route::get('customer_add', 'App\Http\Controllers\backEnd\CustomerController@customer_add');
-	Route::match(['get', 'post'], '/customer_type', 'App\Http\Controllers\backEnd\CustomerController@customer_type');
-	Route::get('/customer_type_add', 'App\Http\Controllers\backEnd\CustomerController@customer_type_add');
-	Route::post('/customer_type_save', 'App\Http\Controllers\backEnd\CustomerController@customer_type_save');
-	Route::post('/customer_type_status_change', 'App\Http\Controllers\backEnd\CustomerController@customer_type_status_change');
-	Route::post('/customer_type_delete', 'App\Http\Controllers\backEnd\CustomerController@customer_type_delete');
-	Route::post('/customer_save', 'App\Http\Controllers\backEnd\CustomerController@customer_save');
-	Route::post('/customer_contact_save', 'App\Http\Controllers\backEnd\CustomerController@customer_contact_save');
-	Route::post('/customer_site_save', 'App\Http\Controllers\backEnd\CustomerController@customer_site_save');
-	Route::post('/customer_login_save', 'App\Http\Controllers\backEnd\CustomerController@customer_login_save');
-	Route::post('/customer_status_change', 'App\Http\Controllers\backEnd\CustomerController@customer_status_change');
-	Route::post('/customer_delete', 'App\Http\Controllers\backEnd\CustomerController@customer_delete');
-	Route::post('/default_address', 'App\Http\Controllers\backEnd\CustomerController@default_address');
-	Route::post('/delete_contact', 'App\Http\Controllers\backEnd\CustomerController@delete_contact');
-	Route::post('/delete_site', 'App\Http\Controllers\backEnd\CustomerController@delete_site');
-	Route::post('/delete_login', 'App\Http\Controllers\backEnd\CustomerController@delete_login');
-
+	// Backend CustomerController
+	Route::controller(BackendCustomerController::class)->group(function () {
+		Route::match(['get', 'post'], '/customers', 'customers');
+		Route::get('customer_add', 'customer_add');
+		Route::match(['get', 'post'], '/customer_type', 'customer_type');
+		Route::get('/customer_type_add', 'customer_type_add');
+		Route::post('/customer_type_save', 'customer_type_save');
+		Route::post('/customer_type_status_change', 'customer_type_status_change');
+		Route::post('/customer_type_delete', 'customer_type_delete');
+		Route::post('/customer_save', 'customer_save');
+		Route::post('/customer_contact_save', 'customer_contact_save');
+		Route::post('/customer_site_save', 'customer_site_save');
+		Route::post('/customer_login_save', 'customer_login_save');
+		Route::post('/customer_status_change', 'customer_status_change');
+		Route::post('/customer_delete', 'customer_delete');
+		Route::post('/default_address', 'default_address');
+		Route::post('/delete_contact', 'delete_contact');
+		Route::post('/delete_site', 'delete_site');
+		Route::post('/delete_login', 'delete_login');
+		Route::get('/getCustomerList', 'getCustomerList');
+	});
+	
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');
 	Route::match(['get', 'post'], '/user/task-allocation/add/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@add');
@@ -2139,16 +2150,27 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/purchase-expenses-type-edit/{id}','editPurchaseExpensesType');
 			Route::get('/getSupplierData', 'getSupplierData')->name('purchase.getSupplierData');
 			Route::get('/getPurchaseExpense', 'getPurchaseExpense')->name('purchase.getPurchaseExpense');
-			Route::get('/getTaxRate', 'getActiveTaxRate');
 			Route::get('purchase-day-book-reclaim-per', 'purchase_day_book_reclaim_per')->name('backend.purchase.purchaseDayBookReclaimPer');
 			Route::get('reclaimPercantage', 'reclaimPercantage')->name('purchase.reclaimPercantage');
 		});
 	}));
+
+	Route::controller(BackendInvoiceController::class)->group((function(){
+		Route::prefix('sales-finance/sales')->group(function(){
+			Route::get('/getTaxRate','getActiveTaxRate');
+			
+		});
+	}));
+	
+
 	// Backend DayBook Sales Controller
 	Route::controller(SalesBackendController::class)->group((function(){
 		Route::prefix('sales-finance/sales')->group(function(){
-			Route::get('/sales-day-book','index');
+			Route::get('/sales-day-book','index')->name('backend.sales_day_book.index');
 			Route::get('/sales-day-book-add','create');
+			Route::get('/save-sales-day-book','store');
+
+			
 		});
 	}));
 	Route::controller(CouncilBackendController::class)->group((function(){
