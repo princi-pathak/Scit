@@ -19,6 +19,7 @@
     text-align: center;
     font-weight: 600 !important;
   }
+  
 </style>
 
 <!--main content start-->
@@ -37,7 +38,7 @@
                 <a href="javascript:void(0)" class="btn btn-warning" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
                 <a href="javascript:void(0)" class="btn btn-warning">Export</a>
                 <div class="searchFilter">
-                  <a href="#!" onclick="hideShowDiv()" class="btn btn-warning">Search</a>
+                  <a href="#!" onclick="hideShowDiv()" class="btn btn-primary">Search</a>
                 </div>
               </div>
               <div>
@@ -80,9 +81,9 @@
                             </div>
                             <div class="col-md-12">
                               <div class="pageTitleBtn justify-content-center">
-                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning px-3">Search </a>
+                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-primary px-3">Search </a>
                                 <!-- <button type="submit" class="btn btn-warning px-3" onclick="return searchBtn()">Search</button> -->
-                                <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="btn btn-warning px-3">Clear</a>
+                                <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="btn btn-default px-3 ms-2">Clear</a>
                               </div>
                             </div>
                           </div>
@@ -105,14 +106,14 @@
                       <th>#</th>
                       <th class="border-end">Asset Name</th>
                       <th class="border-end">Date</th>
-                      <th colspan="4" class="border-end">Cost</th>
-                      <th colspan="4" class="border-end">Depreciation</th>
-                      <th colspan="2">N.B.V</th>
-                      <th colspan="2">Action</th>
+                      <th colspan="4" class="border-end text-center">Cost</th>
+                      <th colspan="4" class="border-end text-center">Depreciation</th>
+                      <th colspan="2" class="border-end text-center">N.B.V</th>
+                      <th colspan="2">Actions</th>
                     </tr>
                     <tr>
                       <th></th>
-                      <th class=""></th>
+                      <th class="border-end"></th>
                       <th class="border-end"></th>
                       <th>B/fwd</th>
                       <th>Additions</th>
@@ -123,7 +124,8 @@
                       <th>Charge</th>
                       <th class="border-end">C/fwd</th>
                       <th>B/fwd</th>
-                      <th colspan="2" class="text-start">C/fwd</th>
+                      <th class="text-start border-end">C/fwd</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody id="assetRegisterList">
@@ -152,18 +154,18 @@
                     ?>
                       <tr>
                         <td>{{++$key}}</td>
-                        <td>{{$val->asset_name}}</td>
-                        <td>{{ date('d/m/Y', strtotime($val->date)) }}</td>
+                        <td class="border-end">{{$val->asset_name}}</td>
+                        <td class="border-end">{{ date('d/m/Y', strtotime($val->date)) }}</td>
                         <td>{{ $val->cost_bfwd ? '£' . $val->cost_bfwd : '' }}</td>
                         <td>{{ $val->cost_disposal ? '£' . $val->cost_disposal : ''}}</td>
                         <td>{{ $val->cost_addition ? '£' . $val->cost_addition : ''}}</td>
-                        <td>{{ $val->cost_fwd ? '£' . $val->cost_fwd : ''}}</td>
+                        <td class="border-end">{{ $val->cost_fwd ? '£' . $val->cost_fwd : ''}}</td>
                         <td>{{ $val->depreciation_bfwd  ? '£' . $val->depreciation_bfwd : ''}}</td>
                         <td>{{ $val->depreciation  ? '£' . $val->depreciation : ''}}</td>
                         <td>{{ $val->charge  ? '£' . $val->charge : ''}}</td>
-                        <td>{{ $val->depreciation_cfwd  ? '£' . $val->depreciation_cfwd : ''}}</td>
+                        <td class="border-end">{{ $val->depreciation_cfwd  ? '£' . $val->depreciation_cfwd : ''}}</td>
                         <td>{{ $val->nbv_bfwd  ? '£' . $val->nbv_bfwd : ''}}</td>
-                        <td>{{ $val->nbv_cfwd  ? '£' . $val->nbv_cfwd : ''}}</td>
+                        <td class="border-end">{{ $val->nbv_cfwd  ? '£' . $val->nbv_cfwd : ''}}</td>
                         <td> <a href="{{url('sales-finance/assets/asset-register-edit?key=' . base64_encode($val->id))}}" class="openModalBtn"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
                           <a href="#!" class="register_delete" data-id="{{$val->id}}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                         </td>
@@ -187,18 +189,19 @@
                   <tfoot>
                     <tr id="footer_table">
                       <th></th>
-                      <th></th>
-                      <th>Total:</th>
+                      <th class="border-end"></th>
+                      <th class="border-end">Total:</th>
                       <th id="tablecost_bfwd">£{{number_format($cost_bfwd, 2)}}</th>
                       <th id="tablecost_disposal">£{{number_format($cost_disposal,2)}}</th>
                       <th id="tablecost_addition">£{{number_format($cost_addition,2)}}</th>
-                      <th id="tablecost_fwd">£{{number_format($cost_fwd,2)}}</th>
+                      <th id="tablecost_fwd" class="border-end">£{{number_format($cost_fwd,2)}}</th>
                       <th id="tabledepreciation_bfwd">£{{number_format($depreciation_bfwd,2)}}</th>
                       <th id="tabledepreciation">£{{number_format($depreciation,2)}}</th>
                       <th id="tablecharge">£{{number_format($charge,2)}}</th>
-                      <th id="tabledepreciation_cfwd">£{{number_format($depreciation_cfwd,2)}}</th>
+                      <th id="tabledepreciation_cfwd" class="border-end">£{{number_format($depreciation_cfwd,2)}}</th>
                       <th id="tablenbv_bfwd">£{{number_format($nbv_bfwd,2)}}</th>
-                      <th id="tablenbv_cfwd" colspan="2" class="text-start">£{{number_format($nbv_cfwd,2)}}</th>
+                      <th id="tablenbv_cfwd" class="text-start border-end">£{{number_format($nbv_cfwd,2)}}</th>
+                      <th></th>
                     </tr>
                   </tfoot>
                 </table>

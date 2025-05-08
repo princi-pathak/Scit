@@ -19,7 +19,7 @@
                                 <a href="#" class="btn btn-warning" onclick="itemsAddProductModal(1)"><i class="fa fa-plus"></i> Add </a>
                                 <a href="{{url('/item/products/active')}}" class="btn btn-warning">Active ({{count($product)}})</a>
                                 <a href="{{url('/item/products/inactive')}}" class="btn btn-warning">Inactive ({{count($product_inactive)}})</a>
-                                <input type="button" class="btn btn-warning" id="getCheckedValues" value="Delete">
+                                <input type="button" class="btn btn-danger" id="getCheckedValues" value="Delete">
                                 <span class="text-danger text-center deletemsg"></span>
                             </div>
                         </div>

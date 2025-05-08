@@ -46,7 +46,7 @@
                         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                             <div class="jobsection justify-content-end">
                                 <a href="javascript:void(0)" class="btn btn-warning" onclick="open_productgroupmodal()"><i class="fa fa-plus"></i> Add</a>
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
                                 <span class="text-danger text-center deletemsg"></span>
                             </div>
                         </div>
@@ -705,7 +705,7 @@
                     noDataRow.id = 'EmptyError'
                     const noDataCell = document.createElement('td');
                     noDataCell.setAttribute('colspan', 7);
-                    noDataCell.innerHTML = '<span class="text-center" style="color:#e10078;">Sorry, there are no items available</span>';
+                    noDataCell.innerHTML = '<span class="text-center" style="color:#dc3545;">Sorry, there are no items available</span>';
                     noDataCell.style.textAlign = 'center';
                     noDataRow.appendChild(noDataCell);
                     tableBody.appendChild(noDataRow);

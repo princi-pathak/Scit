@@ -562,7 +562,7 @@
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #dc3545; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",

@@ -59,6 +59,7 @@
         cursor: pointer;
     }
 </style>
+
 <div class="modal fade" id="itemsAddCatalogueModal" tabindex="-1" data-backdrop="static" data-keyboard="false"
     aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -158,19 +159,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer customer_Form_Popup">
-                    <!-- <input type="hidden" name="productID" id="productID">
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <!-- <input type="hidden" name="productID" id="productID">
                 <input type="hidden" name="producttype" id="producttype"> -->
-                    <input type="hidden" name="TabId" id="TabId" value="0">
-                    <input type="hidden" name="catalogue_id" id="catalogue_id">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-warning" id="submitCatalogue">Save</button>
-                </div>
+                <input type="hidden" name="TabId" id="TabId" value="0">
+                <input type="hidden" name="catalogue_id" id="catalogue_id">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="submitCatalogue">Save</button>
             </div>
         </div>
     </div>
 </div>
+
 @include('components.product-list')
+
 <script>
     $('.tab-menu li a').on('click', function() {
         var $this = $(this);
@@ -190,6 +193,7 @@
         return false;
     });
 </script>
+
 <script>
     function itemsAddCatalogueModal(th, id = null) {
         // $("#productform")[0].reset();        
@@ -199,6 +203,7 @@
         $('#itemsAddCatalogueModal').modal('show');
     }
 </script>
+
 <script>
     function getProductData(selectedId) {
         $.ajax({

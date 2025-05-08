@@ -39,7 +39,7 @@
                         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                             <div class="jobsection justify-content-end">
                                 <a href="#" class="btn btn-warning" onclick="additemsCatagoryModal(1)"><i class="fa fa-plus"></i> Add </a>
-                                <input type="button" class="btn btn-warning" id="getCheckedValues" value="Delete">
+                                <input type="button" class="btn btn-danger" id="getCheckedValues" value="Delete">
                                 <span class="text-danger text-center deletemsg"></span>
                             </div>
                         </div>
