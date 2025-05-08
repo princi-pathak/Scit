@@ -1,5 +1,106 @@
 $(document).ready(function() {
-    const table = $('#expend_cash_table').DataTable({
+    $.ajax({
+        type: "get",
+        url: getAllExpendCash,
+        data: {_token:token},
+        success: function(response) {
+            console.log(response);
+            // return false;
+            if (response.success === true) {
+                const data = response.data;
+                const expendCard = data.expendCard;
+                const previousData = data.previous_month_data;
+                const cash = parseFloat(data.cash ?? 0);
+                let tbody = $('#expend_result');
+                tbody.empty();
+    
+                let index = 0;
+                let enterInLoop = 0;
+                let totalBalancebfwd = 0;
+                let totalBalanceFund = 0;
+                let sumPurchaseCashIn = 0;
+                let date = null;
+    
+                // Append previous month data row if exists
+                // if (previousData && parseFloat(previousData.previousbalanceOnCard) !== 0) {
+                //     enterInLoop = 1;
+                //     tbody.append(`
+                //         <tr>
+                //             <td>${++index}</td>
+                //             <td>${previousData.prvious_date}</td>
+                //             <td>£${previousData.previousbalanceOnCard}</td>
+                //             <td>£${previousData.previousfundAmount}</td>
+                //             <td></td>
+                //             <td></td>
+                //             <td></td>
+                //             <td></td>
+                //             <td></td>
+                //             <td></td>
+                //         </tr>
+                //     `);
+                // }
+    
+                expendCard.forEach((val) => {
+                    let purchaseAmount = parseFloat(val.purchase_amount ?? 0);
+                    let fundAdded = parseFloat(val.fund_added ?? 0);
+                    let balanceBfwd = parseFloat(val.balance_bfwd ?? 0);
+                    let expendDate = new Date(val.expend_date);
+                    let dbMonth = expendDate.getMonth();
+    
+                    sumPurchaseCashIn += purchaseAmount;
+                    totalBalanceFund += fundAdded;
+    
+                    if (enterInLoop === 0) {
+                        totalBalancebfwd = balanceBfwd;
+                        enterInLoop = 1;
+                    }
+    
+                    let showBalanceBfwd = '';
+                    if (date !== dbMonth || date === null) {
+                        date = dbMonth;
+                        showBalanceBfwd = `£${balanceBfwd}`;
+                    }
+    
+                    tbody.append(`
+                        <tr>
+                            <td>${++index}</td>
+                            <td>${val.expend_date}</td>
+                            <td>${showBalanceBfwd}</td>
+                            <td>${val.fund_added ? '£' + val.fund_added : ''}</td>
+                            <td>£${val.purchase_amount}</td>
+                            <td>${val.card_details ?? ''}</td>
+                            <td>
+                                <a href="/public/images/finance_petty_cash/${val.receipt}" target="_blank">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+                            <td>${val.dext == 1 ? 'Yes' : 'No'}</td>
+                            <td>${val.invoice_la == 1 ? 'Yes' : 'No'}</td>
+                            <td>${val.initial ?? ''}</td>
+                        </tr>
+                    `);
+                });
+    
+                // Final calculation
+                let previousBalance = parseFloat(previousData.previousbalanceOnCard ?? 0);
+                let sum = (totalBalancebfwd === 0) ? (totalBalanceFund + previousBalance) : (totalBalanceFund + totalBalancebfwd);
+                let calculation = sum - sumPurchaseCashIn;
+                let balanceOnCard = calculation - cash;
+    
+                $('#totalBalanceOnCard').val(parseFloat(balanceOnCard.toFixed(2)));
+                $('#totalBalancebfwd').text(`£${totalBalancebfwd ? totalBalancebfwd : previousData.previousbalanceOnCard}`);
+                var grandTotalBalanceFund=totalBalanceFund + parseFloat(previousData.previousfundAmount ?? 0);
+                $('#totalBalanceFund').text(`£${totalBalanceFund}`);
+                $('#sumPurchaseCashIn').text(`£${sumPurchaseCashIn.toFixed(2)}`);
+                $("#balanceOnCard").text("£" + parseFloat(balanceOnCard.toFixed(2)));
+            }
+        },
+        error: function(xhr, status, error) {
+            var errorMessage = xhr.status + ': ' + xhr.statusText;
+            alert('Error - ' + errorMessage + "\nMessage: " + error);
+        }
+    });
+    const table = $('#expend_cash_table123').DataTable({
         dom: 'Blfrtip',
         buttons: [
             {
@@ -13,8 +114,6 @@ $(document).ready(function() {
         ],
         footerCallback: function (row, data, start, end, display) {
             var api = this.api();
-    
-            // Helper to parse numbers safely
             var intVal = function (i) {
                 return typeof i === 'string'
                     ? parseFloat(i.replace(/[£,]/g, '')) || 0
@@ -23,12 +122,12 @@ $(document).ready(function() {
                     : 0;
             };
     
-            // Columns to total: netAmount (3), vatAmount (4), grossAmount (5), finalAmount (7), reclaim (8), notReclaim (9), expenseAmount (11)
-            var columnsToTotal = [3, 4, 5, 7, 8, 9, 11];
+            
+            var columnsToTotal = [3];
     
             columnsToTotal.forEach(function (colIdx) {
                 var total = api
-                    .column(colIdx, { page: 'current' }) // only current page; remove this if you want all pages
+                    .column(colIdx, { page: 'current' })
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
