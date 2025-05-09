@@ -145,7 +145,7 @@
                                 <a href="{{url('expenses')}}" class="btn btn-warning bgcolor" id="bgcolor5">All ({{$expenseCount}})</a>
                                 <!-- <a href="#" class="btn btn-warning" id="impExpClickbtnPopup">Import/Export</a> -->
                                 <div class="searchFilter">
-                                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Show Search Filter</a>
+                                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn btn btn-default2">Show Search Filter</a>
                                 </div>
                             </div>
                         </div>
