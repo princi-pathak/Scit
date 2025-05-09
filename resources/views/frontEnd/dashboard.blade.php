@@ -42,7 +42,7 @@
                     <div class="profile-nav alt">
                             <!-- #PoliProcModal -->
                             <section class="panel text-center">
-                                <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-book"></i></div>
+                                <div class="user-heading alt wdgt-row lavender_pink"> <i class="fa fa-book"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Daily Log</h1>
@@ -89,7 +89,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-group"></i> </div>
+                                <div class="user-heading alt wdgt-row grayish_green"> <i class="fa fa-group"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Rota Management</h1>
@@ -120,7 +120,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">
-                                <div class="user-heading alt wdgt-row bg-purple"> <i class="fa fa-group"></i> </div>
+                                <div class="user-heading alt wdgt-row bg-jamni"> <i class="fa fa-group"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Staff Management</h1>
@@ -181,7 +181,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-briefcase"></i></div>
+                                <div class="user-heading alt wdgt-row orange-bg"> <i class="fa fa-briefcase"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Sales</h1>
@@ -209,7 +209,7 @@
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <div class="panel text-center">
-                                <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-money"></i></div>
+                                <div class="user-heading alt wdgt-row alert-bg-green"> <i class="fa fa-money"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Finance</h1>

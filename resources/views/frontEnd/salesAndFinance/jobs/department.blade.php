@@ -118,12 +118,11 @@
                         <div class="formDtail">
                             <form id="form_data">
                                 <input type="hidden" name="id" id="id">
-                                <div class="mb-2">
+                                <div class="mb-3">
                                     <label class="mb-2 col-form-label">Department <span class="radStar ">*</span></label>
                                     <input type="text" class="form-control editInput" id="title" name="title" value="">
                                 </div>
-
-                                <div class="mb-2">
+                                <div class="mb-3">
                                     <label class="mb-2 col-form-label">Status</label>
                                     <select class="form-control editInput selectOptions" id="statusModal" name="status">
                                         <option value="1">Active</option>

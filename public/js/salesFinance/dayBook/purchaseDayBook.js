@@ -130,7 +130,8 @@ $(document).ready(function() {
             table.row.add([
                 index + 1,
                 item.customer_name ?? '',
-                item.date ?? '',
+                // item.date ?? '',
+                `<span class="white_space_nowrap">${item.date ?? ''}</span>`,
                 item.netAmount ?? '',
                 item.vatAmount ?? '',
                 '£' + (item.grossAmount ?? ''),

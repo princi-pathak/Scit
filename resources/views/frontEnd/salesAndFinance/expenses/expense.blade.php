@@ -145,8 +145,9 @@
                                 <a href="{{url('expenses')}}" class="btn btn-warning bgcolor" id="bgcolor5">All ({{$expenseCount}})</a>
                                 <!-- <a href="#" class="btn btn-warning" id="impExpClickbtnPopup">Import/Export</a> -->
                                 <div class="searchFilter">
-                                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn btn btn-warning">Hide Search Filter</a>
+                                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Hide Search Filter</a>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -197,8 +198,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="pageTitleBtn justify-content-center">
-                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning">Search </a>
-                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-warning ms-3">Clear</a>
+                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-primary">Search </a>
+                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default ms-3">Clear</a>
                                             </div>
                                         </div>
                                     </div>
@@ -206,24 +207,18 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="jobsection justify-content-end">
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
-                                <!-- <div class="pageTitleBtn p-0">
+                            <!-- <div class="jobsection justify-content-end">
+                                <div class="pageTitleBtn p-0">
                                     <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle btn btn-warning"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            Bulk Action </a>
+                                        <a href="#" class="nav-link dropdown-toggle btn btn-warning" data-bs-toggle="dropdown" aria-expanded="false"> Bulk Action </a>
                                         <div class="dropdown-menu fade-up m-0">
-                                            <a href="#" class="dropdown-item col-form-label">Set Accont
-                                                Codes</a>
-                                            <a href="#" class="dropdown-item col-form-label">Set Tax
-                                                Rats</a>
-                                            <a href="#" class="dropdown-item col-form-label">Fix duplicate
-                                                product codes</a>
+                                            <a href="#" class="dropdown-item col-form-label">Set Accont Codes</a>
+                                            <a href="#" class="dropdown-item col-form-label">Set Tax Rats</a>
+                                            <a href="#" class="dropdown-item col-form-label">Fix duplicate product codes</a>
                                         </div>
                                     </div>
-                                </div> -->
-                            </div>
+                                </div>
+                            </div> -->
                             @if(session('message'))
                             <div class="alert alert-success text-center success_message mt-3 m-auto" style="height:50px; width:50%">
                                 <p>{{ session('message') }}</p>
@@ -231,6 +226,9 @@
                             @endif
 
                             <div class="maimtable productDetailTable mb-4  table-responsive">
+                            <div class="delete_table_row">
+                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
+                                </div>
                                 <table class="table border-top border-bottom tablechange" id="exampleOne">
                                     <thead>
                                         <tr>
@@ -1064,7 +1062,7 @@
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #dc3545; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",

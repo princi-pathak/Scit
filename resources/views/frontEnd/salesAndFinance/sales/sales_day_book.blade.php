@@ -43,18 +43,18 @@
                                     <tbody>
                                     </tbody>
                                     <tfoot>
-                                    <tr>
-                                        <th style="text-align:right">Total:</th>
-                                        <th></th> 
-                                        <th></th> 
-                                        <th></th> 
-                                        <th></th> 
-                                        <th></th> 
-                                        <th></th> 
-                                        <th></th> 
-                                        <th></th>
-                                        <!-- <th></th> -->
-                                    </tr>
+                                        <tr>
+                                            <th style="text-align:right">Total:</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <!-- <th></th> -->
+                                        </tr>
                                     </tfoot>
                                 </table>
                             </div>
@@ -79,7 +79,7 @@
                 <div id="error-div"></div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group">
                                 <input type="hidden" name="sales_day_book_id" id="sales_day_book_id">
                                 <label> Customer <span class="radStar">*</span></label>
@@ -100,6 +100,8 @@
                                 <label> Net <span class="radStar">*</span></label>
                                 <input type="text" class="form-control editInput" id="net_amount" name="netAmount" placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                             </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group">
                                 <label>VAT <span class="radStar">*</span></label>
                                 <input type="hidden" id="tax_id">

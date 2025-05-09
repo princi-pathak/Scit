@@ -95,7 +95,7 @@ function getSaveData() {
     }
 }
 function openAssetCategoryModal() {
-    $("#assetCategoryModalLabel").text("Add Asset Category");
+    $("#assetCategoryModalLabel").text("Add Asset Categories");
     $("#assetCategoryForm")[0].reset();
     $("#id").val('');
     $("#assetCategoryModal").modal('show');
@@ -153,7 +153,7 @@ function saveassetCategoryModal() {
 }
 $(document).on('click', '.assetCatemodal_dataFetch', function () {
     // alert()
-    $("#assetCategoryModalLabel").text("Edit Asset Category");
+    $("#assetCategoryModalLabel").text("Edit Asset Categories");
     var id = $(this).data('id');
     var name = $(this).data('name');
     var status = $(this).data('status');
