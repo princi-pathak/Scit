@@ -13,20 +13,16 @@
                     <header class="panel-heading px-5">
                         <h4>Product </h4>
                     </header>
-
                     <div class="panel-body">
-
                         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                             <div class="jobsection justify-content-end">
-                                <a href="#" class="btn btn-green" onclick="itemsAddProductModal(1)"><i class="fa fa-plus"></i> Add </a>
+                                <a href="#" class="btn btn-warning" onclick="itemsAddProductModal(1)"><i class="fa fa-plus"></i> Add </a>
                                 <a href="{{url('/item/products/active')}}" class="btn btn-warning">Active ({{count($product)}})</a>
                                 <a href="{{url('/item/products/inactive')}}" class="btn btn-warning">Inactive ({{count($product_inactive)}})</a>
-                                <input type="button" class="btn profileDrop" id="getCheckedValues" value="Delete">
+                                <input type="button" class="btn btn-danger" id="getCheckedValues" value="Delete">
                                 <span class="text-danger text-center deletemsg"></span>
                             </div>
                         </div>
-
-
                         <!--Start Import/Export Popup -->
                         {{-- <div id="importExportpopup" class="importExportMrgin">
                             <div class="popup-content">
@@ -45,7 +41,6 @@
                                                     <li id="payment"><strong>Upload</strong></li>
                                                     <li id="confirm"><strong>Summary</strong></li>
                                                 </ul>
-
                                                 <fieldset>
                                                     <div class="form-card">
                                                         <div class="newJobForm p-3 mb-3">
@@ -66,7 +61,6 @@
                                                     </div>
                                                     <input type="button" name="next" class="next action-button" value="Next" />
                                                 </fieldset>
-
                                                 <fieldset>
                                                     <div class="form-card">
                                                         <label class="fieldlabels">First Name: *</label> <input type="text" />
@@ -74,8 +68,6 @@
                                                     <input type="button" name="next" class="next action-button" value="Next" />
                                                     <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                                                 </fieldset>
-
-
                                                 <fieldset>
                                                     <div class="form-card">
                                                         <label class="fieldlabels">Upload Your Photo:</label>
@@ -84,8 +76,6 @@
                                                     <input type="button" name="next" class="next action-button" value="Submit" /> 
                                                     <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                                                 </fieldset>
-
-
                                                 <fieldset>
                                                     <div class="form-card">
                                                         <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
@@ -107,15 +97,12 @@
                             </div>
                         </div> --}}
                         <!-- End off Import/Export Popup -->
-
-                   
                         <div class="col-lg-12">
-                            <div class="maimTable mt-2">
-
-                                <table id="myTable" class="display tablechange" cellspacing="0" width="100%">
+                            <div class="maimTable productDetailTable mb-4 table-responsive">
+                                <table id="myTable" class="table border-top border-bottom" cellspacing="0" width="100%">
                                     <thead>
-                                        <tr>
-                                            <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> </label></th>
+                                        <tr class="white_space_nowrap">
+                                            <th><input type="checkbox" id="selectAll"> <label for="selectAll"> </label></th>
                                             <th>#</th>
                                             <th>Product Name</th>
                                             <th>Product Code</th>
@@ -130,63 +117,48 @@
                                             <th>Created On</th>
                                             <th>Last Updated On</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         @php
-                                            $i = 1;
+                                        $i = 1;
                                         @endphp
                                         @foreach ($product_list_array as $product_value)
-                                            <tr>
-                                                <td class="text-center"><input type="checkbox" class="checkproductcategory" name="checkproductcategory{{ $i }}" id="checkproductcategory{{ $i }}" value="{{ $product_value['id'] }}" ></td>
-                                                <td>{{$i}}</td>
-                                                <td>{{ $product_value['product_name'] }}</td>
-                                                <td>{{ $product_value['product_code'] }}</td>
-                                                <td>{{ $product_value['product_type_name'] }}</td>
-                                                <td>{{ $product_value['cat_name'] }}</td>
-                                                <td>{{ $product_value['description'] }}</td>
-                                                <td>{{ $product_value['customer_name'] }}</td>
-                                                <td>{{ $product_value['cost_price'] }} </td>
-                                                <td>{{ $product_value['margin'] }}</td>
-                                                <td>{{ $product_value['price'] }} </td>
-                                                <td>{{ $product_value['tax_rate_value'] }}</td>
-                                                <td>{{ $product_value['created_at'] }}</td>
-                                                <td>{{ $product_value['updated_at'] }}</td>
-
-                                                <td>
-                                                    @if ($product_value['status'] == 1)
-                                                        <span class="grencheck"
-                                                            onclick="changeproductstatus({{ $product_value['id'] }},0)"><i
-                                                                class="fa fa-check-circle"></i></span>
-                                                    @else
-                                                        <span class="graycheck"
-                                                            onclick="changeproductstatus({{ $product_value['id'] }},1)"><i
-                                                                class="fa fa-check-circle"></i></span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <div class="pageTitleBtn p-0">
-                                                        <div class="nav-item dropdown">
-                                                            <a href="#" class="btn btn-warning"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </a>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @php
-                                                $i++;
-                                            @endphp
+                                        <tr>
+                                            <td><input type="checkbox" class="checkproductcategory" name="checkproductcategory{{ $i }}" id="checkproductcategory{{ $i }}" value="{{ $product_value['id'] }}"></td>
+                                            <td>{{$i}}</td>
+                                            <td>{{ $product_value['product_name'] }}</td>
+                                            <td>{{ $product_value['product_code'] }}</td>
+                                            <td>{{ $product_value['product_type_name'] }}</td>
+                                            <td>{{ $product_value['cat_name'] }}</td>
+                                            <td>{{ $product_value['description'] }}</td>
+                                            <td>{{ $product_value['customer_name'] }}</td>
+                                            <td>{{ $product_value['cost_price'] }} </td>
+                                            <td>{{ $product_value['margin'] }}</td>
+                                            <td>{{ $product_value['price'] }} </td>
+                                            <td>{{ $product_value['tax_rate_value'] }}</td>
+                                            <td>{{ $product_value['created_at'] }}</td>
+                                            <td>{{ $product_value['updated_at'] }}</td>
+                                            <td>
+                                                @if ($product_value['status'] == 1)
+                                                <span class="grencheck"
+                                                    onclick="changeproductstatus({{ $product_value['id'] }},0)"><i
+                                                        class="fa fa-check-circle"></i></span>
+                                                @else
+                                                <span class="graycheck"
+                                                    onclick="changeproductstatus({{ $product_value['id'] }},1)"><i
+                                                        class="fa fa-check-circle"></i></span>
+                                                @endif
+                                            </td>
+                                            <td><a href="#"> <i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                                        </tr>
+                                        @php
+                                        $i++;
+                                        @endphp
                                         @endforeach
-
                                     </tbody>
                                 </table>
-
-                                
-
-
-                                
                             </div> <!-- End off main Table -->
                         </div>
                     </div>
@@ -195,9 +167,6 @@
         </div>
     </div>
 </section>
-
-
-
 
 <script>
     function changeproductstatus(id, status) {
@@ -226,10 +195,10 @@
         //alert("Checked values: " + checkedValues.join(", "));
         var id = checkedValues.join(", ");
         var token = "<?= csrf_token() ?>";
-        if(id==""){
+        if (id == "") {
             $('.deletemsg').text("Please select product");
             return false;
-        }else{
+        } else {
             if (confirm("Are you sure want to delete this?")) {
                 $.ajax({
                     type: 'POST',
@@ -262,7 +231,7 @@
         });
     });
 
-    checkboxes.forEach(checkbox => {       
+    checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             $('.deletemsg').text("");
             if (!this.checked) {

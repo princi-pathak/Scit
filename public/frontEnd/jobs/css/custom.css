@@ -294,6 +294,7 @@ a.overdueJobsFolder i {
   border: 1px solid #eee;
   margin-top: 12px;
   margin-bottom: 15px;
+  position: relative;
 }
 
 .maimTable div#exampleOne_length {
@@ -838,11 +839,13 @@ span.supCirle.productIcon i {
 .grayCheck i {
   color: #8b8b8b;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .grencheck i {
   color: #039b1c;
   font-size: 20px;
+  cursor: pointer;
 }
 
 footer.mainFooter {
@@ -1529,7 +1532,7 @@ canvas#canv1 {
 }
 
 .radStar {
-  color: #f00;
+  color: #dc3545;
 }
 
 /* forrmOuter */
@@ -3281,7 +3284,7 @@ div.dt-container select.dt-input {
 }
 
 .separate_section {
-  /* padding: 15px; */
+  padding: 15px 0;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   margin-bottom: 20px;
 }
@@ -3432,3 +3435,17 @@ label {
   position: unset;
   clear: both;
 } */
+
+.btn-danger {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #FFFFFF !important;
+}
+
+.delete_table_row {
+  position: absolute;
+  right: 0;
+  margin: 10px;
+  cursor: pointer;
+  z-index: 999;
+}

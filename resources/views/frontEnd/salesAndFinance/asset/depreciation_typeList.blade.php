@@ -18,7 +18,7 @@
                             <div class="jobsection justify-content-end">
                                     <a href="javascript:void(0)" onclick="opendepreciation_typesModal()" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a>
                                     <a href="javascript:void(0)" class="btn btn-warning">Export</a>
-                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
+                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
                             </div>
                             <div class="maimtable productDetailTable mb-4 table-responsive">
                                 <div class="alert success-message text-center" id="msg" style="display:none;height:50px">
@@ -98,7 +98,7 @@
                                                     <span>%</span>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-11 ps-0">
+                                            <div class="col-sm-11">
                                                 <input type="text" class="form-control editInput numberInput" id="percentage" name="percentage" value="">
                                             </div>
                                         </div>
@@ -118,8 +118,8 @@
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" id="savedepreciation_typesModal" onclick="savedepreciation_typesModal()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="savedepreciation_typesModal" onclick="savedepreciation_typesModal()">Save</button>
             </div>
         </div>
     </div>
