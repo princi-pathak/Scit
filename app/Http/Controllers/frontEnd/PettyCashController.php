@@ -372,4 +372,32 @@ class PettyCashController extends Controller
         // echo "<pre>";print_r($html_data);die;
         return response()->json(['success'=>true,'message'=>'Filtered Data','data'=>$search_data,'html_data'=>$html_data,'balanceOnCard'=>$balanceOnCard,'totalBalancebfwd'=>($totalBalancebfwd) ? $totalBalancebfwd: $previous_month_data['previousbalanceOnCard'],'totalBalanceFund'=>$totalBalanceFund,'sumPurchaseCashIn'=>$sumPurchaseCashIn]);
     }
+    public function getAllExpendCash(){
+        try{
+            $home_id=Auth::user()->home_id;
+            $user_id=Auth::user()->id;
+            $data['previous_month_data']=$this->previous_month_data($home_id,$user_id);
+            // $data['expendCardLastData'] = ExpendCard::getAllExpendCard($home_id, $user_id)
+            // ->whereMonth('expend_date', now()->month)
+            // ->whereYear('expend_date', now()->year)
+            // ->orderBy('id','desc')->first();
+            $data['expendCardLastData'] = ExpendCard::getAllExpendCard($home_id, $user_id)
+            ->whereMonth('expend_date', now()->month)
+            ->whereYear('expend_date', now()->year)
+            ->orderBy('id','desc')->first();
+
+            $data['expendCard'] = ExpendCard::getAllExpendCard($home_id, $user_id)
+            ->whereMonth('expend_date', now()->month)
+            ->whereYear('expend_date', now()->year)
+            ->get();
+
+            $data['cash']=Cash::getAllCash($home_id,$user_id)
+            ->whereMonth('cash_date', now()->month)
+            ->whereYear('cash_date', now()->year)
+            ->sum('petty_cashIn');
+            return response()->json(['success'=>true,'message'=>'Expend card data','data'=>$data]);
+        } catch (\Exception $e) {
+            return response()->json(['success'=>false,'error' => $e->getMessage()], 500);
+        }
+    }
 }

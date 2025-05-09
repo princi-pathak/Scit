@@ -79,81 +79,15 @@
                                         </tr>
                                     </thead>
                                     <tbody id="expend_result">
-                                        <?php
-                                        $enterInLoop = 0;
-                                        $index = 0;
-                                        if (!empty($previous_month_data) && $previous_month_data['previousbalanceOnCard'] != 0) {
-                                            $enterInLoop = 1; ?>
-
-                                            <tr>
-                                                <td>{{++$index}}</td>
-                                                <td>{{$previous_month_data['prvious_date']}}</td>
-                                                <td>£{{$previous_month_data['previousbalanceOnCard']}}</td>
-                                                <td>£{{$previous_month_data['previousfundAmount']}}</td>
-                                                <td colspan="6"></td>
-                                            </tr>
-                                        <?php } ?>
-                                        <?php
-                                        $sumBalanceFund = 0;
-                                        $sumPurchaseCashIn = 0;
-                                        $totalBalancebfwd = 0;
-                                        $totalBalanceFund = 0;
-                                        $date = null;
-                                        foreach ($expendCard as $val) {
-                                            $sumPurchaseCashIn = $sumPurchaseCashIn + $val->purchase_amount;
-                                            $totalBalanceFund = $totalBalanceFund + $val->fund_added;
-                                            if ($enterInLoop == 0) {
-                                                $totalBalancebfwd = $val->balance_bfwd;
-                                                $enterInLoop = 1;
-                                            }
-                                            $db_date = date('m', strtotime($val->expend_date));
-                                        ?>
-                                            <tr>
-                                                <td>{{++$index}}</td>
-                                                <td>{{date('Y-m-d',strtotime($val->expend_date))}}</td>
-                                                <?php if ($previous_month_data['previousbalanceOnCard'] == 0) {
-                                                    if ($date != $db_date || $date == null) {
-                                                        $date = $db_date; ?>
-                                                        <td>£{{$val->balance_bfwd}}</td>
-                                                    <?php } else { ?>
-                                                        <td></td>
-                                                <?php }
-                                                } ?>
-                                                <td><?php if (isset($val->fund_added) && $val->fund_added != '') {
-                                                        echo '£' . $val->fund_added;
-                                                    } ?></td>
-                                                <td>£{{$val->purchase_amount}}</td>
-                                                <td>{{$val->card_details}}</td>
-                                                <td><a href="{{url('public/images/finance_petty_cash/'.$val->receipt)}}" target="_blank"><i class="fa fa-eye"></i></a></td>
-                                                <td><?php if ($val->dext == 1) {
-                                                        echo "Yes";
-                                                    } else {
-                                                        echo "No";
-                                                    } ?></td>
-                                                <td><?php if ($val->invoice_la == 1) {
-                                                        echo "Yes";
-                                                    } else {
-                                                        echo "No";
-                                                    } ?></td>
-                                                <td>{{$val->initial}}</td>
-                                            </tr>
-                                        <?php }
-                                        if ($totalBalancebfwd == 0) {
-                                            $sum = $totalBalanceFund + $previous_month_data['previousbalanceOnCard'];
-                                        } else {
-                                            $sum = $totalBalanceFund + $totalBalancebfwd;
-                                        }
-                                        $calculation = $sum - $sumPurchaseCashIn;
-                                        $balanceOnCard = $calculation - $cash;
-                                        ?>
-                                        <input type="hidden" id="totalBalanceOnCard" value="{{$balanceOnCard;}}">
+                                        
+                                        <input type="hidden" id="totalBalanceOnCard" value="">
                                     </tbody>
                                     <tfoot>
                                         <tr class="table-light">
                                             <th colspan="2">Total</th>
-                                            <th id="totalBalancebfwd">£{{($totalBalancebfwd) ? $totalBalancebfwd: $previous_month_data['previousbalanceOnCard']}}</th>
-                                            <th id="totalBalanceFund">£{{$totalBalanceFund}}</th>
-                                            <th id="sumPurchaseCashIn">£{{number_format($sumPurchaseCashIn, 2, '.', '')}}</th>
+                                            <th id="totalBalancebfwd">£0</th>
+                                            <th id="totalBalanceFund">£0</th>
+                                            <th id="sumPurchaseCashIn">£0</th>
                                             <th colspan="5"></th>
                                         </tr>
                                     </tfoot>
@@ -303,6 +237,7 @@
     var saveUrl = "{{url('petty-cash/saveExpend')}}";
     var editUrl = "{{url('petty-cash/editExpend')}}";
     var redirectUrl = "{{url('petty-cash/expend-card')}}";
+    var getAllExpendCash="{{url('petty-cash/getAllExpendCash')}}";
 </script>
 <script>
     $(document).ready(function() {
