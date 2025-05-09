@@ -175,7 +175,7 @@
                                 <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="btn btn-warning">Actioned <span>({{$actionedCount}})</span></a>
                                 <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="btn btn-warning">Paid <span>({{$paidCount}})</span></a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="btn btn-warning hidebtn">Search</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="btn btn-primary hidebtn">Hide Search Filter</a>
                                 </div>
                             </div>
                         </div>
@@ -293,11 +293,10 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="jobsection justify-content-center">
-                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning px-3">Search </a>
+                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-primary px-3">Search </a>
                                                 <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default px-3">Clear</a>
                                             </div>
                                         </div>
-                                        
                                     </div>
                                 </form>
                             </div>
@@ -804,7 +803,7 @@
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #dc3545; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",

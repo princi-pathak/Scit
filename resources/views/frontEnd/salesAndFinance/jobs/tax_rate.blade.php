@@ -42,7 +42,7 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#customerPop" class="btn btn-warning">Add</a>
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#customerPop" class="btn btn-warning"> <i class="fa fa-plus"></i> Add</a>
                                 <a href="{{url('/tax_rate?mode=Active')}}" class="btn btn-warning">Active</a>
                                 <a href="{{url('/tax_rate?mode=Inactive')}}" class="btn btn-warning">Inactive</a>
                                 <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
@@ -119,27 +119,27 @@
                         <div class="text-center" id="message_save"></div>
                         <form id="form_data">
                             <input type="hidden" name="id" id="id">
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <label class="mb-2 col-form-label">Name <span class="radStar ">*</span></label>
                                 <input type="text" class="form-control editInput" id="name" name="name" value="">
                             </div>
-                            <div class="mb-2">
-                                <label for="inputName" class="mb-2 col-form-label">Tax Rate <span class="radStar ">*</span></label>
+                            <div class="mb-3">
+                                <label class="mb-2 col-form-label">Tax Rate <span class="radStar ">*</span></label>
                                 <input type="text" class="form-control editInput" id="tax_rate" name="tax_rate" value="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46">
                             </div>
-                            <div class="mb-2">
-                                <label for="inputProject" class="mb-2 col-form-label">Status</label>
+                            <div class="mb-3">
+                                <label class="mb-2 col-form-label">Status</label>
                                 <select class="form-control editInput selectOptions" id="statusModal" name="status">
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
-                            <div class="mb-2">
-                                <label for="inputName" class="mb-2 col-form-label">External Tax Code</label>
+                            <div class="mb-3">
+                                <label class="mb-2 col-form-label">External Tax Code</label>
                                 <input type="text" class="form-control editInput" id="tax_code" name="tax_code" value="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46">
                             </div>
-                            <div class="mb-2">
-                                <label for="inputName" class="mb-2 col-form-label">Expiry Date</label>
+                            <div class="mb-3">
+                                <label class="mb-2 col-form-label">Expiry Date</label>
                                 <input type="date" class="form-control editInput" id="exp_date" name="exp_date" value="">
                             </div>
                         </form>

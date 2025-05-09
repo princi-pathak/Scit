@@ -178,7 +178,7 @@
                                         echo 'id="active_inactive"';
                                     } ?>>Paid <span>({{$paid_invoice}})</span></a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-warning">Search</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Show Search Filter</a>
                                 </div>
                                 <div class="searchJobForm" id="divTohide" style="display:none">
                                     <form id="search_dataForm" class="p-4">
@@ -296,7 +296,7 @@
                                 </div>
                             </div>
                             <div class="jobsection">
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
                                 <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-warning">Preview Purchase Order</a>
                                 <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-warning">Preview Invoice</a>
                                 <a href="javascript:void(0)" id="bulkInvoiceReceived" class="btn btn-warning">Change To Invoice</a>
@@ -639,7 +639,7 @@
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #dc3545; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",
