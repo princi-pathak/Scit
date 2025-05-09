@@ -178,7 +178,7 @@
                                         echo 'id="active_inactive"';
                                     } ?>>Paid <span>({{$paid_invoice}})</span></a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Show Search Filter</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-default2">Show Search Filter</a>
                                 </div>
                                 <div class="searchJobForm" id="divTohide" style="display:none">
                                     <form id="search_dataForm" class="p-4">

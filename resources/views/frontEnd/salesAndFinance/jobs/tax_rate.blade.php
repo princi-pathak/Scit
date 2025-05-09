@@ -29,7 +29,6 @@
     }
 </style>
 
-
 <!--main content start-->
 <section class="wrapper">
     <div class="container-fluid">
@@ -45,7 +44,7 @@
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#customerPop" class="btn btn-warning"> <i class="fa fa-plus"></i> Add</a>
                                 <a href="{{url('/tax_rate?mode=Active')}}" class="btn btn-warning">Active</a>
                                 <a href="{{url('/tax_rate?mode=Inactive')}}" class="btn btn-warning">Inactive</a>
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
                             </div>
                             <div class="alert alert-success text-center" id="msg" style="display:none;height:50px">
                                 <p id="status_meesage"></p>
@@ -63,7 +62,7 @@
                                             <th>Tax Code</th>
                                             <th>Expiry Date</th>
                                             <th>Status</th>
-                                            <th>Actions</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -88,7 +87,7 @@
                                                         <div class="dropdown">
                                                             <a href="#" class="btn-sm btn btn-primary" data-toggle="dropdown"> Action <i class="fa fa-caret-down"></i></a>
                                                             <div class="dropdown-menu dropdown-menu-right fade-up m-0">
-                                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-name="{{ $val->name }}" data-tax_rate="{{$val->tax_rate}}" data-tax_code="{{$val->tax_code}}" data-exp_date="{{$val->exp_date}}" data-status="{{ $val->status }}">Edit Details</a>
+                                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-name="{{ $val->name }}" data-tax_rate="{{$val->tax_rate}}" data-tax_code="{{$val->tax_code}}" data-exp_date="{{$val->exp_date}}" data-status="{{ $val->status }}">Edit</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -105,6 +104,7 @@
         </div>
     </div>
 </section>
+
 <!--  Modal start here -->
 <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -155,7 +155,9 @@
     </div>
 </div>
 <!-- end here -->
+
 <script src="{{url('public/backEnd/js/multiselect.js')}}"></script>
+
 <script>
     $('#save_dataClose').on('click', function() {
         var name = $("#name").val();

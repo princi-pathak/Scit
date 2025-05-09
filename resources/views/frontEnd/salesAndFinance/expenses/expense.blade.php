@@ -137,7 +137,7 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection">
-                                <a href="#" class="btn btn-warning" onclick="modal_show()">Add</a>
+                                <a href="#" class="btn btn-warning" onclick="modal_show()"><i class="fa fa-plus"></i> Add</a>
                                 <a href="{{url('expenses?key=authorised&value=0')}}" class="btn btn-warning bgcolor" id="bgcolor1">Unauthorised ({{$unauthorisedCount}})</a>
                                 <a href="{{url('expenses?key=authorised&value=1')}}" class="btn btn-warning bgcolor" id="bgcolor2">Authorised ({{$authorisedCount}})</a>
                                 <a href="{{url('expenses?key=reject&value=1')}}" class="btn btn-warning bgcolor" id="bgcolor3">Rejected ({{$rejectCount}})</a>
@@ -145,13 +145,12 @@
                                 <a href="{{url('expenses')}}" class="btn btn-warning bgcolor" id="bgcolor5">All ({{$expenseCount}})</a>
                                 <!-- <a href="#" class="btn btn-warning" id="impExpClickbtnPopup">Import/Export</a> -->
                                 <div class="searchFilter">
-                                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Hide Search Filter</a>
+                                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Show Search Filter</a>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="searchJobForm" id="divTohide">
+                            <div class="searchJobForm" id="divTohide" style="display: none;">
                                 <form id="search_dataForm" class="p-4">
                                     <div class="row justify-content-center">
                                         <div class="col-md-4">
@@ -199,7 +198,7 @@
                                         <div class="col-md-12">
                                             <div class="pageTitleBtn justify-content-center">
                                                 <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-primary">Search </a>
-                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default ms-3">Clear</a>
+                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default ms-2">Clear</a>
                                             </div>
                                         </div>
                                     </div>
@@ -499,8 +498,8 @@
                 </div> <!-- End row -->
             </div>
             <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="btn btn-warning" id="save_data">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="save_data">Save</button>
             </div>
         </div>
     </div>
@@ -811,7 +810,6 @@
         $('#paid').val(paid);
         $('#paid' + paid).prop('checked', true);
         $('#notes').val(notes);
-        // 
         // $('#attachments').val(attachments);
         if (attachments) {
             var imgSrc = "{{url('public/frontEnd/jobs/images/delete.png')}}";
