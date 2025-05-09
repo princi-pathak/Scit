@@ -313,17 +313,17 @@ class PettyCashController extends Controller
         $html_data='';
         $enterInLoop=0;
         $index=0;
-        if(!empty($previous_month_data) && $previous_month_data['previousbalanceOnCard'] !=0){ 
-            $enterInLoop=1;
+        // if(!empty($previous_month_data) && $previous_month_data['previousbalanceOnCard'] !=0){ 
+        //     $enterInLoop=1;
 
-            $html_data.='<tr>
-                            <td>{{++$index}}</td>
-                            <td>'. $previous_month_data['prvious_date'] .'</td>
-                            <td>£'. $previous_month_data['previousbalanceOnCard'] .'</td>
-                            <td>£'. $previous_month_data['previousfundAmount'] .'</td>
-                            <td colspan="6"></td>
-                        </tr>';
-        }
+        //     $html_data.='<tr>
+        //                     <td>'.++$index.'</td>
+        //                     <td>'. $previous_month_data['prvious_date'] .'</td>
+        //                     <td>£'. $previous_month_data['previousbalanceOnCard'] .'</td>
+        //                     <td>£'. $previous_month_data['previousfundAmount'] .'</td>
+        //                     <td colspan="6"></td>
+        //                 </tr>';
+        // }
         $sumBalanceFund=0;
         $sumPurchaseCashIn=0;
         $totalBalancebfwd=0;   

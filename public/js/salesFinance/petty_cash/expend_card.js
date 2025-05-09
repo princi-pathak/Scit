@@ -59,8 +59,7 @@ $(document).ready(function() {
                     if (date !== dbMonth || date === null) {
                         date = dbMonth;
                         showBalanceBfwd = `£${balanceBfwd}`;
-                    }
-    
+                    }                 
                     tbody.append(`
                         <tr>
                             <td>${++index}</td>
@@ -70,7 +69,7 @@ $(document).ready(function() {
                             <td>£${val.purchase_amount}</td>
                             <td>${val.card_details ?? ''}</td>
                             <td>
-                                <a href="/public/images/finance_petty_cash/${val.receipt}" target="_blank">
+                                <a href="${receipt_imag_src +"/"+val.receipt}" target="_blank">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             </td>
@@ -222,11 +221,12 @@ $("#ToDate").change(function() {
             console.log(response);
             // return false;
             if (response.success === true) {
-                if(response.data.length == 0){
-                    $("#expend_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
-                }else{
-                    $("#expend_result").html(response.html_data);
-                }
+                // if(response.data.length == 0){
+                //     $("#expend_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
+                // }else{
+                //     $("#expend_result").html(response.html_data);
+                // }
+                $("#expend_result").html(response.html_data);
                 $("#balanceOnCard").text('£'+response.balanceOnCard);
                 $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
                 $("#totalBalanceFund").text('£'+response.totalBalanceFund);

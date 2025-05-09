@@ -107,7 +107,9 @@
                                                     <?php } else { ?>
                                                         <td></td>
                                                 <?php }
-                                                } ?>
+                                                }else{ ?>
+                                                    <td></td>
+                                                <?php }?>
                                                 <td>£{{$val->petty_cashIn}}</td>
                                                 <td>£{{$val->cash_out}}</td>
                                                 <td>{{$val->card_details}}</td>

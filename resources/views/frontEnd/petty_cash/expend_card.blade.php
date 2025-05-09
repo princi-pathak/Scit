@@ -238,6 +238,7 @@
     var editUrl = "{{url('petty-cash/editExpend')}}";
     var redirectUrl = "{{url('petty-cash/expend-card')}}";
     var getAllExpendCash="{{url('petty-cash/getAllExpendCash')}}";
+    var receipt_imag_src='{{url("public/images/finance_petty_cash/")}}';
 </script>
 <script>
     $(document).ready(function() {
