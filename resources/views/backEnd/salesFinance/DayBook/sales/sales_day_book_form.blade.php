@@ -23,9 +23,19 @@
                         {{ session('error') }}
                     </div>
                     @endif
+
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <div class="panel-body">
                         <div class="position-center">
-                            <form class="form-horizontal" action="{{ url('/admin/sales-finance/sales/save-sales-day-book') }}" role="form">
+                            <form class="form-horizontal" method="POST" action="{{ url('/admin/sales-finance/sales/save-sales-day-book') }}" role="form">
                                 @csrf
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Customer</label>
@@ -58,8 +68,8 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT</label>
                                     <div class="col-lg-10">
-                                        <input type="hidden" class="form-control" id="tax_id" name="tax_id" placeholder="Tax ID">
-                                        <select class="form-control" id="vat_input" name="vat">
+                                        <input type="hidden" class="form-control" id="tax_id" placeholder="Tax ID">
+                                        <select class="form-control" id="vat_input" name="Vat">
                                             <option value="">Select VAT</option>
                                         </select>
                                     </div>
@@ -67,13 +77,13 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="VAT Amount" name="vat_amount" id="vat_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                        <input type="text" class="form-control" placeholder="VAT Amount" name="vatAmount" id="vat_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="Gross" name="gross_amount" id="gross_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                        <input type="text" class="form-control" placeholder="Gross" name="grossAmount" id="gross_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -108,29 +118,29 @@
         const vatInputValue = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
         taxRate(vatInputValue);
     });
-    
-        document.addEventListener('DOMContentLoaded', function () {
-    let vatInput = document.getElementById('vat_input');
-    let netAmountInput = document.getElementById('net_amount');
-    let vatAmountInput = document.getElementById('vat_amount');
-    let grossAmountInput = document.getElementById('gross_amount');
 
-    function calculateTax() {
-        let netAmount = parseFloat(netAmountInput.value) || 0;
-        let selectedOption = vatInput.options[vatInput.selectedIndex];
-        let taxRate = parseFloat(selectedOption.getAttribute('data-tax-rate')) || 0;
+    document.addEventListener('DOMContentLoaded', function() {
+        let vatInput = document.getElementById('vat_input');
+        let netAmountInput = document.getElementById('net_amount');
+        let vatAmountInput = document.getElementById('vat_amount');
+        let grossAmountInput = document.getElementById('gross_amount');
 
-        let vatAmount = (netAmount * taxRate) / 100;
-        let grossAmount = netAmount + vatAmount;
+        function calculateTax() {
+            let netAmount = parseFloat(netAmountInput.value) || 0;
+            let selectedOption = vatInput.options[vatInput.selectedIndex];
+            let taxRate = parseFloat(selectedOption.getAttribute('data-tax-rate')) || 0;
 
-        vatAmountInput.value = vatAmount.toFixed(2);
-        grossAmountInput.value = grossAmount.toFixed(2);
-    }
+            let vatAmount = (netAmount * taxRate) / 100;
+            let grossAmount = netAmount + vatAmount;
 
-    // Trigger calculation on VAT change or Net Amount change
-    vatInput.addEventListener('change', calculateTax);
-    netAmountInput.addEventListener('input', calculateTax);
-});
+            vatAmountInput.value = vatAmount.toFixed(2);
+            grossAmountInput.value = grossAmount.toFixed(2);
+        }
+
+        // Trigger calculation on VAT change or Net Amount change
+        vatInput.addEventListener('change', calculateTax);
+        netAmountInput.addEventListener('input', calculateTax);
+    });
 
     function getCustomerList() {
         $.ajax({
@@ -165,8 +175,8 @@
 
     }
 
-    
-   
+
+
     function taxRate(dropdown) {
         $.ajax({
             url: '{{ url("admin/sales-finance/sales/getTaxRate") }}',
@@ -208,5 +218,4 @@
         });
     }
 </script>
-<!-- <script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/salesDayBook.js') }}"></script> -->
 @endsection

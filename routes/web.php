@@ -2163,7 +2163,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::prefix('sales-finance/sales')->group(function () {
 			Route::get('/sales-day-book', 'index')->name('backend.sales_day_book.index');
 			Route::get('/sales-day-book-add', 'create');
-			Route::get('/save-sales-day-book', 'store');
+			Route::post('/save-sales-day-book', 'store');
+			Route::post('/sales-day-book-delete/{id}', 'salesDayBookDelete')->name('backend.sales_day_book.delete');
+			Route::get('/daybook/data', 'getSalesDayBook');
+			Route::get('/sales-day-book-edit/{id}', 'salesDayBookEdit')->name('backend.sales_day_book.edit');
 		});
 	}));
 	Route::controller(CouncilBackendController::class)->group((function () {

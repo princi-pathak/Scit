@@ -21,21 +21,20 @@ class SalesBackendController extends Controller
 
     public function index(){
         $data['page'] = "salesDayBook";
-        // dd($data);
-        return view('backEnd.salesFinance.sales.sales_day_book', $data);
+        $data['salesDayBooks'] = $this->salesDayBookService->getSalesDayBook(Session::get('scitsAdminSession')->home_id, request());
+        return view('backEnd.salesFinance.DayBook.sales.sales_day_book', $data);   
     }
     public function create(){
         $data['page'] = "salesDayBook";
-        return view('backEnd.salesFinance.sales.sales_day_book_form', $data);
+        return view('backEnd.salesFinance.DayBook.sales.sales_day_book_form', $data);
     }
 
     
     public function store(SalesDayBookRequest $request)
     {
         $data = $request->validated();
-        // $data['home_id'] = Session::get('scitsAdminSession')->home_id;
-        $data['home_id'] = 1;
-        // dd($data);
+        $data['home_id'] = Session::get('scitsAdminSession')->home_id;
+
         try {
             $record = $this->salesDayBookService->save($data);
         } catch (\Exception $e) {
@@ -45,10 +44,50 @@ class SalesBackendController extends Controller
                 'trace' => $e->getTraceAsString(),
                 'data' => $data, // optional: log the input data
             ]);
-            return redirect()->back()->withInput()->with('error', 'Unable to save purchase day book.');
+            return redirect()->back()->withInput()->with('error', 'Unable to save purchase day book.', $e->getMessage());
         }
 
         return redirect()->route('backend.sales_day_book.index')
             ->with('success', $record->wasRecentlyCreated ? 'Record Created!' : 'Record Updated!');
     }
+
+    public function salesDayBookDelete($id)
+    {
+        $deletedAt = $this->salesDayBookService->deleteSalesDayBook($id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Record deleted successfully!',
+            'deleted_at' => $deletedAt 
+        ]);
+    }
+
+    public function getSalesDayBook()
+    {
+        $home_id = Session::get('scitsAdminSession')->home_id;
+        $salesDayBooks = $this->salesDayBookService->getSalesDayBook($home_id, request());
+
+        return response()->json([
+            'success' => (bool) $salesDayBooks,
+            'data' => $salesDayBooks ? $salesDayBooks : 'No data'
+        ]);
+
+    }
+
+    public function editSalesDayBook($id)
+    {
+        $data['page'] = "salesDayBook";
+        // $data['salesBook'] = $this->salesDayBookService->getSalesDayBookById($id);
+        return view('backEnd.salesFinance.DayBook.sales.sales_day_book_form', $data);
+    }
+
+    // public function getSalesDayBookById($id)
+    // {
+    //     $salesDayBook = $this->salesDayBookService->getSalesDayBookById($id);
+    //     return response()->json([
+    //         'success' => (bool) $salesDayBook,
+    //         'data' => $salesDayBook ? $salesDayBook : 'No data'
+    //     ]);
+    // }
+
 }
