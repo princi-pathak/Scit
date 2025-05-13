@@ -129,7 +129,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="col-form-label mb-2">Address <span class="radStar">*</span></label>
-                                                    <textarea class="form-control textareaInput PurchaseOrdercheckError" id="purchase_address" name="address" rows="1" placeholder="Enter Your Address"><?php if (isset($purchase_orders) && $purchase_orders != '') {echo $purchase_orders->address; } ?></textarea>
+                                                    <textarea class="form-control textareaInput PurchaseOrdercheckError" id="purchase_address" name="address" rows="2" placeholder="Enter Your Address"><?php if (isset($purchase_orders) && $purchase_orders != '') {echo $purchase_orders->address; } ?></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">

@@ -16,12 +16,12 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
+                                <a href="#!" type="button" class="btn btn-warning openPurchaseDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
                                 <div>
                                     <select name="" class="form-control editInput selectOptions" id="getDataOnTax">
                                         <option value="0">Please Select</option>
                                     </select>
                                 </div>
-                                <a href="#!" type="button" class="profileDrop openPurchaseDayBookModel" data-action="add"><i class="fa fa-plus"></i> Add</a>
                             </div>
                             <div class="maimTable productDetailTable mb-4 table-responsive">
                                 <table class="table border-top border-bottom tablechange" id="purchaseDayBookTable">
@@ -42,7 +42,23 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-
+                                    <tfoot>
+                                        <tr>
+                                            <th style="text-align:right">Total:</th>
+                                            <th></th> <!-- Net Amount -->
+                                            <th></th> <!-- Net Amount -->
+                                            <th></th> <!-- Net Amount -->
+                                            <th></th> <!-- VAT Amount -->
+                                            <th></th> <!-- Gross Amount -->
+                                            <th></th> <!-- Tax Rate -->
+                                            <th></th> <!-- Final Amount -->
+                                            <th></th> <!-- Reclaim -->
+                                            <th></th> <!-- Not Reclaim -->
+                                            <th></th> <!-- Title -->
+                                            <th></th> <!-- Expense Amount -->
+                                            <th></th> <!-- Actions -->
+                                        </tr>
+                                    </tfoot>
 
                                 </table>
                             </div>
@@ -69,81 +85,86 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="formDtail">
-                                <div class="form-group">
-                                    <label for="Supplier_input"> Supplier <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="hidden" name="purchase_day_book_id" id="purchase_day_book_id">
-                                        <input type="hidden" id="supplier_id">
-                                        <select class="form-control editInput selectOptions" name="supplier_id" id="Supplier_input">
-                                            <option>Please Select</option>
-                                        </select>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Supplier_input"> Supplier <span class="radStar">*</span></label>
+                                            <div>
+                                                <input type="hidden" name="purchase_day_book_id" id="purchase_day_book_id">
+                                                <input type="hidden" id="supplier_id">
+                                                <select class="form-control editInput selectOptions" name="supplier_id" id="Supplier_input">
+                                                    <option>Please Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Date_input"> Date <span class="radStar">*</span></label>
+                                            <div>
+                                                <input type="text" class="form-control editInput" name="date" id="Date_input">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="net_amount"> Net <span class="radStar">*</span></label>
+                                            <div>
+                                                <input type="text" class="form-control editInput" name="netAmount" id="net_amount" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="gross_amount">Total Amount (to be paid)</label>
+                                            <div>
+                                                <input type="text" class="form-control editInput" name="" id="totalAmount" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="vat_input">VAT <span class="radStar">*</span></label>
+                                            <div>
+                                                <input type="hidden" id="tax_id">
+                                                <select class="form-control editInput selectOptions vat_input" name="Vat" id="vat_input">
+                                                    <option>-Not Assigned-</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="vat_amount">VAT Amount</label>
+                                            <div>
+                                                <input type="text" class="form-control editInput" name="vatAmount" id="vat_amount" readonly>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Date_input"> Date <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="date" id="Date_input">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="net_amount"> Net <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="netAmount" id="net_amount" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="gross_amount">Total Amount (to be paid)</label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="" id="totalAmount" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="vat_input">VAT <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="hidden" id="tax_id">
-                                        <select class="form-control editInput selectOptions vat_input" name="Vat" id="vat_input">
-                                            <option>-Not Assigned-</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="vat_amount">VAT Amount</label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="vatAmount" id="vat_amount" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="gross_amount">Gross</label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="reclaim_amount"> Reclaim <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="reclaim" id="reclaim_amount" placeholder="" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="not_claim"> Not Claim <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" placeholder="" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="expenses"> Expenses <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="hidden" id="expenses_id">
-                                        <select class="form-control editInput selectOptions" name="expense_type" id="expenses">
-                                            <option>Please Select</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="rate_input">Expense Amount</label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" readonly>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="gross_amount">Gross</label>
+                                            <div>
+                                                <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reclaim_amount"> Reclaim <span class="radStar">*</span></label>
+                                            <div>
+                                                <input type="text" class="form-control editInput" name="reclaim" id="reclaim_amount" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="not_claim"> Not Claim <span class="radStar">*</span></label>
+                                            <div>
+                                                <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="expenses"> Expenses <span class="radStar">*</span></label>
+                                            <div>
+                                                <input type="hidden" id="expenses_id">
+                                                <select class="form-control editInput selectOptions" name="expense_type" id="expenses">
+                                                    <option>Please Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rate_input">Expense Amount</label>
+                                            <div>
+                                                <input type="text" class="form-control editInput" name="expense_amount" id="expenses_amount" readonly>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

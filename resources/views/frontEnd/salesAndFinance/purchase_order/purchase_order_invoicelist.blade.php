@@ -152,22 +152,22 @@
                     <div class="panel-body">
                         <div class="col-lg-12 mt-4">
                             <div class="jobsection justify-content-end">
-                                <a href="#!" class="btn btn-default2"> Search Purchase Orders</a>
-                                <a href="#!" class="btn btn-default2"> Invoice Received</a>
-                                <a href="#!" class="btn btn-default2"> Statements</a>
+                                <a href="#!" class="btn btn-warning"> Search Purchase Orders</a>
+                                <a href="#!" class="btn btn-default"> Invoice Received</a>
+                                <a href="#!" class="btn btn-warning"> Statements</a>
                             </div>
                         </div>
                         <div class="col-sm-12 col-lg-12 col-xl-12">
                             <div class="jobsection">
-                                <a href="{{url('purchase_order')}}" class="btn btn-default2">New Purchase Order</a>
-                                <a href="{{ url('draft_purchase_order') }}" class="btn btn-default2">Draft <span>({{$draftCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}" class="btn btn-default2">Awaiting Approval <span>({{$awaitingApprovalCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=Approved') }}" class="btn btn-default2">Approved <span>({{$approvedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}" class="btn btn-default2">Rejected <span>({{$rejectedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="btn btn-default2">Actioned <span>({{$actionedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="btn btn-default2">Paid <span>({{$paidCount}})</span></a>
+                                <a href="{{url('purchase_order')}}" class="btn btn-warning">New Purchase Order</a>
+                                <a href="{{ url('draft_purchase_order') }}" class="btn btn-warning">Draft <span>({{$draftCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}" class="btn btn-warning">Awaiting Approval <span>({{$awaitingApprovalCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=Approved') }}" class="btn btn-warning">Approved <span>({{$approvedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}" class="btn btn-warning">Rejected <span>({{$rejectedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="btn btn-warning">Actioned <span>({{$actionedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="btn btn-warning">Paid <span>({{$paidCount}})</span></a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Show Search Filter</a>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +175,7 @@
                             <div class="searchJobForm" id="divTohide" style="display:none">
                                 <form id="search_dataForm" class="p-4">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="mb-2 col-form-label">Supplier:</label>
                                                 <div class="position-relative">
@@ -199,7 +199,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="mb-2 col-form-label">PO Ref:</label>
                                                 <input type="text" class="form-control editInput" id="po_ref">
@@ -216,13 +216,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="mb-2 col-form-label">Invoice Ref:</label>
                                                 <input type="text" class="form-control editInput" id="invoice_ref">
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label class="mb-2 col-form-label">Paid:</label>
                                                 <select class="form-control editInput selectOptions" id="paid_status">
@@ -234,8 +232,8 @@
                                         </div>
                                         <div class="col-md-12 mt-3">
                                             <div class="jobsection justify-content-center">
-                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-default2 px-3">Search </a>
-                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default2 px-3">Clear</a>
+                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning px-3">Search </a>
+                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default px-3">Clear</a>
                                             </div>
                                         </div>
                                     </div>
@@ -312,27 +310,6 @@
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-
-<script>
-    // search leads show search Filter
-    function hideShowDiv() {
-        let div = document.getElementById("divTohide");
-
-        if (div.style.display === 'none' || div.style.opacity === '0') {
-            div.style.display = 'block';
-            div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
-            div.style.opacity = '1';
-        } else {
-            div.style.height = '0px';
-            div.style.opacity = '0';
-            // Use a timeout to set display to none after the transition
-            setTimeout(() => {
-                div.style.display = 'none';
-            }, 500); // 500ms matches the CSS transition duration
-        }
-    }
-    // end search leads show search Filter js
-</script>
 
 <script>
     function clearBtn() {

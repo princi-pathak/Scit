@@ -9,6 +9,8 @@ use App\Models\Supplier;
 use Illuminate\Support\Carbon;
 use App\Models\PurchaseExpenses;
 
+use App\Services\DayBook\PurchaseDayBookService;
+
 use App\Http\Requests\Daybook\PurchaseDayBookRequest;
 use App\Models\DayBook\PurchaseDayBook;
 use App\Models\DayBook\SalesDayBook;
@@ -16,6 +18,14 @@ use App\Home;
 
 class PurchaseController extends Controller
 {
+    
+    protected $purchaseDayBookService;
+
+    public function __construct(PurchaseDayBookService $purchaseService)
+    {
+        $this->purchaseDayBookService = $purchaseService;
+    }
+
     public function index(){
         $data['page'] = "dayBook";
     
@@ -23,21 +33,9 @@ class PurchaseController extends Controller
     }
 
     public function getPurchaseDayBook(Request $request){
+        $home_id = Auth::user()->home_id;
+        $purchaseDayBooks = $this->purchaseDayBookService->getPurchaseDayBook($home_id, $request);
 
-        $query = PurchaseDayBook::join('suppliers', 'suppliers.id', '=', 'purchase_day_books.supplier_id')
-        ->join('construction_tax_rates', 'construction_tax_rates.id', '=', 'purchase_day_books.Vat')
-        ->leftjoin('purchase_expenses', 'purchase_expenses.id', '=', 'purchase_day_books.expense_type')
-        ->where('purchase_day_books.home_id', Auth::user()->home_id)
-        ->select('purchase_day_books.*', 'suppliers.name as customer_name', 'construction_tax_rates.name as tax_rate_name', 'purchase_expenses.title')
-        ->whereNull('purchase_day_books.deleted_at')
-        ->orderBy('purchase_day_books.created_at', 'desc');
-
-        if ($request->has('tax_rate') && $request->tax_rate != 0) {
-            $query->where('purchase_day_books.Vat', $request->tax_rate);
-        }
-
-        $purchaseDayBooks = $query->get();
-      
         return response()->json([
             'success' => (bool) $purchaseDayBooks,
             'data' => $purchaseDayBooks ? $purchaseDayBooks : 'No data'
@@ -53,15 +51,17 @@ class PurchaseController extends Controller
     //     return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
     // }
 
-    public function store(PurchaseDayBookRequest $request)
+    public function store(PurchaseDayBookRequest $request, PurchaseDayBookService $service)
     {
+
         $data = $request->validated();
-
-
-        $convertedDate = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
-        $data['date'] = $convertedDate;
-        $data['home_id'] = Auth::user()->home_id;
-        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null], $data);
+        $data['home_id'] = Auth::user()->home_id;    
+       
+        try {
+            $response = $service->save($request->validated());
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Unable to save purchase day book.');
+        }
 
         if ($response->wasRecentlyCreated) {
             return response()->json([  'success' => true, 'message' => 'Purchase day book record created successfully!', 'data' => $response], 201);

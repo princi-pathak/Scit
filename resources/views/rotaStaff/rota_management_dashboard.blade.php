@@ -101,7 +101,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="row">
-                                                        <div class="col-md-3 col-sm-6">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <div class="inner_cards">
                                                                 <a href="{{ url('/absence/type=1') }}">
                                                                     <div>
@@ -126,7 +126,7 @@
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3 col-sm-6">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <div class="inner_cards">
                                                                 <a href="{{ url('/absence/type=2') }}">
                                                                     <div>
@@ -145,7 +145,7 @@
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3 col-sm-6">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <div class="inner_cards">
                                                                 <a href="{{ url('/absence/type=3') }}">
                                                                     <div>
@@ -162,7 +162,7 @@
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3 col-sm-6">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <div class="inner_cards">
                                                                 <a href="{{ url('/absence/type=4') }}">
                                                                     <div>

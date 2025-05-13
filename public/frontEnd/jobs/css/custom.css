@@ -24,7 +24,7 @@ label,
 a,
 h1,
 h2,
-h3,  
+h3,
 h4,
 h5,
 h6 {
@@ -294,6 +294,7 @@ a.overdueJobsFolder i {
   border: 1px solid #eee;
   margin-top: 12px;
   margin-bottom: 15px;
+  position: relative;
 }
 
 .maimTable div#exampleOne_length {
@@ -838,11 +839,13 @@ span.supCirle.productIcon i {
 .grayCheck i {
   color: #8b8b8b;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .grencheck i {
   color: #039b1c;
   font-size: 20px;
+  cursor: pointer;
 }
 
 footer.mainFooter {
@@ -892,7 +895,7 @@ section.main_section_page {
 }
 
 .col-form-label {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
   font-weight: 400;
   margin: 0;
@@ -1529,7 +1532,7 @@ canvas#canv1 {
 }
 
 .radStar {
-  color: #f00;
+  color: #dc3545;
 }
 
 /* forrmOuter */
@@ -3137,7 +3140,7 @@ section.main_section_page_petty {
 }
 
 .balance_show {
-  background: #e10078;
+  background: #b0b5b9;
   padding: 8px;
   margin: 0 0 20px 0;
   display: inline-block;
@@ -3270,8 +3273,9 @@ table.tablechange tbody td a i {
   border: 0px !important;
 }
 
-.profileDrop#active_inactive {
-  background-color: #32323a;
+#active_inactive {
+  background-color: #b0b5b9 !important;
+  border-color: #b0b5b9 !important;
 }
 
 div.dt-container select.dt-input {
@@ -3280,7 +3284,7 @@ div.dt-container select.dt-input {
 }
 
 .separate_section {
-  /* padding: 15px; */
+  padding: 15px 0;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   margin-bottom: 20px;
 }
@@ -3397,4 +3401,51 @@ label {
 
 .modal-lg {
   width: 900px !important;
+}
+
+.productDetailTable .dt-buttons {
+  padding: 15px;
+  /* position: absolute;
+  top: -16px;
+  right: 206px; */
+}
+
+.productDetailTable label {
+  margin: 0;
+}
+
+.productDetailTable .dt-buttons button {
+  background: #57c8f1 !important;
+  color: #fff !important;
+  border-color: #57c8f1 !important;
+  /* font-size: 13px; */
+}
+
+.productDetailTable .dt-buttons button:hover {
+  background: #57c8f1 !important;
+  color: #fff !important;
+  border-color: #57c8f1 !important;
+}
+
+/* div.dataTables_wrapper {
+  position: unset;
+}
+
+.dataTables_wrapper {
+  position: unset;
+  clear: both;
+} */
+
+.btn-danger {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #FFFFFF !important;
+}
+
+.delete_table_row {
+  position: absolute;
+  right: 0;
+  margin: 10px;
+  cursor: pointer;
+  z-index: 999;
 }

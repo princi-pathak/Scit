@@ -197,7 +197,7 @@
                 <!-- Sales and Finanace -->
                 <li class="sub-menu">
                     <a href="javascript:;"
-                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page = 'dayBook') || ($page = 'salesDayBook') || ($page = 'purchaseExpenese')) {
+                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page == 'dayBook') || ($page == 'salesDayBook') || ($page == 'purchaseExpenese') || ($page =='council_tax')) {
                                     echo 'active';
                                 } ?>">
                         <i class="fa fa-cogs"></i>
@@ -223,6 +223,7 @@
 
                             </ul>
                         </li>
+                        <li class="{{ ($page == 'council_tax') ? 'active' : '' }}"><a href="{{ url('admin/finance/council-tax') }}"> Council Tax </a></li>
                     </ul>
                 </li>
                 <!-- Jobs -->

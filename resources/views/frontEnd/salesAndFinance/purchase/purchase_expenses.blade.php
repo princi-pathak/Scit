@@ -17,10 +17,10 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
-                                <a href="javascript:void(0)" onclick="openExpensesModal('', 'add')" class="profileDrop" data-action="add"><i class="fa fa-plus"></i> Add</a>
+                                <a href="javascript:void(0)" onclick="openExpensesModal('', 'add')" class="btn btn-warning" data-action="add"><i class="fa fa-plus"></i> Add</a>
                                 <!-- <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a> -->
                             </div>
-                            <div class="productDetailTable mb-4 table-responsive">
+                            <div class="maimTable productDetailTable mb-4 table-responsive">
                                 <table class="table border-top border-bottom tablechange display" id="myTable">
                                     <thead>
                                         <tr>

@@ -1,6 +1,6 @@
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@section('title','Add Staff')
+@section('title','Petty Cash')
 
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
@@ -22,36 +22,33 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-between align-items-center">
-                                <div class="jobsection mb-0">
-                                    <a href="{{url('petty-cash/expend-card')}}" class="profileDrop">Expend card</a>
-                                    <a href="{{url('petty-cash/petty_cash')}}" class="profileDrop" id="active_inactive">Cash</a>
-                                </div>
-                                <div class="d-flex justify-content-end gap-4 align-items-center">
-                                    <div class="d-flex justify-content-end gap-2 align-items-center">
-                                        <label for="fromDate" class="mb-0"> From:</label>
-                                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                            <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control">
-
-                                            <span class="input-group-btn datetime-picker2 btn_height">
-                                                <button class="btn btn-primary" type="button" id="openCalendarBtn">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                        <label for="ToDate" class="mb-0"> To:</label>
-                                        <!-- <input type="date" id="ToDate" class="form-control"> -->
-                                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                            <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control">
-
-                                            <span class="input-group-btn datetime-picker2 btn_height">
-                                                <button class="btn btn-primary" type="button" id="openCalendarBtn1">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </button>
-                                            </span>
-                                        </div>
+                                <div class="d-flex justify-content-end gap-2 align-items-center">
+                                    <label for="fromDate" class="mb-0"> From:</label>
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control">
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary" type="button" id="openCalendarBtn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
                                     </div>
-                                    <!-- <a href="{{url('petty-cash/petty-cash-add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
-                                    <a href="javascript:void()" class="profileDrop" data-toggle="modal" data-target="#petty_cash"><i class="fa fa-plus"></i> Add</a>
+                                    <label for="ToDate" class="mb-0"> To:</label>
+                                    <!-- <input type="date" id="ToDate" class="form-control"> -->
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control">
+
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary" type="button" id="openCalendarBtn1">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="jobsection mb-0">
+                                    <!-- <a href="{{url('petty-cash/petty-cash-add')}}" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a> -->
+                                    <a href="javascript:void()" class="btn btn-warning" data-toggle="modal" data-target="#petty_cash"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="{{url('petty-cash/expend-card')}}" class="btn btn-warning">Expend card</a>
+                                    <a href="{{url('petty-cash/petty_cash')}}" class="btn btn-warning" id="active_inactive">Cash</a>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +60,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="table-responsive productDetailTable  mb-4">
+                            <div class="table-responsive productDetailTable maimtable  mb-4">
                                 <table id="" class="table border-top border-bottom tablechange" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -97,7 +94,7 @@
                                                 $total_balance = $val->balance_bfwd;
                                                 $balance_bfwd = $val->balance_bfwd;
                                             }
-                                            $total_balance=$total_balance+$val->petty_cashIn;
+                                            $total_balance = $total_balance + $val->petty_cashIn;
                                             $db_date = date('m', strtotime($val->cash_date));
                                         ?>
                                             <tr>
@@ -179,11 +176,14 @@
                                 <div class="form-group col-md-12">
                                     <label> Balance b/fwd <span class="radStar">*</span></label>
                                     <div>
-                                        <?php if($previous_Cash_month_data['total_balanceInCash'] == 0){?>
-                                            <input type="text" class="form-control editInput numberInput checkInput <?php if(isset($cashLastId) && $cashLastId !=''){ echo "disabled-tab"; }?>" id="balance_bfwd" name="balance_bfwd" <?php if(isset($cashLastId) && $cashLastId !=''){?> value="{{$cashLastId->balance_bfwd}}" <?php }?> onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
-                                            <?php }else{?>
-                                            <input type="text" class="form-control editInput numberInput checkInput disabled-tab" id="balance_bfwd" name="balance_bfwd"  value="{{$previous_Cash_month_data['total_balanceInCash']}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
-                                        <?php }?>
+                                        <?php if ($previous_Cash_month_data['total_balanceInCash'] == 0) { ?>
+                                            <input type="text" class="form-control editInput numberInput checkInput 
+                                            <?php if (isset($cashLastId) && $cashLastId != '') {
+                                                echo "disabled-tab";
+                                            } ?>" id="balance_bfwd" name="balance_bfwd" <?php if (isset($cashLastId) && $cashLastId != '') { ?> value="{{$cashLastId->balance_bfwd}}" <?php } ?> onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <?php } else { ?>
+                                            <input type="text" class="form-control editInput numberInput checkInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_Cash_month_data['total_balanceInCash']}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -260,7 +260,6 @@
                                         </div>
                                     </div> -->
                                 </div>
-
                                 <div class="form-group col-md-12">
                                     <label>Initials <span class="radStar">*</span></label>
                                     <div>
@@ -292,12 +291,39 @@
 <script>
     var filterUrl = "{{url('petty-cash/cash_filter')}}";
     var token = "<?php echo csrf_token(); ?>";
-    var saveUrl="{{url('petty-cash/saveCash')}}";
-    var editUrl="{{url('petty-cash/editCash')}}";
-    var redirectUrl="{{url('petty-cash/petty_cash')}}";
+    var saveUrl = "{{url('petty-cash/saveCash')}}";
+    var editUrl = "{{url('petty-cash/editCash')}}";
+    var redirectUrl = "{{url('petty-cash/petty_cash')}}";
 </script>
 <script>
-    
+    $(document).ready(function() {
+
+        var today = new Date;
+        $('#log-book-datetimepicker').datetimepicker({
+            format: 'dd-mm-yyyy',
+            // endDate: today,
+            // minView : 2
+
+        }).on("change.dp", function(e) {
+            var currentdate = $(this).data("datetimepicker").getDate();
+            var newFormat = currentdate.getDate() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getFullYear() + " " + currentdate.getHours() + ":" + currentdate.getMinutes();
+            $('.log-book-datetime').val(newFormat);
+        });
+
+        $('#log-book-datetimepicker').on('click', function() {
+            $('#log-book-datetimepicker').datetimepicker('show');
+        });
+
+        $("#logBookModal").scroll(function() {
+            $('#log-book-datetimepicker').datetimepicker('place')
+        });
+
+        $('#log-book-datetimepicker').on('change', function() {
+            $('#log-book-datetimepicker').datetimepicker('hide');
+        });
+    });
+</script>
+<!-- <script>
     $(document).ready(function() {
         // New Job date 
         // $('#ToDate').datepicker({
@@ -324,8 +350,8 @@
         $('#openCalendarBtn1').click(function() {
             $('#ToDate').focus();
         });
-});
-</script>
+    });
+</script> -->
 <script type="text/javascript" src="{{ url('public/js/salesFinance/petty_cash/cash.js') }}"></script>
 
 @endsection

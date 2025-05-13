@@ -19,6 +19,7 @@
     text-align: center;
     font-weight: 600 !important;
   }
+  
 </style>
 
 <!--main content start-->
@@ -33,11 +34,11 @@
           <div class="panel-body">
             <div class="col-lg-12">
               <div class="jobsection justify-content-end">
-                <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
-                <a href="javascript:void(0)" class="profileDrop" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
-                <a href="javascript:void(0)" class="profileDrop">Export</a>
+                <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a> -->
+                <a href="javascript:void(0)" class="btn btn-warning" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
+                <a href="javascript:void(0)" class="btn btn-warning">Export</a>
                 <div class="searchFilter">
-                  <a href="#!" onclick="hideShowDiv()" class="profileDrop">Search</a>
+                  <a href="#!" onclick="hideShowDiv()" class="btn btn-primary">Search</a>
                 </div>
               </div>
               <div>
@@ -51,38 +52,38 @@
                             <div class="col-md-12">
                               <div class="row form-group pb-0 pageTitleBtn justify-content-center">
                                 <div class="col-md-4">
-                                    <label>Date From:</label>
-                                    <!-- <input type="date" class="form-control editInput" id="edd_startDate" name="start_date"> -->
-                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="start_date" id="edd_startDate" type="text" value="" autocomplete="off" class="form-control">
+                                  <label>Date From:</label>
+                                  <!-- <input type="date" class="form-control editInput" id="edd_startDate" name="start_date"> -->
+                                  <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                    <input name="start_date" id="edd_startDate" type="text" value="" autocomplete="off" class="form-control">
 
-                                        <span class="input-group-btn datetime-picker2 btn_height">
-                                            <button class="btn btn-primary" type="button" id="openCalendarBtn">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </button>
-                                        </span>
-                                    </div>
+                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                      <button class="btn btn-primary" type="button" id="openCalendarBtn">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                      </button>
+                                    </span>
+                                  </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label>Date To:</label>
-                                    <!-- <input type="date" class="form-control editInput" id="edd_endDate" name="end_date"> -->
-                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control">
+                                  <label>Date To:</label>
+                                  <!-- <input type="date" class="form-control editInput" id="edd_endDate" name="end_date"> -->
+                                  <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                    <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control">
 
-                                        <span class="input-group-btn datetime-picker2 btn_height">
-                                            <button class="btn btn-primary" type="button" id="openCalendarBtn1">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </button>
-                                        </span>
-                                    </div>
+                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                      <button class="btn btn-primary" type="button" id="openCalendarBtn1">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                      </button>
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-12">
                               <div class="pageTitleBtn justify-content-center">
-                                <a href="javascript:void(0)" onclick="searchBtn()" class="profileDrop px-3">Search </a>
-                                <!-- <button type="submit" class="profileDrop px-3" onclick="return searchBtn()">Search</button> -->
-                                <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="profileDrop px-3">Clear</a>
+                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-primary px-3">Search </a>
+                                <!-- <button type="submit" class="btn btn-warning px-3" onclick="return searchBtn()">Search</button> -->
+                                <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="btn btn-default px-3 ms-2">Clear</a>
                               </div>
                             </div>
                           </div>
@@ -98,21 +99,21 @@
                   </div>
                 </div> -->
               </div>
-              <div class="productDetailTable mb-4  table-responsive">
+              <div class="maimtable productDetailTable mb-4  table-responsive">
                 <table class="table border-top border-bottom tablechange" id="containerB">
                   <thead>
                     <tr>
                       <th>#</th>
                       <th class="border-end">Asset Name</th>
                       <th class="border-end">Date</th>
-                      <th colspan="4" class="border-end">Cost</th>
-                      <th colspan="4" class="border-end">Depreciation</th>
-                      <th colspan="2">N.B.V</th>
-                      <th colspan="2">Action</th>
+                      <th colspan="4" class="border-end text-center">Cost</th>
+                      <th colspan="4" class="border-end text-center">Depreciation</th>
+                      <th colspan="2" class="border-end text-center">N.B.V</th>
+                      <th colspan="2">Actions</th>
                     </tr>
                     <tr>
                       <th></th>
-                      <th class=""></th>
+                      <th class="border-end"></th>
                       <th class="border-end"></th>
                       <th>B/fwd</th>
                       <th>Additions</th>
@@ -123,7 +124,8 @@
                       <th>Charge</th>
                       <th class="border-end">C/fwd</th>
                       <th>B/fwd</th>
-                      <th colspan="2" class="text-start">C/fwd</th>
+                      <th class="text-start border-end">C/fwd</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody id="assetRegisterList">
@@ -152,25 +154,25 @@
                     ?>
                       <tr>
                         <td>{{++$key}}</td>
-                        <td>{{$val->asset_name}}</td>
-                        <td>{{ date('d/m/Y', strtotime($val->date)) }}</td>
+                        <td class="border-end">{{$val->asset_name}}</td>
+                        <td class="border-end">{{ date('d/m/Y', strtotime($val->date)) }}</td>
                         <td>{{ $val->cost_bfwd ? '£' . $val->cost_bfwd : '' }}</td>
                         <td>{{ $val->cost_disposal ? '£' . $val->cost_disposal : ''}}</td>
                         <td>{{ $val->cost_addition ? '£' . $val->cost_addition : ''}}</td>
-                        <td>{{ $val->cost_fwd ? '£' . $val->cost_fwd : ''}}</td>
+                        <td class="border-end">{{ $val->cost_fwd ? '£' . $val->cost_fwd : ''}}</td>
                         <td>{{ $val->depreciation_bfwd  ? '£' . $val->depreciation_bfwd : ''}}</td>
                         <td>{{ $val->depreciation  ? '£' . $val->depreciation : ''}}</td>
                         <td>{{ $val->charge  ? '£' . $val->charge : ''}}</td>
-                        <td>{{ $val->depreciation_cfwd  ? '£' . $val->depreciation_cfwd : ''}}</td>
+                        <td class="border-end">{{ $val->depreciation_cfwd  ? '£' . $val->depreciation_cfwd : ''}}</td>
                         <td>{{ $val->nbv_bfwd  ? '£' . $val->nbv_bfwd : ''}}</td>
-                        <td>{{ $val->nbv_cfwd  ? '£' . $val->nbv_cfwd : ''}}</td>
+                        <td class="border-end">{{ $val->nbv_cfwd  ? '£' . $val->nbv_cfwd : ''}}</td>
                         <td> <a href="{{url('sales-finance/assets/asset-register-edit?key=' . base64_encode($val->id))}}" class="openModalBtn"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
                           <a href="#!" class="register_delete" data-id="{{$val->id}}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                         </td>
                         <!-- <td>
                           <div class="d-flex justify-content-end">
                             <div class="nav-item dropdown">
-                              <a href="#!" class="nav-link dropdown-toggle profileDrop" data-toggle="dropdown" aria-expanded="false">
+                              <a href="#!" class="nav-link dropdown-toggle btn btn-warning" data-toggle="dropdown" aria-expanded="false">
                                 Action
                               </a>
                               <div class="dropdown-menu fade-up m-0" style="z-index:9999">
@@ -187,18 +189,19 @@
                   <tfoot>
                     <tr id="footer_table">
                       <th></th>
-                      <th></th>
-                      <th>Total:</th>
+                      <th class="border-end"></th>
+                      <th class="border-end">Total:</th>
                       <th id="tablecost_bfwd">£{{number_format($cost_bfwd, 2)}}</th>
                       <th id="tablecost_disposal">£{{number_format($cost_disposal,2)}}</th>
                       <th id="tablecost_addition">£{{number_format($cost_addition,2)}}</th>
-                      <th id="tablecost_fwd">£{{number_format($cost_fwd,2)}}</th>
+                      <th id="tablecost_fwd" class="border-end">£{{number_format($cost_fwd,2)}}</th>
                       <th id="tabledepreciation_bfwd">£{{number_format($depreciation_bfwd,2)}}</th>
                       <th id="tabledepreciation">£{{number_format($depreciation,2)}}</th>
                       <th id="tablecharge">£{{number_format($charge,2)}}</th>
-                      <th id="tabledepreciation_cfwd">£{{number_format($depreciation_cfwd,2)}}</th>
+                      <th id="tabledepreciation_cfwd" class="border-end">£{{number_format($depreciation_cfwd,2)}}</th>
                       <th id="tablenbv_bfwd">£{{number_format($nbv_bfwd,2)}}</th>
-                      <th id="tablenbv_cfwd" colspan="2" class="text-start">£{{number_format($nbv_cfwd,2)}}</th>
+                      <th id="tablenbv_cfwd" class="text-start border-end">£{{number_format($nbv_cfwd,2)}}</th>
+                      <th></th>
                     </tr>
                   </tfoot>
                 </table>
@@ -221,9 +224,9 @@
         <h4 class="modal-title" id="Fixed_Asset_RegisterLabel">Add Fixed Asset Register</h4>
       </div>
       <div calss="row">
-          <div class="col-md-12 col-lg-12 col-xl-12 mt-4">
-              <div class="mt-1 mb-0 text-center" style="display:none" id="message_save"></div>
-          </div>
+        <div class="col-md-12 col-lg-12 col-xl-12 mt-4">
+          <div class="mt-1 mb-0 text-center" style="display:none" id="message_save"></div>
+        </div>
       </div>
       <form id="assetRegisterFormData" class="customerForm">
         <input type="hidden" name="id" id="id" value="">
@@ -248,9 +251,9 @@
                 <div class="form-group">
                   <label> Asset Type <span class="radStar">*</span></label>
                   <select name="asset_type" id="asset_type" class="form-control editInput">
-                    <?php foreach($AssetCategoryList as $cat){?>
+                    <?php foreach ($AssetCategoryList as $cat) { ?>
                       <option value="{{$cat->id}}">{{$cat->name}}</option>
-                    <?php }?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -294,9 +297,11 @@
                 <div class="form-group">
                   <label> Type of Depreciation</label>
                   <select name="depreciation_type" id="depreciation_type" class="form-control editInput" onchange="calculate()">
-                    <?php foreach($DepreciationTypeList as $type){?>
-                      <option value="{{$type->id}}" data-attr="{{$type->percentage}}" <?php if(isset($register) && $register->depreciation_type ==$type->id){echo "selected";}?>>{{$type->percentage}} (%)</option>
-                    <?php }?>
+                    <?php foreach ($DepreciationTypeList as $type) { ?>
+                      <option value="{{$type->id}}" data-attr="{{$type->percentage}}" <?php if (isset($register) && $register->depreciation_type == $type->id) {
+                                                                                        echo "selected";
+                                                                                      } ?>>{{$type->percentage}} (%)</option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -367,8 +372,8 @@
           <!-- End  off newJobForm -->
         </div>
         <div class="modal-footer customer_Form_Popup">
-          <a href="javascript:void(0)" onclick="getSaveData()" class="btn btn-warning"> Save</a>
           <a href="{{url('sales-finance/assets/asset-register')}}" class="btn btn-default"> Back</a>
+          <a href="javascript:void(0)" onclick="getSaveData()" class="btn btn-warning"> Save</a>
         </div>
       </form>
     </div>
@@ -377,48 +382,28 @@
 <!-- end here -->
 
 <script>
-  // search leads show search Filter
-  function hideShowDiv() {
-    let div = document.getElementById("divTohide");
-
-    if (div.style.display === 'none' || div.style.opacity === '0') {
-      div.style.display = 'block';
-      div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
-      div.style.opacity = '1';
-    } else {
-      div.style.height = '0px';
-      div.style.opacity = '0';
-      // Use a timeout to set display to none after the transition
-      setTimeout(() => {
-        div.style.display = 'none';
-      }, 500); // 500ms matches the CSS transition duration
-    }
-  }
-  // end search leads show search Filter js
-</script>
-<script>
   var searchUrl = "{{url('sales-finance/assets/asset-register-search')}}";
   var deleteAssetRegisterUrl = "{{url('sales-finance/assets/asset-register-delete')}}";
   var assetSaveUrl = "{{ url('sales-finance/assets/asset-regiser-save') }}";
   var redirectUrl = "{{url('sales-finance/assets/asset-register')}}";
-  $(document).ready(function(){
+  $(document).ready(function() {
     $('#edd_startDate').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        todayHighlight: true
+      format: 'dd-mm-yyyy',
+      autoclose: true,
+      todayHighlight: true
     });
-    $(document).on('click', '#openCalendarBtn',function() {
-        $('#edd_startDate').focus();
+    $(document).on('click', '#openCalendarBtn', function() {
+      $('#edd_startDate').focus();
     });
     $('#edd_endDate').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        todayHighlight: true
+      format: 'dd-mm-yyyy',
+      autoclose: true,
+      todayHighlight: true
     });
     $('#openCalendarBtn1').click(function() {
-        $('#edd_endDate').focus();
+      $('#edd_endDate').focus();
     });
-});
+  });
 </script>
 
 <script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}" defer></script>

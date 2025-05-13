@@ -17,27 +17,39 @@
                             <a href="javascript:;" class="fa fa-times"></a>
                         </span> -->
                     </header>
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
                             <div class="clearfix clearfix_space">
+                                <div class="col-lg-3 col-sm-3">
+                                    <input type="hidden" id="tax_id">
+                                    <select class="form-control" name="tax_rate" id="getDataOnTax">
+                                        <option value="0">Please Select</option>
+                                    </select>
+                                </div>
+
                                 <div class="btn-group">
-                                    <a href="{{url('admin/sales-finance/purchase/purchase-day-book-add')}}" id="editable-sample_new" class="btn btn-primary">
-                                        Add New <i class="fa fa-plus"></i>
+                                    <a href="{{url('admin/sales-finance/purchase/purchase-day-book-add')}}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
-                                <div class="btn-group">
+
+                                <!-- <div class="btn-group">
                                     <button class="btn btn-default"> Export </button>
-                                    <!-- <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="#">Print</a></li>
-                                        <li><a href="#">Save as PDF</a></li>
-                                        <li><a href="#">Export to Excel</a></li>
-                                    </ul> -->
-                                </div>
+                                </div> -->
                             </div>
                             <div class="space15"></div>
-                            <table class="table table-striped table-hover table-bordered" id="editable-sample">
+                            <table class="display table table-bordered table-striped" id="purchaseDayBookTable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -56,37 +68,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="">
-                                        <th>1</th>
-                                        <td>Abhishek</td>
-                                        <td>2025-04-08</td>
-                                        <td>500.00</td>
-                                        <td>100.00</td>
-                                        <td>$600.00</td>
-                                        <td>VAT 20</td>
-                                        <td>$600.00</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>54</td>
-                                        <td></td>
-                                        <td><a class="edit" href="javascript:;"><i class="fa fa-edit"></i></a> | <a class="delete" href="javascript:;"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr>
-                                    <tr class="">
-                                        <th>2</th>
-                                        <td>Abhishek</td>
-                                        <td>2025-04-08</td>
-                                        <td>500.00</td>
-                                        <td>100.00</td>
-                                        <td>$600.00</td>
-                                        <td>VAT 20</td>
-                                        <td>$600.00</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>54</td>
-                                        <td></td>
-                                        <td><a class="edit" href="javascript:;"><i class="fa fa-edit"></i></a> | <a class="delete" href="javascript:;"><i class="fa fa-trash-o"></i></a></td>
-                                    </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th style="text-align:right">Total:</th>
+                                        <th></th> <!-- Net Amount -->
+                                        <th></th> <!-- Net Amount -->
+                                        <th></th> <!-- Net Amount -->
+                                        <th></th> <!-- VAT Amount -->
+                                        <th></th> <!-- Gross Amount -->
+                                        <th></th> <!-- Tax Rate -->
+                                        <th></th> <!-- Final Amount -->
+                                        <th></th> <!-- Reclaim -->
+                                        <th></th> <!-- Not Reclaim -->
+                                        <th></th> <!-- Title -->
+                                        <th></th> <!-- Expense Amount -->
+                                        <th></th> <!-- Actions -->
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -96,4 +95,18 @@
         <!-- page end-->
     </div>
 </section>
+
+<script>
+    const getTaxRate = '{{ url("admin/sales-finance/purchase/getTaxRate") }}';
+    const getPurchaseDayBook = "{{ url('admin/sales-finance/purchase/purchase-daybook/data') }}";
+    const purchaseDayBook = "{{ url('admin/sales-finance/purchase/purchase-day-book-delete/') }}";
+
+    $(document).on('click', '.openPurchaseDayBookModel', function() {
+        const mode = $(this).data('mode');
+        const id = $(this).data('id');
+
+        window.location.href = '{{ url("admin/sales-finance/purchase/purchase-day-book-edit/") }}' + "/"+ id;
+    });
+</script>
+<script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/purchaseDayBook.js') }}"></script>
 @endsection

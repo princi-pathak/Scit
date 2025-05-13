@@ -146,14 +146,14 @@
                     <div class="panel-body">
                         <div class="col-lg-12 mt-4">
                             <div class="jobsection justify-content-end">
-                                <a href="{{url('purchase-orders-search')}}" class="btn btn-default2"> Search Invoices</a>
-                                <a href="{{url('purchase-order-statements')}}" class="btn btn-default2">Account Statements</a>
+                                <a href="{{url('purchase-orders-search')}}" class="btn btn-warning"> Search Invoices</a>
+                                <a href="{{url('purchase-order-statements')}}" class="btn btn-warning">Account Statements</a>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-4">
                             <div class="jobsection">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link btn btn-default2" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
+                                    <a href="#" class="nav-link btn btn-warning" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
                                     <div class="dropdown-menu fade-up m-0">
                                         <a href="{{url('invoices/add')}}" class="dropdown-item">Invoice</a>
                                         <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
@@ -161,20 +161,24 @@
                                         <a href="#!" class="dropdown-item">Email</a> -->
                                     </div>
                                 </div>
-                                <a href="{{ url('invoices/invoice/Draft') }}" class="btn btn-default2" <?php if ($key_mode === 'Draft') {
-                                                                                                            echo 'id="active_inactive"';
-                                                                                                        } ?>>Draft <span>({{$draft_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Outstanding') }}" class="btn btn-default2" <?php if ($key_mode === 'Outstanding') {
-                                                                                                                    echo 'id="active_inactive"';
-                                                                                                                } ?>>Outstanding <span>({{$outstanding_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Overdue') }}" class="btn btn-default2" <?php if ($key_mode === 'Overdue') {
-                                                                                                                echo 'id="active_inactive"';
-                                                                                                            } ?>>Overdue <span>({{$overdue_invoice}})</span></a>
-                                <a href="{{ url('invoices/invoice/Paid') }}" class="btn btn-default2" <?php if ($key_mode === 'Paid') {
-                                                                                                            echo 'id="active_inactive"';
-                                                                                                        } ?>>Paid <span>({{$paid_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Draft') }}" class="btn btn-warning"
+                                    <?php if ($key_mode === 'Draft') {
+                                        echo 'id="active_inactive"';
+                                    } ?>>Draft <span>({{$draft_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Outstanding') }}" class="btn btn-warning"
+                                    <?php if ($key_mode === 'Outstanding') {
+                                        echo 'id="active_inactive"';
+                                    } ?>>Outstanding <span>({{$outstanding_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Overdue') }}" class="btn btn-warning"
+                                    <?php if ($key_mode === 'Overdue') {
+                                        echo 'id="active_inactive"';
+                                    } ?>>Overdue <span>({{$overdue_invoice}})</span></a>
+                                <a href="{{ url('invoices/invoice/Paid') }}" class="btn btn-warning"
+                                    <?php if ($key_mode === 'Paid') {
+                                        echo 'id="active_inactive"';
+                                    } ?>>Paid <span>({{$paid_invoice}})</span></a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Show Search Filter</a>
                                 </div>
                                 <div class="searchJobForm" id="divTohide" style="display:none">
                                     <form id="search_dataForm" class="p-4">
@@ -283,8 +287,8 @@
                                             </div>
                                             <div class="col-sm-12 mt-4">
                                                 <div class="jobsection justify-content-center">
-                                                    <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-default2 px-3">Search </a>
-                                                    <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default2 px-3">Clear</a>
+                                                    <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning px-3">Search </a>
+                                                    <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-warning px-3">Clear</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -292,13 +296,13 @@
                                 </div>
                             </div>
                             <div class="jobsection">
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
-                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Purchase Order</a>
-                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Invoice</a>
-                                <a href="javascript:void(0)" id="bulkInvoiceReceived" class="btn btn-default2">Change To Invoice</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
+                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-warning">Preview Purchase Order</a>
+                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-warning">Preview Invoice</a>
+                                <a href="javascript:void(0)" id="bulkInvoiceReceived" class="btn btn-warning">Change To Invoice</a>
                                 <div class=" d-inline-flex align-items-center">
                                     <div class="dropdown">
-                                        <a href="#!" class="btn btn-default2" data-toggle="dropdown" aria-expanded="false">Email Purchase Order
+                                        <a href="#!" class="btn btn-warning" data-toggle="dropdown" aria-expanded="false">Email Purchase Order
                                             <i class="fa fa-caret-down"></i>
                                         </a>
                                         <div class="dropdown-menu fade-up m-0">
@@ -310,13 +314,13 @@
                                 </div>
                                 <!-- <div class="col-sm-5">
                                     <div class="pageTitleBtn p-0">
-                                        <a href="#" class="btn btn-default2"> <i class="material-symbols-outlined"> settings </i></a>        
+                                        <a href="#" class="btn btn-warning"> <i class="material-symbols-outlined"> settings </i></a>        
                                     </div>
                                 </div> -->
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="table-responsive productDetailTable">
+                            <div class="maimtable table-responsive productDetailTable">
                                 <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -635,7 +639,7 @@
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #dc3545; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",
@@ -1341,10 +1345,10 @@
                 var paginationControlsProductDetail = $("#pagination-controls-recordDelivery");
                 paginationControlsProductDetail.empty();
                 if (paginationProductDetails.prev_page_url) {
-                    paginationControlsProductDetail.append('<button type="button" class="btn btn-default2" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                    paginationControlsProductDetail.append('<button type="button" class="btn btn-warning" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
                 }
                 if (paginationProductDetails.next_page_url) {
-                    paginationControlsProductDetail.append('<button type="button" class="btn btn-default2" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                    paginationControlsProductDetail.append('<button type="button" class="btn btn-warning" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
                 }
             },
             error: function(xhr, status, error) {

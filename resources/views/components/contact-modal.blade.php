@@ -255,6 +255,9 @@
                 processData: false,
                 success: function(data) {
                     console.log(data);
+                    if (isAuthenticated(data) == false) {
+                        return false;
+                    }
                     if(data.vali_error){
                         alert(data.vali_error);
                         $(window).scrollTop(0);

@@ -147,15 +147,15 @@
                     <div class="panel-body">
                         <div class="col-lg-12 mt-4">
                             <div class="jobsection justify-content-end">
-                                <a href="{{url('purchase-orders-search')}}" class="btn btn-default2"> Search Purchase Orders</a>
-                                <a href="{{url('purchase-order-invoices')}}" class="btn btn-default2"> Invoice Received</a>
-                                <a href="{{url('purchase-order-statements')}}" class="btn btn-default2"> Statements</a>
+                                <a href="{{url('purchase-orders-search')}}" class="btn btn-warning"> Search Purchase Orders</a>
+                                <a href="{{url('purchase-order-invoices')}}" class="btn btn-warning"> Invoice Received</a>
+                                <a href="{{url('purchase-order-statements')}}" class="btn btn-warning"> Statements</a>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-4">
                             <div class="jobsection">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link btn btn-default2" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
+                                    <a href="#" class="nav-link btn btn-warning" data-toggle="dropdown" aria-expanded="false"> New <i class="fa fa-caret-down"></i></a>
                                     <div class="dropdown-menu fade-up m-0">
                                         <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
                                         <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
@@ -163,20 +163,20 @@
                                     <a href="#!" class="dropdown-item">Email</a> -->
                                     </div>
                                 </div>
-                                <a href="{{ url('draft_purchase_order') }}" class="btn btn-default2" <?php if ($status['status'] == 1) { ?>id="active_inactive" <?php } ?>>Draft <span>({{$draftCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order/AwaitingApprivalPurchaseOrders') }}" class="btn btn-default2" <?php if ($status['status'] == 2) { ?>id="active_inactive" <?php } ?>>Awaiting Approval <span>({{$awaitingApprovalCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order/Approved') }}" class="btn btn-default2" <?php if ($status['status'] == 3) { ?>id="active_inactive" <?php } ?>>Approved <span>({{$approvedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order/Rejected') }}" class="btn btn-default2" <?php if ($status['status'] == 8) { ?>id="active_inactive" <?php } ?>>Rejected <span>({{$rejectedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order/Actioned') }}" class="btn btn-default2" <?php if ($status['status'] == 4) { ?>id="active_inactive" <?php } ?>>Actioned <span>({{$actionedCount}})</span></a>
-                                <a href="{{ url('draft_purchase_order/Paid') }}" class="btn btn-default2" <?php if ($status['status'] == 5) { ?>id="active_inactive" <?php } ?>>Paid <span>({{$paidCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order') }}" class="btn btn-warning" <?php if ($status['status'] == 1) { ?>id="active_inactive" <?php } ?>>Draft <span>({{$draftCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/AwaitingApprivalPurchaseOrders') }}" class="btn btn-warning" <?php if ($status['status'] == 2) { ?>id="active_inactive" <?php } ?>>Awaiting Approval <span>({{$awaitingApprovalCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/Approved') }}" class="btn btn-warning" <?php if ($status['status'] == 3) { ?>id="active_inactive" <?php } ?>>Approved <span>({{$approvedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/Rejected') }}" class="btn btn-warning" <?php if ($status['status'] == 8) { ?>id="active_inactive" <?php } ?>>Rejected <span>({{$rejectedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/Actioned') }}" class="btn btn-warning" <?php if ($status['status'] == 4) { ?>id="active_inactive" <?php } ?>>Actioned <span>({{$actionedCount}})</span></a>
+                                <a href="{{ url('draft_purchase_order/Paid') }}" class="btn btn-warning" <?php if ($status['status'] == 5) { ?>id="active_inactive" <?php } ?>>Paid <span>({{$paidCount}})</span></a>
                             </div>
                             <div class="jobsection">
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-default2">Delete</a>
-                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-default2">Preview Purchase Order</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
+                                <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="btn btn-warning">Preview Purchase Order</a>
                                 @if($status['status'] == 3 || $status['status'] == 4 || $status['status'] == 5)
                                 <div class=" d-inline-flex align-items-center">
                                     <div class="nav-item dropdown">
-                                        <a href="#!" class="nav-link dropdown-toggle btn btn-default2" data-toggle="dropdown" aria-expanded="false">
+                                        <a href="#!" class="nav-link dropdown-toggle btn btn-warning" data-toggle="dropdown" aria-expanded="false">
                                             Email Purchase Order <i class="fa fa-caret-down"></i>
                                         </a>
                                         <div class="dropdown-menu fade-up m-0">
@@ -186,14 +186,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0)" id="bulkInvoiceReceived" class="btn btn-default2">Invoice Received</a>
+                                <a href="javascript:void(0)" id="bulkInvoiceReceived" class="btn btn-warning">Invoice Received</a>
                                 @if($status['status'] != 5)
-                                <a href="javascript:void(0)" id="BulkRecordPaymentBTN" class="btn btn-default2">Record Payment</a>
+                                <a href="javascript:void(0)" id="BulkRecordPaymentBTN" class="btn btn-warning">Record Payment</a>
                                 @endif
                                 @endif
-                                <a href="javascript:void(0)" id="approveBtn" class="btn btn-default2">Approve</a>
+                                <a href="javascript:void(0)" id="approveBtn" class="btn btn-warning">Approve</a>
                                 <div class="searchFilter">
-                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Search</a>
+                                    <a href="#!" onclick="hideShowDiv()" class="hidebtn btn btn-primary">Show Search Filter</a>
                                 </div>
                             </div>
                         </div>
@@ -306,8 +306,8 @@
                                         </div>
                                         <div class="col-md-12 mt-4">
                                             <div class="jobsection justify-content-center">
-                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-default2">Search </a>
-                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default2">Clear</a>
+                                                <a href="javascript:void(0)" onclick="searchBtn()" class="btn btn-warning">Search </a>
+                                                <a href="javascript:void(0)" onclick="clearBtn()" class="btn btn-default">Clear</a>
                                             </div>
                                         </div>
                                     </div>
@@ -315,7 +315,7 @@
                             </div>
                             <div class="maimTable">
                                 <div class="table-responsive productDetailTable">
-                                    <table id="myTable" class="table " cellspacing="0" width="100%">
+                                    <table id="myTable" class="table border-top" cellspacing="0" width="100%">
                                         <thead>
                                             <tr class="white_space_nowrap">
                                                 <th><input type="checkbox" id="selectAllCheckBoxes"></th>
@@ -751,27 +751,6 @@
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>
-    // search leads show search Filter
-    function hideShowDiv() {
-        let div = document.getElementById("divTohide");
-
-        if (div.style.display === 'none' || div.style.opacity === '0') {
-            div.style.display = 'block';
-            div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
-            div.style.opacity = '1';
-        } else {
-            div.style.height = '0px';
-            div.style.opacity = '0';
-            // Use a timeout to set display to none after the transition
-            setTimeout(() => {
-                div.style.display = 'none';
-            }, 500); // 500ms matches the CSS transition duration
-        }
-    }
-    // end search leads show search Filter js
-</script>
-
-<script>
     $("#deleteSelectedRows").on('click', function() {
         let ids = [];
 
@@ -819,179 +798,136 @@
         }
         shoeHideEmailSend();
     });
-    $('#selectAllCheckBoxes').on('click', function() {
+    $('#selectAllCheckBoxes').on('click', function () {
         $('.delete_checkbox').prop('checked', $(this).prop('checked'));
-        shoeHideEmailSend();
-    });
-
-    function shoeHideEmailSend() {
-        if ($('.delete_checkbox:checked').length > 1) {
-            $('.emialSend').show();
-        } else {
-            $('.emialSend').hide();
-        }
+        shoeHideEmailSend(); 
+  });
+  function shoeHideEmailSend(){
+    if($('.delete_checkbox:checked').length>1){
+        $('.emialSend').show();
+    }else{
+        $('.emialSend').hide();
     }
-    $("#preview_purchase_orderBoxes").on('click', function() {
-        let previewids = [];
-        var name = '';
-        let error = 0;
-        $('.delete_checkbox:checked').each(function() {
-            const row = $(this).closest('tr');
-            const supplierName = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
-            if (name == '') {
-                name = supplierName;
-            }
-            if (name !== supplierName) {
-                error = 1;
+  }
+  $("#preview_purchase_orderBoxes").on('click', function(){
+    let previewids = [];
+    var name='';
+    let error=0;
+    $('.delete_checkbox:checked').each(function() {
+        const row = $(this).closest('tr');
+        const supplierName = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
+        if(name == ''){
+            name=supplierName;
+        }
+        if(name !== supplierName){
+            error=1;
+            return false;
+        }
+        previewids.push($(this).val());
+    });
+    if(error){
+        alert("Sorry, you cannot preview purchase orders for multiple customers.");
+        return false;
+    }
+    if (previewids.length == 0) {
+        alert("Please select at least one purchase order for preview.");
+        return false;
+    }else{
+        // location.href="<?php echo url('preview-purchase-orders?key=');?>"+previewids;
+        window.open("<?php echo url('preview-purchase-orders?key=');?>" + previewids, "_blank");
+    }
+  });
+  $("#approveBtn").on('click',function(){
+    let approveids = [];
+
+    $('.delete_checkbox:checked').each(function() {
+        approveids.push($(this).val());
+    });
+    if (approveids.length == 0) {
+        alert("Please select at least one purchase order for approval.");
+    }else{
+        var token='<?php echo csrf_token();?>';
+        // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
+        var url=`{{ url('purchase_order_approveMultiple') }}`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({ approveids: approveids })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // return false;
+            if(data.success === true){
+                location.reload();
+            }else{
+                alert("Something went wrong");
                 return false;
             }
-            previewids.push($(this).val());
+            
+        })
+        .catch(error => {
+            // $('.catsuccessdanger').text('There was an error submitting the form.');
+            console.error("Error: ",error);
         });
-        if (error) {
-            alert("Sorry, you cannot preview purchase orders for multiple customers.");
+    }
+  });
+  function email_sendCheck(type){
+        let emailids = [];
+        var name='';
+        var ref='';
+        let error=0;
+        var SupplierEmail='';
+        $('.delete_checkbox:checked').each(function() {
+            const row = $(this).closest('tr');
+            var supplierNameEmail = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
+            ref = row.get(0).querySelector('td:nth-child(3)').textContent.trim();
+            SupplierEmail = $('#supplierEmail'+$(this).val()).val();
+            
+            if(name == ''){
+                name=supplierNameEmail;
+            }
+            if(name !== supplierNameEmail){
+                error=1;
+                return false;
+            }
+            emailids.push($(this).val());
+        });
+        if(error){
+            alert("Sorry, you cannot email purchase orders for multiple suppliers.");
             return false;
         }
-        if (previewids.length == 0) {
-            alert("Please select at least one purchase order for preview.");
+        if (emailids.length == 0) {
+            alert("Please select at least one purchase order for Email.");
             return false;
-        } else {
-            // location.href="<?php echo url('preview-purchase-orders?key='); ?>"+previewids;
-            window.open("<?php echo url('preview-purchase-orders?key='); ?>" + previewids, "_blank");
-        }
-    });
-    $("#approveBtn").on('click', function() {
-                let approveids = [];
-
-                $('.delete_checkbox:checked').each(function() {
-                            approveids.push($(this).val());
-
-                            $('.delete_checkbox:checked').each(function() {
-                                approveids.push($(this).val());
-                            });
-                            if (approveids.length == 0) {
-                                alert("Please select at least one purchase order for approval.");
-                            } else {
-                                var token = '<?php echo csrf_token(); ?>';
-                                // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
-                                var url = `{{ url('purchase_order_approveMultiple') }}`;
-                                fetch(url, {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'X-CSRF-TOKEN': token
-                                        },
-                                        body: JSON.stringify({
-                                            approveids: approveids
-                                        })
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        console.log(data);
-                                        // return false;
-                                        if (isAuthenticated(data) == false) {
-                                            return false;
-                                        }
-                                        if (data.success === true) {
-                                            location.reload();
-                                        } else {
-                                            alert("Something went wrong");
-                                            return false;
-                                        }
-
-                                    })
-                                    .catch(error => {
-                                        // $('.catsuccessdanger').text('There was an error submitting the form.');
-                                        console.error("Error: ", error);
-
-                                    });
-                                if (approveids.length == 0) {
-                                    alert("Please select at least one purchase order for approval.");
-                                } else {
-                                    var token = '<?php echo csrf_token(); ?>';
-                                    // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
-                                    var url = `{{ url('purchase_order_approveMultiple') }}`;
-                                    fetch(url, {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                'X-CSRF-TOKEN': token
-                                            },
-                                            body: JSON.stringify({
-                                                approveids: approveids
-                                            })
-                                        })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            console.log(data);
-                                            // return false;
-                                            if (data.success === true) {
-                                                location.reload();
-                                            } else {
-                                                alert("Something went wrong");
-                                                return false;
-                                            }
-
-                                        })
-                                        .catch(error => {
-                                            // $('.catsuccessdanger').text('There was an error submitting the form.');
-                                            console.error("Error: ", error);
-                                        });
-                                }
-                            });
-
-                        function email_sendCheck(type) {
-                            let emailids = [];
-                            var name = '';
-                            var ref = '';
-                            let error = 0;
-                            var SupplierEmail = '';
-                            $('.delete_checkbox:checked').each(function() {
-                                const row = $(this).closest('tr');
-                                var supplierNameEmail = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
-                                ref = row.get(0).querySelector('td:nth-child(3)').textContent.trim();
-                                SupplierEmail = $('#supplierEmail' + $(this).val()).val();
-
-                                if (name == '') {
-                                    name = supplierNameEmail;
-                                }
-                                if (name !== supplierNameEmail) {
-                                    error = 1;
-                                    return false;
-                                }
-                                emailids.push($(this).val());
-                            });
-                            if (error) {
-                                alert("Sorry, you cannot email purchase orders for multiple suppliers.");
-                                return false;
-                            }
-                            if (emailids.length == 0) {
-                                alert("Please select at least one purchase order for Email.");
-                                return false;
-                            } else {
-                                // window.open("<?php echo url('preview-purchase-orders?key='); ?>" + emailids, "_blank");
-                                $("#emailformId")[0].reset();
-                                $("#dropdownButton").html('');
-                                $("#dropdownButton").append('<span class="optext">' + SupplierEmail + '&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
-                                $("#selectedToEmail").val(SupplierEmail);
-                                $("#email_modalTitle").text("Email Purchase Order");
-                                $("#emailsubject").val("Purchase Order from The Contructor - {PO_REF}");
-                                if (type == 1) {
-                                    $("#emailsubject").val("Purchase Order from The Contructor - " + ref);
-                                }
-                                $("#email_po_id").val(emailids);
-                                $("#defaultOption").text('Default Purchase Order');
-                                const editor = CKEDITOR.instances['emailbody'];
-                                const message = `
+        }else{
+            // window.open("<?php echo url('preview-purchase-orders?key=');?>" + emailids, "_blank");
+            $("#emailformId")[0].reset();
+            $("#dropdownButton").html('');
+            $("#dropdownButton").append('<span class="optext">' + SupplierEmail + '&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+            $("#selectedToEmail").val(SupplierEmail);
+            $("#email_modalTitle").text("Email Purchase Order");
+            $("#emailsubject").val("Purchase Order from The Contructor - {PO_REF}");
+            if(type == 1){
+                $("#emailsubject").val("Purchase Order from The Contructor - " + ref);
+            }
+            $("#email_po_id").val(emailids);
+            $("#defaultOption").text('Default Purchase Order');
+            const editor = CKEDITOR.instances['emailbody'];
+            const message = `
                 Hello,<br>
                 Please find attached purchase order.<br><br><br><br><br>
                 Regards,<br>
                 The Contructor<br><br>
                 Thanks for using SCITS
             `;
-                                editor.setData(message);
-                                $("#emailModal").modal('show');
-                            }
-                        }
+            editor.setData(message);
+            $("#emailModal").modal('show');
+            }
+  }
 </script>
 <script>
     function clearBtn() {
@@ -1076,9 +1012,6 @@
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
-                    return false;
-                }
                 var table = $('#exampleOne').DataTable();
                 table.destroy();
                 if (response.data.length > 0) {
@@ -1104,7 +1037,7 @@
                         },
                         info: "Showing _START_ to _END_ of _TOTAL_ entries",
                         infoEmpty: "No entries available",
-                        emptyTable: '<span style="color: #e10078; font-weight: bold;">Sorry, there are no items available</span>',
+                        emptyTable: '<span style="color: #dc3545; font-weight: bold;">Sorry, there are no items available</span>',
                         infoFiltered: "(filtered from _MAX_ total entries)",
                         lengthMenu: "Show _MENU_ entries",
                         search: "Search:",
@@ -1175,9 +1108,6 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
-                        if (isAuthenticated(response) == false) {
-                            return false;
-                        }
                         deptdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'dept_container';
@@ -1257,9 +1187,6 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
-                        if (isAuthenticated(response) == false) {
-                            return false;
-                        }
                         tagdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'tag_container';
@@ -1338,9 +1265,6 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
-                        if (isAuthenticated(response) == false) {
-                            return false;
-                        }
                         supplierdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'supplier_container';
@@ -1419,9 +1343,6 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
-                        if (isAuthenticated(response) == false) {
-                            return false;
-                        }
                         customerdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'customer_container';
@@ -1500,9 +1421,6 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
-                        if (isAuthenticated(response) == false) {
-                            return false;
-                        }
                         createdbydivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'cretedby_container';
@@ -1581,9 +1499,6 @@
                     success: function(response) {
                         console.log(response);
                         // return false;
-                        if (isAuthenticated(response) == false) {
-                            return false;
-                        }
                         projectdivList.innerHTML = "";
                         const div = document.createElement('div');
                         div.className = 'project_container';
@@ -1672,9 +1587,6 @@
             processData: false,
             success: function(response) {
                 console.log(response);
-                if (isAuthenticated(response) == false) {
-                    return false;
-                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -1719,9 +1631,6 @@
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
-                    return false;
-                }
                 var data = response.data[0];
                 const tableBody = document.querySelector(`#recordDelivery_result tbody`);
                 tableBody.innerHTML = '';
@@ -1834,10 +1743,10 @@
                 var paginationControlsProductDetail = $("#pagination-controls-recordDelivery");
                 paginationControlsProductDetail.empty();
                 if (paginationProductDetails.prev_page_url) {
-                    paginationControlsProductDetail.append('<button type="button" class="btn btn-default2" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                    paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
                 }
                 if (paginationProductDetails.next_page_url) {
-                    paginationControlsProductDetail.append('<button type="button" class="btn btn-default2" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                    paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
                 }
             },
             error: function(xhr, status, error) {
@@ -1846,7 +1755,7 @@
             }
         });
     }
-    document.addEventListener('input', function(event) {
+    document.addEventListener('input', function (event) {
         if (event.target.classList.contains('already_deliver') || event.target.classList.contains('receive_more')) {
             const row = event.target.closest('tr');
             const qty = parseInt(row.querySelector('.qty').value, 10);
@@ -1876,9 +1785,6 @@
                 processData: false,
                 success: function(response) {
                     console.log(response);
-                    if (isAuthenticated(response) == false) {
-                        return false;
-                    }
                     if (response.vali_error) {
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1906,7 +1812,7 @@
 
     }
 
-    function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, product_id, outstandingAmount, supplier_id) {
+    function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, product_id, outstandingAmount,supplier_id) {
         // alert(outstandingAmount)
         $("#purchaseOrderRecordDate").text(po_ref + ' On ' + date);
         $("#recordPayment_po_id").val(id);
@@ -1971,9 +1877,6 @@
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
-                    return false;
-                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -2044,21 +1947,21 @@
         editor.setData(message);
         $("#emailModal").modal('show');
     }
-
-    function getAllPurchaseInvices(data) {
+    function getAllPurchaseInvices(data){
         location.reload();
     }
-    $('#bulkInvoiceReceived').on('click', function() {
+    $('#bulkInvoiceReceived').on('click', function(){
         const tableBody = document.querySelector(`#bulkInvoiceReceived_result tbody`);
-        tableBody.innerHTML = '';
-        tableBody.innerHTML = '<tr><td colspan="9" class="text text-danger text-center" id="norecorderror">Sorry, no records to show</td> </tr>';
+        tableBody.innerHTML='';
+        tableBody.innerHTML='<tr><td colspan="9" class="text text-danger text-center" id="norecorderror">Sorry, no records to show</td> </tr>';
         $("#bulkInvoiceReceivedModal").modal('show');
     });
-    $('#BulkRecordPaymentBTN').on('click', function() {
+    $('#BulkRecordPaymentBTN').on('click', function(){
         const tableBody = document.querySelector(`#bulkRecordPayment_result tbody`);
-        tableBody.innerHTML = '';
-        tableBody.innerHTML = '<tr><td colspan="8" class="text text-danger text-center" id="norecorderrorRecordPayment">Sorry, no records to show</td> </tr>';
+        tableBody.innerHTML='';
+        tableBody.innerHTML='<tr><td colspan="8" class="text text-danger text-center" id="norecorderrorRecordPayment">Sorry, no records to show</td> </tr>';
         $("#bulkRecordPaymentModal").modal('show');
     });
+
 </script>
 @endsection

@@ -1,7 +1,5 @@
 @extends('frontEnd.layouts.master')
-
 @section('title','Finance')
-
 @section('content')
 
 <!--main content start-->
@@ -37,7 +35,7 @@
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Day_book">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row bg-green">
+                                                <div class="user-heading alt wdgt-row bg-pink">
                                                     <i class="fa fa-line-chart"></i>
                                                 </div>
                                                 <div class="panel-body">
@@ -51,7 +49,7 @@
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Fixed_Asset">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row light_blue">
+                                                <div class="user-heading alt wdgt-row bg-green">
                                                     <i class="fa fa-window-maximize" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="panel-body">
@@ -62,11 +60,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#">
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance">
                                         <a href="{{ url('/finance/council-tax') }}">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row lavender_pink">
+                                                    <div class="user-heading alt wdgt-row lightRed">
                                                         <i class="fa fa-university" aria-hidden="true"></i>
                                                     </div>
                                                     <div class="panel-body">
@@ -98,7 +96,7 @@
                                         <a href="{{ url('/expenses') }}">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
-                                                    <div class="user-heading alt wdgt-row bg-blue">
+                                                    <div class="user-heading alt wdgt-row grayish_green">
                                                         <i class="fa fa-calculator"></i>
                                                     </div>
                                                     <div class="panel-body">
@@ -113,7 +111,7 @@
                                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Purchase_Order">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row lightRed">
+                                                <div class="user-heading alt wdgt-row lavender_pink">
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </div>
                                                 <div class="panel-body">
@@ -124,38 +122,37 @@
                                             </div>
                                         </div>
                                     </div>
-                               
-                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Invoice">
-                                    <div class="profile-nav alt">
-                                        <div class="panel text-center">
-                                            <div class="user-heading alt wdgt-row purple-bg">
-                                                <i class="fa fa-file-text-o"></i>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="wdgt-value">
-                                                    <h4 class="count">Invoice</h4>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Invoice">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row purple-bg">
+                                                    <i class="fa fa-file-text-o"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Invoice</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Items">
-                                    <div class="profile-nav alt">
-                                        <div class="panel text-center">
-                                            <div class="user-heading alt wdgt-row grayish_green">
-                                                <i class="fa fa-archive"></i>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="wdgt-value">
-                                                    <h4 class="count">Items</h4>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Items">
+                                        <div class="profile-nav alt">
+                                            <div class="panel text-center">
+                                                <div class="user-heading alt wdgt-row bg-blue">
+                                                    <i class="fa fa-archive"></i>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="wdgt-value">
+                                                        <h4 class="count">Items</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- fa-hourglass-end  fa-life-ring  fa-hourglass-half  fa-hourglass-start  fa-clock-o  fa-tachometer  fa-sliders   -->
+                                    <!-- fa-hourglass-end  fa-life-ring  fa-hourglass-half  fa-hourglass-start  fa-clock-o  fa-tachometer  fa-sliders   -->
 
-                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                    <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                                         <a href="{{ url('/petty-cash/child_register') }}">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
@@ -171,7 +168,7 @@
                                             </div>
                                         </a>
                                     </div> -->
-                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Quoting_System">
+                                    <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 tab_finance" data-tab-finance-target="#Quoting_System">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
                                                 <div class="user-heading alt wdgt-row bg-green">
@@ -186,23 +183,23 @@
                                         </div>
                                     </div> -->
 
-                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                    <a href="#!">
-                                        <div class="profile-nav alt">
-                                            <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row bg-pink">
-                                                    <i class="fa fa-cogs"></i>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div class="wdgt-value">
-                                                        <h4 class="count">Business Integrations</h4>
+                                    <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="#!">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row bg-pink">
+                                                        <i class="fa fa-cogs"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Business Integrations</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div> -->
-                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        </a>
+                                    </div> -->
+                                    <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                                     <a href="#!">
                                         <div class="profile-nav alt">
                                             <div class="panel text-center">
@@ -217,23 +214,23 @@
                                             </div>
                                         </div>
                                     </a>
-                                </div> -->
-                                <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                                    <a href="#!">
-                                        <div class="profile-nav alt">
-                                            <div class="panel text-center">
-                                                <div class="user-heading alt wdgt-row bg-yellow">
-                                                    <i class="fa fa-bell"></i>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div class="wdgt-value">
-                                                        <h4 class="count">EworksPay</h4>
+                                    </div> -->
+                                        <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="#!">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row bg-yellow">
+                                                        <i class="fa fa-bell"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">EworksPay</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div> -->
+                                        </a>
+                                    </div> -->
 
                                 </div>
                                 <div class="tab_finance-content">
@@ -450,6 +447,34 @@
                                                                     </div>
                                                                 </a>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{url('/account_codes')}}">
+                                                                <div>
+                                                                    <div class="icon icon1">
+                                                                        <i class="fa fa-calculator " aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Account Codes</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{url('/tax_rate')}}">
+                                                                <div>
+                                                                    <div class="icon icon2">
+                                                                        <i class="fa fa-percent " aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Tax Rate</h4>
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -686,6 +711,20 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="inner_cards">
+                                                            <a href="{{url('departments')}}">
+                                                                <div>
+                                                                    <div class="icon icon4">
+                                                                        <i class="fa fa-sitemap "></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card_name">
+                                                                    <h4>Departments</h4>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -763,7 +802,7 @@
                                                             <a href="{{ url('purchase/purchase-type') }}">
                                                                 <div>
                                                                     <div class="icon icon3">
-                                                                        <i class="fa fa-book"></i>
+                                                                        <i class="fa fa-money"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
@@ -885,7 +924,7 @@
                                                             <a href="{{ url('/item/product_categories') }}">
                                                                 <div>
                                                                     <div class="icon icon10">
-                                                                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                                        <i class="fa fa-th-large" aria-hidden="true"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
@@ -899,7 +938,7 @@
                                                             <a href="{{ url('/item/products') }}">
                                                                 <div>
                                                                     <div class="icon icon7">
-                                                                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                                        <i class="fa fa-square" aria-hidden="true"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
@@ -913,7 +952,7 @@
                                                             <a href="{{ url('/item/item-groups') }}">
                                                                 <div>
                                                                     <div class="icon icon3">
-                                                                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                                        <i class="fa fa-th-large" aria-hidden="true"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
@@ -927,7 +966,7 @@
                                                             <a href="{{ url('/item/catalogues') }}">
                                                                 <div>
                                                                     <div class="icon icon9">
-                                                                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                                        <i class="fa fa-folder-open" aria-hidden="true"></i>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card_name">
