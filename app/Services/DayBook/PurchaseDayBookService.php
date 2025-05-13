@@ -10,10 +10,7 @@ class PurchaseDayBookService
     public function save(array $data)
     {
         $data['date'] = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
-        $response = PurchaseDayBook::updateOrCreate(
-            ['id' => $data['purchase_day_book_id'] ?? null],
-            $data
-        );
+        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null], $data);
         return $response;
     }
 
