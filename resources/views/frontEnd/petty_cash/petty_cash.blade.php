@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="table-responsive productDetailTable maimtable  mb-4">
-                                <table id="" class="table border-top border-bottom tablechange" cellspacing="0">
+                                <table id="petty_cash_table" class="table border-top border-bottom tablechange" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -74,7 +74,7 @@
                                             <th>Uploaded to DEXT</th>
                                             <th>Invoice LA</th>
                                             <th>Initials</th>
-                                            <!-- <th>Action</th> -->
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="cash_result">
@@ -125,15 +125,16 @@
                                                         echo "No";
                                                     } ?></td>
                                                 <td>{{$val->initial}}</td>
+                                                <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#petty_cash" data-action="edit" data-id="{{ $val->id }}" data-cash_date="{{ $val->cash_date }}" data-petty_cashIn="{{ $val->petty_cashIn }}" data-cash_out="{{ $val->cash_out }}" data-card_details="{{ $val->card_details }}" data-receipt="{{ $val->receipt }}" data-dext="{{ $val->dext }}" data-invoice_la="{{ $val->invoice_la }}" data-initial="{{ $val->initial }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                                             </tr>
                                         <?php }
                                         $total_balanceInCash = $total_balance - $cash_out; ?>
                                     </tbody>
-                                    <input type="hidden" id="total_balanceInCash" value="{{$total_balanceInCash}}">
+                                    <input type="hidden" id="total_balanceInCash" value="<?php echo ($previous_Cash_month_data['total_balanceInCash'] ?? $total_balanceInCash);?>">
                                     <tfoot>
                                         <tr class="table-light">
                                             <th colspan="2">Total</th>
-                                            <th id="total_balance">£{{$balance_bfwd}}</th>
+                                            <th id="total_balance">£<?php echo ($previous_Cash_month_data['total_balanceInCash'] ?? $balance_bfwd);?></th>
                                             <th id="petty_cashIn">£{{$petty_cashIn}}</th>
                                             <th id="cash_out">£{{$cash_out}}</th>
                                             <th colspan="5"></th>
@@ -325,7 +326,7 @@
         });
     });
 </script>
-<!-- <script>
+<script>
     $(document).ready(function() {
         // New Job date 
         // $('#ToDate').datepicker({
@@ -353,7 +354,7 @@
             $('#ToDate').focus();
         });
     });
-</script> -->
+</script>
 <script type="text/javascript" src="{{ url('public/js/salesFinance/petty_cash/cash.js') }}"></script>
 
 @endsection

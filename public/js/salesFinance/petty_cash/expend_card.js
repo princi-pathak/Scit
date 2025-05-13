@@ -6,6 +6,9 @@ $(document).ready(function() {
         success: function(response) {
             console.log(response);
             // return false;
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             if (response.success === true) {
                 const data = response.data;
                 const expendCard = data.expendCard;
@@ -99,7 +102,7 @@ $(document).ready(function() {
             alert('Error - ' + errorMessage + "\nMessage: " + error);
         }
     });
-    const table = $('#expend_cash_table123').DataTable({
+    const table = $('#expend_cash_table').DataTable({
         dom: 'Blfrtip',
         buttons: [
             {
@@ -167,6 +170,9 @@ function save_expend_card(){
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -220,6 +226,9 @@ $("#ToDate").change(function() {
         success: function(response) {
             console.log(response);
             // return false;
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             if (response.success === true) {
                 // if(response.data.length == 0){
                 //     $("#expend_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');

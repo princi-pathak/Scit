@@ -43,7 +43,11 @@ class PettyCashController extends Controller
     public function petty_cash(){
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
-        $data['cash']=Cash::getAllCash($home_id,$user_id)->get();
+        // $data['cash']=Cash::getAllCash($home_id,$user_id)->get();
+        $data['cash']=Cash::getAllCash($home_id,$user_id)
+        ->whereMonth('cash_date', now()->month)
+        ->whereYear('cash_date', now()->year)
+        ->get();
         $data['previous_Cash_month_data']=$this->previous_Cash_month_data($home_id,$user_id);
         $data['cashLastId'] = Cash::getAllCash($home_id, $user_id)
         ->whereMonth('cash_date', now()->month)
@@ -240,7 +244,9 @@ class PettyCashController extends Controller
         $endDate=Carbon::parse($request->endDate)->format('Y-m-d');
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
-        $query = Cash::getAllCash($home_id,$user_id);
+        $query = Cash::getAllCash($home_id,$user_id)
+        ->whereMonth('cash_date', now()->month)
+        ->whereYear('cash_date', now()->year);
         if ($request->filled('startDate') && $request->filled('endDate')) {
             $query->whereBetween('cash_date', [$startDate, $endDate]);
         }
@@ -275,7 +281,9 @@ class PettyCashController extends Controller
                                 $html_data.='<td>£'. $val->balance_bfwd .'</td>';
                             }else{
                                 $html_data.='<td></td>';
-                            }}
+                            }}else{
+                                $html_data.='<td></td>';
+                            }
                             $html_data.='<td>£'. $val->petty_cashIn .'</td>
                             <td>£'. $val->cash_out .'</td>
                             <td>'. $val->card_details .'</td>
@@ -286,8 +294,8 @@ class PettyCashController extends Controller
                         </tr>';
 
         }
-        $total_balanceInCash=$total_balance-$cash_out;
-        return response()->json(['success'=>true,'message'=>'Filtered Data','data'=>$search_data,'html_data'=>$html_data,'total_balance'=>$balance_bfwd,'cash_out'=>$cash_out,'balance_bfwd'=>$balance_bfwd,'petty_cashIn'=>$petty_cashIn,'total_balanceInCash'=>$total_balanceInCash]);
+        $total_balanceInCash=$previous_Cash_month_data['total_balanceInCash'] ?? $total_balance-$cash_out;
+        return response()->json(['success'=>true,'message'=>'Filtered Data','data'=>$search_data,'html_data'=>$html_data,'total_balance'=>$previous_Cash_month_data['total_balanceInCash'] ?? $balance_bfwd,'cash_out'=>$cash_out,'balance_bfwd'=>$balance_bfwd,'petty_cashIn'=>$petty_cashIn,'total_balanceInCash'=>$total_balanceInCash]);
     }
     public function expand_card_filter(Request $request){
         // echo "<pre>";print_r($request->all());die;

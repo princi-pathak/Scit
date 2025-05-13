@@ -1,3 +1,42 @@
+$(document).ready(function() {
+    const table = $('#petty_cash_table').DataTable({
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export',
+                bom: true,
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10]
+                }
+            }
+        ],
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+            var intVal = function (i) {
+                return typeof i === 'string'
+                    ? parseFloat(i.replace(/[£,]/g, '')) || 0
+                    : typeof i === 'number'
+                    ? i
+                    : 0;
+            };
+    
+            
+            var columnsToTotal = [3];
+    
+            columnsToTotal.forEach(function (colIdx) {
+                var total = api
+                    .column(colIdx, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+    
+                $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
+            });
+        }
+    });
+});
 function saveCash(){
     var error=0;
     $(".checkInput").each(function(){
@@ -28,6 +67,9 @@ function saveCash(){
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -82,6 +124,9 @@ $("#ToDate").change(function() {
         success: function(response) {
             console.log(response);
             // return false;
+            if (isAuthenticated(response) == false) {
+                    return false;
+                }
             if (response.success === true) {
                 if(response.data.length == 0){
                     $("#cash_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
@@ -137,3 +182,12 @@ $(document).on('input', '.numberInput', function () {
     }
     $(this).val(val);
 });
+$(document).on('click','.openModalBtn', function(){
+    var id=$(this).data('id');
+    var cash_date=$(this).data('cash_date');
+    var petty_cashIn=$(this).data('petty_cashIn');
+    var cash_out=$(this).data('cash_out');
+    var card_details=$(this).data('card_details');
+    var receipt=$(this).data('receipt');
+    var id=$(this).data('id');
+})
