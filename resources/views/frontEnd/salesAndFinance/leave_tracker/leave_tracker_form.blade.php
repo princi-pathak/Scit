@@ -1,0 +1,280 @@
+<style>
+    .font_color{
+        color: #1f88b5 !important;
+    }
+    
+</style>
+
+<!-- Leave Tracker  model-->
+<div class="modal fade" id="leaveTrackerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close rmp-modal-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Staf Details (Leave Tracker) </h4>
+            </div>
+            <div class="modal-body">
+                <form action="" id="" class="customerForm">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="row formDtail">
+                                <div class="col-md-6 form-group">
+                                    <label> Name </label>
+                                    <input type="text" class="form-control editInput" id="" name="name">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label> Date <span class="radStar">*</span></label>
+                                    <input type="text" class="form-control editInput" id="Leave_startDate" name="Leave Start Date">
+                                </div>
+                                   <div class="col-md-12 form-group">
+                                    <label> Hours <span class="radStar">*</span></label>
+                                    <input type="text" class="form-control editInput" id="" name="name">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label> Sleep <span class="radStar">*</span></label>
+                                    <input type="text" class="form-control editInput" id="" name="name">
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label> Wake Night <span class="radStar">*</span></label>
+                                    <input type="text" class="form-control editInput" id="" name="name">
+                                </div>
+                              
+                                <div class="col-md-12 form-group">
+                                    <label> Disturbance <span class="radStar">*</span></label>
+                                    <input type="text" class="form-control editInput" id="" name="name">
+                                </div>
+                                
+                                <div class="col-md-6 form-group">
+                                    <label> Annual Leave <span class="radStar">*</span></label>
+                                    <input type="text" class="form-control editInput" id="" name="name">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label> On Call <span class="radStar">*</span></label>
+                                    <input type="text" class="form-control editInput" id="" name="name">
+                                </div>
+
+                               
+                                <div class="col-md-12 form-group">
+                                    <label> Comments <span class="radStar">*</span></label>
+                                    <textarea class="form-control textareaInput" placeholder="Type your comments..." rows="3" id="" name="comments"></textarea>
+                                </div>
+                                
+                               
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="">Save</button>
+            </div>
+        </div>        
+    </div>
+</div>
+<!--Leave Tracker model End -->
+
+<script>
+    $('#Leave_startDate').datepicker({
+        format: 'dd-mm-yyyy'
+    });
+ 
+    $('#Leave_startDate').on('change', function () {
+        $('#Leave_startDate').datepicker('hide');
+    });
+ 
+    $("#salesDayBookModel").scroll(function () {
+        $('#Leave_startDate').datepicker('place');
+    });
+</script>
+
+<script>
+    //detail option
+    $(document).on('click','.my-task-detail', function(){
+        
+
+        $(this).closest('.cog-panel').find('.input-plusbox').toggle();
+        $(this).closest('.pop-notifbox').removeClass('active');
+        autosize($("textarea"));
+        return false;
+    });
+</script>
+
+<script>
+    //my task show
+    $(document).ready(function(){
+        $(document).on('click','.leave_tracker_form', function(){
+           
+            var manager_id = $(this).attr('manager_id');
+            
+            $('.loader').show();
+            $('body').addClass('body-overflow'); 
+
+            $.ajax({
+                type : 'get',
+                url  : "{{ url('/my-profile/task-allocation/view/') }}"+'/'+manager_id+ '?logged',
+                success : function(resp) {
+                    if(isAuthenticated(resp) == false){
+                        return false;
+                    }
+                    if(resp == '') {
+                         $('.log-my-task-alloc-record').html('<div class="text-center p-b-20"style="width:100%"> No Records found. </div>');
+                    } else {
+                        $('.log-my-task-alloc-record').html(resp);
+                    }
+                    $('#leaveTrackerModal').modal('show');
+                    $('.loader').hide();
+                    $('body').removeClass('body-overflow');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<script>
+    $('#leaveTrackerModal').on('scroll',function(){
+        $('.dpYears').datepicker('place')
+    });
+
+    //3rd tab search
+    $('input[name=\'sm_date\']').closest('.srch-field').hide();
+    $(document).ready(function(){
+
+        $('input[name=\'search_task_record\']').keydown(function(event) { 
+            var keyCode = (event.keyCode ? event.keyCode : event.which);   
+            if (keyCode == 13) {
+                return false;      
+            }
+        });
+
+        $('select[name=\'sm_search_type\']').change(function(){
+            $('.my-searched-records').html('');
+            var sm_src_title = $('input[name=\'search_task_record\']');
+            var sm_src_date  = $('input[name=\'sm_date\']');
+
+            var type = $(this).val(); 
+            if(type == 'date'){
+
+                sm_src_date.closest('.srch-field').show();
+                sm_src_date.removeClass('red_border');
+                sm_src_title.closest('.srch-field').hide();
+            }
+            else{
+                sm_src_title.closest('.srch-field').show();
+                sm_src_title.removeClass('red_border');
+                sm_src_date.closest('.srch-field').hide();
+            }   
+        });
+
+        $(document).on('click','.search-task-alloc-btn', function(){
+
+            var sm_search_type = $('select[name=\'sm_search_type\']');
+            var search_input = $('input[name=\'search_task_record\']');
+            var sm_search_date = $('input[name=\'sm_date\']');
+            
+            var search = search_input.val();
+            var sm_date = sm_search_date.val();
+            var sm_search_type = sm_search_type.val();
+
+            search = jQuery.trim(search);
+            search = search.replace(/[&\/\\#,+()$~%.'":*?<>^@{}]/g, '');
+            
+            if(sm_search_type == 'title'){
+                if(search == ''){
+
+                    search_input.addClass('red_border');
+                    return false;
+                } else{
+                    search_input.removeClass('red_border');
+                }
+            }
+            else{
+                if(sm_date == ''){
+
+                    sm_search_date.addClass('red_border');
+                    return false;
+                } else{
+                    sm_search_date.removeClass('red_border');
+                }
+
+            }           
+            var formdata = $('#searched-task-alloc-records-form').serialize();
+           
+            var manager_id = "{{ $manager_id }}";
+
+            $('.loader').show();
+            $('body').addClass('body-overflow');
+            $.ajax({
+                type : 'post',
+                url  : "{{ url('/my-profile/task-allocation/view/') }}"+'/'+manager_id+'?search='+search+'&sm_date='+sm_date+'&sm_search_type='+sm_search_type,
+                data : formdata,
+                success : function(resp){
+                  
+                    if(isAuthenticated(resp) == false){
+                        return false;
+                    }
+                    if(resp == ''){
+                        $('.my-searched-records').html('No Records found.');
+                    } else{
+                        $('.my-searched-records').html(resp);
+                    }
+                    $('.loader').hide();
+                    $('body').removeClass('body-overflow');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<script>
+    //pagination
+    $(document).on('click','#leaveTrackerModal .pagination li',function(){
+       
+        var page_no = $(this).children('a').text();
+        if(page_no == '') {
+            return false;
+        }
+        if(isNaN(page_no)) {
+            var new_url = $(this).children('a').attr('href');
+            page_no = new_url[new_url.length - 1];
+        }
+        
+        var manager_id = "{{ $manager_id }}";
+
+        $('.loader').show();
+        $('body').addClass('body-overflow');
+
+        $.ajax({
+            type : 'get',
+            url   : "{{ url('/my-profile/task-allocation/view/') }}"+'/'+manager_id+"?page="+page_no+'&logged',
+            success:function(resp){
+                if(isAuthenticated(resp) == false){
+                    return false;
+                }
+
+                $('.log-my-task-alloc-record').html(resp);
+                $('.loader').hide();
+                $('body').removeClass('body-overflow');
+            }
+        });
+        return false;
+    });
+</script>
+
+<!-- head script of show date  -->
+<script>
+    //same for all heads
+    $(document).ready(function(){
+        $(document).on('click','.daily-rcd-head', function(){
+            $(this).next('.daily-rcd-content').slideToggle();
+            $(this).find('i').toggleClass('fa-angle-down');
+            $('.input-plusbox').hide();
+            
+        });
+    });
+</script>
+
+

@@ -95,6 +95,36 @@
                                                 </div>
                                             </a>
                                         </div>
+                                        <div class="col-md-6">
+                                            <a href="{{ url('/rota/annual-leave') }}">
+                                                    <div class="profile-nav alt">
+                                                        <div class="panel text-center">
+                                                            <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-bed fa-lg"></i></div>
+                                                            <div class="panel-body">
+                                                                <div class="wdgt-value">
+                                                                    <h4 class="count">Annual Leave</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </a>
+                                        </div>
+                                        <!-- <div class="col-md-6">
+                                            <a href="{{ url('/rota/annual-leave') }}">
+                                                <div class="col-md-6">
+                                                    <div class="profile-nav alt">
+                                                        <div class="panel text-center">
+                                                            <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-bed fa-lg"></i></div>
+                                                            <div class="panel-body">
+                                                                <div class="wdgt-value">
+                                                                    <h1 class="count">Annual Leave</h1>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div> -->
                                     </div>
                                     <div class="tab_finance-content">
                                         <div id="Actions" data-tab-finance-content>

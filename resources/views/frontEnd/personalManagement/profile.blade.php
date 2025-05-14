@@ -367,6 +367,37 @@
                                                     </section>
                                                 </div>
                                             </div>
+                                            <div class="col-md-3 col-sm-4 col-xs-12 leave_tracker_form" manager_id="{{ $manager_id }}">
+                                                <div class="profile-nav alt">
+                                                    <section class="panel text-center">
+                                                        <div class="user-heading alt wdgt-row label-inverse">
+                                                            <i class="fa fa-file"></i>
+                                                            <!-- <i class="fa fa-heartbeat"></i> -->
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="wdgt-value">
+                                                                <h4 class="count">Add Leave<br>Tracker</h4>
+                                                                    <p></p>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-md-2 col-sm-4 col-xs-12">
+                                                <div class="profile-nav alt">
+                                                    <a href="javascript:void(0)">
+                                                        <section class="panel text-center profile-square">
+                                                            <div class="user-heading alt wdgt-row label-inverse">
+                                                                <i class="fa fa-file"></i>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <div class="wdgt-value">Add Leave Tracker</div>
+                                                            </div>
+                                                        </section>
+                                                    </a>
+                                                </div>
+                                            </div> -->
+
                                             <!-- <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <div class="below-divider"></div>
                                             </div> -->
@@ -451,6 +482,7 @@
 @include('frontEnd.personalManagement.elements.change_password')
 @include('frontEnd.personalManagement.elements.petty_cash')
 @include('frontEnd.personalManagement.elements.petty_cash_detail')
+@include('frontEnd.salesAndFinance.leave_tracker.leave_tracker_form')
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&AMP;sensor=false"></script>
 <?php $api_key = env('GOOGLE_MAP_API_KEY'); ?>
