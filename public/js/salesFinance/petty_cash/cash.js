@@ -1,3 +1,42 @@
+$(document).ready(function() {
+    const table = $('#petty_cash_table').DataTable({
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export',
+                bom: true,
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10]
+                }
+            }
+        ],
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+            var intVal = function (i) {
+                return typeof i === 'string'
+                    ? parseFloat(i.replace(/[£,]/g, '')) || 0
+                    : typeof i === 'number'
+                    ? i
+                    : 0;
+            };
+    
+            
+            var columnsToTotal = [3];
+    
+            columnsToTotal.forEach(function (colIdx) {
+                var total = api
+                    .column(colIdx, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+    
+                $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
+            });
+        }
+    });
+});
 function saveCash(){
     var error=0;
     $(".checkInput").each(function(){
@@ -28,6 +67,9 @@ function saveCash(){
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -82,6 +124,9 @@ $("#ToDate").change(function() {
         success: function(response) {
             console.log(response);
             // return false;
+            if (isAuthenticated(response) == false) {
+                    return false;
+                }
             if (response.success === true) {
                 if(response.data.length == 0){
                     $("#cash_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
@@ -136,4 +181,97 @@ $(document).on('input', '.numberInput', function () {
         val = val.slice(0, -1);
     }
     $(this).val(val);
+});
+$(document).on('click','.openModalBtn', function(){
+    var action=$(this).data('action');
+    var id=$(this).data('id');
+    var cash_date=$(this).data('cash_date');
+    var petty_cashIn=$(this).data('petty_cashin');
+    var cash_out=$(this).data('cash_out');
+    var card_details=$(this).data('card_details');
+    var receipt=$(this).data('receipt');
+    var dext=$(this).data('dext');
+    var invoice_la=$(this).data('invoice_la');
+    var initial=$(this).data('initial');
+    var balance_bfwd=$("#balance_bfwd").val();
+    var balance_bfwdEdit=$(this).data('balance_bfwd');
+    if(action === 'add'){
+        $("#petty_cashLabel").text("Add Petty Cash");
+        if(balance_bfwd ==''){
+            $("#balance_bfwd").val(balance_bfwdEdit);
+        }
+        $("#id").val('');
+        $("#cash_date").val('');
+        $("#petty_cashInModal").val('');
+        $("#cash_outModal").val('');
+        $("#card_details").val('');
+        var text = '<img src="'+existImage+'" alt="" class="image_delete">';
+        $("#exist_image").html(text);
+        if(dext == 1){
+            $("#yes").attr('checked','checked');
+        }else{
+            $("#no").attr('checked','checked');
+        }
+        if(invoice_la == 1){
+            $("#yes2").attr('checked','checked');
+        }else{
+            $("#no2").attr('checked','checked');
+        }
+        $("#initial").val('');
+    }else{
+        $(".checkInput").css('border','');
+        $("#petty_cashLabel").text("Edit Petty Cash");
+        if(balance_bfwd ==''){
+            $("#balance_bfwd").val(balance_bfwdEdit);
+        }
+        $("#id").val(id);
+        $("#cash_date").val(cash_date);
+        $("#petty_cashInModal").val(petty_cashIn);
+        $("#cash_outModal").val(cash_out);
+        $("#card_details").val(card_details);
+        if (receipt) {
+            var text = '<img src="' + imgSrc + "/" + receipt + '" alt="" class="image_delete" data-delete="' + id + '">';
+            $("#exist_image").html(text);
+        }else {
+            $("#exist_image").html('');
+        }
+        if(dext == 1){
+            $("#yes").attr('checked','checked');
+        }else{
+            $("#no").attr('checked','checked');
+        }
+        if(invoice_la == 1){
+            $("#yes2").attr('checked','checked');
+        }else{
+            $("#no2").attr('checked','checked');
+        }
+        $("#initial").val(initial);
+    }
+});
+$(document).on('click','.deleteBtn', function(){
+    var id=$(this).data('id');
+    if(confirm("Are you sure to delete it?")){
+        $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {id:id,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (isAuthenticated(response) == false) {
+                        return false;
+                    }
+                if (response.success === true) {
+                    location.reload();
+                }
+                if(response.success === false){
+                    alert('Something went wrong');
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
+    }
 });

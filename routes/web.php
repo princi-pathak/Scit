@@ -23,6 +23,8 @@ use App\Http\Controllers\frontEnd\PettyCashController;
 use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
 use App\Http\Controllers\frontEnd\salesFinance\PreInvoiceController;
 use App\Http\Controllers\Rota\StaffController;
+use App\Http\Controllers\Rota\AnnualLeaveController;
+use App\Http\Controllers\frontEnd\salesFinance\leave_tracker\LeaveTrackerController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -531,22 +533,24 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 	// forntend petty cash
-	Route::controller(PettyCashController::class)->group(function () {
-		Route::prefix('petty-cash/')->group(function () {
-			Route::get('dashboard', 'index');
-			Route::get('expend-card', 'expend_card');
-			Route::get('petty_cash', 'petty_cash');
-			Route::get('child_register', 'child_register');
-			Route::get('expend_card_add', 'expend_card_add');
-			Route::get('petty-cash-add', 'petty_cash_add');
-			Route::get('child-register-add', 'child_register_add');
-			Route::post('saveExpend', 'saveExpend');
-			Route::post('editExpend', 'saveExpend');
-			Route::post('saveCash', 'saveCash');
-			Route::post('editCash', 'saveCash');
-			Route::post('cash_filter', 'cash_filter');
-			Route::post('expand_card_filter', 'expand_card_filter');
-			Route::get('getAllExpendCash', 'getAllExpendCash');
+	Route::controller(PettyCashController::class)->group(function (){
+		Route::prefix('petty-cash/')->group(function (){
+			Route::get('dashboard','index');
+			Route::get('expend-card','expend_card');
+			Route::get('petty_cash','petty_cash');
+			Route::get('child_register','child_register');
+			Route::get('expend_card_add','expend_card_add');
+			Route::get('petty-cash-add','petty_cash_add');
+			Route::get('child-register-add','child_register_add');
+			Route::post('saveExpend','saveExpend');
+			Route::post('editExpend','saveExpend');
+			Route::post('saveCash','saveCash');
+			Route::post('editCash','saveCash');
+			Route::post('cash_filter','cash_filter');
+			Route::post('expand_card_filter','expand_card_filter');
+			Route::get('getAllExpendCash','getAllExpendCash');
+			Route::post('cash_delete','cash_delete');
+			Route::post('expend_delete','expend_delete');
 		});
 	});
 
@@ -563,6 +567,18 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('rota/staff', 'index');
 		Route::post('rota/staff-add', 'store');
 		Route::delete('rota/staff-delete/{id}', 'destroy');
+	});
+	// Annual leave frontend
+	Route::controller(AnnualLeaveController::class)->group(function(){
+		route::prefix('rota')->group(function(){
+			Route::get('annual-leave','index');
+		});
+	});
+	// Leave Tracker frontend
+	Route::controller(LeaveTrackerController::class)->group(function(){
+		Route::prefix('finance')->group(function(){
+			Route::get('leave-tracker','leave_tracker');
+		});
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {

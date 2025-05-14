@@ -43,7 +43,7 @@
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#customerPop" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a>
-                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-warning">Delete</a>
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
                             </div>
                             <div class="alert alert-success text-center" id="msg" style="display:none;height:50px">
                                 <p id="status_meesage"></p>
@@ -59,7 +59,7 @@
                                             <th>Account Code Name</th>
                                             <th>Account Code</th>
                                             <th>Status</th>
-                                            <th>Actions</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="result">
@@ -83,7 +83,7 @@
                                                                 Action <i class="fa fa-caret-down"></i>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-right fade-up m-0">
-                                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-title="{{ $val->name }}" data-departmental_code="{{$val->departmental_code}}" data-status="{{ $val->status }}">Edit Details</a>
+                                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-title="{{ $val->name }}" data-departmental_code="{{$val->departmental_code}}" data-status="{{ $val->status }}">Edit</a>
                                                             </div>
                                                         </div>
                                                     </div>

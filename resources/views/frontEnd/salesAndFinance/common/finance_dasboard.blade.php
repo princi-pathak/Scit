@@ -150,6 +150,22 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                        <a href="{{ url('/finance/leave-tracker') }}">
+                                            <div class="profile-nav alt">
+                                                <div class="panel text-center">
+                                                    <div class="user-heading alt wdgt-row bg-yellow">
+                                                        <i class="fa fa-calculator"></i>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="wdgt-value">
+                                                            <h4 class="count">Leave Tracker</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
                                     <!-- fa-hourglass-end  fa-life-ring  fa-hourglass-half  fa-hourglass-start  fa-clock-o  fa-tachometer  fa-sliders   -->
 
                                     <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
