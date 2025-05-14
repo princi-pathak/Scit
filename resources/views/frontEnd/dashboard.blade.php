@@ -85,7 +85,7 @@
                     </div>
                 </a>
                 <?php if($accessRight === true) { ?>
-                <a href="{{ url('/rota-dashboard') }}">
+                <a href="{{ url('/rota-management') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">

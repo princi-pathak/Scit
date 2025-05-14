@@ -23,6 +23,8 @@ use App\Http\Controllers\frontEnd\PettyCashController;
 use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
 use App\Http\Controllers\frontEnd\salesFinance\PreInvoiceController;
 use App\Http\Controllers\Rota\StaffController;
+use App\Http\Controllers\Rota\AnnualLeaveController;
+use App\Http\Controllers\frontEnd\salesFinance\leave_tracker\LeaveTrackerController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -566,6 +568,18 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('rota/staff','index');
 		Route::post('rota/staff-add','store');
 		Route::delete('rota/staff-delete/{id}','destroy');
+	});
+	// Annual leave frontend
+	Route::controller(AnnualLeaveController::class)->group(function(){
+		route::prefix('rota')->group(function(){
+			Route::get('annual-leave','index');
+		});
+	});
+	// Leave Tracker frontend
+	Route::controller(LeaveTrackerController::class)->group(function(){
+		Route::prefix('finance')->group(function(){
+			Route::get('leave-tracker','leave_tracker');
+		});
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {
