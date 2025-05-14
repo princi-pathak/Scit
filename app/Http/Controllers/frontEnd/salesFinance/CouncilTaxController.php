@@ -28,7 +28,6 @@ class CouncilTaxController extends Controller
         $data['bill_period_start_date'] = $bill_period_start_date;
         $bill_period_end_date = Carbon::createFromFormat('d-m-Y', $data['bill_period_end_date'])->format('Y-m-d');
         $data['bill_period_end_date'] = $bill_period_end_date;
-        // $data['home_id'] = Auth::user()->home_id;
 
 
         $response = CouncilTax::updateOrCreate(['id' => $req->council_tax_id], $data );

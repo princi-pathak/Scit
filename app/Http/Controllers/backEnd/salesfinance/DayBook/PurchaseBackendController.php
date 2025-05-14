@@ -4,7 +4,6 @@ namespace App\Http\Controllers\backEnd\salesfinance\DayBook;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Supplier;
 use App\Models\Construction_tax_rate;
 use App\Models\PurchaseExpenses;
@@ -15,6 +14,7 @@ use App\Models\DayBook\PurchaseDayBook;
 
 use Illuminate\Support\Facades\Log;
 use App\Models\DayBook\SalesDayBook;
+use Illuminate\Support\Facades\Session;
 
 class PurchaseBackendController extends Controller
 {
@@ -105,7 +105,7 @@ class PurchaseBackendController extends Controller
 
     public function getPurchaseDayBook(Request $request){
 
-        $home_id =Auth::user()->home_id;
+        $home_id = Session::get('scitsAdminSession')->home_id;
         $purchaseDayBooks = $this->purchaseDayBookService->getPurchaseDayBook($home_id, $request);
 
         return response()->json([
@@ -148,7 +148,7 @@ class PurchaseBackendController extends Controller
 
     public function getSupplierData()
     {
-        $data = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
+        $data = Supplier::getActiveSuppliers(Session::get('scitsAdminSession')->home_id, null);
 
         return response()->json([
             'success' => (bool) $data,
@@ -167,7 +167,7 @@ class PurchaseBackendController extends Controller
 
     public function getActiveTaxRate()
     {
-        $data = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
+        $data = Construction_tax_rate::getAllTax_rate(Session::get('scitsAdminSession')->home_id, "Active");
 
         return response()->json([
             'success' => (bool) $data,
@@ -179,7 +179,7 @@ class PurchaseBackendController extends Controller
     {
 
         $data = $request->validated();
-        $data['home_id'] = Auth::user()->home_id;    
+        $data['home_id'] = Session::get('scitsAdminSession')->home_id;    
         $data['page'] = "dayBook";
         try {
             $record = $this->purchaseDayBookService->save($data);
@@ -199,12 +199,11 @@ class PurchaseBackendController extends Controller
 
     public function purchase_day_book_reclaim_per()
     {
-        return Home::where('id', Auth::user()->home_id)->value('is_registered');
+        return Home::where('id', Session::get('scitsAdminSession')->home_id)->value('is_registered');
     }
 
     public function reclaimPercantage()
     {
-
         $excepmt = SalesDayBook::Where('Vat', 1)->whereNull('deleted_at')->sum('netAmount');
         $standard = SalesDayBook::Where('Vat', 2)->whereNull('deleted_at')->sum('netAmount');
 

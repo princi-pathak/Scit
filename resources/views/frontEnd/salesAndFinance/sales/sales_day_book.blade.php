@@ -53,7 +53,6 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <!-- <th></th> -->
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -105,7 +104,7 @@
                             <div class="form-group">
                                 <label>VAT <span class="radStar">*</span></label>
                                 <input type="hidden" id="tax_id">
-                                <select class="form-control editInput selectOptions" name="Vat" id="vat_input">
+                                <select class="form-control editInput selectOptions vat_input" name="Vat" id="vat_input">
                                     <option>-Not Assigned-</option>
                                 </select>
                             </div>
