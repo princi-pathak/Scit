@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="space15"></div>
-                            <table class="table table-striped table-hover table-bordered" id="editable-sample">
+                            <table class="table table-striped table-hover table-bordered" id="myTable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -83,6 +83,11 @@
 </section>
 
 <script>
+
+    $(document).ready(function() {
+    $('#myTable').DataTable();
+});
+
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.change-status').forEach(function(button) {
             button.addEventListener('click', function() {

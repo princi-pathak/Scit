@@ -276,8 +276,34 @@ $(document).ready(function () {
         });
     });
 
-    $(".deleteBtn").on("click", function () {
-        let salesBookId = $(this).data("id"); // Get ID from button
+    // $(".deleteBtn").on("click", function () {
+    //     let salesBookId = $(this).data("id"); // Get ID from button
+    //     let row = $("#row-" + salesBookId); // Select the row
+
+    //     if (confirm("Are you sure you want to delete this record?")) {
+    //         $.ajax({
+    //             url: salesDayBook + "/" + salesBookId,
+    //             type: "POST",
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    //             },
+    //             success: function (response) {
+    //                 if (response.success) {
+    //                     // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
+    //                     alert(response.message);
+    //                     window.location.reload();
+    //                 }
+    //             },
+    //             error: function () {
+    //                 alert("Something went wrong!");
+    //             },
+    //         });
+    //     }
+    // });
+});
+
+$(document).on("click", ".deleteBtn", function () { 
+     let salesBookId = $(this).data("id"); // Get ID from button
         let row = $("#row-" + salesBookId); // Select the row
 
         if (confirm("Are you sure you want to delete this record?")) {
@@ -299,8 +325,7 @@ $(document).ready(function () {
                 },
             });
         }
-    });
-});
+ });
 
 document.addEventListener('DOMContentLoaded', function () {
     let vatInput = document.getElementById('vat_input');
@@ -397,13 +422,14 @@ function taxRate(dropdown) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.openSalesDayBookModel').forEach(function (btn) {
-        // alert();
+        
+    document.addEventListener('click', function (event) {
+        if (event.target.closest('.openSalesDayBookModel')) {
+            const btn = event.target.closest('.openSalesDayBookModel');
 
-        btn.addEventListener('click', function () {
-            getCustomerList();
-            taxRate();
-            const action = this.getAttribute('data-action');
+          getCustomerList();
+            taxRate(document.getElementById('vat_input'));
+            const action = btn.getAttribute('data-action');
             const modalTitle = document.getElementById('modalTitle');
             const sales_day_book_id = document.getElementById('sales_day_book_id');
             const customer_id = document.getElementById('customer_id');
@@ -417,18 +443,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 modalTitle.textContent = 'Add Sales Day Book';
             } else if (action === 'edit') {
                 modalTitle.textContent = 'Edit Sales Day Book';
-                sales_day_book_id.value = this.getAttribute('data-id');
-                customer_id.value = this.getAttribute('data-customer_id');
-                Date_input.value = this.getAttribute('data-date');
-                Invoice_input.value = this.getAttribute('data-invoice_no');
-                net_amount.value = this.getAttribute('data-netAmount');
-                tax_id.value = this.getAttribute('data-vat');
-                vat_amount.value = this.getAttribute('data-vatAmount');
-                gross_amount.value = this.getAttribute('data-grossAmount');
+                sales_day_book_id.value = btn.getAttribute('data-id');
+                customer_id.value = btn.getAttribute('data-customer_id');
+                // Date_input.value = btn.getAttribute('data-date');
+                  const originalDate = btn.getAttribute('data-date');
+                let formattedDate = originalDate;
+                if (originalDate && originalDate.includes('-')) {
+                    const parts = originalDate.split('-'); // [yyyy, mm, dd]
+                    formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+                }
+                Date_input.value = formattedDate;
+
+                Invoice_input.value = btn.getAttribute('data-invoice_no');
+                net_amount.value = btn.getAttribute('data-netAmount');
+                tax_id.value = btn.getAttribute('data-vat');
+                vat_amount.value = btn.getAttribute('data-vatAmount');
+                gross_amount.value = btn.getAttribute('data-grossAmount');
 
             }
 
             $('#salesDayBookModel').modal('show');
-        });
+        }
     });
+
+
 });

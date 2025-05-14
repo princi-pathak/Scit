@@ -10,25 +10,36 @@ class SalesDayBookService
     public function save($data)
     {
         $data['date'] = Carbon::createFromFormat('d-m-Y', $data['date'])->format('Y-m-d');
-        $response = SalesDayBook::updateOrCreate(['id' => $data['sales_day_book_id'] ?? null], $data );
-        return $response;
+        return  SalesDayBook::updateOrCreate(['id' => $data['sales_day_book_id'] ?? null], $data);
+         
     }
 
     public function getSalesDayBook($home_id, $request)
     {
-        $query = SalesDayBook::join('suppliers', 'suppliers.id', '=', 'purchase_day_books.supplier_id')
-            ->join('construction_tax_rates', 'construction_tax_rates.id', '=', 'purchase_day_books.Vat')
-            ->leftjoin('purchase_expenses', 'purchase_expenses.id', '=', 'purchase_day_books.expense_type')
-            ->where('purchase_day_books.home_id', $home_id)
-            ->select('purchase_day_books.*', 'suppliers.name as customer_name', 'construction_tax_rates.name as tax_rate_name', 'purchase_expenses.title')
-            ->whereNull('purchase_day_books.deleted_at')
-            ->orderBy('purchase_day_books.created_at', 'desc');
+        $query = SalesDayBook::join('customers', 'customers.id', '=', 'sales_day_books.customer_id')
+            ->join('construction_tax_rates', 'construction_tax_rates.id', '=', 'sales_day_books.Vat')
+            ->where('sales_day_books.home_id', $home_id)
+            ->select('sales_day_books.*', 'customers.name as customer_name', 'construction_tax_rates.name as tax_rate_name')
+            ->whereNull('sales_day_books.deleted_at')
+            ->orderBy('sales_day_books.created_at', 'desc');
 
         if ($request->has('tax_rate') && $request->tax_rate != 0) {
-            $query->where('purchase_day_books.Vat', $request->tax_rate);
+            $query->where('sales_day_books.Vat', $request->tax_rate);
         }
 
-        $purchaseDayBooks = $query->get();
-        return $purchaseDayBooks;
+        $salesDayBooks = $query->get();
+        return $salesDayBooks;
+    }
+    public function getSalesDayBookById($id)
+    {
+        return SalesDayBook::find($id);
+    }
+    public function deleteSalesDayBook($id)
+    {
+        $salesBook = SalesDayBook::findOrFail($id);
+        $salesBook->deleted_at = now(); // Update deleted_at with current timestamp
+        $salesBook->save();
+
+      return $salesBook->deleted_at->format('Y-m-d H:i:s');
     }
 }

@@ -97,7 +97,7 @@
 </section>
 
 <script>
-    const getTaxRate = '{{ url("admin/sales-finance/purchase/getTaxRate") }}';
+    const getTaxRate = '{{ url("admin/sales-finance/sales/getTaxRate") }}';
     const getPurchaseDayBook = "{{ url('admin/sales-finance/purchase/purchase-daybook/data') }}";
     const purchaseDayBook = "{{ url('admin/sales-finance/purchase/purchase-day-book-delete/') }}";
 
@@ -105,7 +105,7 @@
         const mode = $(this).data('mode');
         const id = $(this).data('id');
 
-        window.location.href = '{{ url("admin/sales-finance/purchase/purchase-day-book-edit/") }}' + "/"+ id;
+        window.location.href = '{{ url("admin/sales-finance/purchase/purchase-day-book-edit/") }}' + "/" + id;
     });
 </script>
 <script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/purchaseDayBook.js') }}"></script>

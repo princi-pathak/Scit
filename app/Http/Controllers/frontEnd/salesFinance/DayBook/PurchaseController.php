@@ -58,9 +58,9 @@ class PurchaseController extends Controller
         $data['home_id'] = Auth::user()->home_id;    
        
         try {
-            $response = $service->save($request->validated());
+            $response = $service->save($data);
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('error', 'Unable to save purchase day book.');
+            return response()->json([  'success' => false, 'message' => 'Unable to save purchase day book.', 'data' => $e->getMessage()], 200);
         }
 
         if ($response->wasRecentlyCreated) {
