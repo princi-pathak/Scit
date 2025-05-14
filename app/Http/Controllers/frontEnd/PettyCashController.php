@@ -87,6 +87,7 @@ class PettyCashController extends Controller
         // echo "<pre>";print_r($request->all());die;
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
+        $id=$request->id;
         $rules = [
             'expend_date'     => 'required',
             // 'fund_added'      => 'required',
@@ -95,9 +96,10 @@ class PettyCashController extends Controller
             'dext'            => 'required',
             'invoice_la'      => 'required',
             'initial'         => 'required',
-            'receipt'         => 'required',
         ];
-        
+        if($id == ''){
+            $rules['receipt'] = 'required';
+        }
         if ($request->last_id == '') {
             $rules['balance_bfwd'] = 'required';
         }
@@ -137,8 +139,8 @@ class PettyCashController extends Controller
         // echo "<pre>";print_r($request->all());die;
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
-
-        $validator = Validator::make($request->all(), [
+        $id=$request->id;
+        $array=[
             'cash_date'=>'required',
             'balance_bfwd'=>'required',
             'petty_cashIn'=>'required',
@@ -147,8 +149,15 @@ class PettyCashController extends Controller
             'dext'=>'required',
             'invoice_la'=>'required',
             'initial'=>'required',
-            'receipt'=>'required',
-        ]);
+            
+        ]; 
+        if($id == ''){
+            $array= [
+                'receipt'=>'required',
+            ];
+        }
+        
+        $validator = Validator::make($request->all(), $array);
         
         if ($validator->fails()) {
             return response()->json(['vali_error' => $validator->errors()->first()]);
@@ -291,6 +300,7 @@ class PettyCashController extends Controller
                             <td>'. $dext .'</td>
                             <td>'. $invoice_la .'</td>
                             <td>'. $val->initial .'</td>
+                            <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#petty_cash" data-action="edit" data-id="'.$val->id.'" data-cash_date="'.$val->cash_date.'" data-balance_bfwd="'.$val->balance_bfwd.'" data-petty_cashin="'.$val->petty_cashIn.'" data-cash_out="'.$val->cash_out.'" data-card_details="'.$val->card_details.'" data-receipt="'.$val->receipt.'" data-dext="'.$val->dext.'" data-invoice_la="'.$val->invoice_la.'" data-initial="'.$val->initial.'" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="'.$val->id.'"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
                         </tr>';
 
         }
@@ -354,7 +364,9 @@ class PettyCashController extends Controller
                     $html_data.='<td>£'. $val->balance_bfwd .'</td>';
                  }else{
                     $html_data.='<td></td>';
-                 }}
+                 }}else{
+                    $html_data.='<td></td>';
+                 }
                  $fund_added='';
                  if(isset($val->fund_added) && $val->fund_added !=''){$fund_added= '£'.$val->fund_added;}
                  $html_data.='<td>'. $fund_added .'</td>
@@ -364,6 +376,7 @@ class PettyCashController extends Controller
                 <td>'. $dext .'</td>
                 <td>'. $invoice_la .'</td>
                 <td>'. $val->initial .'</td>
+                <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#expend_card" data-action="edit" data-id="'.$val->id.'" data-expend_date="'.$val->expend_date.'" data-balance_bfwd="'.$val->balance_bfwd.'" data-fund_added="'.$val->fund_added.'" data-purchase_amount="'.$val->purchase_amount.'" data-card_details="'.$val->card_details.'" data-receipt="'.$val->receipt.'" data-dext="'.$val->dext.'" data-invoice_la="'.$val->invoice_la.'" data-initial="'.$val->initial.'" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="'.$val->id.'"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
             </tr>';
         }
         if($totalBalancebfwd == 0){
@@ -406,6 +419,35 @@ class PettyCashController extends Controller
             return response()->json(['success'=>true,'message'=>'Expend card data','data'=>$data]);
         } catch (\Exception $e) {
             return response()->json(['success'=>false,'error' => $e->getMessage()], 500);
+        }
+    }
+    public function cash_delete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), ['id'=>'required|integer|exists:cashes,id']);
+        
+        if ($validator->fails()) {
+            return response()->json(['success'=>false,'message' => $validator->errors()->first(),'data'=>array()]);
+        }
+        $cash=Cash::find($request->id);
+        if($cash){
+            $cash->update(['deleted_at' => Carbon::now()]);
+            return response()->json(['success'=>true,'message'=>'Cash deleted successfully done','data'=>array()]);
+        }else{
+            return response()->json(['success'=>false,'message'=>'Invalid Id given','data'=>array()]);
+        }
+    }
+    public function expend_delete(Request $request){
+        $validator = Validator::make($request->all(), ['id'=>'required|integer|exists:expend_cards,id']);
+        
+        if ($validator->fails()) {
+            return response()->json(['success'=>false,'message' => $validator->errors()->first(),'data'=>array()]);
+        }
+        $expendCard=ExpendCard::find($request->id);
+        if($expendCard){
+            $expendCard->update(['deleted_at' => Carbon::now()]);
+            return response()->json(['success'=>true,'message'=>'Expend Card deleted successfully done','data'=>array()]);
+        }else{
+            return response()->json(['success'=>false,'message'=>'Invalid Id given','data'=>array()]);
         }
     }
 }

@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="jobsection mb-0">
                                     <!-- <a href="{{url('petty-cash/petty-cash-add')}}" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a> -->
-                                    <a href="javascript:void()" class="btn btn-warning" data-toggle="modal" data-target="#petty_cash"><i class="fa fa-plus"></i> Add</a>
+                                    <a href="javascript:void(0)" class="btn btn-warning openModalBtn" data-action="add" data-toggle="modal" data-target="#petty_cash"><i class="fa fa-plus"></i> Add</a>
                                     <a href="{{url('petty-cash/expend-card')}}" class="btn btn-warning">Expend card</a>
                                     <a href="{{url('petty-cash/petty_cash')}}" class="btn btn-warning" id="active_inactive">Cash</a>
                                 </div>
@@ -125,7 +125,7 @@
                                                         echo "No";
                                                     } ?></td>
                                                 <td>{{$val->initial}}</td>
-                                                <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#petty_cash" data-action="edit" data-id="{{ $val->id }}" data-cash_date="{{ $val->cash_date }}" data-petty_cashIn="{{ $val->petty_cashIn }}" data-cash_out="{{ $val->cash_out }}" data-card_details="{{ $val->card_details }}" data-receipt="{{ $val->receipt }}" data-dext="{{ $val->dext }}" data-invoice_la="{{ $val->invoice_la }}" data-initial="{{ $val->initial }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                                                <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#petty_cash" data-action="edit" data-id="{{ $val->id }}" data-cash_date="{{ $val->cash_date }}" data-balance_bfwd="{{ $val->balance_bfwd }}" data-petty_cashin="{{ $val->petty_cashIn }}" data-cash_out="{{ $val->cash_out }}" data-card_details="{{ $val->card_details }}" data-receipt="{{ $val->receipt }}" data-dext="{{ $val->dext }}" data-invoice_la="{{ $val->invoice_la }}" data-initial="{{ $val->initial }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="{{ $val->id }}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
                                             </tr>
                                         <?php }
                                         $total_balanceInCash = $total_balance - $cash_out; ?>
@@ -137,7 +137,7 @@
                                             <th id="total_balance">£<?php echo ($previous_Cash_month_data['total_balanceInCash'] ?? $balance_bfwd);?></th>
                                             <th id="petty_cashIn">£{{$petty_cashIn}}</th>
                                             <th id="cash_out">£{{$cash_out}}</th>
-                                            <th colspan="5"></th>
+                                            <th colspan="6"></th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -192,13 +192,13 @@
                                 <div class="form-group col-md-12">
                                     <label>Petty Cash In <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput numberInput checkInput" id="petty_cashIn" name="petty_cashIn" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <input type="text" class="form-control editInput numberInput checkInput" id="petty_cashInModal" name="petty_cashIn" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>Cash Out </label>
                                     <div>
-                                        <input type="text" class="form-control editInput numberInput checkInput" id="cash_out" name="cash_out" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <input type="text" class="form-control editInput numberInput checkInput" id="cash_outModal" name="cash_out" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -214,7 +214,7 @@
                                     </div> -->
                                     <div class="col-md-12 p-0">
                                         <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 100px;">
+                                            <div class="fileupload-new thumbnail" id="exist_image" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 100px;">
                                                 <img src="{{url('public/images/noimage.jpg')}}" alt="No Image" />
                                             </div>
                                             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 20px;"></div>
@@ -297,6 +297,9 @@
     var saveUrl = "{{url('petty-cash/saveCash')}}";
     var editUrl = "{{url('petty-cash/editCash')}}";
     var redirectUrl = "{{url('petty-cash/petty_cash')}}";
+    var imgSrc = "{{url('public/images/finance_cash/')}}";
+    var deleteUrl="{{url('petty-cash/cash_delete')}}";
+    var existImage="{{url('public/images/noimage.jpg')}}";
 </script>
 <script>
     $(document).ready(function() {

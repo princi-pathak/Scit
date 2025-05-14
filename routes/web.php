@@ -549,6 +549,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('cash_filter','cash_filter');
 			Route::post('expand_card_filter','expand_card_filter');
 			Route::get('getAllExpendCash','getAllExpendCash');
+			Route::post('cash_delete','cash_delete');
+			Route::post('expend_delete','expend_delete');
 			
 		});
 	});

@@ -183,11 +183,95 @@ $(document).on('input', '.numberInput', function () {
     $(this).val(val);
 });
 $(document).on('click','.openModalBtn', function(){
+    var action=$(this).data('action');
     var id=$(this).data('id');
     var cash_date=$(this).data('cash_date');
-    var petty_cashIn=$(this).data('petty_cashIn');
+    var petty_cashIn=$(this).data('petty_cashin');
     var cash_out=$(this).data('cash_out');
     var card_details=$(this).data('card_details');
     var receipt=$(this).data('receipt');
+    var dext=$(this).data('dext');
+    var invoice_la=$(this).data('invoice_la');
+    var initial=$(this).data('initial');
+    var balance_bfwd=$("#balance_bfwd").val();
+    var balance_bfwdEdit=$(this).data('balance_bfwd');
+    if(action === 'add'){
+        $("#petty_cashLabel").text("Add Petty Cash");
+        if(balance_bfwd ==''){
+            $("#balance_bfwd").val(balance_bfwdEdit);
+        }
+        $("#id").val('');
+        $("#cash_date").val('');
+        $("#petty_cashInModal").val('');
+        $("#cash_outModal").val('');
+        $("#card_details").val('');
+        var text = '<img src="'+existImage+'" alt="" class="image_delete">';
+        $("#exist_image").html(text);
+        if(dext == 1){
+            $("#yes").attr('checked','checked');
+        }else{
+            $("#no").attr('checked','checked');
+        }
+        if(invoice_la == 1){
+            $("#yes2").attr('checked','checked');
+        }else{
+            $("#no2").attr('checked','checked');
+        }
+        $("#initial").val('');
+    }else{
+        $(".checkInput").css('border','');
+        $("#petty_cashLabel").text("Edit Petty Cash");
+        if(balance_bfwd ==''){
+            $("#balance_bfwd").val(balance_bfwdEdit);
+        }
+        $("#id").val(id);
+        $("#cash_date").val(cash_date);
+        $("#petty_cashInModal").val(petty_cashIn);
+        $("#cash_outModal").val(cash_out);
+        $("#card_details").val(card_details);
+        if (receipt) {
+            var text = '<img src="' + imgSrc + "/" + receipt + '" alt="" class="image_delete" data-delete="' + id + '">';
+            $("#exist_image").html(text);
+        }else {
+            $("#exist_image").html('');
+        }
+        if(dext == 1){
+            $("#yes").attr('checked','checked');
+        }else{
+            $("#no").attr('checked','checked');
+        }
+        if(invoice_la == 1){
+            $("#yes2").attr('checked','checked');
+        }else{
+            $("#no2").attr('checked','checked');
+        }
+        $("#initial").val(initial);
+    }
+});
+$(document).on('click','.deleteBtn', function(){
     var id=$(this).data('id');
-})
+    if(confirm("Are you sure to delete it?")){
+        $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {id:id,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (isAuthenticated(response) == false) {
+                        return false;
+                    }
+                if (response.success === true) {
+                    location.reload();
+                }
+                if(response.success === false){
+                    alert('Something went wrong');
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
+    }
+});
