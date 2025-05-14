@@ -30,10 +30,10 @@ class SalesDayBookService
         $salesDayBooks = $query->get();
         return $salesDayBooks;
     }
-    // public function getSalesDayBookById($id)
-    // {
-    //     return SalesDayBook::findOrFail($id);
-    // }
+    public function getSalesDayBookById($id)
+    {
+        return SalesDayBook::find($id);
+    }
     public function deleteSalesDayBook($id)
     {
         $salesBook = SalesDayBook::findOrFail($id);

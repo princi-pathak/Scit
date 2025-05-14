@@ -73,21 +73,14 @@ class SalesBackendController extends Controller
         ]);
 
     }
-
-    public function editSalesDayBook($id)
+    
+  
+    public function salesDayBookEdit($id)
     {
         $data['page'] = "salesDayBook";
-        // $data['salesBook'] = $this->salesDayBookService->getSalesDayBookById($id);
+        $data['sales_day_book'] = $this->salesDayBookService->getSalesDayBookById($id);
+        // dd($data['salesDayBook']);
         return view('backEnd.salesFinance.DayBook.sales.sales_day_book_form', $data);
     }
-
-    // public function getSalesDayBookById($id)
-    // {
-    //     $salesDayBook = $this->salesDayBookService->getSalesDayBookById($id);
-    //     return response()->json([
-    //         'success' => (bool) $salesDayBook,
-    //         'data' => $salesDayBook ? $salesDayBook : 'No data'
-    //     ]);
-    // }
 
 }

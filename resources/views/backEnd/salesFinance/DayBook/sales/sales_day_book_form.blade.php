@@ -40,8 +40,8 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Customer</label>
                                     <div class="col-lg-10">
-                                        <input type="hidden" id="sales_day_book_id" name="sales_day_book_id">
-                                        <input type="hidden" id="customer_id" name="customer_id">
+                                        <input type="hidden" id="sales_day_book_id" name="sales_day_book_id" value="{{ isset($sales_day_book->id) ? $sales_day_book->id : '' }}">
+                                        <input type="hidden" id="customer_id" name="customer_id" value="{{ isset($sales_day_book->customer_id) ? $sales_day_book->customer_id : '' }}">
                                         <select class="form-control" id="getCustomerList" name="customer_id">
                                             <option value="">Select Customer</option>
                                         </select>
@@ -50,25 +50,25 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Date</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="Date_input" name="date" placeholder="Date">
+                                        <input type="text" class="form-control" id="Date_input" name="date" placeholder="Date" value="{{ isset($sales_day_book->date) ? date('d-m-Y', strtotime($sales_day_book->date)) : '' }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Invoice</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="Invoice_input" placeholder="Invoice no." name="invoice_no">
+                                        <input type="text" class="form-control" id="Invoice_input" name="invoice_no" placeholder="Invoice no." value="{{ isset($sales_day_book->invoice_no) ? $sales_day_book->invoice_no : '' }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Net</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="Net Amount" name="netAmount" id="net_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                        <input type="text" class="form-control" placeholder="Net Amount" name="netAmount" value="{{ isset($sales_day_book->netAmount) ? $sales_day_book->netAmount : '' }}" id="net_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT</label>
                                     <div class="col-lg-10">
-                                        <input type="hidden" class="form-control" id="tax_id" placeholder="Tax ID">
+                                        <input type="hidden" class="form-control" id="tax_id" placeholder="Tax ID" value="{{ isset($sales_day_book->Vat) ? $sales_day_book->Vat : '' }}">
                                         <select class="form-control" id="vat_input" name="Vat">
                                             <option value="">Select VAT</option>
                                         </select>
@@ -77,13 +77,13 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="VAT Amount" name="vatAmount" id="vat_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                        <input type="text" class="form-control" placeholder="VAT Amount" name="vatAmount" id="vat_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($sales_day_book->vatAmount) ? $sales_day_book->vatAmount : '' }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="Gross" name="grossAmount" id="gross_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                        <input type="text" class="form-control" placeholder="Gross" name="grossAmount" id="gross_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($sales_day_book->grossAmount) ? $sales_day_book->grossAmount : '' }}">
                                     </div>
                                 </div>
                                 <div class="form-group">

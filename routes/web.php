@@ -2171,8 +2171,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	}));
 	Route::controller(CouncilBackendController::class)->group((function () {
 		Route::prefix('finance')->group(function () {
-			Route::get('/council-tax', 'index');
+			Route::get('/council-tax', 'index')->name('backend.council_tax.index');
+			Route::get('/council-tax-edit/{id}', 'councilTaxEdit')->name('backend.council_tax.edit');
 			Route::get('/council-tax-add', 'create');
+			Route::post('/save-council-tax', 'store');
 		});
 	}));
 });
