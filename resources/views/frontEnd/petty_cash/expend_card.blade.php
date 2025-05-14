@@ -46,7 +46,7 @@
                                 <div>
                                 <!-- <a href="{{url('petty-cash/expend_card_add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
                                     <div class="jobsection mb-0">
-                                        <a href="javascript:void()" class="btn btn-warning" data-toggle="modal" data-target="#expend_card"><i class="fa fa-plus"></i> Add</a>
+                                        <a href="javascript:void(0)" class="btn btn-warning openModalBtn" data-action="add" data-toggle="modal" data-target="#expend_card"><i class="fa fa-plus"></i> Add</a>
                                         <a href="{{url('petty-cash/expend-card')}}" class="btn btn-warning" id="active_inactive">Expend card</a>
                                         <a href="{{url('petty-cash/petty_cash')}}" class="btn btn-warning">Cash</a>
                                     </div>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="productDetailTable mb-4  table-responsive">
+                            <div class="maimTable productDetailTable mb-4 table-responsive">
                                 <table class="table border-top border-bottom tablechange" id="expend_cash_table" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -75,7 +75,7 @@
                                             <th>Uploaded to DEXT</th>
                                             <th>Invoice LA</th>
                                             <th>Initials</th>
-                                            <!-- <th>Action</th> -->
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="expend_result">
@@ -88,7 +88,7 @@
                                             <th id="totalBalancebfwd">£0</th>
                                             <th id="totalBalanceFund">£0</th>
                                             <th id="sumPurchaseCashIn">£0</th>
-                                            <th colspan="5"></th>
+                                            <th colspan="6"></th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -167,7 +167,7 @@
                                     </div> -->
                                     <div class="col-md-12 p-0">
                                         <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 100px;">
+                                            <div class="fileupload-new thumbnail" id="exist_image" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 100px;">
                                                 <img src="{{url('public/images/noimage.jpg')}}" alt="No Image" />
                                             </div>
                                             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; min-width: 150px; min-height: 100px; line-height: 20px;"></div>
@@ -238,6 +238,9 @@
     var editUrl = "{{url('petty-cash/editExpend')}}";
     var redirectUrl = "{{url('petty-cash/expend-card')}}";
     var getAllExpendCash="{{url('petty-cash/getAllExpendCash')}}";
+    var receipt_imag_src='{{url("public/images/finance_petty_cash/")}}';
+    var deleteUrl="{{url('petty-cash/expend_delete')}}";
+    var existImage="{{url('public/images/noimage.jpg')}}";
 </script>
 <script>
     $(document).ready(function() {

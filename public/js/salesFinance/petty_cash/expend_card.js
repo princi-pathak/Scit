@@ -6,6 +6,9 @@ $(document).ready(function() {
         success: function(response) {
             console.log(response);
             // return false;
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             if (response.success === true) {
                 const data = response.data;
                 const expendCard = data.expendCard;
@@ -59,24 +62,24 @@ $(document).ready(function() {
                     if (date !== dbMonth || date === null) {
                         date = dbMonth;
                         showBalanceBfwd = `£${balanceBfwd}`;
-                    }
-    
+                    }                 
                     tbody.append(`
                         <tr>
                             <td>${++index}</td>
-                            <td>${val.expend_date}</td>
+                            <td class="white_space_nowrap">${val.expend_date}</td>
                             <td>${showBalanceBfwd}</td>
                             <td>${val.fund_added ? '£' + val.fund_added : ''}</td>
                             <td>£${val.purchase_amount}</td>
                             <td>${val.card_details ?? ''}</td>
                             <td>
-                                <a href="/public/images/finance_petty_cash/${val.receipt}" target="_blank">
+                                <a href="${receipt_imag_src +"/"+val.receipt}" target="_blank">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             </td>
                             <td>${val.dext == 1 ? 'Yes' : 'No'}</td>
                             <td>${val.invoice_la == 1 ? 'Yes' : 'No'}</td>
                             <td>${val.initial ?? ''}</td>
+                            <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#expend_card" data-action="edit" data-id="${val.id}" data-expend_date="${val.expend_date}" data-balance_bfwd="${val.balance_bfwd}" data-fund_added="${val.fund_added}" data-purchase_amount="${val.purchase_amount}" data-card_details="${val.card_details}" data-receipt="${val.receipt}" data-dext="${val.dext}" data-invoice_la="${val.invoice_la}" data-initial="${val.initial}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="${val.id}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
                         </tr>
                     `);
                 });
@@ -93,6 +96,7 @@ $(document).ready(function() {
                 $('#totalBalanceFund').text(`£${totalBalanceFund}`);
                 $('#sumPurchaseCashIn').text(`£${sumPurchaseCashIn.toFixed(2)}`);
                 $("#balanceOnCard").text("£" + parseFloat(balanceOnCard.toFixed(2)));
+                datatbleCall();
             }
         },
         error: function(xhr, status, error) {
@@ -100,7 +104,8 @@ $(document).ready(function() {
             alert('Error - ' + errorMessage + "\nMessage: " + error);
         }
     });
-    const table = $('#expend_cash_table123').DataTable({
+    function datatbleCall(){
+        const table = $('#expend_cash_table').DataTable({
         dom: 'Blfrtip',
         buttons: [
             {
@@ -108,35 +113,36 @@ $(document).ready(function() {
                 text: 'Export',
                 bom: true,
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                    columns: [0, 1, 2, 3, 4, 5, 7, 8]
                 }
             }
         ],
-        footerCallback: function (row, data, start, end, display) {
-            var api = this.api();
-            var intVal = function (i) {
-                return typeof i === 'string'
-                    ? parseFloat(i.replace(/[£,]/g, '')) || 0
-                    : typeof i === 'number'
-                    ? i
-                    : 0;
-            };
-    
-            
-            var columnsToTotal = [3];
-    
-            columnsToTotal.forEach(function (colIdx) {
-                var total = api
-                    .column(colIdx, { page: 'current' })
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-    
-                $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
-            });
-        }
-    });
+            footerCallback: function (row, data, start, end, display) {
+                var api = this.api();
+                var intVal = function (i) {
+                    return typeof i === 'string'
+                        ? parseFloat(i.replace(/[£,]/g, '')) || 0
+                        : typeof i === 'number'
+                        ? i
+                        : 0;
+                };
+        
+                
+                var columnsToTotal = [2,3,4];
+        
+                columnsToTotal.forEach(function (colIdx) {
+                    var total = api
+                        .column(colIdx, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+        
+                    $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
+                });
+            }
+        });
+    }
 });
 function save_expend_card(){
     var error=0;
@@ -168,6 +174,9 @@ function save_expend_card(){
             success: function(response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -221,12 +230,16 @@ $("#ToDate").change(function() {
         success: function(response) {
             console.log(response);
             // return false;
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             if (response.success === true) {
-                if(response.data.length == 0){
-                    $("#expend_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
-                }else{
-                    $("#expend_result").html(response.html_data);
-                }
+                // if(response.data.length == 0){
+                //     $("#expend_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
+                // }else{
+                //     $("#expend_result").html(response.html_data);
+                // }
+                $("#expend_result").html(response.html_data);
                 $("#balanceOnCard").text('£'+response.balanceOnCard);
                 $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
                 $("#totalBalanceFund").text('£'+response.totalBalanceFund);
@@ -274,4 +287,99 @@ $(document).on('input', '.numberInput', function () {
         val = val.slice(0, -1);
     }
     $(this).val(val);
+});
+
+$(document).on('click','.openModalBtn', function(){
+    var action=$(this).data('action');
+    var id=$(this).data('id');
+    var expend_date=$(this).data('expend_date');
+    var balance_bfwd=$(this).data('balance_bfwd');
+    var fund_added=$(this).data('fund_added');
+    var purchase_amount=$(this).data('purchase_amount');
+    var card_details=$(this).data('card_details');
+    var receipt=$(this).data('receipt');
+    var dext=$(this).data('dext');
+    var invoice_la=$(this).data('invoice_la');
+    var initial=$(this).data('initial');
+    var balance_bfwdEdit=$(this).data(balance_bfwd);
+    if(action === 'add'){
+        $("#expend_cardLabel").text("Add Expend Card");
+        $("#id").val('');
+        $("#date").val('');
+        if(balance_bfwd ==''){
+            $("#balance_bfwd").val('');
+        }
+        $("#fund_added").val('');
+        $("#purchase_amount").val('');
+        $("#card_details").val('');
+        var text = '<img src="'+existImage+'" alt="" class="image_delete">';
+        $("#exist_image").html(text);
+        if(dext == 1){
+            $("#yes").attr('checked','checked');
+        }else{
+            $("#no").attr('checked','checked');
+        }
+        if(invoice_la == 1){
+            $("#yes2").attr('checked','checked');
+        }else{
+            $("#no2").attr('checked','checked');
+        }
+        $("#initial").val('');
+    }else{
+        $("#expend_cardLabel").text("Edit Expend Card");
+        $("#id").val(id);
+        $("#date").val(expend_date);
+        if(balance_bfwd ==''){
+            $("#balance_bfwd").val(balance_bfwdEdit);
+        }
+        $("#fund_added").val(fund_added);
+        $("#purchase_amount").val(purchase_amount);
+        $("#card_details").val(card_details);
+        if (receipt) {
+            var text = '<img src="' + receipt_imag_src + "/" + receipt + '" alt="" class="image_delete" data-delete="' + id + '">';
+            $("#exist_image").html(text);
+        }else {
+            $("#exist_image").html('');
+        }
+        if(dext == 1){
+            $("#yes").attr('checked','checked');
+        }else{
+            $("#no").attr('checked','checked');
+        }
+        if(invoice_la == 1){
+            $("#yes2").attr('checked','checked');
+        }else{
+            $("#no2").attr('checked','checked');
+        }
+        $("#initial").val(initial);
+        $(".checkInput").css('border','');
+    }
+    
+});
+$(document).on('click','.deleteBtn', function(){
+    var id=$(this).data('id');
+    if(confirm("Are you sure to delete it?")){
+        $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {id:id,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (isAuthenticated(response) == false) {
+                        return false;
+                    }
+                if (response.success === true) {
+                    location.reload();
+                }
+                if(response.success === false){
+                    alert('Something went wrong');
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
+    }
 });
