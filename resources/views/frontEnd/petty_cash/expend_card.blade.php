@@ -24,7 +24,7 @@
                                 <div class="d-flex justify-content-end gap-2 align-items-center">
                                     <label for="fromDate" class="mb-0"> From:</label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control">
+                                        <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control no_input">
 
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary" type="button" id="openCalendarBtn">
@@ -34,7 +34,7 @@
                                     </div>
                                     <label for="ToDate" class="mb-0"> To:</label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control">
+                                        <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control no_input">
 
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary" type="button" id="openCalendarBtn1">
@@ -133,12 +133,10 @@
                                 <div class="form-group col-md-12">
                                     <label> Balance b/fwd <span class="radStar">*</span></label>
                                     <div>
-                                        <?php if ($previous_month_data['previousbalanceOnCard'] == 0) { ?>
-                                            <input type="text" class="form-control editInput numberInput checkInput <?php if (isset($expendCard) && $expendCard != '') {
-                                                                                                                        echo "disabled-tab";
-                                                                                                                    } ?> " id="balance_bfwd" name="balance_bfwd" <?php if (isset($expendCardLastData) && $expendCardLastData != '') { ?> value="{{$expendCardLastData->balance_bfwd}}" <?php } ?> onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <?php if ($previous_month_data['previousbalanceOnCard'] != 0) { ?>
+                                            <input type="text" class="form-control editInput numberInput checkInput disabled-tab" id="balance_bfwd" name="balance_bfwd" <?php if (isset($expendCardLastData) && $expendCardLastData != '') { ?> value="{{$expendCardLastData->balance_bfwd}}" <?php } ?> onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                         <?php } else { ?>
-                                            <input type="text" class="form-control editInput numberInput checkInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_month_data['previousbalanceOnCard']}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                            <input type="text" class="form-control editInput numberInput checkInput" id="balance_bfwd" name="balance_bfwd" value="" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                         <?php } ?>
                                     </div>
                                 </div>
