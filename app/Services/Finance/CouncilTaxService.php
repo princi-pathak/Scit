@@ -21,5 +21,21 @@ class CouncilTaxService
         $council =  CouncilTax::updateOrCreate(['id' => $data['council_tax_id']], $data);
         return $council;
     }
+
+    public function getCouncilTax()
+    {
+       return CouncilTax::whereNull('deleted_at')->get();
+    }
+
+    public function deleteCouncilTax($id)
+    {
+        return CouncilTax::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        
+    }
+
+    public function getCouncilTaxById($id)
+    {
+        return CouncilTax::where('id', $id)->first();
+    }
 }
 

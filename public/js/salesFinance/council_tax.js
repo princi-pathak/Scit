@@ -43,11 +43,37 @@ document.querySelectorAll('.openModalBtn').forEach(function (btn) {
             } else if (this.getAttribute('data-exempt') == 0) {
                 exemptno.checked = true;
             }
-            
+
             account_number.value = this.getAttribute('data-account_number');
-            last_bill_date.value = this.getAttribute('data-last_bill_date');
-            bill_period_start_date.value = this.getAttribute('data-bill_period_start_date');
-            bill_period_end_date.value = this.getAttribute('data-bill_period_end_date');
+            // last_bill_date.value = this.getAttribute('data-last_bill_date');
+
+            const originalLastDate = this.getAttribute('data-last_bill_date');
+            let formattedLastBillDate = originalLastDate;
+            if (originalLastDate && originalLastDate.includes('-')) {
+                const parts = originalLastDate.split('-'); // [yyyy, mm, dd]
+                formattedLastBillDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+            }
+            last_bill_date.value = formattedLastBillDate;
+
+            // bill_period_start_date.value = this.getAttribute('data-bill_period_start_date');
+            const originalStartDate = this.getAttribute('data-bill_period_start_date');
+            let formattedStartDate = originalStartDate;
+            if (originalStartDate && originalStartDate.includes('-')) {
+                const parts = originalStartDate.split('-'); // [yyyy, mm, dd]
+                formattedStartDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+            }
+            bill_period_start_date.value = formattedStartDate;
+
+            // bill_period_end_date.value = this.getAttribute('data-bill_period_end_date');
+
+               const originalEndDate = this.getAttribute('data-bill_period_end_date');
+            let formattedEndDate = originalEndDate;
+            if (originalStartDate && originalEndDate.includes('-')) {
+                const parts = originalEndDate.split('-'); // [yyyy, mm, dd]
+                formattedEndDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+            }
+            bill_period_end_date.value = formattedEndDate;
+
             amount_paid.value = this.getAttribute('data-amount_paid');
         }
 
@@ -59,23 +85,23 @@ const startDateInput = document.getElementById('bill_period_start_date');
 const endDateInput = document.getElementById('bill_period_end_date');
 
 startDateInput.addEventListener('change', function () {
-  const startDate = new Date(this.value);
-  
-  if (this.value) {
-    // Enable end date input and set min to start date
-    endDateInput.disabled = false;
-    endDateInput.min = this.value;
+    const startDate = new Date(this.value);
 
-    // Optional: Clear previously selected end date if it's before the new start date
-    if (new Date(endDateInput.value) < startDate) {
-      endDateInput.value = '';
+    if (this.value) {
+        // Enable end date input and set min to start date
+        endDateInput.disabled = false;
+        endDateInput.min = this.value;
+
+        // Optional: Clear previously selected end date if it's before the new start date
+        if (new Date(endDateInput.value) < startDate) {
+            endDateInput.value = '';
+        }
+    } else {
+        // If start date is cleared, disable end date again
+        endDateInput.disabled = true;
+        endDateInput.value = '';
+        endDateInput.min = '';
     }
-  } else {
-    // If start date is cleared, disable end date again
-    endDateInput.disabled = true;
-    endDateInput.value = '';
-    endDateInput.min = '';
-  }
 });
 
 
@@ -86,7 +112,7 @@ function validateCouncilTaxForm() {
     // Helper to show error
     function showError(field, message) {
         isValid = false;
-        field.after(`<span class="text-danger">${message}</span>`);
+        field.after(`<span class="text-danger">${message}</span>`);   
     }
 
     // Validate each required field
@@ -103,13 +129,13 @@ function validateCouncilTaxForm() {
     // if (!accountNumber.val().trim()) showError(accountNumber, 'The account number field is required.');
 
     // Account number validation
-    const accountNumberField =  $('[name="account_number"]');
+    const accountNumberField = $('[name="account_number"]');
     const accountNumber = parseInt(accountNumberField.val(), 20);
     if (!accountNumberField.val().trim()) {
         showError(accountNumberField, 'The account number field is required.');
     } else if (isNaN(accountNumber) || accountNumber < 0) {
         showError(accountNumberField, 'The account number must be a positive integer.');
-    } 
+    }
     // else if (accountNumber > 20) {
     //     showError(accountNumberField, 'The account number must be less than or equal to 20.');
     // } 
@@ -216,15 +242,12 @@ $(document).ready(function () {
         if (!validateCouncilTaxForm()) {
             return false; // Stop if validation fails
         }
-        var id=$("#council_tax_id").val();
-        var url=saveData;
-        if(id !=''){
-            url=editData;
-        }
+
+
 
         console.log($('#addCouncilTaxForm').serialize());
         $.ajax({
-            url: url, // Laravel route or API endpoint
+            url: saveData, // Laravel route or API endpoint
             method: "POST",
             data: $('#addCouncilTaxForm').serialize(),
             dataType: "json",
@@ -292,6 +315,18 @@ $(document).on('click', '.deleteBtn', function () {
 });
 
 $(document).ready(function () {
+
+    $(document).ready(function () {
+        $('#council_tax').DataTable({
+            dom: 'Blfrtip',
+            buttons: [{
+                extend: 'csv',
+                text: 'Export' // Rename button
+            }]
+        });
+    });
+
+
     // Last Bill date 
     $('#last_bill_date').datepicker({
         format: 'dd-mm-yyyy',

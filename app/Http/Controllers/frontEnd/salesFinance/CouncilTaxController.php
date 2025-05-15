@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 
 use App\Models\CouncilTax;
 use Illuminate\Support\Carbon;
-
 use App\Http\Requests\CouncilTaxRequests;
+use App\Services\Finance\CouncilTaxService;
+
+esi bhi h total deduct hokar 21 milega
 
 class CouncilTaxController extends Controller
 {
@@ -20,7 +22,7 @@ class CouncilTaxController extends Controller
 
     public function saveCouncilTaxData(CouncilTaxRequests $req)
     {
-
+        // dd($req->all());
         $data = $req->validated();
         $last_bill_date = Carbon::createFromFormat('d-m-Y', $data['last_bill_date'])->format('Y-m-d');
         $data['last_bill_date'] = $last_bill_date;
@@ -51,3 +53,4 @@ class CouncilTaxController extends Controller
         }
     }
 }
+
