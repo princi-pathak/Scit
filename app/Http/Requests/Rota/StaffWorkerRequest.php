@@ -37,7 +37,7 @@ class StaffWorkerRequest extends FormRequest
             'start_date' => 'required|date',
             'job_role' => 'required|string|max:255',
             'NIN' => 'required|string|max:255',
-            'starter_declaration' => 'nullable|integer',
+            'starter_declaration' => 'nullable|numeric|in:1,2,3',
             'probation_start_date' => 'required|date',
             'probation_end_date' => 'required|date|after:probation_start_date',
             'probation_renew_date' => 'nullable|date|after:probation_end_date',

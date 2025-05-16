@@ -99,7 +99,7 @@
                                             <a href="{{ url('/rota/annual-leave') }}">
                                                     <div class="profile-nav alt">
                                                         <div class="panel text-center">
-                                                            <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-bed fa-lg"></i></div>
+                                                            <div class="user-heading alt wdgt-row bg-green"> <i class="fa fa-bed fa-lg"></i></div>
                                                             <div class="panel-body">
                                                                 <div class="wdgt-value">
                                                                     <h4 class="count">Annual Leave</h4>

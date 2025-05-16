@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 
 use App\Http\Requests\Rota\StaffWorkerRequest;
-
+use Illuminate\Http\Request;
 use App\Services\Rota\StaffWorkerService;
-
 use Illuminate\Support\Facades\Auth;
 
 
@@ -31,8 +30,9 @@ class StaffController extends Controller
         return view('rotaStaff.staff.index', $data);
     }
 
-    
+    // StaffWorkerRequest
     public function store(StaffWorkerRequest $request){
+      
         $validated = $request->validated();
 
         // dd($validated);
