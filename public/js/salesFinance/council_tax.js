@@ -43,8 +43,8 @@ document.querySelectorAll('.openModalBtn').forEach(function (btn) {
             } else if (this.getAttribute('data-exempt') == 0) {
                 exemptno.checked = true;
             }
-
-            account_number.value = this.getAttribute('data-account_number');
+   
+            account_number.value = this.getAttribute('data-account_number');   
             // last_bill_date.value = this.getAttribute('data-last_bill_date');
 
             const originalLastDate = this.getAttribute('data-last_bill_date');

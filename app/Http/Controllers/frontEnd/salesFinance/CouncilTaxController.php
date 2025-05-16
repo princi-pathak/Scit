@@ -9,8 +9,6 @@ use Illuminate\Support\Carbon;
 use App\Http\Requests\CouncilTaxRequests;
 use App\Services\Finance\CouncilTaxService;
 
-esi bhi h total deduct hokar 21 milega
-
 class CouncilTaxController extends Controller
 {
 
