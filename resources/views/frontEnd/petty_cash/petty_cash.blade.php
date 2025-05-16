@@ -25,7 +25,7 @@
                                 <div class="d-flex justify-content-end gap-2 align-items-center">
                                     <label for="fromDate" class="mb-0"> From:</label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control">
+                                        <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control no_input">
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary" type="button" id="openCalendarBtn">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -35,7 +35,7 @@
                                     <label for="ToDate" class="mb-0"> To:</label>
                                     <!-- <input type="date" id="ToDate" class="form-control"> -->
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control">
+                                        <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control no_input">
 
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary" type="button" id="openCalendarBtn1">
@@ -100,15 +100,11 @@
                                             <tr>
                                                 <td>{{++$key}}</td>
                                                 <td>{{date('Y-m-d',strtotime($val->cash_date))}}</td>
-                                                <?php if ($previous_Cash_month_data['total_balanceInCash'] == 0) {
-                                                    if ($date != $db_date || $date == null) {
+                                                <?php if ($date != $db_date || $date == null) {
                                                         $date = $db_date; ?>
                                                         <td>£{{$val->balance_bfwd}}</td>
                                                     <?php } else { ?>
                                                         <td></td>
-                                                <?php }
-                                                }else{ ?>
-                                                    <td></td>
                                                 <?php }?>
                                                 <td>£{{$val->petty_cashIn}}</td>
                                                 <td>£{{$val->cash_out}}</td>
@@ -128,13 +124,18 @@
                                                 <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#petty_cash" data-action="edit" data-id="{{ $val->id }}" data-cash_date="{{ $val->cash_date }}" data-balance_bfwd="{{ $val->balance_bfwd }}" data-petty_cashin="{{ $val->petty_cashIn }}" data-cash_out="{{ $val->cash_out }}" data-card_details="{{ $val->card_details }}" data-receipt="{{ $val->receipt }}" data-dext="{{ $val->dext }}" data-invoice_la="{{ $val->invoice_la }}" data-initial="{{ $val->initial }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="{{ $val->id }}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
                                             </tr>
                                         <?php }
-                                        $total_balanceInCash = $total_balance - $cash_out; ?>
+                                       $total_balanceInCash = $total_balance - $cash_out; ?>
                                     </tbody>
-                                    <input type="hidden" id="total_balanceInCash" value="<?php echo ($previous_Cash_month_data['total_balanceInCash'] ?? $total_balanceInCash);?>">
+                                    <?php if($total_balanceInCash == 0){?>
+                                        <input type="hidden" id="total_balanceInCash" value="<?php echo $previous_Cash_month_data['total_balanceInCash'];?>">
+                                    <?php }else{?>
+                                        <input type="hidden" id="total_balanceInCash" value="<?php echo $total_balanceInCash;?>">
+                                        
+                                    <?php }?>
                                     <tfoot>
                                         <tr class="table-light">
                                             <th colspan="2">Total</th>
-                                            <th id="total_balance">£<?php echo ($previous_Cash_month_data['total_balanceInCash'] ?? $balance_bfwd);?></th>
+                                            <th id="total_balance">£{{$balance_bfwd}}</th>
                                             <th id="petty_cashIn">£{{$petty_cashIn}}</th>
                                             <th id="cash_out">£{{$cash_out}}</th>
                                             <th colspan="6"></th>
@@ -286,6 +287,7 @@
 <script>
     // 
     $(document).ready(function() {
+        getDatatable();
         var total_balanceInCash = $("#total_balanceInCash").val();
         $("#PettyCashbalance").text("£" + Number(total_balanceInCash).toFixed(2));
         // alert(typeof(totalBalanceOnCard));
