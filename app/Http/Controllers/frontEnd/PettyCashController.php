@@ -69,25 +69,14 @@ class PettyCashController extends Controller
         return view('frontEnd.petty_cash.child_register_form');
     }
     public function saveExpend(Request $request){
-        // echo "<pre>";print_r($request->all());die;
+        echo "<pre>";print_r($request->all());die;
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $id=$request->id;
         $rules = [
             'expend_date'     => 'required',
-            // 'fund_added'      => 'required',
-            'purchase_amount' => 'required',
-            'card_details'    => 'required',
-            'dext'            => 'required',
-            'invoice_la'      => 'required',
-            'initial'         => 'required',
         ];
-        if($id == ''){
-            $rules['receipt'] = 'required';
-        }
-        if ($request->last_id == '') {
-            $rules['balance_bfwd'] = 'required';
-        }
+        
         
         $validator = Validator::make($request->all(), $rules);
         

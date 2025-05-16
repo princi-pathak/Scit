@@ -136,12 +136,17 @@ function save_expend_card(){
             $(this).css('border','');
         }
     });
+    var fund_added=$("#fund_added").val();
+    var purchase_amount=$("#purchase_amount").val();
     var id=$("#id").val();
     var url=saveUrl;
     if(id != ''){
         url=editUrl;
     }
     if(error == 1){
+        return false;
+    }else if(fund_added == '' && purchase_amount == ''){
+        alert("Please fill Fund added to card or Purchases");
         return false;
     }else{
         $.ajax({
