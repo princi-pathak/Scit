@@ -24,25 +24,6 @@ $(document).ready(function() {
                 let sumPurchaseCashIn = 0;
                 let date = null;
     
-                // Append previous month data row if exists
-                // if (previousData && parseFloat(previousData.previousbalanceOnCard) !== 0) {
-                //     enterInLoop = 1;
-                //     tbody.append(`
-                //         <tr>
-                //             <td>${++index}</td>
-                //             <td>${previousData.prvious_date}</td>
-                //             <td>£${previousData.previousbalanceOnCard}</td>
-                //             <td>£${previousData.previousfundAmount}</td>
-                //             <td></td>
-                //             <td></td>
-                //             <td></td>
-                //             <td></td>
-                //             <td></td>
-                //             <td></td>
-                //         </tr>
-                //     `);
-                // }
-    
                 expendCard.forEach((val) => {
                     let purchaseAmount = parseFloat(val.purchase_amount ?? 0);
                     let fundAdded = parseFloat(val.fund_added ?? 0);
@@ -104,7 +85,8 @@ $(document).ready(function() {
             alert('Error - ' + errorMessage + "\nMessage: " + error);
         }
     });
-    function datatbleCall(){
+});
+function datatbleCall(){
         const table = $('#expend_cash_table').DataTable({
         dom: 'Blfrtip',
         buttons: [
@@ -143,7 +125,6 @@ $(document).ready(function() {
             }
         });
     }
-});
 function save_expend_card(){
     var error=0;
     $(".checkInput").each(function(){
@@ -155,12 +136,17 @@ function save_expend_card(){
             $(this).css('border','');
         }
     });
+    var fund_added=$("#fund_added").val();
+    var purchase_amount=$("#purchase_amount").val();
     var id=$("#id").val();
     var url=saveUrl;
     if(id != ''){
         url=editUrl;
     }
     if(error == 1){
+        return false;
+    }else if(fund_added == '' && purchase_amount == ''){
+        alert("Please fill Fund added to card or Purchases");
         return false;
     }else{
         $.ajax({
@@ -222,36 +208,42 @@ $("#ToDate").change(function() {
         alert("End date should be greater than Start date");
         document.getElementById("ToDate").value = "";
         return false;
+    }else if(startDateStr ==''){
+        alert("Please select From Date");
+        document.getElementById("ToDate").value = "";
+        return false;
+    }else if(endDateStr == ''){
+        alert("Please select To Date");
+        return false;
+    }else{
+         $.ajax({
+            type: "POST",
+            url: filterUrl,
+            data: {startDate:startDateStr,endDate:endDateStr,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
+                if (response.success === true) {
+                    var table = $('#expend_cash_table').DataTable();
+                    table.destroy();
+                    $("#expend_result").html(response.html_data);
+                    $("#balanceOnCard").text('£'+response.balanceOnCard);
+                    $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
+                    $("#totalBalanceFund").text('£'+response.totalBalanceFund);
+                    $("#totalBalancebfwd").text('£'+response.totalBalancebfwd);
+                    datatbleCall();
+                    
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
     }
-    $.ajax({
-        type: "POST",
-        url: filterUrl,
-        data: {startDate:startDateStr,endDate:endDateStr,_token:token},
-        success: function(response) {
-            console.log(response);
-            // return false;
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
-            if (response.success === true) {
-                // if(response.data.length == 0){
-                //     $("#expend_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
-                // }else{
-                //     $("#expend_result").html(response.html_data);
-                // }
-                $("#expend_result").html(response.html_data);
-                $("#balanceOnCard").text('£'+response.balanceOnCard);
-                $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
-                $("#totalBalanceFund").text('£'+response.totalBalanceFund);
-                $("#totalBalancebfwd").text('£'+response.totalBalancebfwd);
-                
-            }
-        },
-        error: function(xhr, status, error) {
-            var errorMessage = xhr.status + ': ' + xhr.statusText;
-            alert('Error - ' + errorMessage + "\nMessage: " + error);
-        }
-    });
 });
 function parseDateDMY(dateStr) {
     var parts = dateStr.split("-");
@@ -288,7 +280,9 @@ $(document).on('input', '.numberInput', function () {
     }
     $(this).val(val);
 });
-
+$(document).on('input', '.no_input', function () {
+    $(this).val('');
+});
 $(document).on('click','.openModalBtn', function(){
     var action=$(this).data('action');
     var id=$(this).data('id');
