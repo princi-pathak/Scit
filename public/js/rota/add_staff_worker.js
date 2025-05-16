@@ -61,6 +61,9 @@ function validateStaffWorkerForm() {
     // Helper to show error
     function showError(field, message) {
         isValid = false;
+        console.log('Error isValid:', isValid);
+        console.log('Error message:', message);
+
         field.after(`<span class="text-danger">${message}</span>`);
     }
 
@@ -115,7 +118,7 @@ function validateStaffWorkerForm() {
     } else if (accountNumValue.length > 20) {
         showError(accountNum, 'The account number must not exceed 20 characters.');
     }
-    
+
     const sortCode = $('[name="sort_code"]');
     const sortCodeValue = sortCode.val().trim();
     if (!sortCodeValue) {
@@ -140,14 +143,14 @@ function validateStaffWorkerForm() {
 
     const level = $('[name="level"]');
     const levelValue = level.val().trim();
-    if (!levelValue) {  
+    if (!levelValue) {
         showError(level, 'The level field is required.');
     } else if (levelValue.length < 2) {
         showError(level, 'The level must be at least 2 characters long.');
     } else if (levelValue.length > 20) {
         showError(level, 'The level must not exceed 20 characters.');
     }
-    
+
     const jobRole = $('[name="job_role"]');
     const jobRoleValue = jobRole.val().trim();
     if (!jobRoleValue) {
@@ -170,28 +173,22 @@ function validateStaffWorkerForm() {
 
 
     const starterDeclaration = $('[name="starter_declaration"]');
-    const starterDeclarationValue = starterDeclaration.val().trim();
-    if (!starterDeclarationValue) {
-        showError(starterDeclaration, 'The starter declaration field is required.');
-    } else if (starterDeclarationValue.length < 2) {
-        showError(starterDeclaration, 'The starter declaration must be at least 2 characters long.');
-    } else if (starterDeclarationValue.length > 100) {
-        showError(starterDeclaration, 'The starter declaration must not exceed 100 characters.');
+    const starterDeclarationValue = starterDeclaration.val();
+
+    if (starterDeclarationValue === "" || !['1', '2', '3'].includes(starterDeclarationValue)) {
+        showError(starterDeclaration, 'Please select a valid starter declaration (Yes-A, Yes-B, or Yes-C).');
     }
+
 
     const studentLoan = $('[name="student_loan"]');
     const studentLoanValue = studentLoan.val().trim();
+
     if (!studentLoanValue) {
         showError(studentLoan, 'The student loan field is required.');
-    } else if (studentLoanValue.length < 2) {
-        showError(studentLoan, 'The student loan must be at least 2 characters long.');
-    } else if (studentLoanValue.length > 20) {
-        showError(studentLoan, 'The student loan must not exceed 20 characters.');
-    } else if (!/^\d+$/.test(studentLoanValue)) {
-        showError(studentLoan, 'The student loan must be a number.');
-    } else if (studentLoanValue.length < 10 || studentLoanValue.length > 15) {
-        showError(studentLoan, 'The student loan number must be between 10 and 15 digits long.');
+    } else if (!['no_student_loan', 'postgraduate', 'plan_1', 'plan_2', 'plan_4'].includes(studentLoanValue)) {
+        showError(studentLoan, 'Invalid student loan option selected.');
     }
+
 
     const dbsNumber = $('[name="dbs_number"]');
     const dbsNumberValue = dbsNumber.val().trim();
@@ -219,7 +216,7 @@ function validateStaffWorkerForm() {
     }
 
     const probationStartDate = $('[name="probation_start_date"]');
-    const probationStartDateValue = probationStartDate.val().trim();    
+    const probationStartDateValue = probationStartDate.val().trim();
     if (probationStartDateValue) {
         const probationStartDateObj = new Date(probationStartDateValue);
         const today = new Date();
@@ -247,27 +244,27 @@ function validateStaffWorkerForm() {
         }
     }
 
-    const probationEnrolledYes = $('[name="probation_enrollered_yes"]');
-    const probationEnrolledNo = $('[name="probation_enrollered_no"]');
-    if (!probationEnrolledYes.is(':checked') && !probationEnrolledNo.is(':checked')) {
+    // const probationEnrolledYes = $('[name="probation_enrollered_yes"]');
+    // const probationEnrolledNo = $('[name="probation_enrollered_no"]');
+    // if (!probationEnrolledYes.is(':checked') && !probationEnrolledNo.is(':checked')) {
 
-        showError(probationEnrolledYes, 'The probation enrolled field is required.');
-    }
-    
-    const dbsClearYes = $('[name="dbs_clear_yes"]');
-    const dbsClearNo = $('[name="dbs_clear_no"]');
-    if (!dbsClearYes.is(':checked') && !dbsClearNo.is(':checked')) {
-        showError(dbsClearYes, 'The DBS clear field is required.');
-    }
+    //     showError(probationEnrolledYes, 'The probation enrolled field is required.');
+    // }
 
-    const dbsUpdateYes = $('[name="DBS_Update_yes"]');
-    const dbsUpdateNo = $('[name="DBS_Update_no"]');
-    if (!dbsUpdateYes.is(':checked') && !dbsUpdateNo.is(':checked')) {
-        showError(dbsUpdateYes, 'The DBS update field is required.');
-    }
+    // const dbsClearYes = $('[name="dbs_clear_yes"]');
+    // const dbsClearNo = $('[name="dbs_clear_no"]');
+    // if (!dbsClearYes.is(':checked') && !dbsClearNo.is(':checked')) {
+    //     showError(dbsClearYes, 'The DBS clear field is required.');
+    // }
+
+    // const dbsUpdateYes = $('[name="DBS_Update_yes"]');
+    // const dbsUpdateNo = $('[name="DBS_Update_no"]');
+    // if (!dbsUpdateYes.is(':checked') && !dbsUpdateNo.is(':checked')) {
+    //     showError(dbsUpdateYes, 'The DBS update field is required.');
+    // }
 
 
-    const email = $('[name="email"]');
+    const email = $('#email');
     const emailValue = email.val().trim();
 
     if (!emailValue) {
@@ -275,6 +272,7 @@ function validateStaffWorkerForm() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
         showError(email, 'Please enter a valid email address.');
     }
+    console.log('isValid:', isValid); // Debugging line
 
     return isValid;
 
@@ -307,9 +305,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         'Accept': 'application/json'
                     },
                 });
-
                 // Always parse the response body
                 const result = await response.json();
+                console.log('Form data:', result); // Debugging line
 
                 if (response.status === 422) {
                     // Clear any existing error messages
@@ -339,6 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Success block
                 if (result.success || result.status === 'success') {
+                    console.log(result.success);
                     alert(result.message);
                     form.reset();
                     location.reload();

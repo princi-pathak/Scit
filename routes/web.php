@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteController;
-use App\Http\Controllers\frontEnd\salesFinance\CouncilTaxController as CouncilTaxController;
+use App\Http\Controllers\frontEnd\salesFinance\CouncilTaxController;
 use App\Http\Controllers\frontEnd\salesFinance\item\ProductCategoryController as FrontendProductCategoryController;
 use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
@@ -614,12 +614,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 
-
+	// frontend Council Tax
 	Route::controller(CouncilTaxController::class)->group(function () {
 		Route::prefix('finance')->group(function () {
 			Route::get('/council-tax', 'index')->name('finance.council-tax');
 			Route::post('/save-council-tax', 'saveCouncilTaxData')->name('finance.saveCouncilTaxData');
-			Route::post('/edit-council-tax', 'saveCouncilTaxData');
+			// Route::post('/edit-council-tax', 'saveCouncilTaxData');
 			Route::delete('/delete-council-tax/{id}', 'destroy')->name('finance.deleteCouncilTax');
 		});
 	});
@@ -2185,12 +2185,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/sales-day-book-edit/{id}', 'salesDayBookEdit')->name('backend.sales_day_book.edit');
 		});
 	}));
+	// Backend Council tax Controller
 	Route::controller(CouncilBackendController::class)->group((function () {
 		Route::prefix('finance')->group(function () {
 			Route::get('/council-tax', 'index')->name('backend.council_tax.index');
 			Route::get('/council-tax-edit/{id}', 'councilTaxEdit')->name('backend.council_tax.edit');
 			Route::get('/council-tax-add', 'create');
 			Route::post('/save-council-tax', 'store');
+			Route::get('/council-tax-delete/{id}', 'councilTaxDelete')->name('backend.council_tax.delete');
+			Route::get('/council-tax-edit/{id}', 'councilTaxEdit')->name('backend.council_tax.edit');
 		});
 	}));
 });

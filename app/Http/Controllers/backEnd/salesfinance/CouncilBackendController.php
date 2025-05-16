@@ -5,7 +5,7 @@ namespace App\Http\Controllers\backEnd\salesfinance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CouncilTaxRequests;
-use App\Services\finance\CouncilTaxService;
+use App\Services\Finance\CouncilTaxService;
 
 class CouncilBackendController extends Controller
 {
@@ -20,6 +20,7 @@ class CouncilBackendController extends Controller
     public function index()
     {
         $data['page'] = "council_tax";
+        $data['council_tax'] = $this->councilTaxService->getCouncilTax();
         return view('backEnd.salesFinance.council_tax.council_tax', $data);
     }
 
@@ -36,10 +37,9 @@ class CouncilBackendController extends Controller
         try {
             // Save or update the record using your service
             $response = $this->councilTaxService->saveCouncilTaxData($data);
-
         } catch (\Exception $e) {
             // Log complete exception details
-           \Log::error('SalesDayBook save error: ' . $e->getMessage(), [
+            \Log::error('SalesDayBook save error: ' . $e->getMessage(), [
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
                 'trace' => $e->getTraceAsString(),
@@ -52,8 +52,25 @@ class CouncilBackendController extends Controller
                 ->with('error', 'An error occurred while saving the Council Tax record. Please try again.');
         }
 
-          return redirect()->route('backend.council_tax.index')
+        return redirect()->route('backend.council_tax.index')
             ->with('success', $response->wasRecentlyCreated ? 'Record Created!' : 'Record Updated!');
-    
+    }
+
+    public function councilTaxDelete($id)
+    {
+        try {
+            $this->councilTaxService->deleteCouncilTax($id);
+            return redirect()->back()->with('success', 'Council tax deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to delete council tax.');
+        }
+
+    }
+
+    public function councilTaxEdit($id)
+    {
+        $data['page'] = "council_tax";
+        $data['council_tax'] = $this->councilTaxService->getCouncilTaxById($id);
+        return view('backEnd.salesFinance.council_tax.council_tax_form', $data);
     }
 }

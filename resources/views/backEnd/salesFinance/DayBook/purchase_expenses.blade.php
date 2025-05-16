@@ -83,7 +83,10 @@
 </section>
 
 <script>
-
+       setTimeout(() => {
+        document.querySelectorAll('.alert').forEach(el => el.style.display = 'none');
+    }, 4000); // hides after 4 seconds
+    
     $(document).ready(function() {
     $('#myTable').DataTable();
 });
