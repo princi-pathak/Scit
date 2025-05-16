@@ -42,8 +42,8 @@ class PurchaseBackendController extends Controller
 
     public function save_purchase_expenses_type(Request $request)
     {
+        // dd($request->all());
         $data['page'] = "purchaseExpenese";
-
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'status' => 'required|boolean',

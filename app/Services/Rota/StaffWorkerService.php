@@ -9,6 +9,7 @@ class StaffWorkerService
 {
     public function saveStaffWorkerData(array $data, int $homeId): StaffWorker
     {
+        // dd($data);
         if (!empty($data['DOB'])) {
             $data['DOB'] = Carbon::createFromFormat('d-m-Y', $data['DOB'])->format('Y-m-d');
         }

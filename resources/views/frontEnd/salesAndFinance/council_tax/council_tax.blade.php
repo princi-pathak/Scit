@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                             <div class="maimtable productDetailTable mb-4 table-responsive">
-                                <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
+                                <table id="council_tax" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -221,6 +221,6 @@
 <script>
     deleteURL = "{{ url('finance/delete-council-tax') }}/";
     saveData = "{{ url('finance/save-council-tax') }}";
-    editData = "{{ url('finance/edit-council-tax') }}";
+    // editData = "{{ url('finance/edit-council-tax') }}";
 </script>
 @endsection

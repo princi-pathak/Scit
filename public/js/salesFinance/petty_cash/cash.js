@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function getDatatable(){
     const table = $('#petty_cash_table').DataTable({
         dom: 'Blfrtip',
         buttons: [
@@ -22,7 +22,7 @@ $(document).ready(function() {
             };
     
             
-            var columnsToTotal = [3];
+            var columnsToTotal = [2,3,4];
     
             columnsToTotal.forEach(function (colIdx) {
                 var total = api
@@ -36,7 +36,7 @@ $(document).ready(function() {
             });
         }
     });
-});
+}
 function saveCash(){
     var error=0;
     $(".checkInput").each(function(){
@@ -116,36 +116,43 @@ $("#ToDate").change(function() {
         alert("End date should be greater than Start date");
         document.getElementById("ToDate").value = "";
         return false;
-    }
-    $.ajax({
-        type: "POST",
-        url: filterUrl,
-        data: {startDate:startDateStr,endDate:endDateStr,_token:token},
-        success: function(response) {
-            console.log(response);
-            // return false;
-            if (isAuthenticated(response) == false) {
-                    return false;
-                }
-            if (response.success === true) {
-                if(response.data.length == 0){
-                    $("#cash_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
-                }else{
+    }else if(startDateStr ==''){
+        alert("Please select From Date");
+        document.getElementById("ToDate").value = "";
+        return false;
+    }else if(endDateStr == ''){
+        alert("Please select To Date");
+        return false;
+    }else{
+        $.ajax({
+            type: "POST",
+            url: filterUrl,
+            data: {startDate:startDateStr,endDate:endDateStr,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (isAuthenticated(response) == false) {
+                        return false;
+                    }
+                if (response.success === true) {
+                    var table = $('#petty_cash_table').DataTable();
+                    table.destroy();
                     $("#cash_result").html(response.html_data);
+                    $("#PettyCashbalance").text('£'+response.total_balanceInCash);
+                    $("#total_balance").text('£'+response.total_balance);
+                    $("#petty_cashIn").text('£'+response.petty_cashIn);
+                    $("#cash_out").text('£'+response.cash_out);
+                    $("#total_balance").text('£'+response.total_balance);
+                    getDatatable();
+                    
                 }
-                $("#PettyCashbalance").text('£'+response.total_balanceInCash);
-                $("#total_balance").text('£'+response.total_balance);
-                $("#petty_cashIn").text('£'+response.petty_cashIn);
-                $("#cash_out").text('£'+response.cash_out);
-                $("#total_balance").text('£'+response.total_balance);
-                
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
             }
-        },
-        error: function(xhr, status, error) {
-            var errorMessage = xhr.status + ': ' + xhr.statusText;
-            alert('Error - ' + errorMessage + "\nMessage: " + error);
-        }
-    });
+        });
+    }
 });
 function parseDateDMY(dateStr) {
     var parts = dateStr.split("-");
@@ -181,6 +188,9 @@ $(document).on('input', '.numberInput', function () {
         val = val.slice(0, -1);
     }
     $(this).val(val);
+});
+$(document).on('input', '.no_input', function () {
+    $(this).val('');
 });
 $(document).on('click','.openModalBtn', function(){
     var action=$(this).data('action');
