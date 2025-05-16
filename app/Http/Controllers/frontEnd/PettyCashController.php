@@ -172,7 +172,7 @@ class PettyCashController extends Controller
                 // ->whereYear('expend_date', now()->year)
                 ->orderBy('id', 'desc')
                 ->get();
-        // return count($previous_data);
+        // echo "<pre>";print_r(count($previous_data));die;
         if(count($previous_data) == 0){
             $data=[
                 'previousbalanceOnCard'=>0,
@@ -186,6 +186,7 @@ class PettyCashController extends Controller
                 ->whereMonth('cash_date',$previousMonth->month)
                 // ->whereYear('cash_date', now()->year)
                 ->sum('petty_cashIn');
+        // echo "<pre>";print_r($cash);die;
         $sumPurchaseCashIn=0;  
         $totalBalanceFund=0; 
         $fundAmount=0; 
@@ -203,7 +204,7 @@ class PettyCashController extends Controller
             $db_date=date('m',strtotime($val->expend_date));
             if($date != $db_date || $date == null){$date=$db_date;}
         }   
-        $sum=$totalBalanceFund+$totalBalanceFund;
+        $sum=$totalBalanceFund;
         $calculation=$sum-$sumPurchaseCashIn;
         $balanceOnCard=$calculation-$cash;
         $data=[
@@ -377,6 +378,7 @@ class PettyCashController extends Controller
             $home_id=Auth::user()->home_id;
             $user_id=Auth::user()->id;
             $data['previous_month_data']=$this->previous_month_data($home_id,$user_id);
+            // echo "<pre>"; print_r($data['previous_month_data']);die;
             $data['expendCard'] = ExpendCard::getAllExpendCard($home_id, $user_id)
             ->whereMonth('expend_date', now()->month)
             // ->whereYear('expend_date', now()->year)
