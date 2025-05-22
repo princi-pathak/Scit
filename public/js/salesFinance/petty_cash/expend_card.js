@@ -26,16 +26,16 @@ $(document).ready(function() {
                 let date = null;
                  if (previousData && parseFloat(previousData.previousbalanceOnCard) !== 0) {
                     enterInLoop = 1;
-                    if(expendCard.length >0){
+                    // if(expendCard.length >0){
                        grandTotal= '£'+previousData.previousbalanceOnCard;
-                    }
+                    // }
                     tbody.append(`
                         <tr>
                             <td>${++index}</td>
                             <td>${previousData.prvious_date}</td>
                             <td>${grandTotal}</td>
-                            <td>£${previousData.previousfundAmount}</td>
-                            <td>£${previousData.previouspurchase_amount}</td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -220,53 +220,53 @@ function save_expend_card(){
 //         return false;
 //     }
 // });
-$("#ToDate").change(function() {
-    var startDateStr = document.getElementById("fromDate").value;
-    var endDateStr = document.getElementById("ToDate").value;
-    var startDate = parseDateDMY(startDateStr);
-    var endDate = parseDateDMY(endDateStr);
+// $("#ToDate").change(function() {
+//     var startDateStr = document.getElementById("fromDate").value;
+//     var endDateStr = document.getElementById("ToDate").value;
+//     var startDate = parseDateDMY(startDateStr);
+//     var endDate = parseDateDMY(endDateStr);
 
-    if ((Date.parse(startDate) > Date.parse(endDate))) {
-        alert("End date should be greater than Start date");
-        document.getElementById("ToDate").value = "";
-        return false;
-    }else if(startDateStr ==''){
-        alert("Please select From Date");
-        document.getElementById("ToDate").value = "";
-        return false;
-    }else if(endDateStr == ''){
-        alert("Please select To Date");
-        return false;
-    }else{
-         $.ajax({
-            type: "POST",
-            url: filterUrl,
-            data: {startDate:startDateStr,endDate:endDateStr,_token:token},
-            success: function(response) {
-                console.log(response);
-                // return false;
-                if (isAuthenticated(response) == false) {
-                    return false;
-                }
-                if (response.success === true) {
-                    var table = $('#expend_cash_table').DataTable();
-                    table.destroy();
-                    $("#expend_result").html(response.html_data);
-                    $("#balanceOnCard").text('£'+response.balanceOnCard);
-                    $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
-                    $("#totalBalanceFund").text('£'+response.totalBalanceFund);
-                    $("#totalBalancebfwd").text('£'+response.totalBalancebfwd);
-                    datatbleCall();
+//     if ((Date.parse(startDate) > Date.parse(endDate))) {
+//         alert("End date should be greater than Start date");
+//         document.getElementById("ToDate").value = "";
+//         return false;
+//     }else if(startDateStr ==''){
+//         alert("Please select From Date");
+//         document.getElementById("ToDate").value = "";
+//         return false;
+//     }else if(endDateStr == ''){
+//         alert("Please select To Date");
+//         return false;
+//     }else{
+//          $.ajax({
+//             type: "POST",
+//             url: filterUrl,
+//             data: {startDate:startDateStr,endDate:endDateStr,_token:token},
+//             success: function(response) {
+//                 console.log(response);
+//                 // return false;
+//                 if (isAuthenticated(response) == false) {
+//                     return false;
+//                 }
+//                 if (response.success === true) {
+//                     var table = $('#expend_cash_table').DataTable();
+//                     table.destroy();
+//                     $("#expend_result").html(response.html_data);
+//                     $("#balanceOnCard").text('£'+response.balanceOnCard);
+//                     $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
+//                     $("#totalBalanceFund").text('£'+response.totalBalanceFund);
+//                     $("#totalBalancebfwd").text('£'+response.totalBalancebfwd);
+//                     datatbleCall();
                     
-                }
-            },
-            error: function(xhr, status, error) {
-                var errorMessage = xhr.status + ': ' + xhr.statusText;
-                alert('Error - ' + errorMessage + "\nMessage: " + error);
-            }
-        });
-    }
-});
+//                 }
+//             },
+//             error: function(xhr, status, error) {
+//                 var errorMessage = xhr.status + ': ' + xhr.statusText;
+//                 alert('Error - ' + errorMessage + "\nMessage: " + error);
+//             }
+//         });
+//     }
+// });
 $("#year").on('change',function(){
     card_filter_function();
 });
