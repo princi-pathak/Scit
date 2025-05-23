@@ -1,3 +1,4 @@
+var grandTotalBalanceFund=0;
 $(document).ready(function() {
     $.ajax({
         type: "get",
@@ -95,7 +96,7 @@ $(document).ready(function() {
     
                 $('#totalBalanceOnCard').val(parseFloat(balanceOnCard.toFixed(2)));
                 $('#totalBalancebfwd').text(`£${totalBalancebfwd ? totalBalancebfwd : previousData.previousbalanceOnCard}`);
-                var grandTotalBalanceFund=balanceOnCard;
+                grandTotalBalanceFund=balanceOnCard;
                 $('#totalBalanceFund').text(`£${totalBalanceFund}`);
                 $('#sumPurchaseCashIn').text(`£${sumPurchaseCashIn.toFixed(2)}`);
                 $("#balanceOnCard").text("£" + parseFloat(grandTotalBalanceFund.toFixed(2)));
@@ -367,7 +368,7 @@ $(document).on('click','.openModalBtn', function(){
     if(action === 'add'){
         $("#expend_cardLabel").text("Add Expend Card");
         $("#id").val('');
-        $("#date").val('');
+        $("#expend_date").val('');
         if(balance_bfwd ==''){
             $("#balance_bfwd").val('');
         }
@@ -389,7 +390,7 @@ $(document).on('click','.openModalBtn', function(){
     }else{
         $("#expend_cardLabel").text("Edit Expend Card");
         $("#id").val(id);
-        $("#date").val(expend_date);
+        $("#expend_date").val(expend_date);
         if(balance_bfwd ==''){
             $("#balance_bfwd").val(balance_bfwdEdit);
         }
@@ -443,4 +444,17 @@ $(document).on('click','.deleteBtn', function(){
             }
         });
     }
+});
+const today = new Date().toISOString().split('T')[0];
+document.getElementById("expend_date").setAttribute("max", today);
+
+$(document).on('input', '#purchase_amount', function () {
+    var fund_added=$("#fund_added").val();
+    var purchase_amount=$("#purchase_amount").val();
+    var check_totalAmount=(parseFloat(grandTotalBalanceFund) || 0) + (parseFloat(fund_added) || 0);
+    if(purchase_amount > check_totalAmount){
+        alert("You can't enter above amount of closing balance or Fund added balance");
+        $("#purchase_amount").val('');
+    }
+
 });

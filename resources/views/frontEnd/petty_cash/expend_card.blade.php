@@ -145,7 +145,7 @@
                                 <div class="form-group col-md-12">
                                     <label> Date <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="date" class="form-control editInput checkInput" name="expend_date" id="date" value="">
+                                        <input type="date" class="form-control editInput checkInput" name="expend_date" id="expend_date" value="" max="">
                                     </div>
                                 </div>
                                 <!-- <div class="form-group col-md-12">
@@ -171,9 +171,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label> Card Details</label>
+                                    <label> Card Details <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" id="card_details" name="card_details">
+                                        <input type="text" class="form-control editInput checkInput" id="card_details" name="card_details">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">

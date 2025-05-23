@@ -106,6 +106,24 @@
                                         $balance_bfwd = 0;
                                         $petty_cashIn = 0;
                                         $date = null;
+                                        $index = 0;
+                                        if (!empty($previous_Cash_month_data) && $previous_Cash_month_data['total_balanceInCash'] != 0) {
+                                            $count = 1; ?>
+
+                                            <tr>
+                                                <td>{{++$index}}</td>
+                                                <td>{{$previous_Cash_month_data['prvious_date']}}</td>
+                                                <td>£{{$previous_Cash_month_data['total_balanceInCash']}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        <?php }
                                         foreach ($cash as $key => $val) {
                                             // $total_balance = $total_balance + $val->balance_bfwd + $val->petty_cashIn;
                                             $cash_out = $cash_out + $val->cash_out;
@@ -117,9 +135,9 @@
                                             }
                                             $total_balance = $total_balance + $val->petty_cashIn;
                                             $db_date = date('m', strtotime($val->cash_date));
-                                        ?>
+                                            ?>
                                             <tr>
-                                                <td>{{++$key}}</td>
+                                                <td>{{++$index}}</td>
                                                 <td>{{date('Y-m-d',strtotime($val->cash_date))}}</td>
                                                 <?php if ($date != $db_date || $date == null) {
                                                         $date = $db_date; ?>
@@ -127,8 +145,8 @@
                                                     <?php } else { ?>
                                                         <td></td>
                                                 <?php }?>
-                                                <td>£{{$val->petty_cashIn}}</td>
-                                                <td>£{{$val->cash_out}}</td>
+                                                <td>£{{$val->petty_cashIn ?? 0}}</td>
+                                                <td>£{{$val->cash_out ?? 0}}</td>
                                                 <td>{{$val->card_details}}</td>
                                                 @if($val->receipt)
                                                     <td><a href="{{url('public/images/finance_cash/'.$val->receipt)}}" target="_blank"><i class="fa fa-eye"></i></a></td>
@@ -199,7 +217,7 @@
                                 <div class="form-group col-md-12">
                                     <label> Date <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="date" class="form-control editInput checkInput" id="cash_date" name="cash_date">
+                                        <input type="date" class="form-control editInput checkInput" id="cash_date" name="cash_date" max="">
                                     </div>
                                 </div>
                                 <!-- <div class="form-group col-md-12">
@@ -228,9 +246,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label> Cash Details</label>
+                                    <label> Cash Details <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="text" class="form-control editInput" id="card_details" name="card_details">
+                                        <input type="text" class="form-control editInput checkInput" id="card_details" name="card_details">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -327,6 +345,7 @@
     var imgSrc = "{{url('public/images/finance_cash/')}}";
     var deleteUrl="{{url('petty-cash/cash_delete')}}";
     var existImage="{{url('public/images/noimage.jpg')}}";
+    var total_balanceInCash = $("#total_balanceInCash").val();
 </script>
 <script>
     $(document).ready(function() {

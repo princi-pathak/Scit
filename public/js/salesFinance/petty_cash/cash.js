@@ -336,3 +336,15 @@ $(document).on('click','.deleteBtn', function(){
         });
     }
 });
+const today = new Date().toISOString().split('T')[0];
+document.getElementById("cash_date").setAttribute("max", today);
+$(document).on('input', '#cash_outModal', function () {
+    var petty_cashInModal=$("#petty_cashInModal").val();
+    var cash_outModal=$("#cash_outModal").val();
+    var check_totalAmount=(parseFloat(total_balanceInCash) || 0) + (parseFloat(petty_cashInModal) || 0);
+    if(cash_outModal > check_totalAmount){
+        alert("You can't enter above amount of closing balance or cashin balance");
+        $("#cash_outModal").val('');
+    }
+
+});

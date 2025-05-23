@@ -40,6 +40,7 @@ class PettyCashController extends Controller
         ->whereYear('cash_date', now()->year)
         ->orderBy('id','desc')->first();
         $data['years'] = range(date('Y'), 2000);
+        // echo "<pre>";print_r($data['previous_Cash_month_data']);die;
         return view('frontEnd.petty_cash.petty_cash',$data);
     }
     public function child_register(){
@@ -77,6 +78,7 @@ class PettyCashController extends Controller
         $id=$request->id;
         $rules = [
             'expend_date'     => 'required',
+            'card_details'     => 'required',
         ];
         
         
@@ -121,7 +123,7 @@ class PettyCashController extends Controller
             // 'balance_bfwd'=>'required',
             // 'petty_cashIn'=>'required',
             // 'cash_out'=>'required',
-            // 'card_details'=>'required',
+            'card_details'=>'required',
             // 'dext'=>'required',
             // 'invoice_la'=>'required',
             // 'initial'=>'required',
@@ -220,7 +222,7 @@ class PettyCashController extends Controller
     }
     private function previous_Cash_month_data($home_id,$user_id,$year=null,$month=null){
         $previousMonth = Carbon::now()->subMonth()->month;
-        $previousYear = Carbon::now()->subYear()->year;
+        $previousYear = Carbon::now()->year;
         if(!empty($month)){
             $previousMonth = $month-1;
             $previousYear = $year;
@@ -236,13 +238,15 @@ class PettyCashController extends Controller
         $cash_out=0;
         $balance_bfwd=0;
         $petty_cashIn=0;
+        $prvious_date='';
         foreach($cash as $val){
             $total_balance=$total_balance+$val->balance_bfwd+$val->petty_cashIn;
             $cash_out=$cash_out+$val->cash_out;
+            $prvious_date=$val->cash_date;
             
         }
         $total_balanceInCash=$total_balance-$cash_out;
-        $data=['total_balanceInCash'=>$total_balanceInCash];
+        $data=['total_balanceInCash'=>$total_balanceInCash,'prvious_date'=>$prvious_date];
         return $data;
 
     }
@@ -271,6 +275,24 @@ class PettyCashController extends Controller
         $petty_cashIn=0;
         $html_data='';
         $date=null;
+        $index=0;
+        if (!empty($previous_Cash_month_data) && $previous_Cash_month_data['total_balanceInCash'] != 0) {
+            $count = 1; 
+
+            $html_data.='<tr>
+                <td>'.++$index.'</td>
+                <td>'.$previous_Cash_month_data['prvious_date'].'</td>
+                <td>£'.$previous_Cash_month_data['total_balanceInCash'].'</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>';
+        }
         foreach($search_data as $key=>$val){
             $cash_out=$cash_out+$val->cash_out;
             $petty_cashIn=$petty_cashIn+$val->petty_cashIn;
@@ -286,15 +308,15 @@ class PettyCashController extends Controller
             if($val->invoice_la == 1){ $invoice_la= "Yes"; }else{ $invoice_la= "No" ;}
             $db_date=date('m',strtotime($val->cash_date));
             $html_data.='<tr>
-                            <td>'. ++$key .'</td>
+                            <td>'. ++$index .'</td>
                             <td class="white_space_nowrap">'. date("Y-m-d",strtotime($val->cash_date)) .'</td>';
                             if($date != $db_date || $date == null){$date=$db_date;
                                 $html_data.='<td>£'. ($val->balance_bfwd ?? 0) .'</td>';
                             }else{
                                 $html_data.='<td></td>';
                             }
-                            $html_data.='<td>£'. $val->petty_cashIn .'</td>
-                            <td>£'. $val->cash_out .'</td>
+                            $html_data.='<td>£'. ($val->petty_cashIn ?? 0) .'</td>
+                            <td>£'. ($val->cash_out ?? 0) .'</td>
                             <td>'. $val->card_details .'</td>';
                             if($val->receipt){
                                 $html_data.='<td><a href="'.url("public/images/finance_cash/".$val->receipt) .'" target="_blank"><i class="fa fa-eye"></i></a></td>';
