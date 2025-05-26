@@ -19,6 +19,9 @@
     text-align: center;
     font-weight: 600 !important;
   }
+  .bg_color{
+    background: #b0b5b9;
+  }
   
 </style>
 
@@ -33,7 +36,12 @@
           </header>
           <div class="panel-body">
             <div class="col-lg-12">
-              <div class="jobsection justify-content-end">
+              <div class="col-lg-6">
+                <?php foreach ($AssetCategoryList as $cat) { ?>
+                  <a href="{{url('sales-finance/assets/asset-register?cat=')}}{{base64_encode($cat->id)}}" class="btn @if(isset($selected_cat_id) && $selected_cat_id ==$cat->id)bg_color @else btn-warning @endif">{{$cat->name}}</a>
+                    <?php } ?>
+              </div>
+              <div class="col-lg-6 jobsection justify-content-end">
                 <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a> -->
                 <a href="javascript:void(0)" class="btn btn-warning" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
                 <a href="javascript:void(0)" class="btn btn-warning">Export</a>
@@ -68,7 +76,7 @@
                                   <label>Date To:</label>
                                   <!-- <input type="date" class="form-control editInput" id="edd_endDate" name="end_date"> -->
                                   <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                    <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control">
+                                    <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control" disabled>
 
                                     <span class="input-group-btn datetime-picker2 btn_height">
                                       <button class="btn btn-primary" type="button" id="openCalendarBtn1">

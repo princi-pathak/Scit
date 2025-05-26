@@ -3,7 +3,11 @@
 @section('title','Asset Categories')
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
-
+<style>
+    .cursor{
+        cursor: pointer;
+    }
+</style>
 <!--main content start-->
 <section class="wrapper">
     <div class="container-fluid">
@@ -21,7 +25,7 @@
                                 <a href="javascript:void(0)" class="btn btn-danger">Delete</a>
                             </div>
                             <div class="maimtable productDetailTable mb-4 table-responsive">
-                                <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
+                                <table id="assetCatTable" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" id="selectAllCheckBoxes"></th>
@@ -42,13 +46,13 @@
                                                 <td>{{$val->name}}</td>
                                                 <td>
                                                     <?php if ($val->status == 1) { ?>
-                                                        <span class="grencheck" onclick="status_change({{$val->id}},{{$val->status}})"><i class="fa fa-check-circle"></i></span>
+                                                        <span class="grencheck cursor" onclick="status_change({{$val->id}},{{$val->status}})"><i class="fa fa-check-circle"></i></span>
                                                     <?php } else { ?>
-                                                        <span class="grayCheck" onclick="status_change({{$val->id}},{{$val->status}})"><i class="fa fa-check-circle"></i></span>
+                                                        <span class="grayCheck cursor" onclick="status_change({{$val->id}},{{$val->status}})"><i class="fa fa-check-circle"></i></span>
                                                     <?php } ?>
                                                 </td>
                                                 <td>
-                                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#assetCategoryModal" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $val->id }}" data-name="{{ $val->name }}" data-status="{{ $val->status }}" class="openModalBtn"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#assetCategoryModal" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $val->id }}" data-name="{{ $val->name }}" data-status="{{ $val->status }}" class="openModalBtn"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="dropdown-item delete_assetCat" data-id="{{ $val->id }}"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>
                                                 </td>
                                             </tr>
                                         <?php } ?>
@@ -78,8 +82,24 @@
                         @csrf
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="formDtail">
-                                <div class="col-md-12 col-lg-12 col-xl-12 text-center">
-                                    <div class="mt-1 mb-0 text-center" id="messageAssetCategory"></div>
+                                <!-- <div class="col-md-12 col-lg-12 col-xl-12 text-center">
+                                    <div class="mt-1 mb-0 text-center alert" id="messageAssetCategory"></div>
+                                </div> -->
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_error popup_alrt_msg" style="display: none;">
+                                    <div class="popup_notification-box">
+                                        <div class="alert alert-danger alert-dismissible m-0" role="alert">
+                                            <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
+                                            <strong>Success!</strong> <span class="popup_error_txt">Some error occured, Please try again after sometime.</span>.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_success popup_alrt_msg" style="display: none;">
+                                    <div class="popup_notification-box">
+                                        <div class="alert alert-success alert m-0" role="alert">
+                                            <button type="button" class="close close-msg-btn"><span aria-hidden="true">×</span></button>
+                                            <strong>Success!</strong> <span class="popup_success_txt">Data is made editable</span>.
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
@@ -197,6 +217,7 @@
 <script>
     var assetCatSaveUrl = "{{url('sales-finance/assets/asset-category-save')}}";
     var assetCatEditUrl = "{{url('sales-finance/assets/asset-category-edit')}}";
+    var assetCatDeleteUrl = "{{url('sales-finance/assets/asset-category-delete')}}";
 </script>
 <script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}" defer></script>
 @endsection

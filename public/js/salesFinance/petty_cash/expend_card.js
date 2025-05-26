@@ -1,4 +1,5 @@
-var grandTotalBalanceFund=0;
+var grandTotalBalanceOnCard=0;
+var grandTotalBalanceOnCardCheck=0;
 $(document).ready(function() {
     $.ajax({
         type: "get",
@@ -69,7 +70,7 @@ $(document).ready(function() {
                     }
                     let receipt='';
                     if(val.receipt){
-                        receipt='<a href="${receipt_imag_src +"/"+val.receipt}" target="_blank"><i class="fa fa-eye"></i></a>';
+                        receipt='<a href="'+receipt_imag_src +"/"+val.receipt+'" target="_blank"><i class="fa fa-eye"></i></a>';
                     }
                     tbody.append(`
                         <tr>
@@ -96,10 +97,13 @@ $(document).ready(function() {
     
                 $('#totalBalanceOnCard').val(parseFloat(balanceOnCard.toFixed(2)));
                 $('#totalBalancebfwd').text(`£${totalBalancebfwd ? totalBalancebfwd : previousData.previousbalanceOnCard}`);
-                grandTotalBalanceFund=balanceOnCard;
+                if(grandTotalBalanceOnCardCheck == 0){
+                    grandTotalBalanceOnCardCheck=balanceOnCard;
+                }
+                grandTotalBalanceOnCard=balanceOnCard;
                 $('#totalBalanceFund').text(`£${totalBalanceFund}`);
                 $('#sumPurchaseCashIn').text(`£${sumPurchaseCashIn.toFixed(2)}`);
-                $("#balanceOnCard").text("£" + parseFloat(grandTotalBalanceFund.toFixed(2)));
+                $("#balanceOnCard").text("£" + parseFloat(grandTotalBalanceOnCard.toFixed(2)));
                 datatbleCall();
             }
         },
@@ -451,7 +455,7 @@ document.getElementById("expend_date").setAttribute("max", today);
 $(document).on('input', '#purchase_amount', function () {
     var fund_added=$("#fund_added").val();
     var purchase_amount=$("#purchase_amount").val();
-    var check_totalAmount=(parseFloat(grandTotalBalanceFund) || 0) + (parseFloat(fund_added) || 0);
+    var check_totalAmount=(parseFloat(grandTotalBalanceOnCardCheck) || 0) + (parseFloat(fund_added) || 0);
     if(purchase_amount > check_totalAmount){
         alert("You can't enter above amount of closing balance or Fund added balance");
         $("#purchase_amount").val('');

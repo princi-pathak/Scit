@@ -346,6 +346,10 @@
     var deleteUrl="{{url('petty-cash/cash_delete')}}";
     var existImage="{{url('public/images/noimage.jpg')}}";
     var total_balanceInCash = $("#total_balanceInCash").val();
+    var total_balanceInCashCheck=0;
+    if(total_balanceInCashCheck == 0){
+        total_balanceInCashCheck=total_balanceInCash;
+    }
 </script>
 <script>
     $(document).ready(function() {

@@ -610,6 +610,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('depreciation-type-edit', 'depreciation_type_save');
 			Route::get('asset-register-edit', 'asset_regiser_add');
 			Route::post('asset-register-delete', 'asset_register_delete');
+			Route::post('asset-category-delete', 'asset_category_delete');
 		});
 	});
 

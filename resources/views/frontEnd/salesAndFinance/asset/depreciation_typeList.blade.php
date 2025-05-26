@@ -24,7 +24,7 @@
                                 <div class="alert success-message text-center" id="msg" style="display:none;height:50px">
                                     <p id="status_meesage"></p>
                                 </div>
-                                <table id="exampleOne" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
+                                <table id="Depreciation_typeTable" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>

@@ -129,15 +129,21 @@ function saveassetCategoryModal() {
                     return false;
                 } else if (response.success === true) {
                     $(window).scrollTop(0);
-                    $('#messageAssetCategory').addClass('success-message').text(response.message).show();
+                    // $('#messageAssetCategory').addClass('success-message').text(response.message).show();
+                    $(".popup_success").fadeIn();
+                    $('.popup_success_txt').text(response.message).show();
                     setTimeout(function () {
-                        $('#messageAssetCategory').removeClass('success-message').text('').hide();
+                        // $('#messageAssetCategory').removeClass('success-message').text('').hide();
+                        // $('.popup_success_txt').text('').hide();
+                        $(".popup_success").fadeOut();
                         location.reload();
                     }, 3000);
                 } else if (response.success === false) {
-                    $('#messageAssetCategory').addClass('error-message').text(response.message).show();
+                    // $('#messageAssetCategory').addClass('error-message').text(response.message).show();
+                    $(".popup_error").fadeIn();
+                    $('.popup_success_txt').text(response.message).show();
                     setTimeout(function () {
-                        $('#error-message').text('').fadeOut();
+                        $(".popup_error").fadeOut();
                     }, 3000);
                 } else {
                     alert("Something went wrong");
@@ -346,26 +352,35 @@ function searchBtn() {
 }
 function clearBtn(form_id) {
     $("#" + form_id)[0].reset();
+    location.reload();
     // $('#configform')[0].reset();
 }
 $("#edd_endDate").change(function () {
-    var startDate = document.getElementById("edd_startDate").value;
-    var endDate = document.getElementById("edd_endDate").value;
-
+    var startDateStr = document.getElementById("edd_startDate").value;
+    var endDateStr = document.getElementById("edd_endDate").value;
+    var startDate = parseDateDMY(startDateStr);
+    var endDate = parseDateDMY(endDateStr);
     if ((Date.parse(startDate) >= Date.parse(endDate))) {
         alert("End date should be greater than Start date");
         document.getElementById("edd_endDate").value = "";
     }
 });
 $("#edd_startDate").change(function () {
-    var startDate = document.getElementById("edd_startDate").value;
-    var endDate = document.getElementById("edd_endDate").value;
-
+    var startDateStr = document.getElementById("edd_startDate").value;
+    var endDateStr = document.getElementById("edd_endDate").value;
+    var startDate = parseDateDMY(startDateStr);
+    var endDate = parseDateDMY(endDateStr);
     if ((Date.parse(endDate) <= Date.parse(startDate))) {
         alert("Start date should be less than End date");
         document.getElementById("edd_startDate").value = "";
+    }else{
+        $("#edd_endDate").removeAttr('disabled','disabled');
     }
 });
+function parseDateDMY(dateStr) {
+    var parts = dateStr.split("-");
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+}
 $(document).on('click', '.register_delete', function () {
     var id = $(this).data('id');
     if (confirm("Are you sure you want to delete?")) {
@@ -390,4 +405,59 @@ $(document).on('click', '.register_delete', function () {
             }
         });
     }
+});
+
+$(document).on('click', '.close-msg-btn', function() {
+    $('.popup_alrt_msg').hide();
+});
+$(document).on('click','.delete_assetCat',function(){
+    var id = $(this).data('id');
+    if (confirm("Are you sure you want to delete?")) {
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type: "POST",
+            url: assetCatDeleteUrl,
+            data: { id: id, _token: token },
+            success: function (response) {
+                console.log(response);
+                // return false;
+                if (response.success === true) {
+                    location.reload();
+                } else {
+                    alert("Something went wrong");
+                    return false;
+                }
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
+    }
+});
+$('#assetCatTable').DataTable({
+    dom: 'Blfrtip',
+    buttons: [
+        {
+            extend: 'csv',
+            text: 'Export',
+            bom: true,
+            exportOptions: {
+                columns: [ 1, 2,]
+            }
+        }
+    ],
+});
+$('#Depreciation_typeTable').DataTable({
+    dom: 'Blfrtip',
+    buttons: [
+        {
+            extend: 'csv',
+            text: 'Export',
+            bom: true,
+            exportOptions: {
+                columns: [ 1, 2,3]
+            }
+        }
+    ],
 });
