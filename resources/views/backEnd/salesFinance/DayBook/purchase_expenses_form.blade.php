@@ -36,6 +36,7 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Title</label>
                                     <div class="col-lg-10">
+                                        <input type="hidden" name="purchase_expense_id" value="{{ isset($purchase_expenses) ? $purchase_expenses->id : '' }}">
                                         <input type="text" name="title" class="form-control" id="" value="{{ isset($purchase_expenses) ? $purchase_expenses->title : '' }}" placeholder="Title">
                                     </div>
                                 </div>

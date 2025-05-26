@@ -1,3 +1,4 @@
+var grandTotalBalanceFund=0;
 $(document).ready(function() {
     $.ajax({
         type: "get",
@@ -22,26 +23,29 @@ $(document).ready(function() {
                 let totalBalancebfwd = 0;
                 let totalBalanceFund = 0;
                 let sumPurchaseCashIn = 0;
+                let grandTotal='';
                 let date = null;
-    
-                // Append previous month data row if exists
-                // if (previousData && parseFloat(previousData.previousbalanceOnCard) !== 0) {
-                //     enterInLoop = 1;
-                //     tbody.append(`
-                //         <tr>
-                //             <td>${++index}</td>
-                //             <td>${previousData.prvious_date}</td>
-                //             <td>£${previousData.previousbalanceOnCard}</td>
-                //             <td>£${previousData.previousfundAmount}</td>
-                //             <td></td>
-                //             <td></td>
-                //             <td></td>
-                //             <td></td>
-                //             <td></td>
-                //             <td></td>
-                //         </tr>
-                //     `);
-                // }
+                 if (previousData && parseFloat(previousData.previousbalanceOnCard) !== 0) {
+                    enterInLoop = 1;
+                    // if(expendCard.length >0){
+                       grandTotal= '£'+previousData.previousbalanceOnCard;
+                    // }
+                    tbody.append(`
+                        <tr>
+                            <td>${++index}</td>
+                            <td>${previousData.prvious_date}</td>
+                            <td>${grandTotal}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    `);
+                }
     
                 expendCard.forEach((val) => {
                     let purchaseAmount = parseFloat(val.purchase_amount ?? 0);
@@ -59,23 +63,23 @@ $(document).ready(function() {
                     }
     
                     let showBalanceBfwd = '';
-                    if (date !== dbMonth || date === null) {
+                    if (enterInLoop !=1 && date === null) {
                         date = dbMonth;
                         showBalanceBfwd = `£${balanceBfwd}`;
-                    }                 
+                    }
+                    let receipt='';
+                    if(val.receipt){
+                        receipt='<a href="${receipt_imag_src +"/"+val.receipt}" target="_blank"><i class="fa fa-eye"></i></a>';
+                    }
                     tbody.append(`
                         <tr>
                             <td>${++index}</td>
                             <td class="white_space_nowrap">${val.expend_date}</td>
                             <td>${showBalanceBfwd}</td>
                             <td>${val.fund_added ? '£' + val.fund_added : ''}</td>
-                            <td>£${val.purchase_amount}</td>
+                            <td>£${purchaseAmount}</td>
                             <td>${val.card_details ?? ''}</td>
-                            <td>
-                                <a href="${receipt_imag_src +"/"+val.receipt}" target="_blank">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                            </td>
+                            <td>${receipt}</td>
                             <td>${val.dext == 1 ? 'Yes' : 'No'}</td>
                             <td>${val.invoice_la == 1 ? 'Yes' : 'No'}</td>
                             <td>${val.initial ?? ''}</td>
@@ -92,10 +96,10 @@ $(document).ready(function() {
     
                 $('#totalBalanceOnCard').val(parseFloat(balanceOnCard.toFixed(2)));
                 $('#totalBalancebfwd').text(`£${totalBalancebfwd ? totalBalancebfwd : previousData.previousbalanceOnCard}`);
-                var grandTotalBalanceFund=totalBalanceFund + parseFloat(previousData.previousfundAmount ?? 0);
+                grandTotalBalanceFund=balanceOnCard;
                 $('#totalBalanceFund').text(`£${totalBalanceFund}`);
                 $('#sumPurchaseCashIn').text(`£${sumPurchaseCashIn.toFixed(2)}`);
-                $("#balanceOnCard").text("£" + parseFloat(balanceOnCard.toFixed(2)));
+                $("#balanceOnCard").text("£" + parseFloat(grandTotalBalanceFund.toFixed(2)));
                 datatbleCall();
             }
         },
@@ -104,7 +108,8 @@ $(document).ready(function() {
             alert('Error - ' + errorMessage + "\nMessage: " + error);
         }
     });
-    function datatbleCall(){
+});
+function datatbleCall(){
         const table = $('#expend_cash_table').DataTable({
         dom: 'Blfrtip',
         buttons: [
@@ -143,7 +148,6 @@ $(document).ready(function() {
             }
         });
     }
-});
 function save_expend_card(){
     var error=0;
     $(".checkInput").each(function(){
@@ -155,12 +159,17 @@ function save_expend_card(){
             $(this).css('border','');
         }
     });
+    var fund_added=$("#fund_added").val();
+    var purchase_amount=$("#purchase_amount").val();
     var id=$("#id").val();
     var url=saveUrl;
     if(id != ''){
         url=editUrl;
     }
     if(error == 1){
+        return false;
+    }else if(fund_added == '' && purchase_amount == ''){
+        alert("Please fill Fund added to card or Purchases");
         return false;
     }else{
         $.ajax({
@@ -202,57 +211,108 @@ function save_expend_card(){
         });
     }
 }
-$("#fromDate").change(function() {
-    var startDate = document.getElementById("fromDate").value;
-    var endDate = document.getElementById("ToDate").value;
+// $("#fromDate").change(function() {
+//     var startDate = document.getElementById("fromDate").value;
+//     var endDate = document.getElementById("ToDate").value;
 
-    if ((Date.parse(endDate) <= Date.parse(startDate))) {
-        alert("Start date should be less than End date");
-        document.getElementById("fromDate").value = "";
-        return false;
-    }
-});
-$("#ToDate").change(function() {
-    var startDateStr = document.getElementById("fromDate").value;
-    var endDateStr = document.getElementById("ToDate").value;
-    var startDate = parseDateDMY(startDateStr);
-    var endDate = parseDateDMY(endDateStr);
+//     if ((Date.parse(endDate) <= Date.parse(startDate))) {
+//         alert("Start date should be less than End date");
+//         document.getElementById("fromDate").value = "";
+//         return false;
+//     }
+// });
+// $("#ToDate").change(function() {
+//     var startDateStr = document.getElementById("fromDate").value;
+//     var endDateStr = document.getElementById("ToDate").value;
+//     var startDate = parseDateDMY(startDateStr);
+//     var endDate = parseDateDMY(endDateStr);
 
-    if ((Date.parse(startDate) > Date.parse(endDate))) {
-        alert("End date should be greater than Start date");
-        document.getElementById("ToDate").value = "";
-        return false;
-    }
-    $.ajax({
-        type: "POST",
-        url: filterUrl,
-        data: {startDate:startDateStr,endDate:endDateStr,_token:token},
-        success: function(response) {
-            console.log(response);
-            // return false;
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
-            if (response.success === true) {
-                // if(response.data.length == 0){
-                //     $("#expend_result").html('<tr><td colspan="10" class="text-danger text-center">Record Not Found</td></tr>');
-                // }else{
-                //     $("#expend_result").html(response.html_data);
-                // }
-                $("#expend_result").html(response.html_data);
-                $("#balanceOnCard").text('£'+response.balanceOnCard);
-                $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
-                $("#totalBalanceFund").text('£'+response.totalBalanceFund);
-                $("#totalBalancebfwd").text('£'+response.totalBalancebfwd);
-                
-            }
-        },
-        error: function(xhr, status, error) {
-            var errorMessage = xhr.status + ': ' + xhr.statusText;
-            alert('Error - ' + errorMessage + "\nMessage: " + error);
-        }
-    });
+//     if ((Date.parse(startDate) > Date.parse(endDate))) {
+//         alert("End date should be greater than Start date");
+//         document.getElementById("ToDate").value = "";
+//         return false;
+//     }else if(startDateStr ==''){
+//         alert("Please select From Date");
+//         document.getElementById("ToDate").value = "";
+//         return false;
+//     }else if(endDateStr == ''){
+//         alert("Please select To Date");
+//         return false;
+//     }else{
+//          $.ajax({
+//             type: "POST",
+//             url: filterUrl,
+//             data: {startDate:startDateStr,endDate:endDateStr,_token:token},
+//             success: function(response) {
+//                 console.log(response);
+//                 // return false;
+//                 if (isAuthenticated(response) == false) {
+//                     return false;
+//                 }
+//                 if (response.success === true) {
+//                     var table = $('#expend_cash_table').DataTable();
+//                     table.destroy();
+//                     $("#expend_result").html(response.html_data);
+//                     $("#balanceOnCard").text('£'+response.balanceOnCard);
+//                     $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
+//                     $("#totalBalanceFund").text('£'+response.totalBalanceFund);
+//                     $("#totalBalancebfwd").text('£'+response.totalBalancebfwd);
+//                     datatbleCall();
+                    
+//                 }
+//             },
+//             error: function(xhr, status, error) {
+//                 var errorMessage = xhr.status + ': ' + xhr.statusText;
+//                 alert('Error - ' + errorMessage + "\nMessage: " + error);
+//             }
+//         });
+//     }
+// });
+$("#year").on('change',function(){
+    card_filter_function();
 });
+$("#month").on('change',function(){
+    $("#year").val('');
+});
+function card_filter_function(){
+    var year=$("#year").val();
+    var month=$("#month").val();
+    if(year == '' || year == null){
+        alert("Please Select The Year");
+        return false;
+    }else if(month == '' || month == null){
+        alert("Please Select The Month");
+        return false;
+    }else{
+        $.ajax({
+            type: "POST",
+            url: filterUrl,
+            data: {year:year,month:month,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
+                if (response.success === true) {
+                    var table = $('#expend_cash_table').DataTable();
+                    table.destroy();
+                    $("#expend_result").html(response.html_data);
+                    $("#balanceOnCard").text('£'+response.balanceOnCard);
+                    $("#sumPurchaseCashIn").text('£'+response.sumPurchaseCashIn);
+                    $("#totalBalanceFund").text('£'+response.totalBalanceFund);
+                    $("#totalBalancebfwd").text('£'+response.totalBalancebfwd);
+                    datatbleCall();
+                    
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
+    }
+}
 function parseDateDMY(dateStr) {
     var parts = dateStr.split("-");
     return new Date(parts[2], parts[1] - 1, parts[0]);
@@ -288,7 +348,9 @@ $(document).on('input', '.numberInput', function () {
     }
     $(this).val(val);
 });
-
+$(document).on('input', '.no_input', function () {
+    $(this).val('');
+});
 $(document).on('click','.openModalBtn', function(){
     var action=$(this).data('action');
     var id=$(this).data('id');
@@ -302,17 +364,17 @@ $(document).on('click','.openModalBtn', function(){
     var invoice_la=$(this).data('invoice_la');
     var initial=$(this).data('initial');
     var balance_bfwdEdit=$(this).data(balance_bfwd);
+    var text = '<img src="'+existImage+'" alt="" class="image_delete">';
     if(action === 'add'){
         $("#expend_cardLabel").text("Add Expend Card");
         $("#id").val('');
-        $("#date").val('');
+        $("#expend_date").val('');
         if(balance_bfwd ==''){
             $("#balance_bfwd").val('');
         }
         $("#fund_added").val('');
         $("#purchase_amount").val('');
         $("#card_details").val('');
-        var text = '<img src="'+existImage+'" alt="" class="image_delete">';
         $("#exist_image").html(text);
         if(dext == 1){
             $("#yes").attr('checked','checked');
@@ -328,7 +390,7 @@ $(document).on('click','.openModalBtn', function(){
     }else{
         $("#expend_cardLabel").text("Edit Expend Card");
         $("#id").val(id);
-        $("#date").val(expend_date);
+        $("#expend_date").val(expend_date);
         if(balance_bfwd ==''){
             $("#balance_bfwd").val(balance_bfwdEdit);
         }
@@ -339,7 +401,7 @@ $(document).on('click','.openModalBtn', function(){
             var text = '<img src="' + receipt_imag_src + "/" + receipt + '" alt="" class="image_delete" data-delete="' + id + '">';
             $("#exist_image").html(text);
         }else {
-            $("#exist_image").html('');
+            $("#exist_image").html(text);
         }
         if(dext == 1){
             $("#yes").attr('checked','checked');
@@ -382,4 +444,17 @@ $(document).on('click','.deleteBtn', function(){
             }
         });
     }
+});
+const today = new Date().toISOString().split('T')[0];
+document.getElementById("expend_date").setAttribute("max", today);
+
+$(document).on('input', '#purchase_amount', function () {
+    var fund_added=$("#fund_added").val();
+    var purchase_amount=$("#purchase_amount").val();
+    var check_totalAmount=(parseFloat(grandTotalBalanceFund) || 0) + (parseFloat(fund_added) || 0);
+    if(purchase_amount > check_totalAmount){
+        alert("You can't enter above amount of closing balance or Fund added balance");
+        $("#purchase_amount").val('');
+    }
+
 });

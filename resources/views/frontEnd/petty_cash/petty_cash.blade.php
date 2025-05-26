@@ -24,25 +24,46 @@
                             <div class="jobsection justify-content-between align-items-center">
                                 <div class="d-flex justify-content-end gap-2 align-items-center">
                                     <label for="fromDate" class="mb-0"> From:</label>
-                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control">
+                                    <!-- <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="date_of_birth" id="fromDate" type="text" value="" autocomplete="off" class="form-control no_input">
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary" type="button" id="openCalendarBtn">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </button>
                                         </span>
-                                    </div>
-                                    <label for="ToDate" class="mb-0"> To:</label>
+                                    </div> -->
+                                     <select name="month" id="month" class="form-control">
+                                        <option selected disabled>Select Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                    <label for="ToDate" class="mb-0"> Year:</label>
                                     <!-- <input type="date" id="ToDate" class="form-control"> -->
-                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control">
+                                    <!-- <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="date_of_birth" id="ToDate" type="text" value="" autocomplete="off" class="form-control no_input">
 
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary" type="button" id="openCalendarBtn1">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </button>
                                         </span>
-                                    </div>
+                                    </div> -->
+                                    <select name="year" id="year" class="form-control">
+                                        <option selected disabled>Select Year</option>
+                                        @foreach($years as $year)
+                                            <option value="{{$year}}">{{$year}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="jobsection mb-0">
                                     <!-- <a href="{{url('petty-cash/petty-cash-add')}}" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a> -->
@@ -85,6 +106,24 @@
                                         $balance_bfwd = 0;
                                         $petty_cashIn = 0;
                                         $date = null;
+                                        $index = 0;
+                                        if (!empty($previous_Cash_month_data) && $previous_Cash_month_data['total_balanceInCash'] != 0) {
+                                            $count = 1; ?>
+
+                                            <tr>
+                                                <td>{{++$index}}</td>
+                                                <td>{{$previous_Cash_month_data['prvious_date']}}</td>
+                                                <td>£{{$previous_Cash_month_data['total_balanceInCash']}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        <?php }
                                         foreach ($cash as $key => $val) {
                                             // $total_balance = $total_balance + $val->balance_bfwd + $val->petty_cashIn;
                                             $cash_out = $cash_out + $val->cash_out;
@@ -96,24 +135,24 @@
                                             }
                                             $total_balance = $total_balance + $val->petty_cashIn;
                                             $db_date = date('m', strtotime($val->cash_date));
-                                        ?>
+                                            ?>
                                             <tr>
-                                                <td>{{++$key}}</td>
+                                                <td>{{++$index}}</td>
                                                 <td>{{date('Y-m-d',strtotime($val->cash_date))}}</td>
-                                                <?php if ($previous_Cash_month_data['total_balanceInCash'] == 0) {
-                                                    if ($date != $db_date || $date == null) {
+                                                <?php if ($date != $db_date || $date == null) {
                                                         $date = $db_date; ?>
                                                         <td>£{{$val->balance_bfwd}}</td>
                                                     <?php } else { ?>
                                                         <td></td>
-                                                <?php }
-                                                }else{ ?>
-                                                    <td></td>
                                                 <?php }?>
-                                                <td>£{{$val->petty_cashIn}}</td>
-                                                <td>£{{$val->cash_out}}</td>
+                                                <td>£{{$val->petty_cashIn ?? 0}}</td>
+                                                <td>£{{$val->cash_out ?? 0}}</td>
                                                 <td>{{$val->card_details}}</td>
-                                                <td><a href="{{url('public/images/finance_cash/'.$val->receipt)}}" target="_blank"><i class="fa fa-eye"></i></a></td>
+                                                @if($val->receipt)
+                                                    <td><a href="{{url('public/images/finance_cash/'.$val->receipt)}}" target="_blank"><i class="fa fa-eye"></i></a></td>
+                                                @else
+                                                    <td></td>
+                                                @endif
                                                 <td><?php if ($val->dext == 1) {
                                                         echo "Yes";
                                                     } else {
@@ -128,13 +167,18 @@
                                                 <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#petty_cash" data-action="edit" data-id="{{ $val->id }}" data-cash_date="{{ $val->cash_date }}" data-balance_bfwd="{{ $val->balance_bfwd }}" data-petty_cashin="{{ $val->petty_cashIn }}" data-cash_out="{{ $val->cash_out }}" data-card_details="{{ $val->card_details }}" data-receipt="{{ $val->receipt }}" data-dext="{{ $val->dext }}" data-invoice_la="{{ $val->invoice_la }}" data-initial="{{ $val->initial }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="{{ $val->id }}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
                                             </tr>
                                         <?php }
-                                        $total_balanceInCash = $total_balance - $cash_out; ?>
+                                       $total_balanceInCash = $total_balance - $cash_out; ?>
                                     </tbody>
-                                    <input type="hidden" id="total_balanceInCash" value="<?php echo ($previous_Cash_month_data['total_balanceInCash'] ?? $total_balanceInCash);?>">
+                                    <?php if($total_balanceInCash == 0){?>
+                                        <input type="hidden" id="total_balanceInCash" value="<?php echo $previous_Cash_month_data['total_balanceInCash'];?>">
+                                    <?php }else{?>
+                                        <input type="hidden" id="total_balanceInCash" value="<?php echo $total_balanceInCash;?>">
+                                        
+                                    <?php }?>
                                     <tfoot>
                                         <tr class="table-light">
                                             <th colspan="2">Total</th>
-                                            <th id="total_balance">£<?php echo ($previous_Cash_month_data['total_balanceInCash'] ?? $balance_bfwd);?></th>
+                                            <th id="total_balance">£{{$balance_bfwd}}</th>
                                             <th id="petty_cashIn">£{{$petty_cashIn}}</th>
                                             <th id="cash_out">£{{$cash_out}}</th>
                                             <th colspan="6"></th>
@@ -173,32 +217,32 @@
                                 <div class="form-group col-md-12">
                                     <label> Date <span class="radStar">*</span></label>
                                     <div>
-                                        <input type="date" class="form-control editInput checkInput" id="cash_date" name="cash_date">
+                                        <input type="date" class="form-control editInput checkInput" id="cash_date" name="cash_date" max="">
                                     </div>
                                 </div>
-                                <div class="form-group col-md-12">
+                                <!-- <div class="form-group col-md-12">
                                     <label> Balance b/fwd <span class="radStar">*</span></label>
-                                    <div>
+                                    <div> -->
                                         <?php if ($previous_Cash_month_data['total_balanceInCash'] == 0) { ?>
-                                            <input type="text" class="form-control editInput numberInput checkInput 
+                                            <input type="hidden" class="form-control editInput numberInput 
                                             <?php if (isset($cashLastId) && $cashLastId != '') {
                                                 echo "disabled-tab";
                                             } ?>" id="balance_bfwd" name="balance_bfwd" <?php if (isset($cashLastId) && $cashLastId != '') { ?> value="{{$cashLastId->balance_bfwd}}" <?php } ?> onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                         <?php } else { ?>
-                                            <input type="text" class="form-control editInput numberInput checkInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_Cash_month_data['total_balanceInCash']}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                            <input type="hidden" class="form-control editInput numberInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_Cash_month_data['total_balanceInCash']}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                         <?php } ?>
-                                    </div>
-                                </div>
+                                    <!-- </div>
+                                </div> -->
                                 <div class="form-group col-md-12">
-                                    <label>Petty Cash In <span class="radStar">*</span></label>
+                                    <label>Petty Cash In </label>
                                     <div>
-                                        <input type="text" class="form-control editInput numberInput checkInput" id="petty_cashInModal" name="petty_cashIn" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <input type="text" class="form-control editInput numberInput" id="petty_cashInModal" name="petty_cashIn" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>Cash Out </label>
                                     <div>
-                                        <input type="text" class="form-control editInput numberInput checkInput" id="cash_outModal" name="cash_out" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
+                                        <input type="text" class="form-control editInput numberInput" id="cash_outModal" name="cash_out" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -230,7 +274,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label>Uploaded to DEXT <span class="radStar">*</span></label>
+                                    <label>Uploaded to DEXT</label>
                                     <div class="d-flex align-items-center gap-2">
                                         <label class="form-check-label m-0" for="yes">Yes</label>
                                         <input class="form-check-input mt-0" type="radio" name="dext" value="1" id="yes">
@@ -264,9 +308,9 @@
                                     </div> -->
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label>Initials <span class="radStar">*</span></label>
+                                    <label>Initials</label>
                                     <div>
-                                        <input type="text" class="form-control editInput checkInput" id="initial" name="initial">
+                                        <input type="text" class="form-control editInput" id="initial" name="initial">
                                     </div>
                                 </div>
                             </div>
@@ -286,6 +330,7 @@
 <script>
     // 
     $(document).ready(function() {
+        getDatatable();
         var total_balanceInCash = $("#total_balanceInCash").val();
         $("#PettyCashbalance").text("£" + Number(total_balanceInCash).toFixed(2));
         // alert(typeof(totalBalanceOnCard));
@@ -300,6 +345,7 @@
     var imgSrc = "{{url('public/images/finance_cash/')}}";
     var deleteUrl="{{url('petty-cash/cash_delete')}}";
     var existImage="{{url('public/images/noimage.jpg')}}";
+    var total_balanceInCash = $("#total_balanceInCash").val();
 </script>
 <script>
     $(document).ready(function() {
