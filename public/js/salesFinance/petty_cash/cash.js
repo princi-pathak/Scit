@@ -49,11 +49,16 @@ function saveCash(){
         }
     });
     var id=$("#id").val();
+    var petty_cashInModal=$("#petty_cashInModal").val();
+    var cash_outModal=$("#cash_outModal").val();
     var url=saveUrl;
     if(id !=''){
         url=editUrl;
     }
     if(error == 1){
+        return false;
+    }else if(petty_cashInModal == '' && cash_outModal == ''){
+        alert("Please Fill Cash In or Cash Out");
         return false;
     }else{
         $.ajax({
@@ -96,16 +101,16 @@ function saveCash(){
     }
     
 }
-$("#fromDate").change(function() {
-    var startDate = document.getElementById("fromDate").value;
-    var endDate = document.getElementById("ToDate").value;
+// $("#fromDate").change(function() {
+//     var startDate = document.getElementById("fromDate").value;
+//     var endDate = document.getElementById("ToDate").value;
 
-    if ((Date.parse(endDate) <= Date.parse(startDate))) {
-        alert("Start date should be less than End date");
-        document.getElementById("fromDate").value = "";
-        return false;
-    }
-});
+//     if ((Date.parse(endDate) <= Date.parse(startDate))) {
+//         alert("Start date should be less than End date");
+//         document.getElementById("fromDate").value = "";
+//         return false;
+//     }
+// });
 $("#ToDate").change(function() {
     var startDateStr = document.getElementById("fromDate").value;
     var endDateStr = document.getElementById("ToDate").value;
@@ -154,6 +159,52 @@ $("#ToDate").change(function() {
         });
     }
 });
+$("#year").on('change',function(){
+    cash_filter_function();
+});
+$("#month").on('change',function(){
+    $("#year").val('');
+});
+function cash_filter_function(){
+    var year=$("#year").val();
+    var month=$("#month").val();
+    if(year == '' || year == null){
+        alert("Please Select The Year");
+        return false;
+    }else if(month == '' || month == null){
+        alert("Please Select The Month");
+        return false;
+    }else{
+        $.ajax({
+            type: "POST",
+            url: filterUrl,
+            data: {year:year,month:month,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (isAuthenticated(response) == false) {
+                        return false;
+                    }
+                if (response.success === true) {
+                    var table = $('#petty_cash_table').DataTable();
+                    table.destroy();
+                    $("#cash_result").html(response.html_data);
+                    $("#PettyCashbalance").text('£'+response.total_balanceInCash);
+                    $("#total_balance").text('£'+response.total_balance);
+                    $("#petty_cashIn").text('£'+response.petty_cashIn);
+                    $("#cash_out").text('£'+response.cash_out);
+                    $("#total_balance").text('£'+response.total_balance);
+                    getDatatable();
+                    
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
+    }
+}
 function parseDateDMY(dateStr) {
     var parts = dateStr.split("-");
     return new Date(parts[2], parts[1] - 1, parts[0]);
@@ -243,7 +294,7 @@ $(document).on('click','.openModalBtn', function(){
             var text = '<img src="' + imgSrc + "/" + receipt + '" alt="" class="image_delete" data-delete="' + id + '">';
             $("#exist_image").html(text);
         }else {
-            $("#exist_image").html('');
+            $("#exist_image").html('<img src="'+existImage+'" alt="" class="image_delete">');
         }
         if(dext == 1){
             $("#yes").attr('checked','checked');
@@ -284,4 +335,16 @@ $(document).on('click','.deleteBtn', function(){
             }
         });
     }
+});
+const today = new Date().toISOString().split('T')[0];
+document.getElementById("cash_date").setAttribute("max", today);
+$(document).on('input', '#cash_outModal', function () {
+    var petty_cashInModal=$("#petty_cashInModal").val();
+    var cash_outModal=$("#cash_outModal").val();
+    var check_totalAmount=(parseFloat(total_balanceInCash) || 0) + (parseFloat(petty_cashInModal) || 0);
+    if(cash_outModal > check_totalAmount){
+        alert("You can't enter above amount of closing balance or cashin balance");
+        $("#cash_outModal").val('');
+    }
+
 });
