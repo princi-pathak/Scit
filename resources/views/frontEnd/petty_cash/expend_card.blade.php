@@ -8,6 +8,10 @@
         pointer-events: none;
         opacity: 0.5;
     }
+    .modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
 </style>
 
 <section class="wrapper">
@@ -130,7 +134,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="expend_cardLabel">Add Expend Card</h4>
             </div>
-            <div calss="row">
+            <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12 mt-4">
                     <div class="mt-1 mb-0 text-center" style="display:none" id="message_save"></div>
                 </div>
@@ -257,6 +261,7 @@
     var receipt_imag_src='{{url("public/images/finance_petty_cash/")}}';
     var deleteUrl="{{url('petty-cash/expend_delete')}}";
     var existImage="{{url('public/images/noimage.jpg')}}";
+    var check_CardclosingAmount="{{url('petty-cash/check_CardclosingAmount')}}";
 </script>
 <script>
     $(document).ready(function() {

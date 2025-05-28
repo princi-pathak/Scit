@@ -25,7 +25,7 @@ class PreInvoiceController extends Controller
         return view('frontEnd.salesAndFinance.pre_invoice.pre_invoice',$data);
     }
     public function preinvoice_save(Request $request){
-        // echo "<pre>";print_r($request->all());die;
+        echo "<pre>";print_r($request->all());die;
         $loggedUserId=Auth::user()->id;
         $home_id=Auth::user()->home_id;
         $child_id=$request->child_id;

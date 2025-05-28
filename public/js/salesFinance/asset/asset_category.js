@@ -461,3 +461,16 @@ $('#Depreciation_typeTable').DataTable({
         }
     ],
 });
+// $('#assetRegisterTable').DataTable({
+//     dom: 'Blfrtip',
+//     buttons: [
+//         {
+//             extend: 'csv',
+//             text: 'Export',
+//             bom: true,
+//             exportOptions: {
+//                 columns: [ 0,1, 2,3,4,5]
+//             }
+//         }
+//     ],
+// });

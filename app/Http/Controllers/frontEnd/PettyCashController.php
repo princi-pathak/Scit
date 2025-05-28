@@ -88,6 +88,13 @@ class PettyCashController extends Controller
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
         try {
+            $checkVal=$this->check_CardclosingAmount($request->expend_date);
+            if($checkVal == 0 && $request->fund_added == ''){
+                return response()->json(['success'=>false,'message'=>'Please fill fund added first','data'=>array()]);
+            }else if($request->purchase_amount > $checkVal && $checkVal !=0){
+                return response()->json(['success'=>false,'message'=>"Please enter purchases amount that does not exceed the closing balance or the added funds.",'data'=>array()]);
+            }
+            // echo "<pre>";print_r($checkVal);die;
             if ($request->hasFile('receipt')) {
                 $imageName = time().'.'.$request->receipt->extension();      
                 $request->receipt->move(public_path('images/finance_petty_cash'), $imageName);
@@ -136,6 +143,13 @@ class PettyCashController extends Controller
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
         try {
+            $checkVal=$this->check_CashclosingAmount($request->cash_date);
+            if($checkVal == 0 && $request->petty_cashIn == ''){
+                return response()->json(['success'=>false,'message'=>'Please fill petty cash in first','data'=>array()]);
+            }else if($request->cash_out > $checkVal && $checkVal !=0){
+                return response()->json(['success'=>false,'message'=>"Please enter cash out amount that does not exceed the closing balance or the petty cash in.",'data'=>array()]);
+            }
+            // echo "<pre>";print_r($checkVal);die;
             if ($request->hasFile('receipt')) {
                 $imageName = time().'.'.$request->receipt->extension();      
                 $request->receipt->move(public_path('images/finance_cash'), $imageName);
@@ -477,5 +491,81 @@ class PettyCashController extends Controller
         }else{
             return response()->json(['success'=>false,'message'=>'Invalid Id given','data'=>array()]);
         }
+    }
+    public function check_CardclosingAmount($expend_date){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id=Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        // $expend_date=$request->expend_date;
+        $date = Carbon::parse($expend_date);
+        $current_month=now()->month;
+        $month = $date->format('m')+1;
+        if($current_month == $date->format('m')){
+            $month = $date->format('m');
+        }
+        $year = $date->format('Y');
+        $startDate=Carbon::parse($expend_date)->format('m');
+        // return $startDate;
+        $previous_month_data=$this->previous_month_data($home_id,$user_id,$month,$year);
+        $expendCard = ExpendCard::getAllExpendCard($home_id, $user_id)
+            ->whereMonth('expend_date', $startDate)
+            ->whereYear('expend_date', now()->year)
+            ->get();
+            // echo "<pre>";print_r($expendCard);die;
+        $cash=Cash::getAllCash($home_id,$user_id)
+            ->whereMonth('cash_date', $startDate)
+            ->whereYear('cash_date', now()->year)
+            ->sum('petty_cashIn');
+        $enter=0;
+        $balance_bfwd=0;
+        $purchase_amount=0;
+        $fund_added=0;
+        foreach($expendCard as $val){
+            if($enter == 0){
+                $balance_bfwd=$val->balance_bfwd;
+                $enter=1;
+            }
+            $purchase_amount=$purchase_amount+$val->purchase_amount;
+            $fund_added=$fund_added+$val->fund_added;
+
+        }
+        $sum=($balance_bfwd == 0) ? $previous_month_data['previousbalanceOnCard'] : $balance_bfwd+$fund_added;
+        return $calculate=$sum-$cash-$purchase_amount;
+        
+        // echo "<pre>";print_r($previous_month_data);die;
+        // return response()->json(['success'=>true,'message'=>'Closing Amount For Card','data'=>$previous_month_data]);
+    }
+    public function check_CashclosingAmount($cash_date){
+        $home_id=Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        $date = Carbon::parse($cash_date);
+        $current_month=now()->month;
+        $month = $date->format('m')+1;
+        if($current_month == $date->format('m')){
+            $month = $date->format('m');
+        }
+        $year = $date->format('Y');
+        $startDate=Carbon::parse($cash_date)->format('m');
+        // return $startDate;
+        $previous_Cash_month_data=$this->previous_Cash_month_data($home_id,$user_id,$year,$month);
+        $cash = Cash::getAllCash($home_id,$user_id)
+        ->whereMonth('cash_date', $month)
+        ->whereYear('cash_date', $year)
+        ->get();
+        // echo "<pre>";print_r($cash);die;
+        $entercash=0;
+        $balance_bfwd=0;
+        $petty_cashIn=0;
+        $cash_out=0;
+        foreach($cash as $val){
+            if($entercash == 0){
+                $balance_bfwd=$val->balance_bfwd;
+                $entercash=1;
+            }
+            $petty_cashIn=$petty_cashIn+$val->petty_cashIn;
+            $cash_out=$cash_out+$val->cash_out;
+        }
+        $sum=($balance_bfwd == 0) ? $previous_Cash_month_data['total_balanceInCash'] : $balance_bfwd+$petty_cashIn;
+        return $calculate=$sum-$cash_out;
     }
 }

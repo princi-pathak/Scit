@@ -97,9 +97,9 @@ $(document).ready(function() {
     
                 $('#totalBalanceOnCard').val(parseFloat(balanceOnCard.toFixed(2)));
                 $('#totalBalancebfwd').text(`£${totalBalancebfwd ? totalBalancebfwd : previousData.previousbalanceOnCard}`);
-                if(grandTotalBalanceOnCardCheck == 0){
-                    grandTotalBalanceOnCardCheck=balanceOnCard;
-                }
+                // if(grandTotalBalanceOnCardCheck == 0){
+                //     grandTotalBalanceOnCardCheck=balanceOnCard;
+                // }
                 grandTotalBalanceOnCard=balanceOnCard;
                 $('#totalBalanceFund').text(`£${totalBalanceFund}`);
                 $('#sumPurchaseCashIn').text(`£${sumPurchaseCashIn.toFixed(2)}`);
@@ -163,6 +163,7 @@ function save_expend_card(){
             $(this).css('border','');
         }
     });
+    $('.modal-body').scrollTop(0);
     var fund_added=$("#fund_added").val();
     var purchase_amount=$("#purchase_amount").val();
     var id=$("#id").val();
@@ -452,13 +453,45 @@ $(document).on('click','.deleteBtn', function(){
 const today = new Date().toISOString().split('T')[0];
 document.getElementById("expend_date").setAttribute("max", today);
 
-$(document).on('input', '#purchase_amount', function () {
-    var fund_added=$("#fund_added").val();
-    var purchase_amount=$("#purchase_amount").val();
-    var check_totalAmount=(parseFloat(grandTotalBalanceOnCardCheck) || 0) + (parseFloat(fund_added) || 0);
-    if(purchase_amount > check_totalAmount){
-        alert("You can't enter above amount of closing balance or Fund added balance");
-        $("#purchase_amount").val('');
-    }
+// $(document).on('input', '#purchase_amount', function () {
+//     var fund_added=$("#fund_added").val();
+//     var purchase_amount=$("#purchase_amount").val();
+//     var expend_date=$("#expend_date").val();
+//     if(expend_date == ''){
+//         alert("Please choose date first");
+//         $("#purchase_amount").val('');
+//         return false;
+//     }else{
+//         $.ajax({
+//             type: "POST",
+//             url: check_CardclosingAmount,
+//             data: {expend_date:expend_date,_token:token},
+//             success: function(response) {
+//                 console.log(response);
+//                 if (isAuthenticated(response) == false) {
+//                         return false;
+//                     }
+//                 if (response.success === true) {
+//                     var data=response.data;
+//                     var check_totalAmount=(parseFloat(data.previousbalanceOnCard) || 0) + (parseFloat(fund_added) || 0);
+//                     if(data.previousbalanceOnCard == 0){
+//                         alert("Please fill Fund Added first");
+//                         $("#purchase_amount").val('');
+//                         return false;
+//                     }else if(purchase_amount > check_totalAmount){
+//                         alert("You can't enter above amount of closing balance or Fund added balance");
+//                         $("#purchase_amount").val('');
+//                     }
+//                 }
+//                 if(response.success === false){
+//                     alert('Something went wrong');
+//                 }
+//             },
+//             error: function(xhr, status, error) {
+//                 var errorMessage = xhr.status + ': ' + xhr.statusText;
+//                 alert('Error - ' + errorMessage + "\nMessage: " + error);
+//             }
+//         });
+//     }
 
-});
+// });

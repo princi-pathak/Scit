@@ -29,6 +29,7 @@ class AssetController extends Controller
             $query->where('asset_type',$cat_id);
         }
         $data['list']=$query->orderBy('id','desc')->get();
+        // echo "<pre>";print_r($data['list']);die;
         $data['AssetCategoryList']=AssetCategory::getAllAssetCategory()->where('status',1)->get();
         $data['DepreciationTypeList']=DepreciationType::getDepreciationType()->where('status',1)->get();
         $data['selected_cat_id']=$selected_cat_id;
