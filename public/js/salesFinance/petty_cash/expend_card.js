@@ -8,8 +8,10 @@ $(document).ready(function() {
         success: function(response) {
             console.log(response);
             // return false;
-            if (isAuthenticated(response) == false) {
-                return false;
+            if (typeof isAuthenticated === "function") {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
             }
             if (response.success === true) {
                 const data = response.data;
@@ -49,6 +51,10 @@ $(document).ready(function() {
                 }
     
                 expendCard.forEach((val) => {
+                    var loginuserid='00';
+                    if(response.is_admin == 1){
+                        loginuserid=val.loginUserId;
+                    }
                     let purchaseAmount = parseFloat(val.purchase_amount ?? 0);
                     let fundAdded = parseFloat(val.fund_added ?? 0);
                     let balanceBfwd = parseFloat(val.balance_bfwd ?? 0);
@@ -84,7 +90,7 @@ $(document).ready(function() {
                             <td>${val.dext == 1 ? 'Yes' : 'No'}</td>
                             <td>${val.invoice_la == 1 ? 'Yes' : 'No'}</td>
                             <td>${val.initial ?? ''}</td>
-                            <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#expend_card" data-action="edit" data-id="${val.id}" data-expend_date="${val.expend_date}" data-balance_bfwd="${val.balance_bfwd}" data-fund_added="${val.fund_added}" data-purchase_amount="${val.purchase_amount}" data-card_details="${val.card_details}" data-receipt="${val.receipt}" data-dext="${val.dext}" data-invoice_la="${val.invoice_la}" data-initial="${val.initial}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="${val.id}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
+                            <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#expend_card" data-action="edit" data-id="${val.id}" data-loginuserid="${loginuserid}" data-expend_date="${val.expend_date}" data-balance_bfwd="${val.balance_bfwd}" data-fund_added="${val.fund_added}" data-purchase_amount="${val.purchase_amount}" data-card_details="${val.card_details}" data-receipt="${val.receipt}" data-dext="${val.dext}" data-invoice_la="${val.invoice_la}" data-initial="${val.initial}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="${val.id}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
                         </tr>
                     `);
                 });
@@ -188,8 +194,10 @@ function save_expend_card(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
-                    return false;
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                 }
                 if (response.vali_error) {
                     alert(response.vali_error);
@@ -296,8 +304,10 @@ function card_filter_function(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
-                    return false;
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                 }
                 if (response.success === true) {
                     var table = $('#expend_cash_table').DataTable();
@@ -358,6 +368,7 @@ $(document).on('input', '.no_input', function () {
 });
 $(document).on('click','.openModalBtn', function(){
     var action=$(this).data('action');
+    var loginuserid=$(this).data('loginuserid');
     var id=$(this).data('id');
     var expend_date=$(this).data('expend_date');
     var balance_bfwd=$(this).data('balance_bfwd');
@@ -393,6 +404,9 @@ $(document).on('click','.openModalBtn', function(){
         }
         $("#initial").val('');
     }else{
+        if(loginuserid != '00'){
+            $("#loginuserid").val(loginuserid);
+        }
         $("#expend_cardLabel").text("Edit Expend Card");
         $("#id").val(id);
         $("#expend_date").val(expend_date);
@@ -433,9 +447,11 @@ $(document).on('click','.deleteBtn', function(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
                         return false;
                     }
+                }
                 if (response.success === true) {
                     location.reload();
                 }

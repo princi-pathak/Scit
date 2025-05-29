@@ -100,7 +100,7 @@
                                             <th>Uploaded to DEXT</th>
                                             <th>Invoice LA</th>
                                             <th>Initials</th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="expend_result">

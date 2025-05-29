@@ -39,6 +39,7 @@ use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\PurchaseBackendController;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\SalesBackendController;
 use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
+use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
 
 
 
@@ -2197,6 +2198,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/council-tax-edit/{id}', 'councilTaxEdit')->name('backend.council_tax.edit');
 		});
 	}));
+	// Backend Petty Cash
+	Route::controller(PettyCashBackendController::class)->group(function (){
+		Route::prefix('sales-finance')->group(function(){
+			Route::get('expend-card','expend_card');
+			Route::get('getAllExpendCard','getAllExpendCardData');
+			Route::post('expend-card/saveExpend','saveExpend');
+			Route::post('expend-card/editExpend','saveExpend');
+			Route::post('expend-card/expend_delete','expend_delete');
+			Route::get('cash','cash');
+		});
+	});
 });
 
 //super admin path

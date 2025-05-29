@@ -17,7 +17,7 @@
                         <div class="col-lg-12">
                             <div class="jobsection justify-content-end">
                                     <a href="javascript:void(0)" onclick="opendepreciation_typesModal()" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a>
-                                    <a href="javascript:void(0)" class="btn btn-warning">Export</a>
+                                    <!-- <a href="javascript:void(0)" class="btn btn-warning">Export</a> -->
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
                             </div>
                             <div class="maimtable productDetailTable mb-4 table-responsive">

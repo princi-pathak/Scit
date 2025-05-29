@@ -157,30 +157,30 @@
                         
                         <tr>
                             <td>1.</td><td></td><td>Bfwd</td>
-                            <td>{{ number_format(array_sum($costBfwd)) }}</td>
+                            <td>{{ number_format(array_sum($costBfwd),2 ,'.', '') }}</td>
                             @foreach ($AssetCategoryList as $cat)
-                                <td>{{ number_format($costBfwd[$cat->id]) }}</td>
+                                <td>{{ number_format($costBfwd[$cat->id],2 ,'.', '') }}</td>
                             @endforeach
                         </tr>
                         <tr>
                             <td>2.</td><td></td><td>Additions</td>
-                            <td>{{ number_format(array_sum($costAdd)) }}</td>
+                            <td>{{ number_format(array_sum($costAdd),2 ,'.', '') }}</td>
                             @foreach ($AssetCategoryList as $cat)
-                                <td>{{ number_format($costAdd[$cat->id]) }}</td>
+                                <td>{{ number_format($costAdd[$cat->id],2 ,'.', '') }}</td>
                             @endforeach
                         </tr>
                         <tr>
                             <td>3.</td><td></td><td>Disposals</td>
-                            <td>-{{ number_format(array_sum($costDisposal)) }}</td>
+                            <td>-{{ number_format(array_sum($costDisposal), 2, '.', '') }}</td>
                             @foreach ($AssetCategoryList as $cat)
-                                <td>-{{ number_format($costDisposal[$cat->id]) }}</td>
+                                <td>-{{ number_format($costDisposal[$cat->id], 2, '.', '') }}</td>
                             @endforeach
                         </tr>
                         <tr>
                             <td>4.</td><td></td><td>Cfwd</td>
-                            <th>{{ number_format(array_sum($costCfwd)) }}</th>
+                            <th>{{ number_format(array_sum($costCfwd), 2, '.', '') }}</th>
                             @foreach ($AssetCategoryList as $cat)
-                                <th>{{ number_format($costCfwd[$cat->id]) }}</th>
+                                <th>{{ number_format($costCfwd[$cat->id], 2, '.', '') }}</th>
                             @endforeach
                         </tr>
 
@@ -207,39 +207,39 @@
                        
                         <tr>
                             <td>1.</td><td></td><td>Bfwd</td>
-                            <td>{{ number_format(array_sum($depBfwd)) }}</td>
+                            <td>{{ number_format(array_sum($depBfwd), 2, '.', '') }}</td>
                             @foreach ($AssetCategoryList as $cat)
-                                <td>{{ number_format($depBfwd[$cat->id]) }}</td>
+                                <td>{{ number_format($depBfwd[$cat->id], 2, '.', '') }}</td>
                             @endforeach
                         </tr>
                         <tr>
                             <td>2.</td><td></td><td>Charge for year</td>
-                            <td>{{ number_format(array_sum($charge)) }}</td>
+                            <td>{{ number_format(array_sum($charge), 2, '.', '') }}</td>
                             @foreach ($AssetCategoryList as $cat)
-                                <td>{{ number_format($charge[$cat->id]) }}</td>
+                                <td>{{ number_format($charge[$cat->id], 2, '.', '') }}</td>
                             @endforeach
                         </tr>
                         <tr>
                             <td>3.</td><td></td><td>Eliminated on disposals</td>
-                            <td>-{{ number_format(array_sum($elimDisp)) }}</td>
+                            <td>-{{ number_format(array_sum($elimDisp), 2, '.', '') }}</td>
                             @foreach ($AssetCategoryList as $cat)
-                                <td>-{{ number_format($elimDisp[$cat->id]) }}</td>
+                                <td>-{{ number_format($elimDisp[$cat->id], 2, '.', '') }}</td>
                             @endforeach
                         </tr>
                         <tr>
                             <td>4.</td><td></td><td>Cfwd</td>
-                            <th>{{ number_format(array_sum($depCfwd)) }}</th>
+                            <th>{{ number_format(array_sum($depCfwd), 2, '.', '') }}</th>
                             @foreach ($AssetCategoryList as $cat)
-                                <th>{{ number_format($depCfwd[$cat->id]) }}</th>
+                                <th>{{ number_format($depCfwd[$cat->id], 2, '.', '') }}</th>
                             @endforeach
                         </tr>
                         <tr>
                             <td>5.</td>
                             <td></td>
                             <th>NBV Cfwd</th>
-                            <th>{{ number_format(array_sum($costCfwd) + array_sum($depCfwd)) }}</th>
+                            <th>{{ number_format(array_sum($costCfwd) + array_sum($depCfwd), 2, '.', '') }}</th>
                             @foreach ($AssetCategoryList as $cat)
-                                <th>{{ number_format($costCfwd[$cat->id] + $depCfwd[$cat->id]) }}</th>
+                                <th>{{ number_format($costCfwd[$cat->id] + $depCfwd[$cat->id], 2, '.', '') }}</th>
                             @endforeach
                         </tr>
 
@@ -247,9 +247,9 @@
                             <td>6.</td>
                             <td></td>
                             <th>NBV Bfwd</th>
-                            <th>{{ number_format(array_sum($costBfwd) + array_sum($depBfwd)) }}</th>
+                            <th>{{ number_format(array_sum($costBfwd) + array_sum($depBfwd), 2, '.', '') }}</th>
                             @foreach ($AssetCategoryList as $cat)
-                                <th>{{ number_format($costBfwd[$cat->id] + $depBfwd[$cat->id]) }}</th>
+                                <th>{{ number_format($costBfwd[$cat->id] + $depBfwd[$cat->id], 2, '.', '') }}</th>
                             @endforeach
                         </tr>
                     </tbody>
