@@ -155,11 +155,9 @@
                                 <!-- <div class="form-group col-md-12">
                                     <label> Balance b/fwd <span class="radStar">*</span></label>
                                     <div> -->
-                                        <?php if ($previous_month_data['previousbalanceOnCard'] != 0) { ?>
-                                            <input type="hidden" class="form-control editInput numberInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_month_data['previousbalanceOnCard']}}"  onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
-                                        <?php } else { ?>
-                                            <input type="hidden" class="form-control editInput numberInput" id="balance_bfwd" name="balance_bfwd" <?php if (isset($expendCardLastData) && $expendCardLastData != '') { ?> value="{{$expendCardLastData->balance_bfwd}}" <?php } ?>  onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
-                                        <?php } ?>
+                                        
+                                    <!-- <input type="hidden" class="form-control editInput numberInput" id="balance_bfwd" name="balance_bfwd" <?php if (isset($expendCardLastData) && $expendCardLastData != '') { ?> value="{{$expendCardLastData->balance_bfwd}}" <?php } else{?>value="{{$previous_month_data['previousbalanceOnCard']}}"<?php }?>  onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10"> -->
+                                        
                                     <!-- </div>
                                 </div> -->
                                 <div class="form-group col-md-12">

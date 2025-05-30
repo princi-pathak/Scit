@@ -62,7 +62,7 @@
 
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
-                            <h4>Closing Balance on Card = <span id="balanceOnCard">£0.00</span></h4>
+                            <!-- <h4>Closing Balance on Card = <span id="balanceOnCard">£0.00</span></h4> -->
                             <div class="clearfix clearfix_space">
                                 <!-- <div class="col-lg-3 col-sm-3">
                                     <input type="hidden" id="tax_id">
@@ -77,7 +77,7 @@
                                     
                                 </div>
                                 <div class="btn-group">
-                                    <a href="{{ url('admin/sales-finance/cash') }}" class="btn btn-primary "> Cash</a>
+                                    <a href="{{ url('admin/sales-finance/petty-cash') }}" class="btn btn-primary "> Cash</a>
                                 </div>  
                                 <!-- <div class="btn-group">
                                     <button class="btn btn-default"> Export </button>
@@ -167,7 +167,7 @@
                                 
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="inputName" class="col-sm-4 control-label">User <span class="radStar">*</span></label>
                                 <div class="col-sm-8">
                                     <select name="loginUserId" id="loginuserid" class="form-control ">
@@ -177,7 +177,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group row">
                                 <label for="inputName" class="col-sm-2 control-label">Receipt</label>
                                 <div class="col-sm-10">

@@ -73,8 +73,10 @@ function saveCash(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
-                    return false;
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                 }
                 if (response.vali_error) {
                     alert(response.vali_error);
@@ -137,9 +139,11 @@ $("#ToDate").change(function() {
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
                         return false;
                     }
+                }
                 if (response.success === true) {
                     var table = $('#petty_cash_table').DataTable();
                     table.destroy();
@@ -183,9 +187,11 @@ function cash_filter_function(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
                         return false;
                     }
+                }
                 if (response.success === true) {
                     var table = $('#petty_cash_table').DataTable();
                     table.destroy();
@@ -320,9 +326,11 @@ $(document).on('click','.deleteBtn', function(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
                         return false;
                     }
+                }
                 if (response.success === true) {
                     location.reload();
                 }
