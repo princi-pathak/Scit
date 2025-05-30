@@ -24,7 +24,7 @@ class CouncilTaxService
 
     public function getCouncilTax()
     {
-       return CouncilTax::whereNull('deleted_at')->get();
+       return CouncilTax::whereNull('deleted_at')->orderBy('created_at', 'desc')->get();
     }
 
     public function deleteCouncilTax($id)

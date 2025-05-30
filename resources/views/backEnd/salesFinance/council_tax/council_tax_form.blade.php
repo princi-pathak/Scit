@@ -1,44 +1,16 @@
 @extends('backEnd.layouts.master')
 @section('title',' Add New')
 @section('content')
+
 <section id="main-content" class="">
     <section class="wrapper">
         <!-- page start-->
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel">
-                    <!-- @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                    @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                    @endif
-                    @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                    @endif
-                    @if (session('warning'))
-                    <div class="alert alert-warning">
-                        {{ session('warning') }}
-                    </div>
-                    @endif
-                    @if (session('info'))
-                    <div class="alert alert-info">
-                        {{ session('info') }}
-                    </div>
-                    @endif -->
                     <header class="panel-heading">Add Council Tax</header>
                     <div class="panel-body">
-                        <div class="position-center">
+                        <div class="position-center add-council-tax">
                             <form class="form-horizontal" method="POST" action="{{ url('/admin/finance/save-council-tax') }}" role="form">
                                 @csrf
                                 <div class="form-group">
@@ -133,7 +105,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 col-sm-3 control-label">Account number<span class="radStar">*</span></label>
-                                    <div class="col-lg-9">      
+                                    <div class="col-lg-9">
                                         <input type="text" class="form-control" id="account_number" name="account_number" placeholder="Account number" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($council_tax->account_number) ? $council_tax->account_number : '' }}">
                                         @error('account_number')
                                         <div class="radStar">{{ $message }}</div>
@@ -141,14 +113,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-3 col-sm-3 control-label">Start Period</label>
+                                    <label for="" class="col-lg-3 col-sm-3 control-label">Bill Period</label>
                                     <div class="col-lg-4">
                                         <input type="text" class="form-control" id="bill_period_start_date" name="bill_period_start_date" placeholder="Start Period" value="{{ isset($council_tax->bill_period_start_date) ? date('d-m-Y', strtotime($council_tax->bill_period_start_date)) : '' }}" readonly>
                                         @error('bill_period_start_date')
                                         <div class="radStar">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                  
+
                                     <div class="col-lg-5">
                                         <input type="text" class="form-control" id="bill_period_end_date" name="bill_period_end_date" placeholder="End Period" value="{{ isset($council_tax->bill_period_end_date) ? date('d-m-Y', strtotime($council_tax->bill_period_end_date)) : '' }}" readonly>
                                         @error('bill_period_end_date')
@@ -164,7 +136,7 @@
                                         <div class="radStar">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                
+
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-3 col-sm-3 control-label">Additional Notes</label>
@@ -172,7 +144,7 @@
                                         <input type="text" class="form-control" id="" placeholder="Additional Notes" name="additional" value="{{ isset($council_tax->additional) ? $council_tax->additional : '' }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group council-tax-btn">
                                     <div class="col-lg-offset-3 col-lg-9">
                                         <button type="submit" class="btn btn-primary">Save</button>
                                         <button type="submit" class="btn btn-default">Cencel</button>
