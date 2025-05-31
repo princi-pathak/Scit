@@ -85,18 +85,16 @@
                                                 <label> Annual Leave <span class="radStar">*</span></label>
                                                 <input type="text" class="form-control editInput" id="" name="name">
                                             </div>
+                                            
                                             <div class="col-md-6 form-group">
                                                 <label> On Call <span class="radStar">*</span></label>
                                                 <input type="text" class="form-control editInput" id="" name="name">
                                             </div>
 
-
                                             <div class="col-md-12 form-group">
                                                 <label> Comments <span class="radStar">*</span></label>
                                                 <textarea class="form-control textareaInput" placeholder="Type your comments..." rows="3" id="" name="comments"></textarea>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -115,11 +113,9 @@
                                         <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                                         <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                             <div class="input-group">
-
                                                 <!-- <input type="hidden" name="su_bmp_id[]" value="548" disabled="disabled" class="edit_bmp_id_548"> -->
                                                 <a href="#"><span><input type="text" class="form-control" style="cursor:pointer" name="" readonly="" value="Record Form (26-03-2025 )" maxlength="255"></span></a>
                                                 <!-- <a href="#" class="dyn-form-view-data" id="548"><span><input type="text" class="form-control" style="cursor:pointer" name="" readonly="" value="Record Form (26-03-2025 )" maxlength="255"></span></a> -->
-
                                                 <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
                                                     <i class="fa fa-cog"></i>
                                                     <div class="pop-notifbox">
@@ -233,38 +229,38 @@
 </div>
 <!--Leave Tracker model End -->
 
-    <!-- modal edit and view  -->
-    <div class="modal fade" id="viewEditStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close rmp-modal-close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Edit </h4>
-                </div>
-                <div class="modal-body tabStaff">
-                    <form action="" id="" class="customerForm">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                <div class="row formDtail">
-                                    <div class="col-md-6 form-group">
-                                        <label> Name </label>
-                                        <input type="text" class="form-control editInput" id="" name="name">
-                                    </div>
-
-
-
-
+<!-- modal edit and view  -->
+<div class="modal fade" id="viewEditStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close rmp-modal-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit </h4>
+            </div>
+            <div class="modal-body tabStaff">
+                <form action="" id="" class="customerForm">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="row formDtail">
+                                <div class="col-md-6 form-group">
+                                    <label> Name </label>
+                                    <input type="text" class="form-control editInput" id="" name="name">
                                 </div>
+
+
+
+
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
-
     </div>
 
-    <!-- modal edit and view -->
+</div>
+
+<!-- modal edit and view -->
 <script>
     $('#Leave_startDate').datepicker({
         format: 'dd-mm-yyyy'

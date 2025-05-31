@@ -10,6 +10,10 @@
         pointer-events: none;
         opacity: 0.5;
     }
+    .modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
 </style>
 <section class="wrapper">
     <div class="container-fluid">
@@ -95,7 +99,7 @@
                                             <th>Uploaded to DEXT</th>
                                             <th>Invoice LA</th>
                                             <th>Initials</th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="cash_result">
@@ -105,7 +109,6 @@
                                         $count = 0;
                                         $balance_bfwd = 0;
                                         $petty_cashIn = 0;
-                                        $date = null;
                                         $index = 0;
                                         if (!empty($previous_Cash_month_data) && $previous_Cash_month_data['total_balanceInCash'] != 0) {
                                             $count = 1; ?>
@@ -130,20 +133,16 @@
                                             $petty_cashIn = $petty_cashIn + $val->petty_cashIn;
                                             if ($count == 0) {
                                                 $count = 1;
-                                                $total_balance = $val->balance_bfwd;
                                                 $balance_bfwd = $val->balance_bfwd;
                                             }
-                                            $total_balance = $total_balance + $val->petty_cashIn;
-                                            $db_date = date('m', strtotime($val->cash_date));
                                             ?>
                                             <tr>
                                                 <td>{{++$index}}</td>
                                                 <td>{{date('Y-m-d',strtotime($val->cash_date))}}</td>
-                                                <?php if ($date != $db_date || $date == null) {
-                                                        $date = $db_date; ?>
-                                                        <td>£{{$val->balance_bfwd}}</td>
-                                                    <?php } else { ?>
+                                                <?php if ($count == 1) { ?>
                                                         <td></td>
+                                                    <?php } else { ?>
+                                                        <td>£{{$val->balance_bfwd}}</td>
                                                 <?php }?>
                                                 <td>£{{$val->petty_cashIn ?? 0}}</td>
                                                 <td>£{{$val->cash_out ?? 0}}</td>
@@ -167,14 +166,10 @@
                                                 <td><a href="javascript:void(0)" class="openModalBtn" data-toggle="modal" data-target="#petty_cash" data-action="edit" data-id="{{ $val->id }}" data-cash_date="{{ $val->cash_date }}" data-balance_bfwd="{{ $val->balance_bfwd }}" data-petty_cashin="{{ $val->petty_cashIn }}" data-cash_out="{{ $val->cash_out }}" data-card_details="{{ $val->card_details }}" data-receipt="{{ $val->receipt }}" data-dext="{{ $val->dext }}" data-invoice_la="{{ $val->invoice_la }}" data-initial="{{ $val->initial }}" id=""><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="javascript:void(0)" class="deleteBtn" data-id="{{ $val->id }}"><i class="fa fa-trash radStar" aria-hidden="true"></i></a></td>
                                             </tr>
                                         <?php }
-                                       $total_balanceInCash = $total_balance - $cash_out; ?>
+                                        $sumCash = $petty_cashIn + (($balance_bfwd == 0) ? $previous_Cash_month_data['total_balanceInCash'] : $balance_bfwd);
+                                        $total_balanceInCash = $sumCash - $cash_out; ?>
                                     </tbody>
-                                    <?php if($total_balanceInCash == 0){?>
-                                        <input type="hidden" id="total_balanceInCash" value="<?php echo $previous_Cash_month_data['total_balanceInCash'];?>">
-                                    <?php }else{?>
                                         <input type="hidden" id="total_balanceInCash" value="<?php echo $total_balanceInCash;?>">
-                                        
-                                    <?php }?>
                                     <tfoot>
                                         <tr class="table-light">
                                             <th colspan="2">Total</th>
@@ -345,7 +340,11 @@
     var imgSrc = "{{url('public/images/finance_cash/')}}";
     var deleteUrl="{{url('petty-cash/cash_delete')}}";
     var existImage="{{url('public/images/noimage.jpg')}}";
-    var total_balanceInCash = $("#total_balanceInCash").val();
+    // var total_balanceInCash = $("#total_balanceInCash").val();
+    // var total_balanceInCashCheck=0;
+    // if(total_balanceInCashCheck == 0){
+    //     total_balanceInCashCheck=total_balanceInCash;
+    // }
 </script>
 <script>
     $(document).ready(function() {

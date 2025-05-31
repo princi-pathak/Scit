@@ -19,6 +19,14 @@
     text-align: center;
     font-weight: 600 !important;
   }
+  .bg_color{
+    background: #b0b5b9;
+  }
+  .fixedAssetSummary table.table thead tr th, .fixedAssetSummary table.table tbody tr td, .fixedAssetSummary table.table tbody tr th {
+        font-size: 12px;
+        line-height: 22px;
+        vertical-align: middle;
+    }
   
 </style>
 
@@ -33,13 +41,20 @@
           </header>
           <div class="panel-body">
             <div class="col-lg-12">
-              <div class="jobsection justify-content-end">
+              <div class="col-lg-6">
+                <?php foreach ($AssetCategoryList as $cat) { ?>
+                  <a href="{{url('sales-finance/assets/asset-register?cat=')}}{{base64_encode($cat->id)}}" class="btn @if(isset($selected_cat_id) && $selected_cat_id ==$cat->id)bg_color @else btn-warning @endif">{{$cat->name}}</a>
+                    <?php } ?>
+              </div>
+              <div class="col-lg-6 jobsection justify-content-end">
                 <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="btn btn-warning"><i class="fa fa-plus"></i> Add</a> -->
                 <a href="javascript:void(0)" class="btn btn-warning" data-toggle="modal" data-target="#Fixed_Asset_Register"><i class="fa fa-plus"></i> Add</a>
-                <a href="javascript:void(0)" class="btn btn-warning">Export</a>
+                <!-- <a href="javascript:void(0)" class="btn btn-warning">Export</a> -->
+                @if($selected_cat_id != 0)
                 <div class="searchFilter">
                   <a href="#!" onclick="hideShowDiv()" class="btn btn-primary">Search</a>
                 </div>
+                @endif
               </div>
               <div>
                 <div class="searchJobForm" id="divTohide" style="display:none">
@@ -68,7 +83,7 @@
                                   <label>Date To:</label>
                                   <!-- <input type="date" class="form-control editInput" id="edd_endDate" name="end_date"> -->
                                   <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                    <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control">
+                                    <input name="end_date" id="edd_endDate" type="text" value="" autocomplete="off" class="form-control" disabled>
 
                                     <span class="input-group-btn datetime-picker2 btn_height">
                                       <button class="btn btn-primary" type="button" id="openCalendarBtn1">
@@ -99,6 +114,149 @@
                   </div>
                 </div> -->
               </div>
+              @if($selected_cat_id == 0)
+              <div class="fixedAssetSummary table-responsive">
+                  <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                          <th scope="col">S. N.</th>
+                          <th scope="col"></th>
+                          <th scope="col"></th>
+                          <th scope="col"></th>
+                          <?php foreach ($AssetCategoryList as $cat) { ?>
+                            <th scope="col">{{$cat->name}} </th>
+                          <?php }?>
+                      </tr>
+                
+                  </thead>
+                  <tbody>
+                       
+                        <tr>
+                            <td colspan="3"></td>
+                            <th scope="col">Total</th>
+                            <td colspan="{{ count($AssetCategoryList) }}"></td>
+                        </tr>
+
+                       
+                        <tr>
+                            <td></td>
+                            <th scope="col">Cost</th>
+                            <td colspan="{{ count($AssetCategoryList) + 2 }}"></td>
+                        </tr>
+                        @php
+                            $costBfwd = $costAdd = $costDisposal = $costCfwd = [];
+                            foreach ($AssetCategoryList as $cat) {
+                                $items = $list->where('asset_type', $cat->id);
+                                $costBfwd[$cat->id] = $items->sum('cost_bfwd');
+                                $costAdd[$cat->id] = $items->sum('cost_addition');
+                                $costDisposal[$cat->id] = $items->sum('cost_disposal');
+                                $costCfwd[$cat->id] = $costBfwd[$cat->id] + $costAdd[$cat->id] - $costDisposal[$cat->id];
+                            }
+                        @endphp
+
+                        
+                        <tr>
+                            <td>1.</td><td></td><td>Bfwd</td>
+                            <td>{{ number_format(array_sum($costBfwd),2 ,'.', '') }}</td>
+                            @foreach ($AssetCategoryList as $cat)
+                                <td>{{ number_format($costBfwd[$cat->id],2 ,'.', '') }}</td>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <td>2.</td><td></td><td>Additions</td>
+                            <td>{{ number_format(array_sum($costAdd),2 ,'.', '') }}</td>
+                            @foreach ($AssetCategoryList as $cat)
+                                <td>{{ number_format($costAdd[$cat->id],2 ,'.', '') }}</td>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <td>3.</td><td></td><td>Disposals</td>
+                            <td>-{{ number_format(array_sum($costDisposal), 2, '.', '') }}</td>
+                            @foreach ($AssetCategoryList as $cat)
+                                <td>-{{ number_format($costDisposal[$cat->id], 2, '.', '') }}</td>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <td>4.</td><td></td><td>Cfwd</td>
+                            <th>{{ number_format(array_sum($costCfwd), 2, '.', '') }}</th>
+                            @foreach ($AssetCategoryList as $cat)
+                                <th>{{ number_format($costCfwd[$cat->id], 2, '.', '') }}</th>
+                            @endforeach
+                        </tr>
+
+                       
+                        <tr>
+                            <td></td>
+                            <th scope="col">Depreciation</th>
+                            <td colspan="{{ count($AssetCategoryList) + 2 }}"></td>
+                        </tr>
+                        @php
+                            $depBfwd = $charge = $elimDisp = $depCfwd = $nbvCfwd = $nbvBfwd = [];
+                            foreach ($AssetCategoryList as $cat) {
+                                $items = $list->where('asset_type', $cat->id);
+                                $depBfwd[$cat->id] = $items->sum('depreciation_bfwd');
+                                $charge[$cat->id] = $items->sum('charge');
+                                $elimDisp[$cat->id] = $items->sum('depreciation');
+                                $depCfwd[$cat->id] = $depBfwd[$cat->id] + $charge[$cat->id] - $elimDisp[$cat->id];
+
+                                $nbvCfwd[$cat->id] = $costCfwd[$cat->id] - $depCfwd[$cat->id];
+                                $nbvBfwd[$cat->id] = $costBfwd[$cat->id] - $depBfwd[$cat->id];
+                            }
+                        @endphp
+
+                       
+                        <tr>
+                            <td>1.</td><td></td><td>Bfwd</td>
+                            <td>{{ number_format(array_sum($depBfwd), 2, '.', '') }}</td>
+                            @foreach ($AssetCategoryList as $cat)
+                                <td>{{ number_format($depBfwd[$cat->id], 2, '.', '') }}</td>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <td>2.</td><td></td><td>Charge for year</td>
+                            <td>{{ number_format(array_sum($charge), 2, '.', '') }}</td>
+                            @foreach ($AssetCategoryList as $cat)
+                                <td>{{ number_format($charge[$cat->id], 2, '.', '') }}</td>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <td>3.</td><td></td><td>Eliminated on disposals</td>
+                            <td>-{{ number_format(array_sum($elimDisp), 2, '.', '') }}</td>
+                            @foreach ($AssetCategoryList as $cat)
+                                <td>-{{ number_format($elimDisp[$cat->id], 2, '.', '') }}</td>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <td>4.</td><td></td><td>Cfwd</td>
+                            <th>{{ number_format(array_sum($depCfwd), 2, '.', '') }}</th>
+                            @foreach ($AssetCategoryList as $cat)
+                                <th>{{ number_format($depCfwd[$cat->id], 2, '.', '') }}</th>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <td>5.</td>
+                            <td></td>
+                            <th>NBV Cfwd</th>
+                            <th>{{ number_format(array_sum($costCfwd) + array_sum($depCfwd), 2, '.', '') }}</th>
+                            @foreach ($AssetCategoryList as $cat)
+                                <th>{{ number_format($costCfwd[$cat->id] + $depCfwd[$cat->id], 2, '.', '') }}</th>
+                            @endforeach
+                        </tr>
+
+                        <tr>
+                            <td>6.</td>
+                            <td></td>
+                            <th>NBV Bfwd</th>
+                            <th>{{ number_format(array_sum($costBfwd) + array_sum($depBfwd), 2, '.', '') }}</th>
+                            @foreach ($AssetCategoryList as $cat)
+                                <th>{{ number_format($costBfwd[$cat->id] + $depBfwd[$cat->id], 2, '.', '') }}</th>
+                            @endforeach
+                        </tr>
+                    </tbody>
+
+                  </table>
+              </div>
+              @else
               <div class="maimtable productDetailTable mb-4  table-responsive">
                 <table class="table border-top border-bottom tablechange" id="containerB">
                   <thead>
@@ -206,6 +364,7 @@
                   </tfoot>
                 </table>
               </div>
+              @endif
             </div>
           </div>
           <!-- Button trigger modal -->
@@ -233,7 +392,7 @@
         @csrf
         <div class="modal-body">
           <div class="">
-            <label class="form_heading border-0 p-0">Home</label>
+            <label class="form_heading border-0 p-0">Asset Details</label>
             <div class="row">
               <div class="col-md-6 ">
                 <div class="form-group">
@@ -338,7 +497,7 @@
               <div class="col-md-6 ">
                 <div class="form-group">
                   <label> B/fwd</label>
-                  <input type="text" class="form-control editInput" id="nbv_bfwd" name="nbv_cfwd" placeholder="00.00" readonly value="">
+                  <input type="text" class="form-control editInput" id="nbv_bfwd" name="nbv_bfwd" placeholder="00.00" readonly value="">
                 </div>
               </div>
               <div class="col-md-6 ">

@@ -39,6 +39,7 @@ use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\PurchaseBackendController;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\SalesBackendController;
 use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
+use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
 
 
 
@@ -610,6 +611,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('depreciation-type-edit', 'depreciation_type_save');
 			Route::get('asset-register-edit', 'asset_regiser_add');
 			Route::post('asset-register-delete', 'asset_register_delete');
+			Route::post('asset-category-delete', 'asset_category_delete');
 		});
 	});
 
@@ -2196,6 +2198,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/council-tax-edit/{id}', 'councilTaxEdit')->name('backend.council_tax.edit');
 		});
 	}));
+	// Backend Petty Cash
+	Route::controller(PettyCashBackendController::class)->group(function (){
+		Route::prefix('sales-finance')->group(function(){
+			Route::get('expend-card','expend_card');
+			Route::get('getAllExpendCard','getAllExpendCardData');
+			Route::post('expend-card/saveExpend','saveExpend');
+			Route::post('expend-card/editExpend','saveExpend');
+			Route::post('expend-card/expend_delete','expend_delete');
+			Route::get('petty-cash','cash');
+			Route::post('petty-cash/saveCash','saveCash');
+			Route::post('petty-cash/editCash','saveCash');
+			Route::post('petty-cash/cash_delete','cash_delete');
+		});
+	});
 });
 
 //super admin path
