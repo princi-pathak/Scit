@@ -48,6 +48,7 @@ function saveCash(){
             $(this).css('border','');
         }
     });
+    $('.modal-body').scrollTop(0);
     var id=$("#id").val();
     var petty_cashInModal=$("#petty_cashInModal").val();
     var cash_outModal=$("#cash_outModal").val();
@@ -72,8 +73,10 @@ function saveCash(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
-                    return false;
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                 }
                 if (response.vali_error) {
                     alert(response.vali_error);
@@ -136,9 +139,11 @@ $("#ToDate").change(function() {
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
                         return false;
                     }
+                }
                 if (response.success === true) {
                     var table = $('#petty_cash_table').DataTable();
                     table.destroy();
@@ -182,9 +187,11 @@ function cash_filter_function(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
                         return false;
                     }
+                }
                 if (response.success === true) {
                     var table = $('#petty_cash_table').DataTable();
                     table.destroy();
@@ -319,9 +326,11 @@ $(document).on('click','.deleteBtn', function(){
             success: function(response) {
                 console.log(response);
                 // return false;
-                if (isAuthenticated(response) == false) {
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
                         return false;
                     }
+                }
                 if (response.success === true) {
                     location.reload();
                 }
@@ -338,13 +347,13 @@ $(document).on('click','.deleteBtn', function(){
 });
 const today = new Date().toISOString().split('T')[0];
 document.getElementById("cash_date").setAttribute("max", today);
-$(document).on('input', '#cash_outModal', function () {
-    var petty_cashInModal=$("#petty_cashInModal").val();
-    var cash_outModal=$("#cash_outModal").val();
-    var check_totalAmount=(parseFloat(total_balanceInCash) || 0) + (parseFloat(petty_cashInModal) || 0);
-    if(cash_outModal > check_totalAmount){
-        alert("You can't enter above amount of closing balance or cashin balance");
-        $("#cash_outModal").val('');
-    }
+// $(document).on('input', '#cash_outModal', function () {
+//     var petty_cashInModal=$("#petty_cashInModal").val();
+//     var cash_outModal=$("#cash_outModal").val();
+//     var check_totalAmount=(parseFloat(total_balanceInCashCheck) || 0) + (parseFloat(petty_cashInModal) || 0);
+//     if(cash_outModal > check_totalAmount){
+//         alert("You can't enter above amount of closing balance or cashin balance");
+//         $("#cash_outModal").val('');
+//     }
 
-});
+// });

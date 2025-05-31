@@ -8,6 +8,10 @@
         pointer-events: none;
         opacity: 0.5;
     }
+    .modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
 </style>
 
 <section class="wrapper">
@@ -96,7 +100,7 @@
                                             <th>Uploaded to DEXT</th>
                                             <th>Invoice LA</th>
                                             <th>Initials</th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="expend_result">
@@ -130,7 +134,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 <h4 class="modal-title" id="expend_cardLabel">Add Expend Card</h4>
             </div>
-            <div calss="row">
+            <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12 mt-4">
                     <div class="mt-1 mb-0 text-center" style="display:none" id="message_save"></div>
                 </div>
@@ -151,11 +155,9 @@
                                 <!-- <div class="form-group col-md-12">
                                     <label> Balance b/fwd <span class="radStar">*</span></label>
                                     <div> -->
-                                        <?php if ($previous_month_data['previousbalanceOnCard'] != 0) { ?>
-                                            <input type="hidden" class="form-control editInput numberInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_month_data['previousbalanceOnCard']}}"  onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
-                                        <?php } else { ?>
-                                            <input type="hidden" class="form-control editInput numberInput" id="balance_bfwd" name="balance_bfwd" <?php if (isset($expendCardLastData) && $expendCardLastData != '') { ?> value="{{$expendCardLastData->balance_bfwd}}" <?php } ?>  onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
-                                        <?php } ?>
+                                        
+                                    <!-- <input type="hidden" class="form-control editInput numberInput" id="balance_bfwd" name="balance_bfwd" <?php if (isset($expendCardLastData) && $expendCardLastData != '') { ?> value="{{$expendCardLastData->balance_bfwd}}" <?php } else{?>value="{{$previous_month_data['previousbalanceOnCard']}}"<?php }?>  onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10"> -->
+                                        
                                     <!-- </div>
                                 </div> -->
                                 <div class="form-group col-md-12">
@@ -257,6 +259,7 @@
     var receipt_imag_src='{{url("public/images/finance_petty_cash/")}}';
     var deleteUrl="{{url('petty-cash/expend_delete')}}";
     var existImage="{{url('public/images/noimage.jpg')}}";
+    var check_CardclosingAmount="{{url('petty-cash/check_CardclosingAmount')}}";
 </script>
 <script>
     $(document).ready(function() {

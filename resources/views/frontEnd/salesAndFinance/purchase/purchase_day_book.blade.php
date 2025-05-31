@@ -106,7 +106,9 @@
                                         <div class="form-group">
                                             <label for="net_amount"> Net <span class="radStar">*</span></label>
                                             <div>
-                                                <input type="text" class="form-control editInput" name="netAmount" id="net_amount" placeholder="">
+                                                <input type="text" class="form-control editInput" name="netAmount" id="net_amount" placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                                
+                                                >
                                             </div>
                                         </div>
                                         <div class="form-group">

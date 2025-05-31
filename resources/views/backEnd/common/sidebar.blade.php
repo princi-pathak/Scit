@@ -204,7 +204,7 @@
                 <!-- Sales and Finanace -->
                 <li class="sub-menu">
                     <a href="javascript:;"
-                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page == 'dayBook') || ($page == 'salesDayBook') || ($page == 'purchaseExpenese') || ($page =='council_tax')) {
+                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page == 'dayBook') || ($page == 'salesDayBook') || ($page == 'purchaseExpenese') || ($page =='council_tax') || ($page == 'petty_card_cash') ) {
                                     echo 'active';
                                 } ?>">
                         <i class="fa fa-cogs"></i>
@@ -231,6 +231,7 @@
                             </ul>
                         </li>
                         <li class="{{ ($page == 'council_tax') ? 'active' : '' }}"><a href="{{ url('admin/finance/council-tax') }}"> Council Tax </a></li>
+                        <li class="{{ ($page == 'petty_card_cash') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/expend-card') }}"> Petty Cash </a></li>
                     </ul>
                 </li>
                 <!-- Jobs -->
