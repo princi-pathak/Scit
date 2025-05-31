@@ -6,7 +6,6 @@
 <section id="main-content">
     <div class="wrapper">
         <!-- page start-->
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel">
@@ -23,7 +22,6 @@
                                     </select>
                                 </div>
                                 <div class="btn-group">
-
                                     <a href="{{url('admin/sales-finance/sales/sales-day-book-add')}}" id="editable-sample_new" class="btn btn-primary">
                                         Add New <i class="fa fa-plus"></i>
                                     </a>

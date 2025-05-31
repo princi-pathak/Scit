@@ -133,13 +133,13 @@
                     <div class="col-md-4 col-lg-4 col-xl-3">
                       <div class="form-group">
                         <label> B/fwd</label>
-                        <input type="text" class="form-control editInput" id="nbv_bfwd" name="nbv_cfwd" placeholder="00.00" readonly value="<?php if(isset($register) && $register->nbv_cfwd !=''){echo $register->nbv_cfwd;}?>">
+                        <input type="text" class="form-control editInput" id="nbv_bfwd" name="nbv_bfwd" placeholder="00.00" readonly value="<?php if(isset($register) && $register->nbv_cfwd !=''){echo $register->nbv_cfwd;}?>">
                       </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                       <div class="form-group">
                         <label> C/fwd</label>
-                        <input type="text" class="form-control editInput" id="nbv_cfwd" name="depreciation_cfwd" placeholder="00.00" readonly>
+                        <input type="text" class="form-control editInput" id="nbv_cfwd" name="nbv_cfwd" placeholder="00.00" readonly>
                       </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">

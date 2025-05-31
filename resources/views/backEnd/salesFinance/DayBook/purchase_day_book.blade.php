@@ -11,11 +11,6 @@
                 <div class="panel">
                     <header class="panel-heading">
                         Purchase Day Book
-                        <!-- <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            <a href="javascript:;" class="fa fa-cog"></a>
-                            <a href="javascript:;" class="fa fa-times"></a>
-                        </span> -->
                     </header>
                     @if(session('success'))
                     <div class="alert alert-success">
@@ -38,15 +33,10 @@
                                         <option value="0">Please Select</option>
                                     </select>
                                 </div>
-
                                 <div class="btn-group">
                                     <a href="{{url('admin/sales-finance/purchase/purchase-day-book-add')}}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
-
-                                <!-- <div class="btn-group">
-                                    <button class="btn btn-default"> Export </button>
-                                </div> -->
                             </div>
                             <div class="space15"></div>
                             <table class="display table table-bordered table-striped" id="purchaseDayBookTable">

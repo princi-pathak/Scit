@@ -2,7 +2,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('title', 'Pre Invoice')
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @section('content')
 
 <style>
@@ -10,6 +11,10 @@
         cursor: pointer !important;
         background-color: #fff !important;
         opacity: 1;
+    }
+    .modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
     }
 </style>
 
@@ -27,7 +32,7 @@
                             <div class="jobsection justify-content-end delete_btn_end">
                                 <!-- <a href="{{url('sales-finance/assets/asset-regiser-add')}}" class="profileDrop"><i class="fa fa-plus"></i> Add</a> -->
                                 <a href="javascript:void(0)" onclick="openInvoiceModal('add')"  class="profileDrop"> <i class="fa fa-plus"></i> Add</a>
-                                <a href="javascript:void(0)" class="profileDrop">Export</a>
+                                <!-- <a href="javascript:void(0)" class="profileDrop">Export</a> -->
                                 <!-- <a href="#!" class="profileDrop" id="active_inactive" >Current Rate (per week)</a>
                                 <a href="#!" class="profileDrop" id="active_inactive" >Subs (per week)</a>
                                 <a href="#!" class="profileDrop" id="active_inactive" >Additional Hours</a>
@@ -37,7 +42,7 @@
                                     class="profileDrop">Delete</a> -->
                             </div>
                             <div class="productDetailTable mb-4 table-responsive">
-                                <table class="table border-top border-bottom tablechange" id="exampleOne">
+                                <table class="table border-top border-bottom tablechange" id="pre_invoice_table">
                                     <thead>
                                         <tr>
                                             <!-- <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th> -->
@@ -48,7 +53,7 @@
                                             <th>End Date</th>
                                             <th>Current Rate(per week)</th>
                                             <th>Subs(per week)</th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -117,31 +122,49 @@
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
                                                                 <label>Start Date</label>
-                                                                <input type="date"
+                                                                <!-- <input type="date"
                                                                     class="form-control editInput faltpicker_date"
-                                                                    id="currentRateStart_date" name="currentRateStart_date[]">
+                                                                    id="currentRateStart_date" name="currentRateStart_date[]"> -->
+                                                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                    <input name="currentRateStart_date[]" id="currentRateStart_date" type="text" value="" autocomplete="off" class="form-control checkvalidation" onchange="dateremoveAttr('currentRateEnd_date')">
+
+                                                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                                                    <button class="btn btn-primary" type="button" id="currentopenCalendarBtn">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label>End Date</label>
-                                                                <input type="date"
+                                                                 <label>End Date</label>
+                                                                <!-- <input type="date"
                                                                     class="form-control editInput faltpicker_date"
-                                                                    id="currentRateEnd_date" name="currentRateEnd_date[]" onchange="CountDays('currentRateStart_date','currentRateEnd_date','currentRateNo_of_days','currentRateTotalCost','currentRateWeekly_rate',null,1)">
+                                                                    id="currentRateEnd_date" name="currentRateEnd_date[]" onchange="CountDays('currentRateStart_date','currentRateEnd_date','currentRateNo_of_days','currentRateTotalCost','currentRateWeekly_rate',null,1)"> -->
+                                                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                        <input name="currentRateEnd_date[]" id="currentRateEnd_date" type="text" value="" autocomplete="off" class="form-control remove_desabled checkvalidation" disabled onchange="CountDays('currentRateStart_date','currentRateEnd_date','currentRateNo_of_days','currentRateTotalCost','currentRateWeekly_rate',null,1)">
+
+                                                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                                                        <button class="btn btn-primary" type="button" id="currentopenCalendarBtn1">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </button>
+                                                                        </span>
+                                                                    </div>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
                                                                 <label>No of days</label>
                                                                 <input type="start" class="form-control editInput" id="currentRateNo_of_days"
-                                                                    name="currentRateNo_of_days[]">
+                                                                    name="currentRateNo_of_days[]" readonly>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>Weekly Rate</label>
                                                                 <input type="text" class="form-control editInput" id="currentRateWeekly_rate"
-                                                                    name="currentRateWeekly_rate[]" value="<?php if(isset($child) && $child->weekly_rate !=''){echo $child->weekly_rate;}?>" readonly>
+                                                                    name="currentRateWeekly_rate[]" value="<?php if(isset($child) && $child->weekly_rate !=''){echo number_format($child->weekly_rate, 2, '.', '');}?>" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="heading">Total Cost Excluding VAT</label>
+                                                            <label class="heading">Total Cost 'Excluding VAT'</label>
                                                             <div class="row">
                                                                 <div class="col-md-11">
                                                                     <input type="text" readonly
@@ -156,22 +179,40 @@
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
                                                                 <label>Start Date</label>
-                                                                <input type="date"
+                                                                <!-- <input type="date"
                                                                     class="form-control editInput faltpicker_date"
-                                                                    id="subsStart_date" name="subsStart_date[]">
+                                                                    id="subsStart_date" name="subsStart_date[]"> -->
+                                                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                    <input name="subsStart_date[]" id="subsStart_date" type="text" value="" autocomplete="off" class="form-control checkvalidation" onchange="dateremoveAttr('subsEnd_date')">
+
+                                                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                                                    <button class="btn btn-primary" type="button" id="subs_week_idopenCalendarBtn">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>End Date</label>
-                                                                <input type="date"
+                                                                <!-- <input type="date"
                                                                     class="form-control editInput faltpicker_date"
-                                                                    id="subsEnd_date" name="subsEnd_date[]" onchange="CountDays('subsStart_date','subsEnd_date','subsNo_of_days','subsTotalCost','subsWeeklyRate',null,2)">
+                                                                    id="subsEnd_date" name="subsEnd_date[]" onchange="CountDays('subsStart_date','subsEnd_date','subsNo_of_days','subsTotalCost','subsWeeklyRate',null,2)"> -->
+                                                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                    <input name="subsEnd_date[]" id="subsEnd_date" type="text" value="" autocomplete="off" class="form-control remove_desabled checkvalidation" disabled onchange="CountDays('subsStart_date','subsEnd_date','subsNo_of_days','subsTotalCost','subsWeeklyRate',null,2)">
+
+                                                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                                                    <button class="btn btn-primary" type="button" id="subs_week_idopenCalendarBtn1">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
                                                                 <label>No of days</label>
                                                                 <input type="start" class="form-control editInput" id="subsNo_of_days"
-                                                                    name="subsNo_of_days[]">
+                                                                    name="subsNo_of_days[]" readonly>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>Weekly Rate</label>
@@ -194,28 +235,46 @@
                                                         <input type="hidden" name="additionalHours_id[]" id="additionalHours_id">
                                                         <div class="mb-3">
                                                             <label>Hours per week </label>
-                                                            <input type="text" class="form-control editInput" id="additionalHours_HoursPerWeek"
+                                                            <input type="text" class="form-control editInput numberInput" id="additionalHours_HoursPerWeek"
                                                                 name="additionalHours_HoursPerWeek[]">
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-6">
                                                                 <label>Start Date </label>
-                                                                <input type="date"
+                                                                <!-- <input type="date"
                                                                     class="form-control editInput faltpicker_date" id="additionalHours_Start_date"
-                                                                    name="additionalHours_Start_date[]">
+                                                                    name="additionalHours_Start_date[]"> -->
+                                                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                    <input name="additionalHours_Start_date[]" id="additionalHours_Start_date" type="text" value="" autocomplete="off" class="form-control checkvalidation" onchange="dateremoveAttr('additionalHours_End_date')">
+
+                                                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                                                    <button class="btn btn-primary" type="button" id="HoursPerWeekopenCalendarBtn">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>End Date </label>
-                                                                <input type="date"
+                                                                <!-- <input type="date"
                                                                     class="form-control editInput faltpicker_date" id="additionalHours_End_date"
-                                                                    name="additionalHours_End_date[]" onchange="CountDays('additionalHours_Start_date','additionalHours_End_date','additionalHours_No_of_days','additionalHours_TotalCost','additionalHours_Hourly_rate','additionalHours_HoursPerWeek',3)">
+                                                                    name="additionalHours_End_date[]" onchange="CountDays('additionalHours_Start_date','additionalHours_End_date','additionalHours_No_of_days','additionalHours_TotalCost','additionalHours_Hourly_rate','additionalHours_HoursPerWeek',3)"> -->
+                                                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                    <input name="additionalHours_End_date[]" id="additionalHours_End_date" type="text" value="" autocomplete="off" class="form-control remove_desabled checkvalidation" disabled onchange="CountDays('additionalHours_Start_date','additionalHours_End_date','additionalHours_No_of_days','additionalHours_TotalCost','additionalHours_Hourly_rate','additionalHours_HoursPerWeek',3)">
+
+                                                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                                                    <button class="btn btn-primary" type="button" id="HoursPerWeekopenCalendarBtn1">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-6">
                                                                 <label>No of days</label>
                                                                 <input type="text" class="form-control editInput" id="additionalHours_No_of_days"
-                                                                    name="additionalHours_No_of_days[]">
+                                                                    name="additionalHours_No_of_days[]" readonly>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>Hourly rate</label>
@@ -224,7 +283,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="heading">Total Cost Excluding VAT</label>
+                                                            <label class="heading">Total Cost 'Excluding VAT'</label>
                                                             <div class="row">
                                                                 <div class="col-md-11">
                                                                     <input type="text" readonly
@@ -234,7 +293,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 Additional_Hours">
-                                                        <label class="heading d-block">Additional Extras - weekly:</label>
+                                                        <label class="heading d-block">Additional Extras - 'weekly'</label>
                                                         <input type="hidden" name="extras_weekly_id[]" id="extras_weekly_id">
                                                         <div class="mb-3">
                                                             <label>Expenditure Type</label>
@@ -244,15 +303,33 @@
                                                         <div class="row mb-2">
                                                             <div class="col-md-6">
                                                                 <label>Start Date </label>
-                                                                <input type="date"
+                                                                <!-- <input type="date"
                                                                     class="form-control editInput faltpicker_date" id="additionalExtrasWeekly_Start_date"
-                                                                    name="additionalExtrasWeekly_Start_date[]">
+                                                                    name="additionalExtrasWeekly_Start_date[]"> -->
+                                                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                    <input name="additionalExtrasWeekly_Start_date[]" id="additionalExtrasWeekly_Start_date" type="text" value="" autocomplete="off" class="form-control checkvalidation" onchange="dateremoveAttr('additionalExtrasWeekly_End_date')">
+
+                                                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                                                    <button class="btn btn-primary" type="button" id="additionalExtrasWeeklyopenCalendarBtn">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>End Date </label>
-                                                                <input type="date"
+                                                                <!-- <input type="date"
                                                                     class="form-control editInput faltpicker_date" id="additionalExtrasWeekly_End_date"
-                                                                    name="additionalExtrasWeekly_End_date[]" onchange="CountDays('additionalExtrasWeekly_Start_date','additionalExtrasWeekly_End_date','additionalExtrasWeekly_No_of_Days','additionalExtrasWeekly_Total_Cost','additionalExtrasWeekly_Weekly_amount',null,4)">
+                                                                    name="additionalExtrasWeekly_End_date[]" onchange="CountDays('additionalExtrasWeekly_Start_date','additionalExtrasWeekly_End_date','additionalExtrasWeekly_No_of_Days','additionalExtrasWeekly_Total_Cost','additionalExtrasWeekly_Weekly_amount',null,4)"> -->
+                                                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                    <input name="additionalExtrasWeekly_End_date[]" id="additionalExtrasWeekly_End_date" type="text" value="" autocomplete="off" class="form-control remove_desabled checkvalidation" disabled onchange="CountDays('additionalExtrasWeekly_Start_date','additionalExtrasWeekly_End_date','additionalExtrasWeekly_No_of_Days','additionalExtrasWeekly_Total_Cost','additionalExtrasWeekly_Weekly_amount',null,4)">
+
+                                                                    <span class="input-group-btn datetime-picker2 btn_height">
+                                                                    <button class="btn btn-primary" type="button" id="additionalExtrasWeeklyopenCalendarBtn1">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </button>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-2">
@@ -260,7 +337,7 @@
                                                                 <label>No of days</label>
                                                                 <input type="text"
                                                                     class="form-control editInput faltpicker_date" id="additionalExtrasWeekly_No_of_Days"
-                                                                    name="additionalExtrasWeekly_No_of_Days[]">
+                                                                    name="additionalExtrasWeekly_No_of_Days[]" readonly>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>Weekly Amount </label>
@@ -280,7 +357,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 Additional_Hours">
-                                                        <label class="heading d-block">Additional Extras - one off:</label>
+                                                        <label class="heading d-block">Additional Extras - 'one off'</label>
                                                         <input type="hidden" name="oneoff_id[]" id="oneoff_id">
                                                         <div class="mb-3">
                                                             <label>Expenditure Type</label>
@@ -289,7 +366,16 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Date</label>
-                                                            <input type="date" class="form-control editInput faltpicker_date" id="additionalExtrasOneOff_Start_date" name="additionalExtrasOneOff_Start_date[]" onchange="CountDays('additionalExtrasOneOff_Start_date',null,null,'additionalExtrasOneOff_Total_cost','additionalExtrasOneOff_Amount',null,5)">
+                                                            <!-- <input type="date" class="form-control editInput faltpicker_date" id="additionalExtrasOneOff_Start_date" name="additionalExtrasOneOff_Start_date[]" onchange="CountDays('additionalExtrasOneOff_Start_date',null,null,'additionalExtrasOneOff_Total_cost','additionalExtrasOneOff_Amount',null,5)"> -->
+                                                             <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                                                <input name="additionalExtrasOneOff_Start_date[]" id="additionalExtrasOneOff_Start_date" type="text" value="" autocomplete="off" class="form-control checkvalidation" onchange="CountDays('additionalExtrasOneOff_Start_date',null,null,'additionalExtrasOneOff_Total_cost','additionalExtrasOneOff_Amount',null,5)">
+
+                                                                <span class="input-group-btn datetime-picker2 btn_height">
+                                                                <button class="btn btn-primary" type="button" id="additionalExtrasOneOffopenCalendarBtn">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </button>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label>Amount </label>
@@ -308,7 +394,7 @@
                                                     <div class="mb-3">
                                                         <div class="productDetailTable">
                                                             <table class="table tablechange mb-0 table-bordered"
-                                                                id="exampleOne">
+                                                                id="">
                                                                 <thead class="table-light">
                                                                     <tr>
                                                                         <th>#</th>
@@ -386,11 +472,89 @@
     </div>
     <!-- end here -->
 
-@endsection
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        defualt_date(0)
+        // defualt_date(0)
+        // current
+        $('#currentRateStart_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $(document).on('click', '#currentopenCalendarBtn', function() {
+            $('#currentRateStart_date').focus();
+        });
+        $('#currentRateEnd_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $('#currentopenCalendarBtn1').click(function() {
+            $('#currentRateEnd_date').focus();
+        });
+        // subs
+        $('#subsStart_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $(document).on('click', '#subs_week_idopenCalendarBtn', function() {
+            $('#subsStart_date').focus();
+        });
+        $('#subsEnd_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $('#subs_week_idopenCalendarBtn1').click(function() {
+            $('#subsEnd_date').focus();
+        });
+        // additional_hours
+        $('#additionalHours_Start_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $(document).on('click', '#HoursPerWeekopenCalendarBtn', function() {
+            $('#additionalHours_Start_date').focus();
+        });
+        $('#additionalHours_End_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $('#HoursPerWeekopenCalendarBtn1').click(function() {
+            $('#additionalHours_End_date').focus();
+        });
+        // additionalExtrasWeekly_Start_date
+        $('#additionalExtrasWeekly_Start_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $(document).on('click', '#additionalExtrasWeeklyopenCalendarBtn', function() {
+            $('#additionalExtrasWeekly_Start_date').focus();
+        });
+        $('#additionalExtrasWeekly_End_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $('#additionalExtrasWeeklyopenCalendarBtn1').click(function() {
+            $('#additionalExtrasWeekly_End_date').focus();
+        });
+        // additionalExtrasOneOff_Start_date
+        $('#additionalExtrasOneOff_Start_date').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $(document).on('click', '#additionalExtrasOneOffopenCalendarBtn', function() {
+            $('#additionalExtrasOneOff_Start_date').focus();
+        });
+        
     });
     $("#deleteSelectedRows").on('click', function () {
         let ids = [];
@@ -457,48 +621,74 @@
         }
     }
     function savePreInvoiceModal() {
-        $.ajax({
-            url: "{{ url('/save-pre-invoice') }}",
-            type: "POST",
-            data: $('#preInvoiceForm').serialize(),
-            success: function (response) {
-                console.log(response);
-                if(response.vali_error){
-                    alert(response.vali_error);
-                    return false;
-                }else if(response.success === true){
-                    alert(response.message);
-                    $("#addPreInvoiceModel").modal('hide');
-                    window.location.reload();
-                }else{
-                    console.log("No response");
-                    alert("Something went wrong");
-                    return false;
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr);
-                let errors = xhr.responseJSON.error;
-                console.log(errors)
-                alert("Something went wrong");
+        var error=0;
+        $('.checkvalidation').each(function(){
+            if($(this).val() == '' || $(this).val() == null){
+                $(this).css('border','1px solid red');
+                var $field = $(this);
+                var $modalBody = $field.closest('.modal-body');
+                var scrollTo = $field.offset().top - $modalBody.offset().top + $modalBody.scrollTop() - 20;
+
+                $modalBody.animate({
+                    scrollTop: scrollTo
+                }, 300);
+                error=1;
+                return false;
+            }else{
+                $(this).css('border','');
             }
         });
-    }
-    function defualt_date(type) {
-        if (type == 0) {
-            flatpickr(".faltpicker_date", {
-                dateFormat: "d/m/Y",
+        if(error == 1){
+            alert("Please fill required data");
+            return false;
+        }else{
+            $.ajax({
+                url: "{{ url('/save-pre-invoice') }}",
+                type: "POST",
+                data: $('#preInvoiceForm').serialize(),
+                success: function (response) {
+                    console.log(response);
+                    if(response.vali_error){
+                        alert(response.vali_error);
+                        return false;
+                    }else if(response.success === true){
+                        alert(response.message);
+                        $("#addPreInvoiceModel").modal('hide');
+                        window.location.reload();
+                    }else{
+                        console.log("No response");
+                        alert("Something went wrong");
+                        return false;
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                    let errors = xhr.responseJSON.error;
+                    console.log(errors)
+                    alert("Something went wrong");
+                }
             });
         }
-
     }
+    // function defualt_date(type) {
+    //     if (type == 0) {
+    //         flatpickr(".faltpicker_date", {
+    //             dateFormat: "d/m/Y",
+    //         });
+    //     }
+
+    // }
 </script>
 <script>
     var netCost=0;
     var netVat=0;
     var netTotal=0;
     function CountDays(start_date, end_date = null, apened_id = null, total_cost, rate, hourly_time = null, fieldtype) {
-        
+        if(fieldtype == 3 && document.getElementById(hourly_time).value == ''){
+            alert("please fill Hours per week");
+            document.getElementById(end_date).value='';
+            return false;
+        }
         var rate_value = parseFloat(document.getElementById(rate).value) || 0;
         var calculateTotalCost = 0;
 
@@ -507,27 +697,32 @@
             let endDateStr = document.getElementById(end_date).value;
 
             if (startDateStr && endDateStr) {
-                let startParts = startDateStr.split('/');
-                let endParts = endDateStr.split('/');
+                let startParts = startDateStr.split('-');
+                let endParts = endDateStr.split('-');
                 let startDate = new Date(startParts[2], startParts[1] - 1, startParts[0]);
                 let endDate = new Date(endParts[2], endParts[1] - 1, endParts[0]);
                 let diffTime = endDate - startDate;
                 let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
                 document.getElementById(apened_id).value = diffDays >= 0 ? diffDays : "Invalid Dates";
-
                 if (hourly_time != null) {
                     let hourly = document.getElementById(hourly_time).value;
-                    calculateTotalCost = rate_value * hourly;
+                    let no_of_days=diffDays/7;
+                    calculateTotalCost = no_of_days*rate_value * hourly;
                 } else {
-                    calculateTotalCost = rate_value * diffDays;
+                    if(fieldtype == 4){
+                        let weellyAmount=rate_value/7;
+                        calculateTotalCost = weellyAmount * diffDays;
+                    }else{
+                        calculateTotalCost = rate_value * diffDays;
+                    }
                 }
 
-                document.getElementById(total_cost).value = calculateTotalCost;
+                document.getElementById(total_cost).value = calculateTotalCost.toFixed(2);
             }
         } else {
             calculateTotalCost = rate_value;
-            document.getElementById(total_cost).value = calculateTotalCost;
+            document.getElementById(total_cost).value = calculateTotalCost.toFixed(2);
         }
 
         calculate_summary(calculateTotalCost, fieldtype);
@@ -595,6 +790,7 @@
                     var oneoff_id=[];
                     current_ratePerWeek.forEach(function(current) {
                         // alert(current.current_rate);
+                        $(".remove_desabled").removeAttr('disabled','disabled');
                         var current_date=getDateFormat(current.start_date,current.end_date);
                         $("#currentRateStart_date").val(current_date.start_date);
                         $("#currentRateEnd_date").val(current_date.end_date);
@@ -659,15 +855,39 @@
     function getDateFormat(start_date,end_date = null){
         var originalDate = start_date;
         var parts = originalDate.split("-");
-        var formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0];
+        var formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
 
         var originalDate1 = end_date;
         var parts1 = originalDate1.split("-");
-        var formattedDate1 = parts1[2] + '/' + parts1[1] + '/' + parts1[0];
+        var formattedDate1 = parts1[2] + '-' + parts1[1] + '-' + parts1[0];
         var data = {
             start_date: formattedDate,
             end_date: formattedDate1
         };
         return data;
     }
+    function dateremoveAttr(id){
+        $("#"+id).removeAttr('disabled','disabled');
+    }
+    $(document).on('input', '.numberInput', function () {
+        let val = $(this).val().replace(/[^0-9.]/g, '');
+        if ((val.match(/\./g) || []).length > 1) {
+            val = val.slice(0, -1);
+        }
+        $(this).val(val);
+});
+$('#pre_invoice_table').DataTable({
+    dom: 'Blfrtip',
+    buttons: [
+        {
+            extend: 'csv',
+            text: 'Export',
+            bom: true,
+            exportOptions: {
+                columns: [ 0,1, 2,3,4,5,6]
+            }
+        }
+    ],
+});
 </script>
+@endsection

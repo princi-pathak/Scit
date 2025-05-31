@@ -1,7 +1,6 @@
 @extends('backEnd.layouts.master')
 @section('title',' Purchase Expenses')
 @section('content')
-
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -9,7 +8,6 @@
 <section id="main-content">
     <div class="wrapper">
         <!-- page start-->
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel">
@@ -21,7 +19,6 @@
                         {{ session('success') }}
                     </div>
                     @endif
-
                     @if (session('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}
@@ -34,9 +31,6 @@
                                     <a href="{{url('admin/sales-finance/purchase/purchase-type-add')}}" id="editable-sample_new" class="btn btn-primary">
                                         Add New <i class="fa fa-plus"></i>
                                     </a>
-                                </div>
-                                <div class="btn-group">
-                                    <button class="btn btn-default"> Export </button>
                                 </div>
                             </div>
                             <div class="space15"></div>

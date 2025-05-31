@@ -29,6 +29,8 @@ class DynamicFormController extends Controller
 
     public function save_form(Request $request)
     {
+
+        // dd($request);
         $data = $request->input();
 
         if (!empty($data)) {
@@ -81,6 +83,7 @@ class DynamicFormController extends Controller
                                 'is_late' => 0,
                                 'created_at' => date('Y-m-d H:i:s'),
                                 'updated_at' => date('Y-m-d H:i:s'),
+                                'logType' => 1,
                             );
                             DB::table('su_log_book')->insert($insertServiceUserLogBook);
                         }
