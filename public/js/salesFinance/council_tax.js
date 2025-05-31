@@ -43,8 +43,8 @@ document.querySelectorAll('.openModalBtn').forEach(function (btn) {
             } else if (this.getAttribute('data-exempt') == 0) {
                 exemptno.checked = true;
             }
-   
-            account_number.value = this.getAttribute('data-account_number');   
+
+            account_number.value = this.getAttribute('data-account_number');
             // last_bill_date.value = this.getAttribute('data-last_bill_date');
 
             const originalLastDate = this.getAttribute('data-last_bill_date');
@@ -66,7 +66,7 @@ document.querySelectorAll('.openModalBtn').forEach(function (btn) {
 
             // bill_period_end_date.value = this.getAttribute('data-bill_period_end_date');
 
-               const originalEndDate = this.getAttribute('data-bill_period_end_date');
+            const originalEndDate = this.getAttribute('data-bill_period_end_date');
             let formattedEndDate = originalEndDate;
             if (originalStartDate && originalEndDate.includes('-')) {
                 const parts = originalEndDate.split('-'); // [yyyy, mm, dd]
@@ -105,6 +105,10 @@ startDateInput.addEventListener('change', function () {
 });
 
 
+
+
+
+
 function validateCouncilTaxForm() {
     let isValid = true;
     $('.text-danger').remove(); // Clear previous errors
@@ -112,7 +116,7 @@ function validateCouncilTaxForm() {
     // Helper to show error
     function showError(field, message) {
         isValid = false;
-        field.after(`<span class="text-danger">${message}</span>`);   
+        field.after(`<span class="text-danger">${message}</span>`);
     }
 
     // Validate each required field
@@ -235,6 +239,7 @@ function validateCouncilTaxForm() {
 
 
 $(document).ready(function () {
+
     $("#saveCouncilTax").on("click", function (e) {
         // alert("hii");
         e.preventDefault(); // Prevent default form submission
@@ -315,14 +320,15 @@ $(document).on('click', '.deleteBtn', function () {
 });
 
 $(document).ready(function () {
-
     $(document).ready(function () {
         $('#council_tax').DataTable({
             dom: 'Blfrtip',
             buttons: [{
                 extend: 'csv',
                 text: 'Export' // Rename button
-            }]
+            },
+                'colvis'
+            ]
         });
     });
 
@@ -355,7 +361,14 @@ $(document).ready(function () {
         format: 'dd-mm-yyyy',
         autoclose: true,
         todayHighlight: true,
-    });
+    }).on('changeDate', function (e) {
+        var startDate = $('#bill_period_start_date').val();
+        if (!startDate) {
+            alert('Please select the Start Period first.');
+            $(this).val('');
+            $('#bill_period_start_date').focus();
+        }
+    })
 
     $('#openCalendarBillPeriodEndBtn').click(function () {
         $('#bill_period_end_date').focus();

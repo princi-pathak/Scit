@@ -22,11 +22,6 @@
                     @endif
                     <header class="panel-heading">
                         Council Tax
-                        <!-- <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            <a href="javascript:;" class="fa fa-cog"></a>
-                            <a href="javascript:;" class="fa fa-times"></a>
-                        </span> -->
                     </header>
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
@@ -99,6 +94,7 @@
         <!-- page end-->
     </div>
 </section>
+
 <script>
     setTimeout(() => {
         document.querySelectorAll('.alert').forEach(el => el.style.display = 'none');
@@ -108,9 +104,11 @@
         $('#council_tax').DataTable({
             dom: 'Blfrtip',
             buttons: [{
-                extend: 'csv',
-                text: 'Export' // Rename button
-            }]
+                    extend: 'csv',
+                    text: 'Export' // Rename button
+                },
+                'colvis'
+            ]
         });
     });
 </script>
