@@ -137,6 +137,13 @@
                 </li>
 
                 <li class="sub-menu">
+                    <a href="javascript:;"> <i class="fa fa-home"></i> <span>Rota management</span> </a>
+                    <ul class="sub">                       
+                        <li class="{{ ($page == 'homelist') ? 'active' : '' }}"><a href="#!">Staff</a></li>
+                    </ul>
+                </li>
+
+                <li class="sub-menu">
                     <a href="javascript:;"
                         class="<?php if (($page == 'care_team_job_title') || ($page == 'mood_title')  || ($page == 'access_levels')  || ($page == 'rota_shift') || ($page == 'homelist') || ($page == 'policies')) {
                                     echo 'active';
