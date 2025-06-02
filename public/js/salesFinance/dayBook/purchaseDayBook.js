@@ -2,9 +2,18 @@ let allPurchaseData = [];
 
 $(document).ready(function () {
 
+    setTimeout(function() {
+        // Hide all alerts after 3 seconds
+        document.querySelectorAll('.alert').forEach(function(alert) {
+            alert.style.display = 'none';
+        });
+    }, 3000); // 3000 milliseconds = 3 seconds
+
     taxRate(document.getElementById('getDataOnTax'));
     $('#Date_input').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true, // Optional: close picker after selection
+        todayHighlight: true // Optional: highlight today's date
     });
     $('#Date_input').on('change', function () {
         $('#Date_input').datepicker('hide');
@@ -358,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let input = document.getElementById('purchase_day_book_id');
                 if (input.value.trim() !== "") {
                     console.log("Input has a value:", input.value);
-                    expensesAmountInput.value = not_claimedAmt;
+                    // expensesAmountInput.value = not_claimedAmt;
                 }
             }
         });
@@ -390,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
         vatAmountInput.value = vatAmount.toFixed(2);
         grossAmountInput.value = grossAmount.toFixed(2);
         expenses.value = '';
-        expensesAmountInput.value = "";
+        expensesAmountInput.value = '';
     }
 
     // Trigger calculation on VAT change or Net Amount change

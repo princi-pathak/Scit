@@ -1,42 +1,69 @@
 $(document).ready(function () {
 
+    $('#staffWorker').DataTable({
+        dom: 'Bfrtip', // B = Buttons
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export',
+                bom: true,
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                }
+            }, 
+             'colvis'
+        ]
+    });
+
     $('#DOB').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true, // Optional: close picker after selection
+        todayHighlight: true // Optional: highlight today's date
     });
     $('#DOB').on('change', function () {
         $('#DOB').datepicker('hide');
     });
 
     $('#start_Date').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true, // Optional: close picker after selection
+        todayHighlight: true // Optional: highlight today's date
     });
     $('#start_Date').on('change', function () {
         $('#start_Date').datepicker('hide');
     });
 
     $('#probation_start_date').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true, // Optional: close picker after selection
+        todayHighlight: true // Optional: highlight today's date
     });
     $('#probation_start_date').on('change', function () {
         $('#probation_start_date').datepicker('hide');
     });
 
     $('#probation_end_date').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true, // Optional: close picker after selection
+        todayHighlight: true // Optional: highlight today's date
     });
     $('#probation_end_date').on('change', function () {
         $('#probation_end_date').datepicker('hide');
     });
 
     $('#probation_renew_date').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true, // Optional: close picker after selection
+        todayHighlight: true // Optional: highlight today's date
     });
     $('#probation_renew_date').on('change', function () {
         $('#probation_renew_date').datepicker('hide');
     });
 
     $('#leave_date').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true, // Optional: close picker after selection
+        todayHighlight: true // Optional: highlight today's date
     });
     $('#leave_date').on('change', function () {
         $('#leave_date').datepicker('hide');
