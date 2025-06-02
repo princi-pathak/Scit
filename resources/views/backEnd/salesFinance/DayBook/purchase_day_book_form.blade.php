@@ -50,13 +50,13 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Net</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="netAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->netAmount : '' }}" id="net_amount" placeholder="Net">
+                                        <input type="text" class="form-control" name="netAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->netAmount : '' }}" id="net_amount" placeholder="Net" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Total Amount (to be paid)</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="totalAmount" value="{{ isset($purchase_day_book) ? ($purchase_day_book->grossAmount - $purchase_day_book->reclaim) : ''}}" placeholder="Total Amount (to be paid)">
+                                        <input type="text" class="form-control" id="totalAmount" value="{{ isset($purchase_day_book) ? ($purchase_day_book->grossAmount - $purchase_day_book->reclaim) : ''}}" placeholder="Total Amount (to be paid)" readonly oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -71,25 +71,25 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="vatAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->vatAmount : '' }}" id="vat_amount" placeholder="VAT Amount">
+                                        <input type="text" class="form-control" name="vatAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->vatAmount : '' }}" id="vat_amount" placeholder="VAT Amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="grossAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->grossAmount : '' }}" id="gross_amount" placeholder="Gross">
+                                        <input type="text" class="form-control" name="grossAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->grossAmount : '' }}" id="gross_amount" placeholder="Gross" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Reclaim</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="reclaim" value="{{ isset($purchase_day_book) ? $purchase_day_book->reclaim : ''}}" id="reclaim_amount" placeholder="Reclaim">
+                                        <input type="text" class="form-control" name="reclaim" value="{{ isset($purchase_day_book) ? $purchase_day_book->reclaim : ''}}" id="reclaim_amount" placeholder="Reclaim" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Not Claim</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="not_reclaim" id="not_claim" value="{{ isset($purchase_day_book) ? $purchase_day_book->not_reclaim : '' }}" placeholder="Not Claim">
+                                        <input type="text" class="form-control" name="not_reclaim" id="not_claim" value="{{ isset($purchase_day_book) ? $purchase_day_book->not_reclaim : '' }}" placeholder="Not Claim" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -104,7 +104,7 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Expense Amount</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="expense_amount" value="{{ isset($purchase_day_book) ? $purchase_day_book->expense_amount : '' }}" id="expenses_amount" placeholder="Expense Amount">
+                                        <input type="text" class="form-control" name="expense_amount" value="{{ isset($purchase_day_book) ? $purchase_day_book->expense_amount : '' }}" id="expenses_amount" placeholder="Expense Amount" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -127,7 +127,7 @@
 
 <script>
     
-   setTimeout(function() {
+    setTimeout(function() {
         // Hide all alerts after 3 seconds
         document.querySelectorAll('.alert').forEach(function(alert) {
             alert.style.display = 'none';

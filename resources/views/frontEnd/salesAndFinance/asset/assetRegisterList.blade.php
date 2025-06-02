@@ -42,6 +42,7 @@
           <div class="panel-body">
             <div class="col-lg-12">
               <div class="col-lg-6">
+                <a href="{{url('sales-finance/assets/asset-register?cat=')}}" class="btn @if(isset($selected_cat_id) && $selected_cat_id ==0)bg_color @else btn-warning @endif">Summary</a>
                 <?php foreach ($AssetCategoryList as $cat) { ?>
                   <a href="{{url('sales-finance/assets/asset-register?cat=')}}{{base64_encode($cat->id)}}" class="btn @if(isset($selected_cat_id) && $selected_cat_id ==$cat->id)bg_color @else btn-warning @endif">{{$cat->name}}</a>
                     <?php } ?>

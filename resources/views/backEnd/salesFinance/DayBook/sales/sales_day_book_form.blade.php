@@ -77,13 +77,13 @@
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="VAT Amount" name="vatAmount" id="vat_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($sales_day_book->vatAmount) ? $sales_day_book->vatAmount : '' }}">
+                                        <input type="text" class="form-control" placeholder="VAT Amount" name="vatAmount" id="vat_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($sales_day_book->vatAmount) ? $sales_day_book->vatAmount : '' }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="Gross" name="grossAmount" id="gross_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($sales_day_book->grossAmount) ? $sales_day_book->grossAmount : '' }}">
+                                        <input type="text" class="form-control" placeholder="Gross" name="grossAmount" id="gross_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($sales_day_book->grossAmount) ? $sales_day_book->grossAmount : '' }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">

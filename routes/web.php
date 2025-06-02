@@ -2216,10 +2216,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('expend-card/saveExpend','saveExpend');
 			Route::post('expend-card/editExpend','saveExpend');
 			Route::post('expend-card/expend_delete','expend_delete');
+			Route::post('expand_card_filter','expand_card_filter');
 			Route::get('petty-cash','cash');
 			Route::post('petty-cash/saveCash','saveCash');
 			Route::post('petty-cash/editCash','saveCash');
 			Route::post('petty-cash/cash_delete','cash_delete');
+			Route::post('petty-cash/cash_filter','cash_filter');
 		});
 	});
 });
