@@ -137,9 +137,9 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;"> <i class="fa fa-home"></i> <span>Rota management</span> </a>
+                    <a href="javascript:;"> <i class="fa fa-users"></i> <span>Rota management</span> </a>
                     <ul class="sub">                       
-                        <li class="{{ ($page == 'homelist') ? 'active' : '' }}"><a href="#!">Staff</a></li>
+                        <li class="{{ ($page == 'homelist') ? 'active' : '' }}"><a href="{{ url('/admin/rota/staff-worker') }}">Staff</a></li>
                     </ul>
                 </li>
 
