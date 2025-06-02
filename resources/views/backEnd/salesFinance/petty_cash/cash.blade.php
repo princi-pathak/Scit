@@ -63,6 +63,33 @@
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
                             <!-- <h4>Closing Petty Cash balance = <span id="PettyCashbalance">£0.00</span></h4> -->
+                             <div class="col-lg-3 col-sm-3" style="margin-bottom:15px">
+                                <label for="inputName" class="control-label">Month:</label>
+                                <select name="month" id="month" class="form-control">
+                                        <option selected disabled>Select Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                            </div>
+                            <div class="col-lg-3 col-sm-3" style="margin-bottom:15px">
+                                <label for="inputName" class="control-label">Year:</label>
+                                <select name="year" id="year" class="form-control">
+                                    <option selected disabled>Select Year</option>
+                                    @foreach($years as $year)
+                                        <option value="{{$year}}">{{$year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="clearfix clearfix_space">
 
                                 <div class="btn-group">
@@ -131,11 +158,7 @@
                                             <tr>
                                                 <td>{{++$index}}</td>
                                                 <td>{{date('Y-m-d',strtotime($val->cash_date))}}</td>
-                                                <?php if ($count == 1) { ?>
-                                                        <td></td>
-                                                    <?php } else { ?>
-                                                        <td>£{{$val->balance_bfwd}}</td>
-                                                <?php }?>
+                                                <td></td>
                                                 <td>£{{$val->petty_cashIn ?? 0}}</td>
                                                 <td>£{{$val->cash_out ?? 0}}</td>
                                                 <td>{{$val->card_details}}</td>
@@ -289,7 +312,7 @@
     });
 </script>
 <script>
-    // var filterUrl = "{{url('petty-cash/cash_filter')}}";
+    var filterUrl = "{{url('admin/sales-finance/petty-cash/cash_filter')}}";
     var token = "<?php echo csrf_token(); ?>";
     var saveUrl = "{{url('admin/sales-finance/petty-cash/saveCash')}}";
     var editUrl = "{{url('admin/sales-finance/petty-cash/editCash')}}";

@@ -63,13 +63,35 @@
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
                             <!-- <h4>Closing Balance on Card = <span id="balanceOnCard">£0.00</span></h4> -->
-                            <div class="clearfix clearfix_space">
-                                <!-- <div class="col-lg-3 col-sm-3">
-                                    <input type="hidden" id="tax_id">
-                                    <select class="form-control" name="tax_rate" id="getDataOnTax">
-                                        <option value="0">Please Select</option>
+                             <div class="col-lg-3 col-sm-3" style="margin-bottom:15px">
+                                <label for="inputName" class="control-label">Month:</label>
+                                <select name="month" id="month" class="form-control">
+                                        <option selected disabled>Select Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
                                     </select>
-                                </div> -->
+                            </div>
+                            <div class="col-lg-3 col-sm-3" style="margin-bottom:15px">
+                                <label for="inputName" class="control-label">Year:</label>
+                                <select name="year" id="year" class="form-control">
+                                    <option selected disabled>Select Year</option>
+                                    @foreach($years as $year)
+                                        <option value="{{$year}}">{{$year}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="clearfix clearfix_space">
+                                
 
                                 <div class="btn-group">
                                     <a href="javascript:void(0)" id="editable-sample_new" data-toggle="modal" data-target="#expend_card" data-action="add" class="btn btn-primary openModalBtn"> Add New <i class="fa fa-plus"></i>
@@ -148,7 +170,7 @@
                                 <div class="form-group row">
                                     <label for="inputName" class="col-sm-4 control-label">Fund added to card</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control numberInput" id="balance_bfwd" name="balance_bfwd" value="">
+                                        <input type="text" class="form-control numberInput" id="fund_added" name="fund_added" value="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -241,7 +263,7 @@
 </script>
 
 <script>
-    // var filterUrl = "{{url('petty-cash/expand_card_filter')}}";
+    var filterUrl = "{{url('admin/sales-finance/expand_card_filter')}}";
     var token = "<?php echo csrf_token(); ?>";
 </script>
 <script>
