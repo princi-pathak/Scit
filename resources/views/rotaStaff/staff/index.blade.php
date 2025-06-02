@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                             <div class="productDetailTable mb-4 table-responsive">
-                                <table class="table border-top border-bottom tablechange" id="containerA">
+                                <table class="table border-top border-bottom tablechange" id="staffWorker">
                                     <thead>
                                         <tr>
                                             <th>#</th>
