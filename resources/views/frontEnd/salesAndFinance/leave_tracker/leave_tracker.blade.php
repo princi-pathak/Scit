@@ -305,8 +305,10 @@
     </div>
 </div>
 
-<script src="{{ url('public/js/salesFinance/council_tax.js') }}"></script>
 
+
+
+<script src="{{ url('public/js/salesFinance/council_tax.js') }}"></script>
 <script>
     deleteURL = "{{ url('finance/delete-council-tax') }}/";
     saveData = "{{ url('finance/save-council-tax') }}";

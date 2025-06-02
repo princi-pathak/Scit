@@ -40,6 +40,8 @@ use App\Http\Controllers\backEnd\salesfinance\DayBook\PurchaseBackendController;
 use App\Http\Controllers\backEnd\salesfinance\DayBook\SalesBackendController;
 use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
 use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
+use App\Http\Controllers\backEnd\rota\StaffWorkerController;
+
 
 
 
@@ -2148,6 +2150,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		});
 	});
 	// end
+
+	Route::controller(StaffWorkerController::class)->group(function () {
+		Route::prefix('rota')->group(function () {
+			Route::get('/staff-worker', 'index');
+			Route::get('/staff-worker-add', 'create');
+		});
+	});
+
 	// Backend DayBook Purchse Controller
 	Route::controller(PurchaseBackendController::class)->group((function () {
 		Route::prefix('sales-finance/purchase')->group(function () {
@@ -2206,10 +2216,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('expend-card/saveExpend','saveExpend');
 			Route::post('expend-card/editExpend','saveExpend');
 			Route::post('expend-card/expend_delete','expend_delete');
+			Route::post('expand_card_filter','expand_card_filter');
 			Route::get('petty-cash','cash');
 			Route::post('petty-cash/saveCash','saveCash');
 			Route::post('petty-cash/editCash','saveCash');
 			Route::post('petty-cash/cash_delete','cash_delete');
+			Route::post('petty-cash/cash_filter','cash_filter');
 		});
 	});
 });
