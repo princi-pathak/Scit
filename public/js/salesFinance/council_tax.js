@@ -362,13 +362,13 @@ $(document).ready(function () {
         autoclose: true,
         todayHighlight: true,
     }).on('changeDate', function (e) {
-        var startDate = $('#bill_period_start_date').val();
+        var startDate = $('#bill_period_start_date').val(); 
         if (!startDate) {
             alert('Please select the Start Period first.');
             $(this).val('');
             $('#bill_period_start_date').focus();
         }
-    })
+    });
 
     $('#openCalendarBillPeriodEndBtn').click(function () {
         $('#bill_period_end_date').focus();
