@@ -204,7 +204,7 @@
                 <!-- Sales and Finanace -->
                 <li class="sub-menu">
                     <a href="javascript:;"
-                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page == 'dayBook') || ($page == 'salesDayBook') || ($page == 'purchaseExpenese') || ($page =='council_tax') || ($page == 'petty_card_cash') ) {
+                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page == 'dayBook') || ($page == 'salesDayBook') || ($page == 'purchaseExpenese') || ($page =='council_tax') || ($page == 'petty_card_cash') || ($page == 'assets_category') || ($page == 'depreciation_type') || ($page == 'asset_register') ) {
                                     echo 'active';
                                 } ?>">
                         <i class="fa fa-cogs"></i>
@@ -232,6 +232,19 @@
                         </li>
                         <li class="{{ ($page == 'council_tax') ? 'active' : '' }}"><a href="{{ url('admin/finance/council-tax') }}"> Council Tax </a></li>
                         <li class="{{ ($page == 'petty_card_cash') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/expend-card') }}"> Petty Cash </a></li>
+                        <li class="sub-menu">
+                            <a href="javascript:void(0)"
+                                <?php if (($page == 'assets_category') || ($page == 'depreciation_type') || ($page == 'asset_register')) {
+                                    echo 'class="active" style="color:#1fb5ad"';
+                                } ?>><span>Fixed Assets</span></a>
+                            <ul class="sub pdlft">
+
+                                <li class="{{ ($page == 'assets_category') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/assets/asset-category') }}"> Asset Category </a></li>
+                                <li class="{{ ($page == 'depreciation_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/assets/depreciation-type') }}"> Depreciation Type </a></li>
+                                <li class="{{ ($page == 'asset_register') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/assets/asset-register') }}"> Asset Register </a></li>
+
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <!-- Jobs -->
