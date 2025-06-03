@@ -41,6 +41,7 @@ use App\Http\Controllers\backEnd\salesfinance\DayBook\SalesBackendController;
 use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
 use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
 use App\Http\Controllers\backEnd\rota\StaffWorkerController;
+use App\Http\Controllers\backEnd\salesfinance\asset\AssetBackendController;
 
 
 
@@ -2222,6 +2223,26 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('petty-cash/editCash','saveCash');
 			Route::post('petty-cash/cash_delete','cash_delete');
 			Route::post('petty-cash/cash_filter','cash_filter');
+		});
+	});
+	// Backend Fixed Assets
+	Route::controller(AssetBackendController::class)->group(function(){
+		Route::prefix('sales-finance/assets/')->group(function(){
+			Route::get('asset-category', 'asset_category');
+			Route::post('asset-category-save', 'asset_category_save');
+			Route::post('asset-category-edit', 'asset_category_save');
+			Route::post('asset-category-status-change', 'asset_category_status_change');
+			Route::post('asset-category-delete', 'asset_category_delete');
+			Route::get('depreciation-type', 'depreciation_type');
+			Route::post('depreciation-type-save', 'depreciation_type_save');
+			Route::post('depreciation-type-edit', 'depreciation_type_save');
+			Route::post('depreciation-status-change', 'depreciation_status_change');
+			Route::get('asset-register', 'asset_register');
+			Route::post('asset-register-search', 'asset_register_search');
+			Route::get('asset-register-add', 'asset_regiser_add');
+			Route::post('asset-register-save', 'asset_regiser_save');
+			Route::get('asset-register-edit', 'asset_regiser_add');
+			Route::post('asset-register-delete', 'asset_register_delete');
 		});
 	});
 });
