@@ -5,6 +5,11 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
+<style>
+    .formDtail .text-danger{
+        position: absolute;
+    }
+</style>
 <!--main content start-->
 <section class="wrapper">
     <div class="container-fluid">
@@ -47,9 +52,9 @@
                                             <th>Probation Extended Date </th>
                                             <th>After Probation Enrolled</th>
                                             <th>Student Loan</th>
-                                            <th>DBS Clear?</th>
+                                            <th>DBS Clear</th>
                                             <th>DBS Number</th>
-                                            <th>On DBS Update Service?</th>
+                                            <th>On DBS Update Service</th>
                                             <th>Leave Date</th>
                                             <th>Email Address</th>
                                             <th>Mobile</th>
@@ -105,7 +110,7 @@
 
 <!-- Add Staff Modal start here -->
 <div class="modal fade" id="addStaffWorkerModal" tabindex="-1" aria-labelledby="addStaffWorkerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
@@ -116,33 +121,33 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="formDtail">
-                                <div class="form-group">
+                            <div class="formDtail row">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <input type="hidden" name="staff_id" id="staff_id">
                                     <label> Surname <span class="radStar">*</span></label>
                                     <div>
                                         <input type="text" class="form-control editInput" placeholder="Daniels" name="surname" id="surname">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label> Forename <span class="radStar">*</span></label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="forename" id="forename" placeholder="Jesse">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>Address</label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="address" id="address" placeholder="34/36 Gresford Avenue">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label> Post Code <span class="radStar">*</span></label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="postCode" id="postCode" placeholder="L17 2AW">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>Date of Birth</label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
                                         <input name="DOB" id="DOB" type="text" autocomplete="off" class="form-control">
@@ -153,18 +158,23 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Bank Details, Acct Number & Sort Code <span class="radStar">*</span></label>
+                                <div class="form-group col-md-6 col-lg-6">
+                                    <label>Bank Details, Acct Number  <span class="radStar">*</span></label>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <input type="text" class="form-control editInput" name="account_num" id="account_num" placeholder="83903674">
                                         </div>
-                                        <div class="col-md-6">
+                                    </div>
+                                </div>
+                                 <div class="form-group col-md-6 col-lg-6">
+                                    <label>Sort Code <span class="radStar">*</span></label>
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <input type="text" class="form-control editInput" name="sort_code" id="sort_code" placeholder="04-00-75">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>Status <span class="radStar">*</span></label>
                                     <div>
                                         <select class="form-control editInput" name="status" id="status">
@@ -178,7 +188,42 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                          
+                                  <div class="form-group col-md-6 col-lg-6">
+                                    <label>Starter Declaration (HMRC Starter Form Completed) <span class="radStar">*</span></label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <select class="form-control editInput" name="starter_declaration" id="starter_declaration">
+                                            <option value="1">Yes-A</option>
+                                            <option value="2">Yes-B</option>
+                                            <option value="3">Yes-C</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6">
+                                    <label>Start Date <span class="radStar">*</span></label>
+                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
+                                        <input name="start_date" id="start_Date" type="text" autocomplete="off" class="form-control">
+                                        <span class="input-group-btn datetime-picker2 btn_height">
+                                            <button class="btn btn-primary openCalendarBtn" type="button" id="">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6">
+                                    <label>Job Role <span class="radStar">*</span></label>
+                                    <div>
+                                        <input type="text" class="form-control editInput" name="job_role" id="job_role" placeholder="Support Worker">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6">
+                                    <label>NIN <span class="radStar">*</span></label>
+                                    <div>
+                                        <input type="text" class="form-control editInput" name="NIN" id="NIN" placeholder="JT083437B">
+                                    </div>
+                                </div>
+                                <!-- Starter Declaration (HMRC Starter Form Completed) -->
+                                <div class="form-group col-md-12 col-lg-12">
                                     <label>Rate of Pay (£)</label>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -193,56 +238,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Start Date <span class="radStar">*</span></label>
-                                    <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="start_date" id="start_Date" type="text" autocomplete="off" class="form-control">
-                                        <span class="input-group-btn datetime-picker2 btn_height">
-                                            <button class="btn btn-primary openCalendarBtn" type="button" id="">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Job Role <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="job_role" id="job_role" placeholder="Support Worker">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>NIN <span class="radStar">*</span></label>
-                                    <div>
-                                        <input type="text" class="form-control editInput" name="NIN" id="NIN" placeholder="JT083437B">
-                                    </div>
-                                </div>
-                                <!-- Starter Declaration (HMRC Starter Form Completed) -->
-                                <div class="form-group">
-                                    <label>Starter Declaration (HMRC Starter Form Completed) <span class="radStar">*</span></label>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <select class="form-control editInput" name="starter_declaration" id="starter_declaration">
-                                            <option value="1">Yes-A</option>
-                                            <option value="2">Yes-B</option>
-                                            <option value="3">Yes-C</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
+                              
+                                <div class="form-group col-md-12 col-lg-12">
                                     <label>Probation End Date (6 months) Passed/Extended <span class="radStar">*</span></label>
                                     <div class="row">
                                         <div class="col-md-4">
+                                            <label>Start date <span class="radStar">*</span></label>
                                             <input type="text" class="form-control editInput " name="probation_start_date" id="probation_start_date">
                                         </div>
                                         <div class="col-md-4">
+                                            <label>End date <span class="radStar">*</span></label>
                                             <input type="text" class="form-control editInput " name="probation_end_date" id="probation_end_date">
                                         </div>
                                         <div class="col-md-4">
+                                            <label>Extended date </label>
                                             <input type="text" class="form-control editInput" name="probation_renew_date" id="probation_renew_date">
                                         </div>
                                     </div>
                                 </div>
                                 <!-- After Probation Enrolled in Private Medical -->
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>After Probation Enrolled in Private Medical <span class="radStar">*</span></label>
                                     <div class="d-flex align-items-center gap-2">
                                         <input class="form-check-input mt-0" type="radio" name="probation_enrollered" value="1" id="probation_enrollered_yes">
@@ -252,7 +267,7 @@
                                     </div>
                                 </div>
                                 <!-- Student Loan -->
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>Student Loan <span class="radStar">*</span></label>
                                     <div class="d-flex align-items-center gap-2">
                                         <select class="form-control editInput" name="student_loan" id="student_loan">
@@ -264,7 +279,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>DBS Clear? (Risk Assisment Required or not) </label>
                                     <div>
                                         <input class="form-check-input mt-0" type="radio" name="dbs_clear" value="1" id="dbs_clear_yes">
@@ -273,14 +288,14 @@
                                         <label class="form-check-label m-0" for="dbs_clear_no">No</label>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>DBS Number </label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="dbs_number" id="dbs_number" placeholder="1813929307">
                                     </div>
                                 </div>
                                 <!-- On DBS Update Service? -->
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>On DBS Update Service? </label>
                                     <div class="d-flex align-items-center gap-2">
                                         <input class="form-check-input mt-0" type="radio" name="dbs_service_update" value="1" id="DBS_Update_yes">
@@ -289,7 +304,7 @@
                                         <label class="form-check-label m-0" for="DBS_Update_no">No</label>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>Leave Date </label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
                                         <input name="leave_date" id="leave_date" type="text" autocomplete="off" class="form-control" placeholder="Leave Date">
@@ -300,13 +315,13 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>Email Address <span class="radStar">*</span></label>
                                     <div>
                                         <input type="email" class="form-control editInput" name="email" id="email" placeholder="example232@hotmail.com">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6 col-lg-6">
                                     <label>Mobile </label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="mobile" id="mobile" placeholder="07821 155 062">
