@@ -221,14 +221,20 @@ function savedepreciation_typesModal() {
                 } else if (response.success === true) {
                     $(window).scrollTop(0);
                     $('#messagedepreciation_types').addClass('success-message').text(response.message).show();
+                    $(".popup_success").fadeIn();
+                    $('.popup_success_txt').text(response.message).show();
                     setTimeout(function () {
                         $('#messagedepreciation_types').removeClass('success-message').text('').hide();
+                        $(".popup_success").fadeOut();
                         location.reload();
                     }, 3000);
                 } else if (response.success === false) {
                     $('#messagedepreciation_types').addClass('error-message').text(response.message).show();
+                    $(".popup_error").fadeIn();
+                    $('.popup_success_txt').text(response.message).show();
                     setTimeout(function () {
                         $('#error-message').text('').fadeOut();
+                        $(".popup_error").fadeOut();
                     }, 3000);
                 } else {
                     alert("Something went wrong");
