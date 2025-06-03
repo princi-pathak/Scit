@@ -8,10 +8,10 @@ $(document).ready(function () {
                 text: 'Export',
                 bom: true,
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
                 }
-            }, 
-             'colvis'
+            },
+            'colvis'
         ]
     });
 
@@ -24,50 +24,153 @@ $(document).ready(function () {
         $('#DOB').datepicker('hide');
     });
 
+    // Initialize Start Date
     $('#start_Date').datepicker({
         format: 'dd-mm-yyyy',
-        autoclose: true, // Optional: close picker after selection
-        todayHighlight: true // Optional: highlight today's date
+        autoclose: true,
+        todayHighlight: true
+    }).on('changeDate', function (e) {
+        const startDate = e.date;
+
+        // Set the minimum date for Leave Date to the next day
+        const minLeaveDate = new Date(startDate.getTime() + 86400000);
+        $('#leave_date').datepicker('setStartDate', minLeaveDate);
+
+        // Clear any previously selected leave date
+        $('#leave_date').val('');
     });
+
     $('#start_Date').on('change', function () {
         $('#start_Date').datepicker('hide');
     });
 
+
+    // $('#probation_start_date').datepicker({
+    //     format: 'dd-mm-yyyy',
+    //     autoclose: true, // Optional: close picker after selection
+    //     todayHighlight: true // Optional: highlight today's date
+    // });
+    // $('#probation_start_date').on('change', function () {
+    //     $('#probation_start_date').datepicker('hide');
+    // });
+
+    // $('#probation_end_date').datepicker({
+    //     format: 'dd-mm-yyyy',
+    //     autoclose: true, // Optional: close picker after selection
+    //     todayHighlight: true // Optional: highlight today's date
+    // });
+    // $('#probation_end_date').on('change', function () {
+    //     $('#probation_end_date').datepicker('hide');
+    // });
+
+    // $('#probation_renew_date').datepicker({
+    //     format: 'dd-mm-yyyy',
+    //     autoclose: true, // Optional: close picker after selection
+    //     todayHighlight: true // Optional: highlight today's date
+    // });
+    // $('#probation_renew_date').on('change', function () {
+    //     $('#probation_renew_date').datepicker('hide');
+    // });
+
+    // START DATE
     $('#probation_start_date').datepicker({
         format: 'dd-mm-yyyy',
-        autoclose: true, // Optional: close picker after selection
-        todayHighlight: true // Optional: highlight today's date
-    });
-    $('#probation_start_date').on('change', function () {
-        $('#probation_start_date').datepicker('hide');
+        autoclose: true,
+        todayHighlight: true
+    }).on('changeDate', function (e) {
+        const startDate = e.date;
+
+        // Clear & reset End Date
+        $('#probation_end_date').val('').datepicker('setStartDate', new Date(startDate.getTime() + 86400000));
+
+        // Clear & reset Renew Date
+        $('#probation_renew_date').val('').datepicker('setStartDate', null);
     });
 
+    // END DATE
     $('#probation_end_date').datepicker({
         format: 'dd-mm-yyyy',
-        autoclose: true, // Optional: close picker after selection
-        todayHighlight: true // Optional: highlight today's date
-    });
-    $('#probation_end_date').on('change', function () {
-        $('#probation_end_date').datepicker('hide');
+        autoclose: true,
+        todayHighlight: true
+    }).on('changeDate', function (e) {
+        const startDateStr = $('#probation_start_date').val();
+        if (!startDateStr) {
+            alert('Please select the Probation Start Date first.');
+            $(this).val('');
+            $('#probation_start_date').focus();
+            return;
+        }
+
+        const [d, m, y] = startDateStr.split('-');
+        const startDate = new Date(y, m - 1, d);
+        const endDate = e.date;
+
+        if (endDate <= startDate) {
+            alert('End Date must be after Start Date.');
+            $(this).val('');
+            return;
+        }
+
+        // Clear & reset Renew Date
+        $('#probation_renew_date').val('').datepicker('setStartDate', new Date(endDate.getTime() + 86400000));
     });
 
+    // RENEW DATE
     $('#probation_renew_date').datepicker({
         format: 'dd-mm-yyyy',
-        autoclose: true, // Optional: close picker after selection
-        todayHighlight: true // Optional: highlight today's date
-    });
-    $('#probation_renew_date').on('change', function () {
-        $('#probation_renew_date').datepicker('hide');
+        autoclose: true,
+        todayHighlight: true
+    }).on('changeDate', function (e) {
+        const endDateStr = $('#probation_end_date').val();
+        if (!endDateStr) {
+            alert('Please select the Probation End Date first.');
+            $(this).val('');
+            $('#probation_end_date').focus();
+            return;
+        }
+
+        const [d, m, y] = endDateStr.split('-');
+        const endDate = new Date(y, m - 1, d);
+        const renewDate = e.date;
+
+        if (renewDate <= endDate) {
+            alert('Renew Date must be after End Date.');
+            $(this).val('');
+        }
     });
 
+
+    // Initialize Leave Date
     $('#leave_date').datepicker({
         format: 'dd-mm-yyyy',
-        autoclose: true, // Optional: close picker after selection
-        todayHighlight: true // Optional: highlight today's date
+        autoclose: true,
+        todayHighlight: true
+    }).on('changeDate', function (e) {
+        const leaveDate = e.date;
+        const startDateStr = $('#start_Date').val();
+
+        if (!startDateStr) {
+            alert('Please select the Start Date first.');
+            $(this).val('');
+            $('#start_Date').focus();
+            return;
+        }
+
+        // Convert startDate string to Date
+        const parts = startDateStr.split('-');
+        const startDate = new Date(parts[2], parts[1] - 1, parts[0]);
+
+        // Manual check (in case someone edits the input manually)
+        if (leaveDate <= startDate) {
+            alert('Leave Date must be greater than Start Date.');
+            $(this).val('');
+        }
     });
+
     $('#leave_date').on('change', function () {
         $('#leave_date').datepicker('hide');
     });
+
 
     $("#addStaffWorkerModal").scroll(function () {
         $('#DOB').datepicker('place');
@@ -76,6 +179,27 @@ $(document).ready(function () {
         $('#probation_end_date').datepicker('place');
         $('#probation_renew_date').datepicker('place');
         $('#leave_date').datepicker('place');
+    });
+
+    // Validate leave date after it's picked
+    $('#leave_date').on('changeDate', function () {
+        let startDate = $('#start_Date').val();
+        let leaveDate = $('#leave_date').val();
+
+        // Check both dates are filled
+        if (startDate && leaveDate) {
+            // Convert dd-mm-yyyy to Date object
+            let partsStart = startDate.split('-');
+            let partsLeave = leaveDate.split('-');
+
+            let start = new Date(partsStart[2], partsStart[1] - 1, partsStart[0]); // yyyy, mm-1, dd
+            let leave = new Date(partsLeave[2], partsLeave[1] - 1, partsLeave[0]);
+
+            if (leave <= start) {
+                alert('Leave date must be greater than start date.');
+                $('#leave_date').val(''); // Clear invalid leave date
+            }
+        }
     });
 
 });
