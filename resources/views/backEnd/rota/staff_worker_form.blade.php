@@ -33,7 +33,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="" class="col-lg-3 col-sm-3 control-label">Surname *</label>
+                                            <label for="" class="col-lg-3 col-sm-3 control-label">Surname <span class="radColor">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" name="surname" id="" value="" placeholder="Enter name">
                                             </div>

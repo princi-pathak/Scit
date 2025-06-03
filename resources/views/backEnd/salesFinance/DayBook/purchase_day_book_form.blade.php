@@ -39,18 +39,27 @@
                                         <select class="form-control" id="Supplier_input" name="supplier_id">
                                             <option value="">Select Supplier</option>
                                         </select>
+                                        @error('supplier_id')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Date</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="date" id="Date_input" value="{{ isset($purchase_day_book) ? \Carbon\Carbon::parse($purchase_day_book->date)->format('d-m-Y') : '' }}" placeholder="Date">
+                                        @error('date')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Net</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="netAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->netAmount : '' }}" id="net_amount" placeholder="Net" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                        @error('netAmount')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -66,18 +75,27 @@
                                         <select class="form-control" id="vat_input" name="Vat">
                                             <option value="">Select VAT</option>
                                         </select>
+                                        @error('Vat')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="vatAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->vatAmount : '' }}" id="vat_amount" placeholder="VAT Amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" readonly>
+                                        @error('vatAmount')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="grossAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->grossAmount : '' }}" id="gross_amount" placeholder="Gross" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" readonly>
+                                          @error('grossAmount')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">

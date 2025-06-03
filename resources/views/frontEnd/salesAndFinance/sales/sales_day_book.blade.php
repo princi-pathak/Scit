@@ -109,11 +109,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Vat Amount </label>
+                                <label>Vat Amount <span class="radStar">*</span></label>
                                 <input type="text" class="form-control editInput" name="vatAmount" id="vat_amount" placeholder="" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Gross</label>
+                                <label>Gross <span class="radStar">*</span></label>
                                 <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" placeholder="" readonly>
                             </div>
                         </div>
