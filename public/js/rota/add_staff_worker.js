@@ -1,5 +1,12 @@
 $(document).ready(function () {
 
+     setTimeout(function() {
+        // Hide all alerts after 3 seconds
+        document.querySelectorAll('.alert').forEach(function(alert) {
+            alert.style.display = 'none';
+        });
+    }, 3000); // 3000 milliseconds = 3 seconds
+    
     $('#staffWorker').DataTable({
         dom: 'Bfrtip', // B = Buttons
         buttons: [
