@@ -12,9 +12,9 @@
                 <section class="panel">
                     <header class="panel-heading">
                         General Admin
-                        <span class="tools pull-right">
+                        <!-- <span class="tools pull-right">
                             <a href="javascript:;" class="fa fa-times"></a>
-                        </span>
+                        </span> -->
                     </header>
                     <div class="panel-body cus-panelbody">
                         <div class="col-md-6 col-sm-6 col-xs-6 petty-cash">

@@ -78,6 +78,7 @@ class PettyCashController extends Controller
     }
     public function saveExpend(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        // echo $request->purchase_amount;die;
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $id=$request->id;
@@ -96,8 +97,8 @@ class PettyCashController extends Controller
             if($id ==''){
                 $month=Carbon::parse($request->expend_date)->format('m');
                 $year=Carbon::parse($request->expend_date)->format('Y');
-                $checkVal=$this->previous_month_data($home_id,$month,$year);
-                $checkPurchaseAmount=$checkVal['previousbalanceOnCard']+$request->fund_added;
+                $checkVal=$this->check_CardclosingAmount($request->expend_date);
+                $checkPurchaseAmount=$checkVal+$request->fund_added;
                 if($checkVal == 0 && $request->fund_added == ''){
                     return response()->json(['success'=>false,'message'=>'Please fill fund added first','data'=>array()]);
                 }else if($request->purchase_amount > $checkPurchaseAmount){
@@ -156,8 +157,8 @@ class PettyCashController extends Controller
             if($id == ''){
                 $month=Carbon::parse($request->expend_date)->format('m');
                 $year=Carbon::parse($request->expend_date)->format('Y');
-                $checkVal=$this->previous_Cash_month_data($home_id,$year,$month);
-                $checkCashOut=$checkVal['total_balanceInCash']+$request->petty_cashIn;
+                $checkVal=$this->check_CashclosingAmount($request->expend_date);
+                $checkCashOut=$checkVal+$request->petty_cashIn;
                 if($checkVal == 0 && $request->petty_cashIn == ''){
                     return response()->json(['success'=>false,'message'=>'Please fill petty cash in first','data'=>array()]);
                 }else if($request->cash_out > $checkCashOut){
@@ -206,7 +207,7 @@ class PettyCashController extends Controller
             $current_month = $month;
             $current_year=$year;
         }
-        // $data=['previousMonth'=>$previousMonth,'previousYear'=>$previousYear];
+        // $data=['current_month'=>$current_month,'current_year'=>$current_year];
         // return $data;
         // $previous_data = ExpendCard::getAllExpendCard()
         //         ->where(['home_id'=>$home_id])
@@ -268,9 +269,9 @@ class PettyCashController extends Controller
             $totalBalanceFund=$totalBalanceFund+$val->fund_added;
             if($count == 0){
                 $fundAmount=$val->fund_added;
-                $prvious_date=$val->expend_date;
                 $count=1;
             }
+            $prvious_date=$val->expend_date;
             $db_date=date('m',strtotime($val->expend_date));
             if($date != $db_date || $date == null){$date=$db_date;}
         }   
@@ -279,8 +280,8 @@ class PettyCashController extends Controller
         $balanceOnCard=$calculation-$cash;
         $data=[
             'previousbalanceOnCard'=>$balanceOnCard,
-            'previousfundAmount'=>$fundAmount,
-            'previouspurchase_amount'=>$sumPurchaseCashIn,
+            // 'previousfundAmount'=>$fundAmount,
+            // 'previouspurchase_amount'=>$sumPurchaseCashIn,
             'prvious_date'=>$prvious_date,
 
         ];
@@ -569,52 +570,52 @@ class PettyCashController extends Controller
             return response()->json(['success'=>false,'message'=>'Invalid Id given','data'=>array()]);
         }
     }
-    // public function check_CardclosingAmount($expend_date){
-    //     // echo "<pre>";print_r($request->all());die;
-    //     $home_id=Auth::user()->home_id;
-    //     $user_id=Auth::user()->id;
-    //     // $expend_date=$request->expend_date;
-    //     $date = Carbon::parse($expend_date);
-    //     $current_month=now()->month;
-    //     $month = $date->format('m')+1;
-    //     if($current_month == $date->format('m')){
-    //         $month = $date->format('m');
-    //     }
-    //     $year = $date->format('Y');
-    //     $startDate=Carbon::parse($expend_date)->format('m');
-    //     // return $startDate;
-    //     $previous_month_data=$this->previous_month_data($home_id,$month,$year);
-    //     $expendCard = ExpendCard::getAllExpendCard()
-    //     ->where(['home_id'=>$home_id])
-    //         ->whereMonth('expend_date', $startDate)
-    //         ->whereYear('expend_date', now()->year)
-    //         ->get();
-    //         // echo "<pre>";print_r($expendCard);die;
-    //     $cash=Cash::getAllCash()
-    //         ->where(['home_id'=>$home_id])
-    //         ->whereMonth('cash_date', $startDate)
-    //         ->whereYear('cash_date', now()->year)
-    //         ->sum('petty_cashIn');
-    //     $enter=0;
-    //     $balance_bfwd=0;
-    //     $purchase_amount=0;
-    //     $fund_added=0;
-    //     foreach($expendCard as $val){
-    //         if($enter == 0){
-    //             $balance_bfwd=$val->balance_bfwd;
-    //             $enter=1;
-    //         }
-    //         $purchase_amount=$purchase_amount+$val->purchase_amount;
-    //         $fund_added=$fund_added+$val->fund_added;
+    public function check_CardclosingAmount($expend_date){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id=Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        // $expend_date=$request->expend_date;
+        $date = Carbon::parse($expend_date);
+        // $current_month=now()->month;
+        // $month = $date->format('m')+1;
+        // if($current_month == $date->format('m')){
+            $month = $date->format('m');
+        // }
+        $year = $date->format('Y');
+        $startDate=Carbon::parse($expend_date)->format('m');
+        // return $startDate;
+        $previous_month_data=$this->previous_month_data($home_id,$month,$year);
+        $expendCard = ExpendCard::getAllExpendCard()
+        ->where(['home_id'=>$home_id])
+            ->whereMonth('expend_date', $startDate)
+            ->whereYear('expend_date', now()->year)
+            ->get();
+            // echo "<pre>";print_r($expendCard);die;
+        $cash=Cash::getAllCash()
+            ->where(['home_id'=>$home_id])
+            ->whereMonth('cash_date', $startDate)
+            ->whereYear('cash_date', now()->year)
+            ->sum('petty_cashIn');
+        $enter=0;
+        $balance_bfwd=0;
+        $purchase_amount=0;
+        $fund_added=0;
+        foreach($expendCard as $val){
+            if($enter == 0){
+                $balance_bfwd=$val->balance_bfwd;
+                $enter=1;
+            }
+            $purchase_amount=$purchase_amount+$val->purchase_amount;
+            $fund_added=$fund_added+$val->fund_added;
 
-    //     }
-    //     // return $data_arr=['fund'=>$fund_added,'balance_bfwd'=>$balance_bfwd,'previous_month'=>$previous_month_data['previousbalanceOnCard']];
-    //     $sum=($previous_month_data['previousbalanceOnCard'] != 0) ? $previous_month_data['previousbalanceOnCard'] : $balance_bfwd+$fund_added;
-    //     return $calculate=$sum-$cash-$purchase_amount;
+        }
+        // return $data_arr=['fund'=>$fund_added,'balance_bfwd'=>$balance_bfwd,'previous_month'=>$previous_month_data['previousbalanceOnCard']];
+        $sum=($previous_month_data['previousbalanceOnCard'] != 0) ? $previous_month_data['previousbalanceOnCard'] : $balance_bfwd+$fund_added;
+        return $calculate=$sum-$cash-$purchase_amount;
         
-    //     // echo "<pre>";print_r($previous_month_data);die;
-    //     // return response()->json(['success'=>true,'message'=>'Closing Amount For Card','data'=>$previous_month_data]);
-    // }
+        // echo "<pre>";print_r($previous_month_data);die;
+        // return response()->json(['success'=>true,'message'=>'Closing Amount For Card','data'=>$previous_month_data]);
+    }
     public function check_CashclosingAmount($cash_date){
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
