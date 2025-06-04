@@ -50,25 +50,25 @@
                             <a href="{{ url('/rota') }}">
                                 <div class="sys-mngmnt-box" >
                                     <div class="sys-mngmnticon"> <i class="fa fa-users" aria-hidden="true"></i> </div>
-                                    <p>Add Staff </p>
+                                    <p>Rotas </p>
                                 </div>
                             </a>
                         </div>
 
                         <div class="col-md-6 col-sm-6 col-xs-6">
-                            <a href="#!">
+                            <a href="{{ url('/rota/staff') }}">
                                 <div class="sys-mngmnt-box" >
-                                    <div class="sys-mngmnticon"> <i class="fa fa-plus-circle" aria-hidden="true"></i> </div>
-                                    <p>Actions </p>
+                                    <div class="sys-mngmnticon"> <i class="fa fa-users" aria-hidden="true"></i> </div>
+                                    <p>Add Staff </p>
                                 </div>
                             </a>
                         </div>
 
                          <div class="col-md-6 col-sm-6 col-xs-6">
-                            <a href="#!">
+                            <a href="{{ url('/rota/annual-leave') }}">
                                 <div class="sys-mngmnt-box" >
-                                    <div class="sys-mngmnticon"> <i class="fa fa-plus-circle" aria-hidden="true"></i> </div>
-                                    <p>Actions </p>
+                                    <div class="sys-mngmnticon">  <i class="fa fa-bed fa-lg"></i> </div>
+                                    <p>Annual Leave </p>
                                 </div>
                             </a>
                         </div>
