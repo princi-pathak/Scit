@@ -238,7 +238,7 @@
                                         <td class="border-end">{{ $val->depreciation_cfwd  ? '£' . $val->depreciation_cfwd : ''}}</td>
                                         <td>{{ $val->nbv_bfwd  ? '£' . $val->nbv_bfwd : ''}}</td>
                                         <td class="border-end">{{ $val->nbv_cfwd  ? '£' . $val->nbv_cfwd : ''}}</td>
-                                        <td> <a href="{{url('sales-finance/assets/asset-register-edit?key=' . base64_encode($val->id))}}" class="openModalBtn"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                                        <td> <a href="{{url('admin/sales-finance/assets/asset-register-edit?key=' . base64_encode($val->id))}}" class="openModalBtn"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
                                         <a href="#!" class="register_delete" data-id="{{$val->id}}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                         </td>
                                         <!-- <td>
@@ -291,7 +291,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header terques-bg">
-                <h5 class="modal-title pupTitle" id="Fixed_Asset_RegisterLabel"></h5>
+                <h5 class="modal-title pupTitle" id="Fixed_Asset_RegisterLabel">Add Fixed Asset Register</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -302,16 +302,17 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-6 col-lg-6 col-xl-6">
+                            <label class="form_heading">Asset Details</label>
                             <div class="form-group row">
                                 <label for="inputName" class="col-sm-4 control-label">Asset Name <span class="radStar">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="date" class="form-control" id="asset_name" name="asset_name" value="" max="">
+                                    <input type="text" class="form-control" id="asset_name" name="asset_name" value="" max="">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputName" class="col-sm-4 control-label">Date <span class="radStar">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="date" class="form-control" id="date" name="date" value="" max="">
+                                    <input type="date" class="form-control" id="date" name="date" value="">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -350,37 +351,81 @@
                             <div class="form-group row">
                                 <label for="inputName" class="col-sm-2 control-label">C/fwd</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control numberInput" onkeyup="calculate()" id="cost_fwd" name="cost_fwd" value="">
+                                    <input type="text" class="form-control" id="cost_fwd" name="cost_fwd" readonly>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <label class="form_heading">Cost</label>
+                            <label class="form_heading">Depreciation</label>
                             <div class="form-group row">
-                                <label for="inputName" class="col-sm-2 control-label">B/fwd</label>
+                                <label for="inputName" class="col-sm-2 control-label">Type of Depreciation</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control numberInput" onkeyup="calculate()" id="cost_bfwd" name="cost_bfwd" value="">
+                                    <select name="depreciation_type" id="depreciation_type" class="form-control editInput" onchange="calculate()">
+                                    <?php foreach ($DepreciationTypeList as $type) { ?>
+                                    <option value="{{$type->id}}" data-attr="{{$type->percentage}}" 
+                                        <?php if (isset($register) && $register->depreciation_type == $type->id) {
+                                                echo "selected";
+                                            } ?>>{{$type->percentage}} (%)</option>
+                                    <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputName" class="col-sm-2 control-label">Additions</label>
+                                <label for="inputName" class="col-sm-2 control-label">B/fwd</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control numberInput" onkeyup="calculate()" id="cost_addition" name="cost_addition" value="">
+                                    <input type="text" class="form-control numberInput" onkeyup="calculate()" id="depreciation_bfwd" name="depreciation_bfwd" value="">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="inputName" class="col-sm-2 control-label">Disposals</label>
+                                <label for="inputName" class="col-sm-2 control-label">Disps</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control numberInput" onkeyup="calculate()" id="cost_disposal" name="cost_disposal" value="">
+                                    <input type="text" class="form-control numberInput" onkeyup="calculate()" id="depreciation" name="depreciation" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-sm-2 control-label">Charge</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control numberInput" id="charge" name="charge" value="" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="inputName" class="col-sm-2 control-label">C/fwd</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control numberInput" onkeyup="calculate()" id="cost_fwd" name="cost_fwd" value="">
+                                    <input type="text" class="form-control" id="depreciation_cfwd" name="depreciation_cfwd" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <label class="form_heading">N.B.V</label>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-sm-2 control-label">B/fwd</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control editInput" id="nbv_bfwd" name="nbv_bfwd" placeholder="00.00" readonly value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputName" class="col-sm-2 control-label">C/fwd</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control editInput" id="nbv_cfwd" name="nbv_cfwd" placeholder="00.00" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputName" class="col-sm-4 control-label">NQ</label>
+                                <div class="col-sm-8">
+
+                                    <label class="radio-inline">
+                                        <input type="radio"  name="nq" id="yes" value="1">Yes
+                                    </label>
+                                    <label class="radio-inline">
+                                            <input type="radio" name="nq" id="no" value="0" checked="">No
+                                    </label>
+                                    <label for="" class="ps-2"><small>(NO CAPITAL ALLOWANCES CLAIM)</small></label>
+
                                 </div>
                             </div>
                         </div>
@@ -389,8 +434,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="save_data" class="btn btn-primary" onclick="save_expend_card()">Add</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+                <!-- <button type="button" id="save_data" class="btn btn-primary" onclick="getSaveData()">Add</button> -->
             </div>
         </div>
     </div>

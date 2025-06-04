@@ -92,7 +92,7 @@ function saveCash(){
                 } else if (response.success === false) {
                     $('#message_save').addClass('error-message').text(response.message).show();
                     setTimeout(function() {
-                        $('#error-message').text('').fadeOut();
+                        $('#message_save').removeClass('error-message').text('').fadeOut();
                     }, 3000);
                 }
             },
