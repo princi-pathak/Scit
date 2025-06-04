@@ -14,9 +14,15 @@ use App\Home;
 class AssetBackendController extends Controller
 {
     public function asset_category(Request $request){
-        $data['page']='assets_category';
-        $data['list']=AssetCategory::getAllAssetCategory()->get();
-        return view('backEnd.salesFinance.asset.asset_category',$data);
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $data['page']='assets_category';
+            $data['list']=AssetCategory::getAllAssetCategory()->get();
+            return view('backEnd.salesFinance.asset.asset_category',$data);
+        }else{
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
     }
     public function asset_category_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -64,9 +70,15 @@ class AssetBackendController extends Controller
         }
     }
     public function depreciation_type(Request $request){
-        $data['page'] = 'depreciation_type';
-        $data['list'] = DepreciationType::getDepreciationType()->get();
-        return view('backEnd.salesFinance.asset.depreciation_type',$data);
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $data['page'] = 'depreciation_type';
+            $data['list'] = DepreciationType::getDepreciationType()->get();
+            return view('backEnd.salesFinance.asset.depreciation_type',$data);
+        }else{
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
     }
     public function depreciation_type_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -106,20 +118,25 @@ class AssetBackendController extends Controller
         }
     }
     public function asset_register(Request $request){
-
-        $data['page']='asset_register';
-        $cat_id=base64_decode($request->cat);
-        $query=AssetRegistration::getAllAssetRegistration();
-        $selected_cat_id=0;
-        if(isset($cat_id) && $cat_id !=''){
-            $selected_cat_id=$cat_id;
-            $query->where('asset_type',$cat_id);
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $data['page']='asset_register';
+            $cat_id=base64_decode($request->cat);
+            $query=AssetRegistration::getAllAssetRegistration();
+            $selected_cat_id=0;
+            if(isset($cat_id) && $cat_id !=''){
+                $selected_cat_id=$cat_id;
+                $query->where('asset_type',$cat_id);
+            }
+            $data['list']=$query->orderBy('id','desc')->get();
+            // echo "<pre>";print_r($data['list']);die;
+            $data['AssetCategoryList']=AssetCategory::getAllAssetCategory()->where('status',1)->get();
+            $data['DepreciationTypeList']=DepreciationType::getDepreciationType()->where('status',1)->get();
+            $data['selected_cat_id']=$selected_cat_id;
+            return view('backEnd.salesFinance.asset.asset_register',$data);
+        }else{
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['list']=$query->orderBy('id','desc')->get();
-        // echo "<pre>";print_r($data['list']);die;
-        $data['AssetCategoryList']=AssetCategory::getAllAssetCategory()->where('status',1)->get();
-        $data['DepreciationTypeList']=DepreciationType::getDepreciationType()->where('status',1)->get();
-        $data['selected_cat_id']=$selected_cat_id;
-        return view('backEnd.salesFinance.asset.asset_register',$data);
     }
 }
