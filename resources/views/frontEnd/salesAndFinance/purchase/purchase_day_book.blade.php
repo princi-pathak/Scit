@@ -127,7 +127,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="vat_amount">VAT Amount</label>
+                                            <label for="vat_amount">VAT Amount <span class="radStar">*</span></label>
                                             <div>
                                                 <input type="text" class="form-control editInput" name="vatAmount" id="vat_amount" readonly>
                                             </div>
@@ -135,19 +135,19 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="gross_amount">Gross</label>
+                                            <label for="gross_amount">Gross <span class="radStar">*</span></label>
                                             <div>
                                                 <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="reclaim_amount"> Reclaim <span class="radStar">*</span></label>
+                                            <label for="reclaim_amount"> Reclaim </label>
                                             <div>
                                                 <input type="text" class="form-control editInput" name="reclaim" id="reclaim_amount" placeholder="" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="not_claim"> Not Claim <span class="radStar">*</span></label>
+                                            <label for="not_claim"> Not Claim </label>
                                             <div>
                                                 <input type="text" class="form-control editInput" name="not_reclaim" id="not_claim" placeholder="" readonly>
                                             </div>

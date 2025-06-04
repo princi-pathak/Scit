@@ -99,6 +99,9 @@
                                 </div>
                                 <div class="btn-group">
                                     <a href="{{ url('admin/sales-finance/expend-card') }}" class="btn btn-primary "> Expend</a>
+                                </div> 
+                                <div class="btn-group">
+                                    <a href="{{ url('admin/sales-finance/petty-cash') }}" class="btn btn-primary "> Cash</a>
                                 </div>  
                                 <!-- <div class="btn-group">
                                     <button class="btn btn-default"> Export </button>

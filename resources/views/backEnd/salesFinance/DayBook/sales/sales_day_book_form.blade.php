@@ -24,15 +24,6 @@
                     </div>
                     @endif
 
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <div class="panel-body">
                         <div class="position-center">
                             <form class="form-horizontal" method="POST" action="{{ url('/admin/sales-finance/sales/save-sales-day-book') }}" role="form">
@@ -45,24 +36,36 @@
                                         <select class="form-control" id="getCustomerList" name="customer_id">
                                             <option value="">Select Customer</option>
                                         </select>
+                                        @error('customer_id')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Date</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" id="Date_input" name="date" placeholder="Date" value="{{ isset($sales_day_book->date) ? date('d-m-Y', strtotime($sales_day_book->date)) : '' }}">
+                                        @error('date')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Invoice</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" id="Invoice_input" name="invoice_no" placeholder="Invoice no." value="{{ isset($sales_day_book->invoice_no) ? $sales_day_book->invoice_no : '' }}">
+                                        @error('invoice_no')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Net</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" placeholder="Net Amount" name="netAmount" value="{{ isset($sales_day_book->netAmount) ? $sales_day_book->netAmount : '' }}" id="net_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                        @error('netAmount')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -72,18 +75,27 @@
                                         <select class="form-control" id="vat_input" name="Vat">
                                             <option value="">Select VAT</option>
                                         </select>
+                                        @error('Vat')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" placeholder="VAT Amount" name="vatAmount" id="vat_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($sales_day_book->vatAmount) ? $sales_day_book->vatAmount : '' }}" readonly>
+                                        @error('vatAmount')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" placeholder="Gross" name="grossAmount" id="gross_amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ isset($sales_day_book->grossAmount) ? $sales_day_book->grossAmount : '' }}" readonly>
+                                        @error('grossAmount')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
