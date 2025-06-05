@@ -140,7 +140,7 @@
                     <div class="panel-body">
                         <div class="position-center">
                             <form id="assetRegisterFormData" class="customerForm">
-                                <input type="hidden" id="id" name="id" value="">
+                                <input type="hidden" id="id" name="id" value="<?php if(isset($register) && $register->id !=''){echo $register->id;}?>">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -294,7 +294,7 @@
     </section>
 </section>
 <script>
-  var assetSaveUrl = "{{ url('admin/sales-finance/assets/asset-regiser-save') }}";
+  var assetSaveUrl = "{{ url('admin/sales-finance/assets/asset-register-save') }}";
   var redirectUrl = "{{url('admin/sales-finance/assets/asset-register')}}";
 </script>
 

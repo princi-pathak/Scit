@@ -301,6 +301,22 @@
                     <input type="hidden" id="id" name="id" value="">
                     @csrf
                     <div class="row">
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_error popup_alrt_msg" style="display: none;">
+                                <div class="popup_notification-box">
+                                    <div class="alert alert-danger alert-dismissible m-0" role="alert">
+                                        <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Success!</strong> <span class="popup_error_txt">Some error occured, Please try again after sometime.</span>.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_success popup_alrt_msg" style="display: none;">
+                                <div class="popup_notification-box">
+                                    <div class="alert alert-success alert m-0" role="alert">
+                                        <button type="button" class="close close-msg-btn"><span aria-hidden="true">×</span></button>
+                                        <strong>Success!</strong> <span class="popup_success_txt">Data is made editable</span>.
+                                    </div>
+                                </div>
+                            </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <label class="form_heading">Asset Details</label>
                             <div class="form-group row">
@@ -435,7 +451,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
-                <!-- <button type="button" id="save_data" class="btn btn-primary" onclick="getSaveData()">Add</button> -->
+                <button type="button" id="save_data" class="btn btn-primary" onclick="getSaveData()">Add</button>
             </div>
         </div>
     </div>
@@ -444,8 +460,9 @@
 </section>
 
 <script>
-    var assetDepreciationTypeSaveUrl = "{{url('admin/sales-finance/assets/depreciation-type-save')}}";
-    var assetDepreciationTypeEditUrl = "{{url('admin/sales-finance/assets/depreciation-type-edit')}}";
+    var assetSaveUrl = "{{ url('admin/sales-finance/assets/asset-register-save') }}";
+    var redirectUrl = "{{url('admin/sales-finance/assets/asset-register')}}";
+    var deleteAssetRegisterUrl = "{{ url('admin/sales-finance/assets/asset-register-delete') }}";
     function status_change(id, status) {
         var token = '<?php echo csrf_token(); ?>'
         $.ajax({

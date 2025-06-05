@@ -155,7 +155,7 @@ class AssetBackendController extends Controller
         }
     }
     public function asset_regiser_save(Request $request){
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
         $validator = Validator::make($request->all(), [
             'asset_name'=>'required',
             'asset_type'=>'required',
@@ -167,7 +167,10 @@ class AssetBackendController extends Controller
         }
         
         try {
-            $request['company_id'] = Home::getCompanyIdFromHome();            
+            $admin   = Session::get('scitsAdminSession');
+            $home_id = $admin->home_id;
+            $request['company_id'] = Home::where('id', $home_id)->value('admin_id');
+            // echo "<pre>";print_r($request->all());die;
             $asset_registration=AssetRegistration::saveAssetRegistration($request->all());
             if($request->id == ''){
                 return response()->json(['success' => true,'message'=>'The Aseet Registration has been saved succesfully.', 'data' => $asset_registration]);
@@ -175,6 +178,16 @@ class AssetBackendController extends Controller
                 return response()->json(['success' => true,'message'=>'The Aseet Registration has been updated succesfully.', 'data' => $asset_registration]);
             }
         } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function asset_register_delete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            AssetRegistration::find($request->id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            // Log::error('Error saving Tag: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
