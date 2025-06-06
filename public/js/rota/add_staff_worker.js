@@ -708,11 +708,11 @@ function deleteStaff(id) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
-                alert('Deleted successfully');
+                alert(response.message);
                 location.reload(); // or remove the row from DOM
             },
             error: function (err) {
-                alert('Something went wrong!');
+                alert(response.message);
             }
         });
     }

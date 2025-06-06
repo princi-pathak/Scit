@@ -2157,6 +2157,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/staff-worker', 'index')->name('backend.staff_worker');
 			Route::get('/staff-worker-add', 'create')->name('backend.staff_worker.add');
 			Route::post('/save-staff-worker-data', 'store');
+			Route::delete('/staff-delete/{id}', 'destroy')->name('staff.delete');
+			Route::get('/edit-staff-worker/{id}', 'edit')->name('backend.staff_worker.edit');
+
 
 		});
 	});

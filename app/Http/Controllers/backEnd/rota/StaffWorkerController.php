@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\backEnd\rota;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use App\Http\Requests\Rota\StaffWorkerRequest;
 use App\Services\Rota\StaffWorkerService;
 use Illuminate\Support\Facades\Log;
@@ -59,5 +59,22 @@ class StaffWorkerController extends Controller
             Log::error('Form submission failed: ' . $e->getMessage());
             return redirect()->route('backend.staff_worker.add')->with('error', 'Something went wrong while saving. Please try again.');
         }
+    }
+
+    public function destroy($id){
+        try {
+            $this->staffWorkerService->deleteStaffWorkerData($id);
+            return response()->json(['status' => 'success', 'message' => 'Staff deleted successfully!']);
+        } catch (Exception $e) {
+            Log::error('Staff deletion failed: ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong while deleting. Please try again.']);
+        }
+    }
+
+    public function edit($id){
+        $data['page'] = "staff_worker";
+        $data['staffWorker'] = $this->staffWorkerService->getData($id);
+        // dd($data['staffWorker']);
+        return view('backEnd/rota/staff_worker_form', $data);        
     }
 }
