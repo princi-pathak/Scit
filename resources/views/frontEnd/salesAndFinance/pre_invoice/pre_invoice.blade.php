@@ -648,6 +648,9 @@
                 data: $('#preInvoiceForm').serialize(),
                 success: function (response) {
                     console.log(response);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if(response.vali_error){
                         alert(response.vali_error);
                         return false;
@@ -780,6 +783,9 @@
             .then(data => {
                 console.log(data);
                 // return false;
+                if (isAuthenticated(data) == false) {
+                    return false;
+                }
                 if(data.success === true){
                     openInvoiceModal('edit');
                     var current_ratePerWeek=data.data;
