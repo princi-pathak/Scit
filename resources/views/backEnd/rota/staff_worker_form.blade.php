@@ -43,7 +43,7 @@
                                             <input type="hidden" name="staff_id" value="{{ isset($staffWorker) ? $staffWorker->id : '' }}">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Surname <span class="radStar">*</span></label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="surname" id="" value="{{ isset($staffWorker) ?  $staffWorker->surname : '' }}" placeholder="Enter name">
+                                                <input type="text" class="form-control" name="surname" id="" value="{{ isset($staffWorker) ?  $staffWorker->surname : '' }}" placeholder="Enter Surname">
                                                 @error('surname')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
@@ -52,7 +52,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Forename <span class="radStar">*</span></label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="forename" id="" value="{{ isset($staffWorker) ? $staffWorker->forename : ''}}" placeholder="Enter name ">
+                                                <input type="text" class="form-control" name="forename" id="" value="{{ isset($staffWorker) ? $staffWorker->forename : ''}}" placeholder="Enter Forename ">
                                                 @error('forename')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
@@ -79,7 +79,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Date of Birth <span class="radStar">*</span></label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="DOB" value="{{ isset($staffWorker) && !empty($staffWorker->DOB) ? \Carbon\Carbon::parse($staffWorker->DOB)->format('d-m-Y') : '' }}" id="DOB" placeholder="DOB" readonly>
+                                                <input type="text" class="form-control" name="DOB" value="{{ isset($staffWorker) && !empty($staffWorker->DOB) ? \Carbon\Carbon::parse($staffWorker->DOB)->format('d-m-Y') : '' }}" id="DOB" placeholder="Date of Birth" readonly>
                                                 @error('DOB')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
@@ -127,7 +127,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Rate of Pay (£) <span class="radStar">*</span></label>
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control" name="rate_of_pay" value="{{ isset($staffWorker) ? $staffWorker->rate_of_pay : ''}}" id="" placeholder="">
+                                                <input type="text" class="form-control" name="rate_of_pay" value="{{ isset($staffWorker) ? $staffWorker->rate_of_pay : ''}}" id="" placeholder="Rate of Pay">
                                                 @error('rate_of_pay')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
@@ -155,7 +155,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Job Role <span class="radStar">*</span></label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="job_role" id="" value="{{ isset($staffWorker) ? $staffWorker->job_role : '' }}" placeholder="Enter Your Role">
+                                                <input type="text" class="form-control" name="job_role" id="" value="{{ isset($staffWorker) ? $staffWorker->job_role : '' }}" placeholder="Enter Job Role">
                                                 @error('job_role')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
@@ -165,7 +165,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">NIN <span class="radStar">*</span></label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="NIN" id="" value="{{ isset($staffWorker) ? $staffWorker->NIN : '' }}" placeholder="Enter name">
+                                                <input type="text" class="form-control" name="NIN" id="" value="{{ isset($staffWorker) ? $staffWorker->NIN : '' }}" placeholder="Enter NIN">
                                                 @error('NIN')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
@@ -272,7 +272,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Leave Date</label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="leave_date" value="{{ isset($staffWorker) && !empty($staffWorker->leave_date) ? \Carbon\Carbon::parse($staffWorker->leave_date)->format('d-m-Y') : '' }}" id="leave_date" readonly>
+                                                <input type="text" class="form-control" name="leave_date" value="{{ isset($staffWorker) && !empty($staffWorker->leave_date) ? \Carbon\Carbon::parse($staffWorker->leave_date)->format('d-m-Y') : '' }}" id="leave_date" placeholder="Leave Date" readonly>
                                                 @error('leave_date')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
@@ -288,7 +288,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Mobile</label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="mobile" value="{{ isset($staffWorker) ? $staffWorker->mobile : '' }}" id="" placeholder="">
+                                                <input type="text" class="form-control" name="mobile" value="{{ isset($staffWorker) ? $staffWorker->mobile : '' }}" id="" placeholder="Mobile">
                                             </div>
                                         </div>
                                         <div class="form-group">
