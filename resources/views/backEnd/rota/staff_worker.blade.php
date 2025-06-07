@@ -17,28 +17,18 @@
                         {{ session('success') }}
                     </div>
                     @endif
-
                     @if(session('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}
                     </div>
                     @endif
-
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
                             <div class="clearfix clearfix_space">
-                                <div class="col-lg-3 col-sm-3">
-                                    <input type="hidden" id="tax_id">
-                                    <select class="form-control" name="tax_rate" id="getDataOnTax">
-                                        <option value="0">Please Select</option>
-                                    </select>
-                                </div>
                                 <div class="btn-group">
-                                    <a href="{{url('admin/rota/staff-worker-add')}}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i>
-                                    </a>
+                                    <a href="{{url('admin/rota/staff-worker-add')}}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i></a>
                                 </div>
                             </div>
-
                             <section class="panel">
                                 <!-- <header class="panel-heading">
                         Dynamic Table
@@ -50,7 +40,7 @@
                     </header> -->
                                 <div class="panel-body">
                                     <div class="adv-table table-responsive">
-                                        <table class="display table table-bordered table-striped" id="dynamic-table">
+                                        <table class="display table table-bordered table-striped" id="staffWorker">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -83,345 +73,39 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-
-                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Seddon	</td>
-                                                    <td>Paul</td>
-                                                    <td>4 Milman Road, Walton</td>
-                                                    <td>L4 5SH</td>
-                                                    <td>12-12-1980</td>
-                                                    <td>38409216</td>
-                                                    <td>60-20-23</td>
-                                                    <td>13.25</td>
-                                                    <td>Qualified</td>
-                                                    <td>01-06-2020	</td>
-                                                    <td>Duty Manager</td>
-                                                    <td>JM342800A</td>
-                                                    <td>Yes-A	</td>
-                                                    <td>07-06-2020	</td>
-                                                    <td>01-04-2025	</td>
-                                                    <td>02-06-2025	</td>
-                                                    <td>No</td>
-                                                    <td>No Student Loan</td>
-                                                    <td>Yes</td>
-                                                    <td>001715234301</td>
-                                                    <td>No	</td>
-                                                    <td>...</td>
-                                                    <td>aliceleigh93@icloud.com</td>
-                                                    <td>000</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                               
-                                                
+                                                 @foreach($staffWorkers as $key => $staffData)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $staffData->surname }}</td>
+                                            <td>{{ $staffData->forename }}</td>
+                                            <td>{{ $staffData->address }}</td>
+                                            <td>{{ $staffData->postCode }}</td>
+                                            <td class="white_space_nowrap">{{ \Carbon\Carbon::parse($staffData->DOB)->format('d-m-Y')  }}</td>
+                                            <td>{{ $staffData->account_num }}</td>
+                                            <td>{{ $staffData->sort_code }}</td>
+                                            <td>{{ $staffData->rate_of_pay }}</td>
+                                            <td>@if($staffData->level == "qualified") Qualified @else Unqualified @endif</td>
+                                            <td class="white_space_nowrap">{{ \Carbon\Carbon::parse($staffData->start_date)->format('d-m-Y') }}</td>
+                                            <td>{{ $staffData->job_role }}</td>
+                                            <td>{{ $staffData->NIN }}</td>
+                                            <td>@if($staffData->starter_declaration == 1 ) Yes-A @elseif($staffData->starter_declaration == 2) Yes-B @elseif($staffData->starter_declaration == 3) Yes-C @else No @endif</td>
+                                            <td>{{ \Carbon\Carbon::parse($staffData->probation_start_date)->format('d-m-Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($staffData->probation_end_date)->format('d-m-Y')  }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($staffData->probation_renew_date)->format('d-m-Y')  }}</td>
+                                            <td>@if($staffData->after_probation_enrolled == "1") Yes @else No @endif</td>
+                                            <td>@if($staffData->student_loan == "no_student_loan") No Student Loan @elseif($staffData->student_loan == "postgraduate") Postgraduate @elseif($staffData->student_loan == "plan_1") Plan 1 @elseif($staffData->student_loan == "plan_2") Plan 2 @elseif($staffData->student_loan == "plan_4") Plan 4 @endif</td>
+                                            <td>@if($staffData->dbs_clear == 1) Yes @else No @endif</td>
+                                            <td>{{ $staffData->dbs_number }}</td>
+                                            <td>@if($staffData->dbs_update_service == 1) Yes @else No @endif</td>
+                                            <td class="white_space_nowrap">{{ $staffData->leave_date ? \Carbon\Carbon::parse($staffData->leave_date)->format('d-m-Y') : '' }}</td>
+                                            <td>{{ $staffData->email }}</td>
+                                            <td>{{ $staffData->mobile }}</td>
+                                            <td>
+                                                <a href="{{ url('/admin/rota/edit-staff-worker/'.$staffData->id) }}" class="openModalBtn openAddStaffModel" ><i class="fa fa-pencil" aria-hidden="true"></i></a> |
+                                                <a href="#!" onclick="deleteStaff({{ $staffData->id }})" class="deleteBtn"><i class="fa fa-trash radStar" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                        @endforeach                                                
                                             </tbody>
                                             <!-- <tfoot>
                                                 <tr>
@@ -436,7 +120,6 @@
                                     </div>
                                 </div>
                             </section>
-
                         </div>
                     </div>
                 </div>
@@ -445,6 +128,9 @@
         <!-- page end-->
     </div>
 </section>
-
+<script>
+    deleteStaffWorker = "{{ url('admin/rota/staff-delete') }}";
+</script>
+<script type="text/javascript" src="{{ url('public/js/rota/add_staff_worker.js') }}"></script>
 
 @endsection

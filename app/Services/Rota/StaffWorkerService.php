@@ -41,6 +41,10 @@ class StaffWorkerService
     {
         return StaffWorker::where('id', $id)->update(['deleted_at' => now()]);
     }
+
+    public function getData($id){
+        return StaffWorker::where('id', $id)->first();
+    }
    
    
 }
