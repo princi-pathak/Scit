@@ -233,7 +233,7 @@ class PettyCashBackendController extends Controller
             $fund_added=$fund_added+$val->fund_added;
 
         }
-        $sum=($previous_month_data['previousbalanceOnCard'] != 0) ? $previous_month_data['previousbalanceOnCard'] : $balance_bfwd+$fund_added;
+        $sum=$previous_month_data['previousbalanceOnCard']+$fund_added;
         return $calculate=$sum-$cash-$purchase_amount;
     }
     public function expend_delete(Request $request){
@@ -407,7 +407,7 @@ class PettyCashBackendController extends Controller
             $petty_cashIn=$petty_cashIn+$val->petty_cashIn;
             $cash_out=$cash_out+$val->cash_out;
         }
-        $sum=($balance_bfwd == 0) ? $previous_Cash_month_data['total_balanceInCash'] : $balance_bfwd+$petty_cashIn;
+        $sum=$previous_Cash_month_data['total_balanceInCash']+$petty_cashIn;
         return $calculate=$sum-$cash_out;
     }
     public function cash_delete(Request $request){

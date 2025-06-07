@@ -5,7 +5,7 @@ namespace App\Http\Controllers\backEnd\salesfinance\asset;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Validator;
+use Validator,Session;
 use App\Models\DepreciationType;
 use App\Models\AssetCategory;
 use App\Models\AssetRegistration;
@@ -137,6 +137,58 @@ class AssetBackendController extends Controller
             return view('backEnd.salesFinance.asset.asset_register',$data);
         }else{
             return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+     public function asset_regiser_add(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $id=base64_decode($request->key);
+            $data['register']=AssetRegistration::find($id);
+            // echo "<pre>";print_r($data['register']);die;
+            $data['page']='assets';
+            $data['AssetCategoryList']=AssetCategory::getAllAssetCategory()->where('status',1)->get();
+            $data['DepreciationTypeList']=DepreciationType::getDepreciationType()->where('status',1)->get();
+            return view('backEnd.salesFinance.asset.addAssetRegister',$data);
+        }else{
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function asset_regiser_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'asset_name'=>'required',
+            'asset_type'=>'required',
+            'date'=>'required',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        
+        try {
+            $admin   = Session::get('scitsAdminSession');
+            $home_id = $admin->home_id;
+            $request['company_id'] = Home::where('id', $home_id)->value('admin_id');
+            // echo "<pre>";print_r($request->all());die;
+            $asset_registration=AssetRegistration::saveAssetRegistration($request->all());
+            if($request->id == ''){
+                return response()->json(['success' => true,'message'=>'The Aseet Registration has been saved succesfully.', 'data' => $asset_registration]);
+            }else{
+                return response()->json(['success' => true,'message'=>'The Aseet Registration has been updated succesfully.', 'data' => $asset_registration]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function asset_register_delete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            AssetRegistration::find($request->id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            // Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

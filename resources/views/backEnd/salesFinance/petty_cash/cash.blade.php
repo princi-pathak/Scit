@@ -62,7 +62,7 @@
 
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
-                            <!-- <h4>Closing Petty Cash balance = <span id="PettyCashbalance">£0.00</span></h4> -->
+                            <h4>Closing Petty Cash balance = <span id="PettyCashbalance">£0.00</span></h4>
                              <div class="col-lg-3 col-sm-3" style="margin-bottom:15px">
                                 <label for="inputName" class="control-label">Month:</label>
                                 <select name="month" id="month" class="form-control">
@@ -296,7 +296,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
                 <button type="button" id="save_data" class="btn btn-primary" onclick="saveCash()">Add</button>
             </div>
         </div>
@@ -310,7 +310,7 @@
     $(document).ready(function() {
         getDatatable();
         var total_balanceInCash = $("#total_balanceInCash").val();
-        // $("#PettyCashbalance").text("£" + Number(total_balanceInCash).toFixed(2));
+        $("#PettyCashbalance").text("£" + Number(total_balanceInCash).toFixed(2));
         // alert(typeof(totalBalanceOnCard));
     });
 </script>

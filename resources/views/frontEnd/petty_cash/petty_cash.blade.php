@@ -218,14 +218,7 @@
                                 <!-- <div class="form-group col-md-12">
                                     <label> Balance b/fwd <span class="radStar">*</span></label>
                                     <div> -->
-                                        <?php if ($previous_Cash_month_data['total_balanceInCash'] == 0) { ?>
-                                            <input type="hidden" class="form-control editInput numberInput 
-                                            <?php if (isset($cashLastId) && $cashLastId != '') {
-                                                echo "disabled-tab";
-                                            } ?>" id="balance_bfwd" name="balance_bfwd" <?php if (isset($cashLastId) && $cashLastId != '') { ?> value="{{$cashLastId->balance_bfwd}}" <?php } ?> onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
-                                        <?php } else { ?>
-                                            <input type="hidden" class="form-control editInput numberInput disabled-tab" id="balance_bfwd" name="balance_bfwd" value="{{$previous_Cash_month_data['total_balanceInCash']}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && value.length<10">
-                                        <?php } ?>
+                                        
                                     <!-- </div>
                                 </div> -->
                                 <div class="form-group col-md-12">
