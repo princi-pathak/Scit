@@ -610,7 +610,7 @@ class PettyCashController extends Controller
 
         }
         // return $data_arr=['fund'=>$fund_added,'balance_bfwd'=>$balance_bfwd,'previous_month'=>$previous_month_data['previousbalanceOnCard']];
-        $sum=($previous_month_data['previousbalanceOnCard'] != 0) ? $previous_month_data['previousbalanceOnCard'] : $balance_bfwd+$fund_added;
+        $sum=$previous_month_data['previousbalanceOnCard'] +$fund_added;
         return $calculate=$sum-$cash-$purchase_amount;
         
         // echo "<pre>";print_r($previous_month_data);die;
@@ -628,6 +628,7 @@ class PettyCashController extends Controller
         $year = $date->format('Y');
         $startDate=Carbon::parse($cash_date)->format('m');
         // return $startDate;
+        // return $data=['home_id'=>$home_id,'year'=>$year,'month'=>$month];die;
         $previous_Cash_month_data=$this->previous_Cash_month_data($home_id,$year,$month);
         $cash = Cash::getAllCash()
         ->where(['home_id'=>$home_id])
@@ -640,14 +641,10 @@ class PettyCashController extends Controller
         $petty_cashIn=0;
         $cash_out=0;
         foreach($cash as $val){
-            if($entercash == 0){
-                $balance_bfwd=$val->balance_bfwd;
-                $entercash=1;
-            }
             $petty_cashIn=$petty_cashIn+$val->petty_cashIn;
             $cash_out=$cash_out+$val->cash_out;
         }
-        $sum=($balance_bfwd == 0) ? $previous_Cash_month_data['total_balanceInCash'] : $balance_bfwd+$petty_cashIn;
+        $sum=$previous_Cash_month_data['total_balanceInCash']+$petty_cashIn;
         return $calculate=$sum-$cash_out;
     }
 }

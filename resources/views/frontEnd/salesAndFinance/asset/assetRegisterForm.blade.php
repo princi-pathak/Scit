@@ -30,7 +30,7 @@
                 <input type="hidden" name="id" id="id" value="<?php if(isset($register) && $register->id !=''){echo $register->id;}?>">
                 @csrf
                 <div class="mt-4">
-                  <label class="form_heading border-0 p-0">Home</label>
+                  <label class="form_heading border-0 p-0">Asset Details</label>
                   <div class="row">
                     <div class="col-md-4 col-lg-4 col-xl-3">
                       <div class="form-group">
