@@ -30,7 +30,7 @@ class StaffWorkerService
         }
 
         $id = isset($data['staff_id']) ? $data['staff_id'] : null;
-
+        // dd($data);
         return StaffWorker::updateOrCreate(['id' => $id], array_merge(['home_id' => $homeId], $data));
     }
     public function getStaffWorkerData($homeId)

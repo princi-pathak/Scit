@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title',' Purchase Day Book')
+@section('title',' Staff Worker')
 @section('content')
 
 <!--main content start-->

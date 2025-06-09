@@ -282,6 +282,9 @@
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Email Address </label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" name="email" id="" value="{{ isset($staffWorker) ? $staffWorker->email : '' }}" placeholder="Enter mail ">
+                                                @error('email')
+                                                <div class="radStar">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
