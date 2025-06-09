@@ -92,7 +92,7 @@ class checkUserAuth
                 $path = preg_replace('/\d/', '', $path);
                 // print_r($path); die;
                 //paths that does not need permssions
-                $allowed_path = array('send-modify-request','bug-report','bug-report/add','notif/response','ajax.getCountriesList','bulk_delete','getAllSupplierPurchaseOrder');
+                $allowed_path = array('send-modify-request','bug-report','bug-report/add','notif/response','ajax.getCountriesList','bulk_delete','getAllSupplierPurchaseOrder','purchase/getSupplierData','purchase/purchase-daybook/data','getTaxRate','purchase/reclaimPercantage','purchase/purchase-day-book-reclaim-per','purchase/getPurchaseExpense','sales/get-sales-day-book/data','customers/getCustomerList','sales-finance/assets/asset-register-search','petty-cash/getAllExpendCash','petty-cash/cash_filter','find_project','expense_image_delete','find_job','find_appointment','searchExpenses','searchCustomerName','get_supplier_details','lead/getCountriesList','get_customer_details_front','getCustomerSiteDetails','result_product_calculation','vat_tax_details','item/searchProduct','getAllAttachmens','getAllNewTaskList','delete_po_attachment','searchPurchase_qoute_ref','searchPurchase_job_ref','getAllPurchaseInvoices','getAllPaymentPaids','paymentPaidDelete','savePurchaseOrderRecordPayment','item/get_product_categories','item/getProductCounts','item/getProductList','purchase-orders-search','purchase-order-invoices','purchase-order-statements','customers/getCustomerSiteDetails','getTags','invoices/getAllInvoiceNewTaskList','invoices/customer_visibleUpdate');
                 //,'/general/petty_cash/check-balance'
                 //if requested path is not one of them that don't need permission. then check it for permission 
                 if(!in_array($path, $allowed_path)) {
@@ -115,6 +115,7 @@ class checkUserAuth
 
     function checkPermission($path){
         //return true; //by passing route check 
+        // return $path;
         $user_rights = Auth::user()->access_rights;
         $user_rights = explode(',',$user_rights);
         $rights      = AccessRight::select('id','route')->whereIn('id',$user_rights)->get()->toArray();

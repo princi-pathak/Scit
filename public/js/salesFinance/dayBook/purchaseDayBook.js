@@ -78,7 +78,10 @@ $(document).ready(function () {
                 tax_rate: selectedTaxRate  // only pass if filtering is needed
             },
             success: function (response) {
-                console.log("response.data", response.data);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
+                console.log("loadPurchaseDayBookData.data", response.data);
                 allPurchaseData = response.data;
                 populateTable(allPurchaseData);
             },
@@ -168,6 +171,9 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 alert(response.message);
                 window.location.reload();
             },
@@ -215,6 +221,9 @@ $(document).on("click", ".deleteBtn", function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
             success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.success) {
                     alert(response.message);
                     window.location.reload();
@@ -234,6 +243,9 @@ function getSupplierList() {
         url: getSuppliersList,
         method: 'GET',
         success: function (response) {
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             console.log("supplier list data:", response.data);
             const selectedSupplierId = document.getElementById('supplier_id').value;
             const supplierSelect = document.getElementById('Supplier_input');
@@ -265,6 +277,9 @@ function getPurchaseExpense() {
         url: getPurchaseExpenses,
         method: 'GET',
         success: function (response) {
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             console.log("purchase expenses:", response.data);
             const selectedexpednseId = document.getElementById('expenses_id').value;
             const expensesSelect = document.getElementById('expenses');
@@ -296,6 +311,9 @@ function taxRate(dropdown) {
         url: getTaxRate,
         method: 'GET',
         success: function (response) {
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             console.log("response.data", response.data);
             if (Array.isArray(response.data)) {
                 // const dropdown = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
@@ -352,6 +370,9 @@ document.addEventListener('DOMContentLoaded', function () {
             type: "GET",
             url: calculatedData,
             success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 console.log("reclaimPercantage ", response.data);
                 var vatAmount = vatAmountInput.value;
                 console.log("vatAmount", vatAmount);
@@ -386,6 +407,9 @@ document.addEventListener('DOMContentLoaded', function () {
             url: reclaimPercantage,
             data: '',
             success: function (data) {
+                if (isAuthenticated(data) == false) {
+                    return false;
+                }
                 console.log("Response ", data);
                 if (data == "0") {
                     getCalculatedData(); // Now this function is defined and accessible

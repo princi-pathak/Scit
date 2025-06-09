@@ -105,6 +105,9 @@ $(document).ready(function () {
                 tax_rate: selectedTaxRate  // only pass if filtering is needed
             },
             success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 console.log("response.data", response.data);
                 allSalesData = response.data;
                 renderSalesDayBook(allSalesData);
@@ -235,15 +238,23 @@ $(document).ready(function () {
     $("#saveSalesDayBookModal").on("click", function (e) {
         // alert();
         e.preventDefault(); // Prevent page reload
-
+        var sales_day_book_id=$("#sales_day_book_id").val();
+        var url =saveSalesDayBook;
+        if(sales_day_book_id !=''){
+            url=editSalesDayBook;
+        }
+        alert(url)
         $.ajax({
-            url: saveSalesDayBook, // Laravel route
+            url: url, // Laravel route
             type: "POST",
             data: $('#salesDayBookForm').serialize(), // Serialize form data
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 alert(response.message);
                 window.location.reload();
             },
@@ -314,6 +325,9 @@ $(document).on("click", ".deleteBtn", function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
                 success: function (response) {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (response.success) {
                         // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
                         alert(response.message);
@@ -355,6 +369,9 @@ function getCustomerList() {
         url: customerList,
         method: 'GET',
         success: function (response) {
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             console.log("Customer list data:", response.data);
             const selectedCustomerId = document.getElementById('customer_id').value;
             const customerSelect = document.getElementById('getCustomerList');
@@ -385,6 +402,9 @@ function taxRate(dropdown) {
         url: getTaxRate,
         method: 'GET',
         success: function (response) {
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
             console.log("response.data", response.data);
             if (Array.isArray(response.data)) {
                 // const dropdown = document.getElementById('vat_input'); // Assumes ID is 'vat_input'
