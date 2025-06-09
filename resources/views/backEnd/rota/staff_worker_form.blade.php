@@ -293,8 +293,8 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-lg-12 text-right">
+                                                <button type="submit" class="btn btn-default">Cancel</button>
                                                 <button type="submit" class="btn btn-primary">Save</button>
-                                                <button type="submit" class="btn btn-default">Cencel</button>
                                             </div>
                                         </div>
                                     </div>
