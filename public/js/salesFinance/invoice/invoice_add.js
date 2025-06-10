@@ -1240,9 +1240,6 @@ function customer_visible(id, customer_visibleData) {
         },
         success: function (response) {
             // console.log(response);return false;
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
             if (response.success === true) {
                 location.reload();
             } else {
@@ -1267,9 +1264,6 @@ function mobile_user_visible(id, mobile_user_visibleData) {
         },
         success: function (response) {
             // console.log(response);return false;
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
             if (response.success === true) {
                 location.reload();
             } else {
@@ -1296,9 +1290,6 @@ $(document).on('click', '.attachment_delete', function () {
             },
             success: function (data) {
                 console.log(data);
-                if (isAuthenticated(data) == false) {
-                    return false;
-                }
             }
         });
     }
