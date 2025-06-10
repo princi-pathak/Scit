@@ -952,6 +952,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	//Task Allocation
 	Route::match(['get', 'post'], '/my-profile/task-allocation/view/{manager_id}', 'App\Http\Controllers\frontEnd\PersonalManagement\TaskAllocationController@index');
 
+	//Time Sheet
+	Route::match(['get', 'post'], '/my-profile/time-sheet/add', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@save');
+
+
 	// -------- Header ------------------------//
 	//Dynamic forms
 	//Route::match(['get','post'], '/system/plans/', 'App\Http\Controllers\frontEnd\SystemManagement\PlanBuilderController@index');

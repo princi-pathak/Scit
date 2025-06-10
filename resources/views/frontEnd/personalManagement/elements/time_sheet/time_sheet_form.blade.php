@@ -21,10 +21,6 @@
         justify-content: end;
     }
 
-    /* .buttonStaffTab .nav-item.active button {
-    background-color: #57c8f1;
-    color: #fff;
-} */
     .buttonStaffTab button.active {
         background-color: #57c8f1;
         color: #fff;
@@ -37,7 +33,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close rmp-modal-close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add Staff Details (Leave Tracker) </h4>
+                <h4 class="modal-title">Add Staff Details (Time Sheet) </h4>
             </div>
             <div class="modal-body tabStaff">
                 <!-- tabs staff -->
@@ -45,58 +41,58 @@
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
                         <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button">Record</button>
-
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <!-- <div class="col-md-12 col-sm-12 col-xs-12"> -->
                         <!-- Add new Details -->
                         <div class="add-new-box risk-tabs custm-tabs">
-                            <form action="" id="" class="customerForm">
+                            <form action="" id="time_sheet" class="customerForm ">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="row formDtail">
+                                        <div class="row formDtail ps-4 pe-4">
                                             <div class="col-md-6 form-group">
                                                 <label> Name </label>
-                                                <input type="text" class="form-control editInput" id="" name="name">
+                                                <input type="hidden" class="form-control editInput" id="manager_id" name="user_id"> 
+                                                <input type="text" class="form-control editInput" id="" value="{{ $manager_profile->name }}" name="name"> 
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label> Date <span class="radStar">*</span></label>
-                                                <input type="text" class="form-control editInput" id="Leave_startDate" name="Leave Start Date">
+                                                <input type="date" class="form-control editInput" id="timeSheetDate" name="date">
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label> Hours <span class="radStar">*</span></label>
-                                                <input type="text" class="form-control editInput" id="" name="name">
+                                                <label> Hours </label>
+                                                <input type="text" class="form-control editInput" id="" name="hours">
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label> Sleep <span class="radStar">*</span></label>
-                                                <input type="text" class="form-control editInput" id="" name="name">
+                                                <label> Sleep </label>
+                                                <input type="text" class="form-control editInput" id="" name="sleep">
                                             </div>
-
                                             <div class="col-md-6 form-group">
-                                                <label> Wake Night <span class="radStar">*</span></label>
-                                                <input type="text" class="form-control editInput" id="" name="name">
+                                                <label> Wake Night </label>
+                                                <input type="text" class="form-control editInput" id="" name="wake_night">
                                             </div>
-
                                             <div class="col-md-6 form-group">
-                                                <label> Disturbance <span class="radStar">*</span></label>
-                                                <input type="text" class="form-control editInput" id="" name="name">
+                                                <label> Disturbance </label>
+                                                <input type="text" class="form-control editInput" id="" name="disturbance">
                                             </div>
-
                                             <div class="col-md-6 form-group">
-                                                <label> Annual Leave <span class="radStar">*</span></label>
-                                                <input type="text" class="form-control editInput" id="" name="name">
+                                                <label> Annual Leave </label>
+                                                <input type="text" class="form-control editInput" id="" name="annual_leave">
                                             </div>
-                                            
                                             <div class="col-md-6 form-group">
-                                                <label> On Call <span class="radStar">*</span></label>
-                                                <input type="text" class="form-control editInput" id="" name="name">
+                                                <label> On Call </label>
+                                                <input type="text" class="form-control editInput" id="" name="on_call">
                                             </div>
-
                                             <div class="col-md-12 form-group">
                                                 <label> Comments <span class="radStar">*</span></label>
                                                 <textarea class="form-control textareaInput" placeholder="Type your comments..." rows="3" id="" name="comments"></textarea>
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
+                                <div class="modal-footer customer_Form_Popup">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-warning" id="save_time_sheet">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -107,26 +103,18 @@
                                 <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Staff Records </h3>
                             </div>
                             <!-- records staff -->
-                            <div>
+                            <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 cog-panel rows">
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                        <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                                         <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                             <div class="input-group">
-                                                <!-- <input type="hidden" name="su_bmp_id[]" value="548" disabled="disabled" class="edit_bmp_id_548"> -->
                                                 <a href="#"><span><input type="text" class="form-control" style="cursor:pointer" name="" readonly="" value="Record Form (26-03-2025 )" maxlength="255"></span></a>
-                                                <!-- <a href="#" class="dyn-form-view-data" id="548"><span><input type="text" class="form-control" style="cursor:pointer" name="" readonly="" value="Record Form (26-03-2025 )" maxlength="255"></span></a> -->
                                                 <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
                                                     <i class="fa fa-cog"></i>
                                                     <div class="pop-notifbox">
                                                         <ul class="pop-notification" type="none">
                                                             <li> <a href="#" data-dismiss="modal" data-target="viewEditStaff" aria-hidden="true"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
                                                             <li> <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                                            <!-- <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="548"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
-                                                            <li> <a href="#" class="dyn_form_del_btn" id="548"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li> -->
-                                                            <!-- <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="548" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
-                                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="548" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
-                                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="548" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li> -->
                                                         </ul>
                                                     </div>
                                                 </span>
@@ -136,13 +124,9 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12 cog-panel rows">
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                        <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                                         <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                             <div class="input-group popovr">
-
-                                                <!-- <input type="hidden" name="su_bmp_id[]" value="547" disabled="disabled" class="edit_bmp_id_547"> -->
                                                 <a href="#"><span><input type="text" class="form-control" style="cursor:pointer" name="" readonly="" value="Record (26-03-2025 )" maxlength="255"></span></a>
-                                                <!-- <a href="#" class="dyn-form-view-data" id="547"><span><input type="text" class="form-control" style="cursor:pointer" name="" readonly="" value="Record (26-03-2025 )" maxlength="255"></span></a> -->
 
                                                 <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
                                                     <i class="fa fa-cog"></i>
@@ -150,11 +134,6 @@
                                                         <ul class="pop-notification" type="none">
                                                             <li> <a href="#"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
                                                             <li> <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                                            <!-- <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="547"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
-                                                            <li> <a href="#" class="dyn_form_del_btn" id="547"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li> -->
-                                                            <!-- <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="547" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
-                                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="547" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
-                                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="547" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li> -->
                                                         </ul>
                                                     </div>
                                                 </span>
@@ -163,11 +142,13 @@
                                     </div>
                                 </div>
 
+                                
                             </div>
+                            <div class="modal-footer customer_Form_Popup">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-warning" id="">Save</button>
+                                </div>
                             <!-- Record Staff -->
-
-
-
 
                             <!-- alert messages -->
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_success popup_alrt_msg">
@@ -202,30 +183,14 @@
                                     $('.popup_alrt_msg').hide();
                                 });
                             </script>
-                            <!-- <div class="modal-space modal-pading view-dyn-record">
-                            record shown using Ajax
                         </div>
-                         -->
-
-                        </div>
-                    </div>
-
-
+                    <!-- </div> -->
                 </div>
                 <!-- tabs staff -->
-
-
-
             </div>
-            <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-warning" id="">Save</button>
-            </div>
+
         </div>
     </div>
-
-
-
 </div>
 <!--Leave Tracker model End -->
 
@@ -246,36 +211,41 @@
                                     <label> Name </label>
                                     <input type="text" class="form-control editInput" id="" name="name">
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
+                  
                 </form>
             </div>
         </div>
     </div>
-
 </div>
 
 <!-- modal edit and view -->
-<script>
-    $('#Leave_startDate').datepicker({
-        format: 'dd-mm-yyyy'
-    });
 
-    $('#Leave_startDate').on('change', function() {
-        $('#Leave_startDate').datepicker('hide');
-    });
-
-    $("#salesDayBookModel").scroll(function() {
-        $('#Leave_startDate').datepicker('place');
-    });
-</script>
 
 <script>
+    $(document).ready(function() {
+      $('#save_time_sheet').on('click', function(e) {
+        e.preventDefault(); // prevent form from submitting normally
+        
+        const formData = $('#time_sheet').serialize();
+
+        $.ajax({
+          url: "{{ url('/my-profile/time-sheet/add') }}", // Replace with your actual backend endpoint
+          method: 'POST',
+          data: JSON.stringify(formData),
+          contentType: 'application/json',
+          success: function(response) {
+           console.log("response",response);
+          },
+          error: function(xhr, status, error) {
+            alert('Error saving data: ' + error);
+          }
+        });
+      });
+    });
+
     //detail option
     $(document).on('click', '.my-task-detail', function() {
 
@@ -293,6 +263,8 @@
         $(document).on('click', '.leave_tracker_form', function() {
 
             var manager_id = $(this).attr('manager_id');
+            console.log("manager_id2", manager_id);
+            document.getElementById('manager_id').value = manager_id;
 
             $('.loader').show();
             $('body').addClass('body-overflow');
@@ -320,9 +292,9 @@
 </script>
 
 <script>
-    $('#leaveTrackerModal').on('scroll', function() {
-        $('.dpYears').datepicker('place')
-    });
+    // $('#leaveTrackerModal').on('scroll', function() {
+    //     $('.dpYears').datepicker('place')
+    // });
 
     //3rd tab search
     $('input[name=\'sm_date\']').closest('.srch-field').hide();

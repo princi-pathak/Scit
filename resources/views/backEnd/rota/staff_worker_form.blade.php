@@ -95,8 +95,7 @@
                                                 @enderror
                                             </div>
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control" name="account_num"
-                                                    value="{{ old('account_num', $staffWorker->account_num ?? '') }}" placeholder="Acct Number">
+                                                <input type="text" class="form-control" name="sort_code" value="{{ old('sort_code', $staffWorker->sort_code ?? '') }}" placeholder="Sort Code">
                                                 @error('sort_code')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
@@ -149,8 +148,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Start Date <span class="radStar">*</span></label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="rate_of_pay"
-                                                    value="{{ old('rate_of_pay', $staffWorker->rate_of_pay ?? '') }}" placeholder="Rate of Pay">
+                                                <input type="text" class="form-control" name="start_date" value="{{ old('start_date', isset($staffWorker->start_date) ? \Carbon\Carbon::parse($staffWorker->start_date)->format('d-m-Y') : '') }}" id="start_Date" placeholder="Start Date" readonly>
                                                 @error('start_date')
                                                 <div class="radStar">{{ $message }}</div>
                                                 @enderror
