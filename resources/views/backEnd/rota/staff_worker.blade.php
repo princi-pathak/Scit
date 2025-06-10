@@ -73,7 +73,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                 @foreach($staffWorkers as $key => $staffData)
+                                                @foreach($staffWorkers as $key => $staffData)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $staffData->surname }}</td>
