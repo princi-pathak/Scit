@@ -42,6 +42,7 @@ use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
 use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
 use App\Http\Controllers\backEnd\rota\StaffWorkerController;
 use App\Http\Controllers\backEnd\salesfinance\asset\AssetBackendController;
+use App\Http\Controllers\backEnd\generalAdmin\HomeCostingController;
 
 
 
@@ -2250,6 +2251,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('asset-register-delete', 'asset_register_delete');
 		});
 	});
+	// HomeCostingController code 
+	Route::controller(HomeCostingController::class)->group(function(){
+		Route::prefix('general-admin')->group(function(){
+			Route::get('/home-costing','index');
+		});
+	});
+	// end here
 });
 
 //super admin path

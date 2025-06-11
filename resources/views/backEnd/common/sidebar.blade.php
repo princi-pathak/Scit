@@ -176,7 +176,7 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if (($page == 'agenda_meeting') || ($page == 'petty_cash') || ($page == 'log_book') || ($page == 'weekly_allowance') || ($page == 'staff_training')) {
+                    <a href="javascript:;" class="<?php if (($page == 'agenda_meeting') || ($page == 'petty_cash') || ($page == 'log_book') || ($page == 'weekly_allowance') || ($page == 'staff_training') || ($page == 'home_costing')) {
                                                         echo 'active';
                                                     } ?>">
                         <i class="fa fa-cogs"></i>
@@ -198,6 +198,9 @@
                         </li>
                         <li class="{{ ($page == 'staff_training') ? 'active' : '' }}">
                             <a href="{{ url('admin/general-admin/staff/training') }}">Staff Training </a>
+                        </li>
+                        <li class="{{ ($page == 'home_costing') ? 'active' : '' }}">
+                            <a href="{{ url('admin/general-admin/home-costing') }}">Home Costing </a>
                         </li>
                     </ul>
                 </li>
