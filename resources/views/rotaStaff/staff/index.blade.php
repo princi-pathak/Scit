@@ -1,6 +1,6 @@
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@section('title','Add Staff')
+@section('title','Staff')
 
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
@@ -17,7 +17,7 @@
             <div class="col-md-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
-                        <h4>Add Staff</h4>
+                        <h4>Staff</h4>
                     </header>
                     <div class="panel-body">
                         <div class="col-lg-12">
