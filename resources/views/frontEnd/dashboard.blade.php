@@ -22,6 +22,7 @@
         <div class="container p-0">
             <div class="col-md-7 col-sm-7 col-xs-12 p-0">
             <!-- style="display: none" -->
+             @if(in_array(1, $access_rights))
                 <a href="{{ url('/service-user-management') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -37,6 +38,8 @@
                         </div>
                     </div>
                 </a>
+            @endif
+            @if(in_array(534, $access_rights))
                 <a href="{{url('service/daily-logs')}}">
                 <div class="col-md-6">
                     <div class="profile-nav alt">
@@ -54,6 +57,8 @@
                     </div>
                 </div>
             </a>
+            @endif
+            @if(in_array(535, $access_rights))
                 <a data-target="#dynmicFormModal" data-toggle="modal" class="MainNavText">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -69,6 +74,8 @@
                         </div>
                     </div>
                 </a>
+            @endif
+            @if(in_array(67, $access_rights))
                 <a href="{{ url('/system/calendar') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -84,6 +91,7 @@
                         </div>
                     </div>
                 </a>
+            @endif
                 <?php if($accessRight === true) { ?>
                 <a href="{{ url('/rota-management') }}">
                     <div class="col-md-6">
@@ -103,6 +111,7 @@
                  <div class="col-md-6">
                     <div class="profile-nav alt">
                     <!-- #PoliProcModal  -->
+                     @if(in_array(211, $access_rights))
                         <a data-target="#PoliProcModal" data-toggle="modal" class="MainNavText" >   
                             <section class="panel text-center">
                                 <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-book"></i></div>
@@ -114,8 +123,10 @@
                                 </div>
                             </section>
                         </a>
+                        @endif
                     </div>
                 </div> 
+                @if(in_array(159, $access_rights))
                 <a href="{{ url('/staff-management') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -131,6 +142,8 @@
                         </div>
                     </div>
                 </a>
+                @endif
+                @if(in_array(3, $access_rights))
                 <a href="{{ url('/system-management') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -146,7 +159,7 @@
                         </div>
                     </div>
                 </a>
-
+                @endif
                 <!-- <a href="{{ url('/view-reports') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -162,6 +175,7 @@
                         </div>
                     </div>
                 </a> -->
+                @if(in_array(172, $access_rights))
                 <a href="{{ url('/general-admin') }}">
                      <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -177,6 +191,8 @@
                         </div>
                     </div>
                 </a>
+                @endif
+                @if(in_array(324, $access_rights))
                 <a href="{{ url('/sales') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -191,6 +207,7 @@
                         </div>
                     </div>
                 </a>
+                @endif
                 <!-- <a href="{{ url('/petty-cash/child_register') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -205,6 +222,7 @@
                         </div>
                     </div>
                 </a> -->
+                @if(in_array(342, $access_rights))
                 <a href="{{ url('/finance') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
@@ -219,6 +237,7 @@
                         </div>
                     </div>
                 </a>
+                @endif
             </div>
 
             @include('frontEnd.common.sidebar_dashboard')
