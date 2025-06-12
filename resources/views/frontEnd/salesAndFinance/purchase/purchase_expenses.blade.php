@@ -114,6 +114,9 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
                 success: function (response) {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (response.success) {
                         // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
                         alert(response.message);
@@ -174,6 +177,9 @@
                 type: "POST",
                 data: $('#purchaseExpeneseForm').serialize(), // Serialize form data
                 success: function(response) {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     alert(response.message);
                     window.location.reload();
                 },

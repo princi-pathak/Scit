@@ -33,7 +33,9 @@
 <div class="row">
   <?php foreach ($access_rights as $management) { ?>
     <div class="col-sm-12 border_bottom">
+      @if(count($management['module_list']) > 0)
       <h4>{{ ucfirst($management['name']) }}</h4>
+      @endif
       <div class="row d-flex" style="flex-wrap: wrap;">
         <?php foreach ($management['module_list'] as $module) { ?>
           <div class="col-sm-4">

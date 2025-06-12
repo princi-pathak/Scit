@@ -303,7 +303,7 @@ class PettyCashController extends Controller
             $current_month = $month;
             $current_year = $year;
         }
-        // $data=['previousMonth'=>$previousMonth,'previousYear'=>$previousYear];
+        // $data=['current_month'=>$current_month,'current_year'=>$current_year];
         // return $data;
         // $cash=Cash::getAllCash()
         //         ->where(['home_id'=>$home_id])
@@ -387,7 +387,7 @@ class PettyCashController extends Controller
             if($count == 0){
                 $count=1;
                 $balance_bfwd=$val->balance_bfwd;
-                $total_balance=$val->balance_bfwd;
+                // $total_balance=$val->balance_bfwd;
             }
             $total_balance=$total_balance+$val->petty_cashIn;
             $dext='';
@@ -398,11 +398,7 @@ class PettyCashController extends Controller
             $html_data.='<tr>
                             <td>'. ++$index .'</td>
                             <td class="white_space_nowrap">'. date("Y-m-d",strtotime($val->cash_date)) .'</td>';
-                            if($date != $db_date || $date == null){$date=$db_date;
-                                $html_data.='<td>£'. ($val->balance_bfwd ?? 0) .'</td>';
-                            }else{
-                                $html_data.='<td></td>';
-                            }
+                            $html_data.='<td></td>';
                             $html_data.='<td>£'. ($val->petty_cashIn ?? 0) .'</td>
                             <td>£'. ($val->cash_out ?? 0) .'</td>
                             <td>'. $val->card_details .'</td>';
@@ -418,7 +414,8 @@ class PettyCashController extends Controller
                         </tr>';
 
         }
-        $total_balanceInCash=$total_balance-$cash_out;
+        $calculate=$previous_Cash_month_data['total_balanceInCash']+$total_balance;
+        $total_balanceInCash=$calculate-$cash_out;
         return response()->json(['success'=>true,'message'=>'Filtered Data','data'=>$search_data,'html_data'=>$html_data,'total_balance'=>$balance_bfwd,'cash_out'=>$cash_out,'balance_bfwd'=>$balance_bfwd,'petty_cashIn'=>$petty_cashIn,'total_balanceInCash'=>$total_balanceInCash]);
     }
     public function expand_card_filter(Request $request){

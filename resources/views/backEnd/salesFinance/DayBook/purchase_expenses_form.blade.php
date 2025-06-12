@@ -19,25 +19,17 @@
                     @if(session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
-
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-
                     <div class="panel-body">
                         <div class="position-center">
                             <form class="form-horizontal" action="{{ url('admin/sales-finance/purchase/save-purchase-expenses-type') }}" role="form">
                                 <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">Title</label>
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">Title <span class="radStar">*</span></label>
                                     <div class="col-lg-10">
                                         <input type="hidden" name="purchase_expense_id" value="{{ isset($purchase_expenses) ? $purchase_expenses->id : '' }}">
                                         <input type="text" name="title" class="form-control" id="" value="{{ isset($purchase_expenses) ? $purchase_expenses->title : '' }}" placeholder="Title">
+                                        @error('title')
+                                            <div class="radStar">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">

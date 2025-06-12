@@ -928,6 +928,9 @@ function save_all_data() {
             processData: false,
             success: function (response) {
                 console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -1063,7 +1066,7 @@ function siteDetail() {
             id: id
         },
         success: function (response) {
-            console.log(response.data);
+            console.log(response);
             // return false;
             if (id == 0) {
                 $("#invoice_siteName").val(invoice_siteName);
@@ -1117,6 +1120,9 @@ $("#saveTag").on('click', function () {
             processData: false,
             success: function (response) {
                 // console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -1387,6 +1393,9 @@ $(document).on('click', '.reminder_delete', function () {
             },
             success: function (data) {
                 console.log(data);
+                if (isAuthenticated(data) == false) {
+                    return false;
+                }
                 if (data.success != true) {
                     alert("Something went wrong! Please try later");
                     return false;

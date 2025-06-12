@@ -184,7 +184,7 @@
         var model = "DepreciationType";
         $.ajax({
             type: "POST",
-            url: "{{url('/status_change')}}",
+            url: "{{url('/sales-finance/assets/asset-depreciation/status_change')}}",
             data: {
                 id: id,
                 status: status,
@@ -193,6 +193,9 @@
             },
             success: function(data) {
                 console.log(data);
+                if (isAuthenticated(data) == false) {
+                    return false;
+                }
                 if ($.trim(data) == 1) {
                     $("#status_meesage").text("Status Changed Successfully Done");
                     $("#msg").show();

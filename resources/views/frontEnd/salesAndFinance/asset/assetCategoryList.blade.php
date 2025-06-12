@@ -28,7 +28,7 @@
                                 <table id="assetCatTable" class="table border-top border-bottom tablechange" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" id="selectAllCheckBoxes"></th>
+                                            <!-- <th><input type="checkbox" id="selectAllCheckBoxes"></th> -->
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Status</th>
@@ -39,9 +39,9 @@
                                     <tbody id="search_data">
                                         <?php foreach ($list as $key => $val) { ?>
                                             <tr>
-                                                <td>
+                                                <!-- <td>
                                                     <div><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div>
-                                                </td>
+                                                </td> -->
                                                 <td>{{++$key}}</td>
                                                 <td>{{$val->name}}</td>
                                                 <td>
@@ -191,7 +191,7 @@
         var model = "AssetCategory";
         $.ajax({
             type: "POST",
-            url: "{{url('/status_change')}}",
+            url: "{{url('/sales-finance/assets/asset-category/status_change')}}",
             data: {
                 id: id,
                 status: status,
@@ -200,6 +200,9 @@
             },
             success: function(data) {
                 console.log(data);
+                if (isAuthenticated(data) == false) {
+                    return false;
+                }
                 if ($.trim(data) == 1) {
                     $("#status_meesage").text("Status Changed Successfully Done");
                     $("#msg").show();
