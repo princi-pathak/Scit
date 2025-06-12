@@ -31,7 +31,7 @@
                         <div class="position-center">
                             <form class="form-horizontal" method="post" action="{{ route('backend.purchase_day_book.store') }}" role="form">
                                 <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">Supplier</label>
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">Supplier <span class="radStar">*</span></label>
                                     <div class="col-lg-10">
                                         @csrf
                                         <input type="hidden" id="purchase_day_book_id" name="purchase_day_book_id" value="{{ isset($purchase_day_book) ? $purchase_day_book->id : '' }}">
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">Date</label>
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">Date <span class="radStar">*</span></label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="date" id="Date_input" value="{{ isset($purchase_day_book) ? \Carbon\Carbon::parse($purchase_day_book->date)->format('d-m-Y') : '' }}" placeholder="Date">
                                         @error('date')
@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">Net</label>
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">Net <span class="radStar">*</span></label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="netAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->netAmount : '' }}" id="net_amount" placeholder="Net" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                         @error('netAmount')
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">VAT</label>
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">VAT <span class="radStar">*</span></label>
                                     <div class="col-lg-10">
                                         <input type="hidden" id="tax_id" value="{{ isset($purchase_day_book) ? $purchase_day_book->Vat : '' }}">
                                         <select class="form-control" id="vat_input" name="Vat">
@@ -81,7 +81,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount</label>
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">VAT Amount <span class="radStar">*</span> </label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="vatAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->vatAmount : '' }}" id="vat_amount" placeholder="VAT Amount" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" readonly>
                                         @error('vatAmount')
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">Gross</label>
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">Gross <span class="radStar">*</span> </label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="grossAmount" value="{{ isset($purchase_day_book) ? $purchase_day_book->grossAmount : '' }}" id="gross_amount" placeholder="Gross" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" readonly>
                                           @error('grossAmount')

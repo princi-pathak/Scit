@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title',' Purchase Day Book')
+@section('title',' Staff Worker')
 @section('content')
 
 <!--main content start-->
@@ -73,7 +73,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                 @foreach($staffWorkers as $key => $staffData)
+                                                @foreach($staffWorkers as $key => $staffData)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $staffData->surname }}</td>

@@ -47,7 +47,7 @@ class StaffWorkerRequest extends FormRequest
             'dbs_service_update' => 'nullable|boolean',
             'student_loan' => 'nullable|in:no_student_loan,postgraduate,plan_1,plan_2,plan_4',
             'leave_date' => 'nullable|date|after:start_date',
-            'email' => 'nullable|email|max:255',
+            'email' => 'required|email|max:255',
             'mobile' => 'nullable|integer|min:11',
             'deleted_at' => 'nullable|date'
         ];

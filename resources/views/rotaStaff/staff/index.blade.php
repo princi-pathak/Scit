@@ -1,6 +1,6 @@
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@section('title','Add Staff')
+@section('title','Staff')
 
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
@@ -17,7 +17,7 @@
             <div class="col-md-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
-                        <h4>Add Staff</h4>
+                        <h4>Staff</h4>
                     </header>
                     <div class="panel-body">
                         <div class="col-lg-12">
@@ -150,7 +150,7 @@
                                 <div class="form-group col-md-6 col-lg-6">
                                     <label>Date of Birth</label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="DOB" id="DOB" type="text" autocomplete="off" class="form-control">
+                                        <input name="DOB" id="DOB" type="text" autocomplete="off" class="form-control" placeholder="Date of Birth" readonly>
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary openCalendarBtn" type="button" id="">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -202,7 +202,7 @@
                                 <div class="form-group col-md-6 col-lg-6">
                                     <label>Start Date <span class="radStar">*</span></label>
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                        <input name="start_date" id="start_Date" type="text" autocomplete="off" class="form-control">
+                                        <input name="start_date" id="start_Date" type="text" autocomplete="off" class="form-control" placeholder="Start Date" readonly>
                                         <span class="input-group-btn datetime-picker2 btn_height">
                                             <button class="btn btn-primary openCalendarBtn" type="button" id="">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -224,7 +224,7 @@
                                 </div>
                                 <!-- Starter Declaration (HMRC Starter Form Completed) -->
                                 <div class="form-group col-md-12 col-lg-12">
-                                    <label>Rate of Pay (£)</label>
+                                    <label>Rate of Pay (£) <span class="radStar">*</span></label>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <input type="test" class="form-control editInput" name="rate_of_pay" id="rate_of_pay">

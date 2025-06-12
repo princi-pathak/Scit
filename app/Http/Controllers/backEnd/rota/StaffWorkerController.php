@@ -37,6 +37,8 @@ class StaffWorkerController extends Controller
     {
 
         $validated = $request->validated();
+
+        // print_r($validated);
         // dd($validated);
 
         try {

@@ -953,6 +953,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	//Task Allocation
 	Route::match(['get', 'post'], '/my-profile/task-allocation/view/{manager_id}', 'App\Http\Controllers\frontEnd\PersonalManagement\TaskAllocationController@index');
 
+	//Time Sheet
+	Route::match(['get', 'post'], '/my-profile/{id}/time-sheet', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@index');
+	Route::match(['get', 'post'], '/my-profile/time-sheet/add', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@save');
+	Route::delete('/my-profile/time-sheet/delete/{id}', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@destroy');
+
+
 	// -------- Header ------------------------//
 	//Dynamic forms
 	//Route::match(['get','post'], '/system/plans/', 'App\Http\Controllers\frontEnd\SystemManagement\PlanBuilderController@index');
@@ -2160,8 +2166,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('/save-staff-worker-data', 'store');
 			Route::delete('/staff-delete/{id}', 'destroy')->name('staff.delete');
 			Route::get('/edit-staff-worker/{id}', 'edit')->name('backend.staff_worker.edit');
-
-
 		});
 	});
 
