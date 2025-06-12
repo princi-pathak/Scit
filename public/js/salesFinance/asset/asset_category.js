@@ -66,6 +66,9 @@ function getSaveData() {
             success: function (response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -129,6 +132,9 @@ function saveassetCategoryModal() {
             success: function (response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -175,6 +181,7 @@ $(document).on('click', '.assetCatemodal_dataFetch', function () {
     $("#statusAssetModal").val(status);
 });
 function opendepreciation_typesModal() {
+    $("#depreciation_typesForm")[0].reset();
     $("#depreciation_typesModalLabel").text("Add Depreciation Type");
     $("#depreciation_typesModal").modal('show');
 }
@@ -220,6 +227,9 @@ function savedepreciation_typesModal() {
             success: function (response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);
@@ -404,6 +414,9 @@ $(document).on('click', '.register_delete', function () {
             success: function (response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.success === true) {
                     location.reload();
                 } else {
@@ -433,6 +446,9 @@ $(document).on('click','.delete_assetCat',function(){
             success: function (response) {
                 console.log(response);
                 // return false;
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.success === true) {
                     location.reload();
                 } else {

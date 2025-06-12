@@ -273,30 +273,16 @@ class PettyCashBackendController extends Controller
             return redirect('admin/')->with('error',NO_HOME_ERR);
         }
     }
-    private function previous_Cash_month_data($year=null,$month=null){
+    private function previous_Cash_month_data($home_id=null,$year=null,$month=null){
         $current_month = Carbon::now()->month;
         $current_year = Carbon::now()->year;
-        // if ($current_month == 1) {
-        //     $previousMonth = 12;
-        //     $previousYear = $currentYear - 1;
-        // } else {
-        //     $previousMonth = $current_month - 1;
-        //     $previousYear = $currentYear;
-        // }
-        // $previousMonth = Carbon::now()->subMonth()->month;
-        // $previousYear = Carbon::now()->year;
         $home_id=Session::get('scitsAdminSession')->home_id;
         if(!empty($month)){
             $current_month = $month;
             $current_year = $year;
         }
         // $data=['current_month'=>$current_month,'current_year'=>$current_year];
-        // return $data;   
-        // $cash=Cash::getAllCash()
-        //         ->where(['home_id'=>$home_id])
-        //         ->whereMonth('cash_date',$previousMonth)
-        //         ->whereYear('cash_date', $previousYear)
-        //         ->get();
+        // return $data;
         $cashQuery = Cash::getAllCash()->where('home_id', $home_id);
         $cashQuery->where(function ($query) use ($current_month, $current_year) {
             $query->whereYear('cash_date', '<', $current_year)
@@ -525,6 +511,7 @@ class PettyCashBackendController extends Controller
         $endDate=Carbon::parse($request->endDate)->format('Y-m-d');
         $year=$request->year;
         $month=$request->month;
+        // return $data=['year'=>$year,'month'=>$month];
         $home_id=Session::get('scitsAdminSession')->home_id;
         $query = Cash::getAllCash()
         ->where(['home_id'=>$home_id])
@@ -600,7 +587,8 @@ class PettyCashBackendController extends Controller
                         </tr>';
 
         }
-        $total_balanceInCash=$total_balance-$cash_out;
+        $calculate=$previous_Cash_month_data['total_balanceInCash']+$total_balance;
+        $total_balanceInCash=$calculate-$cash_out;
         return response()->json(['success'=>true,'message'=>'Filtered Data','data'=>$search_data,'html_data'=>$html_data,'total_balance'=>$balance_bfwd,'cash_out'=>$cash_out,'balance_bfwd'=>$balance_bfwd,'petty_cashIn'=>$petty_cashIn,'total_balanceInCash'=>$total_balanceInCash]);
     }
 }

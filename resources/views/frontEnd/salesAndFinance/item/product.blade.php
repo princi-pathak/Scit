@@ -181,6 +181,9 @@
                     _token: token
                 },
                 success: function(data) {
+                    if (isAuthenticated(data) == false) {
+                        return false;
+                    }
                     location.reload();
                 }
 
@@ -209,7 +212,9 @@
                     },
                     success: function(data) {
                         console.log(data);
-
+                        if (isAuthenticated(data) == false) {
+                            return false;
+                        }
                         location.reload();
                     }
 

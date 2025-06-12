@@ -42,6 +42,7 @@ use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
 use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
 use App\Http\Controllers\backEnd\rota\StaffWorkerController;
 use App\Http\Controllers\backEnd\salesfinance\asset\AssetBackendController;
+use App\Http\Controllers\backEnd\generalAdmin\HomeCostingController;
 
 
 
@@ -341,6 +342,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/Department_status_change', 'App\Http\Controllers\ActionController@status_change');
 	Route::post('/account_code_status_change', 'App\Http\Controllers\ActionController@status_change');
 	Route::post('/tax_rate_status_change', 'App\Http\Controllers\ActionController@status_change');
+	Route::post('/sales-finance/assets/asset-category/status_change', 'App\Http\Controllers\ActionController@status_change');
+	Route::post('/sales-finance/assets/asset-depreciation/status_change', 'App\Http\Controllers\ActionController@status_change');
 
 	// Supplier Section
 	Route::controller(SupplierController::class)->group(function () {
@@ -624,7 +627,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::prefix('finance')->group(function () {
 			Route::get('/council-tax', 'index')->name('finance.council-tax');
 			Route::post('/save-council-tax', 'saveCouncilTaxData')->name('finance.saveCouncilTaxData');
-			// Route::post('/edit-council-tax', 'saveCouncilTaxData');
+			Route::post('/edit-council-tax', 'saveCouncilTaxData');
 			Route::delete('/delete-council-tax/{id}', 'destroy')->name('finance.deleteCouncilTax');
 		});
 	});
@@ -634,6 +637,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/sales-day-book', 'index')->name('sales.salesDayBook');
 			Route::get('/sales-day-book/add', 'create')->name('sales.salesDayBookCreate');
 			Route::post('/save-sales-day-book', 'store');
+			Route::post('/edit-sales-day-book', 'store');
 			Route::post('/sales-day-book/delete/{id}', 'deleteSalesDayBook')->name('salesDayBook.delete');
 			Route::get('/sales-day-book/edit/{id}', 'editSalesDayBook');
 			Route::get('/get-sales-day-book/data', 'getSalesDayBook');
@@ -2254,6 +2258,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('asset-register-delete', 'asset_register_delete');
 		});
 	});
+	// HomeCostingController code 
+	Route::controller(HomeCostingController::class)->group(function(){
+		Route::prefix('general-admin')->group(function(){
+			Route::get('/home-costing','index');
+		});
+	});
+	// end here
 });
 
 //super admin path

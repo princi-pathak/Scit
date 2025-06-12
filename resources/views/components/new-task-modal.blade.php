@@ -517,11 +517,18 @@
 </script>
 <script>
     $("#{{$saveButtonId}}").on('click', function() {
+        // const formTypeInput = document.getElementById('form_type');
+        // if (document.getElementById('nav-home').classList.contains('active')) {
+        //     formTypeInput.value = 'task_form';
+        // } else if (document.getElementById('nav-profile').classList.contains('active')) {
+        //     formTypeInput.value = 'timer_form';
+        // }
         const formTypeInput = document.getElementById('form_type');
-        if (document.getElementById('nav-home').classList.contains('active')) {
-            formTypeInput.value = 'task_form';
-        } else if (document.getElementById('nav-profile').classList.contains('active')) {
-            formTypeInput.value = 'timer_form';
+        const activeTab = document.querySelector('a.btn.active');
+
+        if (activeTab) {
+            const formType = activeTab.getAttribute('data-rel');
+            formTypeInput.value = formType.toLowerCase() === 'task' ? 'task_form' : 'timer_form';
         }
         $.ajax({
             type: "POST",

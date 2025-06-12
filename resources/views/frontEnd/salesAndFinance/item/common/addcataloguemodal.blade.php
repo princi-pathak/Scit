@@ -250,6 +250,9 @@
                     },
                     success: function(response) {
                         console.log(response);
+                         if (isAuthenticated(data) == false) {
+                            return false;
+                        }
                         location.reload();
                     },
                     error: function(xhr, status, error) {
@@ -313,6 +316,9 @@
             },
             success: function(response) {
                 console.log(response);
+                 if (isAuthenticated(data) == false) {
+                    return false;
+                }
                 if (TabId == 0 && response.success == true) {
                     alert('Data saved successfully!');
                     $("#nav-home-tab").removeClass('active');
