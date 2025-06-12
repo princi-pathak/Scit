@@ -685,6 +685,9 @@
                 processData: false,
                 success: function(response) {
                     console.log(response);
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                     if (response.vali_error) {
                         alert(response.vali_error);
                         $("#email").css('border', '1px solid red');

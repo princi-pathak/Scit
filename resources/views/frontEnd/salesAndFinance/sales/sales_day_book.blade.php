@@ -135,6 +135,7 @@
     const customerList = '{{ route("customer.ajax.getCustomerList") }}';
     const getTaxRate = '{{ route("invoice.ajax.getActiveTaxRate") }}';
     const saveSalesDayBook = "{{ url('sales/save-sales-day-book') }}";
+    const editSalesDayBook = "{{ url('sales/edit-sales-day-book') }}";
     const getSalesDayBook = "{{ url('sales/get-sales-day-book/data') }}";
 </script>
 

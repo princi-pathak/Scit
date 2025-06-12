@@ -248,16 +248,23 @@ $(document).ready(function () {
             return false; // Stop if validation fails
         }
 
-
+        var council_tax_id=$("#council_tax_id").val();
+        var url=saveData;
+        if(council_tax_id !=''){
+            url=editData;
+        }
 
         console.log($('#addCouncilTaxForm').serialize());
         $.ajax({
-            url: saveData, // Laravel route or API endpoint
+            url: url, // Laravel route or API endpoint
             method: "POST",
             data: $('#addCouncilTaxForm').serialize(),
             dataType: "json",
             success: function (response) {
                 console.log(response);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 if (response.success) {
                     alert("Success: " + response.message);
                     // alert("Data saved successfully!");
@@ -309,6 +316,9 @@ $(document).on('click', '.deleteBtn', function () {
                 _token: $('meta[name="csrf-token"]').attr('content') // for Laravel CSRF protection
             },
             success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 alert('Record deleted successfully!');
                 location.reload();
             },
