@@ -960,6 +960,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::match(['get', 'post'], '/my-profile/{id}/time-sheet', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@index');
 	Route::match(['get', 'post'], '/my-profile/time-sheet/add', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@save');
 	Route::delete('/my-profile/time-sheet/delete/{id}', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@destroy');
+	Route::post('/my-profile/time-sheet', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@getData');
+
 
 
 	// -------- Header ------------------------//
