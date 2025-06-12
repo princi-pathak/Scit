@@ -42,6 +42,7 @@ use App\Http\Controllers\backEnd\salesfinance\CouncilBackendController;
 use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
 use App\Http\Controllers\backEnd\rota\StaffWorkerController;
 use App\Http\Controllers\backEnd\salesfinance\asset\AssetBackendController;
+use App\Http\Controllers\backEnd\generalAdmin\HomeCostingController;
 
 
 
@@ -954,6 +955,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::match(['get', 'post'], '/my-profile/annual-leaves/view-record/{annual_leave_id}', 'App\Http\Controllers\frontEnd\PersonalManagement\AnnualLeaveController@view_annual_record');
 	//Task Allocation
 	Route::match(['get', 'post'], '/my-profile/task-allocation/view/{manager_id}', 'App\Http\Controllers\frontEnd\PersonalManagement\TaskAllocationController@index');
+
+	//Time Sheet
+	Route::match(['get', 'post'], '/my-profile/{id}/time-sheet', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@index');
+	Route::match(['get', 'post'], '/my-profile/time-sheet/add', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@save');
+	Route::delete('/my-profile/time-sheet/delete/{id}', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@destroy');
+
 
 	// -------- Header ------------------------//
 	//Dynamic forms
@@ -2162,8 +2169,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('/save-staff-worker-data', 'store');
 			Route::delete('/staff-delete/{id}', 'destroy')->name('staff.delete');
 			Route::get('/edit-staff-worker/{id}', 'edit')->name('backend.staff_worker.edit');
-
-
 		});
 	});
 
@@ -2253,6 +2258,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('asset-register-delete', 'asset_register_delete');
 		});
 	});
+	// HomeCostingController code 
+	Route::controller(HomeCostingController::class)->group(function(){
+		Route::prefix('general-admin')->group(function(){
+			Route::get('/home-costing','index');
+		});
+	});
+	// end here
 });
 
 //super admin path

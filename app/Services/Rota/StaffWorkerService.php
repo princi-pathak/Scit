@@ -30,12 +30,12 @@ class StaffWorkerService
         }
 
         $id = isset($data['staff_id']) ? $data['staff_id'] : null;
-
+        // dd($data);
         return StaffWorker::updateOrCreate(['id' => $id], array_merge(['home_id' => $homeId], $data));
     }
     public function getStaffWorkerData($homeId)
     {
-        return StaffWorker::where('home_id', $homeId)->where('deleted_at', null)->get();
+        return StaffWorker::where('home_id', $homeId)->where('deleted_at', null)->orderBy('created_at', 'desc')->get();
     }
     public function deleteStaffWorkerData($id)
     {
