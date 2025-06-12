@@ -29,15 +29,15 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                             <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Title: </label>
-                            <div class="col-md-9 col-sm-10 col-xs-12"> -->
-                                <!-- <div class="select-bi" style="width:100%;float:left;"> -->
-                                    <!-- <input type="text" class="form-control" placeholder="" name="log_title" /> -->
-                                <!-- </div> -->
-                                <!-- <p class="help-block"> Enter the Title of Log and add details below.</p> -->
-                            <!-- </div> -->
-                        <!-- </div> -->
+                            <div class="col-md-9 col-sm-10 col-xs-12">
+                                <div class="select-bi" style="width:100%;float:left;">
+                                    <input type="text" class="form-control" placeholder="" name="log_title" />
+                                </div>
+                                <p class="help-block"> Enter the Title of Log and add details below.</p>
+                            </div>
+                        </div>
 
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
                             <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Category: </label>
@@ -66,14 +66,14 @@
                             </div>
                         </div>
                         
-                        <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                             <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Details: </label>
                             <div class="col-md-9 col-sm-10 col-xs-12">
                                 <div class="select-bi">
                                     <textarea name="log_detail" class="form-control detail-info-txt log-detail" rows="3" ></textarea>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
 
                         <!-- new image -->
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
