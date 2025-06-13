@@ -46,7 +46,7 @@ class TimesheetController extends Controller
 
     }
 
-     public function destroy($id){
+    public function destroy($id){
         try {
            TimeSheet::where('id', $id)->update(['deleted_at' => now()]);
             return response()->json(['status' => 'success', 'message' => 'Record deleted successfully!']);
@@ -56,4 +56,15 @@ class TimesheetController extends Controller
         }
     }
 
+    public function getData(Request $request){
+
+    $query = TimeSheet::with('user')->orderBy('created_at', 'desc');
+
+    if ($request->filled('user_id')) {
+        $query->where('user_id', $request->user_id);
+    }
+
+    return response()->json($query->get());
+   
+    }
 }
