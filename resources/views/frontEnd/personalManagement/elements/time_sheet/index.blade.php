@@ -24,12 +24,20 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
+                                        <div>
+                                            <select name="" class="form-control editInput selectOptions" id="getDataOnTax">
+                                                <option value="0">Please Select</option>
+                                                @foreach($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <a href="javaScript:void(0)" type="button" class="profileDrop openTimeSheetModel" data-action="add"> <i class="fa fa-plus"></i> Add</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="productDetailTable mb-4 table-responsive">
-                                <table class="table border-top border-bottom tablechange" id="staffWorker">
+                                <table class="table border-top border-bottom tablechange" id="timeSheetTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -46,24 +54,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($time_sheets as $time_sheet)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $time_sheet->user->name ?? ''}}</td>
-                                            <td>{{ $time_sheet->date }}</td>
-                                            <td>{{ $time_sheet->hours }}</td>
-                                            <td>{{ $time_sheet->sleep }}</td>
-                                            <td>{{ $time_sheet->wake_night }}</td>
-                                            <td>{{ $time_sheet->disturbance }}</td>
-                                            <td>{{ $time_sheet->annual_leave }}</td>
-                                            <td>{{ $time_sheet->on_call }}</td>
-                                            <td>{{ $time_sheet->comments }}</td>
-                                            <td>
-                                                <a href="#!" class="openModalBtn openTimeSheetModel" data-action="edit" data-id="{{ $time_sheet->id }}" data-user_id="{{ $time_sheet->user_id }}" data-name="{{ $time_sheet->user->name }}" data-date="{{ $time_sheet->date }}" data-hours="{{ $time_sheet->hours }}" data-sleep="{{ $time_sheet->sleep }}" data-wake_night="{{ $time_sheet->wake_night }}" data-disturbance="{{ $time_sheet->disturbance }}" data-annual_leave="{{ $time_sheet->annual_leave }}" data-on_call="{{ $time_sheet->on_call }}" data-comments="{{ $time_sheet->comments }}" ><i class="fa fa-pencil" aria-hidden="true"></i></a> |
-                                                <a href="#!" onclick="deleteStaff({{ $time_sheet->id }})" class="deleteBtn"><i class="fa fa-trash radStar" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -143,7 +133,8 @@
 
 <script>
     const timeSheetSaveUrl = "{{ url('/my-profile/time-sheet/add') }}";
-    const deleteTimeSheet = "{{ url('/my-profile/time-sheet/delete') }}"
+    const deleteTimeSheet = "{{ url('/my-profile/time-sheet/delete') }}";
+    const getData = "{{ url('/my-profile/time-sheet') }}";
 </script>
 
 <script type="text/javascript" src="{{ url('public\frontEnd\js\personal\timeSheet.js') }}"></script>

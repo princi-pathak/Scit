@@ -1,3 +1,157 @@
+// $(document).ready(function () {
+//     const table = $('#timeSheetTable').DataTable({
+//         ajax: {
+//             url: getData, // Laravel route
+//             type: 'POST',  
+//             dataSrc: '', // Because the response is a plain array
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             }
+//         },
+//         columns: [
+//             {
+//                 data: null,
+//                 render: function (data, type, row, meta) {
+//                     return meta.row + 1;
+//                 }
+//             },
+//             { data: 'user.name', defaultContent: '' },
+//             { data: 'date' },
+//             { data: 'hours' },
+//             { data: 'sleep' },
+//             { data: 'wake_night' },
+//             { data: 'disturbance' },
+//             { data: 'annual_leave' },
+//             { data: 'on_call' },
+//             { data: 'comments' },
+//             {
+//                 data: null,
+//                 render: function (data, type, row) {
+//                     return `
+//                         <a href="#!" class="openModalBtn openTimeSheetModel"
+//                             data-action="edit"
+//                             data-id="${row.id}"
+//                             data-user_id="${row.user_id}"
+//                             data-name="${row.user?.name || ''}"
+//                             data-date="${row.date}"
+//                             data-hours="${row.hours}"
+//                             data-sleep="${row.sleep}"
+//                             data-wake_night="${row.wake_night}"
+//                             data-disturbance="${row.disturbance}"
+//                             data-annual_leave="${row.annual_leave}"
+//                             data-on_call="${row.on_call}"
+//                             data-comments="${row.comments}">
+//                             <i class="fa fa-pencil" aria-hidden="true"></i>
+//                         </a> |
+//                         <a href="#!" onclick="deleteStaff(${row.id})" class="deleteBtn">
+//                             <i class="fa fa-trash radStar" aria-hidden="true"></i>
+//                         </a>
+//                     `;
+//                 }
+//             }
+//         ]
+//     });
+// });
+
+
+$(document).ready(function () {
+    loadTimeSheetTable(); // Loads all data
+});
+
+
+
+let timeSheetTable;
+
+function loadTimeSheetTable(userId = '') {
+    // Destroy existing table if already initialized
+    if ($.fn.DataTable.isDataTable('#timeSheetTable')) {
+        timeSheetTable.destroy();
+        $('#timeSheetTable').empty(); // remove old header/footer
+        $('#timeSheetTable').html(`
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Date</th>
+                    <th>Hours</th>
+                    <th>Sleep</th>
+                    <th>Wake Night</th>
+                    <th>Disturbance</th>
+                    <th>Annual Leave</th>
+                    <th>On Call</th>
+                    <th>Comments</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        `);
+    }
+
+    timeSheetTable = $('#timeSheetTable').DataTable({
+        ajax: {
+            url: getData, // Laravel route
+            type: 'POST',
+            data: {
+                user_id: userId
+            },
+            dataSrc: '',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { data: 'user.name', defaultContent: '' },
+            { data: 'date' },
+            { data: 'hours' },
+            { data: 'sleep' },
+            { data: 'wake_night' },
+            { data: 'disturbance' },
+            { data: 'annual_leave' },
+            { data: 'on_call' },
+            { data: 'comments' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <a href="#!" class="openModalBtn openTimeSheetModel"
+                            data-action="edit"
+                            data-id="${row.id}"
+                            data-user_id="${row.user_id}"
+                            data-name="${row.user?.name || ''}"
+                            data-date="${row.date}"
+                            data-hours="${row.hours}"
+
+                            data-sleep="${row.sleep}"
+                            data-wake_night="${row.wake_night}"
+                            data-disturbance="${row.disturbance}"
+                            data-annual_leave="${row.annual_leave}"
+                            data-on_call="${row.on_call}"
+                            data-comments="${row.comments}">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a> |
+                        <a href="#!" onclick="deleteStaff(${row.id})" class="deleteBtn">
+                            <i class="fa fa-trash radStar" aria-hidden="true"></i>
+                        </a>
+                    `;
+                }
+            }
+        ]
+    });
+}
+
+
+$('#getDataOnTax').on('change', function () {
+    const selectedUserId = $(this).val(); // gets '' if none selected
+    loadTimeSheetTable(selectedUserId);
+});
+
+
+
 $('#timeSheetDate').datepicker({
     format: 'dd-mm-yyyy',
     autoclose: true, // Optional: close picker after selection
@@ -45,8 +199,10 @@ $(document).ready(function () {
 });
 
 document.querySelectorAll('.openTimeSheetModel').forEach(function (btn) {
+    
     btn.addEventListener('click', function () {
         const action = this.getAttribute('data-action');
+        alert(action);
         const user_id = document.getElementById('user_id');
         // const timeSheetDate = document.getElementById('timeSheetDate');
         const hours = document.getElementById('hours');

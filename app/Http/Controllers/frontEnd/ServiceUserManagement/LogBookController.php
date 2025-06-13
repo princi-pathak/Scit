@@ -206,7 +206,7 @@ class LogBookController extends ServiceUserManagementController
     }
   
     public function add(Request $request) {       
-
+        // echo "<pre>";print_r($request->all());die;
         if($request->isMethod('post'))
         {
             //sourabh geo location
@@ -290,15 +290,15 @@ class LogBookController extends ServiceUserManagementController
             $category_icon = CategoryFrontEnd::where('id',$data['category'])->value('icon');
             $category_name = CategoryFrontEnd::where('id',$data['category'])->value('name');
             
-            // $log_book_record->title   = $data['log_title'];
-             $log_book_record->title   = null;
+            $log_book_record->title   = $data['log_title'];
+            //  $log_book_record->title   = null;
             $log_book_record->category_id = $data['category'];
             $log_book_record->category_name   = $category_name;
             $log_book_record->category_icon   = $category_icon;
             $log_book_record->date    = date('Y-m-d H:i:s', strtotime($data['log_date']));
             // $log_book_record->date    = date('Y-m-d H:i:s');
-            // $log_book_record->details = $data['log_detail'];
-            $log_book_record->details = null;
+            $log_book_record->details = $data['log_detail'];
+            // $log_book_record->details = null;
             $log_book_record->home_id = $login_home_id;
             $log_book_record->user_id = Auth::user()->id;
             $log_book_record->image_name = $log_image;
