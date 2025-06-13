@@ -25,7 +25,7 @@
                                 <div class="col-md-12">
                                     <div class="jobsection justify-content-end">
                                         <div>
-                                            <select name="" class="form-control editInput selectOptions" id="getDataOnTax">
+                                            <select name="" class="form-control editInput selectOptions" id="getDataOnUsers">
                                                 <option value="0">Please Select</option>
                                                 @foreach($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -67,7 +67,7 @@
 </section>
 
 <!-- Add Staff Modal start here -->
-<div class="modal fade" id="addStaffWorkerModal" tabindex="-1" aria-labelledby="addStaffWorkerModalLabel" aria-hidden="true">
+<div class="modal fade" id="addTimeSheetModal" tabindex="-1" aria-labelledby="addTimeSheetModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -79,6 +79,7 @@
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="row formDtail ps-4 pe-4">
                             <div class="col-md-6 form-group">
+                                <input type="hidden"  id="time_sheet_id" name="time_sheet_id">
                                 <label> User <span class="radStar">*</span> </label>
                                 <select name="user_id" id="user_id" class="form-control editInput">
                                     @foreach($users as $user)
@@ -88,7 +89,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label> Date <span class="radStar">*</span></label>
-                                <input type="text" class="form-control editInput" id="timeSheetDate" name="date">
+                                <input type="text" class="form-control editInput" id="timeSheetDt" name="date">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label> Hours </label>
@@ -135,6 +136,7 @@
     const timeSheetSaveUrl = "{{ url('/my-profile/time-sheet/add') }}";
     const deleteTimeSheet = "{{ url('/my-profile/time-sheet/delete') }}";
     const getData = "{{ url('/my-profile/time-sheet') }}";
+    
 </script>
 
 <script type="text/javascript" src="{{ url('public\frontEnd\js\personal\timeSheet.js') }}"></script>
