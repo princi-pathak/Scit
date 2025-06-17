@@ -22,6 +22,7 @@ class TimeSheetRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'time_sheet_id'  => 'nullable',
             'user_id'        => 'required|integer|exists:user,id',
             'date'           => 'required|date',
             'hours'          => 'nullable|numeric|min:0|max:24',
