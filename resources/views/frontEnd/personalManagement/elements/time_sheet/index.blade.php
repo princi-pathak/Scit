@@ -75,6 +75,7 @@
                 <h4 class="modal-title" id="modalTitle">Add Staff</h4>
             </div>
             <form action="" id="time_sheet" class="customerForm ">
+                <input type="hidden" id="time_sheetId" name="id">
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="row formDtail ps-4 pe-4">
@@ -134,6 +135,7 @@
 
 <script>
     const timeSheetSaveUrl = "{{ url('/my-profile/time-sheet/add') }}";
+    const timeSheetEditUrl = "{{ url('/my-profile/time-sheet/edit') }}";
     const deleteTimeSheet = "{{ url('/my-profile/time-sheet/delete') }}";
     const getData = "{{ url('/my-profile/time-sheet') }}";
     

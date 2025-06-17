@@ -43,6 +43,7 @@ use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
 use App\Http\Controllers\backEnd\rota\StaffWorkerController;
 use App\Http\Controllers\backEnd\salesfinance\asset\AssetBackendController;
 use App\Http\Controllers\backEnd\generalAdmin\HomeCostingController;
+use App\Http\Controllers\backEnd\systemManage\PlanBuilderAdminController;
 
 
 
@@ -585,6 +586,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(LeaveTrackerController::class)->group(function(){
 		Route::prefix('finance')->group(function(){
 			Route::get('leave-tracker','leave_tracker');
+			Route::get('leave-tracker-add','leave_tracker_add');
 		});
 	});
 
@@ -959,6 +961,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	//Time Sheet
 	Route::match(['get', 'post'], '/my-profile/{id}/time-sheet', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@index');
 	Route::match(['get', 'post'], '/my-profile/time-sheet/add', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@save');
+	Route::match(['get', 'post'], '/my-profile/time-sheet/edit', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@save');
 	Route::delete('/my-profile/time-sheet/delete/{id}', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@destroy');
 	Route::post('/my-profile/time-sheet', 'App\Http\Controllers\frontEnd\PersonalManagement\TimesheetController@getData');
 
@@ -2264,6 +2267,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::controller(HomeCostingController::class)->group(function(){
 		Route::prefix('general-admin')->group(function(){
 			Route::get('/home-costing','index');
+		});
+	});
+	// end here
+	// PlanBuilderAdminController Code
+	Route::controller(PlanBuilderAdminController::class)->group(function(){
+		Route::prefix('appointment')->group(function(){
+			Route::get('plans','index');
+			Route::get('plans/add','plan_add');
 		});
 	});
 	// end here

@@ -188,13 +188,21 @@ $(document).ready(function () {
         formArray.forEach(item => {
             formData[item.name] = item.value;
         });
-        console.log("formData", formData);
+
+        var time_sheetId=$("#time_sheetId").val();
+        var url=timeSheetSaveUrl;
+        if(time_sheetId == ''){
+            url=timeSheetEditUrl;
+        }
         $.ajax({
-            url: timeSheetSaveUrl, // Replace with your actual backend endpoint
+            url: url, // Replace with your actual backend endpoint
             method: 'POST',
             data: JSON.stringify(formData),
             contentType: 'application/json',
             success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 console.log("response", response.message);
 
                 $('#addTimeSheetModal').modal('hide');
@@ -249,6 +257,9 @@ function deleteStaff(id) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
                 alert(response.message);
                 location.reload(); // or remove the row from DOM
             },

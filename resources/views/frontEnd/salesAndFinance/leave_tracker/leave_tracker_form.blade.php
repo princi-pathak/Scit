@@ -1,3 +1,10 @@
+
+@extends('frontEnd.layouts.master')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title','Leave Tracker')
+
+<link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+@section('content')
 <style>
     .font_color {
         color: #1f88b5 !important;
@@ -223,10 +230,8 @@
             </div>
         </div>
     </div>
-
-
-
 </div>
+
 <!--Leave Tracker model End -->
 
 <!-- modal edit and view  -->
@@ -246,10 +251,6 @@
                                     <label> Name </label>
                                     <input type="text" class="form-control editInput" id="" name="name">
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -460,3 +461,4 @@
         });
     });
 </script>
+@endsection

@@ -686,226 +686,150 @@
                                                             <td></td>
                                                             <td>Mercury</td>
                                                             <td>3</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>3.</th>
                                                             <td></td>
-                                                            <td>Jupiter
-</td>
-                                                            <td>3
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>Jupiter</td>
+                                                            <td>3</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>4.</th>
                                                             <td></td>
-                                                            <td>Poseidon
-</td>
-                                                            <td>4
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>Poseidon</td>
+                                                            <td>4</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>5.</th>
                                                             <td></td>
-                                                            <td>Apollo
-</td>
-                                                            <td>1
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>Apollo</td>
+                                                            <td>1</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>6.</th>
                                                             <td></td>
-                                                            <td>Zeus
-</td>
-                                                            <td>2
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>Zeus</td>
+                                                            <td>2</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>7.</th>
                                                             <td></td>
-                                                            <td>Hebe
-</td>
-                                                            <td>2
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>Hebe</td>
+                                                            <td>2</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>8.</th>
                                                             <td></td>
-                                                            <td>Alexandra
-</td>
-                                                            <td>4
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>Alexandra</td>
+                                                            <td>4</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>9.</th>
                                                             <td></td>
-                                                            <td>Iris
-</td>
-                                                            <td>3
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>Iris</td>
+                                                            <td>3</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>10.</th>
                                                             <td></td>
-                                                            <td>Athena
-</td>
-                                                            <td>2
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>Athena</td>
+                                                            <td>2</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>11.</th>
                                                             <td></td>
-                                                            <td>The Grove
-</td>
-                                                            <td>3
-</td>
-                                                            <td>7.50%
-</td>
-                                                            <td>£2,669.48
-</td>
-                                                            <td>Care Home
-</td>
+                                                            <td>The Grove</td>
+                                                            <td>3</td>
+                                                            <td>7.50%</td>
+                                                            <td>£2,669.48</td>
+                                                            <td>Care Home</td>
                                                         </tr>
                                                         <tr>
                                                             <th>12.</th>
                                                             <td></td>
-                                                            <td>Moss Lane
-</td>
-                                                            <td>5
-</td>
-                                                            <td>3.50%
-</td>
-                                                            <td>£1,245.76
-</td>
-                                                            <td>16+
-</td>
+                                                            <td>Moss Lane</td>
+                                                            <td>5</td>
+                                                            <td>3.50%</td>
+                                                            <td>£1,245.76</td>
+                                                            <td>16+</td>
                                                         </tr>
                                                         <tr>
                                                             <th>13.</th>
                                                             <td></td>
-                                                            <td>Anda house
-</td>
-                                                            <td>4
-</td>
-                                                            <td>3.50%
-</td>
-                                                            <td>£1,245.76
-</td>
-                                                            <td>16+
-</td>
+                                                            <td>Anda house</td>
+                                                            <td>4</td>
+                                                            <td>3.50%</td>
+                                                            <td>£1,245.76</td>
+                                                            <td>16+</td>
                                                         </tr>
                                                         <tr>
                                                             <th>14.</th>
                                                             <td></td>
-                                                            <td>Hawthorne
-</td>
-                                                            <td>3
-</td>
-                                                            <td>3.50%
-</td>
-                                                            <td>£1,245.76
-</td>
-                                                            <td>16+
-</td>
+                                                            <td>Hawthorne</td>
+                                                            <td>3</td>
+                                                            <td>3.50%</td>
+                                                            <td>£1,245.76</td>
+                                                            <td>16+</td>
                                                         </tr>
                                                         <tr>
                                                             <th>15.</th>
                                                             <td></td>
-                                                            <td>Garmoyle
-</td>
-                                                            <td>5
-</td>
-                                                            <td>3.50%
-</td>
-                                                            <td>£1,245.76
-</td>
-                                                            <td>16+
-</td>
+                                                            <td>Garmoyle</td>
+                                                            <td>5</td>
+                                                            <td>3.50%</td>
+                                                            <td>£1,245.76</td>
+                                                            <td>16+</td>
                                                         </tr>
                                                         <tr>
                                                             <th>16.</th>
                                                             <td></td>
-                                                            <td>Grey
-</td>
-                                                            <td>5
-</td>
-                                                            <td>3.50%
-</td>
-                                                            <td>£1,245.76
-</td>
-                                                            <td>16+
-</td>
+                                                            <td>Grey</td>
+                                                            <td>5</td>
+                                                            <td>3.50%</td>
+                                                            <td>£1,245.76</td>
+                                                            <td>16+</td>
                                                         </tr>
                                                         <tr>
                                                             <th></th>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td>100.00%
-</td>
+                                                            <td>100.00%</td>
                                                             <th>£35,593.05</th>
-                                                            <td>weekly overhead
-</td>
+                                                            <td>weekly overhead</td>
                                                         </tr>
                                                         <tr>
                                                             <th></th>
                                                             <td></td>
                                                             <td colspan="2">Total Overhead allocation inc direct costs</td>
-                                                            <td>£13,760.71
-</td>
+                                                            <td>£13,760.71</td>
                                                             <td></td>
                                                             <td></td>
                                                         </tr>
