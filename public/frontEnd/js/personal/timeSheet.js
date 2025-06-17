@@ -36,6 +36,19 @@ function loadTimeSheetTable(userId = '') {
                     <th>Actions</th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="3" style="text-align:right">Total:</th>
+                    <th></th> <!-- Hours total -->
+                    <th></th> <!-- Sleep total -->
+                    <th></th> <!-- Wake Night total -->
+                    <th></th> <!-- Disturbance total -->
+                    <th></th> <!-- Annual Leave total -->
+                    <th></th> <!-- On Call total -->
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
         `);
     }
 
@@ -123,9 +136,38 @@ function loadTimeSheetTable(userId = '') {
                     `;
                 }
             }
-        ]
+        ],
+        footerCallback: function (row, data, start, end, display) {
+            const api = this.api();
+
+            // Helper function to sum a column
+            const getTotal = (columnIndex) => {
+                return api
+                    .column(columnIndex, { page: 'current' }) // Use `{ search: 'applied' }` for all rows
+                    .data()
+                    .reduce((a, b) => {
+                        const val = parseFloat(b) || 0;
+                        return a + val;
+                    }, 0);
+            };
+
+            // Update footer cells
+            $(api.column(3).footer()).html(getTotal(3)); // Hours
+            $(api.column(4).footer()).html(getTotal(4)); // Sleep
+            $(api.column(5).footer()).html(getTotal(5)); // Wake Night
+            $(api.column(6).footer()).html(getTotal(6)); // Disturbance
+            $(api.column(7).footer()).html(getTotal(7)); // Annual Leave
+            $(api.column(8).footer()).html(getTotal(8)); // On Call
+        }
     });
+
+    timeSheetTable.on('draw', function () {
+        timeSheetTable.columns.adjust();
+    });
+
 }
+
+
 
 
 $('#getDataOnUsers').on('change', function () {
@@ -180,12 +222,12 @@ $(document).on('click', '.openTimeSheetModel', function () {
         const date = $(this).data('date');
         // $('#timeSheetDt').val($(this).data('date'));
         if (date) {
-                // Convert from Y-m-d to d-m-Y
-                const dateParts = date.split('-'); // [2025, 04, 24]
-                const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // 24-04-2025
+            // Convert from Y-m-d to d-m-Y
+            const dateParts = date.split('-'); // [2025, 04, 24]
+            const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // 24-04-2025
 
-                $('#timeSheetDt').datepicker('setDate', formattedDate);
-            }
+            $('#timeSheetDt').datepicker('setDate', formattedDate);
+        }
         $('#hours').val($(this).data('hours'));
         $('#sleep').val($(this).data('sleep'));
         $('#wake_night').val($(this).data('wake_night'));
