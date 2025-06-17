@@ -368,7 +368,7 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="wdgt-value">
-                                                                    <h4 class="count">Add Leave<br>Tracker</h4>
+                                                                    <h4 class="count">Add Time<br>  </h4>
                                                                     <p></p>
                                                                 </div>
                                                             </div>

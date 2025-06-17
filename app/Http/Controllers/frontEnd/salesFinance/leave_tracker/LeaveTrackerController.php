@@ -10,4 +10,7 @@ class LeaveTrackerController extends Controller
     public function leave_tracker(){
         return view('frontEnd.salesAndFinance.leave_tracker.leave_tracker');
     }
+    public function leave_tracker_add(){
+        return view('frontEnd.salesAndFinance.leave_tracker.leave_tracker_form');
+    }
 }

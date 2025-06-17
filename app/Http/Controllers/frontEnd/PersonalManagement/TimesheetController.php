@@ -24,10 +24,22 @@ class TimesheetController extends Controller
     {
         try {
             $validated = $request->validated();
+            // dd($validated);
             $validated['home_id'] = Auth::user()->home_id;
             $validated['date'] = \Carbon\Carbon::parse($validated['date'])->format('Y-m-d');
-            TimeSheet::create($validated);
-
+            TimeSheet::updateOrCreate(['id' => $validated['time_sheet_id']],$validated);
+            
+            if(empty($validated['time_sheet_id'])){
+                return response()->json([
+                'message' => 'Time sheet saved successfully.',
+                'data' => $validated
+            ], 201);    
+            } else {
+                return response()->json([
+                'message' => 'Time sheet updated successfully.',
+                'data' => $validated
+            ], 200);
+            }
             return response()->json([
                 'message' => 'Time sheet saved successfully.',
                 'data' => $validated
