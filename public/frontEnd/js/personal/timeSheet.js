@@ -56,9 +56,7 @@ function loadTimeSheetTable(userId = '') {
         ajax: {
             url: getData, // Laravel route
             type: 'POST',
-            data: {
-                user_id: userId
-            },
+            data: { user_id: userId },
             dataSrc: '',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -72,41 +70,59 @@ function loadTimeSheetTable(userId = '') {
                 }
             },
             { data: 'user.name', defaultContent: '' },
-            { data: 'date' },
+            {
+                data: 'date',
+                render: function (data, type, row) {
+                    if (!data) return '';
+
+                    const date = new Date(data);
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+                    const year = date.getFullYear();
+
+                    return `${day}-${month}-${year}`; // Format: dd-mm-yyyy
+                }
+            },
             {
                 data: 'hours',
-                render: function (data, type, row) {
-                    return (parseFloat(data) % 1 === 0) ? parseInt(data) : parseFloat(data);
+                render: function (data) {
+                    const num = parseFloat(data) || 0;
+                    return (num % 1 === 0) ? parseInt(num) : num.toFixed(2);
                 }
             },
             {
                 data: 'sleep',
-                render: function (data, type, row) {
-                    return (parseFloat(data) % 1 === 0) ? parseInt(data) : parseFloat(data);
+                render: function (data) {
+                    const num = parseFloat(data) || 0;
+                    return (num % 1 === 0) ? parseInt(num) : num.toFixed(2);
                 }
             },
             {
                 data: 'wake_night',
-                render: function (data, type, row) {
-                    return (parseFloat(data) % 1 === 0) ? parseInt(data) : parseFloat(data);
+                render: function (data) {
+                    const num = parseFloat(data) || 0;
+                    return (num % 1 === 0) ? parseInt(num) : num.toFixed(2);
                 }
             },
             {
                 data: 'disturbance',
-                render: function (data, type, row) {
-                    return (parseFloat(data) % 1 === 0) ? parseInt(data) : parseFloat(data);
+                render: function (data) {
+                    const num = parseFloat(data) || 0;
+                    return (num % 1 === 0) ? parseInt(num) : num.toFixed(2);
                 }
             },
             {
                 data: 'annual_leave',
-                render: function (data, type, row) {
-                    return (parseFloat(data) % 1 === 0) ? parseInt(data) : parseFloat(data);
+                render: function (data) {
+                    const num = parseFloat(data) || 0;
+                    return (num % 1 === 0) ? parseInt(num) : num.toFixed(2);
                 }
             },
             {
                 data: 'on_call',
-                render: function (data, type, row) {
-                    return (parseFloat(data) % 1 === 0) ? parseInt(data) : parseFloat(data);
+                render: function (data) {
+                    const num = parseFloat(data) || 0;
+                    return (num % 1 === 0) ? parseInt(num) : num.toFixed(2);
                 }
             },
             { data: 'comments' },
@@ -121,7 +137,6 @@ function loadTimeSheetTable(userId = '') {
                             data-name="${row.user?.name || ''}"
                             data-date="${row.date}"
                             data-hours="${row.hours}"
-
                             data-sleep="${row.sleep}"
                             data-wake_night="${row.wake_night}"
                             data-disturbance="${row.disturbance}"
@@ -140,32 +155,36 @@ function loadTimeSheetTable(userId = '') {
         footerCallback: function (row, data, start, end, display) {
             const api = this.api();
 
-            // Helper function to sum a column
             const getTotal = (columnIndex) => {
                 return api
-                    .column(columnIndex, { page: 'current' }) // Use `{ search: 'applied' }` for all rows
+                    .column(columnIndex, { page: 'current' }) // use { search: 'applied' } for filtered total
                     .data()
                     .reduce((a, b) => {
-                        const val = parseFloat(b) || 0;
-                        return a + val;
+                        const val = parseFloat(b);
+                        return a + (isNaN(val) ? 0 : val);
                     }, 0);
             };
 
-            // Update footer cells
-            $(api.column(3).footer()).html(getTotal(3)); // Hours
-            $(api.column(4).footer()).html(getTotal(4)); // Sleep
-            $(api.column(5).footer()).html(getTotal(5)); // Wake Night
-            $(api.column(6).footer()).html(getTotal(6)); // Disturbance
-            $(api.column(7).footer()).html(getTotal(7)); // Annual Leave
-            $(api.column(8).footer()).html(getTotal(8)); // On Call
+            const formatTotal = (num) => {
+                return num % 1 === 0 ? parseInt(num) : num.toFixed(2);
+            };
+
+            // Set footer cell totals   
+            $(api.column(3).footer()).html(formatTotal(getTotal(3))); // Hours
+            $(api.column(4).footer()).html(formatTotal(getTotal(4))); // Sleep
+            $(api.column(5).footer()).html(formatTotal(getTotal(5))); // Wake Night
+            $(api.column(6).footer()).html(formatTotal(getTotal(6))); // Disturbance
+            $(api.column(7).footer()).html(formatTotal(getTotal(7))); // Annual Leave
+            $(api.column(8).footer()).html(formatTotal(getTotal(8))); // On Call
         }
     });
 
+    // Optional: fix table layout issues after redraw
     timeSheetTable.on('draw', function () {
         timeSheetTable.columns.adjust();
     });
-
 }
+
 
 
 
@@ -189,10 +208,10 @@ $(document).ready(function () {
             formData[item.name] = item.value;
         });
 
-        var time_sheetId=$("#time_sheetId").val();
-        var url=timeSheetSaveUrl;
-        if(time_sheetId == ''){
-            url=timeSheetEditUrl;
+        var time_sheetId = $("#time_sheetId").val();
+        var url = timeSheetSaveUrl;
+        if (time_sheetId == '') {
+            url = timeSheetEditUrl;
         }
         $.ajax({
             url: url, // Replace with your actual backend endpoint
@@ -211,7 +230,30 @@ $(document).ready(function () {
                 location.reload();
             },
             error: function (xhr, status, error) {
-                alert('Error saving data: ' + error);
+                   if (xhr.status === 422) {
+                    // Validation error
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessages = '';
+
+                    // Clear old errors first
+                    $('.text-danger').remove();
+
+                    $.each(errors, function (key, value) {
+                        // Display message under each input field
+                        let inputField = $(`[name="${key}"]`);
+                        if (inputField.length) {
+                            inputField.after(`<span class="text-danger">${value[0]}</span>`);
+                        }
+
+                        // Collect all messages for optional alert box
+                        errorMessages += value[0] + "\n";
+                    });
+
+                    // Optional: show all errors in a single alert box
+                    // alert("Please fix the following errors:\n" + errorMessages);
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
             }
         });
     });

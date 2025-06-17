@@ -8,7 +8,12 @@
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Purchase Day Book Add
+                        @if(isset($purchase_day_book))
+                        Edit
+                        @else
+                        Add
+                        @endif
+                        Purchase Day Book 
                     </header>
                     @if (session('success'))
                     <div class="aalert alert-success alert-dismissible fade show">
