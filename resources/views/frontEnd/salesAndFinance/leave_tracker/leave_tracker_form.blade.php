@@ -1,4 +1,3 @@
-
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('title','Leave Tracker')
@@ -37,6 +36,109 @@
         color: #fff;
     }
 </style>
+
+
+
+<!--main content start-->
+<section class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <div class="panel">
+                    <header class="panel-heading px-5">
+                        <h4>Add Leave Tracker</h4>
+                    </header>
+                    <div class="panel-body">
+
+
+                        <form class="" id="">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label>Name </label>
+                                            <div id="" style="display: block;">
+                                                <select class="form-control editInput selectOptions" id="">
+                                                    <option value="">Select Name</option>
+                                                    <option value=""> Name1</option>
+                                                    <option value=""> Name2</option>
+                                                    <option value=""> Name3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Department</label>
+                                            <div id="" style="display: block;">
+                                                <select class="form-control editInput selectOptions" id="">
+                                                    <option value="">Select Department</option>
+                                                    <option value=""> Department1</option>
+                                                    <option value=""> Department2</option>
+                                                    <option value=""> Department3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Provision <span class="radStar">*</span></label>
+                                            <input type="text" class="form-control editInput" name="product_name" id="" required="">
+                                        </div>
+                              
+                                        <div class="mb-3">
+                                            <label>Start Date </label>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <input type="date" class="form-control editInput" id="" placeholder="Start Date" name="Start Date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <div class="mb-3">
+                                            <label>A/L Entitlement </label>
+                                            <input type="text" class="form-control editInput" id="" name="Al_Entitlement " value="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Month</label>
+                                            <div id="" style="display: block;">
+                                                <select class="form-control editInput selectOptions" id="">
+                                                    <option value="">Select Month</option>
+                                                    <option value=""> Month1</option>
+                                                    <option value=""> Month1</option>
+                                                    <option value=""> Month1</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Total A/L Hours  Used <span class="radStar ">*</span></label>
+                                            <input type="text" class="form-control editInput" id="" name="" value="" required="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Total A/L Hours  left</label>
+                                            <input type="text" class="form-control editInput" id="" name="" value="" required="">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>Total A/L Hours  left</label>
+                                            <input type="text" class="form-control editInput" id="" name="" value="" required="">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer customer_Form_Popup">
+                                <button type="button" class="btn btn-default">Cancel</button>
+                                <button type="submit" class="btn btn-warning">Save</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Leave Tracker  model-->
 <div class="modal fade" id="leaveTrackerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -92,7 +194,7 @@
                                                 <label> Annual Leave <span class="radStar">*</span></label>
                                                 <input type="text" class="form-control editInput" id="" name="name">
                                             </div>
-                                            
+
                                             <div class="col-md-6 form-group">
                                                 <label> On Call <span class="radStar">*</span></label>
                                                 <input type="text" class="form-control editInput" id="" name="name">
@@ -276,17 +378,7 @@
     });
 </script>
 
-<script>
-    //detail option
-    $(document).on('click', '.my-task-detail', function() {
 
-
-        $(this).closest('.cog-panel').find('.input-plusbox').toggle();
-        $(this).closest('.pop-notifbox').removeClass('active');
-        autosize($("textarea"));
-        return false;
-    });
-</script>
 
 <script>
     //my task show
@@ -320,145 +412,6 @@
     });
 </script>
 
-<script>
-    $('#leaveTrackerModal').on('scroll', function() {
-        $('.dpYears').datepicker('place')
-    });
 
-    //3rd tab search
-    $('input[name=\'sm_date\']').closest('.srch-field').hide();
-    $(document).ready(function() {
 
-        $('input[name=\'search_task_record\']').keydown(function(event) {
-            var keyCode = (event.keyCode ? event.keyCode : event.which);
-            if (keyCode == 13) {
-                return false;
-            }
-        });
-
-        $('select[name=\'sm_search_type\']').change(function() {
-            $('.my-searched-records').html('');
-            var sm_src_title = $('input[name=\'search_task_record\']');
-            var sm_src_date = $('input[name=\'sm_date\']');
-
-            var type = $(this).val();
-            if (type == 'date') {
-
-                sm_src_date.closest('.srch-field').show();
-                sm_src_date.removeClass('red_border');
-                sm_src_title.closest('.srch-field').hide();
-            } else {
-                sm_src_title.closest('.srch-field').show();
-                sm_src_title.removeClass('red_border');
-                sm_src_date.closest('.srch-field').hide();
-            }
-        });
-
-        $(document).on('click', '.search-task-alloc-btn', function() {
-
-            var sm_search_type = $('select[name=\'sm_search_type\']');
-            var search_input = $('input[name=\'search_task_record\']');
-            var sm_search_date = $('input[name=\'sm_date\']');
-
-            var search = search_input.val();
-            var sm_date = sm_search_date.val();
-            var sm_search_type = sm_search_type.val();
-
-            search = jQuery.trim(search);
-            search = search.replace(/[&\/\\#,+()$~%.'":*?<>^@{}]/g, '');
-
-            if (sm_search_type == 'title') {
-                if (search == '') {
-
-                    search_input.addClass('red_border');
-                    return false;
-                } else {
-                    search_input.removeClass('red_border');
-                }
-            } else {
-                if (sm_date == '') {
-
-                    sm_search_date.addClass('red_border');
-                    return false;
-                } else {
-                    sm_search_date.removeClass('red_border');
-                }
-
-            }
-            var formdata = $('#searched-task-alloc-records-form').serialize();
-
-            var manager_id = "{{ $manager_id }}";
-
-            $('.loader').show();
-            $('body').addClass('body-overflow');
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/my-profile/task-allocation/view/') }}" + '/' + manager_id + '?search=' + search + '&sm_date=' + sm_date + '&sm_search_type=' + sm_search_type,
-                data: formdata,
-                success: function(resp) {
-
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == '') {
-                        $('.my-searched-records').html('No Records found.');
-                    } else {
-                        $('.my-searched-records').html(resp);
-                    }
-                    $('.loader').hide();
-                    $('body').removeClass('body-overflow');
-                }
-            });
-            return false;
-        });
-    });
-</script>
-
-<script>
-    //pagination
-    $(document).on('click', '#leaveTrackerModal .pagination li', function() {
-
-        var page_no = $(this).children('a').text();
-        if (page_no == '') {
-            return false;
-        }
-        if (isNaN(page_no)) {
-            var new_url = $(this).children('a').attr('href');
-            page_no = new_url[new_url.length - 1];
-        }
-
-        var manager_id = "{{ $manager_id }}";
-
-        $('.loader').show();
-        $('body').addClass('body-overflow');
-
-        $.ajax({
-            type: 'get',
-            url: "{{ url('/my-profile/task-allocation/view/') }}" + '/' + manager_id + "?page=" + page_no + '&logged',
-            success: function(resp) {
-                if (isAuthenticated(resp) == false) {
-                    return false;
-                }
-
-                $('.log-my-task-alloc-record').html(resp);
-                $('.loader').hide();
-                $('body').removeClass('body-overflow');
-            }
-        });
-        return false;
-    });
-</script>
-
-<!-- head script of show date  -->
-<script>
-    //same for all heads
-    $(document).ready(function() {
-        $(document).on('click', '.daily-rcd-head', function() {
-            $(this).next('.daily-rcd-content').slideToggle();
-            $(this).find('i').toggleClass('fa-angle-down');
-            $('.input-plusbox').hide();
-
-        });
-    });
-</script>
 @endsection

@@ -10,7 +10,12 @@
             <div class="col-lg-12">
                 <div class="panel">
                     <header class="panel-heading">
-                        Sales Day Book Add
+                       @if(isset($sales_day_book))
+                        Edit
+                        @else
+                        Add
+                        @endif
+                        Sales Day Book 
                     </header>
                     @if (session('success'))
                     <div class="aalert alert-success alert-dismissible fade show">
