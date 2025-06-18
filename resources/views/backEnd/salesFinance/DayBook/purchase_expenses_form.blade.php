@@ -10,7 +10,12 @@
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Purchase Expenses Type Add
+                        @if(isset($purchase_expenses))
+                        Edit
+                        @else
+                        Add
+                        @endif
+                        Purchase Expenses Type 
                     </header>
                     @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>

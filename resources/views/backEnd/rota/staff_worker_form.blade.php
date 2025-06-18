@@ -125,6 +125,15 @@
                                                 </select> -->
                                             </div>
                                         </div>
+                                            <div class="form-group">
+                                            <label for="" class="col-lg-3 col-sm-3 control-label">Start Date <span class="radStar">*</span></label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" name="start_date" value="{{ old('start_date', isset($staffWorker->start_date) ? \Carbon\Carbon::parse($staffWorker->start_date)->format('d-m-Y') : '') }}" id="start_Date" placeholder="Start Date" readonly>
+                                                @error('start_date')
+                                                <div class="radStar">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Rate of Pay (£) <span class="radStar">*</span></label>
                                             <div class="col-lg-4">
@@ -145,15 +154,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-lg-3 col-sm-3 control-label">Start Date <span class="radStar">*</span></label>
-                                            <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="start_date" value="{{ old('start_date', isset($staffWorker->start_date) ? \Carbon\Carbon::parse($staffWorker->start_date)->format('d-m-Y') : '') }}" id="start_Date" placeholder="Start Date" readonly>
-                                                @error('start_date')
-                                                <div class="radStar">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                    
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Job Role <span class="radStar">*</span></label>
                                             <div class="col-lg-9">
@@ -258,6 +259,15 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                               <div class="form-group">
+                                            <label for="" class="col-lg-3 col-sm-3 control-label">Leave Date</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" name="leave_date" value="{{ isset($staffWorker) && !empty($staffWorker->leave_date) ? \Carbon\Carbon::parse($staffWorker->leave_date)->format('d-m-Y') : '' }}" id="leave_date" placeholder="Leave Date" readonly>
+                                                @error('leave_date')
+                                                <div class="radStar">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">DBS Number </label>
                                             <div class="col-lg-9">
@@ -278,15 +288,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="" class="col-lg-3 col-sm-3 control-label">Leave Date</label>
-                                            <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="leave_date" value="{{ isset($staffWorker) && !empty($staffWorker->leave_date) ? \Carbon\Carbon::parse($staffWorker->leave_date)->format('d-m-Y') : '' }}" id="leave_date" placeholder="Leave Date" readonly>
-                                                @error('leave_date')
-                                                <div class="radStar">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                 
                                         <div class="form-group">
                                             <label for="" class="col-lg-3 col-sm-3 control-label">Email Address </label>
                                             <div class="col-lg-9">

@@ -28,7 +28,7 @@ $(document).ready(function () {
     //     ],
     //     footerCallback: function (row, data, start, end, display) {
     //         var api = this.api();
-    
+
     //         var intVal = function (i) {
     //             return typeof i === 'string'
     //                 ? parseFloat(i.replace(/[£,]/g, '')) || 0
@@ -36,10 +36,10 @@ $(document).ready(function () {
     //                 ? i
     //                 : 0;
     //         };
-    
+
     //         // Columns to total: netAmount (4), vatAmount (5), grossAmount (6)
     //         var columnsToTotal = [4, 5, 6];
-    
+
     //         columnsToTotal.forEach(function (colIdx) {
     //             var total = api
     //                 .column(colIdx, { page: 'current' })
@@ -47,7 +47,7 @@ $(document).ready(function () {
     //                 .reduce(function (a, b) {
     //                     return intVal(a) + intVal(b);
     //                 }, 0);
-    
+
     //             $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
     //         });
     //     }
@@ -61,22 +61,22 @@ $(document).ready(function () {
                 text: 'Export',
                 bom: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                 }
             }
         ],
         footerCallback: function (row, data, start, end, display) {
             var api = this.api();
-    
+
             // Helper to parse £ values
             var intVal = function (i) {
                 return typeof i === 'string'
                     ? parseFloat(i.replace(/[£,]/g, '')) || 0
                     : typeof i === 'number'
-                    ? i
-                    : 0;
+                        ? i
+                        : 0;
             };
-    
+
             // Columns to total: Net Amount (4), VAT Amount (5), Gross Amount (6)
             [4, 5, 6].forEach(function (colIdx) {
                 var total = api
@@ -85,13 +85,13 @@ $(document).ready(function () {
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
-    
+
                 // Update footer cell
                 $(api.column(colIdx).footer()).html('£' + total.toFixed(2));
             });
         }
     });
-    
+
 
     const selectedVatId = document.getElementById('getDataOnTax').value;
     loadSalesDayBookData(selectedVatId);
@@ -105,8 +105,10 @@ $(document).ready(function () {
                 tax_rate: selectedTaxRate  // only pass if filtering is needed
             },
             success: function (response) {
-                if (isAuthenticated(response) == false) {
-                    return false;
+                if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                 }
                 console.log("response.data", response.data);
                 allSalesData = response.data;
@@ -238,10 +240,10 @@ $(document).ready(function () {
     $("#saveSalesDayBookModal").on("click", function (e) {
         // alert();
         e.preventDefault(); // Prevent page reload
-        var sales_day_book_id=$("#sales_day_book_id").val();
-        var url =saveSalesDayBook;
-        if(sales_day_book_id !=''){
-            url=editSalesDayBook;
+        var sales_day_book_id = $("#sales_day_book_id").val();
+        var url = saveSalesDayBook;
+        if (sales_day_book_id != '') {
+            url = editSalesDayBook;
         }
         alert(url)
         $.ajax({
@@ -313,33 +315,33 @@ $(document).ready(function () {
     // });
 });
 
-$(document).on("click", ".deleteBtn", function () { 
-     let salesBookId = $(this).data("id"); // Get ID from button
-        let row = $("#row-" + salesBookId); // Select the row
+$(document).on("click", ".deleteBtn", function () {
+    let salesBookId = $(this).data("id"); // Get ID from button
+    let row = $("#row-" + salesBookId); // Select the row
 
-        if (confirm("Are you sure you want to delete this record?")) {
-            $.ajax({
-                url: salesDayBook + "/" + salesBookId,
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                success: function (response) {
-                    if (isAuthenticated(response) == false) {
-                        return false;
-                    }
-                    if (response.success) {
-                        // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
-                        alert(response.message);
-                        window.location.reload();
-                    }
-                },
-                error: function () {
-                    alert("Something went wrong!");
-                },
-            });
-        }
- });
+    if (confirm("Are you sure you want to delete this record?")) {
+        $.ajax({
+            url: salesDayBook + "/" + salesBookId,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function (response) {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
+                if (response.success) {
+                    // row.find("td:nth-child(7)").text(response.deleted_at); // Update deleted_at column
+                    alert(response.message);
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                alert("Something went wrong!");
+            },
+        });
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     let vatInput = document.getElementById('vat_input');
@@ -442,12 +444,12 @@ function taxRate(dropdown) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-        
+
     document.addEventListener('click', function (event) {
         if (event.target.closest('.openSalesDayBookModel')) {
             const btn = event.target.closest('.openSalesDayBookModel');
 
-          getCustomerList();
+            getCustomerList();
             taxRate(document.getElementById('vat_input'));
             const action = btn.getAttribute('data-action');
             const modalTitle = document.getElementById('modalTitle');
@@ -466,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 sales_day_book_id.value = btn.getAttribute('data-id');
                 customer_id.value = btn.getAttribute('data-customer_id');
                 // Date_input.value = btn.getAttribute('data-date');
-                  const originalDate = btn.getAttribute('data-date');
+                const originalDate = btn.getAttribute('data-date');
                 let formattedDate = originalDate;
                 if (originalDate && originalDate.includes('-')) {
                     const parts = originalDate.split('-'); // [yyyy, mm, dd]
