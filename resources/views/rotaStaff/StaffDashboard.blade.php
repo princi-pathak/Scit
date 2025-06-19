@@ -1,9 +1,15 @@
+@extends('frontEnd.layouts.master')
+@include('rotaStaff.components.header')
+
+<!-- @include('rotaStaff.components.rota_master') -->
+
 <style>
   .add_trans {
     transform: scale(1.2);
   }
 
   .main-shodw-box {
+    width: 100%;
     background-color: #fff;
     display: inline-block;
     border-radius: 6px;
@@ -39,7 +45,10 @@
   .main-white-crical {
     margin: 15px 0;
   }
-
+/* 
+  .right-side-info .tab-content .fade{
+     opacity: 1;
+  } */
   @media (max-width: 991px) {
     .right-side-info .tab-content {
       padding: 0px 20px 20px 20px;
@@ -66,8 +75,13 @@
     background: #e10078!important;
     border-radius:5px !important;
 }
+
+#container {
+    height: auto !important;
+}
 </style>
-@include('rotaStaff.components.header')
+<section class="wrapper">
+  <div class="row">
 <div class="col-lg-12">
   <div class="row">
     <!-- Top Bar Info Section Start Here -->
@@ -83,7 +97,9 @@
             <h4><a href="{{ url('/absence/type=1') }}">+ Add time off</a></h4>
           </div>
         </div>
-        <div class="flx-box">
+        
+        <div class="col-lg-12">
+          <div class="flx-box">
           <div class="crical-part-info-main" onclick="moveUp(id)">
             <div class="cricat-up-text">
               <h3 class="entry-title"> {{ \Carbon\Carbon::parse('Now -3 days')->format('D d M') }}</a>
@@ -163,7 +179,6 @@
             </a>
           </div>
         </div>
-        <div class="col-lg-12">
           <div class="line-hr"></div>
         </div>
         <div class="my-summary-info">
@@ -264,7 +279,7 @@
 
 
           </div>
-          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+         
         </div>
       </aside>
     </div>
@@ -409,6 +424,7 @@
 </div>
 </section>
 @include('rotaStaff.components.footer')
+
 <script>
   function change_leaves_data(date) {
     var token = "<?= csrf_token() ?>";
