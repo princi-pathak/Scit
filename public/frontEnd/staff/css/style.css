@@ -418,7 +418,7 @@ Crical Bar Info
 
 .stock-crical-info h2 {
     text-align: center;
-    line-height: 54px;
+    line-height: 14px;
     font-size: 20px;
     font-weight: 700;
     color: #1f88b5;
@@ -588,7 +588,7 @@ h4.my-summry-part {
     height: 110px;
     border-radius: 50%;
     position: absolute;
-    top: 40%;
+    top: 10%;
     background-color: #fff;
     border: 14px solid #1f88b5;
     transform: translate(10px, 10px);
@@ -596,7 +596,7 @@ h4.my-summry-part {
 
 .main-summery-box-strock h2 {
     text-align: center;
-    line-height: 89px;
+    line-height: 47px;
     font-size: 37px;
     font-weight: 600;
     color: #1f88b5;
@@ -619,9 +619,8 @@ aside.right-side-info {
     display: inline-block;
     border-radius: 6px;
     box-shadow: rgb(187 184 184 / 25%) 0px 2px 8px;
-    position: relative;
-
-    width: 94%;
+    position: relative; 
+    width: 100%;
 
 }
 

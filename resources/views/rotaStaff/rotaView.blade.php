@@ -3,6 +3,7 @@
   window.isMbscDemo = true;
 </script>
 @include('rotaStaff.components.header')
+@include('rotaStaff.components.rota_master')
 <style>
   / Dropdown Button / .dropbtn {
     /* background-color: #3498DB;
