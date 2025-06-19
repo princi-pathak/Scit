@@ -1,6 +1,3 @@
-<?php
-
-use Illuminate\Support\Facades\DB; ?>
 @extends('backEnd.layouts.master')
 
 @section('title',': Form Builder Form')
@@ -23,7 +20,17 @@ if (isset($form)) {
     .hidden {
         display: none;
     }
-
+    .fontwesome-panel {
+        top: 0;
+        float: left;
+        overflow-y: auto;
+        position: fixed;
+        right: 0;
+        width: 100%;
+        background: white;
+        z-index: 9999;
+        height: 100vh;
+    }
     .prient-btn input[type="button"] {
         background-color: #1fb5ad;
         border: none;
@@ -250,15 +257,16 @@ if (isset($form)) {
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">Add:</label>
                                     <div class="col-lg-8">
-                                        <input type="text" class="form-control" id=""  placeholder="">
+                                        <input type="text" class="form-control" id="" name="plan_title_add" placeholder="">
                                         <p class="help-block">Enter a title,choose an icon and click plus to description</p>
                                     </div>
                                     <div class="col-lg-1">
-                                        <button id="" class="btn btn-primary"> <i class="fa fa-info"></i>
+                                        <button id="" class="btn btn-primary icon-box-risk" type="button"> <i class="fa fa-info"></i>
                                         </button>
+                                        <input type="hidden" name="plan_icon_add" class="form-control plan_icon">
                                     </div>
                                     <div class="col-lg-1">
-                                        <button  class="btn btn-primary addTextareaPlus"> <i class="fa fa-plus"></i>
+                                        <button type="button" class="btn btn-primary addTextareaPlus add_plan_desc"> <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -266,22 +274,28 @@ if (isset($form)) {
                                 <div class="form-group " >
                                     <label class="col-lg-2 col-sm-2 control-label"></label>
                                     <div class="col-lg-8">
-                                        <textarea class="form-control" rows="4"></textarea>
+                                        <textarea class="form-control" rows="4" name="plan_detail_add"></textarea>
                                     </div>
                                 </div>
                                
                                 <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">Add:</label>
                                     <div class="col-lg-5">
-                                        <input type="text" class="form-control" id="" placeholder="">
+                                        <input type="text" class="form-control" id="" placeholder="" name="field_name">
                                             <p class="help-block"> Enter the field name and choose its type</p>
                                     </div>
                                     <label class="col-lg-1 col-sm-2 control-label">Type:</label>
                                       <div class="col-lg-3">
-                                        <input type="text" class="form-control" id="" placeholder="">
+                                        <select name="field_type" class="form-control">
+                                            <option value=""> Select </option>
+                                            <option value="Textbox"> Textbox </option>
+                                            <option value="Selectbox"> Selectbox </option>
+                                            <option value="Textarea"> Textarea </option>
+                                            <option value="Date"> Date </option>
+                                        </select>
                                     </div>
                                     <div class="col-lg-1">
-                                        <button id="" class="btn btn-primary"> <i class="fa fa-plus"></i>
+                                        <button id="" class="btn btn-primary add-field-btn"> <i class="fa fa-plus"></i>
                                         </button>
                                     </button>
                                     </div>
@@ -291,14 +305,17 @@ if (isset($form)) {
                                  <div class="form-group">
                                     <label class="col-lg-2 col-sm-2 control-label">Title:</label>
                                     <div class="col-lg-9">
-                                        <input type="text" class="form-control" id="" placeholder="">
+                                        <input type="text" class="form-control" id="" placeholder="" name="title">
                                             <p class="help-block">Above are default fields of your form, New custom fields will be shown below.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
+                                        <input type="hidden" name="plan_title" value="" />
+                                        <input type="hidden" name="plan_icon" value="" />
+                                        <textarea name="plan_detail" style="display:none" value=""> </textarea>
                                         <button type="button" class="btn btn-default" name="cancel">Cancel</button>
-                                        <button type="submit" class="btn btn-danger">Confirm</button>
+                                        <button type="button" class="btn btn-danger" save-appointmnt-form>Confirm</button>
                                     </div>
                                 </div>
                             </form>
@@ -309,9 +326,56 @@ if (isset($form)) {
         </div>
     </section>
 </section>
+<!-- Font awesome(icons) -->
+       @include('backEnd.common.icon_list')
+<!-- Font awesome(icons) end -->
 <script>
   document.querySelector('.addTextareaPlus').addEventListener('click', function () {
     document.querySelector('.showTextarea').classList.toggle('active');
   });
 </script>
+<script>
+    /*------Font awesome icons script ---------*/ 
+    $(document).ready(function(){ 
+        $('.fontwesome-panel').hide();
+        $('.icon-box-risk').on('click',function(){ 
+            $('body').addClass('modal-open');
+            $('.fontwesome-panel').show();
+            $('.fontwesome-panel').find('#icons-fonts').attr('id','risk-fonts');
+        });
+
+        $('.fontawesome-cross').on('click',function(){
+           $('body').removeClass('modal-open');
+           $('.fontwesome-panel').hide(); 
+           
+        });
+
+        $(document).on('click','#risk-fonts .fa-hover a', function () {             
+            var trim_txt = $(this).find('i');
+            var new_class = trim_txt.attr('class');
+            $('.icon-box-risk i').attr('class',new_class);
+            $('body').toggleClass('modal-open');
+            $('.fontwesome-panel').hide(); 
+            $('.plan_icon').val(new_class);
+            //alert(new_class);
+        });
+    });
+</script>
+<script>
+    $('.description_plan').hide();
+    $('.add_plan_desc').on('click',function(){
+        autosize($("textarea"));
+        $('.description_plan').toggle();
+    });
+</script>
+
+<script>
+    $('.edit_description_plan').hide();
+    //$('.edit_description_plan').on('click', function(){
+    $(document).on('click','.e_description_plan', function(){
+        autosize($("textarea"));
+        $('.edit_description_plan').toggle();
+    });
+</script>
+
 @endsection
