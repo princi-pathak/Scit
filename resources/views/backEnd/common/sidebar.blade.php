@@ -208,7 +208,7 @@
                 <!-- Sales and Finanace -->
                 <li class="sub-menu">
                     <a href="javascript:;"
-                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page == 'dayBook') || ($page == 'salesDayBook') || ($page == 'purchaseExpenese') || ($page =='council_tax') || ($page == 'petty_card_cash') || ($page == 'assets_category') || ($page == 'depreciation_type') || ($page == 'asset_register') ) {
+                        class="<?php if (($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense') || ($page == 'dayBook') || ($page == 'salesDayBook') || ($page == 'purchaseExpenese') || ($page =='council_tax') || ($page == 'petty_card_cash') || ($page == 'assets_category') || ($page == 'depreciation_type') || ($page == 'asset_register') || ($page == 'time_sheet') ) {
                                     echo 'active';
                                 } ?>">
                         <i class="fa fa-cogs"></i>
@@ -249,6 +249,8 @@
 
                             </ul>
                         </li>
+                        <li class="{{ ($page == 'time_sheet') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/time-sheet') }}">Time Sheet </a></li>
+
                     </ul>
                 </li>
                 <!-- Jobs -->
