@@ -44,6 +44,9 @@ use App\Http\Controllers\backEnd\rota\StaffWorkerController;
 use App\Http\Controllers\backEnd\salesfinance\asset\AssetBackendController;
 use App\Http\Controllers\backEnd\generalAdmin\HomeCostingController;
 use App\Http\Controllers\backEnd\systemManage\PlanBuilderAdminController;
+use App\Http\Controllers\backEnd\salesfinance\TimeSheetBackendController;
+
+
 
 
 
@@ -2202,6 +2205,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::controller(BackendInvoiceController::class)->group((function () {
 		Route::prefix('sales-finance/sales')->group(function () {
 			Route::get('/getTaxRate', 'getActiveTaxRate');
+		});
+	}));
+
+
+	Route::controller(TimeSheetBackendController::class)->group((function () {
+		Route::prefix('/sales-finance/time-sheet')->group(function () {
+			Route::get('/', 'index');
+			Route::get('/time-sheet-add', 'create');
 		});
 	}));
 
