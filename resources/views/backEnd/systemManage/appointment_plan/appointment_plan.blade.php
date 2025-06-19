@@ -60,30 +60,23 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Username</th>
+                                        <th>Title Name</th>
+                                        <th>Icon</th>
+                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
+                                    @foreach($plan_builder as $key=>$val)
+                                        <tr>
+                                            <td>{{ ++$key}}</td>
+                                            <td>{{$val->title}}</td>
+                                            <td>{{$val->icon}}</td>
+                                            <td>
+                                                <a href="javascript:void(0)"  class=""><i class="text-primary fa fa-edit"></i></a> | 
+                                                <a href="#!" class=""><i class="text-danger fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
