@@ -1,5 +1,4 @@
 <?php
-
 // $alert_dynamic_form = App\DynamicForm::alertDynamicForm();
 //     echo "<pre>"; print_r($alert_dynamic_form); die;
 ?>
@@ -112,11 +111,13 @@ float: right;
                                 $user_image = 'default_user.jpg';
                             }
                             $current_path = Request::path();
+                           
                             $user_id = Auth::user()->id;
                             ?>
                             <!-- <img alt="" src="{{ userProfileImagePath.'/'.$user_image }}"> -->
+                            <img alt="" src="{{ url('public/images/userProfileImages'.'/'.$user_image) }}">
                             <!-- Komal -->
-                            <img alt="" src="{{ env('APP_URL') }}/{{ userProfileImagePath.'/'.$user_image }}">
+                            <!-- <img alt="" src="{{ env('APP_URL') }}/{{ userProfileImagePath.'/'.$user_image }}"> -->
                             <span class="username">{{ ucfirst(Auth::user()->name) }}</span>
                             <b class="caret"></b>
                         </a>

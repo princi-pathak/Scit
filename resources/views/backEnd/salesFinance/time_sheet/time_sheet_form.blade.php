@@ -25,7 +25,7 @@
                     </div>
                     @endif
 
-                    @if (session('error'))
+                    @if (session('error'))    
                     <div class="alert alert-danger alert-dismissible fade show">
                         {{ session('error') }}
                     </div>

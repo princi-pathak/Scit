@@ -15,6 +15,10 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
     .pagination>li>span {
         padding: 5px 6px;
     }
+
+    /* .has-feedback.formio-component canvas {
+        max-width: 100% !important;
+    } */
 </style>
 
 <!-- dynmic Form Modal -->
@@ -23,7 +27,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Forms </h4>
+                <h4 class="modal-title">Forms1 </h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -638,7 +642,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         $('#' + previous_model_id + ' .popup_error').show();
                         setTimeout(function() {
                             $('#' + previous_model_id + ' .popup_error').fadeOut()
-                             location.reload()
+                            location.reload()
                         }, 5000);
                     }
 
@@ -686,8 +690,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
          });*/
 
-        $(document).on('click', '.dyn-form-view-data', function()
-        {
+        $(document).on('click', '.dyn-form-view-data', function() {
 
             var previous_model_id = $(this).closest('.modal').attr('id');
             var dynamic_form_id = $(this).attr('id');
@@ -789,8 +792,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
 
 
-        $(document).on('click', '.dyn-form-filler', function()
-        {
+        $(document).on('click', '.dyn-form-filler', function() {
             var previous_model_id = $(this).closest('.modal').attr('id');
             var dynamic_form_id = $(this).attr('id');
             var form_id = $(this).closest('form').attr('id');
@@ -886,7 +888,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             return false;
         });
 
-        function dyn_form_filler(){
+        function dyn_form_filler() {
 
         }
 
@@ -1112,11 +1114,11 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             var logtype = $(this).attr('logtype');
             $('#logtype').val(logtype);
             //alert(logtype);
-            if(logtype==1){
+            if (logtype == 1) {
                 $('.logtitle').text("Add Record To Child's Daily Log");
-            }else if(logtype==2){
+            } else if (logtype == 2) {
                 $('.logtitle').text("Add Record To Child's Weekly Log");
-            }else if(logtype==3){
+            } else if (logtype == 3) {
                 $('.logtitle').text("Add Record To Child's Monthly Log");
             }
             $('#dynmicFormModal').modal('hide');
@@ -1132,11 +1134,11 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             var s_category_id = $('select[name=\'s_category_id\']').val();
             var logtype = $('input[name=\'logtype\']').val();
             var token = $('input[name=\'_token\']').val();
-            if(logtype==1){
+            if (logtype == 1) {
                 var logtext = "daily";
-            }else if(logtype==2){
+            } else if (logtype == 2) {
                 var logtext = "weekly";
-            }else if(logtype==3){
+            } else if (logtype == 3) {
                 var logtext = "monthly";
             }
 
@@ -1183,18 +1185,18 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         $('.popup_error').show();
 
                     } else if (res == '1') {
-                        $('span.popup_success_txt').text('Record has been added to Child '+ logtext +' log successfully.');
+                        $('span.popup_success_txt').text('Record has been added to Child ' + logtext + ' log successfully.');
                         $('.popup_success').show();
                         setTimeout(function() {
                             $('.popup_success').fadeOut()
                         }, 5000);
 
-                        if(logtype==1){
-                            window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;   
-                        }else if(logtype==2){
-                            window.location.href = "{{ url('/service/weekly-logs?key=') }}" + s_user_id;   
-                        }else if(logtype==3){
-                            window.location.href = "{{ url('/service/monthly-logs?key=') }}" + s_user_id;   
+                        if (logtype == 1) {
+                            window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;
+                        } else if (logtype == 2) {
+                            window.location.href = "{{ url('/service/weekly-logs?key=') }}" + s_user_id;
+                        } else if (logtype == 3) {
+                            window.location.href = "{{ url('/service/monthly-logs?key=') }}" + s_user_id;
                         }
 
 
@@ -1228,24 +1230,27 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         $(document).on('click', '.dyn_form_new_tab', function() {
 
             var printWindow = window.open('', '', 'height=600,width=600');
-                printWindow.document.write('<html><head><title>Print DIV Content</title>');
-                printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">');
-                printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">');
-                printWindow.document.write('<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
-                printWindow.document.write('<link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css" >');
-                printWindow.document.write('<link href="{{ url('public/backEnd/css/pdfstyle.css')}}" rel="stylesheet" type="text/css" >');
-                printWindow.document.write('</head><body > <div class="masterprintmainarea">');
-                printWindow.document.write('<div class="header">');
-                printWindow.document.write('<img src="{{url('/public/images/scits.png')}}" style="float:right;height:80px;">');
-                printWindow.document.write('</div>');
-                // printWindow.document.write(divContents);
-                printWindow.document.write('</div>');
-                printWindow.document.write('<div class="footer">');
-                printWindow.document.write('<div class="footer-section-area">');
-                printWindow.document.write('© {{ date('Y') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
-                printWindow.document.write('</div>');
-                printWindow.document.write('</div>');
-                printWindow.document.write('</div> </body></html>');
+            printWindow.document.write('<html><head><title>Print DIV Content</title>');
+            printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">');
+            printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">');
+            printWindow.document.write('<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
+            printWindow.document.write('<link href="{{ url('
+                public / backEnd / css / amarjeet.css ')}}" rel="stylesheet" type="text/css" >');
+            printWindow.document.write('<link href="{{ url('
+                public / backEnd / css / pdfstyle.css ')}}" rel="stylesheet" type="text/css" >');
+            printWindow.document.write('</head><body > <div class="masterprintmainarea">');
+            printWindow.document.write('<div class="header">');
+            printWindow.document.write('<img src="{{url(' / public / images / scits.png ')}}" style="float:right;height:80px;">');
+            printWindow.document.write('</div>');
+            // printWindow.document.write(divContents);
+            printWindow.document.write('</div>');
+            printWindow.document.write('<div class="footer">');
+            printWindow.document.write('<div class="footer-section-area">');
+            printWindow.document.write('© {{ date('
+                Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
+            printWindow.document.write('</div>');
+            printWindow.document.write('</div>');
+            printWindow.document.write('</div> </body></html>');
         });
     })
 </script>
