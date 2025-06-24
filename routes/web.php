@@ -2211,8 +2211,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 	Route::controller(TimeSheetBackendController::class)->group((function () {
 		Route::prefix('/sales-finance/time-sheet')->group(function () {
-			Route::get('/', 'index');
-			Route::get('/time-sheet-add', 'create');
+			Route::get('/', 'index')->name('backEnd.salesFinance.time_sheet');
+			Route::get('/add', 'create');
+			Route::post('/save', 'store');
+			Route::post('/get-data', 'getData');
+			Route::delete('/delete/{id}', 'destroy');
+			Route::get('/edit/{id}', 'edit');
+
+
 		});
 	}));
 
