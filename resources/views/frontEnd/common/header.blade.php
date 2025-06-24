@@ -74,7 +74,7 @@ float: right;
         </div>
         <!--logo end-->
         <div class="horizontal-menu navbar-collapse collapse">
-            <div class="wlcome-header text-uppercase"> Welcome Back, </div>
+            <div class="wlcome-header"> Welcome Back, </div>
         </div>
         <div class="header-dys top-nav hr-top-nav cus-nav">
             <div class="col-md-8 col-sm-8 col-xs-12 col-lg-8">
