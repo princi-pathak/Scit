@@ -493,6 +493,9 @@ class DynamicFormController extends Controller
             $data = $request->all();
 
             $dyn_form = DynamicForm::where('id', $data['dyn_form_id'])->first();
+            // Ram here code for save title and detail when user want to send to daily log 19/06/2025
+            $title_detail = DynamicFormBuilder::where('id', $dyn_form->form_builder_id)->first();
+            // echo "<pre>";print_r($title_detail);die;
 
             $check_log_record = LogBook::where('dynamic_form_id', $data['dyn_form_id'])->where('logType',$data['logtype'])->get()->toArray();
             // echo "<pre>"; print_r($check_log_record); die;
@@ -523,9 +526,9 @@ class DynamicFormController extends Controller
             $log_book->dynamic_form_id = $data['dyn_form_id'] ?? null;
             $log_book->home_id         = Auth::user()->home_id;
             $log_book->user_id         = Auth::user()->id;
-            $log_book->title           = $dyn_form->title ?? null;
+            $log_book->title           = $dyn_form->title ?? $title_detail->title;
             $log_book->date            = date('Y-m-d H:i:s');
-            $log_book->details         = $dyn_form->details ?? null;
+            $log_book->details         = $dyn_form->details ?? $title_detail->detail;
             $log_book->category_id     = $s_category_id;
             $log_book->category_name   = $category_data ? $category_data->name : null;
             $log_book->category_icon   = $category_data ? $category_data->icon : null;

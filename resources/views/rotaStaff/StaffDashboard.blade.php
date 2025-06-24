@@ -45,10 +45,10 @@
   .main-white-crical {
     margin: 15px 0;
   }
-/* 
+
   .right-side-info .tab-content .fade{
      opacity: 1;
-  } */
+  } 
   @media (max-width: 991px) {
     .right-side-info .tab-content {
       padding: 0px 20px 20px 20px;
@@ -423,7 +423,7 @@
 </div>
 </div>
 </section>
-@include('rotaStaff.components.footer')
+<!-- @include('rotaStaff.components.footer') -->
 
 <script>
   function change_leaves_data(date) {
