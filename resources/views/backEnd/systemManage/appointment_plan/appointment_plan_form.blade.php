@@ -251,11 +251,19 @@ if (isset($form)) {
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_error popup_alrt_msg">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_error">
                         <div class="popup_notification-box">
                             <div class="alert alert-danger alert-dismissible m-0" role="alert">
                                 <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
                                 <strong>Success!</strong> <span class="popup_error_txt">Some error occured, Please try again after sometime.</span>.
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_success popup_alrt_msg" style="display: none;">
+                        <div class="popup_notification-box">
+                            <div class="alert alert-success alert m-0" role="alert">
+                                <button type="button" class="close close-msg-btn"><span aria-hidden="true">×</span></button>
+                                <strong>Success!</strong> <span class="popup_success_txt">Data is made editable</span>.
                             </div>
                         </div>
                     </div>
@@ -554,9 +562,10 @@ $(document).ready(function(){
                     $('textarea[name=\'plan_detail_add\']').closest('.description_plan').hide();
 
                     //show success message
+                    $('.popup_alrt_msg').show();
+                    $('.alert-success').show();
                     $('span.popup_success_txt').text('Plan Added successfully');
-                    $('.popup_success').show();
-                    setTimeout(function(){$(".popup_success").fadeOut()}, 5000);
+                    setTimeout(function(){$(".popup_alrt_msg").fadeOut()}, 5000);
 
                 } else if(resp == 'false'){
                     $('span.popup_error_txt').text('Error Occured');
@@ -564,9 +573,9 @@ $(document).ready(function(){
                     setTimeout(function(){$(".popup_error").fadeOut()}, 5000);
 
                 } else{
-                    alert()
-                    $('span.popup_error_txt').text(' No input field added in the form');
                     $('.popup_error').show();
+                    $('.alert-danger').show();
+                    $('span.popup_error_txt').text(' No input field added in the form');
                     setTimeout(function(){$(".popup_error").fadeOut()}, 5000);
                 }
                 $('.loader').hide();
