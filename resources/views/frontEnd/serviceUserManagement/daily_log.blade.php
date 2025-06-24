@@ -463,7 +463,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 <!-- Daily Log Comments -->
 <script>
     function daily_log_comment(logId, service_user_id) {
-        alert(service_user_id)
+        // alert(service_user_id)
         localStorage.setItem('log_book_id', logId);
         $('.loader').show();
         $('body').addClass('body-overflow');

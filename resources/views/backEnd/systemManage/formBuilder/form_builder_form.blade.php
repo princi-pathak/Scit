@@ -528,6 +528,4 @@ if (isset($form)) {
     });
 </script>
 
-
-
 @endsection

@@ -25,6 +25,19 @@
                        Add Time Sheet
                     </header>
 
+                    @if (session('success'))
+                    <div class="aalert alert-success alert-dismissible fade show">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if (session('error'))    
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+
+
                     <div class="panel-body">
                         <div class="position-center">
                             <form class="form-horizontal" method="" action="" role="form">

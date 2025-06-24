@@ -2286,6 +2286,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::prefix('appointment')->group(function(){
 			Route::get('plans','index');
 			Route::get('plans/add','plan_add');
+			Route::post('plans/store','store');
 		});
 	});
 	// end here
