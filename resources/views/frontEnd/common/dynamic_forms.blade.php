@@ -1175,7 +1175,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 },
                 //dataType : 'json',
                 success: function(res) {
-                    //console.log(res);
+                    console.log(res);
                     if (isAuthenticated(res) == false) {
                         return false;
                     }
