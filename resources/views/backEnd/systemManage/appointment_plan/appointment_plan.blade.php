@@ -32,7 +32,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div id="editable-sample_length" class="dataTables_length ">
-                                        <form method='post' action="{{ url('admin/appointment/plan/add') }}" id="records_per_page_form" >
+                                        <form method='post' action="{{ url('admin/appointment/plans') }}" id="records_per_page_form" >
                                             <label>
                                                 <select name="limit"  size="1" aria-controls="editable-sample" class="form-control xsmall select_limit">
                                                     <option value="10" {{ ($limit == '10') ? 'selected': '' }}>10</option>
@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <form method='get' action="{{ url('admin/form-builder') }}">
+                                    <form method='get' action="{{ url('admin/appointment/plans') }}">
                                         <div class="dataTables_filter" id="editable-sample_filter">
                                             <label>Search: <input name="search" type="text" value="{{ $search }}" aria-controls="editable-sample" class="form-control medium" maxlength="255"></label>
                                             <!-- <button class="btn search-btn" type="submit"><i class="fa fa-search"></i></button>   -->
@@ -72,8 +72,8 @@
                                             <td>{{$val->title}}</td>
                                             <td>{{$val->icon}}</td>
                                             <td>
-                                                <a href="javascript:void(0)"  class=""><i class="text-primary fa fa-edit"></i></a> | 
-                                                <a href="#!" class=""><i class="text-danger fa fa-trash-o"></i></a>
+                                                <a href="{{url('admin/appointment/plans/edit/'.$val->id)}}"  class=""><i class="text-primary fa fa-edit"></i></a> | 
+                                                <a href="{{url('admin/appointment/plans/delete/'.$val->id)}}" class=""><i class="text-danger fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

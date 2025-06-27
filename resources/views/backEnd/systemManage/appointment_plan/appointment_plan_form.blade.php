@@ -251,11 +251,19 @@ if (isset($form)) {
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_error popup_alrt_msg">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_error">
                         <div class="popup_notification-box">
                             <div class="alert alert-danger alert-dismissible m-0" role="alert">
                                 <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
                                 <strong>Success!</strong> <span class="popup_error_txt">Some error occured, Please try again after sometime.</span>.
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_success popup_alrt_msg" style="display: none;">
+                        <div class="popup_notification-box">
+                            <div class="alert alert-success alert m-0" role="alert">
+                                <button type="button" class="close close-msg-btn"><span aria-hidden="true">×</span></button>
+                                <strong>Success!</strong> <span class="popup_success_txt">Data is made editable</span>.
                             </div>
                         </div>
                     </div>
@@ -325,6 +333,7 @@ if (isset($form)) {
                                     <div class="col-lg-offset-2 col-lg-10">
                                         <input type="hidden" name="plan_title" value="" />
                                         <input type="hidden" name="plan_icon" value="" />
+                                        <input type="hidden" name="id" value="<?php if(isset($id) && $id !=''){echo $id;}?>" />
                                         <textarea name="plan_detail" style="display:none" value=""> </textarea>
                                         <button type="button" class="btn btn-default" name="cancel">Cancel</button>
                                         <button type="button" class="btn btn-danger save-appointmnt-form">Confirm</button>
@@ -501,9 +510,8 @@ $(document).ready(function(){
 
     $(document).on('click','.save-appointmnt-form', function() { 
         $('input[name=\'plan_title\']').val($('input[name=\'plan_title_add\']').val());
-        $('input[name=\'plan_icon\']').val($('input[name=\'plan_icon_add\']').val());
+       var icon= $('input[name=\'plan_icon\']').val($('input[name=\'plan_icon_add\']').val());
         $('textarea[name=\'plan_detail\']').val($('textarea[name=\'plan_detail_add\']').val());
-        
         var error = 0;
         if( $('input[name=\'plan_title_add\']').val() == '' ) {
             $('input[name=\'plan_title_add\']').addClass('red_border');
@@ -525,7 +533,7 @@ $(document).ready(function(){
         }                                           
 
         var formData = $('#custom-created-fields-form').serialize();
-
+        var id=$('input[name=\'id\']').val();
         //alert(formData);
         // $('.loader').show();
         // $('body').addClass('body-overflow');
@@ -554,9 +562,15 @@ $(document).ready(function(){
                     $('textarea[name=\'plan_detail_add\']').closest('.description_plan').hide();
 
                     //show success message
-                    $('span.popup_success_txt').text('Plan Added successfully');
-                    $('.popup_success').show();
-                    setTimeout(function(){$(".popup_success").fadeOut()}, 5000);
+                    $('.popup_alrt_msg').show();
+                    $('.alert-success').show();
+                    if(id == ''){
+                        $('span.popup_success_txt').text('Plan Added successfully');
+                    }else{
+                        $('span.popup_success_txt').text('Plan Editted successfully');
+                    }
+                    setTimeout(function(){$(".popup_alrt_msg").fadeOut()}, 5000);
+                    window.location.href='<?php echo url('admin/appointment/plans');?>'
 
                 } else if(resp == 'false'){
                     $('span.popup_error_txt').text('Error Occured');
@@ -564,9 +578,9 @@ $(document).ready(function(){
                     setTimeout(function(){$(".popup_error").fadeOut()}, 5000);
 
                 } else{
-                    alert()
-                    $('span.popup_error_txt').text(' No input field added in the form');
                     $('.popup_error').show();
+                    $('.alert-danger').show();
+                    $('span.popup_error_txt').text(' No input field added in the form');
                     setTimeout(function(){$(".popup_error").fadeOut()}, 5000);
                 }
                 $('.loader').hide();
@@ -575,36 +589,6 @@ $(document).ready(function(){
         });
         
         return false;
-    });
-
-    $(".logged-plans").click(function(){
-        
-        $('.loader').show();
-        $('body').addClass('body-overflow');
-       
-        $.ajax({
-            type : 'get',
-            url  : "{{ url('/system/plans') }}",
-            // dataType : 'json',
-            success:function(resp){
-                if(isAuthenticated(resp) == false){
-                    return false;
-                }
-                if(resp == '') {
-                    $('.logged-plan-shown').html('<div class="text-center p-b-20" style="width:100%"> No Records found. </div>');
-                    $('.plan_sel_all_checkbox,.plan_del_btn').hide();
-                } else {
-                    $('.logged-plan-shown').html(resp);
-                    $('.plan_sel_all_checkbox,.plan_del_btn').show();
-                }
-                reset_appointment_modal();
-                $('#appointmentplanmodal').modal('show');
-
-                $('.loader').hide();
-                $('body').removeClass('body-overflow');
-            }
-        });
-        
     });
 
     function add_field_in_form(option_count,field_count,operation){
@@ -730,43 +714,26 @@ $(document).ready(function(){
         $('.add-more-select-options-div').html('');
     }
     
-    function e_reset_appointment_modal(){
-        
-        //reset add select options
-        $("input[name=\'e_field_name\']").val('');
-        $("select[name=\'e_field_type\']").val('');
-        
-        //reset select box
-        $('.e-add-select-options-div').hide(); 
-        // $("input[name=\'cus_option1\']").val('');
-        // $("input[name=\'cus_value1\']").val('');
-
-        //$('#e-custom-created-fields-form').find('input').val('');
-        $('.e-add-more-select-options-div').html('');
-    }    
+    
 
     /*Editing plan */
-
-    $('.e-add-more-option-btn').hide();
     var e_option_count = 1;
     var e_field_count  = 1;
+<?php if(isset($id) && $id !=''){?>
+    $(document).ready(function(){
 
-    $(document).on('click','.view-plan',function(){
-
-        e_reset_appointment_modal();
-        var plan_id = $(this).closest('ul').attr('logged_plan_id');
+        // e_reset_appointment_modal();
+        var plan_id = <?php echo $id; ?>
         
-        $('.loader').show();
-        $('body').addClass('body-overflow');
+        // $('.loader').show();
+        // $('body').addClass('body-overflow');
        
         $.ajax({
             type : 'get',
-            url  : "{{ url('/system/plans/view') }}"+'/'+plan_id,
+            url  : "{{ url('admin/appointment/plans/view') }}"+'/'+plan_id,
             dataType : 'json',
             success:function(resp){
-                if(isAuthenticated(resp) == false){
-                    return false;
-                }
+                console.log(resp)
                 var response = resp['response'];
                 if(response == true){
                     var plan_id = resp['plan_id']; 
@@ -778,22 +745,17 @@ $(document).ready(function(){
                     // alert(icon);return
                     e_field_count = resp['total_fields'];
                     e_field_count++;
-                    //alert(e_field_count);
-                    // return false;
-                    // set plan info in form for showing
-                    $('input[name=\'e_plan_title_add\']').val(title);
-                    // $('input[name=\'e_plan_icon_add\']').val(icon);
-                    $('.sel_icon i').addClass(icon);
-                    $('textarea[name=\'e_plan_detail_add\']').val(detail);
-
-                    $('#e-custom-created-fields-form').find('input[name=\'plan_id\']').val(plan_id);
+                    $('input[name=\'plan_title_add\']').val(title);
+                    $('input[name=\'plan_icon_add\']').val(icon);
+                    $('.icon-box-risk').find('i').attr('class', icon);
+                    $('textarea[name=\'plan_detail_add\']').val(detail);
+                    if(detail){
+                        $('.description_plan').show();
+                    }
+                    $('#custom-created-fields-form').find('input[name=\'plan_id\']').val(plan_id);
                     //$('#e-custom-created-fields-form').find('input[name=\'alrdy_savd_flds\']').val(alrdy_savd_flds);
 
-                    $('.e-created-fields').html(formdata);
-                    //$('#appointmentplanmodal').modal('show');
-                    $('#appointmentplanmodal').modal('hide'); 
-                    $('#viewappointmentmodal').modal('show'); 
-                    e_reset_appointment_modal();
+                    $('.created-fields').html(formdata);
                 } else{
                     alert("{{ COMMON_ERROR }}");
                 }
@@ -804,111 +766,7 @@ $(document).ready(function(){
         });
         return false;
     });
-
-    $('.e-add-field-btn').on('click',function(){
-        //alert(e_field_count); return false;
-        
-        var field = add_field_in_form(e_option_count,e_field_count,'EDIT');
-        if(field == false){
-            return false;
-        } 
-        e_field_count++;
-
-        // showing new created fields
-        $('.e-created-fields').append(field);
-        //e_field_count++;
-        // select box options set to default
-        $('.e-add-more-option-btn').hide();
-        e_option_count = 1; 
-
-        e_reset_appointment_modal();
-    });
-
-    $(document).on('click','.e-save-appointmnt-form', function() {
-        $('#e-custom-created-fields-form').find('input[name=\'plan_title\']').val($('input[name=\'e_plan_title_add\']').val());
-        // $('#e-custom-created-fields-form').find('input[name=\'plan_icon\']').val($('input[name=\'plan_icon_add\']').val($('input[name=\'e_plan_icon_add\']').val()));
-        $('#e-custom-created-fields-form').find('input[name=\'plan_id\']').val();
-
-        $('input[name=\'plan_icon\']').val($('input[name=\'e_plan_icon_add\']').val());
-        $('#e-custom-created-fields-form').find('textarea[name=\'plan_detail\']').val($('textarea[name=\'e_plan_detail_add\']').val());
-        var error = 0;
-        if($('input[name=\'e_plan_title_add\']').val() == '') {
-            $('input[name=\'e_plan_title_add\']').addClass('red_border');
-            //$('input[name=\'e_plan_icon_add\']').siblings('span').addClass('red_border');
-            error = 1;
-        } else {
-            $('input[name=\'e_plan_title_add\']').removeClass('red_border');
-            //$('input[name=\'e_plan_icon_add\']').siblings('span').removeClass('red_border');
-        }
-        if(error == 1) {
-            return false;
-        }
-
-        var formData = $('#e-custom-created-fields-form').serialize();
-        $('.loader').show();
-        $('body').addClass('body-overflow');
-
-        $.ajax({
-            url : "{{ url('/system/plans/edit') }}",
-            type : "post",
-            data : formData,
-            success:function(resp){
-                if(isAuthenticated(resp) == false){
-                    return false;
-                }
-                if(resp == 'empty'){
-                    $('span.popup_error_txt').text(' No input field added in the form');
-                    $('.popup_error').show();
-                    setTimeout(function(){$(".popup_error").fadeOut()}, 5000);
-                } else if(resp == 'false'){
-                    $('span.popup_error_txt').text('Some Error Occured.');
-                    $('.popup_error').show();
-                    setTimeout(function(){$(".popup_success").fadeOut()}, 5000);
-                } else {
-                    
-                    $('#viewappointmentmodal').modal('hide'); 
-                    $('#appointmentplanmodal').modal('show'); 
-                    $('.logged-plan-shown').html(resp);
-                    //$('.edit_description_plan').siblings().hide();
-                    $('textarea[name=\'e_plan_detail_add\']').closest('.edit_description_plan').hide();
-                    
-                    //show success message
-                    $('span.popup_success_txt').text('Plan updated successfully');
-                    $('.popup_success').show();
-                    setTimeout(function(){$(".popup_success").fadeOut()}, 5000);
-                }
-                $('.loader').hide();
-                $('body').removeClass('body-overflow');
-            }
-        });
-        return false;
-    });
-
-    /*select box jquery edit case */
-    $("select[name=\'e_field_type\'").change(function(){
-    
-        var value = $(this).val();
-        if(value == 'Selectbox'){ 
-            $('.e-add-select-options-div').show();
-            $('.e-add-more-option-btn').show();
-            $('.e-add-more-select-options-div').show();
-            $('.e-add-more-select-options-div').html('');
-            var e_option_count = 1;
-            $('.e-add-more-select-options-div').append('<div class="form-group col-md-offset 1 col-md-10 col-sm-10 col-xs-12 p-0 m-l-50 option-div"> <div class="col-md-4 col-sm-4 col-xs-12 p-l-0"> <input name="e_cus_option'+e_option_count+'" placeholder="option" class="form-control " type="text" value=""> </div> <div class="col-md-4 col-sm-4 col-xs-12 p-l-0"> <input name="e_cus_value'+e_option_count+'" placeholder="value" class=" form-control" type="text" value=""> </div> <div class="col-md-1 col-sm-1 col-xs-1 p-0"> <button class="btn group-ico remove-option-btn" type="button"> <i class="fa fa-minus"></i> </button> </div> </div>');
-
-        } else{
-            $('.e-add-select-options-div').hide();
-            $('.e-add-more-option-btn').hide();        
-            $('.e-add-more-select-options-div').hide();            
-        }
-    });
-
-   $(document).on('click','.e-add-more-option-btn', function(){
-
-        e_option_count++;
-        $('.e-add-more-select-options-div').append('<div class="form-group col-md-offset 1 col-md-10 col-sm-10 col-xs-12 p-0 m-l-50 option-div"> <div class="col-md-4 col-sm-4 col-xs-12 p-l-0"> <input name="e_cus_option'+e_option_count+'" placeholder="option" class="form-control " type="text" value=""> </div> <div class="col-md-4 col-sm-4 col-xs-12 p-l-0"> <input name="e_cus_value'+e_option_count+'" placeholder="value1" class=" form-control" type="text" value=""> </div> <div class="col-md-1 col-sm-1 col-xs-1 p-0"> <button class="btn group-ico remove-option-btn" type="button"> <i class="fa fa-minus"></i> </button> </div> </div>');
-   });
-
+<?php }?>
     $(document).on('click','.remove-option-btn', function(){
         $(this).closest('.option-div').remove();
     });
@@ -925,60 +783,6 @@ $(document).ready(function(){
 
 });
 </script>
-
-<!-- <script>
-    $(document).ready(function(){
-        
-        //$(document).on('click','.settings',function(){
-        $('.settings').on('click',function(){
-            $(this).find('.pop-notifbox').toggleClass('active');
-            $(this).closest('.cog-panel').siblings('.cog-panel').find('.pop-notifbox').removeClass('active');
-        });
-        $(window).on('click',function(e){
-            e.stopPropagation();
-            var $trigger = $(".settings");
-            // console.log($trigger.has(e.target));
-            if($trigger !== e.target && !$trigger.has(e.target).length){
-                $('.pop-notifbox').removeClass('active');
-            }
-        });
-    });
-</script> -->
-<script>
-    /*-------Sweetalert ---------*/
-     //swal("Good job!", "You clicked the button!", "success");
-</script>    
-<script>
-
-    /*---------Three tabs click option----------*/
-    /*
-    $('.risk-logged-box').hide();
-    $('.risk-search-box').hide();
-    $('.risk-logged-btn').removeClass('active');
-    $('.risk-search-btn').removeClass('active');
-
-    $('.risk-add-btn').on('click',function(){ 
-        $(this).addClass('active');
-        $(this).siblings().removeClass('active');
-        $(this).closest('.modal-body').find('.risk-add-box').show();
-        $(this).closest('.modal-body').find('.risk-add-box').siblings('.risk-tabs').hide();
-    });
-    $('.risk-logged-btn').on('click',function(){
-        $(this).addClass('active');
-        $(this).siblings().removeClass('active');
-        $(this).closest('.modal-body').find('.risk-logged-box').show();
-        $(this).closest('.modal-body').find('.risk-logged-box').siblings('.risk-tabs').hide();
-    });
-    $('.risk-search-btn').on('click',function(){
-        $(this).addClass('active');
-        $(this).siblings().removeClass('active');
-        $(this).closest('.modal-body').find('.risk-search-box').show();
-        $(this).closest('.modal-body').find('.risk-search-box').siblings('.risk-tabs').hide();
-    }); */
-</script>       
-
-<!-- akhil scripts-->
-
 <script>
     /*------Font awesome icons script ---------*/ 
     $(document).ready(function(){ 
@@ -1058,68 +862,6 @@ $(document).ready(function(){
         });
     });
 </script>
-
-<script>
-    $(document).ready(function(){
-
-        $('input[name=\'search\']').keydown(function(event) { 
-        var keyCode = (event.keyCode ? event.keyCode : event.which);   
-        if (keyCode == 13) {
-            return false;
-            //$('.search_files_btn').click();        
-        }
-        });
-        $(document).on('click','.search_plan_builder',function(){
-
-        //alert(1);return false;
-        var search = $('input[name=\'search\']').val();
-        search = jQuery.trim(search);
-        var error = 0;
-        if(search == '' || search == '0'){
-            $('input[name=\'search\']').addClass('red_border');
-            error=1;
-        } else{
-            $('input[name=\'search\']').removeClass('red_border');
-        }
-
-        if(error == 1){
-            return false;
-        }
-
-        var formdata = $('#plan_search_form').serialize();
-        // alert(formdata);
-        // return false;
-
-        $('.loader').show();
-        $('body').addClass('body-overflow');
-        
-        //var token = "{{ csrf_token() }}";
-
-        $.ajax({
-            type : 'post',
-            url  : "{{ url('/system/plans') }}",
-            data : formdata,
-            success : function(resp){
-                if(isAuthenticated(resp) == false){
-                    return false;
-                }
-                
-                if(resp == ''){
-                    $('.searched-plan').html('{{ NO_RECORD }}');
-                } else{
-                    $('.searched-plan').html(resp);
-                }
-                //$('.searched-plan').html(resp);
-                //$('input[name=\'search\']').val();
-                $('.loader').hide();
-                $('body').removeClass('body-overflow');
-            }
-        });
-        return false;
-
-        });
-    });
-</script>
 <script>
     $('.description_plan').hide();
     $('.add_plan_desc').on('click',function(){
@@ -1136,19 +878,6 @@ $(document).ready(function(){
         $('.edit_description_plan').toggle();
     });
 </script>
-
-<!-- sortable start -->
-<!-- <link href="{{ url('public/frontEnd/js/sortable-jquery/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ url('public/frontEnd/js/sortable-jquery/jquery-ui.js') }}"></script>
-<script>
-      $( function() {
-        $( "#sortable" ).sortable();
-        $( "#sortable" ).disableSelection();
-        $( "#e-sortable" ).sortable();
-        $( "#e-sortable" ).disableSelection();
-      } );
-</script> -->
-<!-- sortable end -->
 <script type="text/javascript">
     $(document).on('click','.bck_btn',function(){
         $('.sel_icon i').attr('class','');
