@@ -43,6 +43,7 @@ use App\Http\Controllers\backEnd\salesfinance\PettyCashBackendController;
 use App\Http\Controllers\backEnd\rota\StaffWorkerController;
 use App\Http\Controllers\backEnd\salesfinance\asset\AssetBackendController;
 use App\Http\Controllers\backEnd\generalAdmin\HomeCostingController;
+use App\Http\Controllers\backEnd\generalAdmin\DepartmentBackendController;
 use App\Http\Controllers\backEnd\systemManage\PlanBuilderAdminController;
 use App\Http\Controllers\backEnd\salesfinance\TimeSheetBackendController;
 
@@ -544,24 +545,24 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 	// forntend petty cash
-	Route::controller(PettyCashController::class)->group(function (){
-		Route::prefix('petty-cash/')->group(function (){
-			Route::get('dashboard','index');
-			Route::get('expend-card','expend_card');
-			Route::get('petty_cash','petty_cash');
-			Route::get('child_register','child_register');
-			Route::get('expend_card_add','expend_card_add');
-			Route::get('petty-cash-add','petty_cash_add');
-			Route::get('child-register-add','child_register_add');
-			Route::post('saveExpend','saveExpend');
-			Route::post('editExpend','saveExpend');
-			Route::post('saveCash','saveCash');
-			Route::post('editCash','saveCash');
-			Route::post('cash_filter','cash_filter');
-			Route::post('expand_card_filter','expand_card_filter');
-			Route::get('getAllExpendCash','getAllExpendCash');
-			Route::post('cash_delete','cash_delete');
-			Route::post('expend_delete','expend_delete');
+	Route::controller(PettyCashController::class)->group(function () {
+		Route::prefix('petty-cash/')->group(function () {
+			Route::get('dashboard', 'index');
+			Route::get('expend-card', 'expend_card');
+			Route::get('petty_cash', 'petty_cash');
+			Route::get('child_register', 'child_register');
+			Route::get('expend_card_add', 'expend_card_add');
+			Route::get('petty-cash-add', 'petty_cash_add');
+			Route::get('child-register-add', 'child_register_add');
+			Route::post('saveExpend', 'saveExpend');
+			Route::post('editExpend', 'saveExpend');
+			Route::post('saveCash', 'saveCash');
+			Route::post('editCash', 'saveCash');
+			Route::post('cash_filter', 'cash_filter');
+			Route::post('expand_card_filter', 'expand_card_filter');
+			Route::get('getAllExpendCash', 'getAllExpendCash');
+			Route::post('cash_delete', 'cash_delete');
+			Route::post('expend_delete', 'expend_delete');
 		});
 	});
 
@@ -580,16 +581,16 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::delete('rota/staff-delete/{id}', 'destroy');
 	});
 	// Annual leave frontend
-	Route::controller(AnnualLeaveController::class)->group(function(){
-		route::prefix('rota')->group(function(){
-			Route::get('annual-leave','index');
+	Route::controller(AnnualLeaveController::class)->group(function () {
+		route::prefix('rota')->group(function () {
+			Route::get('annual-leave', 'index');
 		});
 	});
 	// Leave Tracker frontend
-	Route::controller(LeaveTrackerController::class)->group(function(){
-		Route::prefix('finance')->group(function(){
-			Route::get('leave-tracker','leave_tracker');
-			Route::get('leave-tracker-add','leave_tracker_add');
+	Route::controller(LeaveTrackerController::class)->group(function () {
+		Route::prefix('finance')->group(function () {
+			Route::get('leave-tracker', 'leave_tracker');
+			Route::get('leave-tracker-add', 'leave_tracker_add');
 		});
 	});
 
@@ -2049,6 +2050,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get', 'post'], '/general-admin/staff/training', 'App\Http\Controllers\backEnd\generalAdmin\StaffTrainingController@index');
 	Route::match(['get', 'post'], '/general-admin/staff/training-view/{training_id}', 'App\Http\Controllers\backEnd\generalAdmin\StaffTrainingController@view');
 
+	Route::controller(DepartmentBackendController::class)->group(function () {
+		Route::prefix('/general-admin/department')->group(function () {
+			Route::get('/', 'index')->name('generalAdmin.department.index');
+			Route::get('/add', 'create');
+			Route::post('/save', 'store');
+			Route::post('/change-status/{id}', 'changeStatus');
+			Route::get('/delete/{id}', 'destroy');
+			Route::get('/edit/{id}', 'edit');
+
+		});
+	});
+
 
 	// Backend Route for construction customers
 	Route::get('sales-finance/customers', 'App\Http\Controllers\backEnd\salesfinance\CustomerController@index');
@@ -2211,8 +2224,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 	Route::controller(TimeSheetBackendController::class)->group((function () {
 		Route::prefix('/sales-finance/time-sheet')->group(function () {
-			Route::get('/', 'index');
-			Route::get('/time-sheet-add', 'create');
+			Route::get('/', 'index')->name('backEnd.salesFinance.time_sheet');
+			Route::get('/add', 'create');
+			Route::post('/save', 'store');
+			Route::post('/get-data', 'getData');
+			Route::delete('/delete/{id}', 'destroy');
+			Route::get('/edit/{id}', 'edit');
 		});
 	}));
 
@@ -2239,24 +2256,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		});
 	}));
 	// Backend Petty Cash
-	Route::controller(PettyCashBackendController::class)->group(function (){
-		Route::prefix('sales-finance')->group(function(){
-			Route::get('expend-card','expend_card');
-			Route::get('getAllExpendCard','getAllExpendCardData');
-			Route::post('expend-card/saveExpend','saveExpend');
-			Route::post('expend-card/editExpend','saveExpend');
-			Route::post('expend-card/expend_delete','expend_delete');
-			Route::post('expand_card_filter','expand_card_filter');
-			Route::get('petty-cash','cash');
-			Route::post('petty-cash/saveCash','saveCash');
-			Route::post('petty-cash/editCash','saveCash');
-			Route::post('petty-cash/cash_delete','cash_delete');
-			Route::post('petty-cash/cash_filter','cash_filter');
+	Route::controller(PettyCashBackendController::class)->group(function () {
+		Route::prefix('sales-finance')->group(function () {
+			Route::get('expend-card', 'expend_card');
+			Route::get('getAllExpendCard', 'getAllExpendCardData');
+			Route::post('expend-card/saveExpend', 'saveExpend');
+			Route::post('expend-card/editExpend', 'saveExpend');
+			Route::post('expend-card/expend_delete', 'expend_delete');
+			Route::post('expand_card_filter', 'expand_card_filter');
+			Route::get('petty-cash', 'cash');
+			Route::post('petty-cash/saveCash', 'saveCash');
+			Route::post('petty-cash/editCash', 'saveCash');
+			Route::post('petty-cash/cash_delete', 'cash_delete');
+			Route::post('petty-cash/cash_filter', 'cash_filter');
 		});
 	});
 	// Backend Fixed Assets
-	Route::controller(AssetBackendController::class)->group(function(){
-		Route::prefix('sales-finance/assets/')->group(function(){
+	Route::controller(AssetBackendController::class)->group(function () {
+		Route::prefix('sales-finance/assets/')->group(function () {
 			Route::get('asset-category', 'asset_category');
 			Route::post('asset-category-save', 'asset_category_save');
 			Route::post('asset-category-edit', 'asset_category_save');
@@ -2275,18 +2292,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		});
 	});
 	// HomeCostingController code 
-	Route::controller(HomeCostingController::class)->group(function(){
-		Route::prefix('general-admin')->group(function(){
-			Route::get('/home-costing','index');
+	Route::controller(HomeCostingController::class)->group(function () {
+		Route::prefix('general-admin')->group(function () {
+			Route::get('/home-costing', 'index');
 		});
 	});
 	// end here
 	// PlanBuilderAdminController Code
-	Route::controller(PlanBuilderAdminController::class)->group(function(){
-		Route::prefix('appointment')->group(function(){
-			Route::get('plans','index');
-			Route::get('plans/add','plan_add');
-			Route::post('plans/store','store');
+	Route::controller(PlanBuilderAdminController::class)->group(function () {
+		Route::prefix('appointment')->group(function () {
+			Route::get('plans', 'index');
+			Route::get('plans/add', 'plan_add');
+			Route::post('plans/store', 'store');
 		});
 	});
 	// end here

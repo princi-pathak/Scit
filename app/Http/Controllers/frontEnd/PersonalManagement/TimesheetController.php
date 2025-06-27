@@ -42,10 +42,10 @@ class TimesheetController extends Controller
                     'data' => $validated
                 ], 200);
             }
-            return response()->json([
-                'message' => 'Time sheet saved successfully.',
-                'data' => $validated
-            ], 201);
+            // return response()->json([
+            //     'message' => 'Time sheet saved successfully.',
+            //     'data' => $validated
+            // ], 201);
         } catch (\Exception $e) {
             // Optional: Log the error for debugging
             Log::error('TimeSheet Store Error: ' . $e->getMessage());
