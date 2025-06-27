@@ -9,8 +9,6 @@ $(document).ready(function () {
     $('#timeSheetDt').on('change', function () {
         $('#timeSheetDt').datepicker('hide');
     });
-
-
 });
 
 let timeSheetTable;
@@ -291,7 +289,7 @@ $(document).on('click', '.openTimeSheetModel', function () {
 });
 
 function deleteStaff(id) {
-    if (confirm('Are you sure you want to delete this staff?')) {
+    if (confirm('Are you sure you want to delete this record?')) {
         $.ajax({
             url: deleteTimeSheet + "/" + id,
             type: 'DELETE',
@@ -299,8 +297,10 @@ function deleteStaff(id) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
-                if (isAuthenticated(response) == false) {
-                    return false;
+                   if (typeof isAuthenticated === "function") {
+                    if (isAuthenticated(response) == false) {
+                        return false;
+                    }
                 }
                 alert(response.message);
                 location.reload(); // or remove the row from DOM

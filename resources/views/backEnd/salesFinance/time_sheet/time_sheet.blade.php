@@ -29,32 +29,38 @@
                             <div class="clearfix clearfix_space">
                                 <div class="col-lg-3 col-sm-3">
                                     <input type="hidden" id="tax_id">
-                                    <select class="form-control" name="tax_rate" id="getDataOnTax">
+                                    <select class="form-control" name="user_id" id="getDataOnUsers">
                                         <option value="0">Please Select</option>
+                                        @foreach($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="btn-group">
-                                    <a href="{{url('admin/sales-finance/time-sheet/time-sheet-add')}}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i>
+                                    <a href="{{url('admin/sales-finance/time-sheet/add')}}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
                             </div>
                             <div class="space15"></div>
-                            <table class="display table table-bordered table-striped" id="purchaseDayBookTable">
+                            <table class="display table table-bordered table-striped" id="timeSheetTable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Uploaded By</th>
-                                        <th>Home</th>
-                                        <th>Month</th>
-                                        <th>File</th>
-                                        <th>Final Version</th>
-                                        <th>Uploaded At</th>
-                                        <th>Actions</th>
+                                        <th>User</th>
+                                        <th>Date</th>
+                                        <th>Hours</th>
+                                        <th>Sleep</th>
+                                        <th>Wake Night </th>
+                                        <th>DIsturbance </th>
+                                        <th>Annual Leave</th>
+                                        <th>On Call</th>
+                                        <th>Comments </th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
-                                
+
                             </table>
                         </div>
                     </div>
@@ -64,5 +70,21 @@
         <!-- page end-->
     </div>
 </section>
+<script>
+    const getData = "{{ url('/admin/sales-finance/time-sheet/get-data') }}";
+    const deleteTimeSheet = "{{ url('/admin/sales-finance/time-sheet/delete') }}";
+    const editUrlBase = "{{ url('admin/sales-finance/time-sheet') }}";
+    $(document).on('click', '.openTimeSheetModel', function(e) {
+        e.preventDefault(); // Prevent default <a> action
 
+        const id = $(this).data('id');
+
+        if (id) {
+            window.location.href = `${editUrlBase}/edit/${id}`;
+        } else {
+            alert('No ID found');
+        }
+    });
+</script>
+<script type="text/javascript" src="{{ url('public\frontEnd\js\personal\timeSheet.js') }}"></script>
 @endsection

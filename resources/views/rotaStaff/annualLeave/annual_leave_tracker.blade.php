@@ -5,8 +5,9 @@
 @section('content')
 
 <style>
-    .omegaCareAnnual thead tr th, .omegaCareAnnual tbody tr td{
-     white-space: nowrap;
+    .omegaCareAnnual thead tr th,
+    .omegaCareAnnual tbody tr td {
+        white-space: nowrap;
     }
 </style>
 
@@ -17,7 +18,7 @@
             <div class="col-md-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
-                        <h4>Annual Leave</h4>
+                        <h4>Annual Leave Tracker</h4>
                     </header>
                     <div class="panel-body">
                         <div class="col-lg-12">
@@ -51,13 +52,13 @@
                                             <th>July</th>
                                             <th>August</th>
                                             <th>September</th>
-                                            <th>Total A/L Hours  Used</th>
-                                            <th>Total A/L Hours  left</th>
+                                            <th>Total A/L Hours Used</th>
+                                            <th>Total A/L Hours left</th>
                                             <th>Carried over</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                         <tr>
                                             <td>1.</td>
                                             <td>Aaron Hill </td>
@@ -80,7 +81,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>2.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -102,7 +103,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>3.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -124,7 +125,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>4.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -146,7 +147,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>5.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -168,7 +169,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>6.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -190,7 +191,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>7.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -212,7 +213,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>8.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -234,7 +235,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>9.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -256,7 +257,7 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td>10.</td>
                                             <td>Aaron Hill </td>
                                             <td>Residential Care</td>
@@ -278,7 +279,9 @@
                                             <td>224</td>
                                             <td>0</td>
                                         </tr>
-                                       
+
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -305,39 +308,42 @@
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="row formDtail">
                                 <div class="col-md-6 form-group">
-                                    <label> Name </label>
+                                    <label> User </label>
                                     <select class="form-control editInput selectOptions">
-                                            <option selected="" disabled="">Select Name</option>
-                                            <option value="1">Ram Kumar</option>
-                                            <option value="2">Abhishek</option>
+                                        <option >Select User</option>
+                                        @foreach($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label> Department <span class="radStar">*</span></label>
                                     <select class="form-control editInput selectOptions">
-                                            <option selected="" disabled="">Select Department</option>
-                                            <option value="1">Ram Kumar</option>
-                                            <option value="2">Abhishek</option>
+                                        <option selected="" disabled="">Select Department</option>
+                                        <option value="1">Residential Care</option>
+                                        <option value="2">Leaving Care</option>
+                                        <option value="3">Head Office</option>
+                                        
                                     </select>
                                 </div>
-                                   <div class="col-md-12 form-group">
+                                <div class="col-md-12 form-group">
                                     <label> Months <span class="radStar">*</span></label>
                                     <select class="form-control editInput selectOptions">
-                                            <option selected="" disabled="">Select Months</option>
-                                            <option value="1">October</option>
-                                            <option value="2">November</option>
-                                            <option value="3">December</option>
-                                            <option value="4">January</option>
-                                            <option value="5">February</option>
-                                            <option value="6">March</option>
+                                        <option selected="" disabled="">Select Months</option>
+                                        <option value="1">October</option>
+                                        <option value="2">November</option>
+                                        <option value="3">December</option>
+                                        <option value="4">January</option>
+                                        <option value="5">February</option>
+                                        <option value="6">March</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label> Start Date <span class="radStar">*</span></label>
                                     <input type="text" class="form-control editInput" id="Leave_startDate" name="Leave Start Date">
                                 </div>
-                              
-                               
+
+
                                 <div class="col-md-6 form-group">
                                     <div class="row">
                                         <div class="col-sm-6 pe-3">
@@ -345,19 +351,19 @@
                                             <input type="text" class="form-control editInput" name="no_of_bedrooms" placeholder="4">
                                         </div>
                                         <div class="col-sm-6 ps-3">
-                                            <label>Tot. A/L Hrs  left </label>
+                                            <label>Tot. A/L Hrs left </label>
                                             <input type="text" class="form-control editInput" id="occupancy" name="occupancy" placeholder="2">
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12 form-group">
                                     <label>MAT leave<span class="radStar">*</span></label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="account_number" placeholder="MAT leave">
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -371,7 +377,7 @@
     </div>
 </div>
 
-<script src="{{ url('public/js/salesFinance/council_tax.js') }}"></script>
+<script src="{{ url('public\js\rota\leave_tracker.js') }}"></script>
 
 <script>
     deleteURL = "{{ url('finance/delete-council-tax') }}/";
@@ -383,16 +389,14 @@
     $('#Leave_startDate').datepicker({
         format: 'dd-mm-yyyy'
     });
- 
-    $('#Leave_startDate').on('change', function () {
+
+    $('#Leave_startDate').on('change', function() {
         $('#Leave_startDate').datepicker('hide');
     });
- 
-    $("#salesDayBookModel").scroll(function () {
+
+    $("#salesDayBookModel").scroll(function() {
         $('#Leave_startDate').datepicker('place');
     });
 </script>
 
 @endsection
-
-
