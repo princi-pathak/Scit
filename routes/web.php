@@ -2299,11 +2299,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	});
 	// end here
 	// PlanBuilderAdminController Code
-	Route::controller(PlanBuilderAdminController::class)->group(function () {
-		Route::prefix('appointment')->group(function () {
-			Route::get('plans', 'index');
-			Route::get('plans/add', 'plan_add');
-			Route::post('plans/store', 'store');
+
+	Route::controller(PlanBuilderAdminController::class)->group(function(){
+		Route::prefix('appointment')->group(function(){
+			Route::match(['get','post'],'plans','index');
+			Route::get('plans/add','plan_add');
+			Route::post('plans/store','store');
+			Route::get('plans/edit/{id}','edit');
+			Route::get('plans/view/{id}','view');
+			Route::get('plans/delete/{id}','delete');
 		});
 	});
 	// end here
