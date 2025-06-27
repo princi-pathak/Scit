@@ -7,7 +7,6 @@
   .add_trans {
     transform: scale(1.2);
   }
-
   .main-shodw-box {
     width: 100%;
     background-color: #fff;
@@ -17,14 +16,9 @@
     position: relative;
     height: auto !important;
   }
-
-  .first-from,
-  .secound-from,
-  .three-from,
-  .four-from {
+  .first-from, .secound-from, .three-from, .four-from {
     padding: 10px 6px 10px 39px !important;
   }
-
   .search_employees .search_icon {
     position: absolute;
     top: 11px !important;
@@ -32,53 +26,31 @@
     color: #a1a9b3;
     font-size: 18px;
   }
-
-  .ntn-prt {
-    display: flex;
-    margin-top: 22px !important;
+  .ntn-prt {display: flex;  margin-top: 22px !important;
   }
-
-  .ntn-prt h5{
-    margin-top: 3px;
-  }
-
-  .main-white-crical {
-    margin: 15px 0;
-  }
-
-  .right-side-info .tab-content .fade{
-     opacity: 1;
-  } 
+  .ntn-prt h5{ margin-top: 3px; }
+  .main-white-crical { margin: 15px 0;}
+  .right-side-info .tab-content .fade{ opacity: 1;} 
   @media (max-width: 991px) {
     .right-side-info .tab-content {
       padding: 0px 20px 20px 20px;
       height: auto !important;
     }
-
-    .left-sidebar-info {
-      width: 60px !important;
-    }
-
+    .left-sidebar-info { width: 60px !important; }
     .main-summery-box-strock {
       position: absolute;
       top: 29% !important;
     }
-
-    .aside.right-side-info {
-      margin-top: 200px;
+    .aside.right-side-info { margin-top: 200px;
     }
   }
-  .from-equal a {
-    width: 200px;
+  .from-equal a {width: 200px;
 }
 .tab-first-infos a {
     background: #e10078!important;
     border-radius:5px !important;
 }
-
-#container {
-    height: auto !important;
-}
+#container {height: auto !important;}
 </style>
 <section class="wrapper">
   <div class="row">
