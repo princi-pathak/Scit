@@ -245,7 +245,7 @@ $(document).ready(function () {
         if (sales_day_book_id != '') {
             url = editSalesDayBook;
         }
-        alert(url)
+        // alert(url)
         $.ajax({
             url: url, // Laravel route
             type: "POST",
