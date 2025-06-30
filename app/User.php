@@ -92,7 +92,6 @@ class User extends Authenticatable
 
     public static function saveQualification($data = array(), $user_id = null)
     {
-
         //saving qualification info and certificates images
         if (isset($data['qualification'])) {
             foreach ($data['qualification'] as $key => $qualification_name) {
@@ -150,7 +149,6 @@ class User extends Authenticatable
 
     public static function getStaffList($home_id)
     {
-
         $users = User::select('id', 'name', 'user_name', 'email')
             ->where('home_id', $home_id)
             ->where('status', '1')
@@ -162,7 +160,6 @@ class User extends Authenticatable
 
     public static function checkUserHasAccessRight($user_id, $access_id)
     {
-
         $user = User::select('id', 'access_rights')
             ->whereRaw('FIND_IN_SET(?,access_rights)', $access_id)
             ->where('id', $user_id)
@@ -246,17 +243,21 @@ class User extends Authenticatable
         return User::where('id', $id)->value('name');
     }
 
-    
-
     public static function updateManagerStatus($id, $status)
     {
-
         return User::where('id', $id)->update(['status' => $status]);
     }
 
     public static function countManager($id)
     {
         return User::where('id', $id)->count();
+    }
+
+    public static function getData($id)
+    {
+        return User::select('id', 'name', 'email', 'holiday_entitlement', 'date_of_joining') // specify only the fields you need
+            ->where('id', $id)
+            ->first();
     }
     /*
     Note: User(manager/staff) - set password functionality
