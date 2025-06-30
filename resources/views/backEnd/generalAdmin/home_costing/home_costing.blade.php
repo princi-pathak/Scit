@@ -39,7 +39,7 @@
                         <div class="adv-table editable-table ">
                             <div class="clearfix clearfix_space">
                                 <div class="btn-group">
-                                    <a href="#!" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i></a>
+                                    <a href="{{url('admin/general-admin/home-costing/add')}}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i></a>
                                 </div>
                             </div>
 
