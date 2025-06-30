@@ -316,6 +316,39 @@ if (isset($form)) {
                                         </button>
                                     </button>
                                     </div>
+                                    
+                                    <div class="cus-select-options">
+                                        <div class="form-group col-md-offset-1 col-md-10 col-sm-10 col-xs-12 p-0  m-t-10 m-l-50 add-select-options-div " style="display: none;">
+                                        
+                                            <p>Select options</p>
+                                            <!-- <div class="option-div">
+                                                <div class="col-md-4 col-sm-4 col-xs-12 p-l-0">
+                                                    <input name="cus_option1" placeholder="option" class="form-control" type="text" value="">
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-12 p-l-0">
+                                                    <input name="cus_value1" placeholder="value" class="form-control" type="text" value="">
+                                                </div>
+                                                <div class="col-md-1 col-sm-1 col-xs-1 p-0">
+                                                    <button class="btn group-ico remove-option1-btn" type="button"> <i class="fa fa-minus"></i> </button>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-md-1 col-sm-1 col-xs-1 p-0 plus-btn">
+                                                <button class="btn group-ico add-more-option-btn" type="button"> <i class="fa fa-plus"></i> </button>
+                                            </div> -->
+                                        </div>
+                                        <div class="add-more-select-options-div">
+                                            <!-- more select options using jquery will be placed here -->
+                                        </div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1 p-0 appoint-plus-btn">
+                                            <button class="btn group-ico add-more-option-btn" type="button"> <i class="fa fa-plus"></i></button>
+                                        </div>
+                                    <!-- add-select-options-div closed -->
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 m-t-20">
+                                    <div class="below-divider"></div>
+                                </div>
+
                                 </div>
                              
 
@@ -679,7 +712,7 @@ $(document).ready(function(){
                 alert('Please')
             }*/
           
-            var new_field = '<div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 cus-field "> <label class="col-md-2 col-sm-2 col-xs-12 p-t-7" type="'+field_type+'"> '+field_name+' </label> <div class="col-md-8 col-sm-8 col-xs-12 p-l-0"> <div class="select-style"> <select name="'+column_name+'" readonly class="trans"> '+options+' </select>  <input type="hidden" name="formdata['+field_count+'][label]" value="'+field_name+'"> <input type="hidden" name="formdata['+field_count+'][column_name]" value="'+column_name+'"> <input type="hidden" name="formdata['+field_count+'][column_type]" value="'+field_type+'"> '+opt+' </div> </div> <div class="col-md-1 col-sm-1 col-xs-1 p-0"> <button class="btn group-ico field-remove-btn" type="button"> <i class="fa fa-minus"></i> </button> </div> <div class="col-md-1 col-sm-1 col-xs-1 m-t-5 p-l-10"><span class="sort-sp"><i class="fa fa-sort"></i></span></div> </div>';    
+            var new_field = '<div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 cus-field "> <label class="col-md-2 col-sm-2 col-xs-12 p-t-7" type="'+field_type+'"> '+field_name+' </label> <div class="col-md-8 col-sm-8 col-xs-12 p-l-0"> <div class="select-style"> <select name="'+column_name+'" readonly class="trans form-control"> '+options+' </select>  <input type="hidden" name="formdata['+field_count+'][label]" value="'+field_name+'"> <input type="hidden" name="formdata['+field_count+'][column_name]" value="'+column_name+'"> <input type="hidden" name="formdata['+field_count+'][column_type]" value="'+field_type+'"> '+opt+' </div> </div> <div class="col-md-1 col-sm-1 col-xs-1 p-0"> <button class="btn group-ico field-remove-btn" type="button"> <i class="fa fa-minus"></i> </button> </div> <div class="col-md-1 col-sm-1 col-xs-1 m-t-5 p-l-10"><span class="sort-sp"><i class="fa fa-sort"></i></span></div> </div>';    
 
         } else if(field_type == 'Textarea'){
             var new_field = '<div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 cus-field "> <label class="col-md-2 col-sm-2 col-xs-12 p-t-7" type="'+field_type+'"> '+field_name+' </label> <div class="col-md-8 col-sm-8 col-xs-12 p-l-0">  <textarea name="'+column_name+'" class="form-control trans" readonly></textarea> </div> <input type="hidden" name="formdata['+field_count+'][label]" value="'+field_name+'"> <input type="hidden" name="formdata['+field_count+'][column_name]" value="'+column_name+'">  <input type="hidden" name="formdata['+field_count+'][column_type]" value="'+field_type+'">  <div class="col-md-1 col-sm-1 col-xs-1 p-0"> <button class="btn group-ico field-remove-btn" type="button"> <i class="fa fa-minus"></i> </button> </div> <div class="col-md-1 col-sm-1 col-xs-1 m-t-5 p-l-10"><span class="sort-sp"><i class="fa fa-sort"></i></span></div> </div>'; 

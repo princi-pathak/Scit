@@ -1,63 +1,61 @@
-@include('rotaStaff.components.header')
-<div class="col-lg-12">
-  <div class="row">
-    <div class="col-lg-12">
-      <ul class="nav nav-tabs calender-Tab nav-fill" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Calendar</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Pending requests</button>
-        </li>
-        <!-- <li class="nav-item" role="presentation">
-          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Mandatory leave</button>
-        </li> -->
-      </ul> 
-      <div class="tab-content tabs-info-content-space-bar" id="myTabContent">
-        <div class="tab-pane fade show active calendar" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <div class="all_leave_with_color d-flex align-items-center my-3">
-            <span class="annual leave"></span>Annual leave
-            <span class="sick leave"></span>Sickness
-            <span class="late leave"></span>Lateness
-            <span class="toil leave"></span>TOIL
-            <span class="other_leave leave"></span>Other absence
-            <!-- <span class="mandatory_leave"></span>Mandatory leave -->
-            <!-- <span class="pending_leave leave"></span>Pending -->
+@extends('frontEnd.layouts.master')
+ @section('content')
+ <section id="main-content">
+    <div class="wrapper">
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="nav nav-tabs calender-Tab nav-fill" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Calendar</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Pending requests</button>
+              </li>
+              <!-- <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Mandatory leave</button>
+              </li> -->
+            </ul> 
+            <div class="tab-content tabs-info-content-space-bar" id="myTabContent">
+              <div class="tab-pane fade show active calendar" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="all_leave_with_color d-flex align-items-center my-3">
+                  <span class="annual leave"></span>Annual leave
+                  <span class="sick leave"></span>Sickness
+                  <span class="late leave"></span>Lateness
+                  <span class="toil leave"></span>TOIL
+                  <span class="other_leave leave"></span>Other absence
+                  <!-- <span class="mandatory_leave"></span>Mandatory leave -->
+                  <!-- <span class="pending_leave leave"></span>Pending -->
+                </div>
+                <div id='calendar'></div>
+              </div>
+
+              <div class="tab-pane fade content-info-title" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <select id="leave_order">
+                  <option value="1">Date raised (Newest first)</option>
+                  <option value="2">Date raised (Oldest first)</option>
+                </select>
+                <h2>Pending requests (<span id="leave_count"></span>)</h2>
+
+                <!-- <div class="row"> -->
+                  <div class="row" id="blank_id"></div>
+                <!-- </div> -->
+            
+              </div>
+              <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <h3>Mandatory leave</h3>
+                <p>Dates your employees have to take as leave such as shutdown periods, local bank holidays etc. Once set, it will appear on employee profile as Mandatory time off as well as in the calendar.</p>
+              </div> -->
+            </div>
           </div>
-          <div id='calendar'></div>
-        </div>
+          <!-- Col Md 9 End -->
 
-        <div class="tab-pane fade content-info-title" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <select id="leave_order">
-            <option value="1">Date raised (Newest first)</option>
-            <option value="2">Date raised (Oldest first)</option>
-          </select>
-          <h2>Pending requests (<span id="leave_count"></span>)</h2>
-
-          <!-- <div class="row"> -->
-            <div class="row" id="blank_id"></div>
-          <!-- </div> -->
-      
         </div>
-        <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-          <h3>Mandatory leave</h3>
-          <p>Dates your employees have to take as leave such as shutdown periods, local bank holidays etc. Once set, it will appear on employee profile as Mandatory time off as well as in the calendar.</p>
-        </div> -->
       </div>
-    </div>
-    <!-- Col Md 9 End -->
-
   </div>
-</div>
-</div>
-</div>
-</div>
 </section>
 
-<!-- demo -->
-
-@include('rotaStaff.components.footer')
-
+@endsection
 <div class="modal fade unapproved_modal_content" id="exampleModalUnapproved" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="max-width: 50vw;">
     <div class="modal-content content-modal">

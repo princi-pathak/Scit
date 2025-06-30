@@ -2250,6 +2250,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::controller(HomeCostingController::class)->group(function () {
 		Route::prefix('general-admin')->group(function () {
 			Route::get('/home-costing', 'index');
+			Route::get('/home-costing/add', 'add');
 		});
 	});
 	// end here
