@@ -5,17 +5,21 @@
 
 <!--main content start-->
 <section id="main-content">
-    <section class="wrapper">
+    <div class="wrapper">
         <!-- page start-->
 
         <div class="row">
             <div class="col-sm-12">
-                <div class="clearfix clearfix_space">
-                    <div class="btn-group">
-                        <a href="{{ url('/admin/general-admin/department/add') }}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i></a>
+                <div class="panel">
+                    <header class="panel-heading">
+                        Department
+                    </header>
+                    <div class="clearfix clearfix_space">
+                        <div class="btn-group">
+                            <a href="{{ url('/admin/general-admin/department/add') }}" id="editable-sample_new" class="btn btn-primary"> Add New <i class="fa fa-plus"></i></a>
+                        </div>
                     </div>
-                </div>
-                <section class="panel">
+
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
                             <div class="clearfix">
@@ -67,14 +71,13 @@
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
-        </div>
-        <!-- page end-->
-    </section>
-</section>
-<!--main content end-->
 
+                </div>
+            </div>
+            <!-- page end-->
+        </div>
+        <!--main content end-->
+</section>
 <script>
     setTimeout(() => {
         document.querySelectorAll('.alert').forEach(el => el.style.display = 'none');
