@@ -2,8 +2,8 @@
   // Ignore this in your implementation
   window.isMbscDemo = true;
 </script>
-@include('rotaStaff.components.header')
-@include('rotaStaff.components.rota_master')
+
+@extends('frontEnd.layouts.master')
 <style>
   / Dropdown Button / .dropbtn {
     /* background-color: #3498DB;

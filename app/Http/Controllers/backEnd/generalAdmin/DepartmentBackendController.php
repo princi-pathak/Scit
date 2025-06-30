@@ -60,7 +60,8 @@ class DepartmentBackendController extends Controller
             return redirect()->back()->with('error', 'Failed to delete department type.');
         }
     }
-    public function edit($id){
+    public function edit($id)
+    {
 
         $data['page'] = "department";
         $data['department'] = CompanyDepartment::findOrFail($id);
