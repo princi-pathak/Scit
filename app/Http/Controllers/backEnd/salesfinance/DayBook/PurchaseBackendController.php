@@ -25,7 +25,7 @@ class PurchaseBackendController extends Controller
     {
         $this->purchaseDayBookService = $purchaseService;
     }
-    
+
     // Purchase Expenses Type 
     public function purchase_type()
     {
@@ -103,7 +103,8 @@ class PurchaseBackendController extends Controller
         return view('backEnd.salesFinance.DayBook.purchase_day_book', $data);
     }
 
-    public function getPurchaseDayBook(Request $request){
+    public function getPurchaseDayBook(Request $request)
+    {
 
         $home_id = Session::get('scitsAdminSession')->home_id;
         $purchaseDayBooks = $this->purchaseDayBookService->getPurchaseDayBook($home_id, $request);
@@ -113,13 +114,13 @@ class PurchaseBackendController extends Controller
             'data' => $purchaseDayBooks ? $purchaseDayBooks : 'No data'
         ]);
     }
-  
+
     public function create()
     {
         $data['page'] = "dayBook";
         return view('backEnd.salesFinance.DayBook.purchase_day_book_form', $data);
     }
-    
+
     public function edit($id)
     {
         $data['page'] = "dayBook";
@@ -179,7 +180,7 @@ class PurchaseBackendController extends Controller
     {
 
         $data = $request->validated();
-        $data['home_id'] = Session::get('scitsAdminSession')->home_id;    
+        $data['home_id'] = Session::get('scitsAdminSession')->home_id;
         $data['page'] = "dayBook";
         try {
             $record = $this->purchaseDayBookService->save($data);

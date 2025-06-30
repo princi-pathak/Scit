@@ -150,7 +150,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                                    <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                                         <a href="{{ url('/finance/leave-tracker') }}">
                                             <div class="profile-nav alt">
                                                 <div class="panel text-center">
@@ -165,7 +165,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                    </div>
+                                    </div> -->
                                     <!-- fa-hourglass-end  fa-life-ring  fa-hourglass-half  fa-hourglass-start  fa-clock-o  fa-tachometer  fa-sliders   -->
 
                                     <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
