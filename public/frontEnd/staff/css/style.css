@@ -1358,7 +1358,7 @@ h2.unpublice-titel {
 .content-info-title select {
     padding: 7px 26px;
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-top: 20px;
     border: 1px solid #ccc;
     outline: none;
 }
@@ -2081,7 +2081,7 @@ margin: 0px 10px 0px 10px;
 }
 
 .working-time-pattern .first-section {
-    border-bottom: 1px solid #1f88b561;
+    /* border-bottom: 1px solid #1f88b561; */
     padding-bottom: 30px;
 }
 
@@ -3107,29 +3107,29 @@ margin: 0px 10px 0px 10px;
     border: 2px solid #ad005c;
 } */
 
-.annual-leave .absance-btn {
+/* .annual-leave .absance-btn {
     background-color: #1F88B5;
     color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 7px 10px;
+    border-radius: 3px;
     font-weight: 600;
     margin-right: 10px;
-}
+} */
 
 .annual-leave .absance-btn:hover {
     background-color: #1F88B5;
     color: #fff;
 } 
 
-.annual-leave .dash-btn {
+.annual-leave .dash-btn, .annual-leave .absance-btn {
     background-color: #1F88B5;
     color:  #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 7px 10px;
+    border-radius: 3px;
     transition: 0.3s;
     font-weight: 600;
-    margin-right: 10px;
     text-decoration: none;
+    border: none;
 }
 
 .annual-leave .dash-btn:hover {
