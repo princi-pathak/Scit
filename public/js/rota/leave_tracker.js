@@ -1,7 +1,6 @@
 document.querySelectorAll('.openModalBtn').forEach(function (btn) {
     btn.addEventListener('click', function () {
         const action = this.getAttribute('data-action');
-
         if (action === 'add') {
             modalTitle.textContent = 'Add Annual Leave Tracker';
         } else if (action === 'edit') {
@@ -221,18 +220,6 @@ $(document).on('click', '.deleteBtn', function () {
 });
 
 $(document).ready(function () {
-    $(document).ready(function () {
-        $('#leaveTracker').DataTable({
-            dom: 'Blfrtip',
-            buttons: [{
-                extend: 'csv',
-                text: 'Export' // Rename button
-            },
-                'colvis'
-            ]
-        });
-    });
-
 
     $('#Leave_startDate').datepicker({
         format: 'dd-mm-yyyy'
@@ -242,48 +229,61 @@ $(document).ready(function () {
         $('#Leave_startDate').datepicker('hide');
     });
 
-    $(document).ready(function () {
-        $('#user_id').on('change', function () {
-            var userId = $(this).val();
 
-            $.ajax({
-                url: getUserData,
-                method: 'POST',
-                data: {
-                    id: userId, // make sure you're passing the correct ID
-                    _token: $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    console.log('User Data:', response.data);
-                    // document.getElementById('start_date').value = response.data.date_of_joining;
-                    // $('#start_date').datepicker('setDate', response.data.date_of_joining);
-                    $(function () {
-                        $('#start_date').datepicker({
-                            dateFormat: 'yy-mm-dd' // format should match the date string
-                        });
+});
 
-                        // Then set the date
-                        $('#start_date').datepicker('setDate', response.data.date_of_joining);
-                    });
-
-                    document.getElementById('entitlement').value = response.data.holiday_entitlement;
-                },
-                error: function (xhr) {
-                    if (xhr.status === 422) {
-                        // Laravel validation error
-                        const errors = xhr.responseJSON.errors;
-                        let errorMessage = '';
-                        for (const key in errors) {
-                            if (errors.hasOwnProperty(key)) {
-                                errorMessage += errors[key][0] + '\n';
-                            }
-                        }
-                        alert(errorMessage);
-                    } else {
-                        alert('An error occurred. Please try again.');
-                    }
-                }
-            });
-        });
+$(document).ready(function () {
+    $('#leaveTracker').DataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'csv',
+            text: 'Export' // Rename button
+        }
+        ]
     });
 });
+
+//  $(document).ready(function () {
+//         $('#user_id').on('change', function () {
+//             var userId = $(this).val();
+
+//             $.ajax({
+//                 url: getUserData,
+//                 method: 'POST',
+//                 data: {
+//                     id: userId, // make sure you're passing the correct ID
+//                     _token: $('meta[name="csrf-token"]').attr('content')
+//                 },
+//                 success: function (response) {
+//                     console.log('User Data:', response.data);
+//                     // document.getElementById('start_date').value = response.data.date_of_joining;
+//                     // $('#start_date').datepicker('setDate', response.data.date_of_joining);
+//                     $(function () {
+//                         $('#start_date').datepicker({
+//                             dateFormat: 'yy-mm-dd' // format should match the date string
+//                         });
+
+//                         // Then set the date
+//                         $('#start_date').datepicker('setDate', response.data.date_of_joining);
+//                     });
+
+//                     document.getElementById('entitlement').value = response.data.holiday_entitlement;
+//                 },
+//                 error: function (xhr) {
+//                     if (xhr.status === 422) {
+//                         // Laravel validation error
+//                         const errors = xhr.responseJSON.errors;
+//                         let errorMessage = '';
+//                         for (const key in errors) {
+//                             if (errors.hasOwnProperty(key)) {
+//                                 errorMessage += errors[key][0] + '\n';
+//                             }
+//                         }
+//                         alert(errorMessage);
+//                     } else {
+//                         alert('An error occurred. Please try again.');
+//                     }
+//                 }
+//             });
+//         });
+//     });

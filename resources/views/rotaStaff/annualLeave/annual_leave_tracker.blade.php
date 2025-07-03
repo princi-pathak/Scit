@@ -23,11 +23,20 @@
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="row">
-                                <div class="col-md-12">
+                                <!-- <div class="col-md-4"></div>
+                                <div class="col-md-4"></div> -->
+                                <div class="col-md-4">
                                     <div class="jobsection justify-content-end mb-0">
-                                        <a href="javascript:void(0)" class="btn btn-warning openModalBtn" data-action='add'>
-                                            <i class="fa fa-plus"></i> Add</a>
-                                        <!-- <a href="javascript:void(0)" class="profileDrop">Export</a> -->
+                                        @php
+                                        $startYear = 2000;
+                                        $currentYear = date('Y');
+                                        @endphp
+
+                                        <select name="year" class="form-control">
+                                            @for ($year = $startYear; $year <= $currentYear; $year++)
+                                                <option value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }}>{{ $year }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +299,7 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="AddAnnualLeave" tabindex="-1" aria-labelledby="AddAnnualLeaveLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="AddAnnualLeave" tabindex="-1" aria-labelledby="AddAnnualLeaveLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div id="error-text"></div>
@@ -345,7 +354,7 @@
                                             <label> Start Date <span class="radStar">*</span></label>
                                             <input type="text" class="form-control editInput" id="Leave_startDate" name="start_date" placeholder="Start Date">
                                         </div>
-                                         <div class="col-sm-6 pe-3">
+                                        <div class="col-sm-6 pe-3">
                                             <label> A/L Entitlement <span class="radStar">*</span></label>
                                             <input type="text" class="form-control editInput" id="entitlement" name="entitlement" placeholder="A/L Entitlement">
                                         </div>
@@ -363,12 +372,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-12 form-group">
+                                <div class="col-md-12 form-group">
                                     <label>MAT leave<span class="radStar">*</span></label>
                                     <div>
                                         <input type="text" class="form-control editInput" name="account_number" placeholder="MAT leave">
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -380,15 +389,12 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
 
 <script src="{{ url('public\js\rota\leave_tracker.js') }}"></script>
 
 <script>
-    // deleteURL = "{{ url('finance/delete-council-tax') }}/";
-    // saveData = "{{ url('finance/save-council-tax') }}";
-    // editData = "{{ url('finance/edit-council-tax') }}";
-    getUserData = "{{ url('rota/get-user-data') }}";
+    // getUserData = "{{ url('rota/get-user-data') }}";
 </script>
 
 

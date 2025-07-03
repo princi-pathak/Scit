@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Mail;
 use Auth;
 use App\Home, App\Admin, App\StaffSickLeave;
+use App\Models\PersonalManagement\TimeSheet;
 
 class User extends Authenticatable
 {
@@ -253,12 +254,18 @@ class User extends Authenticatable
         return User::where('id', $id)->count();
     }
 
-    public static function getData($id)
+    public function timesheets()
     {
-        return User::select('id', 'name', 'email', 'holiday_entitlement', 'date_of_joining') // specify only the fields you need
-            ->where('id', $id)
-            ->first();
+        return $this->hasMany(Timesheet::class);
     }
+
+
+    // public static function getData($id)
+    // {
+    //     return User::select('id', 'name', 'email', 'holiday_entitlement', 'date_of_joining') // specify only the fields you need
+    //         ->where('id', $id)
+    //         ->first();
+    // }
     /*
     Note: User(manager/staff) - set password functionality
         1. Super admin will create a new user

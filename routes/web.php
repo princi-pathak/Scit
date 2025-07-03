@@ -576,7 +576,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(AnnualLeaveController::class)->group(function () {
 		route::prefix('rota')->group(function () {
 			Route::get('annual-leave', 'index');
-			Route::post('get-user-data', 'getUserData');
+			// Route::post('get-user-data', 'getUserData');
 		});
 	});
 	// Leave Tracker frontend

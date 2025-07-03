@@ -19,14 +19,24 @@ class AnnualLeaveController extends Controller
         return view('rotaStaff.annualLeave.annual_leave_tracker', $data);
     }
 
-    public function getUserData(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:user,id',
-        ]);
+    // public function getUserData(Request $request)
+    // {
+    //     $request->validate([
+    //         'id' => 'required|exists:user,id',
+    //     ]);
 
-        $data = User::getData($request->id);
-        // dd($data);
-        return response()->json(['data' => $data]);
+    //     $data = User::getData($request->id);
+    //     // dd($data);
+    //     return response()->json(['data' => $data]);
+    // }
+
+    public function getUserData(){
+        $currentYear = date('Y');
+
+        $users = User::where('is_deleted', 0)->where('status', 1)->get();
+
+        foreach($users as $user){
+            
+        }
     }
 }

@@ -1,5 +1,7 @@
 @extends('frontEnd.layouts.master')
- @section('content')
+@include('rotaStaff.components.header')
+<!-- @extends('rotaStaff.components.rota_master') -->
+@section('content')
  <section id="main-content">
     <div class="wrapper">
       <div class="col-lg-12">
@@ -76,6 +78,7 @@
     </div>
   </div>
 </div>
+@include('rotaStaff.components.footer')
 
 <script>
   function getInitials(fullName) {
