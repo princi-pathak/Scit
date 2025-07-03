@@ -202,8 +202,6 @@
 
             // console.log(today);
 
-            // alert(today);
-
             /*var hours = new Date().getHours();*/
 
             // var hours = new Date().getUTCHours() + 1 ;
