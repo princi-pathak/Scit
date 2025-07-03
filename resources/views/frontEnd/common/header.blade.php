@@ -25,17 +25,6 @@
         padding: 0px 15px 10px 15px;
     }
 
-
-    /* .col-form-label {
-width: 20%;
-float: left;   
-}
-
-.element .form-control {
-width: 80%;
-float: right; 
-} */
-
     .sel_design_layout {
         border: 1px solid #1f88b5;
         box-shadow: none;

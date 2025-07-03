@@ -1,5 +1,6 @@
 @extends('frontEnd.layouts.master')
 @include('rotaStaff.components.header')
+
 <style>
   a.nav-link {
     background-color: #fff;
@@ -44,6 +45,9 @@ th .fc-scrollgrid-sync-inner {
 
 
   <section id="main-content">
+<!-- @extends('rotaStaff.components.rota_master') -->
+@section('content')
+ <section id="main-content">
     <div class="wrapper">
       <div class="col-lg-12">
         <div class="row">
@@ -144,12 +148,12 @@ th .fc-scrollgrid-sync-inner {
       </div>
     </div>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script>
     function getInitials(fullName) {
       const words = fullName.split(' ');
-
       if (words.length >= 1) {
         const firstNameInitial = words[0][0];
 
