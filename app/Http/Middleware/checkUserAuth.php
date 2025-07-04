@@ -102,14 +102,14 @@ class checkUserAuth
                 if(!in_array($path, $allowed_path)) {
                     // echo $path; die;
                     $res = $this->checkPermission($path);
-                    // if(!$res){
-                    //     if($request->ajax()){
-                    //         echo json_encode('unauthorize'); die;    
-                    //     }
-                    //     return redirect()->back()->with("error", UNAUTHORIZE_ERR);
-                    // } else {
+                    if(!$res){
+                        if($request->ajax()){
+                            echo json_encode('unauthorize'); die;    
+                        }
+                        return redirect()->back()->with("error", UNAUTHORIZE_ERR);
+                    } else {
                        
-                    // }
+                    }
                 }            
             } 
         } 
