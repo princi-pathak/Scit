@@ -621,7 +621,7 @@ a.overdueJobsFolder img {
 .shape .tile {
   width: 110px;
   height: 76px;
-  background-color: #0078d1;
+  background-color: #1f88b5;
   position: relative;
   border-radius: 4px;
   text-align: center;
@@ -742,7 +742,7 @@ a.overdueJobsFolder img {
 
 .clickHere a {
   font-size: 18px;
-  color: #0078d1;
+  color: #1f88b5;
   text-decoration: none;
   font-weight: 600;
 }
@@ -780,7 +780,7 @@ a.overdueJobsFolder img {
 }
 
 .supCirle {
-  border: 4px solid #0078d1;
+  border: 4px solid #1f88b5;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -791,7 +791,7 @@ a.overdueJobsFolder img {
 
 .supText {
   font-size: 14px;
-  color: #0078d1;
+  color: #1f88b5;
   font-weight: 500;
   display: inline-grid;
 }
@@ -1434,7 +1434,7 @@ table.checkboxhide.dataTable td.select-checkbox:after {
 }
 
 .extraInformationTab .nav.nav-tabs .nav-link {
-  color: #0078d1;
+  color: #1f88b5;
   background-color: #fff !important;
   font-size: 13px;
   font-weight: 700;
@@ -2339,7 +2339,7 @@ span.oNOfswich {
 }
 
 .sectionTitle {
-  border: 1px solid #0078d1;
+  border: 1px solid #1f88b5;
   padding: 6px;
 }
 
@@ -2964,7 +2964,7 @@ ul#supplierList {
 
 .custom_dropdown .dropbtn {
   text-align: left;
-  transition: background 0.3s ease;
+  transition: 0.3s ease;
   cursor: pointer;
 }
 
@@ -3311,8 +3311,8 @@ label {
 }
 
 .btn-warning {
-  background-color: #57c8f1 !important;
-  border-color: #57c8f1 !important;
+  background-color: #1f88b5 !important;
+  border-color: #1f88b5 !important;
   color: #FFFFFF !important;
 }
 
@@ -3358,8 +3358,8 @@ label {
 }
 
 .tab-teaser .tab-menu ul li a.active {
-  background-color: #57c8f1;
-  border-color: #57c8f1;
+  background-color: #1f88b5;
+  border-color: #1f88b5;
   color: #FFFFFF;
   text-decoration: none;
 }
@@ -3370,7 +3370,7 @@ label {
 
 .tab-teaser .tab-menu ul li a.active .productCount {
   background-color: #ffffff;
-  color: #57c8f1;
+  color: #1f88b5;
 }
 
 .tab-teaser .tab-menu ul li a .productCount {
@@ -3415,16 +3415,16 @@ label {
 }
 
 .productDetailTable .dt-buttons button {
-  background: #57c8f1 !important;
+  background: #1f88b5 !important;
   color: #fff !important;
-  border-color: #57c8f1 !important;
+  border-color: #1f88b5 !important;
   /* font-size: 13px; */
 }
 
 .productDetailTable .dt-buttons button:hover {
-  background: #57c8f1 !important;
+  background: #1f88b5 !important;
   color: #fff !important;
-  border-color: #57c8f1 !important;
+  border-color: #1f88b5 !important;
 }
 
 /* div.dataTables_wrapper {
@@ -3441,7 +3441,6 @@ label {
   border-color: #dc3545 !important;
   color: #FFFFFF !important;
 }
-
 .delete_table_row {
   position: absolute;
   right: 0;

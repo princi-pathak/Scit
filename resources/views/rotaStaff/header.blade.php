@@ -22,8 +22,9 @@
 
   <meta name="generator" content="SCITS  Lockscreen">
 
-  <title>SCITS Lockscreen</title>
+  <title>SCITS </title>
 
+  <link rel="shortcut icon" type="image/x-icon" href="{{url('public/images/favicon.ico') }}">
   <link href="{{ url('public/frontEnd/staff/css/bootstrap.min.css') }}" rel="stylesheet">
 
   <link href="{{ url('public/frontEnd/staff/css/font-awesome.min.css') }}" rel="stylesheet">
