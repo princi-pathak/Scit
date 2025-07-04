@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>  -->
   <style type="text/css">
     /*09 Aug 2018*/
     .chat_opt {
@@ -74,6 +73,10 @@
       font-size: 14px;
       text-transform: capitalize;
     }
+
+    .field-wrapper {
+      display: block !important;
+    }
   </style>
   <meta charset="utf-8">
 
@@ -136,8 +139,7 @@
   <link href="{{ url('public/frontEnd/js/selectize/selectize.default.css') }}" rel="stylesheet">
 
   <!-- For body Map-->
-  <link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css">
-
+  <!-- <link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css"> -->
   <!--Core js-->
 
   <script src="{{ url('public/frontEnd/js/jquery.min.js') }}"></script>
