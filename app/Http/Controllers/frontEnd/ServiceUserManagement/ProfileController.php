@@ -6,6 +6,8 @@ use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
 use App\ServiceUserCareHistory, App\CareTeam, App\ServiceUser, App\FormBuilder, App\Notification, App\ServiceUserAFC, App\HomeLabel, App\LogBook, App\ServiceUserLogBook, App\CareTeamJobTitle, App\ServiceUserCareCenter, App\ServiceUserContacts, App\DynamicFormBuilder, App\DynamicForm, App\SocialApp, App\ServiceUserSocialApp, App\ServiceUserMoney, App\ServiceUserMoneyRequest, App\ServiceUserCareHistoryFile, App\User;
 use DB, Auth, Session;
+use Illuminate\Support\Facades\Log;
+
 
 class ProfileController extends ServiceUserManagementController
 {
@@ -254,34 +256,12 @@ class ProfileController extends ServiceUserManagementController
             $team->phone_no         = $data['phone_no'];
             $team->email            = $data['email'];
             $team->address          = $data['address'];
-            // $team->image            = $data['image'];
             $team->home_id          = $su_home_id;
-
-            // if(!empty($_FILES['image']['name']))
-            // {
-            //     $tmp_image  =   $_FILES['image']['tmp_name'];
-            //     $image_info =   pathinfo($_FILES['image']['name']);
-            //     $ext        =   strtolower($image_info['extension']);
-            //     $new_name   =   time().'.'.$ext; 
-
-            //     if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png')
-            //     {
-            //         $destination = base_path().careTeamPath; 
-            //         if(move_uploaded_file($tmp_image, $destination.'/'.$new_name))
-            //         {
-            //             $team->image = $new_name;
-            //         }
-            //     }
-            // }
-            // if(!isset($team->image)){
-            //     $team->image = '';
-            // }
 
             if (!empty($_FILES['image']['name'])) {
 
                 // $member_old_image =  $member->image;
                 $tmp_image  =  $_FILES['image']['tmp_name'];
-
                 $image_info =  pathinfo($_FILES['image']['name']);
                 $ext        =  strtolower($image_info['extension']);
                 $new_name   =  time() . '.' . $ext;
@@ -295,13 +275,23 @@ class ProfileController extends ServiceUserManagementController
             } else {
 
                 $staff_image = $request->staff_image_name;
-
                 $team->image = $staff_image;
-
-                $user_img = userProfileImagePath . '/' . $staff_image;
+                $user_img = public_path("images\\userProfileImages\\$staff_image");
+                print_r($user_img);
+                echo "<br>";
                 // $ctm_img  = '/opt/lampp/htdocs/scits/public/images/careTeam/'.$staff_image; //for localhost
-                $ctm_img  = '/home/mercury/public_html/scits/public/images/careTeam/' . $staff_image; //for mercury server
-                // $ctm_img  = careTeam;
+                // $ctm_img  = '/home/mercury/public_html/scits/public/images/careTeam/' . $staff_image; //for mercury server
+                $ctm_img  = public_path("images\\careTeam\\$staff_image"); //for mercury server
+
+                if (file_exists($user_img)) {
+                    if (copy($user_img, $ctm_img)) {
+                        Log::info('File copied successfully.');
+                    } else {
+                        Log::info('Failed to copy file..');
+                    }
+                } else {
+                    Log::info('Source file does not exist');
+                }
                 // echo $user_img."<br>".$ctm_img; //die;
                 copy($user_img, $ctm_img);
             }
