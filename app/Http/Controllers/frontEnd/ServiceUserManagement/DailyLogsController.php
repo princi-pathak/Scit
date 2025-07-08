@@ -23,6 +23,8 @@ class DailyLogsController extends ServiceUserManagementController
 
         $data = $request->input();
         $home_id = Auth::user()->home_id;
+        // Ram explode the home id 05/07/2025
+        $ex_home_id=explode(',',$home_id);
         $user_id = Auth::user()->id;
         $today = date('Y-m-d 00:0:00');
         $service_users = ServiceUser::select('id', 'name')
@@ -58,6 +60,7 @@ class DailyLogsController extends ServiceUserManagementController
                         ->whereIn('log_book.id', $su_logs)
                         ->join('user', 'log_book.user_id', '=', 'user.id')
                         ->join('category', 'log_book.category_id', '=', 'category.id')
+                        ->whereIn('log_book.home_id',$ex_home_id)
                         ->orderBy('date', 'desc');
                     // $log_book_records = LogBook::select('log_book.*')
                     //                         ->orderBy('date','desc');
@@ -118,6 +121,7 @@ class DailyLogsController extends ServiceUserManagementController
                 ->whereDate('log_book.date', '=', $today)
                 ->join('user', 'log_book.user_id', '=', 'user.id')
                 // ->join('category', 'log_book.category_id', '=', 'category.id')
+                ->whereIn('log_book.home_id',$ex_home_id)
                 ->orderBy('date', 'desc')->get();
 
             //  echo "<pre>"; print_r($log_book_records); die;
@@ -195,6 +199,7 @@ class DailyLogsController extends ServiceUserManagementController
                         ->whereIn('log_book.id', $su_logss)
                         ->join('user', 'log_book.user_id', '=', 'user.id')
                         ->join('category', 'log_book.category_id', '=', 'category.id')
+                        ->whereIn('log_book.home_id',$ex_home_id)
                         ->orderBy('date', 'desc');
                     //print_r($log_book_records);
                     //die;
@@ -265,6 +270,7 @@ class DailyLogsController extends ServiceUserManagementController
                 ->whereDate('log_book.date', '=', $today)
                 ->join('user', 'log_book.user_id', '=', 'user.id')
                 ->join('category', 'log_book.category_id', '=', 'category.id')
+                ->whereIn('log_book.home_id',$ex_home_id)
                 ->orderBy('date', 'desc')->get();
             //print_r($log_book_records);
             //die;

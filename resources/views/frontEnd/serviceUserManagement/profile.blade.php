@@ -75,7 +75,8 @@
 
     .contact h3 .currentAdd {
         color: #767676;
-        background: #f1f2f7;
+        /* background: #f1f2f7; */
+        background: #ffffff;
         font-family: 'Open Sans', sans-serif;
         font-size: 13px;
         font-weight: 500;

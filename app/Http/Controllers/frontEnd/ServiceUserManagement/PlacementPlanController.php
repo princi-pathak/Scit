@@ -20,8 +20,12 @@ class PlacementPlanController extends ServiceUserManagementController
         //check su home id
         $su_home_id     = ServiceUser::where('id',$service_user_id)->value('home_id');
         $usr_home_id    = Auth::user()->home_id;
-        if($su_home_id != $usr_home_id){
-            return redirect('/')->with('error',UNAUTHORIZE_ERR); 
+        // if($su_home_id != $usr_home_id){
+        //     return redirect('/')->with('error',UNAUTHORIZE_ERR); 
+        // }
+        $ex_usr_home_id=explode(',',$usr_home_id);
+        if (!in_array($su_home_id, $ex_usr_home_id)) {
+            return redirect('/')->with('error',UNAUTHORIZE_ERR);
         }
         //check su home id end
         
@@ -83,8 +87,12 @@ class PlacementPlanController extends ServiceUserManagementController
         //check su home id
         $su_home_id     = ServiceUser::where('id',$service_user_id)->value('home_id');
         $usr_home_id    = Auth::user()->home_id;
-        if($su_home_id != $usr_home_id){
-            die;
+        // if($su_home_id != $usr_home_id){
+        //     die;
+        // }
+        $ex_usr_home_id=explode(',',$usr_home_id);
+        if (!in_array($su_home_id, $ex_usr_home_id)) {
+            return redirect('/')->with('error',UNAUTHORIZE_ERR);
         }
         //check su home id end
 
@@ -113,8 +121,12 @@ class PlacementPlanController extends ServiceUserManagementController
         //check su home id
         $su_home_id     = ServiceUser::where('id',$service_user_id)->value('home_id');
         $usr_home_id    = Auth::user()->home_id;
-        if($su_home_id != $usr_home_id){
-            die;
+        // if($su_home_id != $usr_home_id){
+        //     die;
+        // }
+        $ex_usr_home_id=explode(',',$usr_home_id);
+        if (!in_array($su_home_id, $ex_usr_home_id)) {
+            return redirect('/')->with('error',UNAUTHORIZE_ERR);
         }
         //check su home id end
 
@@ -252,8 +264,13 @@ class PlacementPlanController extends ServiceUserManagementController
     public function pending_targets(Request $request, $service_user_id = null) {
         
         $su_home_id = ServiceUser::where('id',$service_user_id)->value('home_id');
-        if(Auth::user()->home_id != $su_home_id){
-            die; 
+        // if(Auth::user()->home_id != $su_home_id){
+        //     die; 
+        // }
+        $usr_home_id    = Auth::user()->home_id;
+        $ex_usr_home_id=explode(',',$usr_home_id);
+        if (!in_array($su_home_id, $ex_usr_home_id)) {
+            return redirect('/')->with('error',UNAUTHORIZE_ERR);
         }            
 
         $today = date('Y-m-d');
@@ -364,12 +381,16 @@ class PlacementPlanController extends ServiceUserManagementController
             }
             // echo "<pre>"; print_r($dyn_form); die;
             $su_home_id = ServiceUser::where('id',$active_target->service_user_id)->value('home_id');
-        
-            if(Auth::user()->home_id != $su_home_id){
-                $result['response'] = false;
-                $result['error']    = 'AUTH';
-                return $result; 
+            $usr_home_id    = Auth::user()->home_id;
+            $ex_usr_home_id=explode(',',$usr_home_id);
+            if (!in_array($su_home_id, $ex_usr_home_id)) {
+                return redirect('/')->with('error',UNAUTHORIZE_ERR);
             }
+            // if(Auth::user()->home_id != $su_home_id){
+            //     $result['response'] = false;
+            //     $result['error']    = 'AUTH';
+            //     return $result; 
+            // }
 
             /*$formdata = $active_target->formdata;
             $form_response = FormBuilder::showFormWithValue('placement_plan',$formdata,true);
@@ -524,8 +545,13 @@ class PlacementPlanController extends ServiceUserManagementController
 
 
             $su_home_id = ServiceUser::where('id',$placement_plan->service_user_id)->value('home_id');
-            if(Auth::user()->home_id != $su_home_id){
-                return redirect('/')->with('error',UNAUTHORIZE_ERR); 
+            // if(Auth::user()->home_id != $su_home_id){
+            //     return redirect('/')->with('error',UNAUTHORIZE_ERR); 
+            // }
+            $usr_home_id    = Auth::user()->home_id;
+            $ex_usr_home_id=explode(',',$usr_home_id);
+            if (!in_array($su_home_id, $ex_usr_home_id)) {
+                return redirect('/')->with('error',UNAUTHORIZE_ERR);
             }
 
             // $placement_plan                  = new ServiceUserPlacementPlan;
@@ -566,8 +592,13 @@ class PlacementPlanController extends ServiceUserManagementController
             $placement_plan = ServiceUserPlacementPlan::where('id',$data['placement_plan_id'])->first();
 
             $su_home_id = ServiceUser::where('id',$placement_plan->service_user_id)->value('home_id');
-            if(Auth::user()->home_id != $su_home_id){
-                return redirect('/')->with('error',UNAUTHORIZE_ERR); 
+            // if(Auth::user()->home_id != $su_home_id){
+            //     return redirect('/')->with('error',UNAUTHORIZE_ERR); 
+            // }
+            $usr_home_id    = Auth::user()->home_id;
+            $ex_usr_home_id=explode(',',$usr_home_id);
+            if (!in_array($su_home_id, $ex_usr_home_id)) {
+                return redirect('/')->with('error',UNAUTHORIZE_ERR);
             }
             
             $placement_plan->qqa_review = $data['qqa_review'];            

@@ -156,7 +156,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
             </div> -->
                 <!-- sourabh -->
                 <div class="col-md-2 col-lg-2" style="padding-bottom:10px; margin-left: -10px;">
-                    <input type="text" class="form-control" id="keywordhr" onKeyPress="hrmyFunctionkey()" onKeyUp="hrmyFunctionkey()" name="keywordhr" placeholder="Keyword">
+                    <input type="text" class="form-control" id="keywordhr" onKeyPress="hrmyFunctionkey()" name="keywordhr" placeholder="Keyword">
                 </div>
                 <!-- sourabh -->
                 <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
@@ -1536,15 +1536,11 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
         };
         $.ajax({
             type: 'get',
-            url: "{{ url('/service/health-records') }}" + '/' + {
-                {
-                    $service_user_id
-                }
-            },
+            url: "{{ url('/service/health-records') }}" + '/' + service_user_id,
             data: data,
             success: function(resp) {
-                //console.log(resp)
-                //return false;
+                console.log(resp);
+                return false;
                 if (isAuthenticated(resp) == false) {
                     return false;
                 }
@@ -1766,14 +1762,10 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
         //alert(data)
         $.ajax({
             type: 'get',
-            url: "{{ url('/service/health-records') }}" + '/' + {
-                {
-                    $service_user_id
-                }
-            },
+            url: "{{ url('/service/health-records') }}" + '/' +service_user_id,
             data: data,
             success: function(resp) {
-                //console.log(resp)
+                console.log(resp)
                 //return false;
                 if (isAuthenticated(resp) == false) {
                     return false;
@@ -1927,7 +1919,7 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
                             }
 
 
-                            $(pannel_body).append($(`<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`));
+                            $(pannel_body).append($(`<h1 class="title_time_log"><span>${resp.log_book_records[i]['title'] || ''}</span></h1>`));
 
                             var details = document.createElement("p");
                             details.setAttribute("class", "space_bottom");

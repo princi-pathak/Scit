@@ -12,7 +12,7 @@
 <div class="label_selct">
   <div class="checkbox">
     <label>
-      <input name="access_id[]" class="select_all" value="172" checked="" type="checkbox">
+      <input name="access_id[]" class="select_all" value="172"  type="checkbox">
       <strong>[ Select All ]</strong>
     </label>
   </div>
@@ -91,13 +91,26 @@
     });
   });
 
+  // $(document).ready(function() {
+  //   $('.select_all').click(function() {
+  //     if ($(this).is(':checked')) {
+  //       $(this).closest('form').find('input').prop('checked', true);
+  //     } else {
+  //       $(this).closest('form').find('input').prop('checked', false);
+  //     }
+  //   });
+  // });
   $(document).ready(function() {
-    $('.select_all').click(function() {
-      if ($(this).is(':checked')) {
-        $(this).closest('form').find('input').prop('checked', true);
-      } else {
-        $(this).closest('form').find('input').prop('checked', false);
-      }
-    });
+  $('.select_all').click(function() {
+    let form = $(this).closest('form');
+    form.find('input[type="checkbox"]').prop('checked', $(this).is(':checked'));
   });
+  let form = $('.select_all').closest('form');
+  let checkboxes = form.find('input[name="access_id[]"]').not('.select_all');
+  let allChecked = checkboxes.length && checkboxes.filter(':checked').length === checkboxes.length;
+
+  if (allChecked) {
+    $('.select_all').prop('checked', true);
+  }
+});
 </script>
