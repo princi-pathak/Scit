@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>  -->
   <style type="text/css">
     /*09 Aug 2018*/
     .chat_opt {
@@ -74,6 +73,10 @@
       font-size: 14px;
       text-transform: capitalize;
     }
+
+    .field-wrapper {
+      display: block !important;
+    }
   </style>
   <meta charset="utf-8">
 
@@ -85,7 +88,7 @@
 
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/images/favicon.ico') }}">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"> -->
 
   <link href="https://cdn.form.io/formiojs/formio.form.min.css">
   <title>{{ PROJECT_NAME }} @yield('title','') </title>
@@ -136,8 +139,7 @@
   <link href="{{ url('public/frontEnd/js/selectize/selectize.default.css') }}" rel="stylesheet">
 
   <!-- For body Map-->
-  <link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css">
-
+  <!-- <link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css"> -->
   <!--Core js-->
 
   <script src="{{ url('public/frontEnd/js/jquery.min.js') }}"></script>

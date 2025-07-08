@@ -6,7 +6,7 @@ use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use DB, Auth;
-use App\User, App\LogBook, App\ServiceUser, App\ServiceUserLogBook, App\LogBookComment, App\CategoryFrontEnd;
+use App\User, App\LogBook, App\ServiceUser, App\ServiceUserLogBook, App\LogBookComment, App\CategoryFrontEnd, App\DynamicFormBuilder;
 use Illuminate\Support\Arr;
 
 class DailyLogsController extends ServiceUserManagementController
@@ -311,10 +311,11 @@ class DailyLogsController extends ServiceUserManagementController
             }
         }
 
+        $dynamic_forms = DynamicFormBuilder::getFormList();
+        // dd($dynamic_forms);
 
 
-
-        return view('frontEnd.serviceUserManagement.daily_log', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members'));
+        return view('frontEnd.serviceUserManagement.daily_log', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members', 'dynamic_forms'));
     }
 
 
