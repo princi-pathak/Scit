@@ -1,25 +1,22 @@
+@extends('frontEnd.layouts.master')
+@include('rotaStaff.components.header')
 <script>
   // Ignore this in your implementation
   window.isMbscDemo = true;
 </script>
-
-@extends('frontEnd.layouts.master')
 <style>
-  / Dropdown Button / .dropbtn {
-    /* background-color: #3498DB;
-  color: white;
-  padding: 16px; */
+  .dropbtn {
     font-size: 16px;
     border: none;
     cursor: pointer;
   }
 
-  / The container <div>- needed to position the dropdown content / .dropdown {
+  .dropdown {
     position: relative;
     display: inline-block;
   }
 
-  / Dropdown Content (Hidden by Default) / .dropdown-content {
+  .dropdown-content {
     display: none;
     position: absolute;
     right: 0px;
@@ -29,7 +26,7 @@
     z-index: 1;
   }
 
-  / Links inside the dropdown / .dropdown-content a,
+  .dropdown-content a,
   .dropdown-content button {
     color: #1f88b5;
     padding: 5px 12px;
@@ -100,6 +97,7 @@
   .modal-header {
     background-color: #1f88b5;
     color: #fff;
+    display: block;
   }
 
   .modal-dialog .close_btn_modal {
@@ -185,10 +183,17 @@
     margin-left: 30px;
     margin-top: 25px;
   }
+
+  section#container {
+    height: auto;
+  }
+  /* .tab-content>.active {
+    display: block;
+    opacity: 1;
+} */
 </style>
 <!-- Top Bar Info Section End Here -->
-<div class="col-lg-9">
-
+<section class="wrapper">
   <div class="row">
     <div class="col-lg-12">
       <ul class="nav nav-tabs rotas" id="myTab" role="tablist">
@@ -388,7 +393,6 @@
             </div>
           </div>
         </div>
-        <!-- </div> -->
         <div class="tab-pane fade" id="createrota" role="tabpanel" aria-labelledby="createrota-tab">
           <!-- <div class="row">
                         <div class="col-lg-12 create-a-rota-info">
@@ -612,16 +616,7 @@
       </div>
 
     </div>
-
   </div>
-</div>
-</div>
-<!-- Col Md 9 End -->
-</div>
-</div>
-</div>
-</div>
-</div>
 </section>
 <!-- Rename Modal -->
 <div class="modal fade" id="renameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -746,11 +741,11 @@
   </div>
 </div>
 <!-- Modal View end -->
-@include('rotaStaff.components.footer')
+<!-- @include('rotaStaff.components.footer') -->
 <script>
   $(document).ready(function() {
 
-    $('#createrota-tab2').on('click',function(){
+    $('#createrota-tab2').on('click', function() {
       var tab1 = document.getElementById("activerotas-tab");
       var div1 = document.getElementById("activerotas");
       tab1.classList.remove("active");
@@ -762,7 +757,7 @@
       tab3.className += " active";
       div3.className += " active";
       div3.className += " show";
-});
+    });
 
     const selectDate = document.getElementById('select-date');
     selectDate.addEventListener('change', (event) => {
@@ -832,7 +827,6 @@
           }
         }
 
-
       }
     });
     const source = document.getElementById('rota_name_search');
@@ -857,8 +851,6 @@
 
     source.addEventListener('input', inputHandler);
     source.addEventListener('propertychange', inputHandler);
-
-
 
     $('#rename_save_btn').on('click', function() {
       var rota_id = document.getElementById('renameid').value;

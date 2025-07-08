@@ -6,6 +6,10 @@
     section#container {
         height: auto;
     }
+  input.form-control, select.form-control {
+    height: 40px;
+    }
+
 </style>
 <section id="main-content">
     <div class="wrapper">

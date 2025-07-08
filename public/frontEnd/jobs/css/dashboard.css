@@ -160,7 +160,7 @@
   align-items: center;
   justify-content: center;
   color: #fff;
-  height: 90px;
+  height: 108px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   box-shadow: 0px 0px 20px rgb(0 0 0 / 10%);
@@ -814,4 +814,10 @@
   border: 1px solid #eee;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+h4.count.risk-desc {
+  font-size: 14px;
+  font-weight: 600;
+  color: #575757;
 }

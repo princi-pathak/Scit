@@ -74,7 +74,12 @@
       font-size: 14px;
       text-transform: capitalize;
     }
+
+    .field-wrapper {
+      display: block !important;
+    }
   </style>
+  
   <meta charset="utf-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,7 +90,7 @@
 
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/images/favicon.ico') }}">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"> -->
 
   <link href="https://cdn.form.io/formiojs/formio.form.min.css">
   <title>{{ PROJECT_NAME }} @yield('title','') </title>
@@ -136,8 +141,7 @@
   <link href="{{ url('public/frontEnd/js/selectize/selectize.default.css') }}" rel="stylesheet">
 
   <!-- For body Map-->
-  <link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css">
-
+  <!-- <link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css"> -->
   <!--Core js-->
 
   <script src="{{ url('public/frontEnd/js/jquery.min.js') }}"></script>
@@ -181,6 +185,79 @@
   <link href="{{ url('public/frontEnd/jobs/css/dashboard.css') }}" rel="stylesheet">
 
 
+    <style type="text/css">
+    /*09 Aug 2018*/
+    .chat_opt {
+      display: flex;
+      background: #1f88b5;
+      border-radius: 100%;
+      bottom: 70px;
+      color: #fff;
+      font-size: 30px;
+      padding: 10px;
+      position: fixed;
+      right: 40px;
+      z-index: 999;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+    }
+
+    .chat_opt:hover i {
+      color: #fff;
+    }
+
+    /* #call_modal .wrap-info {
+      float: left;
+      margin-bottom: 30px;
+      width: 100%;
+    } */
+
+    .wrap-info span.icon {
+      color: #e1355d;
+      font-size: 56px;
+      margin-bottom: 20px;
+      transition: all 0.5s ease 0s;
+    }
+
+    .wrap-info>p {
+      color: #606060;
+      font-size: 16px;
+    }
+
+    .wrap-info a {
+      color: #00938d;
+      transition: all 0.5s ease 0s;
+    }
+
+    .wrap-info i {
+      color: #1f88b5;
+      font-size: 25px;
+      /*    margin-bottom: 20px;*/
+    }
+
+    #call_modal.modal.in .modal-dialog {
+      transform: translate(0, 160px);
+    }
+
+    .prient-btn {
+      text-align: center;
+      padding: 0px 0px 20px 0px;
+    }
+
+    .prient-btn input {
+      background: #1ca59e;
+      color: #fff;
+      border: none;
+      padding: 7px 15px;
+      border-radius: 5px;
+      font-size: 14px;
+      text-transform: capitalize;
+    }
+  </style>
+
 </head>
 @include('frontEnd.common.alert_messages')
 
@@ -212,8 +289,6 @@
   <!--<script src="{{ url('public/frontEnd/js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js" type="text/javascript"></script>
 
-
-
   <!--  <script type="text/javascript" src="{{ url('public/frontEnd/js/external-dragging-calendar.js') }}"></script> -->
   <!--clock init-->
   <script src="{{ url('public/frontEnd/css/css3clock/js/css3clock.js') }}"></script>
@@ -223,9 +298,6 @@
   <script src="{{ url('public/frontEnd/js/scripts.js') }}"></script>
   <script src="{{ url('public/frontEnd/js/developer.js') }}"></script>
   <script src="{{ url('public/frontEnd/js/advanced-form.js') }}"></script>
-
-
-
 
   <!-- VALIDATION FILES -->
   <script type="text/javascript" src="{{ url('public/frontEnd/js/validation/formValidation.min.js') }}"></script>
@@ -253,10 +325,8 @@
       printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">');
       printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">');
       printWindow.document.write('<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
-      printWindow.document.write('<link href="{{ url('
-        public / backEnd / css / amarjeet.css ')}}" rel="stylesheet" type="text/css" >');
-      printWindow.document.write('<link href="{{ url('
-        public / backEnd / css / pdfstyle.css ')}}" rel="stylesheet" type="text/css" >');
+      printWindow.document.write('<link href="{{ url(' public / backEnd / css / amarjeet.css ')}}" rel="stylesheet" type="text/css" >');
+      printWindow.document.write('<link href="{{ url(' public / backEnd / css / pdfstyle.css ')}}" rel="stylesheet" type="text/css" >');
       printWindow.document.write('</head><body > <div class="masterprintmainarea">');
       printWindow.document.write('<div class="header">');
       printWindow.document.write('<img src="' + finalpath + '" style="height:80px;">');
@@ -267,8 +337,7 @@
       printWindow.document.write('</div>');
       printWindow.document.write('<div class="footer">');
       printWindow.document.write('<div class="footer-section-area">');
-      printWindow.document.write('© {{ date('
-        Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
+      printWindow.document.write('© {{ date(' Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
       printWindow.document.write('</div>');
       printWindow.document.write('</div>');
       printWindow.document.write('</div> </body></html>');
@@ -300,10 +369,8 @@
       printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">');
       printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">');
       printWindow.document.write('<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
-      printWindow.document.write('<link href="{{ url('
-        public / backEnd / css / amarjeet.css ')}}" rel="stylesheet" type="text/css" >');
-      printWindow.document.write('<link href="{{ url('
-        public / backEnd / css / pdfstyle.css ')}}" rel="stylesheet" type="text/css" >');
+      printWindow.document.write('<link href="{{ url(' public / backEnd / css / amarjeet.css ')}}" rel="stylesheet" type="text/css" >');
+      printWindow.document.write('<link href="{{ url(' public / backEnd / css / pdfstyle.css ')}}" rel="stylesheet" type="text/css" >');
       printWindow.document.write('</head><body ><div class="masterprintmainarea">');
       printWindow.document.write('<div class="header">');
       printWindow.document.write('<img src="' + finalpath + '" style="height:80px;">');
@@ -314,8 +381,7 @@
       printWindow.document.write('</div>');
       printWindow.document.write('<div class="footer">');
       printWindow.document.write('<div class="footer-section-area">');
-      printWindow.document.write('© {{ date('
-        Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
+      printWindow.document.write('© {{ date(' Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
       printWindow.document.write('</div>');
       printWindow.document.write('</div>');
       printWindow.document.write('</div></body></html>');
