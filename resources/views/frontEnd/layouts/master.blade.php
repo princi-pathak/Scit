@@ -88,7 +88,7 @@
 
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/images/favicon.ico') }}">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"> -->
 
   <link href="https://cdn.form.io/formiojs/formio.form.min.css">
   <title>{{ PROJECT_NAME }} @yield('title','') </title>
