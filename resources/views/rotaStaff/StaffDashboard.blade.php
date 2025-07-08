@@ -253,11 +253,11 @@
                   <p>You've also taken</p>
                   <div class="ntn-prt">
                     <h5><a href="#">{{ $sickness }} Lateness</a></h5>
-                    <h6><a href="#">{{ $lateness }} Sickness</a></h6>
+                    <h5><a href="#">{{ $lateness }} Sickness</a></h5>
                   </div>
                 </div>
               </div>
-              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="tab-pane fade p-1" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="tab-first-infos">
                   <h3><a href="{{ url('absence/type=1') }}">Request time off</a></h3>
                 </div>
@@ -275,12 +275,10 @@
                 <div class="btn-info-sep">
                   <p>You've also taken</p>
                   <div class="ntn-prt">
-                    <h5><a href="#">0 Lateness</a></h5>
+                    <h6><a href="#">0 Lateness</a></h6>
                     <h6><a href="#">0 Sickness</a></h6>
                   </div>
                 </div>
-
-
               </div>
 
             </div>

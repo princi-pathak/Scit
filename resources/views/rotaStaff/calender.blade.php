@@ -32,7 +32,7 @@
     color: #333;
 }
 th .fc-scrollgrid-sync-inner {
-    background: #e4e4e4;
+    background: #f6f6f6;
     padding: 10px;
 }
 .tab-content {
