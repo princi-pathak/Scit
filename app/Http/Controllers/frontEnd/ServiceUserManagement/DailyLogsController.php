@@ -186,6 +186,8 @@ class DailyLogsController extends ServiceUserManagementController
                             ->where('su_log_book.service_user_id', $request->service_user)->get()->toArray();
                     } else if ($request->service_user == '' && $request->staff_member != '') {
 
+
+
                         $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')
                             ->where('su_log_book.user_id', $request->staff_member)->get()->toArray();
                     } else if ($request->service_user != '' && $request->staff_member != '') {
@@ -613,9 +615,10 @@ class DailyLogsController extends ServiceUserManagementController
         }
 
 
+        
+        $dynamic_forms = DynamicFormBuilder::getFormList();
 
-
-        return view('frontEnd.serviceUserManagement.daily_log2', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members'));
+        return view('frontEnd.serviceUserManagement.daily_log2', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members', 'dynamic_forms'));
     }
 
 
