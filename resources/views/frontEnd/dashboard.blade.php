@@ -160,7 +160,7 @@
                     </div>
                 </a>
                 @endif
-                <!-- <a href="{{ url('/view-reports') }}">
+                <a href="{{ url('/view-reports') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">
@@ -174,7 +174,7 @@
                             </section>
                         </div>
                     </div>
-                </a> -->
+                </a>
                 @if(in_array(172, $access_rights))
                 <a href="{{ url('/general-admin') }}">
                      <div class="col-md-6">
