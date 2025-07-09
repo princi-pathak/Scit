@@ -101,45 +101,167 @@
     }
 
 
-.timeline-messages{
-    text-align: center;
-}
-.message-body.msg-in.rightmsg {
-    left: 12%;
-}
-.message-body.msg-in.leftmsg{
-    right: 232px;
-}
-.timeline-messages .msg-in .arrow {
-    border-right: 0px solid #949496 !important;
-}
-.timeline-messages .msg-in.rightmsg .arrow {
-    border-right: 8px solid #949496 !important;
-}
-.timeline-messages .msg-in.leftmsg .arrow{
-    right: -3px;
-    left: inherit;
-    border-left: 8px solid #949496 !important;
-}
-.timeline-messages:before, .msg-time-chat:before, .msg-time-chat .text:before {
-    content: "";
-    left: 50%;
-    position: absolute;
-    top: -2px;
-}
-.msg-time-chat .msg-in .text .second {
-    margin-right: 6px;
+    .timeline-messages {
+        text-align: center;
     }
 
-    /* .msg-time-chat .msg-in .text .second {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;           
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    .message-body.msg-in.rightmsg {
+        left: 210px;
+    }
+
+    .message-body.msg-in.leftmsg {
+        right: 250px;
+    }
+
+    .timeline-messages .msg-in .arrow {
+        border-right: 0px solid #949496 !important;
+    }
+
+    .timeline-messages .msg-in.rightmsg .arrow {
+        border-right: 8px solid #949496 !important;
+    }
+
+    .timeline-messages .msg-in.leftmsg .arrow {
+        right: -3px;
+        left: inherit;
+        border-left: 8px solid #949496 !important;
+    }
+
+    .timeline-messages:before,
+    .msg-time-chat:before,
+    .msg-time-chat .text:before {
+        content: "";
+        left: 50%;
+        position: absolute;
+        top: -2px;
+    }
+
+    .msg-time-chat .msg-in .text .second {
+        margin-right: 6px;
+        display: flex;
+        padding: 9px 10px;
+    }
+
+    .msg-time-chat .msg-in .text .second p {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 24ch;
+    }
+    span.timelineIcons {
+    border-left: 1px solid #fff;
+    margin-left: 10px;
+}
+    .timelineIcons a {
+        padding: 0px 10px;
+        /* border-right: 1px solid #fff; */
+        border-radius: 0;
+        margin-right: 0;
+        color: #fff;
+    }
+
+    .timelineIcons a:last-child {
+        border-right: none;
+    }
+
+    .timelineIcons a:hover {
+        border-radius: 0;
+        margin-right: 0;
+    }
+
+    .timelineIcons a {
+        color: #fff;
+        font-size: 16px;
+        transition: .7s;
+    }
+
+    .timelineIcons a:hover {
+        color: #000;
+        font-size: 16px;
+    }
+    .msg-time-chat {
+        overflow: inherit;
+    }
+.leftmsg span.timelineIcons {
+    border-right: 1px solid #fff;
+    margin-right: 10px;
+    border-left: none;
+    margin-left: 0;
+}
+.leftmsg ul.dd-menu {
+    left: -183px;
+}
+.leftmsg .dd-button {
+    padding: 0px 10px 0px 4px;
+}
+    /* *********************** */
+.timelinedropdown {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 0;
+}
+.dd-button {
+  display: inline-block;
+  padding: 0px 4px 0px 12px;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
   white-space: nowrap;
-  max-width: 25ch;  
-} */
+  font-size: 14px;
+   font-weight: 500;
+}
+.dd-input {
+  display: none;
+}
+.dd-menu {
+  position: absolute;
+  top: -11px;
+  left: 42px;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 2px 0 0 0;
+  box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  list-style-type: none;
+      z-index: 999;
+          width: 172px;
+}
+.dd-input + .dd-menu {
+  display: none;
+} 
+.dd-input:checked + .dd-menu {
+  display: block;
+} 
+.dd-menu li a{
+    display:  block;
+    color: #000;
+    padding: 8px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: start;
+    font-size: 14px;
+    font-weight: 500;
+    transition: .7s;
+    border-radius: 4px;
+}
+.dd-menu li a:hover{
+    color: #333;
+    background: #F1F2F7;
+    font-size: 14px;
+}
+.dd-menu li a i{
+    margin-right: 8px;
+}
+.dd-menu li a:hover i{
+    color: #1f88b5;
+}
+.actionForm{
+    display: flow-root;
+}
+
 </style>
 
 
@@ -194,7 +316,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
         <section class="wrapper">
             <div class="row">
                 <div class="pull-right">
-                    <div class="filter_buttons" style="text-align:right;padding-right:150px;display:inline-block; padding-bottom: 10px;">
+                    <div class="filter_buttons" style="text-align:right;padding-right:16px;display:inline-block; padding-bottom: 10px;">
                         <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
                         <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
                     </div>
@@ -284,139 +406,243 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                         </article>
 
                         <div class="timeline-messages">
-                                            <!-- Comment -->
-                                            <div class="msg-time-chat">
-                                                <div class="message-body msg-in rightmsg">
-                                                    <span class="arrow"></span>
-                                                    <div class="text">
-                                                        <div class="first">
-                                                            13 Jan 2013
-                                                        </div>
-                                                        <div class="second bg-terques ">
-                                                            Join as Product Asst. Manager
-                                                        </div>
-                                                        <span class="bg-terques">
-                                                        
-                                                            <a href="#!"><i class="fa fa-angle-left"></i></a>
-                                                        </span>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /comment -->
+                            <!-- Comment -->
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in rightmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="first">
+                                            13 Jan 2013
+                                        </div>
+                                        <div class="second bg-terques ">
+                                            <p>Join as Product Asst. Manager</p>
+                                            <span class="timelineIcons">
+                                                <label class="timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label>                                                 
+                                            </span>
+                                        </div>
 
-                                            <!-- Comment -->
-                                            <div class="msg-time-chat">
-                                                <div class="message-body msg-in leftmsg">
-                                                    <span class="arrow"></span>
-                                                    <div class="text">                                                       
-                                                        <div class="second bg-red">
-                                                            Completed Provition period and Appointed as a permanent Employee
-                                                        </div>
-                                                         <div class="first">
-                                                            10 Feb 2012
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /comment -->
-                                                 <!-- Comment -->
-                                            <div class="msg-time-chat">
-                                                <div class="message-body msg-in rightmsg">
-                                                    <span class="arrow"></span>
-                                                    <div class="text">
-                                                        <div class="first">
-                                                            2 January 2011
-                                                        </div>
-                                                        <div class="second bg-purple">
-                                                            Selected Employee of the Month
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /comment -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment -->
 
-                                            <!-- Comment -->
-                                            <div class="msg-time-chat">
-                                                <div class="message-body msg-in leftmsg">
-                                                    <span class="arrow"></span>
-                                                    <div class="text">
-                                                        <div class="second bg-green">
-                                                            Got Promotion and become area manager of California
-                                                        </div>
-                                                        <div class="first">
-                                                            4 March 2010
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /comment -->
-                                             <!-- Comment -->
-                                            <div class="msg-time-chat">
-                                                <div class="message-body msg-in rightmsg">
-                                                    <span class="arrow"></span>
-                                                    <div class="text">
-                                                        <div class="first">
-                                                            3 April 2009
-                                                        </div>
-                                                        <div class="second bg-yellow">
-                                                            Selected the Best Employee of the Year 2013 and was awarded
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /comment -->
+                            <!-- Comment -->
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in leftmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="second bg-red">
+                                            <span class="timelineIcons">
+                                                <label class="timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label> 
+                                            </span>
+                                            <p>Completed Provition period and Appointed as a permanent Employee</p>
+                                        </div>
+                                        <div class="first">
+                                            10 Feb 2012
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment -->
+                            <!-- Comment -->
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in rightmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="first">
+                                            2 January 2011
+                                        </div>
+                                        <div class="second bg-purple">
+                                            <p>Selected Employee of the Month</p>
+                                            <span class="timelineIcons">
+                                                <label class="timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label> 
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment -->
 
-                                            <!-- Comment -->
-                                            <div class="msg-time-chat">
-                                                <div class="message-body msg-in leftmsg">
-                                                    <span class="arrow"></span>
-                                                    <div class="text">                                                        
-                                                        <div class="second bg-terques">
-                                                            Got Promotion and become Product Manager and was transper from Branch to Head Office. Lorem ipsum dolor sit amet
-                                                        </div>
-                                                        <div class="first">
-                                                            23 May 2008
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /comment -->
-                                            <!-- Comment -->
-                                            <div class="msg-time-chat">
-                                                <div class="message-body msg-in rightmsg">
-                                                    <span class="arrow"></span>
-                                                    <div class="text">
-                                                        <div class="first">
-                                                            14 June 2007
-                                                        </div>
-                                                        <div class="second bg-blue">
-                                                            Height Sales scored and break all of the previous sales record ever in the company. Awarded
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /comment -->
-                                            <!-- Comment -->
-                                            <div class="msg-time-chat">
-                                                <div class="message-body msg-in leftmsg">
-                                                    <span class="arrow"></span>
-                                                    <div class="text">
-                                                        <div class="second bg-green">
-                                                            Take 15 days leave for his wedding and Honeymoon & Christmas
-                                                        </div>
-                                                        <div class="first">
-                                                            1 January 2006
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /comment -->
+                            <!-- Comment -->
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in leftmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="second bg-green">
+                                            <span class="timelineIcons">
+                                                <label class="timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label> 
+                                            </span>
+                                            <p>Got Promotion and become area manager of California</p>
+                                        </div>
+                                        <div class="first">
+                                            4 March 2010
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment -->
+                            <!-- Comment -->
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in rightmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="first">
+                                            3 April 2009
+                                        </div>
+                                        <div class="second bg-yellow">
+                                            <p>Selected the Best Employee of the Year 2013 and was awarded</p>
+                                            <span class="timelineIcons">
+                                                <label class="timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label> 
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment -->
 
-                                        </div> 
-                        
-                       
+                            <!-- Comment -->
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in leftmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="second bg-terques">
+                                            <span class="timelineIcons">
+                                                <label class="timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label> 
+                                            </span>
+                                            <p> Got Promotion and become Product Manager and was transper from Branch to Head Office. Lorem ipsum dolor sit amet</p>
+                                        </div>
+                                        <div class="first">
+                                            23 May 2008
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment -->
+                            <!-- Comment -->
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in rightmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="first">
+                                            14 June 2007
+                                        </div>
+                                        <div class="second bg-blue">
+                                            <p>Height Sales scored and break all of the previous sales record ever in the company. Awarded</p>
+                                            <span class="timelineIcons">
+                                                <label class="timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label> 
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment -->
+                            <!-- Comment -->
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in leftmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="second bg-green">
+                                            <span class="timelineIcons">
+                                                <label class="timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label> 
+                                            </span>
+                                            <p>Take 15 days leave for his wedding and Honeymoon & Christmas</p>
+                                        </div>
+                                        <div class="first">
+                                            1 January 2006
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment -->
 
+                        </div>
+                        <article class="timeline-item alt">
+                            <div class="text-right">
+                                <div class="time-show first">
+                                    <a href="#" class="btn btn-primary" id="today">08/07/2025</a>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -425,8 +651,59 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
     </section>
     <!--main content end-->
 
-</section>
+    <div class="modal fade" id="viewDaily_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Daily Logs </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="actionForm">
+                       <div class="p-b-10">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">Email</label>
+                                    <div class="col-lg-10">
+                                        <input type="email" class="form-control" id="" placeholder="Email">                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="" class="col-lg-2 col-sm-2 control-label">Password</label>
+                                    <div class="col-lg-10">
+                                        <input type="password" class="form-control" id="" placeholder="Password">
+                                    </div>
+                                </div>
 
+                                <div class="modal-footer m-t-0 m-b-15 p-r-0 modal-bttm">  
+                                    <button type="submit" class="btn btn-danger">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+<script>
+  const inputs = document.querySelectorAll('.dd-input');
+
+  inputs.forEach(input => {
+    input.addEventListener('change', () => {
+      if (input.checked) {
+        inputs.forEach(otherInput => {
+          if (otherInput !== input) {
+            otherInput.checked = false;
+          }
+        });
+      }
+    });
+  });
+</script>
 
 <!-- Date Range Initialization -->
 <script>
@@ -1711,7 +1988,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 `${resp.log_book_records[i]['category_name']}`);
 
                             var fa_check = document.createElement("i");
-                            fa_check.setAttribute("class", resp.log_book_records[i]['category_icon']|| 'fa fa-question');
+                            fa_check.setAttribute("class", resp.log_book_records[i]['category_icon'] || 'fa fa-question');
 
                             timeline_icon.append(fa_check);
 
