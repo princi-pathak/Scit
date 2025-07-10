@@ -17,9 +17,12 @@ class ProfileController extends ServiceUserManagementController
         //$d = DynamicForm::countIncidentReport(1,'29-08-2017','30-08-2017');
         //echo '<prE>'; print_r($d); die;
         // update notify
+        $home_ids = Auth::user()->home_id;
+        $ex_home_ids = explode(',', $home_ids);
+        $home_id=$ex_home_ids[0];
         $updatenotify = array('read_notify' => 1);
-        DB::table('su_risk')->where('service_user_id', $service_user_id)->where('home_id', Auth::user()->home_id)->update($updatenotify);
-        $risktable = DB::table('su_risk')->where('service_user_id', $service_user_id)->where('home_id', Auth::user()->home_id)->get();
+        DB::table('su_risk')->where('service_user_id', $service_user_id)->where('home_id', $home_id)->update($updatenotify);
+        $risktable = DB::table('su_risk')->where('service_user_id', $service_user_id)->where('home_id', $home_id)->get();
         foreach ($risktable as $rval) {
             DB::table('risk')->where('id', $rval->risk_id)->update($updatenotify);
         }
@@ -30,10 +33,8 @@ class ProfileController extends ServiceUserManagementController
         if (!empty($patient)) {
 
 
-            $home_id = Auth::user()->home_id;
-            $home_ids = explode(',', $home_id);
-            //if($patient->home_id != $home_id){
-            if (!in_array($patient->home_id, $home_ids)) {
+            
+            if($patient->home_id != $home_id){
                 return redirect('/')->with('error', UNAUTHORIZE_ERR);
             }
 
