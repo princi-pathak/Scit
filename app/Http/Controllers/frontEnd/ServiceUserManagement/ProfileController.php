@@ -243,8 +243,9 @@ class ProfileController extends ServiceUserManagementController
         if ($request->isMethod('post')) {
 
             $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
-            $usr_home_id   = Auth::user()->home_id;
-
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $usr_home_id   = $ex_home_ids[0];
             if ($su_home_id != $usr_home_id) {
                 return redirect('/')->with('error', UNAUTHORIZE_ERR);
             }
@@ -277,12 +278,14 @@ class ProfileController extends ServiceUserManagementController
 
                 $staff_image = $request->staff_image_name;
                 $team->image = $staff_image;
-                $user_img = public_path("images\\userProfileImages\\$staff_image");
-                print_r($user_img);
-                echo "<br>";
+                // $user_img = public_path("images\\userProfileImages\\$staff_image");
+                $user_img = public_path("images/userProfileImages/$staff_image");  // Ram new code 08/07/2025 avoid error for slash
+                // print_r($user_img);
+                // echo "<br>";
                 // $ctm_img  = '/opt/lampp/htdocs/scits/public/images/careTeam/'.$staff_image; //for localhost
                 // $ctm_img  = '/home/mercury/public_html/scits/public/images/careTeam/' . $staff_image; //for mercury server
-                $ctm_img  = public_path("images\\careTeam\\$staff_image"); //for mercury server
+                // $ctm_img  = public_path("images\\careTeam\\$staff_image"); //for mercury server
+                $ctm_img  = public_path("images/careTeam/$staff_image"); // Ram new code 08/07/2025 avoid error for slash
 
                 if (file_exists($user_img)) {
                     if (copy($user_img, $ctm_img)) {
@@ -399,7 +402,10 @@ class ProfileController extends ServiceUserManagementController
             $data = $request->all();
 
             $su_home_id     = ServiceUser::where('id', $service_user_id)->value('home_id');
-            if ($su_home_id != Auth::user()->home_id) {
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
+            if ($su_home_id != $home_id) {
                 return redirect('/')->with('error', UNAUTHORIZE_ERR);
             }
 
@@ -468,7 +474,10 @@ class ProfileController extends ServiceUserManagementController
             $care_history   = ServiceUserCareHistory::find($data['care_history_id']);
 
             $su_home_id     = ServiceUser::where('id', $care_history->service_user_id)->value('home_id');
-            if ($su_home_id != Auth::user()->home_id) {
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
+            if ($su_home_id != $home_id) {
                 return redirect('/')->with('error', UNAUTHORIZE_ERR);
             }
 
@@ -493,7 +502,10 @@ class ProfileController extends ServiceUserManagementController
         if (!empty($care_history)) {
 
             $su_home_id     = ServiceUser::where('id', $care_history->service_user_id)->value('home_id');
-            if ($su_home_id != Auth::user()->home_id) {
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
+            if ($su_home_id != $home_id) {
                 return redirect('/')->with('error', UNAUTHORIZE_ERR);
             }
 
@@ -518,10 +530,12 @@ class ProfileController extends ServiceUserManagementController
             $service_user_id = $data['service_user_id'];
             unset($data['service_user_id']);
             unset($data['_token']);
-
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
             foreach ($data as $key => $value) {
                 $updated = ServiceUser::where('id', $service_user_id)
-                    ->where('home_id', Auth::user()->home_id)
+                    ->where('home_id', $home_id)
                     ->update([
                         // $key => nl2br(trim($value))           
                         $key => trim($value)
@@ -543,9 +557,11 @@ class ProfileController extends ServiceUserManagementController
             $data = $request->all();
             // $data['current_location'] = trim($data['current_location']);
             // $current_location = str_replace("\n\r", '<br />', $data['current_location']);
-
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
             $updated = ServiceUser::where('id', $data['service_user_id'])
-                ->where('home_id', Auth::user()->home_id)
+                ->where('home_id', $home_id)
                 ->update([
                     //'current_location' => $current_location,
                     'current_location' => nl2br(trim($data['current_location'])),
@@ -565,9 +581,12 @@ class ProfileController extends ServiceUserManagementController
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
             $updated = ServiceUser::where('id', $data['service_user_id'])
-                ->where('home_id', Auth::user()->home_id)
+                // ->where('home_id', Auth::user()->home_id) this line is not need because we have already compare with primary id. but developer wants it then I write a new code below for the checking of home
+                ->where('home_id', $home_id)
                 ->update([
                     'phone_no' => $data['phone_no'],
                     'mobile' => $data['mobile'],
