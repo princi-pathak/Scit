@@ -132,19 +132,18 @@ class HealthRecordController extends ServiceUserManagementController
     // }
     public function add(Request $request)
     {
-
         $data = $request->input();
-
+        // dd($data);
 
         if (!empty($data)) {
             //save form
             $formdata = json_encode($data);
-            $service_user_id = $data['service_user_id'];
+            $service_user_id        = $data['service_user_id'];
             $form                   = new DynamicForm;
             $form->home_id          = Auth::user()->home_id;
             $form->user_id          = Auth::user()->id;
             $form->form_builder_id  = $data['dynamic_form_builder_id'];
-            $form->service_user_id = $data['service_user_id'];
+            $form->service_user_id  = $data['service_user_id'];
             $form->location_id      = $data['location_id'];
             $form->title            = $data['title'];
             $form->time             = $data['time']; 
@@ -189,7 +188,7 @@ class HealthRecordController extends ServiceUserManagementController
                         if ($s_type[0] == 'ct') {
                             $type = 'ct';
                             $care_team_id = $s_type[1];
-                            //Parent::sendEmailNotificationDynamicForm($care_team_id, $type, $data['service_user_id'], $data['dynamic_form_builder_id']);
+                            // Parent::sendEmailNotificationDynamicForm($care_team_id, $type, $data['service_user_id'], $data['dynamic_form_builder_id']);
                         } else if ($s_type[0] ==  'sc') {
                             // echo "sc_yes";
                             $type = 'sc';
@@ -202,8 +201,7 @@ class HealthRecordController extends ServiceUserManagementController
             } else {
                 $form_insert_id = '0';
             }
-            // print_r($form_insert_id);
-            // die;
+            // echo "<br>"; print_r($form_insert_id);  die;
 
             if ($form_insert_id != 0) {
 
@@ -269,7 +267,6 @@ class HealthRecordController extends ServiceUserManagementController
                 return 'false';
             }
         } else {
-
             return 'false';
         }
     }
@@ -300,7 +297,7 @@ class HealthRecordController extends ServiceUserManagementController
             }
 
             //saving notification start
-            $notification                             = new Notification;
+            $notification                             = new Notification;   
             $notification->service_user_id            = $data['service_user_id'];
             $notification->event_id                   = $health_record->id;
             // $notification->event_type      = 'SU_HR';

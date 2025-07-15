@@ -161,21 +161,33 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                         </article>
 
                         <div class="timeline-messages" id="logs_articles">
-                            @foreach ($log_book_records as $key )
+                            @php
+                            $colors = ['#8fd6d6', '#E13533', '#bda4ec', '#fed65a', '#81b56b'];
+                            shuffle($colors); // Randomizes the order
+                            @endphp
+
+                            @foreach ($log_book_records as $index => $key )
+
+                            @php
+                            $color = $colors[$index % count($colors)]; // Cycle through colors if more records than colors
+                            @endphp
+
+
                             @if($loop->iteration % 2 == 0)
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
                                     <span class="arrow"></span>
                                     <div class="text">
                                         <div class="first"> {{ date('d M Y', strtotime($key['created_at'])) }} </div>
-                                        <div class="second bg-blue">
+
+                                        <div class="second" style="background-color: {{ $color }};">
                                             <p>{{ $key['title'] }}</p>
                                             <span class="timelineIcons">
                                                 <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
                                                     <ul class="dd-menu">
-                                                        <li><a href="#viewDaily_log" id="open_form_view" data-toggle="modal"> <i class="fa fa-eye"></i> View</a></li>
+                                                        <li><a href="#viewDaily_log" id="open_form_view" data-toggle="modal"> <i class="fa fa-eye" data-id="{{ $key['id'] }}"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
@@ -187,30 +199,13 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     </div>
                                 </div>
                             </div>
-                            <!-- <article class="timeline-item">
-                                <div class="timeline-desk">
-                                    <div class="panel">
-                                        <div class="panel-body">
-                                            <span class="arrow"></span>
-                                            <span class="badge badge-pill red-bg" style="position:absolute;right:30px;"></span>
-                                            <span style="background:null;" data-toggle="tooltip" data-placement="left" title="" class="timeline-icon">
-                                                <i class="fa fa-h-square"></i>
-                                            </span>
-                                            <span class="time_abbre" data-toggle="tooltip" data-placement="top" title="{{ $key['created_at'] }}">{{ time_diff_string(date("d-m-Y H:i", strtotime($key['created_at'])), 'now') }} <span style="color:black;font-weight:400;font-size:14px;">by {{ $key['staff_name'] }}</span></span>
-                                            <h1 class="title_time_log"><span class="log_title">{{ $key['title']}}</span></h1>
 
-                                            <p class="space_bottom">{{ $key['details']}}</p>
-                                            <h6 hidden>{{ $key['id'] }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article> -->
                             @else
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in leftmsg">
                                     <span class="arrow"></span>
                                     <div class="text">
-                                        <div class="second bg-red">
+                                        <div class="second" style="background-color: {{ $color }};">
                                             <span class="timelineIcons">
                                                 <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
@@ -230,25 +225,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     </div>
                                 </div>
                             </div>
-                            <!-- <article class="timeline-item alt">
-                                <div class="timeline-desk">
-                                    <div class="panel">
-                                        <div class="panel-body">
-                                            <span class="arrow-alt"></span>
 
-                                            <span style="background:null;" data-toggle="tooltip" data-placement="right" title="" class="timeline-icon">
-                                                <i class="fa fa-h-square"></i>
-                                            </span>
-                                            <span class="time_abbre" data-toggle="tooltip" data-placement="top" title="{{ $key['created_at'] }}">{{ time_diff_string(date("d-m-Y H:i", strtotime($key['created_at'])), 'now') }} <span style="color:black;font-weight:400;font-size:14px;">by {{ $key['staff_name']}}</span></span>
-
-                                            <h1 class="title_time_log"><span class="log_title">{{ $key['title']}}</span></h1>
-
-                                            <p class="space_bottom">{{ $key['details']}}</p>
-                                            <h6 hidden>{{ $key['id'] }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article> -->
                             @endif
                             @endforeach
                         </div>
@@ -263,41 +240,41 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 
 </section>
 
-   <div class="modal fade" id="viewDaily_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Daily Logs </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="actionForm">
-                       <div class="p-b-10">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">Email</label>
-                                    <div class="col-lg-10">
-                                        <input type="email" class="form-control" id="" placeholder="Email">                                        
-                                    </div>
+<div class="modal fade" id="viewDaily_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Daily Logs </h4>
+            </div>
+            <div class="modal-body">
+                <div class="actionForm">
+                    <div class="p-b-10">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="" class="col-lg-2 col-sm-2 control-label">Email</label>
+                                <div class="col-lg-10">
+                                    <input type="email" class="form-control" id="" placeholder="Email">
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label for="" class="col-lg-2 col-sm-2 control-label">Password</label>
-                                    <div class="col-lg-10">
-                                        <input type="password" class="form-control" id="" placeholder="Password">
-                                    </div>
-                                </div>
+                            </div>
 
-                                <div class="modal-footer m-t-0 m-b-15 p-r-0 modal-bttm">  
-                                    <button type="submit" class="btn btn-danger">Save</button>
+                            <div class="form-group">
+                                <label for="" class="col-lg-2 col-sm-2 control-label">Password</label>
+                                <div class="col-lg-10">
+                                    <input type="password" class="form-control" id="" placeholder="Password">
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+
+                            <div class="modal-footer m-t-0 m-b-15 p-r-0 modal-bttm">
+                                <button type="submit" class="btn btn-danger">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
@@ -316,15 +293,38 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
         });
     });
 
-    // open_form_view
+    document.getElementById('open_form_view').addEventListener('click', function() {
+        document.getElementById('viewDaily_log').style.display = 'block';
+
+        $.ajax({
+            type: 'get',
+            url: "{{ url('/service/health-records') }}" + '/' + service_user_id,
+            data: data,
+            success: function(resp) {
+                console.log(resp);
+                return false;
+                if (isAuthenticated(resp) == false) {
+                    return false;
+                }
+                if (resp == 0) {
+                    $('span.popup_error_txt').text('Error Occured');
+                    $('.popup_error').show();
+                } else {
+                    const container = document.querySelector('#logs_articles');
+                    removeAllChildNodes(container);
+                    let previous_date = '';
+
+                    return true;
+                }
+            }
+        });
+    });
 </script>
 <!-- Date Range Initialization -->
 <script>
-    /**
+    /** 
      * Adding tooltips
      */
-
-
 
     $(document).ready(function() {
         $('.timeline-icon').tooltip();
@@ -378,7 +378,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 </script>
 
 <!-- Daily Log Comments -->
-
 
 <!-- Comment Created Duration -->
 <script>
@@ -440,7 +439,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 </script>
 
 <!-- Category Filter -->
-
 
 <!-- Daterange Filter -->
 <!-- <script>
