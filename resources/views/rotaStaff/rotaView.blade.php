@@ -236,7 +236,7 @@
                 <button type="button" class="filter_btn">Clear all filter</button>
               </div>
               <div class="col-lg-3 col-md-3">
-                <select name="sortBy" class="form-select fotm-control">
+                <select name="sortBy" class="form-select form-control">
                   <option value="Name (A-Z)">Name (A-Z)</option>
                   <option value="Name (Z-A)">Name (Z-A)</option>
                   <option value="Start date (Newest first)">Start date (Newest first)</option>
@@ -308,7 +308,7 @@
               </div>
               <div class="row">
                 <div class="col-md-3 col-lg-3">
-                  <select name="" class="form-select fotm-control" id="">
+                  <select name="" class="form-select form-control" id="">
                     <option value="">Name (A-Z)</option>
                     <option value="">Name (Z-A )</option>
                     <option value="">Start date (Newest first)</option>
