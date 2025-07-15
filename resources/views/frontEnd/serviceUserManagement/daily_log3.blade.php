@@ -25,8 +25,8 @@
     }
 
     .timeline .time-show {
-        text-align: center;
-        margin-right: 0px;
+        text-align: end;
+       margin-right: -74px;
     }
 
     .timeline .time-show .btn {
@@ -100,17 +100,20 @@
         }
     }
 
+
     .timeline-messages {
         text-align: center;
     }
 
     .message-body.msg-in.rightmsg {
-        left: 210px;
+         right: -625px;
+        bottom: 92px;
     }
 
-    .message-body.msg-in.leftmsg {
-        right: 250px;
-    }
+   .message-body.msg-in.leftmsg {
+    right: -138px;
+    top: 0px;
+}
 
     .timeline-messages .msg-in .arrow {
         border-right: 0px solid #949496 !important;
@@ -129,12 +132,11 @@
     .timeline-messages:before,
     .msg-time-chat:before,
     .msg-time-chat .text:before {
-        content: "";
-        left: 50%;
-        position: absolute;
-        top: -2px;
+        display: none;
     }
-
+.msg-time-chat:before {
+    display: none;
+}
     .msg-time-chat .msg-in .text .second {
         margin-right: 6px;
         display: flex;
@@ -150,16 +152,27 @@
         white-space: nowrap;
         max-width: 24ch;
     }
+
     span.timelineIcons {
-    border-left: 1px solid #fff;
-    margin-left: 10px;
-}
+        border-left: 1px solid #fff;
+        margin-left: 10px;
+    }
+
     .timelineIcons a {
         padding: 0px 10px;
-        /* border-right: 1px solid #fff; */
         border-radius: 0;
         margin-right: 0;
         color: #fff;
+    }
+    .timelineIcons.iconLeftDrop{
+        right: 10px;
+        top: 14px;   
+        position: absolute;        
+    }
+     .timelineIcons.iconRightDrop{
+        left: -7px;
+        position: absolute;
+        top: 12px;
     }
 
     .timelineIcons a:last-child {
@@ -181,90 +194,162 @@
         color: #000;
         font-size: 16px;
     }
+
     .msg-time-chat {
         overflow: inherit;
+        height: 0;
     }
-.leftmsg span.timelineIcons {
-    border-right: 1px solid #fff;
-    margin-right: 10px;
-    border-left: none;
-    margin-left: 0;
+
+    .leftmsg span.timelineIcons {
+        border-right: 1px solid #fff;
+        margin-right: 10px;
+        border-left: none;
+        margin-left: 0;
+    }
+
+    .leftmsg ul.dd-menu {
+        left: -183px;
+    }
+
+    .leftmsg .dd-button {
+        padding: 0px 10px 0px 4px;
+    }
+
+    /* *********************** */
+    .timelinedropdown {
+        display: inline-block;
+        position: relative;
+        margin-bottom: 0;
+    }
+
+    .dd-button {
+        display: inline-block;
+        padding: 0px 4px 0px 12px;
+        border-radius: 4px;
+        background-color: transparent;
+        cursor: pointer;
+        white-space: nowrap;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .dd-input {
+        display: none;
+    }
+
+    .dd-menu {
+        position: absolute;
+        top: -11px;
+        left: 42px;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 2px 0 0 0;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        list-style-type: none;
+        z-index: 999;
+        width: 172px;
+        border: none;
+    }
+
+    .dd-input+.dd-menu {
+        display: none;
+    }
+
+    .dd-input:checked+.dd-menu {
+        display: block;
+    }
+
+    .dd-menu li a {
+        display: block;
+        color: #000;
+        padding: 8px 10px;
+        cursor: pointer;
+        white-space: nowrap;
+        text-align: start;
+        font-size: 13px;
+        font-weight: 500;
+        transition: .7s;
+        border-radius: 4px;
+    }
+
+    .dd-menu li a:hover {
+        color: #333;
+        background: #F1F2F7;
+        font-size: 13px;
+    }
+
+    .dd-menu li a i {
+        margin-right: 8px;
+    }
+
+    .dd-menu li a:hover i {
+        color: #1f88b5;
+    }
+
+    .actionForm {
+        display: flow-root;
+    }
+.timeline-item.alt .timeline-desk .album a img {
+    width: 40px;
 }
-.leftmsg ul.dd-menu {
+
+.timeline-desk h1.green, .timeline-desk span a.green {
+    color: #39B6AE;
+    margin-top: 0px;
+    margin-left: 28px;
+}
+.dd-menu.rightSidedrop {
     left: -183px;
 }
-.leftmsg .dd-button {
-    padding: 0px 10px 0px 4px;
+/* new left side white design  */
+/* 
+.message-body.msg-in.leftWhite {
+    right: 382px;
 }
-    /* *********************** */
-.timelinedropdown {
-  display: inline-block;
-  position: relative;
-  margin-bottom: 0;
-}
-.dd-button {
-  display: inline-block;
-  padding: 0px 4px 0px 12px;
-  border-radius: 4px;
-  background-color: transparent;
-  cursor: pointer;
-  white-space: nowrap;
-  font-size: 14px;
-   font-weight: 500;
-}
-.dd-input {
-  display: none;
-}
-.dd-menu {
-  position: absolute;
-  top: -11px;
-  left: 42px;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 2px 0 0 0;
-  box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
-  background-color: #ffffff;
-  list-style-type: none;
-  z-index: 999;
-  width: 172px;
-  border: none;
-}
-.dd-input + .dd-menu {
-  display: none;
-} 
-.dd-input:checked + .dd-menu {
-  display: block;
-} 
-.dd-menu li a{
-    display:  block;
-    color: #000;
-    padding: 8px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    text-align: start;
-    font-size: 13px;
-    font-weight: 500;
-    transition: .7s;
-    border-radius: 4px;
-}
-.dd-menu li a:hover{
-    color: #333;
-    background: #F1F2F7;
-    font-size: 13px;
-}
-.dd-menu li a i{
-    margin-right: 8px;
-}
-.dd-menu li a:hover i{
-    color: #1f88b5;
-}
-.actionForm{
-    display: flow-root;
-}
+    .timeline-item {
+        display: flow;
+        margin-left: -476px;
+    }
 
+    .timeline .timeline-icon {
+        right: -48px;
+        left: auto;
+        position: absolute;
+        top: 14px;
+    }
+
+    .timeline-desk {
+        width: 91%;
+    }
+
+    .timeline-item.alt .timeline-icon {
+        left: auto;
+        right: -50px;
+        top: 10px;
+    }
+    .timeline-messages .msg-in .arrow {
+    border-right: 8px solid #949496 !important;
+    }
+    .timeline-item .timeline-desk .arrow {
+        border-right: 0px solid #fff !important;
+        border-left: 8px solid #fff !important;
+    }
+
+    .timeline-item .timeline-desk .arrow {
+        border-bottom: 8px solid transparent;
+        border-top: 8px solid transparent;
+        display: block;
+        height: 0;
+        right: -7px;
+        left: inherit;
+        position: absolute;
+        top: 22px;
+        width: 0;
+    } */
 </style>
 
-<link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
+
 
 @php
 if (!function_exists('time_diff_string')) {
@@ -393,20 +478,47 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
             </div>
 
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="timeline">
 
+            <div class="col-sm-12">
+                    <div class="timeline">
                         <article class="timeline-item alt">
                             <div class="text-right">
                                 <div class="time-show first">
-                                    <a href="#" class="btn btn-primary" id="today">Today</a>
+                                    <a href="#" class="btn btn-primary">Today</a>
                                 </div>
                             </div>
                         </article>
+                        <article class="timeline-item alt">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow-alt"></span>
 
+                                        <span class="timeline-icon red">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                        <span class="timelineIcons iconLeftDrop">
+                                            <label class="dropdown timelinedropdown">
+                                                <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                <input type="checkbox" class="dd-input">
+                                                <ul class="dropdown-menu dd-menu">
+                                                    <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                    <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                </ul>                                                    
+                                            </label> 
+                                        </span>
+                                        <span class="timeline-date">08:25 am</span>
+                                        <h1 class="red">1 hour ago</h1>
+                                        <p>Purchased new stationary items for head office </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
                         <div class="timeline-messages">
-                            <!-- Comment -->
-                            <div class="msg-time-chat">
+                              <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
                                     <span class="arrow"></span>
                                     <div class="text">
@@ -418,34 +530,21 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                             <span class="timelineIcons">
                                                 <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
-                                                
                                                     <input type="checkbox" class="dd-input">
-
-                                                        <ul class="dropdown-menu dd-menu">
-                                                            <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
-                                                            <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
-                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
-                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
-                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                        </ul>                                                 
-
-                                                    <ul class="dd-menu">
+                                                    <ul class="dropdown-menu dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
                                                     </ul>                                                    
-
                                                 </label>                                                 
                                             </span>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                            <!-- /comment -->
-
-                            <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in leftmsg">
                                     <span class="arrow"></span>
@@ -472,8 +571,280 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     </div>
                                 </div>
                             </div>
-                            <!-- /comment -->
-                            <!-- Comment -->
+                        </div>
+                        <article class="timeline-item ">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow"></span>
+                                        <span class="timeline-icon green">
+                                            <i class="fa fa-beer"></i>
+                                        </span>
+                                        <span class="timelineIcons iconRightDrop">
+                                            <label class="dropdown timelinedropdown">
+                                                <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                <input type="checkbox" class="dd-input">
+                                                <ul class="dropdown-menu dd-menu rightSidedrop">
+                                                    <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                    <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                </ul>                                                    
+                                            </label> 
+                                        </span>
+                                        <span class="timeline-date">10:00 am</span>
+                                        <h1 class="green">2 hours ago</h1>
+                                        <p>Completed Coffee meeting with <a href="#">Stive Martin</a> regarding the Product Promotion</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="timeline-item alt">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow-alt"></span>
+                                        <span class="timeline-icon blue">
+                                            <i class="fa fa-tags"></i>
+                                        </span>
+                                        <span class="timeline-date">11:35 am</span>
+                                        <h1 class="blue">10 hours ago</h1>
+                                        <p>3 new photo Uploaded on facebook fan page</p>
+                                        <div class="album">
+                                            <a href="#">
+                                                <img alt="" src="http://localhost/socialcareitsolution/public/images/userProfileImages/1686647448.jpg">
+                                            </a>
+                                            <a href="#">
+                                                <img alt="" src="http://localhost/socialcareitsolution/public/images/userProfileImages/1686647448.jpg">
+                                            </a>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <div class="timeline-messages">
+                              <div class="msg-time-chat">
+                                <div class="message-body msg-in rightmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="first">
+                                            13 Jan 2013
+                                        </div>
+                                        <div class="second bg-terques ">
+                                            <p>Join as Product Asst. Manager</p>
+                                            <span class="timelineIcons">
+                                                <label class="dropdown timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dropdown-menu dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label>                                                 
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in leftmsg">
+                                    <span class="arrow"></span>
+                                    <div class="text">
+                                        <div class="second bg-red">
+                                            <span class="timelineIcons">
+                                                <label class="dropdown timelinedropdown">
+                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                    <input type="checkbox" class="dd-input">
+                                                    <ul class="dropdown-menu dd-menu">
+                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                    </ul>                                                    
+                                                </label> 
+                                            </span>
+                                            <p>Completed Provition period and Appointed as a permanent Employee</p>
+                                        </div>
+                                        <div class="first">
+                                            10 Feb 2012
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <article class="timeline-item">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow"></span>
+                                        <span class="timeline-icon purple">
+                                            <i class="fa fa-map-marker"></i>
+                                        </span>
+                                        <span class="timeline-date">3:20 pm</span>
+                                        <h1 class="purple">4:30</h1>
+                                        <p>Outdoor visit at California State Route 85 with John Boltana & Harry Piterson regarding to setup a new show room.</p>
+                                        <p>
+                                            <i class=" fa fa-exclamation-sign"></i> New task added for <span><a href="#" class="purple">Denial Collins</a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="timeline-item alt">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow-alt"></span>
+
+                                        <span class="timeline-icon light-green">
+                                            <i class="fa fa-user-md"></i>
+                                        </span>
+                                        <span class="timeline-date">07:49 pm</span>
+                                        <h1 class="light-green">10 June | Friday</h1>
+                                        <p>Jonatha Smith</a> added new milestone <span><a href="#" class="light-green">prank</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="timeline-item alt">
+                            <div class="text-right">
+                                <div class="time-show">
+                                    <a href="#" class="btn btn-default">Yesterday</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow"></span>
+                                        <span class="timeline-icon yellow">
+                                            <i class="fa fa-comments-o"></i>
+                                        </span>
+                                        <span class="timeline-date">3:20 pm</span>
+                                        <h1 class="yellow">4:30</h1>
+                                        <p>Montly Regular Medical check up at Greenland Hospital by the doctor <span><a href="#" class="yellow">  Berry Moor </a></span> </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="timeline-item alt">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow-alt"></span>
+
+                                        <span class="timeline-icon ">
+                                            <i class="fa fa-download"></i>
+                                        </span>
+                                        <span class="timeline-date">07:49 pm</span>
+                                        <h1 class="">4:55</h1>
+                                        <p>Download the new updates of SAP ERP Solution</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="timeline-item">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow"></span>
+
+                                        <span class="timeline-icon blue">
+                                            <i class="fa fa-user-md"></i>
+                                        </span>
+                                        <span class="timeline-date">07:49 pm</span>
+                                        <h1 class="blue">10 June | Friday</h1>
+                                        <p>Jonatha Smith added new milestone <span><a class="blue" href="#">prank</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="timeline-item alt">
+                            <div class="text-right">
+                                <div class="time-show">
+                                    <a href="#" class="btn btn-default">20 December 2013</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="timeline-item alt">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow-alt"></span>
+
+                                        <span class="timeline-icon ">
+                                            <i class="fa fa-download"></i>
+                                        </span>
+                                        <span class="timeline-date">07:49 pm</span>
+                                        <h1 class="">13 March | Sunday</h1>
+                                        <p>Download the new updates of SAP ERP Solution</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="timeline-item">
+                            <div class="timeline-desk">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <span class="arrow"></span>
+
+                                        <span class="timeline-icon red">
+                                            <i class="fa fa-user-md"></i>
+                                        </span>
+                                        <span class="timeline-date">07:49 pm</span>
+                                        <h1 class="red">5:33</h1>
+                                        <p>Jonatha Smith added new milestone <span><a class="red" href="#">prank</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-12">
+                    <div class="timeline">
+
+                        <article class="timeline-item alt">
+                            <div class="text-right">
+                                <div class="time-show first">
+                                    <a href="#" class="btn btn-primary" id="today">Today</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <div class="timeline-messages">
+                            <div class="msg-time-chat">
+                                <div class="message-body msg-in leftWhite">
+                                    <article class="timeline-item">
+                                        <div class="timeline-desk">
+                                            <div class="panel">
+                                                <div class="panel-body">
+                                                    <span class="arrow"></span>
+                                                    <span class="timeline-icon red">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                                    <span class="timeline-date">08:25 am</span>
+                                                    <h1 class="red">1 hour ago</h1>
+                                                    <p>Jonatha Smith</a> added new milestone <span><a href="#" class="light-green">prank</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
                                     <span class="arrow"></span>
@@ -484,53 +855,41 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-purple">
                                             <p>Selected Employee of the Month</p>
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>                                                    
-                                                </label> 
+                                                    </ul>
+                                                </label>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /comment -->
-
-                            <!-- Comment -->
                             <div class="msg-time-chat">
-                                <div class="message-body msg-in leftmsg">
-                                    <span class="arrow"></span>
-                                    <div class="text">
-                                        <div class="second bg-green">
-                                            <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
-                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
-                                                    <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
-                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
-                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>                                                    
-                                                </label> 
-                                            </span>
-                                            <p>Got Promotion and become area manager of California</p>
+                                <div class="message-body msg-in leftWhite">
+                                    <article class="timeline-item">
+                                        <div class="timeline-desk">
+                                            <div class="panel">
+                                                <div class="panel-body">
+                                                    <span class="arrow"></span>
+                                                    <span class="timeline-icon purple">
+                                                        <i class="fa fa-map-marker"></i>
+                                                    </span>
+                                                    <span class="timeline-date">07:49 pm</span>
+                                                    <h1 class="purple">10 June | Friday</h1>
+                                                    <p>Jonatha Smith</a> added new milestone <span><a href="#" class="light-green">prank</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="first">
-                                            4 March 2010
-                                        </div>
-                                    </div>
+                                    </article>
                                 </div>
                             </div>
-                            <!-- /comment -->
-                            <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
                                     <span class="arrow"></span>
@@ -541,53 +900,42 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-yellow">
                                             <p>Selected the Best Employee of the Year 2013 and was awarded</p>
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>                                                    
-                                                </label> 
+                                                    </ul>
+                                                </label>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /comment -->
-
-                            <!-- Comment -->
                             <div class="msg-time-chat">
-                                <div class="message-body msg-in leftmsg">
-                                    <span class="arrow"></span>
-                                    <div class="text">
-                                        <div class="second bg-terques">
-                                            <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
-                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
-                                                    <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
-                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
-                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>                                                    
-                                                </label> 
-                                            </span>
-                                            <p> Got Promotion and become Product Manager and was transper from Branch to Head Office. Lorem ipsum dolor sit amet</p>
+                                <div class="message-body msg-in leftWhite">
+                                     <article class="timeline-item">
+                                        <div class="timeline-desk">
+                                            <div class="panel">
+                                                <div class="panel-body">
+                                                    <span class="arrow-alt"></span>
+
+                                                    <span class="timeline-icon light-green">
+                                                        <i class="fa fa-user-md"></i>
+                                                    </span>
+                                                    <span class="timeline-date">07:49 pm</span>
+                                                    <h1 class="light-green">10 June | Friday</h1>
+                                                    <p>Jonatha Smith</a> added new milestone <span><a href="#" class="light-green">prank</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="first">
-                                            23 May 2008
-                                        </div>
-                                    </div>
+                                    </article>
                                 </div>
                             </div>
-                            <!-- /comment -->
-                            <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
                                     <span class="arrow"></span>
@@ -598,51 +946,41 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-blue">
                                             <p>Height Sales scored and break all of the previous sales record ever in the company. Awarded</p>
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>                                                    
-                                                </label> 
+                                                    </ul>
+                                                </label>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /comment -->
-                            <!-- Comment -->
                             <div class="msg-time-chat">
-                                <div class="message-body msg-in leftmsg">
-                                    <span class="arrow"></span>
-                                    <div class="text">
-                                        <div class="second bg-green">
-                                            <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
-                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
-                                                    <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
-                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
-                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>                                                    
-                                                </label> 
-                                            </span>
-                                            <p>Take 15 days leave for his wedding and Honeymoon & Christmas</p>
+                                <div class="message-body msg-in leftWhite">
+                                   <article class="timeline-item">
+                                        <div class="timeline-desk">
+                                            <div class="panel">
+                                                <div class="panel-body">
+                                                    <span class="arrow"></span>
+                                                    <span class="timeline-icon purple">
+                                                        <i class="fa fa-map-marker"></i>
+                                                    </span>
+                                                    <span class="timeline-date">07:49 pm</span>
+                                                    <h1 class="purple">10 June | Friday</h1>
+                                                    <p>Jonatha Smith</a> added new milestone <span><a href="#" class="light-green">prank</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="first">
-                                            1 January 2006
-                                        </div>
-                                    </div>
+                                    </article>
                                 </div>
                             </div>
-                            <!-- /comment -->
 
                         </div>
                         <article class="timeline-item alt">
@@ -653,7 +991,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                             </div>
                         </article>
                     </div>
-                </div>
+                </div> -->
             </div>
             <!-- page end-->
         </section>
@@ -669,15 +1007,15 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                 </div>
                 <div class="modal-body">
                     <div class="actionForm">
-                       <div class="p-b-10">
+                        <div class="p-b-10">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Email</label>
                                     <div class="col-lg-10">
-                                        <input type="email" class="form-control" id="" placeholder="Email">                                        
+                                        <input type="email" class="form-control" id="" placeholder="Email">
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="" class="col-lg-2 col-sm-2 control-label">Password</label>
                                     <div class="col-lg-10">
@@ -685,7 +1023,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     </div>
                                 </div>
 
-                                <div class="modal-footer m-t-0 m-b-15 p-r-0 modal-bttm">  
+                                <div class="modal-footer m-t-0 m-b-15 p-r-0 modal-bttm">
                                     <button type="submit" class="btn btn-danger">Save</button>
                                 </div>
                             </form>
@@ -698,7 +1036,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 
 
 </section>
-
 
 
 <!-- Date Range Initialization -->
