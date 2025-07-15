@@ -1378,8 +1378,7 @@ ul.top-menu>li>a:focus {
 }
 
 /*timeline*/
-.timeline,
-#logs_articles {
+.timeline, #logs_articles {
     border-collapse: collapse;
     border-spacing: 0;
     display: table;
@@ -1390,7 +1389,7 @@ ul.top-menu>li>a:focus {
 }
 
 .timeline .time-show {
-    text-align: center !important;
+    text-align: center;
     margin-right: 0;
     margin-top: 30px;
     position: relative;
@@ -4690,7 +4689,7 @@ span.customSelect.changed {
     -webkit-border-radius: 4px;
     margin-right: 5px;
     width: 130px;
-    text-align: right;
+    text-align: center;
 }
 
 .msg-time-chat .msg-in .text .second {

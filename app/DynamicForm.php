@@ -1444,6 +1444,10 @@ class DynamicForm extends Model //FormBuilder
 
     public static function saveForm($data)
     {
+        $home_ids = Auth::user()->home_id;
+        $ex_home_ids = explode(',', $home_ids);
+        $home_id=$ex_home_ids[0];
+
         if (isset($data['data'])) {
             $formdata = json_encode($data['data']);
         } else {
@@ -1467,9 +1471,9 @@ class DynamicForm extends Model //FormBuilder
             $formImage = null;
         }
         /*----- June 07,2018 End ---*/
-
+        
         $form                   = new DynamicForm;
-        $form->home_id          = Auth::user()->home_id;
+        $form->home_id          = $home_id;
         $form->user_id          = Auth::user()->id;
         $form->form_builder_id  = $data['dynamic_form_builder_id'];
         $form->image_path       = $formImage;
@@ -1519,7 +1523,7 @@ class DynamicForm extends Model //FormBuilder
                 $notification->event_id                   = $form->id;
                 $notification->notification_event_type_id = $notification_event_type_id;
                 $notification->event_action               = 'ADD';
-                $notification->home_id                    = Auth::user()->home_id;
+                $notification->home_id                    = $home_id;
                 $notification->user_id                    = Auth::user()->id;
                 $notification->save();
                 //saving notification end
