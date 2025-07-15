@@ -1,105 +1,6 @@
 @extends('frontEnd.layouts.master')
 @section('title','Daily Logs')
 @section('content')
-<style type="text/css">
-    /*09 Aug 2018*/
-    .back_opt {
-        background: #1f88b5;
-        border-radius: 100%;
-        /* bottom: 70px; */
-        color: #fff;
-        font-size: 20px;
-        padding: 8px 18px;
-        /* position: fixed; */
-        /* right: 90px; */
-        /* float:left; */
-        z-index: 999;
-        cursor: pointer;
-        height: 45px;
-        width: 45px;
-        display: inline-block;
-    }
-
-    .back_opt:hover i {
-        color: #fff;
-    }
-
-    .timeline .time-show {
-        text-align: center;
-        margin-right: 0px;
-    }
-
-    .timeline .time-show .btn {
-        min-width: 150px;
-    }
-
-    #logs_articles {
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: table;
-        position: relative;
-        table-layout: fixed;
-        width: 100%;
-        min-height: 50vh;
-    }
-
-    .daily_log_time {
-        position: inherit !important;
-        bottom: 5px;
-        font-size: 13px;
-        color: #686868;
-        font-weight: 400;
-        margin-top: 20px;
-    }
-
-    .timeline-item.alt h1,
-    .timeline-item.alt p {
-        text-align: left;
-    }
-
-    .logimg {
-        /* left: 80%;
-        top:15px;
-        position: absolute; */
-        float: right;
-        margin-bottom: 38px;
-    }
-
-    .comment-detail-info-area {
-        width: 100%;
-    }
-
-    .comment-number-bnt-info {
-        position: absolute;
-        right: 20px;
-        bottom: 0px;
-    }
-
-
-    .logimg img {
-        width: 100px;
-        height: 60px;
-        object-fit: cover;
-    }
-
-    .Select_staff {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
-    .Select_staff_inner {
-        margin: 10px 0;
-    }
-
-    @media (max-width:890px) {
-        .Select_staff_inner {
-            width: 100%;
-            margin: 10px 0;
-        }
-    }
-</style>
 
 <link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
 
@@ -134,20 +35,12 @@ if (!$full) $string = array_slice($string, 0, 1);
 return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 }
-
+$service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
+$service_user_name  = (isset($service_user_name )) ? $service_user_name  : 0;
 @endphp
 
-<!--Core CSS -->
-<!-- <link href="{{ url('public/frontEnd/daily_logs/bs3/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
-
-<!-- Custom styles for this template -->
-<!-- <link href="{{ url('public/frontEnd/daily_logs/css/style.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
 
 <section id="container">
-
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
@@ -167,12 +60,15 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                     </a>
                 </div>
                 <!-- sourabh -->
-
                 <div class="Select_staff_inner">
                     <select class="form-control" name="staff_member" id="staff_member">
                         <option value="">Select Staff Member</option>
                         @foreach($staff_members as $val)
-                        <option value="{{$val->id}}">{{$val->name}}</option>
+                        <option value="{{$val->id}}" <?php  if(isset(Auth::user()->id)) {
+                            if(Auth::user()->id == $val->id ) {
+                                echo "Selected";
+                            }
+                        } ?>>{{$val->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -204,35 +100,16 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                         </div>
                     </div>
                 </div>
-                <div class="Select_staff_inner">
-                    <div class="datepicker-sttng date-sttng">
-                        <label style="display: none;"> Category: </label>
-                        <div>
-                            <select class="form-control" style="min-width:200px;" id="select_category" name="category_timeline" required />
-                            <!-- <option disabled value> -- select an option -- </option> -->
-                            <option selected value="all">All</option>
-                            @foreach ($categorys as $key )
-                            <option value="{{$key['id']}}">{{ $key['name'] }}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+             
                 <!-- sourabh -->
                 <div class="Select_staff_inner">
-                    <input type="text" class="form-control" id="keyword" onKeyPress="myFunctionkey()" onKeyUp="myFunctionkey()" name="keyword" placeholder="Keyword">
+                    <!-- <input type="text" class="form-control" id="keyword" onKeyPress="myFunctionkey()" onKeyUp="myFunctionkey()" name="keyword" placeholder="Keyword"> -->
                 </div>
-                <!-- sourabh -->
-                <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-            </div> -->
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
                     <div class="timeline">
-
                         <article class="timeline-item alt">
                             <div class="text-right">
                                 <div class="time-show first">
@@ -299,6 +176,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 </div>
                             </div>
                             <!-- /comment -->
+                            
                             <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
@@ -356,6 +234,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 </div>
                             </div>
                             <!-- /comment -->
+                            
                             <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
@@ -413,6 +292,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 </div>
                             </div>
                             <!-- /comment -->
+                            
                             <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
@@ -441,6 +321,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 </div>
                             </div>
                             <!-- /comment -->
+                            
                             <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in leftmsg">
@@ -591,8 +472,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
         var end = get_dates()[1];
         var category_id = parseInt(get_dates()[2]);
         var link = document.getElementById("pdf");
-        let url =
-            `{{ url('/service/logbook/download?end=${end}&start=${start}&category_id=${category_id}&format=pdf&service_user_id='.$service_user_id) }}`;
+        let url = `{{ url('/service/logbook/download?end=${end}&start=${start}&category_id=${category_id}&format=pdf&service_user_id='.$service_user_id) }}`;
         url = url.replaceAll('&amp;', '&')
         link.setAttribute("href", url);
         return false;
@@ -2416,7 +2296,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 <!-- sourabh -->
 
 
-
-@include('frontEnd.serviceUserManagement.elements.add_log')
+@include('frontEnd.serviceUserManagement.elements.add_log_form')
 @include('frontEnd.serviceUserManagement.elements.comments')
 @endsection

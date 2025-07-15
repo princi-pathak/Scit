@@ -6,15 +6,13 @@ use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use DB, Auth;
-use App\User, App\LogBook, App\ServiceUser, App\ServiceUserLogBook, App\LogBookComment, App\CategoryFrontEnd, App\DynamicFormBuilder;
+use App\LogBook, App\ServiceUser, App\ServiceUserLogBook, App\LogBookComment, App\CategoryFrontEnd, App\DynamicFormBuilder, App\User;
 use Illuminate\Support\Arr;
 
 class DailyLogsController extends ServiceUserManagementController
 {
     public function index(Request $request)
     {
-        //echo "string";
-        //die();
         if (isset($_GET['key'])) {
             $service_user_id = $_GET['key'];
         } else {
@@ -32,6 +30,7 @@ class DailyLogsController extends ServiceUserManagementController
             ->where('home_id', $home_id)
             ->where('is_deleted', '0')
             ->get();
+
         //staff_member
         $staff_members  =   User::where('is_deleted', '0')
             ->where('home_id', $home_id)
@@ -124,9 +123,8 @@ class DailyLogsController extends ServiceUserManagementController
                 // ->join('category', 'log_book.category_id', '=', 'category.id')
                 ->where('log_book.home_id',$home_id)
                 ->orderBy('date', 'desc')->get();
-
             //  echo "<pre>"; print_r($log_book_records); die;
-            
+
             $log_book_records = collect($log_book_records)->map(function ($x) {
                 return (array) $x;
             })->toArray();
@@ -321,7 +319,7 @@ class DailyLogsController extends ServiceUserManagementController
         return view('frontEnd.serviceUserManagement.daily_log', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members', 'dynamic_forms'));
     }
 
-     public function index2(Request $request)
+    public function index2(Request $request)
     {
         //echo "string";
         //die();
@@ -338,9 +336,12 @@ class DailyLogsController extends ServiceUserManagementController
         $service_users = ServiceUser::select('id', 'name')
             ->where('home_id', $home_id)
             ->where('is_deleted', '0')
+            ->get(); $service_users = ServiceUser::select('id', 'name')
+            ->where('home_id', $home_id)
+            ->where('is_deleted', '0')
             ->get();
         //staff_member
-        $staff_members  =   User::where('is_deleted', '0')
+        $staff_members = User::where('is_deleted', '0')
             ->where('home_id', Auth::user()->home_id)
             ->get();
         //$service_user_id ="";
@@ -431,7 +432,7 @@ class DailyLogsController extends ServiceUserManagementController
                 ->orderBy('date', 'desc')->get();
 
             //  echo "<pre>"; print_r($log_book_records); die;
-            
+
             $log_book_records = collect($log_book_records)->map(function ($x) {
                 return (array) $x;
             })->toArray();
@@ -616,7 +617,7 @@ class DailyLogsController extends ServiceUserManagementController
         }
 
 
-        
+
         $dynamic_forms = DynamicFormBuilder::getFormList();
 
         return view('frontEnd.serviceUserManagement.daily_log2', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members', 'dynamic_forms'));
@@ -1222,3 +1223,4 @@ class DailyLogsController extends ServiceUserManagementController
         return view('frontEnd.serviceUserManagement.monthly_log', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members'));
     }
 }
+
