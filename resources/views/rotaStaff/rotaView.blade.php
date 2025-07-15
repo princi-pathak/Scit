@@ -219,14 +219,14 @@
         <div id="activeRotas" class="tab-pane active">
           <form class="active-rots-slt-from">
             <div class="row">
-              <div class="col-lg-9">
+              <div class="col-lg-12">
                 <div class="paraentBtnRota">
                   <h3>Active rotas</h3>
                   <div class="rotaBtn">
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-4">
+              <div class="col-lg-3 col-md-3">
                 <input type="date" placeholder="Select range..." id="search_date" class="form-control">
               </div>
               <div class="col-lg-3 col-md-3">
@@ -291,12 +291,12 @@
         <div id="oldRotas" class="tab-pane">
             <form class="active-rots-slt-from">
             <div class="row">
-              <div class="col-lg-9">
+              <div class="col-lg-12">
                 <h3>Old rotas</h3>
               </div>
-              <div class="col-lg-3 col-md-3">
+              <!-- <div class="col-lg-3 col-md-3">
                 <h4 class="d-none"><a href="#">Create new Rota</a></h4>
-              </div>
+              </div> -->
               <div class="col-lg-3 col-md-3">
                 <input type="date" placeholder="Select range..." class="form-control">
               </div>
@@ -306,7 +306,9 @@
               <div class="col-md-3">
                 <button type="button" class="filter_btn">Clear all filter</button>
               </div>
-              <div class="row">
+             
+            </div>
+             <div class="row">
                 <div class="col-md-3 col-lg-3">
                   <select name="" class="form-select form-control" id="">
                     <option value="">Name (A-Z)</option>
@@ -314,10 +316,10 @@
                     <option value="">Start date (Newest first)</option>
                     <option value="">Start date (Oldest first)</option>
                   </select>
+                  <p class="mt-2">Rotas which have ended are shown here.</p>
                 </div>
-                <p class="mt-2">Rotas which have ended are shown here.</p>
+                
               </div>
-            </div>
           </form>
           <div class="row">
             <div class="col-md-12 my-5 publish_rota_content">
@@ -337,7 +339,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          
           <div class="col-md-12 unpublish_rota_content">
             <div class="d-flex justify-content-between">
               <div class="d-flex align-items-center">
@@ -353,6 +355,7 @@
           <div class="col-md-12 col-lg-12" id="unpublish_rota_content_detail">
             <div id="old_unpublish_rota">
             </div>
+          </div>
           </div>
         </div>
         <div id="createRota" class="tab-pane">
