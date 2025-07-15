@@ -20,9 +20,10 @@ class DailyLogsController extends ServiceUserManagementController
         }
 
         $data = $request->input();
-        $home_id = Auth::user()->home_id;
-        // Ram explode the home id 05/07/2025
-        $ex_home_id = explode(',', $home_id);
+        $home_ids = Auth::user()->home_id;
+        $ex_home_ids = explode(',', $home_ids);
+        $home_id=$ex_home_ids[0];
+        // $home_id = Auth::user()->home_id;
         $user_id = Auth::user()->id;
         $today = date('Y-m-d 00:0:00');
         $service_users = ServiceUser::select('id', 'name')
@@ -32,7 +33,7 @@ class DailyLogsController extends ServiceUserManagementController
 
         //staff_member
         $staff_members  =   User::where('is_deleted', '0')
-            ->where('home_id', Auth::user()->home_id)
+            ->where('home_id', $home_id)
             ->get();
         //$service_user_id ="";
         if ($service_user_id != '') {
@@ -59,7 +60,7 @@ class DailyLogsController extends ServiceUserManagementController
                         ->whereIn('log_book.id', $su_logs)
                         ->join('user', 'log_book.user_id', '=', 'user.id')
                         ->join('category', 'log_book.category_id', '=', 'category.id')
-                        ->whereIn('log_book.home_id', $ex_home_id)
+                        ->where('log_book.home_id',$home_id)
                         ->orderBy('date', 'desc');
                     // $log_book_records = LogBook::select('log_book.*')
                     //                         ->orderBy('date','desc');
@@ -120,9 +121,8 @@ class DailyLogsController extends ServiceUserManagementController
                 ->whereDate('log_book.date', '=', $today)
                 ->join('user', 'log_book.user_id', '=', 'user.id')
                 // ->join('category', 'log_book.category_id', '=', 'category.id')
-                ->whereIn('log_book.home_id', $ex_home_id)
+                ->where('log_book.home_id',$home_id)
                 ->orderBy('date', 'desc')->get();
-
             //  echo "<pre>"; print_r($log_book_records); die;
 
             $log_book_records = collect($log_book_records)->map(function ($x) {
@@ -200,7 +200,7 @@ class DailyLogsController extends ServiceUserManagementController
                         ->whereIn('log_book.id', $su_logss)
                         ->join('user', 'log_book.user_id', '=', 'user.id')
                         ->join('category', 'log_book.category_id', '=', 'category.id')
-                        ->whereIn('log_book.home_id', $ex_home_id)
+                        ->where('log_book.home_id',$home_id)
                         ->orderBy('date', 'desc');
                     //print_r($log_book_records);
                     //die;
@@ -271,7 +271,7 @@ class DailyLogsController extends ServiceUserManagementController
                 ->whereDate('log_book.date', '=', $today)
                 ->join('user', 'log_book.user_id', '=', 'user.id')
                 ->join('category', 'log_book.category_id', '=', 'category.id')
-                ->whereIn('log_book.home_id', $ex_home_id)
+                ->where('log_book.home_id',$home_id)
                 ->orderBy('date', 'desc')->get();
             //print_r($log_book_records);
             //die;
