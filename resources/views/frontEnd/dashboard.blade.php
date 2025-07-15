@@ -58,8 +58,10 @@
                 </div>
             </a>
             @endif
-            @if(in_array(535, $access_rights))
-                <a data-target="#dynmicFormModal" data-toggle="modal" class="MainNavText">
+            <!-- @if(in_array(535, $access_rights)) -->
+                <a href="{{url('/forms')}}">
+                    <!-- data-target="#" data-toggle="modal" class="MainNavText"   -->
+                    <!-- dynmicFormModal -->
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">
@@ -74,7 +76,7 @@
                         </div>
                     </div>
                 </a>
-            @endif
+            <!-- @endif -->
             @if(in_array(67, $access_rights))
                 <a href="{{ url('/system/calendar') }}">
                     <div class="col-md-6">

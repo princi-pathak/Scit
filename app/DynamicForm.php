@@ -1444,9 +1444,6 @@ class DynamicForm extends Model //FormBuilder
 
     public static function saveForm($data)
     {
-        // return $data;
-        // die;
-
         if (isset($data['data'])) {
             $formdata = json_encode($data['data']);
         } else {
@@ -1485,12 +1482,9 @@ class DynamicForm extends Model //FormBuilder
         /*----- June 07,2018 End ---*/
         // $form->service_user_id  = $service_user_id; 
         $form->location_id      = $data['location_id'];
-        // $form->title            = $data['title'];
-        $form->title            = null;
-        // $form->time             = $data['time']; 
-        $form->time             =  null;
-        // $form->details          = $data['details']; 
-        $form->details          = null;
+        $form->title            = $data['title'];
+        $form->time             = $data['time']; 
+        $form->details          = $data['details']; 
         $form->pattern_data     = $formdata;
 
         if (isset($data['alert_status'])) {

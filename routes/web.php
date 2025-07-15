@@ -1173,7 +1173,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	//ServiceUser LogBook
 	Route::match(['get', 'post'], '/service/logsbook/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@index');
-	Route::post('/service/logbook/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@add');
+	Route::post('/system/logbook/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@add');
+	Route::get('/forms', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@forms');
 	Route::get('/service/logbook/view/{log_book_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@view');
 
 	/**
