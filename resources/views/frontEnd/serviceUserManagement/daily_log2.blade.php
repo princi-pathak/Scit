@@ -226,8 +226,9 @@
   box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
   background-color: #ffffff;
   list-style-type: none;
-      z-index: 999;
-          width: 172px;
+  z-index: 999;
+  width: 172px;
+  border: none;
 }
 .dd-input + .dd-menu {
   display: none;
@@ -242,7 +243,7 @@
     cursor: pointer;
     white-space: nowrap;
     text-align: start;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     transition: .7s;
     border-radius: 4px;
@@ -250,7 +251,7 @@
 .dd-menu li a:hover{
     color: #333;
     background: #F1F2F7;
-    font-size: 14px;
+    font-size: 13px;
 }
 .dd-menu li a i{
     margin-right: 8px;
@@ -416,16 +417,17 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-terques ">
                                             <p>Join as Product Asst. Manager</p>
                                             <span class="timelineIcons">
-                                                <label class="timelinedropdown">
+                                                <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
-                                                        <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
-                                                        <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>                                                    
+                                                        <ul class="dropdown-menu dd-menu">
+                                                            <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
+                                                            <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
+                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                        </ul>                                                 
                                                 </label>                                                 
                                             </span>
                                         </div>
@@ -442,10 +444,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     <div class="text">
                                         <div class="second bg-red">
                                             <span class="timelineIcons">
-                                                <label class="timelinedropdown">
+                                                <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
+                                                    <ul class="dropdown-menu dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -474,10 +476,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-purple">
                                             <p>Selected Employee of the Month</p>
                                             <span class="timelineIcons">
-                                                <label class="timelinedropdown">
+                                                <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
+                                                    <ul class="dropdown-menu dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -499,10 +501,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     <div class="text">
                                         <div class="second bg-green">
                                             <span class="timelineIcons">
-                                                <label class="timelinedropdown">
+                                                <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
+                                                    <ul class="dropdown-menu dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -531,10 +533,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-yellow">
                                             <p>Selected the Best Employee of the Year 2013 and was awarded</p>
                                             <span class="timelineIcons">
-                                                <label class="timelinedropdown">
+                                                <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
+                                                    <ul class="dropdown-menu dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -556,10 +558,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     <div class="text">
                                         <div class="second bg-terques">
                                             <span class="timelineIcons">
-                                                <label class="timelinedropdown">
+                                                <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
+                                                    <ul class="dropdown-menu dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -588,10 +590,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-blue">
                                             <p>Height Sales scored and break all of the previous sales record ever in the company. Awarded</p>
                                             <span class="timelineIcons">
-                                                <label class="timelinedropdown">
+                                                <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
+                                                    <ul class="dropdown-menu dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -612,10 +614,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     <div class="text">
                                         <div class="second bg-green">
                                             <span class="timelineIcons">
-                                                <label class="timelinedropdown">
+                                                <label class="dropdown timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
+                                                    <ul class="dropdown-menu dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -688,21 +690,8 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 
 
 </section>
-<script>
-  const inputs = document.querySelectorAll('.dd-input');
 
-  inputs.forEach(input => {
-    input.addEventListener('change', () => {
-      if (input.checked) {
-        inputs.forEach(otherInput => {
-          if (otherInput !== input) {
-            otherInput.checked = false;
-          }
-        });
-      }
-    });
-  });
-</script>
+
 
 <!-- Date Range Initialization -->
 <script>
