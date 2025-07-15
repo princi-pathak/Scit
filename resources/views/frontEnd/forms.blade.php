@@ -1,268 +1,6 @@
 @extends('frontEnd.layouts.master')
 @section('title','Daily Logs')
 @section('content')
-<style type="text/css">
-    /*09 Aug 2018*/
-    .back_opt {
-        background: #1f88b5;
-        border-radius: 100%;
-        /* bottom: 70px; */
-        color: #fff;
-        font-size: 20px;
-        padding: 8px 18px;
-        /* position: fixed; */
-        /* right: 90px; */
-        /* float:left; */
-        z-index: 999;
-        cursor: pointer;
-        height: 45px;
-        width: 45px;
-        display: inline-block;
-    }
-
-    .back_opt:hover i {
-        color: #fff;
-    }
-
-    .timeline .time-show {
-        text-align: center;
-        margin-right: 0px;
-    }
-
-    .timeline .time-show .btn {
-        min-width: 150px;
-    }
-
-    #logs_articles {
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: table;
-        position: relative;
-        table-layout: fixed;
-        width: 100%;
-        min-height: 50vh;
-    }
-
-    .daily_log_time {
-        position: inherit !important;
-        bottom: 5px;
-        font-size: 13px;
-        color: #686868;
-        font-weight: 400;
-        margin-top: 20px;
-    }
-
-    .timeline-item.alt h1,
-    .timeline-item.alt p {
-        text-align: left;
-    }
-
-    .logimg {
-        /* left: 80%;
-        top:15px;
-        position: absolute; */
-        float: right;
-        margin-bottom: 38px;
-    }
-
-    .comment-detail-info-area {
-        width: 100%;
-    }
-
-    .comment-number-bnt-info {
-        position: absolute;
-        right: 20px;
-        bottom: 0px;
-    }
-
-
-    .logimg img {
-        width: 100px;
-        height: 60px;
-        object-fit: cover;
-    }
-
-    .Select_staff {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
-    .Select_staff_inner {
-        margin: 10px 0;
-    }
-
-    @media (max-width:890px) {
-        .Select_staff_inner {
-            width: 100%;
-            margin: 10px 0;
-        }
-    }
-
-    .timeline-messages {
-        text-align: center;
-    }
-
-    .message-body.msg-in.rightmsg {
-        left: 210px;
-    }
-
-    .message-body.msg-in.leftmsg {
-        right: 250px;
-    }
-
-    .timeline-messages .msg-in .arrow {
-        border-right: 0px solid #949496 !important;
-    }
-
-    .timeline-messages .msg-in.rightmsg .arrow {
-        border-right: 8px solid #949496 !important;
-    }
-
-    .timeline-messages .msg-in.leftmsg .arrow {
-        right: -3px;
-        left: inherit;
-        border-left: 8px solid #949496 !important;
-    }
-
-    .timeline-messages:before,
-    .msg-time-chat:before,
-    .msg-time-chat .text:before {
-        content: "";
-        left: 50%;
-        position: absolute;
-        top: -2px;
-    }
-
-    .msg-time-chat .msg-in .text .second {
-        margin-right: 6px;
-        display: flex;
-        padding: 9px 10px;
-    }
-
-    .msg-time-chat .msg-in .text .second p {
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        max-width: 24ch;
-    }
-    span.timelineIcons {
-    border-left: 1px solid #fff;
-    margin-left: 10px;
-}
-    .timelineIcons a {
-        padding: 0px 10px;
-        /* border-right: 1px solid #fff; */
-        border-radius: 0;
-        margin-right: 0;
-        color: #fff;
-    }
-
-    .timelineIcons a:last-child {
-        border-right: none;
-    }
-
-    .timelineIcons a:hover {
-        border-radius: 0;
-        margin-right: 0;
-    }
-
-    .timelineIcons a {
-        color: #fff;
-        font-size: 16px;
-        transition: .7s;
-    }
-
-    .timelineIcons a:hover {
-        color: #000;
-        font-size: 16px;
-    }
-    .msg-time-chat {
-        overflow: inherit;
-    }
-.leftmsg span.timelineIcons {
-    border-right: 1px solid #fff;
-    margin-right: 10px;
-    border-left: none;
-    margin-left: 0;
-}
-.leftmsg ul.dd-menu {
-    left: -183px;
-}
-.leftmsg .dd-button {
-    padding: 0px 10px 0px 4px;
-}
-    /* *********************** */
-.timelinedropdown {
-  display: inline-block;
-  position: relative;
-  margin-bottom: 0;
-}
-.dd-button {
-  display: inline-block;
-  padding: 0px 4px 0px 12px;
-  border-radius: 4px;
-  background-color: transparent;
-  cursor: pointer;
-  white-space: nowrap;
-  font-size: 14px;
-   font-weight: 500;
-}
-.dd-input {
-  display: none;
-}
-.dd-menu {
-  position: absolute;
-  top: -11px;
-  left: 42px;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 2px 0 0 0;
-  box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
-  background-color: #ffffff;
-  list-style-type: none;
-  z-index: 999;
-  width: 172px;
-  border: none;
-}
-.dd-input + .dd-menu {
-  display: none;
-} 
-.dd-input:checked + .dd-menu {
-  display: block;
-} 
-.dd-menu li a{
-    display:  block;
-    color: #000;
-    padding: 8px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    text-align: start;
-    font-size: 13px;
-    font-weight: 500;
-    transition: .7s;
-    border-radius: 4px;
-}
-.dd-menu li a:hover{
-    color: #333;
-    background: #F1F2F7;
-    font-size: 13px;
-}
-.dd-menu li a i{
-    margin-right: 8px;
-}
-.dd-menu li a:hover i{
-    color: #1f88b5;
-}
-.actionForm{
-    display: flow-root;
-}
-
-</style>
 
 <link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
 
@@ -297,20 +35,12 @@ if (!$full) $string = array_slice($string, 0, 1);
 return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 }
-
+$service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
+$service_user_name  = (isset($service_user_name )) ? $service_user_name  : 0;
 @endphp
 
-<!--Core CSS -->
-<!-- <link href="{{ url('public/frontEnd/daily_logs/bs3/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
-
-<!-- Custom styles for this template -->
-<!-- <link href="{{ url('public/frontEnd/daily_logs/css/style.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
 
 <section id="container">
-
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
@@ -330,12 +60,15 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                     </a>
                 </div>
                 <!-- sourabh -->
-
                 <div class="Select_staff_inner">
                     <select class="form-control" name="staff_member" id="staff_member">
                         <option value="">Select Staff Member</option>
                         @foreach($staff_members as $val)
-                        <option value="{{$val->id}}">{{$val->name}}</option>
+                        <option value="{{$val->id}}" <?php  if(isset(Auth::user()->id)) {
+                            if(Auth::user()->id == $val->id ) {
+                                echo "Selected";
+                            }
+                        } ?>>{{$val->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -367,35 +100,16 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                         </div>
                     </div>
                 </div>
-                <div class="Select_staff_inner">
-                    <div class="datepicker-sttng date-sttng">
-                        <label style="display: none;"> Category: </label>
-                        <div>
-                            <select class="form-control" style="min-width:200px;" id="select_category" name="category_timeline" required />
-                            <!-- <option disabled value> -- select an option -- </option> -->
-                            <option selected value="all">All</option>
-                            @foreach ($categorys as $key )
-                            <option value="{{$key['id']}}">{{ $key['name'] }}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+             
                 <!-- sourabh -->
                 <div class="Select_staff_inner">
-                    <input type="text" class="form-control" id="keyword" onKeyPress="myFunctionkey()" onKeyUp="myFunctionkey()" name="keyword" placeholder="Keyword">
+                    <!-- <input type="text" class="form-control" id="keyword" onKeyPress="myFunctionkey()" onKeyUp="myFunctionkey()" name="keyword" placeholder="Keyword"> -->
                 </div>
-                <!-- sourabh -->
-                <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-            </div> -->
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
                     <div class="timeline">
-
                         <article class="timeline-item alt">
                             <div class="text-right">
                                 <div class="time-show first">
@@ -416,19 +130,9 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-terques ">
                                             <p>Join as Product Asst. Manager</p>
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
-                                                
                                                     <input type="checkbox" class="dd-input">
-
-                                                        <ul class="dropdown-menu dd-menu">
-                                                            <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
-                                                            <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
-                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
-                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
-                                                            <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                        </ul>                                                 
-
                                                     <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa fa-pencil"></i> Edit </a></li>
@@ -436,7 +140,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
                                                     </ul>                                                    
-
                                                 </label>                                                 
                                             </span>
                                         </div>
@@ -452,10 +155,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     <div class="text">
                                         <div class="second bg-red">
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -473,6 +176,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 </div>
                             </div>
                             <!-- /comment -->
+                            
                             <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
@@ -484,10 +188,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-purple">
                                             <p>Selected Employee of the Month</p>
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -509,10 +213,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     <div class="text">
                                         <div class="second bg-green">
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -530,6 +234,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 </div>
                             </div>
                             <!-- /comment -->
+                            
                             <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
@@ -541,10 +246,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-yellow">
                                             <p>Selected the Best Employee of the Year 2013 and was awarded</p>
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -566,10 +271,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     <div class="text">
                                         <div class="second bg-terques">
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -587,6 +292,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 </div>
                             </div>
                             <!-- /comment -->
+                            
                             <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in rightmsg">
@@ -598,10 +304,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="second bg-blue">
                                             <p>Height Sales scored and break all of the previous sales record ever in the company. Awarded</p>
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -615,6 +321,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 </div>
                             </div>
                             <!-- /comment -->
+                            
                             <!-- Comment -->
                             <div class="msg-time-chat">
                                 <div class="message-body msg-in leftmsg">
@@ -622,10 +329,10 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     <div class="text">
                                         <div class="second bg-green">
                                             <span class="timelineIcons">
-                                                <label class="dropdown timelinedropdown">
+                                                <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
                                                     <input type="checkbox" class="dd-input">
-                                                    <ul class="dropdown-menu dd-menu">
+                                                    <ul class="dd-menu">
                                                         <li><a href="#viewDaily_log" data-toggle="modal"> <i class="fa  fa-eye"></i> View</a></li>
                                                         <li><a href="#!"> <i class="fa  fa-pencil"></i> Edit </a></li>
                                                         <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
@@ -698,8 +405,21 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 
 
 </section>
+<script>
+  const inputs = document.querySelectorAll('.dd-input');
 
-
+  inputs.forEach(input => {
+    input.addEventListener('change', () => {
+      if (input.checked) {
+        inputs.forEach(otherInput => {
+          if (otherInput !== input) {
+            otherInput.checked = false;
+          }
+        });
+      }
+    });
+  });
+</script>
 
 <!-- Date Range Initialization -->
 <script>
@@ -752,8 +472,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
         var end = get_dates()[1];
         var category_id = parseInt(get_dates()[2]);
         var link = document.getElementById("pdf");
-        let url =
-            `{{ url('/service/logbook/download?end=${end}&start=${start}&category_id=${category_id}&format=pdf&service_user_id='.$service_user_id) }}`;
+        let url = `{{ url('/service/logbook/download?end=${end}&start=${start}&category_id=${category_id}&format=pdf&service_user_id='.$service_user_id) }}`;
         url = url.replaceAll('&amp;', '&')
         link.setAttribute("href", url);
         return false;
@@ -2577,7 +2296,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 <!-- sourabh -->
 
 
-
-@include('frontEnd.serviceUserManagement.elements.add_log')
+@include('frontEnd.serviceUserManagement.elements.add_log_form')
 @include('frontEnd.serviceUserManagement.elements.comments')
 @endsection

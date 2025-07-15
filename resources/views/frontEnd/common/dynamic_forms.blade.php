@@ -452,6 +452,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             }
         });
 
+        // Save Dynamic Form Data
         $('.sbt-dyn-form-btn').click(function() {
             var model_id = $(this).closest('.modal').attr('id');
             var form_id = $(this).closest('form').attr('id');
@@ -1105,7 +1106,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
     });
 </script>
 
-
 <script>
     $(document).ready(function() {
         $(document).on('click', '.dyn_form_daily_log', function() {
@@ -1222,8 +1222,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
     });
 </script>
-
-
 
 <script>
     $(document).ready(function() {

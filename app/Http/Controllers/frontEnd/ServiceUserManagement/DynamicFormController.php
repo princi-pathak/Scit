@@ -35,7 +35,9 @@ class DynamicFormController extends Controller
 
         if (!empty($data)) {
             // dd($request);
-
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
             $form_insert_id = DynamicForm::saveForm($data);
 
             if ($form_insert_id != 0) {
@@ -65,7 +67,7 @@ class DynamicFormController extends Controller
                             'date' => null,
                             // 'details'=>$data['details'],
                             'details' => null,
-                            'home_id' => Auth::user()->home_id,
+                            'home_id' => $home_id,
                             'user_id' => Auth::user()->id,
                             'image_name' => '',
                             'is_late' => 0,
@@ -92,15 +94,13 @@ class DynamicFormController extends Controller
                     } else if ($val == 4 || $val == 10) {
                         //health record
                         $insert_su_health_record = array(
-                            'home_id' => Auth::user()->home_id,
+                            'home_id' => $home_id,
                             'service_user_id' => $data['service_user_id'],
                             'contact_id' => 0,
                             'care_team_id' => 0,
-                            // 'title'=>$data['title'],
-                            'title' => null,
+                            'title'=>$data['title'],
                             'status' => 1,
-                            // 'details'=>$data['details'],
-                            'details' => null,
+                            'details'=>$data['details'],
                             'is_deleted' => 0,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
@@ -113,7 +113,7 @@ class DynamicFormController extends Controller
                             'risk_id' => 1,
                             'status' => 0,
                             'dynamic_form_id' => $form_insert_id,
-                            'home_id' => Auth::user()->home_id,
+                            'home_id' => $home_id,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
                         );
@@ -124,7 +124,7 @@ class DynamicFormController extends Controller
                             'event_id' => 1,
                             'notification_event_type_id' => '11',
                             'event_action' => 'ADD',
-                            'home_id' => Auth::user()->home_id,
+                            'home_id' =>$home_id,
                             'user_id' => Auth::user()->id,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
@@ -134,13 +134,11 @@ class DynamicFormController extends Controller
                         //Behaviour Management
                         $insert_behaviour_managment = array(
                             'service_user_id' => $data['service_user_id'],
-                            // 'title'=> $data['title'],
-                            'title' => null,
-                            // 'details' => $data['details'],
-                            'details' => null,
+                            'title'=> $data['title'],
+                            'details' => $data['details'],
                             'sent_to' => 2,
                             'formdata' => json_encode($data['data']),
-                            'home_id' => Auth::user()->home_id,
+                            'home_id' => $home_id,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
                         );
@@ -151,7 +149,7 @@ class DynamicFormController extends Controller
                             'event_id' => $lastid_behaviour,
                             'notification_event_type_id' => '8',
                             'event_action' => 'ADD',
-                            'home_id' => Auth::user()->home_id,
+                            'home_id' => $home_id,
                             'user_id' => Auth::user()->id,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
@@ -161,14 +159,12 @@ class DynamicFormController extends Controller
                         //plans
                         $insert_plans_managment = array(
                             'service_user_id' => $data['service_user_id'],
-                            // 'task'=>$data['title'],
-                            'task' => null,
+                            'task'=>$data['title'],
                             'date' => date('Y-m-d'),
-                            // 'description'=>$data['details'],
-                            'description' => null,
+                            'description'=>$data['details'],
                             'qqa_review' => "",
                             'formdata' => json_encode($data['data']),
-                            'home_id' => Auth::user()->home_id,
+                            'home_id' => $home_id,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
                         );
@@ -179,7 +175,7 @@ class DynamicFormController extends Controller
                             'event_id' => $lastid_plans,
                             'notification_event_type_id' => '8',
                             'event_action' => 'ADD',
-                            'home_id' => Auth::user()->home_id,
+                            'home_id' => $home_id,
                             'user_id' => Auth::user()->id,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
@@ -287,7 +283,10 @@ class DynamicFormController extends Controller
         $data = $request->input();
 
         if (!empty($data)) {
-            $home_id = Auth::user()->home_id;
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
+            // $home_id = Auth::user()->home_id;
             $dynamic_form_id = $request->dynamic_form_id;
             $form            = DynamicForm::where('dynamic_form.id', $dynamic_form_id)->first();
             //join('service_user as su','su.id','=','dynamic_form.service_user_id') ->where('su.home_id',$home_id)
@@ -331,7 +330,7 @@ class DynamicFormController extends Controller
                     $notification->event_id                   = $form->id;
                     $notification->notification_event_type_id = $notification_event_type_id;
                     $notification->event_action               = 'EDIT';
-                    $notification->home_id                    = Auth::user()->home_id;
+                    $notification->home_id                    = $home_id;
                     $notification->user_id                    = Auth::user()->id;
                     $notification->save();
                     //saving notification end
@@ -356,10 +355,13 @@ class DynamicFormController extends Controller
         $form = DynamicForm::find($dynamic_form_id);
 
         if (!empty($form)) {
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id = $ex_home_ids[0];
 
             $su_home_id = ServiceUser::where('id', $form->service_user_id)->value('home_id');
 
-            if ($su_home_id == Auth::user()->home_id) {
+            if ($su_home_id == $home_id) {
 
                 $res = DynamicForm::where('id', $dynamic_form_id)->update(['is_deleted' => '1']);
                 echo $res;
@@ -370,8 +372,9 @@ class DynamicFormController extends Controller
 
     public function index()
     {
-
-        $home_id = Auth::user()->home_id;
+        $home_ids = Auth::user()->home_id;
+        $ex_home_ids = explode(',', $home_ids);
+        $home_id = $ex_home_ids[0];
 
         //in search case editing start for plan,details and review
         /*if(isset($_POST)) {
@@ -491,7 +494,9 @@ class DynamicFormController extends Controller
         if ($request->isMethod('post')) {
 
             $data = $request->all();
-
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id = $ex_home_ids[0];
             $dyn_form = DynamicForm::where('id', $data['dyn_form_id'])->first();
             // Ram here code for save title and detail when user want to send to daily log 19/06/2025
             $title_detail = DynamicFormBuilder::where('id', $dyn_form->form_builder_id)->first();
@@ -524,7 +529,7 @@ class DynamicFormController extends Controller
             
             $log_book                  = new LogBook;
             $log_book->dynamic_form_id = $data['dyn_form_id'] ?? null;
-            $log_book->home_id         = Auth::user()->home_id;
+            $log_book->home_id         = $home_id;
             $log_book->user_id         = Auth::user()->id;
             $log_book->title           = $dyn_form->title ?? $title_detail->title;
             $log_book->date            = date('Y-m-d H:i:s');
