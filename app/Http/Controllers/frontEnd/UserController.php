@@ -66,11 +66,14 @@ class UserController extends Controller
 									//Session::put('LAST_ACTIVITY',time());
 									//check is user already logged in
 									$logged_in = Auth::user()->logged_in;
-									if ($logged_in == '1') {
-										$last_activity = Auth::user()->last_activity_time;
+									$last_activity = Auth::user()->last_activity_time;
+									$last_activity = Carbon::parse($last_activity);
+									$diff_mint     = $last_activity->diffInMinutes();
+									if ($logged_in == '1' && $diff_mint < 60) {
+										// $last_activity = Auth::user()->last_activity_time;
 										$current_time  = date('Y-m-d H:i:s');
-										$last_activity = Carbon::parse($last_activity);
-										$diff_mint     = $last_activity->diffInMinutes();
+										// $last_activity = Carbon::parse($last_activity);
+										// $diff_mint     = $last_activity->diffInMinutes();
 										if ($diff_mint > SESSION_TIMEOUT) {
 										} else {
 											Auth::logout();
@@ -100,11 +103,14 @@ class UserController extends Controller
 									//Session::put('LAST_ACTIVITY',time());
 									//check is user already logged in
 									$logged_in = Auth::user()->logged_in;
-									if ($logged_in == '1') {
-										$last_activity = Auth::user()->last_activity_time;
+									$last_activity = Auth::user()->last_activity_time;
+									$last_activity = Carbon::parse($last_activity);
+									$diff_mint     = $last_activity->diffInMinutes();
+									if ($logged_in == '1' && $diff_mint < 60) {
+										// $last_activity = Auth::user()->last_activity_time;
 										$current_time  = date('Y-m-d H:i:s');
-										$last_activity = Carbon::parse($last_activity);
-										$diff_mint     = $last_activity->diffInMinutes();
+										// $last_activity = Carbon::parse($last_activity);
+										// $diff_mint     = $last_activity->diffInMinutes();
 										if ($diff_mint > SESSION_TIMEOUT) {
 										} else {
 											Auth::logout();
@@ -144,11 +150,14 @@ class UserController extends Controller
 							if (Auth::attempt(['user_name' => $data['username'], 'password' => $data['password'], 'login_home_id' => $user_info->login_home_id])) {
 								//check is user already logged in
 								$logged_in = Auth::user()->logged_in;
-								if ($logged_in == '1') {
-									$last_activity = Auth::user()->last_activity_time;
+								$last_activity = Auth::user()->last_activity_time;
+								$last_activity = Carbon::parse($last_activity);
+								$diff_mint     = $last_activity->diffInMinutes();
+								if ($logged_in == '1' && $diff_mint < 60) {
+									// $last_activity = Auth::user()->last_activity_time;
 									$current_time  = date('Y-m-d H:i:s');
-									$last_activity = Carbon::parse($last_activity);
-									$diff_mint     = $last_activity->diffInMinutes();
+									// $last_activity = Carbon::parse($last_activity);
+									// $diff_mint     = $last_activity->diffInMinutes();
 									if ($diff_mint > SESSION_TIMEOUT) {
 									} else {
 										Auth::logout();
@@ -187,11 +196,14 @@ class UserController extends Controller
 						//Session::put('LAST_ACTIVITY',time());
 						//check is user already logged in
 						$logged_in = Auth::user()->logged_in;
-						if ($logged_in == '1') {
-							$last_activity = Auth::user()->last_activity_time;
+						$last_activity = Auth::user()->last_activity_time;
+						$last_activity = Carbon::parse($last_activity);
+						$diff_mint     = $last_activity->diffInMinutes();
+						if ($logged_in == '1' && $diff_mint < 60) {
+							// $last_activity = Auth::user()->last_activity_time;
 							$current_time  = date('Y-m-d H:i:s');
-							$last_activity = Carbon::parse($last_activity);
-							$diff_mint     = $last_activity->diffInMinutes();
+							// $last_activity = Carbon::parse($last_activity);
+							// $diff_mint     = $last_activity->diffInMinutes();
 							if ($diff_mint > SESSION_TIMEOUT) {
 							} else {
 								Auth::logout();
@@ -230,11 +242,14 @@ class UserController extends Controller
 		if (Auth::attempt(['user_name' => $data['username'], 'password' => $data['password'], 'home_id' => $data['home']])) {
 			//check is user already logged in
 			$logged_in = Auth::user()->logged_in;
-			if ($logged_in == '1') {
-				$last_activity = Auth::user()->last_activity_time;
+			$last_activity = Auth::user()->last_activity_time;
+			$last_activity = Carbon::parse($last_activity);
+			$diff_mint     = $last_activity->diffInMinutes();
+			if ($logged_in == '1' && $diff_mint < 60) {
+				// $last_activity = Auth::user()->last_activity_time;
 				$current_time  = date('Y-m-d H:i:s');
-				$last_activity = Carbon::parse($last_activity);
-				$diff_mint     = $last_activity->diffInMinutes();
+				// $last_activity = Carbon::parse($last_activity);
+				// $diff_mint     = $last_activity->diffInMinutes();
 				if ($diff_mint > SESSION_TIMEOUT) {
 				} else {
 					Auth::logout();
