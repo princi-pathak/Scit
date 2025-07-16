@@ -1240,7 +1240,7 @@ h2.unpublice-titel {
 
 .select-rota .form-select:focus ,
 .select-rota .form-control:focus {
-    border: 2px solid #1f88b5;
+    border: 1px solid #1f88b5;
     box-shadow: rgb(0 0 0 / 25%) 0px 2px 8px; 
 }
 
