@@ -279,7 +279,7 @@ class DynamicForm extends Model //FormBuilder
                                 <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                         <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Staff Created: </label>
-                                        <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
+                                        <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                             <div class="input-group popovr">
                                                 <input type="text" class="form-control trans" placeholder="" name="" value="' . $form_info->name . ' (' . date('d-m-Y h:i a', strtotime($form_info->created_at)) . ')" ' . $disabled . ' readonly/>
                                             </div>
@@ -289,7 +289,7 @@ class DynamicForm extends Model //FormBuilder
                                 <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                      <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Title: </label>
-                                         <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
+                                         <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                              <div class="input-group popovr">
                                                  <input type="text" class="form-control trans static_title" placeholder="" '.$disabled.' name="title" value="'.$form_info->title.'" readonly/>
                                              </div>
@@ -300,7 +300,7 @@ class DynamicForm extends Model //FormBuilder
                                  <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
                                      <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Date: </label>
-                                         <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
+                                         <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                            <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
                                              <input name="date" size="16" readonly="" class="form-control trans" type="text" '.$disabled.' value="'.date('d-m-Y h:i a', strtotime($form_info->date)).'" readonly>
                                              <span class="input-group-btn add-on">
@@ -314,7 +314,7 @@ class DynamicForm extends Model //FormBuilder
                                  <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                      <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
-                                         <div class="col-md-10 col-sm-12 col-xs-12 r-p-0">
+                                         <div class="col-md-10 col-sm-12 col-xs-12 p-r-0">
                                              <div class="input-group popovr">
                                                  <input type="text" class="form-control trans static_title" placeholder="" '.$disabled.' name="time" value="'. $form_info->time .'" readonly/>
                                              </div>
@@ -324,7 +324,7 @@ class DynamicForm extends Model //FormBuilder
                                  <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                      <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Detail: </label>
-                                         <div class="col-md-10 col-sm-12 col-xs-12 r-p-0">
+                                         <div class="col-md-10 col-sm-12 col-xs-12 p-r-0">
                                              <div class="input-group popovr">
                                                 <textarea class="form-control trans" placeholder="" '.$disabled.' name="details" readonly>'. $form_info->details .'</textarea>
                                              </div>
@@ -681,7 +681,7 @@ class DynamicForm extends Model //FormBuilder
                 $static_field = '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 ">
                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Alert: </label>
-                                    <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
+                                    <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                         <div class="select-style" style="pointer-events:none">
                                             <select name="alert_status" ' . $disabled . '>
                                                 <option value="0">No</option>
@@ -694,7 +694,7 @@ class DynamicForm extends Model //FormBuilder
                             <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Alert Date: </label>
-                                    <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
+                                    <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                       <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date custom-input-class">
                                         <input name="alert_date" value="' . $alert_date . '" size="16" readonly="" class="form-control" type="text">
                                         <span class="input-group-btn add-on">
