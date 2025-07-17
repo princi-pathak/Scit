@@ -76,6 +76,83 @@
         </div>
     </div>
 </div>
+<!-- dynmic Form Modal End -->
+
+<!-- View/Edit dynamic form -->
+<div class="modal fade" id="DynFormViewEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <a class="close edit_dyn_form" href="">
+                    <i class="fa fa-pencil" title="Edit Form"></i>
+                </a>
+                <a class="close mdl-back-btn previous_modal_btn" pre_modal="" href="" data-toggle="modal" data-dismiss="modal" aria-hidden="true">
+                    <i class="fa fa-arrow-left" title="View Previous Modal"></i>
+                </a>
+                <h4 class="modal-title">View Details</h4>
+            </div>
+            <div class="modal-body">
+                <form method="" id="dynFormFormData">
+                    <div class="row">
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7">User: </label>
+                            <div class="col-md-11 col-sm-11 col-xs-12">
+                                <div class="select-style">
+                                    <select name="service_user_id" class="su_id" disabled="">
+                                        <option value="0"> N/A Child </option>
+                                        @foreach($service_users as $value)
+                                        <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Form: </label>
+                            <div class="col-md-11 col-sm-11 col-xs-12">
+                                <div class="select-style">
+                                    <select name="dynamic_form_builder_id" class="dynamic_form_select" disabled="">
+                                        <option value="0"> Select Form </option>
+                                        <?php foreach ($dynamic_forms as $value) {
+                                            $location_ids_arr = explode(',', $value['location_ids']); ?>
+                                            <option value="{{ $value['id'] }}"> {{ $value['title'] }} </option>
+                                        <?php  } ?>
+                                    </select>
+                                </div>
+                                <!-- <p class="help-block"> Choose a user and the type of form you want to fill. </p> -->
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="below-divider"></div>
+                        </div>
+
+                        <!-- alert messages -->
+                        @include('frontEnd.common.popup_alert_messages')
+
+                        <!-- Add new Details -->
+                        <div class="risk-tabs">
+                            <!-- dynamic form fields will be shown here -->
+                            <div class="dynamic-form-fields"> </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer m-t-0">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="dynamic_form_id" class="dynamic_form_id" value="">
+                        <input type="hidden" name="formdata" id="setformdata" value="">
+                        <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel
+                        </button>
+                        <!-- <button class="btn btn-warning sbt_edit_bmp_btn" id="vw-sbt-bmp-plan" type="button"> Continue </button> -->
+                        <button class="btn btn-warning e-sbt-dyn-form-btn" disabled="" id="" type="button" data-dismiss="modal" aria-hidden="true"> Save </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- View/Edit dynamic form End -->
 
 <script>
     $(document).ready(function() {
@@ -445,7 +522,7 @@
                     if (response == true) {
 
                         $('#' + previous_model_id).modal('hide');
-                        var view_modal = '#DynFormViewModal';
+                        var view_modal = '#DynFormViewEditModal';
 
                         $(view_modal).modal('show');
                         $(view_modal + ' .mdl-back-btn').attr('pre_modal', previous_model_id);
@@ -520,7 +597,7 @@
                     if (response == true) {
 
                         $('#' + previous_model_id).modal('hide');
-                        var view_modal = '#DynFormViewModal';
+                        var view_modal = '#DynFormViewEditModal';
 
                         $(view_modal).modal('show');
                         $(view_modal + ' .mdl-back-btn').attr('pre_modal', previous_model_id);
@@ -554,14 +631,14 @@
 
         }
 
-        $(document).on('click', '#DynFormViewModal .previous_modal_btn', function() {
+        $(document).on('click', '#DynFormViewEditModal .previous_modal_btn', function() {
             var previous_modal_id = $(this).attr('pre_modal');
             $('#' + previous_modal_id).modal('show');
         });
 
-        $(document).on('click', '#DynFormViewModal .edit_dyn_form', function() {
+        $(document).on('click', '#DynFormViewEditModal .edit_dyn_form', function() {
 
-            var modal_id = 'DynFormViewModal';
+            var modal_id = 'DynFormViewEditModal';
             $('#' + modal_id + ' .dynamic-form-fields input').attr('disabled', false);
             $('#' + modal_id + ' .dynamic-form-fields textarea').attr('disabled', false);
             $('#' + modal_id + ' .dynamic-form-fields select').attr('disabled', false);
@@ -640,7 +717,7 @@
 <script>
     //pagination of bmp
     $(document).ready(function() {
-        $(document).on('click', '#dynmicFormModal .pagination li', function() {
+        $(document).on('click', '#addLogModal .pagination li', function() {
 
             var page_no = $(this).children('a').text();
             if (page_no == '') {
@@ -684,7 +761,7 @@
         });
 
         //when bmp search confirm button is clicked
-        $(document).on('click', '#dynmicFormModal .search-dyn-btn', function() {
+        $(document).on('click', '#addLogModal .search-dyn-btn', function() {
             update_search_list()
             return false;
         });
@@ -753,7 +830,7 @@
             } else if (logtype == 3) {
                 $('.logtitle').text("Add Record To Child's Monthly Log");
             }
-            $('#dynmicFormModal').modal('hide');
+            $('#addLogModal').modal('hide');
             $('#dyn_form_id').val(dyn_form_id);
             $('#suDailyLogBook').modal('show');
         });
@@ -843,7 +920,7 @@
                         // $('#service-user-add-log').find('select').val('');
                     }
                     $('#suDailyLogBook').modal('hide');
-                    $('#dynmicFormModal').modal('show');
+                    $('#addLogModal').modal('show');
 
                     $('.loader').hide();
                     $('body').addClass('body-overflow');
