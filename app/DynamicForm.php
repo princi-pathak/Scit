@@ -357,7 +357,7 @@ class DynamicForm extends Model //FormBuilder
                                     </div>
                                 </div>';
                 } else {
-                    $formdata .= '  <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                    $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12 form-group">
                         <div class="uploadimg222">
                             <input type="hidden" name="formImage" class="uploded_image" id="imageName">                           
                             <div id="previewContainer" class="formImageHide" style="overflow: hidden; margin-bottom: 20px; height: 300px; display :none;">
