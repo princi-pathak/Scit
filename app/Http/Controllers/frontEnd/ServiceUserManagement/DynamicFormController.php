@@ -279,7 +279,6 @@ class DynamicFormController extends Controller
 
     public function edit_form(Request $request)
     {
-
         $data = $request->input();
 
         if (!empty($data)) {
@@ -307,16 +306,13 @@ class DynamicFormController extends Controller
                 $form->date         = date('Y-m-d', strtotime($data['date']));
             }
 
-            // $form->title             = $data['title'];
-            $form->title                = null;
-            // $form->details             = $data['details'];
-            $form->details              = null;
-            // $form->time             = $data['time'];
-            $form->time                = null;
-            $form->image_path          =  $formImage;
-            $form->pattern_data        = json_encode($data['data']);
-            // $form->alert_status     = $data['alert_status'];
-            // $form->alert_date       = $data['alert_date'];
+            $form->title                = $data['title'];
+            $form->details              = $data['details'];
+            $form->time                 = $data['time'];
+            $form->image_path           = $formImage;
+            $form->pattern_data         = json_encode($data['data']);
+            // $form->alert_status      = $data['alert_status'];
+            // $form->alert_date        = $data['alert_date'];
 
             if ($form->save()) {
 
@@ -450,12 +446,9 @@ class DynamicFormController extends Controller
 
                                 <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
 
+                                <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '"><span><input type="text" class="form-control" style="cursor:pointer; background-color: '.$color.';" name="" readonly value="' . $value->title . ' " maxlength="255"/></span></a>
                                 
-                                <a href="#" class="dyn-form-view-data" id="' . $value->id . '"><span><input type="text" class="form-control" style="cursor:pointer; background-color: '.$color.';" name="" readonly value="' . $value->title . ' " maxlength="255"/></span></a>
-                                <span class=" rightdate"> '. $date .' </span>
-                              
-
-                                <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
+                                <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: '.$color.';">
                                     <i class="fa fa-cog"></i>
                                     <div class="pop-notifbox">
                                         <ul class="pop-notification" type="none">
@@ -467,6 +460,8 @@ class DynamicFormController extends Controller
                                         </ul>
                                     </div>
                                 </span>
+                                <span class="ritOrdring three rightdate"> '. $date .' </span>
+                                <span class="rightArrow"></span>
                             </div>
                         </div>
                         </div>
@@ -485,7 +480,7 @@ class DynamicFormController extends Controller
                                 <span class="timLineDate">' . $date . '</span>
                                 <span class="arrow"></span>
 
-                                <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
+                                <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: '.$color.';">
                                     <i class="fa fa-cog"></i>
                                     <div class="pop-notifbox">
                                         <ul class="pop-notification" type="none">

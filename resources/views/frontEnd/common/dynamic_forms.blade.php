@@ -1,8 +1,3 @@
-<style>
-    button.choices__button {
-        display: none;
-    }
-</style>
 <?php
 $home_id = Auth::user()->home_id;
 $service_users = App\ServiceUser::where('home_id', $home_id)->where('is_deleted', 0)->get()->toArray();
@@ -11,14 +6,14 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 ?>
 
 <style>
+    button.choices__button {
+        display: none;
+    }
+
     .pagination>li>a,
     .pagination>li>span {
         padding: 5px 6px;
     }
-
-    /* .has-feedback.formio-component canvas {
-        max-width: 100% !important;
-    } */
 </style>
 
 <!-- dynmic Form Modal -->
@@ -32,9 +27,9 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
-                        <button class="btn label-default add-new-btn active" type="button"> Add New </button>
-                        <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button"> Logged Plans </button>
-                        <button class="btn label-default search-btn active" type="button"> Search </button><!--adg-->
+                        <!-- <button class="btn label-default add-new-btn active" type="button"> Add New </button> -->
+                        <!-- <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button"> Logged Plans </button> -->
+                        <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
                     </div>
                     <!-- Add new Details -->
                     <div class="add-new-box risk-tabs custm-tabs">
@@ -54,7 +49,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                 </div>
                             </div>
 
-
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Add: </label>
                                 <div class="col-md-11 col-sm-11 col-xs-12">
@@ -63,7 +57,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                             <option value="0"> Select Form </option>
 
                                             <?php
-
                                             $this_location_id = App\DynamicFormLocation::getLocationIdByTag('top_profile_btn');
                                             foreach ($dynamic_forms as $value) {
                                                 $location_ids_arr = explode(',', $value['location_ids']);
@@ -77,23 +70,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                     <p class="help-block"> Choose a user and the type of form you want to fill. </p>
                                 </div>
                             </div>
-                            <!-- option for save in daily log -->
-                            <!--<div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">-->
-                            <!--    <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 text-right"> Log Type </label>-->
-                            <!--    <div class="col-md-11 col-sm-11 col-xs-12">-->
-                            <!--        <div class="select-style">-->
-                            <!--            <select name="logtype" class="su_n_id" >-->
-                            <!--                <option value="0"> Select </option>-->
-                            <!--                <option value="1"> Daily Log </option>-->
-                            <!--                <option value="2"> Health Log </option>                         -->
-                            <!--            </select>-->
-                            <!--        </div>-->
-                            <!--    </div>-->
-                            <!--</div>-->
-
-                            <!-- option for save in daily log -->
-
-
 
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="below-divider"></div>
@@ -103,28 +79,12 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                             <div class="dynamic-form-fields"></div>
 
-                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel ">
-                                <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                    <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Send To</label>
-                                    <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                        <select class="send_to demo-default form-control" multiple="" placeholder="Select a person...">
-                                            <option value="">Select a person...</option>
-                                            <option value="4">Thomas Edison</option>
-                                            <option value="1">Nikola</option>
-                                            <option value="3">Nikola Tesla</option>
-                                            <option value="5">Arnold Schwarzenegger</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> -->
-
                             <div class="modal-footer m-t-0 m-b-15 modal-bttm">
                                 <!-- <input type="hidden" name="plan_detail" value=""> -->
                                 <!--  <input type="hidden" name="service_user_id" value="{{ $service_user_id }}"> -->
                                 <input type="hidden" name="location_id" value="{{ $this_location_id }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
-                                    Cancel </button>
+                                <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">Cancel </button>
                                 <button class="btn btn-warning sbt-dyn-form-btn" type="submit"> Confirm </button>
                                 <!-- sbt-bmp-btn  -->
                             </div>
@@ -148,53 +108,53 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     </div>
 
                     <!-- Search Box -->
-                    <div class="search-box risk-tabs custm-tabs">
+                    <!-- <div class="search-box risk-tabs custm-tabs">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Search</h3>
                         </div>
-                        <!--<div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">-->
-                        <!--    <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 cus-lbl text-right"> Title: </label>-->
-                        <!--    <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">-->
-                        <!--        <div class="select-style">-->
-                        <!--            <select name="search_dyn_record" id="search_type">-->
-                        <!--                <option value="">Select</option>-->
-                        <!--                <option value='1'> Title </option>-->
-                        <!--                <option value='2'> Date </option>-->
-                        <!--            </select>-->
-                        <!--        </div>-->
-                        <!--         <input type="text" name="search_dyn_record" class="form-control" maxlength="255"> -->
-                        <!--    </div>-->
-                        <!--</div>-->
-                        <!--<div class="col-md-12 col-sm-12 col-xs-12 p-0 search_title">-->
-                        <!--    <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 cus-lbl"> Title: </label>-->
-                        <!--    <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">-->
-                        <!--        <input type="text" name="search_dyn_title" class="form-control" maxlength="255">-->
-                        <!--    </div>-->
-                        <!--</div>-->
+                        <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
+                           <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 cus-lbl text-right"> Title: </label>
+                           <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">
+                               <div class="select-style">
+                                   <select name="search_dyn_record" id="search_type">
+                                       <option value="">Select</option>
+                                       <option value='1'> Title </option>
+                                       <option value='2'> Date </option>
+                                   </select>
+                               </div>
+                                <input type="text" name="search_dyn_record" class="form-control" maxlength="255">
+                           </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 p-0 search_title">
+                           <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 cus-lbl"> Title: </label>
+                           <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">
+                               <input type="text" name="search_dyn_title" class="form-control" maxlength="255">
+                           </div>
+                        </div>
                         <div class="col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd search_date">
                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Date: </label>
                             <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
 
-                                <input name="search_dyn_date" type="date" size="45" class="form-control">
+                                <input name="search_dyn_date" type="date" size="45" class="form-control"> -->
                                 <!-- <span class="input-group-btn add-on">
                                         <button class="btn clndr btn-primary" type="button"><i class="fa fa-calendar"></i></button>
                                     </span> -->
 
-                            </div>
-                        </div>
+                            <!-- </div>
+                        </div> -->
                         <!-- alert messages -->
                         @include('frontEnd.common.popup_alert_messages')
-                        <form id="searched-dyn-records-form" method="post">
-                            <div class="modal-space modal-pading searched-record text-center">
+                        <!-- <form id="searched-dyn-records-form" method="post"> -->
+                            <!-- <div class="modal-space modal-pading searched-record text-center"> -->
                                 <!--searched Record List using ajax -->
-                            </div>
-                        </form>
-                        <div class="modal-footer m-t-0 recent-task-sec">
+                            <!-- </div> -->
+                        <!-- </form> -->
+                        <!-- <div class="modal-footer m-t-0 recent-task-sec">
                             <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
                                 Cancel </button>
                             <button class="btn btn-warning search-dyn-btn" type="button"> Confirm</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -563,7 +523,9 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         $('.e-sbt-dyn-form-btn').click(function() {
 
             var model_id = $(this).closest('.modal').attr('id');
-            var previous_model_id = $(this).closest('.modal').find('.previous_modal_btn').attr('pre_modal');
+            // var previous_model_id = $(this).closest('.modal').find('.previous_modal_btn').attr('pre_modal');
+            var previous_model_id = $(this).closest('.modal').attr('id');
+            console.log("previous_model_id", previous_model_id);
             var logged_box = $('#' + previous_model_id).find('.logged-box');
             var form_id = $(this).closest('form').attr('id');
 
@@ -607,35 +569,19 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         return false;
                     }
 
+
+
+
                     if (resp == true) {
-
-                        //  const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-
-                        // for (let i = 0; i < hideImageDivs.length; i++) {
-                        //     hideImageDivs[i].style.display = "none";
-                        // }
-
-                        $('#' + model_id).modal('hide');
-                        $('#' + previous_model_id).modal('show');
 
                         $('#' + previous_model_id + ' span.popup_success_txt').text('Record has been Edited Successfully');
                         $('#' + previous_model_id + ' .popup_success').show();
                         setTimeout(function() {
                             $('#' + previous_model_id + ' .popup_success').fadeOut()
+                            location.reload();
                         }, 5000);
 
-                        $('#' + previous_model_id + ' .dyn-logged-btn').click();
 
-                        //$('#'+previous_model_id+' .custm-tabs'
-
-                        // $('#'+model_id+' .dynamic_form_select').val('0');
-                        // $('#'+model_id+' .dynamic-form-fields').html('');
-
-                        //for mfc case only
-                        /*$(".js-example-placeholder-single-mfc").select2({
-                          dropdownParent: $('#mfcModal'),
-                          placeholder: "Select Description"
-                        });*/
                         $('.e-sbt-dyn-form-btn').attr('disabled', true);
                     } else {
                         //show error message
@@ -643,7 +589,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         $('#' + previous_model_id + ' .popup_error').show();
                         setTimeout(function() {
                             $('#' + previous_model_id + ' .popup_error').fadeOut()
-                            location.reload()
                         }, 5000);
                     }
 

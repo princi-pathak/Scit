@@ -251,3 +251,125 @@
             margin: 10px 0;
         }
     }
+
+.timelineInput {
+        display: flex;
+        justify-content: end;
+    }
+
+    .timelineInput a {
+        order: 1;
+        width: 50%;
+    }
+
+    .timelineInput a span input, .rightSideInput  a span input{
+        color: #fff;
+        height: 40px;
+        border: none;
+    }
+
+    .timLineDate {
+        background-color: #777;
+        color: #fff;
+        border-radius: 4px;
+        padding: 7px 6px;
+        order: 3;
+        display: block;
+        margin-left: 12px;
+        line-height: 24px;
+        position: relative;
+    }
+
+    .rightSideInput {
+        margin-top: 60px;
+        display: flex;
+    }
+   .ritOrdring.one {
+    order: 2;
+    }
+    .ritOrdring.two {
+        order: 3;
+        border-top-right-radius: 4px !important;
+        border-bottom-right-radius: 4px !important;
+    }
+    .ritOrdring.three {
+        order: 1;
+    }
+    .rightSideInput a{
+         width: 50%;
+    }
+     .rightSideInput .rightdate {
+        background-color: #777;
+        color: #fff;
+        border-radius: 4px;
+        padding: 7px 6px;
+        display: block;
+        margin-right: 12px;
+        line-height: 24px;
+        position: relative;
+    }
+
+    .pop-notifbox.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .arrow {
+    border-bottom: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-left: 8px solid #777777 !important;
+    display: block;
+    height: 0;
+    right: -8px;
+    position: absolute;
+    top: 13px;
+    width: 0;
+}
+.rightArrow{
+    border-bottom: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-right: 8px solid #777777 !important;
+    display: block;
+    height: 0;
+    left: -8px;
+    position: absolute;
+    top: 13px;
+    width: 0;
+}
+.popovr .form-control {
+    border-radius: 0px;
+}
+.cog-panel .input-group{
+    position: relative;
+}
+.cog-panel .input-group.rightSideInput::after{
+    content: '';
+    position: absolute;
+    bottom: 16px;
+    right: -36px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #777777;
+}
+.cog-panel .input-group.rightSideInput::after{
+    right: inherit;
+    left: -35px;
+}
+.ritOrdring.two:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 1px;
+    height: 20px;
+    background: #fff;
+}
+.timelineInput .input-group-addon:before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 10px;
+    width: 1px;
+    height: 20px;
+    background: #fff;
+}
