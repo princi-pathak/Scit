@@ -122,6 +122,7 @@
   @if(Auth::user()->design_layout == 0)
   <link href="{{ url('public/frontEnd/css/style.css') }}" rel="stylesheet">
   <link href="{{ url('public/frontEnd/css/style-responsive.css') }}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
   <link href="{{ url('public/frontEnd/css/developer.css') }}" rel="stylesheet">
   @else
   <link href="{{ url('public/frontEnd/css/dyslexia/dyslexia_style.css') }}" rel="stylesheet">

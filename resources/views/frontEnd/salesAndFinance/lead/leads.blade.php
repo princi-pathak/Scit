@@ -1,3 +1,4 @@
+@extends('frontEnd.layouts.master')
 @include('frontEnd.salesAndFinance.jobs.layout.header')
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>

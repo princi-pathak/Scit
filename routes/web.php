@@ -182,8 +182,8 @@ Route::post('api/remove-device', 'App\Http\Controllers\Api\DeviceController@remo
 
 // Route::match(['get','post'], '/login', 'App\Http\Controllers\frontEnd\UserController@login');
 Route::match(['get', 'post'], '/login', 'App\Http\Controllers\frontEnd\UserController@login')->middleware('PreventBack');
-Route::post('/yes_logout','App\Http\Controllers\frontEnd\UserController@yes_logout');
-Route::post('/no_logout','App\Http\Controllers\frontEnd\UserController@no_logout');
+Route::post('/yes_logout', 'App\Http\Controllers\frontEnd\UserController@yes_logout');
+Route::post('/no_logout', 'App\Http\Controllers\frontEnd\UserController@no_logout');
 
 Route::get('/logout', 'App\Http\Controllers\frontEnd\UserController@logout');
 Route::post('/forgot-password', 'App\Http\Controllers\frontEnd\ForgotPasswordController@send_forgot_pass_link_mail');
@@ -713,6 +713,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
 			Route::get('/get30DaysLead', 'get30DaysLead')->name('lead.ajax.get30DaysLead');
 			Route::post('/saveLeadConvertQuote', 'saveLeadConvertQuote')->name('lead.ajax.saveLeadConvertQuote');
+			Route::post('lead/getCRMTaskDataToday', 'getCRMTaskDataToday')->name('lead.ajax.getCRMTaskDataToday');
 
 			// Countries List
 			Route::get('/getCountriesList', 'getCountriesList')->name('ajax.getCountriesList');
@@ -731,6 +732,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/saveLeadRejectTypes', 'saveLeadRejectType')->name('lead.ajax.saveLeadRejectTypes');
 			Route::post('/editLeadRejectTypes', 'saveLeadRejectType')->name('lead.ajax.editLeadRejectTypes');
 			Route::post('/saveLeadRejectReasons', 'saveLeadRejectReason')->name('lead.ajax.saveLeadRejectReasons');
+			Route::post('lead/getCRMComplaintData', 'getCRMComplaintData')->name('lead.ajax.getCRMComplaintData');
+			Route::post('lead/getCRMTasksData', 'getCRMTasksData')->name('lead.ajax.getCRMTasksData');
+			Route::post('lead/getCRMAllData', 'getCRMAllData')->name('lead.ajax.getCRMAllData');
+			Route::post('lead/saveCRMLeadComplaint', 'saveCRMLeadComplaint')->name('lead.ajax.saveCRMLeadComplaint');
+			Route::post('lead/saveCRMLeadTaskAndTimer', 'saveCRMLeadTaskAndTimer')->name('lead.ajax.saveCRMLeadTaskAndTimer');
 		});
 
 		Route::prefix('leads')->group(function () {
@@ -791,7 +797,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/saveRegion', 'saveRegion')->name('quote.ajax.saveRegion');
 			Route::post('/editRegion', 'saveRegion')->name('quote.ajax.editRegion');
 			Route::get('/getRegions', 'getRegions')->name('quote.ajax.getRegions');
-			
+
 			Route::get('/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
 			Route::post('/saveQuoteData', 'store');
 			Route::get('/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
@@ -813,11 +819,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/search', 'searchQuote');
 			Route::get('/rejected', 'index');
 		});
-		
+
 		Route::get('/quote-details/edit/{id}', 'editQuoteDetails')->name('quote.editDetails');
 		Route::get('quote-details/add_multi_attachment', 'add_multi_attachment')->name('quote.addMultiAttachment');
-		
-		
+
+
 		Route::prefix('quotes')->group(function () {
 			Route::patch('/statusChange', 'statusChange')->name('quote.ajax.statusChange');
 			Route::get('/getActiveRejectType', 'getActiveRejectType')->name('quote.ajax.getActiveRejectType');
@@ -828,7 +834,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/getQuoteInvoiceDeposit', 'getQuoteInvoiceDeposit')->name('quote.ajax.getQuoteInvoiceDeposit');
 			Route::post('/searchQuoteData', 'searchQuoteData')->name('quote.ajax.searchQuoteData');
 		});
-
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {
