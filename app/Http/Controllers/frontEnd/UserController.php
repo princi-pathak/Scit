@@ -93,6 +93,8 @@ class UserController extends Controller
 									//echo csrf_token(); die;
 									//echo "222"; die;
 									return redirect('/')->with('success', 'Welcome back ' . Auth::user()->user_name);
+								}else {
+									return redirect()->back()->with('error', 'Incorrect email or password combination.');
 								}
 							} elseif ($user_info->user_type == 'N') {
 
@@ -264,11 +266,9 @@ class UserController extends Controller
 		return view('frontEnd.login');
 	}
 	public function yes_logout(Request $request){
-		// echo "<pre>";print_r(Session()->all());die;
-		// , 'home_id' => Session()->get('home_id')
 		try{
 			if (Auth::attempt(['user_name' => Session()->get('user_name'), 'password' => Session()->get('password')])) {
-				// echo "<pre>";print_r(Auth::user());die;
+				
 				DB::beginTransaction();
 				$user=User::find(Auth::user()->id);
 				$user->login_ip='';
@@ -276,16 +276,24 @@ class UserController extends Controller
 				$user->logged_in=0;
 				$user->save();
 				DB::commit();
+				$request->merge([
+					'username' => Session::get('user_name'),
+					'password' => Session::get('password'),
+					'home'     => Session::get('home_id'),
+					'_token'   => csrf_token(),
+				]);
+				$request->setMethod('POST');
+				Auth::logout();
 				Session::forget('user_name');
 				Session::forget('password');
 				Session::forget('home_id');
-				return response()->json(['success'=>true,'message'=>'Logged Out']);
+				return app()->call([new self, 'login'], ['request' => $request]);
 			}else{
 				return response()->json(['success'=>false,'message'=>'Something went wrong! Please try again later']);
 			}
 		}catch (\Exception $e) {
 			DB::rollBack();
-			Log::error("Rating Error:(" . date('d-m-Y H:i') . "): " . $e->getMessage());
+			Log::error("Yes Logout Error:(" . date('d-m-Y H:i') . "): " . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'message' => 'Something went wrong!',

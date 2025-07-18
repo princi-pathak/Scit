@@ -182,7 +182,7 @@ Route::post('api/remove-device', 'App\Http\Controllers\Api\DeviceController@remo
 
 // Route::match(['get','post'], '/login', 'App\Http\Controllers\frontEnd\UserController@login');
 Route::match(['get', 'post'], '/login', 'App\Http\Controllers\frontEnd\UserController@login')->middleware('PreventBack');
-Route::post('/yes_logout', 'App\Http\Controllers\frontEnd\UserController@yes_logout');
+Route::get('/yes_logout', 'App\Http\Controllers\frontEnd\UserController@yes_logout');
 Route::post('/no_logout', 'App\Http\Controllers\frontEnd\UserController@no_logout');
 
 Route::get('/logout', 'App\Http\Controllers\frontEnd\UserController@logout');
