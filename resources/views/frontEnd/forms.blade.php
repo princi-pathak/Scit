@@ -22,6 +22,7 @@ $string = array(
 'h' => 'hour',
 'i' => 'minute',
 's' => 'second',
+
 );
 foreach ($string as $k => &$v) {
 if ($diff->$k) {
@@ -102,7 +103,7 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
 
                 <!-- sourabh -->
                 <div class="Select_staff_inner">
-                    <!-- <input type="text" class="form-control" id="keyword" onKeyPress="myFunctionkey()" onKeyUp="myFunctionkey()" name="keyword" placeholder="Keyword"> -->
+                    <input type="text" class="form-control" id="keyword" onKeyPress="myFunctionkey()" onKeyUp="myFunctionkey()" name="keyword" placeholder="Keyword">
                 </div>
             </div>
 
@@ -118,8 +119,6 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
                         </article>
 
                         <div class="timeline-messages view-dyn-record">
-                            
-                            
                         </div>
                         <!-- <article class="timeline-item alt">
                             <div class="text-right">
@@ -136,7 +135,7 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
     </section>
     <!--main content end-->
 
-     <script>
+    <script>
         //logged btn click view bmp title
         $(document).ready(function() {
             // $(document).on('click', '.logged-dyn-btn', function() {
@@ -164,6 +163,22 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
             });
             // return false;
             // });
+        });
+
+        function showDate() {
+            $('#date_range_input').click();
+        }
+
+
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
         });
     </script>
 
