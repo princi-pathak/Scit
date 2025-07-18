@@ -241,8 +241,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                         </article>
                         <div id="logs_articles">
 
-                            <?php //echo "<pre>";print_r($log_book_records);
-                            ?>
+                            <?php //echo "<pre>";print_r($log_book_records); ?>
                             @foreach ($log_book_records as $key )
 
                             <?php if ($key['logType'] == "1") {
@@ -253,6 +252,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                 $logType = "Monthly Log";
                             }
                             ?>
+
 
                             @if($loop->iteration % 2 == 0)
 

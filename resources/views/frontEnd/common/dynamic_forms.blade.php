@@ -14,6 +14,14 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
     .pagination>li>span {
         padding: 5px 6px;
     }
+
+    .dpYears span.input-group-btn.add-on {
+        width: 36px;
+    }
+
+    .dpYears .add-on .btn {
+        padding: 6px 9px;
+    }
 </style>
 
 <!-- dynmic Form Modal -->
@@ -92,20 +100,20 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     </div>
 
                     <!-- logged plans -->
-                    <div class="logged-box risk-tabs custm-tabs">
+                    <!-- <div class="logged-box risk-tabs custm-tabs">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h3 class="m-t-0 m-b-20 clr-blue fnt-20"> Logged Records </h3>
-                        </div>
-                        <!-- alert messages -->
-                        @include('frontEnd.common.popup_alert_messages')
-                        <div class="modal-space modal-pading view-dyn-record">
-                            <!-- record shown using Ajax -->
-                        </div>
+                        </div> -->
+                    <!-- alert messages -->
+                    <!-- @include('frontEnd.common.popup_alert_messages')
+                        <div class="modal-space modal-pading view-dyn-record"> -->
+                    <!-- record shown using Ajax -->
+                    <!-- </div>
                         <div class="modal-footer m-t-0 recent-task-sec">
-                            <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
-                            <!-- <button class="btn btn-warning sbt-edit-bmp-record" type="button"> Confirm</button> -->
-                        </div>
-                    </div>
+                            <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button> -->
+                    <!-- <button class="btn btn-warning sbt-edit-bmp-record" type="button"> Confirm</button> -->
+                    <!-- </div>
+                    </div> -->
 
                     <!-- Search Box -->
                     <!-- <div class="search-box risk-tabs custm-tabs">
@@ -136,20 +144,20 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
 
                                 <input name="search_dyn_date" type="date" size="45" class="form-control"> -->
-                                <!-- <span class="input-group-btn add-on">
+                    <!-- <span class="input-group-btn add-on">
                                         <button class="btn clndr btn-primary" type="button"><i class="fa fa-calendar"></i></button>
                                     </span> -->
 
-                            <!-- </div>
+                    <!-- </div>
                         </div> -->
-                        <!-- alert messages -->
-                        @include('frontEnd.common.popup_alert_messages')
-                        <!-- <form id="searched-dyn-records-form" method="post"> -->
-                            <!-- <div class="modal-space modal-pading searched-record text-center"> -->
-                                <!--searched Record List using ajax -->
-                            <!-- </div> -->
-                        <!-- </form> -->
-                        <!-- <div class="modal-footer m-t-0 recent-task-sec">
+                    <!-- alert messages -->
+                    <!-- @include('frontEnd.common.popup_alert_messages') -->
+                    <!-- <form id="searched-dyn-records-form" method="post"> -->
+                    <!-- <div class="modal-space modal-pading searched-record text-center"> -->
+                    <!--searched Record List using ajax -->
+                    <!-- </div> -->
+                    <!-- </form> -->
+                    <!-- <div class="modal-footer m-t-0 recent-task-sec">
                             <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
                                 Cancel </button>
                             <button class="btn btn-warning search-dyn-btn" type="button"> Confirm</button>
@@ -253,27 +261,10 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 <div class="row">
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="">
-                            <!-- {{-- sourabh --}}
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Category: </label>
-                                <div class="col-md-6 col-sm-10 col-xs-12">
-                                    <div class="select-bi" style="width:100%;float:left;">
-                                        <select name="s_category_id" class="form-control" required id="category_list" style="width:100%;">
-                                            <option value="0"> Select Category </option>
-                                            @php
-                                            $category = App\CategoryFrontEnd::select('category.*')->orderBy('name', 'asc')->get();
-                                            @endphp
-                                            @foreach($category as $category_value)
-                                            <option value="{{ $category_value->id }}">{{ $category_value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> -->
                             {{-- sourabh --}}
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                 <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child: </label>
-                                <div class="col-md-6 col-sm-10 col-xs-12">
+                                <div class="col-md-8 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         <select name="s_user_id" class="form-control" required id="records_list" style="width:100%;">
                                             <option value="0"> Select Child </option>
@@ -285,11 +276,37 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                 </div>
                             </div>
 
-                              <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd" id="weekly">
                                 <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Weekly log date:</label>
-                                <div class="col-md-6 col-sm-10 col-xs-12">
-                                    <input type="text" class="form-control">
-                                    <input type="text" class="form-control">
+                                <div class="col-md-4 col-sm-10 col-xs-12 ">
+                                    <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
+                                        <input name="start_date" readonly="" class="form-control trans" id="week_start_date" type="text" value="">
+                                        <span class="input-group-btn add-on">
+                                            <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-10 col-xs-12 ">
+                                    <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
+                                        <input name="end_date" readonly="" id="week_end_date" class="form-control trans" type="text" value="">
+                                        <span class="input-group-btn add-on">
+                                            <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng" id="monthly">
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                                    <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Date: </label>
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+                                        <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
+                                            <input name="date" size="16" readonly="" class="form-control trans" type="text" value="">
+                                            <span class="input-group-btn add-on">
+                                                <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -341,27 +358,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         if (isAuthenticated(resp) == false) {
                             return false;
                         }
-
-                        // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
-                        //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-                        //     const imagePreviews = document.getElementsByClassName('imagePreview');
-
-                        //     // Show or hide the image preview for each form
-                        //     for (let i = 0; i < hideImageDivs.length; i++) {
-                        //         hideImageDivs[i].style.display = "block";
-                        //     }
-
-                        //     // Set the src attribute for each image preview
-                        //     for (let i = 0; i < imagePreviews.length; i++) {
-                        //         imagePreviews[i].src = resp['image'];
-                        //     }
-                        // } else {
-                        //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-
-                        //     for (let i = 0; i < hideImageDivs.length; i++) {
-                        //         hideImageDivs[i].style.display = "none";
-                        //     }
-                        // }
 
                         var response = resp['response'];
                         if (response == true) {
@@ -824,9 +820,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 </script>
 
 <script>
-    //    $(document).on('click', '.dyn_form_del_btn', function() {
-    $(document).off('click', '.dyn_form_del_btn').on('click', '.dyn_form_del_btn', function() {
-            console.log("dfsdfd sdgg");
+    $(document).ready(function() {
+        $(document).on('click', '.dyn_form_del_btn', function() {
 
             if (!confirm('{{ DEL_CONFIRM }}')) {
                 return false;
@@ -867,8 +862,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
             return false;
         });
-    $(document).ready(function() {
-     
     });
 </script>
 
@@ -942,21 +935,14 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
     $(document).ready(function() {
 
         //when enter press on search box
-        $('input[name=\'search_dyn_record\']').keydown(function(event) {
-            var keyCode = (event.keyCode ? event.keyCode : event.which);
-            if (keyCode == 13) {
-                return false;
-            }
-        });
-
-        //when bmp search confirm button is clicked
-        $(document).on('click', '#dynmicFormModal .search-dyn-btn', function() {
-            update_search_list()
-            return false;
-        });
+        // $('input[name=\'search_dyn_record\']').keydown(function(event) {
+        //     var keyCode = (event.keyCode ? event.keyCode : event.which);
+        //     if (keyCode == 13) {
+        //         return false;
+        //     }
+        // });
 
         function update_search_list() {
-            // alert("data aaya");
             // var searchType = document.getElementById('search_type').value;
             var searchType = 2;
             var search_input = (searchType == 1) ? $('input[name="search_dyn_title"]') : $('input[name="search_dyn_date"]');
@@ -1006,18 +992,54 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
 <script>
     $(document).ready(function() {
-
+        const weekly = document.getElementById('weekly');
+        const monthly = document.getElementById('monthly');
+        weekly.style.display = 'none';
+        monthly.style.display = 'none';
         $(document).on('click', '.dyn_form_daily_log', function() {
 
             var dyn_form_id = $(this).attr('dyn_form_id');
             var logtype = $(this).attr('logtype');
             $('#logtype').val(logtype);
+
             //alert(logtype);
             if (logtype == 1) {
+                weekly.style.display = 'none';
+                monthly.style.display = 'none';
                 $('.logtitle').text("Add Record To Child's Daily Log");
+
             } else if (logtype == 2) {
+
+                var startInput = document.getElementById('week_start_date');
+                var endInput = document.getElementById('week_end_date');
+
+                var today = new Date();
+
+                // Format today's date
+                var yyyy = today.getFullYear();
+                var mm = String(today.getMonth() + 1).padStart(2, '0');
+                var dd = String(today.getDate()).padStart(2, '0');
+
+                // var startDate = `${yyyy}-${mm}-${dd}`;
+                var startDate = `${dd}-${mm}-${yyyy}`;
+                startInput.value = startDate;
+
+                // Add 7 days for end date
+                today.setDate(today.getDate() + 7);
+                var yyyy2 = today.getFullYear();
+                var mm2 = String(today.getMonth() + 1).padStart(2, '0');
+                var dd2 = String(today.getDate()).padStart(2, '0');
+
+                // var endDate = `${yyyy2}-${mm2}-${dd2}`;
+                var endDate = `${dd2}-${mm2}-${yyyy2}`;
+                endInput.value = endDate;
+
+
+                weekly.style.display = 'block';
                 $('.logtitle').text("Add Record To Child's Weekly Log");
             } else if (logtype == 3) {
+                weekly.style.display = 'none';
+                monthly.style.display = 'block';
                 $('.logtitle').text("Add Record To Child's Monthly Log");
             }
             $('#dynmicFormModal').modal('hide');
@@ -1062,16 +1084,25 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             $('.loader').show();
             $('body').addClass('body-overflow');
 
+            var dataToSend = {
+                'dyn_form_id': dyn_form_id,
+                's_user_id': s_user_id,
+                's_category_id': s_category_id,
+                'logtype': logtype,
+                '_token': token
+            };
+
+            // Add conditionally only if logtype is 2
+            if (logtype == 2) {
+                dataToSend.start_date = $('#week_start_date').val();
+                dataToSend.end_date = $('#week_end_date').val();
+            }
+            console.log("dataToSend", dataToSend);
+
             $.ajax({
                 type: 'post',
                 url: "{{ url('/service/dynamic-form/daily-log') }}",
-                data: {
-                    'dyn_form_id': dyn_form_id,
-                    's_user_id': s_user_id,
-                    's_category_id': s_category_id,
-                    'logtype': logtype,
-                    '_token': token
-                },
+                data: dataToSend,
                 //dataType : 'json',
                 success: function(res) {
                     console.log(res);
@@ -1090,13 +1121,17 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             $('.popup_success').fadeOut()
                         }, 5000);
 
-                        if (logtype == 1) {
-                            window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;
-                        } else if (logtype == 2) {
-                            window.location.href = "{{ url('/service/weekly-logs?key=') }}" + s_user_id;
-                        } else if (logtype == 3) {
-                            window.location.href = "{{ url('/service/monthly-logs?key=') }}" + s_user_id;
-                        }
+                        window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;
+
+
+                    // only one page load and show the data for daily weekly and monthly
+                        // if (logtype == 1) {
+                        //     window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;
+                        // } else if (logtype == 2) {
+                        //     window.location.href = "{{ url('/service/weekly-logs?key=') }}" + s_user_id;
+                        // } else if (logtype == 3) {
+                        //     window.location.href = "{{ url('/service/monthly-logs?key=') }}" + s_user_id;
+                        // }
 
 
                         $('.dyn-logged-btn').click();
