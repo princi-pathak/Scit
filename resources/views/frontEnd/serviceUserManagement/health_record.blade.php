@@ -162,7 +162,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 
                         <div class="timeline-messages" id="logs_articles">
                             @php
-                            $colors = ['#8fd6d6', '#E13533', '#bda4ec', '#fed65a', '#81b56b'];
+                            $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
                             shuffle($colors); // Randomizes the order
                             @endphp
 

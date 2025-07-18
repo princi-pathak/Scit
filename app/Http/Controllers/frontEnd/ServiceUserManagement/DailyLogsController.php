@@ -1235,7 +1235,6 @@ class DailyLogsController extends ServiceUserManagementController
             $service_user_id = "";
         }
 
-
         $data = $request->input();
         $home_id = Auth::user()->home_id;
         $user_id = Auth::user()->id;

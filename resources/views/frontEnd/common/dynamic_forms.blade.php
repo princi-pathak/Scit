@@ -246,19 +246,19 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#dynmicFormModal" class="close" style="padding-right:6px"> <i class="fa fa-arrow-left"></i></a>
+                <!-- <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#dynmicFormModal" class="close" style="padding-right:6px"> <i class="fa fa-arrow-left"></i></a> -->
                 <h4 class="modal-title"><span class="logtitle"></span></h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="">
-                            {{-- sourabh --}}
-                            <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                            <!-- {{-- sourabh --}}
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                 <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Category: </label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
-                                        <select name="s_category_id" class="select-field form-control" required id="category_list" style="width:100%;">
+                                        <select name="s_category_id" class="form-control" required id="category_list" style="width:100%;">
                                             <option value="0"> Select Category </option>
                                             @php
                                             $category = App\CategoryFrontEnd::select('category.*')->orderBy('name', 'asc')->get();
@@ -272,11 +272,10 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             </div> -->
                             {{-- sourabh --}}
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child:
-                                </label>
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child: </label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
-                                        <select name="s_user_id" class="select-field form-control" required id="records_list" style="width:100%;">
+                                        <select name="s_user_id" class="form-control" required id="records_list" style="width:100%;">
                                             <option value="0"> Select Child </option>
                                             @foreach($service_users as $value)
                                             <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
@@ -285,6 +284,15 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                     </div>
                                 </div>
                             </div>
+
+                              <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Weekly log date:</label>
+                                <div class="col-md-6 col-sm-10 col-xs-12">
+                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
                             <div class="form-group modal-footer m-t-0 modal-bttm">
                                 <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                                 <input type="hidden" name="dyn_form_id" value="" id="dyn_form_id">
@@ -604,40 +612,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 <script>
     var seteditvalueeditable = true;
     $(document).ready(function() {
-        // $('.send_to').selectize({
-        //     maxItems: null,
-        //     valueField: 'id',
-        //     labelField: 'title',
-        //     searchField: 'title',
-        //     options: [
-        //         {id: 1, title: 'Spectrometer', url: 'http://en.wikipedia.org/wiki/Spectrometers'},
-        //         {id: 2, title: 'Star Chart', url: 'http://en.wikipedia.org/wiki/Star_chart'},
-        //         {id: 3, title: 'Electrical Tape', url: 'http://en.wikipedia.org/wiki/Electrical_tape'}
-        //     ],
-        //     create: false
-        // });
-        /* $('.send_to').selectize({
-
-             delimiter: ',',
-
-             persist: false,
-
-             create: function(input) {
-
-                 return {
-
-                     value: input,
-
-                     text: input
-
-                 }
-
-             }
-
-         });*/
 
         $(document).on('click', '.dyn-form-view-data', function() {
-
             var previous_model_id = $(this).closest('.modal').attr('id');
             var dynamic_form_id = $(this).attr('id');
             var form_id = $(this).closest('form').attr('id');
@@ -654,27 +630,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }
-
-                    //  if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
-                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-                    //     const imagePreviews = document.getElementsByClassName('imagePreview');
-
-                    //     // Show or hide the image preview for each form
-                    //     for (let i = 0; i < hideImageDivs.length; i++) {
-                    //         hideImageDivs[i].style.display = "block";
-                    //     }
-
-                    //     // Set the src attribute for each image preview
-                    //     for (let i = 0; i < imagePreviews.length; i++) {
-                    //         imagePreviews[i].src = resp['image'];
-                    //     }
-                    // } else {
-                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-
-                    //     for (let i = 0; i < hideImageDivs.length; i++) {
-                    //         hideImageDivs[i].style.display = "none";
-                    //     }
-                    // }
 
                     var response = resp['response'];
                     var form_builder_id = resp['form_builder_id'];
@@ -732,11 +687,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             });
             return false;
         });
-
-
-
-
-
 
         $(document).on('click', '.dyn-form-filler', function() {
             var previous_model_id = $(this).closest('.modal').attr('id');
@@ -874,8 +824,9 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 </script>
 
 <script>
-    $(document).ready(function() {
-        $(document).on('click', '.dyn_form_del_btn', function() {
+    //    $(document).on('click', '.dyn_form_del_btn', function() {
+    $(document).off('click', '.dyn_form_del_btn').on('click', '.dyn_form_del_btn', function() {
+            console.log("dfsdfd sdgg");
 
             if (!confirm('{{ DEL_CONFIRM }}')) {
                 return false;
@@ -884,8 +835,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             var this_record = $(this);
             var dyn_form_id = this_record.attr('id');
 
-            $('.loader').show();
-            $('body').addClass('body-overflow');
+            // $('.loader').show();
+            // $('body').addClass('body-overflow');
 
             $.ajax({
                 type: 'get',
@@ -896,26 +847,28 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     }
                     if (resp == 1) {
                         this_record.closest('.rows').remove();
-
+                        location.reload();
                         //show success delete message
-                        $('span.popup_success_txt').text("{{ DEL_RECORD }}");
-                        $('.popup_success').show();
-                        setTimeout(function() {
-                            $(".popup_success").fadeOut()
-                        }, 5000);
+                        // $('span.popup_success_txt').text("{{ DEL_RECORD }}");
+                        // $('.popup_success').show();
+                        // setTimeout(function() {
+                        //     $(".popup_success").fadeOut()
+                        // }, 5000);
                     } else {
                         //show delete message error
                         $('span.popup_error_txt').text('{{ COMMON_ERROR }}');
                         $('.popup_error').show();
                     }
 
-                    $('.loader').hide();
-                    $('body').removeClass('body-overflow');
+                    // $('.loader').hide();
+                    // $('body').removeClass('body-overflow');
                 }
             });
 
             return false;
         });
+    $(document).ready(function() {
+     
     });
 </script>
 
@@ -1053,6 +1006,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
 <script>
     $(document).ready(function() {
+
         $(document).on('click', '.dyn_form_daily_log', function() {
 
             var dyn_form_id = $(this).attr('dyn_form_id');
@@ -1429,20 +1383,4 @@ $(document).ready(function(){
 
 
     }
-    // $(document).ready(function() {
-    //     $('.search_title, .search_date').hide(); // hide both elements on page load
-
-    //     $('#search_type').on('change', function() {
-    //         var searchType = document.getElementById('search_type').value;
-    //         $('.search_title, .search_date').hide(); // hide both elements first
-    //         switch (searchType) {
-    //             case '1':
-    //                 $('.search_title').show();
-    //                 break;
-    //             case '2':
-    //                 $('.search_date').show();
-    //                 break;
-    //         }
-    //     });
-    // });
 </script>
