@@ -1,5 +1,4 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
-
+@extends('frontEnd.layouts.master')
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
@@ -115,4 +114,3 @@
         document.body.removeChild(link);
     });
 </script>
-@include('frontEnd.salesAndFinance.jobs.layout.footer')
