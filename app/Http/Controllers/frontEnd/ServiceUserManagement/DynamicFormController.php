@@ -510,6 +510,7 @@ class DynamicFormController extends Controller
         if ($request->isMethod('post')) {
 
             $data = $request->all();
+            // dd($data);
             $home_ids = Auth::user()->home_id;
             $ex_home_ids = explode(',', $home_ids);
             $home_id = $ex_home_ids[0];
@@ -549,6 +550,8 @@ class DynamicFormController extends Controller
             $log_book->user_id         = Auth::user()->id;
             $log_book->title           = $dyn_form->title ?? $title_detail->title;
             $log_book->date            = date('Y-m-d H:i:s');
+            $log_book->start_date      = Carbon::createFromFormat('d-m-Y', $data['start_date'])->format('Y-m-d');
+            $log_book->end_date        = Carbon::createFromFormat('d-m-Y', $data['end_date'])->format('Y-m-d');
             $log_book->details         = $dyn_form->details ?? $title_detail->detail;
             $log_book->category_id     = $s_category_id;
             $log_book->category_name   = $category_data ? $category_data->name : null;
