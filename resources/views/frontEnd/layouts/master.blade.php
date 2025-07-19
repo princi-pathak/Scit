@@ -3,82 +3,7 @@
 
 <head>
   <!-- <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>  -->
-  <style type="text/css">
-    /*09 Aug 2018*/
-    .chat_opt {
-      display: flex;
-      background: #1f88b5;
-      border-radius: 100%;
-      bottom: 70px;
-      color: #fff;
-      font-size: 30px;
-      padding: 10px;
-      position: fixed;
-      right: 40px;
-      z-index: 999;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      height: 50px;
-      width: 50px;
-    }
-
-    .chat_opt:hover i {
-      color: #fff;
-    }
-
-    /* #call_modal .wrap-info {
-      float: left;
-      margin-bottom: 30px;
-      width: 100%;
-    } */
-
-    .wrap-info span.icon {
-      color: #e1355d;
-      font-size: 56px;
-      margin-bottom: 20px;
-      transition: all 0.5s ease 0s;
-    }
-
-    .wrap-info>p {
-      color: #606060;
-      font-size: 16px;
-    }
-
-    .wrap-info a {
-      color: #00938d;
-      transition: all 0.5s ease 0s;
-    }
-
-    .wrap-info i {
-      color: #1f88b5;
-      font-size: 25px;
-      /*    margin-bottom: 20px;*/
-    }
-
-    #call_modal.modal.in .modal-dialog {
-      transform: translate(0, 160px);
-    }
-
-    .prient-btn {
-      text-align: center;
-      padding: 0px 0px 20px 0px;
-    }
-
-    .prient-btn input {
-      background: #1ca59e;
-      color: #fff;
-      border: none;
-      padding: 7px 15px;
-      border-radius: 5px;
-      font-size: 14px;
-      text-transform: capitalize;
-    }
-
-    .field-wrapper {
-      display: block !important;
-    }
-  </style>
+ 
   
   <meta charset="utf-8">
 
@@ -187,6 +112,79 @@
 
 
     <style type="text/css">
+      .chat_opt {
+      display: flex;
+      background: #1f88b5;
+      border-radius: 100%;
+      bottom: 70px;
+      color: #fff;
+      font-size: 30px;
+      padding: 10px;
+      position: fixed;
+      right: 40px;
+      z-index: 999;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+    }
+
+    .chat_opt:hover i {
+      color: #fff;
+    }
+
+    /* #call_modal .wrap-info {
+      float: left;
+      margin-bottom: 30px;
+      width: 100%;
+    } */
+
+    .wrap-info span.icon {
+      color: #e1355d;
+      font-size: 56px;
+      margin-bottom: 20px;
+      transition: all 0.5s ease 0s;
+    }
+
+    .wrap-info>p {
+      color: #606060;
+      font-size: 16px;
+    }
+
+    .wrap-info a {
+      color: #00938d;
+      transition: all 0.5s ease 0s;
+    }
+
+    .wrap-info i {
+      color: #1f88b5;
+      font-size: 25px;
+      /*    margin-bottom: 20px;*/
+    }
+
+    #call_modal.modal.in .modal-dialog {
+      transform: translate(0, 160px);
+    }
+
+    .prient-btn {
+      text-align: center;
+      padding: 0px 0px 20px 0px;
+    }
+
+    .prient-btn input {
+      background: #1ca59e;
+      color: #fff;
+      border: none;
+      padding: 7px 15px;
+      border-radius: 5px;
+      font-size: 14px;
+      text-transform: capitalize;
+    }
+
+    .field-wrapper {
+      display: block !important;
+    }
     /*09 Aug 2018*/
     .chat_opt {
       display: flex;
@@ -257,6 +255,9 @@
       font-size: 14px;
       text-transform: capitalize;
     }
+ 
+    /*09 Aug 2018*/
+    
   </style>
 
 </head>
