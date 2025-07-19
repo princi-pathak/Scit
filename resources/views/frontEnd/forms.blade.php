@@ -48,7 +48,7 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
                 <div class="pull-right">
                     <div class="filter_buttons" style="text-align:right;padding-right:16px;display:inline-block; padding-bottom: 10px;">
                         <a data-toggle="modal" href="#dynmicFormModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" style="background-color:#d9534f;color:white;">PDF Export</a>
                     </div>
                 </div>
             </div>
@@ -117,16 +117,8 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
                                 </div>
                             </div>
                         </article>
-
                         <div class="timeline-messages view-dyn-record">
                         </div>
-                        <!-- <article class="timeline-item alt">
-                            <div class="text-right">
-                                <div class="time-show first">
-                                    <a href="#" class="btn btn-primary" id="today">08/07/2025</a>
-                                </div>
-                            </div>
-                        </article> -->
                     </div>
                 </div>
             </div>
@@ -180,11 +172,57 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
                 console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
             });
         });
+
+        function applyFormFilter() {
+            var staffId = $('#staff_member').val();
+            var childId = $('#service_user').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            var title = $('#keyword').val();
+
+            
+            let formdata = {
+                'staff_id' : staffId,
+                'child_id' : childId,
+                'start_date' : start_date,
+                'end_date' : end_date,
+                'title' : title
+            };
+            console.log(formdata);
+
+            $.ajax({
+                type: 'post',
+                url: "{{ url('/service/dynamic-forms') }}" + '?search=' + search,
+                data: formdata,
+                success: function(resp) {
+                    if (isAuthenticated(resp) == false) {
+                        return false;
+                    }
+                    if (resp == '') {
+                        $('#searched-dyn-records-form .searched-record').html('No Records found.');
+                    } else {
+                        $('#searched-dyn-records-form .searched-record').html(resp);
+                    }
+                    $('.loader').hide();
+                    $('body').removeClass('body-overflow');
+                }
+            });
+            return false;
+        }
+
+        // Apply filter automatically on change
+        $('#staff_member, #service_user, #date_range_input').on('change', applyFormFilter);
+
+        // For title field, use keyup so it filters as user types
+        $('#keyword').on('keyup', function() {
+            clearTimeout($(this).data('timer')); // clear previous timer
+            var timer = setTimeout(applyFormFilter, 500); // delay to prevent too many requests
+            $(this).data('timer', timer);
+        });
     </script>
 
 </section>
 
 
-@include('frontEnd.common.dynamic_forms')
 @include('frontEnd.serviceUserManagement.elements.comments')
 @endsection

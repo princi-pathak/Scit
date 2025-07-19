@@ -20,7 +20,7 @@
         <div class="alert alert-warning alert-dismissible m-0" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Warning! </strong> {!! Session::get('login_error') !!}
-            <button id="yes_logout" class="btn btn-warning">Yes</button>
+            <a id="yes_logout" href="{{url('/yes_logout')}}" class="btn btn-warning">Yes</a>
             <button id="no_logout" class="btn btn-danger">No</button>
         </div>
     </div>
