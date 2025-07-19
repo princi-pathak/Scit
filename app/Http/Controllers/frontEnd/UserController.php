@@ -429,7 +429,9 @@ class UserController extends Controller
 	public function switch_home()
 	{
 		// return "Hello";
-		return view('frontEnd.switch_home');
+		$admin_id = Admin::where('id',Auth::user()->admn_id)->where('is_deleted', 0)->value('id');
+		$homes = Home::select('id','title')->where('admin_id',$admin_id)->where('is_deleted','0')->get()->toArray();
+		return view('frontEnd.switch_home',compact('admin_id','homes'));
 	}
 
 	public function switch_home_submit(Request $request)
