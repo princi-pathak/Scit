@@ -722,6 +722,9 @@
       },
       success: function(result) {
         console.log(result);
+        if (isAuthenticated(result) == false) {
+            return false;
+        }
         document.getElementById('active_publish_rota_count').innerHTML = result.active_publish_rota_count;
         document.getElementById('active_unpublish_rota_count').innerHTML = result.active_unpublish_rota_count;
         document.getElementById('old_publish_rota_count').innerHTML = result.old_publish_rota_count;
@@ -792,6 +795,9 @@
         },
         success: function(result) {
           console.log(result);
+          if (isAuthenticated(result) == false) {
+              return false;
+          }
         }
       });
       result.innerHTML = e.target.value;
@@ -815,6 +821,9 @@
         },
         success: function(result) {
           console.log(result);
+          if (isAuthenticated(result) == false) {
+              return false;
+          }
           location.reload();
         }
       });
@@ -832,6 +841,9 @@
         },
         success: function(result) {
           console.log(result);
+          if (isAuthenticated(result) == false) {
+              return false;
+          }
           location.reload();
         }
       });
@@ -849,6 +861,9 @@
         },
         success: function(result) {
           console.log(result);
+          if (isAuthenticated(result) == false) {
+              return false;
+          }
           location.reload();
         }
       });
@@ -934,6 +949,9 @@
       },
       success: function(result) {
         console.log(result);
+        if (isAuthenticated(result) == false) {
+            return false;
+        }
         location.reload();
       }
     });
@@ -952,6 +970,9 @@
       },
       success: function(result) {
         console.log(result);
+        if (isAuthenticated(result) == false) {
+            return false;
+        }
         $('#rota_starting_date').append("<option>Week 1 - " + result + "</option>");
       }
     });
@@ -967,6 +988,9 @@
       },
       success: function(result) {
         console.log(result);
+        if (isAuthenticated(result) == false) {
+            return false;
+        }
         var total_emp_hours = 0;
         var total_emp_minutes = 0;
         var total_emp_minutes_with_break = 0;
