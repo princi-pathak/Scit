@@ -3456,3 +3456,6 @@ label {
     color: #666;
     font-weight: 600;
 }
+.fixed-top{
+  top: 0;
+}

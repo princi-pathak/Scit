@@ -280,36 +280,36 @@
     });
 </script>
 <script>
-    $("#yes_logout").on('click',function(){
-        $.ajax({
-            url: "{{url('/yes_logout')}}",
-            method: "POST",
-            data: {_token:"{{csrf_token()}}"},
-            success: function (response) {
-                console.log(response);
+    // $("#yes_logout").on('click',function(){
+    //     $.ajax({
+    //         url: "{{url('/yes_logout')}}",
+    //         method: "POST",
+    //         data: {_token:"{{csrf_token()}}"},
+    //         success: function (response) {
+    //             console.log(response);
                 
-                if (response.success === true) {
-                //    alert("Please try to login again");
-                    location.reload();
-                } else {
-                    alert("Error: " + response.message);
-                }
-            },
-            error: function (xhr) {
-                if (xhr.status === 422) {
-                    let errors = xhr.responseJSON.errors;
-                    let errorMessages = '';
+    //             if (response.success === true) {
+    //             //    alert("Please try to login again");
+    //                 location.reload();
+    //             } else {
+    //                 alert("Error: " + response.message);
+    //             }
+    //         },
+    //         error: function (xhr) {
+    //             if (xhr.status === 422) {
+    //                 let errors = xhr.responseJSON.errors;
+    //                 let errorMessages = '';
 
-                    $.each(errors, function (key, value) {
-                        errorMessages += value[0] + "\n";
-                    });
-                    alert(errorMessages);
-                } else {
-                    alert("Something went wrong. Please try again.");
-                }
-            }
-        });
-    });
+    //                 $.each(errors, function (key, value) {
+    //                     errorMessages += value[0] + "\n";
+    //                 });
+    //                 alert(errorMessages);
+    //             } else {
+    //                 alert("Something went wrong. Please try again.");
+    //             }
+    //         }
+    //     });
+    // });
     $("#no_logout").on('click',function(){
          $.ajax({
             url: "{{url('/no_logout')}}", // Laravel route or API endpoint
