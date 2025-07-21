@@ -58,15 +58,13 @@ class DynamicFormController extends Controller
                         //Daily record
                         $d_form_name = DB::table('dynamic_form_builder')->where('id', $data['dynamic_form_builder_id'])->value('title');
                         $inserlogbook = array(
-                            // 'title'=>$data['title'],
-                            'title' => null,
+                            'title'=>$data['title'],
                             'category_id' => 3,
                             'category_name' => 'Visitor',
                             'category_icon' => 'fa fa-users',
-                            // 'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
-                            'date' => null,
-                            // 'details'=>$data['details'],
-                            'details' => null,
+                            'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
+                            'formdata' => json_encode($data['data']),
+                            'details'=>$data['details'],
                             'home_id' => $home_id,
                             'user_id' => Auth::user()->id,
                             'image_name' => '',
@@ -101,6 +99,7 @@ class DynamicFormController extends Controller
                             'title' => $data['title'],
                             'status' => 1,
                             'details' => $data['details'],
+                            'formdata' => json_encode($data['data']),
                             'is_deleted' => 0,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
@@ -183,83 +182,8 @@ class DynamicFormController extends Controller
                         DB::table('notification')->insert($insert_plansnotification);
                     } else if ($val == 9 || $val == 10) {
                     }
-                    // else if($val==10){
-                    //     //daily record
-                    //     $d_form_name = DB::table('dynamic_form_builder')->where('id', $data['dynamic_form_builder_id'])->value('title');
-                    //     $inserlogbook = array(
-                    //         'title'=>$data['title'],
-                    //         'category_id'=>3,
-                    //         'category_name'=>'Visitor',
-                    //         'category_icon'=>'fa fa-users',
-                    //         'date'=>date('Y-m-d H:i:s', strtotime($data['date'])),
-                    //         'details'=>$data['details'],
-                    //         'home_id'=>Auth::user()->home_id,
-                    //         'user_id'=>Auth::user()->id,
-                    //         'image_name'=>'',
-                    //         'is_late'=>0,
-                    //         'created_at'=>date('Y-m-d H:i:s'),
-                    //         'updated_at'=>date('Y-m-d H:i:s')
-                    //     );
-                    //     //return $inserlogbook;
-                    //     //die;
-                    //     $last_id = DB::table('log_book')->insertGetId($inserlogbook);
-
-                    //     if($last_id>0){
-                    //         $insertServiceUserLogBook = array(
-                    //             'service_user_id'=>$data['service_user_id'],
-                    //             'log_book_id'=>$last_id,
-                    //             'user_id'=> Auth::user()->id,
-                    //             'is_late'=>0,
-                    //             'created_at'=>date('Y-m-d H:i:s'),
-                    //             'updated_at'=>date('Y-m-d H:i:s'),
-                    //         );
-                    //         DB::table('su_log_book')->insert($insertServiceUserLogBook);
-
-                    //     }
-                    //     //health record
-                    //     $insert_su_health_record = array(
-                    //         'home_id'=>Auth::user()->home_id,
-                    //         'service_user_id'=>$data['service_user_id'],
-                    //         'contact_id'=>0,
-                    //         'care_team_id'=>0,
-                    //         'title'=>$data['title'],
-                    //         'status'=>1,
-                    //         'details'=>$data['details'],
-                    //         'is_deleted'=>0,
-                    //         'created_at'=>date('Y-m-d H:i:s'),
-                    //         'updated_at'=>date('Y-m-d H:i:s'),
-                    //     );
-                    //     DB::table('su_health_record')->insert($insert_su_health_record);
-                    //     //risk managment
-                    //     $risk = new ServiceUserRisk;
-                    //     $risk->service_user_id  = $data['service_user_id'];
-                    //     $risk->risk_id          = 1;
-                    //     $risk->status           = 0;
-                    //     $risk->dynamic_form_id  = $form_insert_id;
-                    //     $risk->home_id          = Auth::user()->home_id;
-                    //     if($risk->save()) {
-                    //         //saving notification start
-                    //         $notification                             = new Notification;
-                    //         $notification->service_user_id            = $data['service_user_id'];
-                    //         $notification->event_id                   = $risk->id;
-                    //         $notification->notification_event_type_id = '11';
-                    //         $notification->event_action               = 'ADD';
-                    //         $notification->home_id                    = Auth::user()->home_id;
-                    //         $notification->user_id                    = Auth::user()->id;
-                    //         $notification->save();
-                    //         //saving notification end
-
-                    //     }
-                    //     //
-
-                    // }
-
+                    
                 }
-
-
-
-                //sourabh log insert
-
                 return 'true';
             } else {
                 return 'false';
