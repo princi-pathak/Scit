@@ -92,7 +92,7 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
                         <label style="display: none;"> Date: </label>
                         <div>
                             <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">
-                                <input id="date_range_input" style="cursor: pointer;" name="daterange" value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value="" readonly="" size="16" class="form-control log-book-datetime">
+                                <input id="date_range_input" style="cursor: pointer;" name="daterange" value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" readonly="" size="16" class="form-control log-book-datetime">
                                 <span class="input-group-btn add-on datetime-picker2">
                                     <button onclick="showDate()" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
                                 </span>
@@ -128,12 +128,11 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
     <!--main content end-->
 
     <script>
-        //logged btn click view bmp title
-        $(document).ready(function() {
-            // $(document).on('click', '.logged-dyn-btn', function() {
 
-            // $('.loader').show();
-            // $('body').addClass('body-overflow');
+        //This Ajax list the record of the form in this pae
+        $(document).ready(function() {
+            $('.loader').show();
+            $('body').addClass('body-overflow');
             $.ajax({
                 type: 'get',
                 url: "{{ url('/service/dynamic-forms') }}",
@@ -154,7 +153,6 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
                 }
             });
             // return false;
-            // });
         });
 
         function showDate() {
@@ -173,42 +171,44 @@ $service_user_name = (isset($service_user_name )) ? $service_user_name : 0;
             });
         });
 
-        function applyFormFilter() {
-            var staffId = $('#staff_member').val();
-            var childId = $('#service_user').val();
-            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
-            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
-            var title = $('#keyword').val();
+        // function applyFormFilter() {
+        //     var staffId = $('#staff_member').val();
+        //     var childId = $('#service_user').val();
+        //     let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+        //     let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+        //     var title = $('#keyword').val();
 
             
-            let formdata = {
-                'staff_id' : staffId,
-                'child_id' : childId,
-                'start_date' : start_date,
-                'end_date' : end_date,
-                'title' : title
-            };
-            console.log(formdata);
+        //     let formdata = {
+        //         'staff_id' : staffId,
+        //         'child_id' : childId, 
 
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/dynamic-forms') }}" + '?search=' + search,
-                data: formdata,
-                success: function(resp) {
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == '') {
-                        $('#searched-dyn-records-form .searched-record').html('No Records found.');
-                    } else {
-                        $('#searched-dyn-records-form .searched-record').html(resp);
-                    }
-                    $('.loader').hide();
-                    $('body').removeClass('body-overflow');
-                }
-            });
-            return false;
-        }
+
+        //         'start_date' : start_date,
+        //         'end_date' : end_date,
+        //         'title' : title
+        //     };
+        //     console.log(formdata);
+
+        //     $.ajax({
+        //         type: 'post',
+        //         url: "{{ url('/service/dynamic-forms') }}" + '?search=' + search,
+        //         data: formdata,
+        //         success: function(resp) {
+        //             if (isAuthenticated(resp) == false) {
+        //                 return false;
+        //             }
+        //             if (resp == '') {
+        //                 $('#searched-dyn-records-form .searched-record').html('No Records found.');
+        //             } else {
+        //                 $('#searched-dyn-records-form .searched-record').html(resp);
+        //             }
+        //             $('.loader').hide();
+        //             $('body').removeClass('body-overflow');
+        //         }
+        //     });
+        //     return false;
+        // }
 
         // Apply filter automatically on change
         $('#staff_member, #service_user, #date_range_input').on('change', applyFormFilter);

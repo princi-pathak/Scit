@@ -1,17 +1,17 @@
 @extends('frontEnd.layouts.master')
-<section class="main_section_page px-3">
-    <div class="container-fluid">
+
+
+<section class="wrapper">
+    <div class="panel">
+        <header class="panel-heading px-5">
+            <h4>Search Leads</h4>
+        </header>    
         <div class="row">
-            <div class="col-md-4 col-lg-4 col-xl-4 ">
-                <div class="pageTitle">
-                    <h3>Search Leads</h3>
-                </div>
-            </div>
-        </div>
-        @include('frontEnd.salesAndFinance.lead.lead_buttons')
-        <di class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
+                    <div class="p-4 ">
+                        @include('frontEnd.salesAndFinance.lead.lead_buttons')
+                    </div>                     
                     <div class="printExpt">
                         <div class="prntExpbtn">
                             <a href="#!">Print</a>
@@ -230,7 +230,7 @@
                 </div>
                 <!-- End off main Table -->
             </div>
-    </div>
+        </div>
     </div>
 </section>
 

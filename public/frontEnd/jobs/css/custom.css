@@ -291,9 +291,9 @@ a.overdueJobsFolder i {
 /* ****************************Table ********************* */
 
 .maimTable {
-  border: 1px solid #eee;
+  /* border: 1px solid #eee;
   margin-top: 12px;
-  margin-bottom: 15px;
+  margin-bottom: 15px; */
   position: relative;
 }
 
@@ -896,8 +896,9 @@ section.main_section_page {
 
 .col-form-label {
   font-size: 13px;
+  color: #666;
+  font-weight: 600;
   line-height: 18px;
-  font-weight: 400;
   margin: 0;
 }
 
@@ -1400,7 +1401,7 @@ div#lineChart-license-text {
 
 /* *********************************** */
 .markendDelete {
-  padding: 12px 12px 4px;
+  padding: 0px 12px 4px;
   border-bottom: 1px solid #eee;
 }
 
@@ -3096,8 +3097,8 @@ ul#supplierList {
 .nav .nav-link.active,
 .nav-pills .show>.nav-link,
 .nav .show>.nav-link {
-  background: #1f88b5 !important;
-  color: #fff;
+  /* background: #1f88b5 !important; */
+  color: #000000;
 }
 
 .nav-pills .nav-link,
