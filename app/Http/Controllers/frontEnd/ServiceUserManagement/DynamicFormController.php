@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\frontEnd\ServiceUserManagement;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\File;
 
+use App\Http\Controllers\Controller;
 use Auth, DB;
 use App\DynamicFormBuilder, App\DynamicForm, App\ServiceUser, App\DynamicFormLocation, App\Notification, App\ServiceUserLogBook, App\LogBook, App\EarningScheme, APP\ServiceUserRisk, App\CategoryFrontEnd;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
-
-//App\ServiceUser, App\Admin, App\Home, App\LogBook;
+use Illuminate\Support\Facades\Log;
 //use Hash, Session;
-//use Carbon\Carbon;
 
 
 class DynamicFormController extends Controller
@@ -30,7 +28,6 @@ class DynamicFormController extends Controller
     public function save_form(Request $request)
     {
 
-        // dd($request);
         $data = $request->input();
 
         if (!empty($data)) {
@@ -44,6 +41,7 @@ class DynamicFormController extends Controller
 
                 //if this dynamic form is mfc form then manage earning points
                 $location_ids = DynamicFormBuilder::where('id', $data['dynamic_form_builder_id'])->value('location_ids');
+                // dd($location_ids);
                 $location_ids_arr = explode(',', $location_ids);
                 if (in_array('5', $location_ids_arr)) {
                     EarningScheme::updateEarning($data['service_user_id']);
@@ -51,138 +49,273 @@ class DynamicFormController extends Controller
                 //update earning scheme in case of mfc form ends here
                 //sourabh log insert
                 $logtype = DynamicFormBuilder::where('id', $data['dynamic_form_builder_id'])->value('logtype');
+                // dd($logtype); 
+
                 $logtype_arr = explode(',', $logtype);
 
+                // Convert all values to integers and remove duplicates
+                $logtype_arr = array_unique(array_map('intval', $logtype_arr));
+
+                // If 10 is selected, override and use all 1–9
+                if (in_array(10, $logtype_arr)) {
+                    $logtype_arr = range(1, 9); // [1, 2, ..., 9]
+                }
+
+
                 foreach ($logtype_arr as $val) {
-                    if ($val == 1 || $val == 10) {
-                        //Daily record
-                        $d_form_name = DB::table('dynamic_form_builder')->where('id', $data['dynamic_form_builder_id'])->value('title');
-                        $inserlogbook = array(
-                            'title'=>$data['title'],
-                            'category_id' => 3,
-                            'category_name' => 'Visitor',
-                            'category_icon' => 'fa fa-users',
-                            'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
-                            'formdata' => json_encode($data['data']),
-                            'details'=>$data['details'],
-                            'home_id' => $home_id,
-                            'user_id' => Auth::user()->id,
-                            'image_name' => '',
-                            'is_late' => 0,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s')
-                        );
-
-                        $last_id = DB::table('log_book')->insertGetId($inserlogbook);
-
-                        if ($last_id > 0) {
-                            $insertServiceUserLogBook = array(
-                                'service_user_id' => $data['service_user_id'],
-                                'log_book_id' => $last_id,
+                    switch ($val) {
+                        case 1:
+                            //Daily record
+                            $d_form_name = DB::table('dynamic_form_builder')->where('id', $data['dynamic_form_builder_id'])->value('title');
+                            $inserlogbook = array(
+                                'title' => $data['title'],
+                                'category_id' => 3,
+                                'category_name' => 'Visitor',
+                                'category_icon' => 'fa fa-users',
+                                'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
+                                'formdata' => json_encode($data['data']),
+                                'details' => $data['details'],
+                                'home_id' => $home_id,
                                 'user_id' => Auth::user()->id,
+                                'image_name' => '',
+                                'logType' => 1,
                                 'is_late' => 0,
                                 'created_at' => date('Y-m-d H:i:s'),
-                                'updated_at' => date('Y-m-d H:i:s'),
-                                'logType' => 1,
+                                'updated_at' => date('Y-m-d H:i:s')
                             );
-                            DB::table('su_log_book')->insert($insertServiceUserLogBook);
-                        }
+
+                            $last_id = DB::table('log_book')->insertGetId($inserlogbook);
+                            Log::info("Inserting logType {$val} with data: $last_id" . json_encode($last_id));
+
+                            if ($last_id > 0) {
+                                $insertServiceUserLogBook = array(
+                                    'service_user_id' => $data['service_user_id'],
+                                    'log_book_id' => $last_id,
+                                    'user_id' => Auth::user()->id,
+                                    'is_late' => 0,
+                                    'created_at' => date('Y-m-d H:i:s'),
+                                    'updated_at' => date('Y-m-d H:i:s'),
+                                    'logType' => 1,
+                                );
+                                DB::table('su_log_book')->insert($insertServiceUserLogBook);
+                            }
+                            break;
+
+                        case 2:
+                            // Weekly Log
+                            $currentDate = Carbon::now()->format('Y-m-d');
+                            // Date after 1 week
+                            $nextWeek = Carbon::now()->addWeek()->format('Y-m-d');
+
+                            $d_form_name = DB::table('dynamic_form_builder')->where('id', $data['dynamic_form_builder_id'])->value('title');
+                            $inserlogbook = array(
+                                'title' => $data['title'],
+                                'category_id' => 3,
+                                'category_name' => 'Visitor',
+                                'category_icon' => 'fa fa-users',
+                                'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
+                                'start_date' => $currentDate,
+                                'end_date' => $nextWeek,
+                                'formdata' => json_encode($data['data']),
+                                'details' => $data['details'],
+                                'home_id' => $home_id,
+                                'user_id' => Auth::user()->id,
+                                'image_name' => '',
+                                'logType' => 2,
+                                'is_late' => 0,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s')
+                            );
+
+                            $last_id = DB::table('log_book')->insertGetId($inserlogbook);
+                            Log::info("Inserting logType {$val} with data: $last_id" . json_encode($inserlogbook));
+
+
+                            if ($last_id > 0) {
+                                $insertServiceUserLogBook = array(
+                                    'service_user_id' => $data['service_user_id'],
+                                    'log_book_id' => $last_id,
+                                    'user_id' => Auth::user()->id,
+                                    'is_late' => 0,
+                                    'created_at' => date('Y-m-d H:i:s'),
+                                    'updated_at' => date('Y-m-d H:i:s'),
+                                    'logType' => 2,
+                                );
+                                DB::table('su_log_book')->insert($insertServiceUserLogBook);
+                            }
+                            break;
+
+                        case 3:
+                            // Monthly log
+                            $currentDate = Carbon::now()->format('Y-m-d');
+                            // Date after 1 month
+                            $nextMonth = Carbon::now()->addMonth()->format('Y-m-d');
+
+                            $d_form_name = DB::table('dynamic_form_builder')->where('id', $data['dynamic_form_builder_id'])->value('title');
+                            $inserlogbook = array(
+                                'title' => $data['title'],
+                                'category_id' => 3,
+                                'category_name' => 'Visitor',
+                                'category_icon' => 'fa fa-users',
+                                'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
+                                'start_date' => $currentDate,
+                                'end_date' => $nextMonth,
+                                'formdata' => json_encode($data['data']),
+                                'details' => $data['details'],
+                                'home_id' => $home_id,
+                                'user_id' => Auth::user()->id,
+                                'image_name' => '',
+                                'logType' => 3,
+                                'is_late' => 0,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s')
+                            );
+
+                            $last_id = DB::table('log_book')->insertGetId($inserlogbook);
+                            Log::info("Inserting logType {$val} with data: $last_id" . json_encode($inserlogbook));
+
+
+                            if ($last_id > 0) {
+                                $insertServiceUserLogBook = array(
+                                    'service_user_id' => $data['service_user_id'],
+                                    'log_book_id' => $last_id,
+                                    'user_id' => Auth::user()->id,
+                                    'is_late' => 0,
+                                    'created_at' => date('Y-m-d H:i:s'),
+                                    'updated_at' => date('Y-m-d H:i:s'),
+                                    'logType' => 3,
+                                );
+                                DB::table('su_log_book')->insert($insertServiceUserLogBook);
+                            }
+                            break;
+
+                        case 4:
+                            //health record
+                            $insert_su_health_record = array(
+                                'home_id' => $home_id,
+                                'service_user_id' => $data['service_user_id'],
+                                'contact_id' => 0,
+                                'care_team_id' => 0,
+                                'title' => $data['title'],
+                                'status' => 1,
+                                'details' => $data['details'],
+                                'formdata' => json_encode($data['data']),
+                                'is_deleted' => 0,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            );
+                            DB::table('su_health_record')->insert($insert_su_health_record);
+                            Log::info("Inserting logType {$val} with data: " . json_encode($insert_su_health_record));
+                            break;
+
+                        case 5:
+                        case 8:
+                            //plans
+                            $insert_plans_managment = array(
+                                'service_user_id' => $data['service_user_id'],
+                                'task' => $data['title'],
+                                'date' => date('Y-m-d'),
+                                'description' => $data['details'],
+                                'qqa_review' => "",
+                                'formdata' => json_encode($data['data']),
+                                'home_id' => $home_id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            );
+                            $lastid_plans = DB::table('su_placement_plan')->insertGetId($insert_plans_managment);
+                            Log::info("Inserting logType {$val} with data: $lastid_plans" . json_encode($insert_plans_managment));
+
+                            //notification
+                            $insert_plansnotification = array(
+                                'service_user_id' => $data['service_user_id'],
+                                'event_id' => $lastid_plans,
+                                'notification_event_type_id' => '8',
+                                'event_action' => 'ADD',
+                                'home_id' => $home_id,
+                                'user_id' => Auth::user()->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            );
+                            DB::table('notification')->insert($insert_plansnotification);
+                            break;
+
+                        case 6:
+                            //risk managment
+                            $insert_risk_managment = array(
+                                'service_user_id' => $data['service_user_id'],
+                                'risk_id' => 1,
+                                'status' => 0,
+                                'dynamic_form_id' => $form_insert_id,
+                                'home_id' => $home_id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            );
+                            $risk_id = DB::table('su_risk')->insert($insert_risk_managment);
+                            Log::info("Inserting logType {$val} with data: $risk_id" . json_encode($insert_risk_managment));
+
+                            //notification
+                            $insert_risknotification = array(
+                                'service_user_id' => $data['service_user_id'],
+                                'event_id' => 1,
+                                'notification_event_type_id' => '11',
+                                'event_action' => 'ADD',
+                                'home_id' => $home_id,
+                                'user_id' => Auth::user()->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            );
+                            DB::table('notification')->insert($insert_risknotification);
+                            break;
+
+                        case 7:
+                            //Behaviour Management
+                            $insert_behaviour_managment = array(
+                                'service_user_id' => $data['service_user_id'],
+                                'title' => $data['title'],
+                                'details' => $data['details'],
+                                'sent_to' => 2,
+                                'formdata' => json_encode($data['data']),
+                                'home_id' => $home_id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            );
+                            $lastid_behaviour = DB::table('su_bmp')->insertGetId($insert_behaviour_managment);
+                            Log::info("Inserting logType {$val} with data: {$lastid_behaviour}" . json_encode($insert_behaviour_managment));
+
+                            //notification
+                            $insert_behaviournotification = array(
+                                'service_user_id' => $data['service_user_id'],
+                                'event_id' => $lastid_behaviour,
+                                'notification_event_type_id' => '8',
+                                'event_action' => 'ADD',
+                                'home_id' => $home_id,
+                                'user_id' => Auth::user()->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            );
+                            DB::table('notification')->insert($insert_behaviournotification);
+                            break;
+
+                        case 9:
+                            // Any special log
+                            break;
+                    }
+                }
+
+
+
+
+                foreach ($logtype_arr as $val) {
+
+                    if ($val == 1 || $val == 10) {
                     } else if ($val == 2 || $val == 10) {
                     } else if ($val == 3 || $val == 10) {
                     } else if ($val == 4 || $val == 10) {
-                        //health record
-                        $insert_su_health_record = array(
-                            'home_id' => $home_id,
-                            'service_user_id' => $data['service_user_id'],
-                            'contact_id' => 0,
-                            'care_team_id' => 0,
-                            'title' => $data['title'],
-                            'status' => 1,
-                            'details' => $data['details'],
-                            'formdata' => json_encode($data['data']),
-                            'is_deleted' => 0,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        );
-                        DB::table('su_health_record')->insert($insert_su_health_record);
                     } else if ($val == 6 || $val == 10) {
-                        //risk managment
-                        $insert_risk_managment = array(
-                            'service_user_id' => $data['service_user_id'],
-                            'risk_id' => 1,
-                            'status' => 0,
-                            'dynamic_form_id' => $form_insert_id,
-                            'home_id' => $home_id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        );
-                        DB::table('su_risk')->insert($insert_risk_managment);
-                        //notification
-                        $insert_risknotification = array(
-                            'service_user_id' => $data['service_user_id'],
-                            'event_id' => 1,
-                            'notification_event_type_id' => '11',
-                            'event_action' => 'ADD',
-                            'home_id' => $home_id,
-                            'user_id' => Auth::user()->id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        );
-                        DB::table('notification')->insert($insert_risknotification);
                     } else if ($val == 7 || $val == 10) {
-                        //Behaviour Management
-                        $insert_behaviour_managment = array(
-                            'service_user_id' => $data['service_user_id'],
-                            'title' => $data['title'],
-                            'details' => $data['details'],
-                            'sent_to' => 2,
-                            'formdata' => json_encode($data['data']),
-                            'home_id' => $home_id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        );
-                        $lastid_behaviour = DB::table('su_bmp')->insertGetId($insert_behaviour_managment);
-                        //notification
-                        $insert_behaviournotification = array(
-                            'service_user_id' => $data['service_user_id'],
-                            'event_id' => $lastid_behaviour,
-                            'notification_event_type_id' => '8',
-                            'event_action' => 'ADD',
-                            'home_id' => $home_id,
-                            'user_id' => Auth::user()->id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        );
-                        DB::table('notification')->insert($insert_behaviournotification);
                     } else if ($val == 8 || $val == 10 || $val == 5) {
-                        //plans
-                        $insert_plans_managment = array(
-                            'service_user_id' => $data['service_user_id'],
-                            'task' => $data['title'],
-                            'date' => date('Y-m-d'),
-                            'description' => $data['details'],
-                            'qqa_review' => "",
-                            'formdata' => json_encode($data['data']),
-                            'home_id' => $home_id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        );
-                        $lastid_plans = DB::table('su_placement_plan')->insertGetId($insert_plans_managment);
-                        //notification
-                        $insert_plansnotification = array(
-                            'service_user_id' => $data['service_user_id'],
-                            'event_id' => $lastid_plans,
-                            'notification_event_type_id' => '8',
-                            'event_action' => 'ADD',
-                            'home_id' => $home_id,
-                            'user_id' => Auth::user()->id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        );
-                        DB::table('notification')->insert($insert_plansnotification);
                     } else if ($val == 9 || $val == 10) {
                     }
-                    
                 }
                 return 'true';
             } else {
@@ -206,6 +339,8 @@ class DynamicFormController extends Controller
         $data = $request->input();
 
         if (!empty($data)) {
+
+
             $home_ids = Auth::user()->home_id;
             $ex_home_ids = explode(',', $home_ids);
             $home_id = $ex_home_ids[0];
@@ -370,9 +505,9 @@ class DynamicFormController extends Controller
 
                                 <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
 
-                                <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '"><span><input type="text" class="form-control" style="cursor:pointer; background-color: '.$color.';" name="" readonly value="' . $value->title . ' " maxlength="255"/></span></a>
+                                <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '"><span><input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $value->title . ' " maxlength="255"/></span></a>
                                 
-                                <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: '.$color.';">
+                                <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
                                     <i class="fa fa-cog"></i>
                                     <div class="pop-notifbox">
                                         <ul class="pop-notification" type="none">
@@ -384,7 +519,7 @@ class DynamicFormController extends Controller
                                         </ul>
                                     </div>
                                 </span>
-                                <span class="ritOrdring three rightdate"> '. $date .' </span>
+                                <span class="ritOrdring three rightdate"> ' . $date . ' </span>
                                 <span class="rightArrow"></span>
                             </div>
                         </div>
@@ -400,11 +535,11 @@ class DynamicFormController extends Controller
 
                                <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
                                 <a href="#" class="dyn-form-view-data" id="' . $value->id . '"><span>
-                                <input type="text" class="form-control" style="cursor:pointer; background-color: '. $color .';" name="" readonly value="' . $value->title . '" maxlength="255"/></span></a>
+                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $value->title . '" maxlength="255"/></span></a>
                                 <span class="timLineDate">' . $date . '</span>
                                 <span class="arrow"></span>
 
-                                <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: '.$color.';">
+                                <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
                                     <i class="fa fa-cog"></i>
                                     <div class="pop-notifbox">
                                         <ul class="pop-notification" type="none">
@@ -439,6 +574,8 @@ class DynamicFormController extends Controller
             $ex_home_ids = explode(',', $home_ids);
             $home_id = $ex_home_ids[0];
             $dyn_form = DynamicForm::where('id', $data['dyn_form_id'])->first();
+            // echo "<pre>"; print_r($dyn_form); die;
+
             // Ram here code for save title and detail when user want to send to daily log 19/06/2025
             $title_detail = DynamicFormBuilder::where('id', $dyn_form->form_builder_id)->first();
             // echo "<pre>";print_r($title_detail);die;
@@ -474,12 +611,18 @@ class DynamicFormController extends Controller
             $log_book->user_id         = Auth::user()->id;
             $log_book->title           = $dyn_form->title ?? $title_detail->title;
             $log_book->date            = date('Y-m-d H:i:s');
-            $log_book->start_date      = Carbon::createFromFormat('d-m-Y', $data['start_date'])->format('Y-m-d');
-            $log_book->end_date        = Carbon::createFromFormat('d-m-Y', $data['end_date'])->format('Y-m-d');
+            $log_book->start_date = !empty($data['start_date'])
+                ? Carbon::createFromFormat('d-m-Y', $data['start_date'])->format('Y-m-d')
+                : null;
+
+            $log_book->end_date = !empty($data['end_date'])
+                ? Carbon::createFromFormat('d-m-Y', $data['end_date'])->format('Y-m-d')
+                : null;
             $log_book->details         = $dyn_form->details ?? $title_detail->detail;
             $log_book->category_id     = $s_category_id;
             $log_book->category_name   = $category_data ? $category_data->name : null;
             $log_book->category_icon   = $category_data ? $category_data->icon : null;
+            $log_book->formdata        = $dyn_form->pattern_data;
             $log_book->logType         = $data['logtype'] ?? null;
             $log_book->save();
 

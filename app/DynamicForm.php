@@ -1502,17 +1502,14 @@ class DynamicForm extends Model //FormBuilder
             $formdata = '';
         }
         // return $data['title'];
-        // //return $formdata;
-        // die;
-        //  print_r($formdata);
-        // die();
+        // return $formdata; die;
+        //  print_r($formdata); die();
         /*----- June 07,2018 (Akhil) ---*/
         if ($data['service_user_id'] != '') {
             $service_user_id = $data['service_user_id'];
         }
         // return $data['title'];
-        // //return $formdata;
-        // die;
+        // return $formdata; die;
         if (isset($data['formImage'])) {
             $formImage = $data['formImage'];
         } else {
