@@ -433,9 +433,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             // }
 
             var service_user_id = service_user.val().trim();
-            // alert(service_user_id);
             var form_builder_id = form_builder.val().trim();
-            // alert(form_builder_id);
             // var static_title_vl = static_title_vl.trim();
             // alert(static_title_vl); return false;
             var err = 0;
@@ -466,9 +464,10 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             }
 
             var formdata = $('#' + form_id).serialize();
-            // alert(formdata); // return false;
+
             //$('.loader').show();
             // $('body').addClass('body-overflow');
+
             $.ajax({
                 type: 'post',
                 url: "{{ url('/service/dynamic-form/save') }}",
@@ -476,18 +475,11 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 //dataType: 'json',
                 success: function(resp) {
                     console.log(resp);
-                    // alert("ldkjflk");
                     if (isAuthenticated(resp) == "false") {
                         return false;
                     }
 
                     if (resp == "true") {
-
-                        // const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-
-                        // for (let i = 0; i < hideImageDivs.length; i++) {
-                        //     hideImageDivs[i].style.display = "none";
-                        // }
 
                         console.log("true");
                         $('#' + form_id + ' span.popup_success_txt').text('Record has been Added Successfully');
@@ -1188,25 +1180,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 </script>
 
 
-
-
-
-
-<script>
-    /*$('.send_to').selectize({
-        maxItems: null,
-        valueField: 'id',
-        labelField: 'title',
-        searchField: 'title',
-        options: [
-            {id: 1, title: 'Spectrometer', url: 'http://en.wikipedia.org/wiki/Spectrometers'},
-            {id: 2, title: 'Star Chart', url: 'http://en.wikipedia.org/wiki/Star_chart'},
-            {id: 3, title: 'Electrical Tape', url: 'http://en.wikipedia.org/wiki/Electrical_tape'}
-        ],
-        create: false
-    });*/
-</script>
-
 <!-- <script>
     //making editable click on edit of listing
     $(document).ready(function(){
@@ -1316,40 +1289,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         });
     });
 </script> -->
-<!-- <script>
-$(document).ready(function(){
-    $('.sbt-dyn-form-btn').click(function(){
 
-        var model_id        = $(this).closest('.modal').attr('id');
-        var service_user    = $('#'+model_id+' .su_n_id');
-        var form_builder    = $('#'+model_id+' .dynamic_form_select');
-        var service_user_id = service_user.val().trim();
-        var form_builder_id = form_builder.val().trim();
-        var err = 0;
-
-        if(service_user_id == 0) {
-            service_user.parent().addClass('red_border');
-            err = 1;
-        }else{
-            service_user.parent().removeClass('red_border');
-        }
-
-        if(form_builder_id == 0) {
-            form_builder.parent().addClass('red_border');
-            err = 1;
-        } else{
-            form_builder.parent().removeClass('red_border');
-        }
-
-        if(err == 1){
-            return false;
-        }else{
-            return true;
-        }
-
-    });
-});
-</script>   -->
 <script>
     let loaddataontable = () => {
         let formid = $("#formid").val();

@@ -12,7 +12,6 @@ class BmpController extends ServiceUserManagementController
 
     public function index($service_user_id = null)
     {
-
         $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
@@ -22,7 +21,6 @@ class BmpController extends ServiceUserManagementController
         }
 
         // $home_id = Auth::user()->home_id;
-
         //in search case editing start for plan,details and review
         if (isset($_POST)) {
             $data = $_POST;
@@ -44,7 +42,6 @@ class BmpController extends ServiceUserManagementController
             }
         }
         //in search case editing end
-
         $this_location_id = DynamicFormLocation::getLocationIdByTag('bmp');
 
         //$form_bildr_ids_data = DynamicFormBuilder::select('id')->whereRaw('FIND_IN_SET(?,location_ids)',$this_location_id)->get()->toArray();
@@ -54,7 +51,6 @@ class BmpController extends ServiceUserManagementController
             ->where('service_user_id', $service_user_id)
             ->where('is_deleted', '0')
             ->orderBy('id', 'desc');
-
         /*$bmp_record = ServiceUserBmp::where('is_deleted','0')
                                     ->where('service_user_id', $service_user_id)
                                     ->where('home_id', $home_id)
@@ -90,7 +86,7 @@ class BmpController extends ServiceUserManagementController
 
             $tick_btn_class = "sbt-edit-bmp-record submit-edit-logged-record";
         }
-
+        // dd($bmp_form);
         foreach ($bmp_form as $key => $value) {
             $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
