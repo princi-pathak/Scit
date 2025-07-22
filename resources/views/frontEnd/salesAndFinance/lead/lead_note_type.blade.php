@@ -1,14 +1,11 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
+@extends('frontEnd.layouts.master')
 
-<section class="main_section_page px-3">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4 col-lg-4 col-xl-4 ">
-                <div class="pageTitle">
-                    <h3>History Type</h3>
-                </div>
-            </div>
-        </div>
+<section class="wrapper">
+    <div class="panel">
+          <header class="panel-heading px-5">
+            <h4>History Type</h4>
+        </header>
+
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
