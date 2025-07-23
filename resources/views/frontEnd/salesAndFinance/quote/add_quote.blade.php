@@ -1,5 +1,4 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
-
+@extends('frontEnd.layouts.master')
 
 <section class="main_section_page px-3 pt-0">
     <div class="container-fluid">
@@ -923,7 +922,6 @@
 </section>
 
 
-@include('frontEnd.salesAndFinance.jobs.layout.footer')
 
 
 <script src="assets/js/jquery-3.7.1.min.js"></script>
