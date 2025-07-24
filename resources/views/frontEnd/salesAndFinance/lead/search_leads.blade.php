@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
-                    <div class="p-4 ">
+                    <div class="py-4 ">
                         @include('frontEnd.salesAndFinance.lead.lead_buttons')
                     </div>                     
                     <div class="printExpt">

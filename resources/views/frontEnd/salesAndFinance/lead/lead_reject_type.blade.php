@@ -11,7 +11,7 @@
         <di class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
-                    <div class="p-4">
+                    <div class="py-4">
                         <div class="jobsection">
                             <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectTypeModel" class="profileDrop open-modal">Add</a>
                             <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>

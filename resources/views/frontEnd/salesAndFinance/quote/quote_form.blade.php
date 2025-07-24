@@ -1,4 +1,4 @@
-@include('frontEnd.salesAndFinance.jobs.layout.header')
+@extends('frontEnd.layouts.master')
 @section('title','Quotes')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
