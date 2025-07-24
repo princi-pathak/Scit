@@ -305,18 +305,18 @@ class DynamicFormController extends Controller
 
 
 
-                foreach ($logtype_arr as $val) {
+                // foreach ($logtype_arr as $val) {
 
-                    if ($val == 1 || $val == 10) {
-                    } else if ($val == 2 || $val == 10) {
-                    } else if ($val == 3 || $val == 10) {
-                    } else if ($val == 4 || $val == 10) {
-                    } else if ($val == 6 || $val == 10) {
-                    } else if ($val == 7 || $val == 10) {
-                    } else if ($val == 8 || $val == 10 || $val == 5) {
-                    } else if ($val == 9 || $val == 10) {
-                    }
-                }
+                //     if ($val == 1 || $val == 10) {
+                //     } else if ($val == 2 || $val == 10) {
+                //     } else if ($val == 3 || $val == 10) {
+                //     } else if ($val == 4 || $val == 10) {
+                //     } else if ($val == 6 || $val == 10) {
+                //     } else if ($val == 7 || $val == 10) {
+                //     } else if ($val == 8 || $val == 10 || $val == 5) {
+                //     } else if ($val == 9 || $val == 10) {
+                //     }
+                // }
                 return 'true';
             } else {
                 return 'false';
@@ -333,6 +333,7 @@ class DynamicFormController extends Controller
         $result = DynamicForm::showFormWithValue($dynamic_form_id, false);
         return $result;
     }
+
 
     public function edit_form(Request $request)
     {
