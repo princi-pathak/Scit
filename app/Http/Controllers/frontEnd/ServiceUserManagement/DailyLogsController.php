@@ -6,7 +6,7 @@ use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use DB, Auth;
-use App\LogBook, App\ServiceUser, App\ServiceUserLogBook, App\LogBookComment, App\CategoryFrontEnd, App\DynamicFormBuilder, App\User;
+use App\LogBook, App\ServiceUser, App\ServiceUserLogBook, App\LogBookComment, App\CategoryFrontEnd, App\DynamicFormBuilder, App\User, App\DynamicForm;
 use Illuminate\Support\Arr;
 
 class DailyLogsController extends ServiceUserManagementController
@@ -149,6 +149,9 @@ class DailyLogsController extends ServiceUserManagementController
             $log_book_records = collect($log_book_records)->map(function ($x) {
                 return (array) $x;
             })->toArray();
+
+
+            // dd($log_book_records);
             // $log_book_records = LogBook::select('log_book.*')
             //                             ->whereIn('log_book.id',$su_logs)
             //                             ->whereDate('log_book.date', '=', $today)
@@ -1256,6 +1259,7 @@ class DailyLogsController extends ServiceUserManagementController
         //die();
         if (isset($_GET['key'])) {
             $service_user_id = $_GET['key'];
+
         } else {
             $service_user_id = "";
         }
@@ -1541,9 +1545,13 @@ class DailyLogsController extends ServiceUserManagementController
             }
         }
 
-
-
-
         return view('frontEnd.serviceUserManagement.monthly_log', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members'));
+    }
+
+    
+    public function view_log_form_data($dynamic_form_id = null)
+    {
+        $result = DynamicForm::showFormLogWithValue($dynamic_form_id, false);
+        return $result;
     }
 }
