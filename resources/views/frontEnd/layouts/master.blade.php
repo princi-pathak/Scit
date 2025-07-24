@@ -310,6 +310,10 @@
   <!-- Js for Clock in the sidebar -->
   <script src="{{ url('public/frontEnd/js/moment-timezone-data.js') }}"></script>
   <script src='https://cdn.form.io/formiojs/formio.full.min.js'></script>
+
+  <!-- Js PaiChart graph  -->
+   <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+   
   <script>
     function PrintDivwithvalue(th) {
       var divContents = document.getElementById("formioView").innerHTML;

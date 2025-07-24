@@ -1355,7 +1355,5 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             });
 
         });
-
-
     }
 </script>

@@ -6,13 +6,9 @@
         .back_opt {
             background: #1f88b5;
             border-radius: 100%;
-            /* bottom: 70px; */
             color: #fff;
             font-size: 20px;
             padding: 8px 18px;
-            /* position: fixed; */
-            /* right: 90px; */
-            /* float:left; */
             z-index: 999;
             cursor: pointer;
             height: 45px;
@@ -58,9 +54,6 @@
         }
 
         .logimg {
-            /* left: 80%;
-                top:15px;
-                position: absolute; */
             float: right;
             margin-bottom: 38px;
         }
@@ -149,12 +142,12 @@
 
     <!--Core CSS -->
     <!-- <link href="{{ url('public/frontEnd/daily_logs/bs3/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
+                <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
+                <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
 
     <!-- Custom styles for this template -->
     <!-- <link href="{{ url('public/frontEnd/daily_logs/css/style.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
+                <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
 
     <section id="container">
 
@@ -243,9 +236,9 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                    </div> -->
+                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                            </div> -->
                 </div>
 
                 <div class="row">
@@ -293,6 +286,11 @@
                                                             title="{{ $key['created_at'] }}">{{ time_diff_string(date('d-m-Y H:i', strtotime($key['created_at'])), 'now') }}
                                                             <span style="color:black;font-weight:400;font-size:14px;">by
                                                                 {{ $key['staff_name'] }}</span>
+                                                        </span>
+                                                        <span class="viewEditIcon">
+                                                            <a href="#!" class="dyn-form-view-data" id="{{ $key['id'] }}"><i
+                                                                    class="fa fa-edit"></i></a>
+                                                            <a href="#!"><i class="fa fa-eye"></i></a>
                                                         </span>
                                                         @if (isset($key['category_name']) && !empty($key['category_name']))
                                                             <h1 class="title_time_log">
@@ -369,7 +367,7 @@
                                                                     {{ $key['staff_name'] }}</span>
                                                             </span>
                                                             <span class="viewEditIcon">
-                                                                <a href="#!" id="openModelDailyLog"><i
+                                                                <a href="#!" class="dyn-form-view-data" id="{{ $key['id'] }}"><i
                                                                         class="fa fa-edit"></i></a>
                                                                 <a href="#!"><i class="fa fa-eye"></i></a>
                                                             </span>
@@ -425,9 +423,7 @@
                                                 </div>
                                             </div>
                                         </article>
-                                    @endif
-
-
+                                    @endif  
                                 @endforeach
                             </div>
 
@@ -618,7 +614,7 @@
 
                 $.ajax({
                     type: 'get',
-                    url: "{{ url('/service/dynamic-form/view/data') }}" + '/' + dynamic_form_id,
+                    url: "{{ url('/service/daily-log-form/view/data') }}" + '/' + dynamic_form_id,
                     dataType: 'json',
                     success: function(resp) {
 
@@ -673,10 +669,46 @@
             });
         });
 
+          let viewdatawithvalueFormio = () => {
+        // console.log($('#dynamic_form_idformio').val());
+        let dynamic_form_idformio = $("#dynamic_form_idformio").val();
+        var token = "<?= csrf_token() ?>";
+        var settings = {
+            "url": "{{url('/service/patterndataformiovaule')}}",
+            "method": "POST",
+            "data": {
+                dynamic_form_idformio: dynamic_form_idformio,
+                _token: token
+            },
+            //dataType: "json",
+        };
+        $.ajax(settings).done(function(response) {
+            // console.log(response[0].pattern);
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
 
-        document.getElementById('openModelDailyLog').addEventListener('click', function() {
-            $('#DynFormViewModal').modal('show'); // jQuery required
+            Formio.createForm(document.getElementById('formioView'), {
+                components: JSON.parse(response[0].pattern)
+            }, {
+                readOnly: seteditvalueeditable
+            }).then(function(form) {
+                form.submission = {
+                    data: JSON.parse(response[0].pattern_data)
+                }
+                // form.getComponent('email').setValue('rksonkar356@gmail.com');
+            });
+
         });
+    }
+
+
+        document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                $('#DynFormViewModal').modal('show');
+            });
+        });
+
 
         /**
          * Sanitizer Function
@@ -2622,3 +2654,6 @@
     @include('frontEnd.serviceUserManagement.elements.add_log')
     @include('frontEnd.serviceUserManagement.elements.comments')
 @endsection
+
+
+

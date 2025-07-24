@@ -7280,7 +7280,7 @@ div.tagsinput span.tag {
 .cus-inpt-grp-addon {
     background-color: transparent;
     border: medium none;
-    font-size: 24px;
+    font-size: 20px;
     padding: 0;
     width: 35px;
 }
@@ -7538,12 +7538,12 @@ div.tagsinput span.tag {
     min-width: 246px;
 }
 
-.popovr .input-group-addon {
+.timeline .popovr .input-group-addon {
     cursor: pointer;
     background: #e13533;
     color: #fff;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
      border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     line-height: 39px;
@@ -9133,10 +9133,10 @@ ul.pop-notification>li a:hover i {
 }
 
 
-.pt-0 {
+/* .pt-0 {
     text-align: center;
     width: 95px;
-}
+} */
 
 .bars {
     padding-left: 0;
