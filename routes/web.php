@@ -1067,7 +1067,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/service/earning/set-target', 'App\Http\Controllers\frontEnd\ServiceUserManagement\EarningSchemeController@set_su_earning_target');
 
 	//suspend incentive
-	Route::post('/service/earning-scheme/incentive/suspend', 'App\Http\Controllers\frontEnd\ServiceUserManagement\EarningSchemeController@incentive_suspend');
+	Route::post('/service/earning-scheme/incentive/suspend/save', 'App\Http\Controllers\frontEnd\ServiceUserManagement\EarningSchemeController@incentive_suspend');
 	Route::get('/service/earning-scheme/incentive/suspend/view/{suspended_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\EarningSchemeController@view_suspension');
 	/*Route::post('/service/earning-scheme/incentive/suspend/edit', 'App\Http\Controllers\frontEnd\ServiceUserManagement\EarningSchemeController@edit_suspension');*/
 	Route::get('/service/earning-scheme/incentive/suspend/delete', 'App\Http\Controllers\frontEnd\ServiceUserManagement\EarningSchemeController@remove_suspension');
