@@ -288,15 +288,16 @@
                                                                 {{ $key['staff_name'] }}</span>
                                                         </span>
                                                         <span class="viewEditIcon">
-                                                            <a href="#!" class="dyn-form-view-data" id="{{ $key['id'] }}"><i
+                                                            <a href="#!" class="dyn-form-view-data" id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}
+"><i
                                                                     class="fa fa-edit"></i></a>
                                                             <a href="#!"><i class="fa fa-eye"></i></a>
                                                         </span>
                                                         @if (isset($key['category_name']) && !empty($key['category_name']))
                                                             <h1 class="title_time_log">
                                                                 <span style="color:{{ $key['category_color'] ?? '' }};">
-                                                                    {{ $key['category_name'] }}
-                                                                </span>
+                                                                    {{ $key['category_name'] }} {{ $logType }}
+                                                                </span> 
                                                             </h1>
                                                         @else
                                                             <h1 class="title_time_log">
@@ -367,7 +368,8 @@
                                                                     {{ $key['staff_name'] }}</span>
                                                             </span>
                                                             <span class="viewEditIcon">
-                                                                <a href="#!" class="dyn-form-view-data" id="{{ $key['id'] }}"><i
+                                                                <a href="#!" class="dyn-form-view-data" id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}
+"><i 
                                                                         class="fa fa-edit"></i></a>
                                                                 <a href="#!"><i class="fa fa-eye"></i></a>
                                                             </span>
@@ -376,7 +378,7 @@
                                                         @if (isset($key['category_name']) && !empty($key['category_name']))
                                                             <h1 class="title_time_log">
                                                                 <span style="color:{{ $key['category_color'] ?? '' }};">
-                                                                    {{ $key['category_name'] }}
+                                                                    {{ $key['category_name'] }} {{ $logType }}
                                                                 </span>
                                                             </h1>
                                                         @else
@@ -666,7 +668,7 @@
                     }
                 });
                 return false;
-            });
+            });     
         });
 
           let viewdatawithvalueFormio = () => {

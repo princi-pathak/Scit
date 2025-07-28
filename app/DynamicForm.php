@@ -730,6 +730,7 @@ class DynamicForm extends Model //FormBuilder
 
     public static function showFormLogWithValue($dynamic_form_id = null, $enable = false)
     { 
+        //show filled form
 
         /* Note:
             the form fields will be shown according to the latest form pattern 
@@ -750,11 +751,13 @@ class DynamicForm extends Model //FormBuilder
 
         $form_info    = DynamicForm::select('dynamic_form.pattern_data', 'dynamic_form.form_builder_id', 'dynamic_form.date', 'dynamic_form.created_at', 'u.name', 'dynamic_form.title', 'dynamic_form.time', 'dynamic_form.details', 'dynamic_form.alert_status', 'dynamic_form.form_builder_id', 'dynamic_form.service_user_id', 'dynamic_form.image_path')
             ->join('user as u', 'u.id', 'dynamic_form.user_id')
+            ->join('log_book')
             ->where('dynamic_form.id', $dynamic_form_id)
             // ->where('su.home_id',$home_id)
             ->where('dynamic_form.home_id', $home_id)
             ->first();
 
+            dd($form_info);
         $form_values  = array();
 
         if (!empty($form_info)) {
@@ -762,8 +765,12 @@ class DynamicForm extends Model //FormBuilder
             $form_values = $form_info->pattern_data;
             $form_values = trim($form_values);
 
+            // if(!empty($form_values)){ 
+            //     $form_values = json_decode($form_values);
+            // }
+
             $form_builder_id = $form_info->form_builder_id;
-            
+
         }
 
         //first get the form default id from tag
@@ -771,6 +778,10 @@ class DynamicForm extends Model //FormBuilder
 
         if (!empty($form_builder)) {
 
+            //$form_builder->pattern = json_decode($form_builder->pattern);
+            // echo "<pre>";
+            //  print_r($form_values);
+            //  die;
             //static fields
             if ($enable == true) {
                 $disabled = '';
@@ -886,6 +897,301 @@ class DynamicForm extends Model //FormBuilder
 
             $inp_col = 10;
 
+            //echo '<pre>'; print_r( $form_builder->pattern); die;
+            // foreach($form_builder->pattern as $key => $value){
+
+            //     $field_label = $value->label;
+            //     $column_name = $value->column_name;
+            //     $field_type  = $value->column_type;  
+
+            //     $match_found = 0;
+            //     foreach($form_values as $key => $value2){
+
+            //         $form_column     = $key; 
+            //         $form_column_val = $value2;
+            //         if($column_name == $form_column){
+
+            //             $field_value = $form_column_val;  
+            //             $total_fields++;
+            //             $match_found = 1;
+
+            //             if($field_type == 'Textbox'){
+            //                 $formdata .= '
+            //                             <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+            //                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+            //                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                                     <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0 ">
+            //                                         <div class="input-group popovr">
+            //                                             <input name="formdata['.$column_name.']" value="'.$field_value.'" type="text" class="form-control trans" '.$disabled.' />
+            //                                         </div>
+            //                                     </div>
+            //                                 </div>
+            //                             </div>';
+            //             //p-l-30
+            //             } else if($field_type == 'Selectbox'){
+            //                 $options = '';
+            //                 $option_name = '';
+            //                 $option_value = '';
+            //                 $opt = '';
+            //                 $j = 0;
+            //                 ///alert(option_count);
+            //                 //for($i=1; $i <= $option_count; $i++){
+            //                 foreach($value->select_options as $select_option){
+            //                     //echo '<pre>'; print_r($select_option);
+            //                     $select_option = (array)$select_option;
+            //                     //print_r($se['option_name']); die;
+
+            //                     $option_name    = $select_option['option_name'];
+            //                     $option_value   = $select_option['option_value'];
+
+            //                     $selected = '';
+            //                     if($form_column_val == $option_value){
+            //                         $selected = 'selected';
+            //                     } 
+
+            //                     //if( ($option_name !== '') && ($option_value !== '') ) {            
+            //                         $options .= '<option value="'.$option_value.'" '.$selected.'>'.$option_name.'</option>';
+
+            //                         $opt .= '<input type="hidden" name="formdata['.$key.'][select_options]['.$j.'][option_name]" value="'.$option_name.'"> <input type="hidden" name="formdata['.$key.'][select_options]['.$j.'][option_value]" value="'.$option_value.'">';
+            //                         $j++;
+            //                     //}
+            //                 }
+
+            //                 $formdata .= '
+            //                     <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+            //                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 ">
+            //                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                             <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-10 ">
+            //                                 <div class="select-style">
+            //                                     <select name="formdata['.$column_name.']" '.$disabled.' >
+            //                                         '.$options.'
+            //                                     </select>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>'; 
+
+            //             } else if($field_type == 'Textarea'){
+            //                 $formdata .='
+            //                     <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+            //                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 ">
+            //                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                             <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0 ">
+            //                                 <div class="input-group popovr">
+            //                                     <textarea name="formdata['.$column_name.']" class="form-control trans" '.$disabled.' >'.$field_value.'</textarea>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>';
+
+            //             } else if($field_type == 'Date'){
+            //                 $formdata .='
+            //                     <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
+            //                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+            //                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                             <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0 ">
+            //                                 <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date=""  class="input-group date dpYears">
+            //                                     <input name="formdata['.$column_name.']" type="text" value="'.$field_value.'" size="16" class="form-control trans" readonly="">
+            //                                     <span class="input-group-btn add-on">
+            //                                         <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
+            //                                     </span>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>';
+
+            //             } else if($field_type == 'Checkbox'){
+
+            //                 //print_r($field_value); die;
+
+            //                 $checkbox       = '';
+            //                 $checkbox_name  = '';
+            //                 $checkbox_value = '';
+            //                 $chk = '';
+            //                 $j   = 0;
+
+            //                 foreach($value->select_checkboxs as $select_checkbox){
+
+            //                     //print_r($form_column_val); die;
+            //                     $select_checkbox = (array)$select_checkbox;
+
+            //                     $checkbox_name  = $select_checkbox['checkbox_name'];
+
+
+            //                     $checked = '';
+            //                     if(in_array($checkbox_name, $form_column_val)){
+            //                         $checked = 'checked';
+            //                     } 
+            //                     // echo 'checked='.$checked; die;
+
+            //                     $chk .= '<div class="col-md-6">
+            //                                 <div class="checkbox ">
+            //                                     <label>
+            //                                         <input class="trans" name="formdata['.$column_name.'][]" value="'.$checkbox_name.'" type="checkbox" '.$checked.' '.$disabled.'>'.$checkbox_name.'
+            //                                     </label>
+            //                                 </div>
+            //                             </div>';
+            //                     $j++;
+            //                 }
+
+            //                 $formdata .= '
+            //                     <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+            //                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+            //                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                             <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0">
+            //                                 <div class="wrap_checks">
+            //                                     <div class="row">
+            //                                         '.$chk.'
+            //                                     </div>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>'; 
+
+            //             } else{
+            //                 $formdata .='';
+            //             }                    
+            //         }
+
+            //     }
+
+            //     if($match_found == 0){
+
+            //             $field_value = '';  
+            //             $total_fields++;
+
+            //             if($field_type == 'Textbox'){
+            //                 $formdata .= '
+            //                             <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+            //                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+            //                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                                     <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0 ">
+            //                                         <div class="input-group popovr">
+            //                                             <input name="formdata['.$column_name.']" value="'.$field_value.'" type="text" class="form-control trans" '.$disabled.' />
+            //                                         </div>
+            //                                     </div>
+            //                                 </div>
+            //                             </div>';
+
+            //             } else if($field_type == 'Selectbox'){
+            //                 $options = '';
+            //                 $option_name = '';
+            //                 $option_value = '';
+            //                 $opt = '';
+            //                 $j = 0;
+            //                 ///alert(option_count);
+            //                 //for($i=1; $i <= $option_count; $i++){
+            //                 foreach($value->select_options as $select_option){
+            //                     //echo '<pre>'; print_r($select_option);
+            //                     $select_option = (array)$select_option;
+            //                     //print_r($se['option_name']); die;
+
+            //                     $option_name    = $select_option['option_name'];
+            //                     $option_value   = $select_option['option_value'];
+
+            //                     $selected = '';
+            //                     /*if($form_column_val == $option_value){
+            //                         $selected = 'selected';
+            //                     }*/ 
+            //                     $selected = '';
+
+            //                     //if( ($option_name !== '') && ($option_value !== '') ) {            
+            //                         $options .= '<option value="'.$option_value.'" '.$selected.'>'.$option_name.'</option>';
+
+            //                         $opt .= '<input type="hidden" name="formdata['.$key.'][select_options]['.$j.'][option_name]" value="'.$option_name.'"> <input type="hidden" name="formdata['.$key.'][select_options]['.$j.'][option_value]" value="'.$option_value.'">';
+            //                         $j++;
+            //                     //}
+            //                 }
+
+            //                 $formdata .= '
+            //                     <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+            //                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 ">
+            //                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                             <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-10 ">
+            //                                 <div class="select-style">
+            //                                     <select name="formdata['.$column_name.']" '.$disabled.' >
+            //                                         '.$options.'
+            //                                     </select>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>'; 
+
+            //             } else if($field_type == 'Textarea'){
+            //                 $formdata .='
+            //                     <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+            //                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 ">
+            //                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                             <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0 ">
+            //                                 <div class="input-group popovr">
+            //                                     <textarea name="formdata['.$column_name.']" class="form-control trans" '.$disabled.' >'.$field_value.'</textarea>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>';
+
+            //             } else if($field_type == 'Date'){
+            //                 $formdata .='
+            //                     <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
+            //                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+            //                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                             <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0 ">
+            //                                 <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date=""  class="input-group date dpYears">
+            //                                     <input name="formdata['.$column_name.']" type="text" value="'.$field_value.'" size="16" class="form-control trans" readonly="">
+            //                                     <span class="input-group-btn add-on">
+            //                                         <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
+            //                                     </span>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>';
+
+            //             } else if($field_type == 'Checkbox') {
+
+            //                 $checkbox       = '';
+            //                 $checkbox_name  = '';
+            //                 $checkbox_value = '';
+            //                 $chk = '';
+            //                 $j   = 0;
+
+            //                 foreach ($value->select_checkboxs as $select_checkbox) {
+
+            //                     $select_checkbox = (array)$select_checkbox;
+
+            //                     $checkbox_name   = $select_checkbox['checkbox_name'];
+
+            //                     $chk .= '<div class="col-md-6">
+            //                                 <div class="checkbox ">
+            //                                     <label>
+            //                                         <input class="trans" name="formdata['.$column_name.'][]" value="'.$checkbox_name.'" type="checkbox" '.$disabled.'>'.$checkbox_name.'
+            //                                     </label>
+            //                                 </div>
+            //                             </div>';
+
+            //                     $j++;
+            //                 }   
+
+            //                 $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+            //                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+            //                                         <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
+            //                                         <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0">
+            //                                             <div class="wrap_checks">
+            //                                                 <div class="row">
+            //                                                     '.$chk.'
+            //                                                 </div>
+            //                                             </div>
+            //                                         </div>
+            //                                     </div>
+            //                             </div>';
+            //             } 
+            //             else{
+            //                 $formdata .='';
+            //             }
+
+            //     }
+
+            // }
+
             $selected = '';
             if ($form_info->alert_status == '1') {
                 $selected = 'selected';
@@ -926,6 +1232,8 @@ class DynamicForm extends Model //FormBuilder
 
                 $formdata .= $static_field;
             }
+
+
 
             $result['response']         = true;
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12' id='formioView'></div>";

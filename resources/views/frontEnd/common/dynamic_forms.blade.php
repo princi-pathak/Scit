@@ -43,7 +43,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="TopForm">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7">User: </label>
+                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7">Child: </label>
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_n_id">
@@ -180,9 +180,9 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 <a class="close edit_dyn_form" href="">
                     <i class="fa fa-pencil" title="Edit Form"></i>
                 </a>
-                <a class="close mdl-back-btn previous_modal_btn" pre_modal="" href="" data-toggle="modal" data-dismiss="modal" aria-hidden="true">
+                {{-- <a class="close mdl-back-btn previous_modal_btn" pre_modal="" href="" data-toggle="modal" data-dismiss="modal" aria-hidden="true">
                     <i class="fa fa-arrow-left" title="View Previous Modal"></i>
-                </a>
+                </a> --}}
                 <h4 class="modal-title">View Details</h4>
             </div>
             <div class="modal-body">

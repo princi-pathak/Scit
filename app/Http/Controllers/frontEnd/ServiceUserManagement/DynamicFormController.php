@@ -36,6 +36,8 @@ class DynamicFormController extends Controller
             $ex_home_ids = explode(',', $home_ids);
             $home_id = $ex_home_ids[0];
             $form_insert_id = DynamicForm::saveForm($data);
+            // dd($form_insert_id);
+            // echo "dfdf"; die;
 
             if ($form_insert_id != 0) {
 
@@ -61,6 +63,7 @@ class DynamicFormController extends Controller
                     $logtype_arr = range(1, 9); // [1, 2, ..., 9]
                 }
 
+                $currentDate = Carbon::now()->format('Y-m-d');
 
                 foreach ($logtype_arr as $val) {
                     switch ($val) {
@@ -75,8 +78,10 @@ class DynamicFormController extends Controller
                                 'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
                                 'formdata' => json_encode($data['data']),
                                 'details' => $data['details'],
+                                'start_date' => $currentDate,
                                 'home_id' => $home_id,
                                 'user_id' => Auth::user()->id,
+                                'dynamic_form_id' => $form_insert_id,
                                 'image_name' => '',
                                 'logType' => 1,
                                 'is_late' => 0,
@@ -103,7 +108,7 @@ class DynamicFormController extends Controller
 
                         case 2:
                             // Weekly Log
-                            $currentDate = Carbon::now()->format('Y-m-d');
+                          
                             // Date after 1 week
                             $nextWeek = Carbon::now()->addWeek()->format('Y-m-d');
 
@@ -118,6 +123,7 @@ class DynamicFormController extends Controller
                                 'end_date' => $nextWeek,
                                 'formdata' => json_encode($data['data']),
                                 'details' => $data['details'],
+                                'dynamic_form_id' => $form_insert_id,
                                 'home_id' => $home_id,
                                 'user_id' => Auth::user()->id,
                                 'image_name' => '',
@@ -147,7 +153,6 @@ class DynamicFormController extends Controller
 
                         case 3:
                             // Monthly log
-                            $currentDate = Carbon::now()->format('Y-m-d');
                             // Date after 1 month
                             $nextMonth = Carbon::now()->addMonth()->format('Y-m-d');
 
@@ -164,6 +169,7 @@ class DynamicFormController extends Controller
                                 'details' => $data['details'],
                                 'home_id' => $home_id,
                                 'user_id' => Auth::user()->id,
+                                'dynamic_form_id' => $form_insert_id,
                                 'image_name' => '',
                                 'logType' => 3,
                                 'is_late' => 0,
@@ -570,7 +576,6 @@ class DynamicFormController extends Controller
         if ($request->isMethod('post')) {
 
             $data = $request->all();
-            // dd($data);
             $home_ids = Auth::user()->home_id;
             $ex_home_ids = explode(',', $home_ids);
             $home_id = $ex_home_ids[0];
@@ -605,6 +610,9 @@ class DynamicFormController extends Controller
 
             $s_category_id = $data['s_category_id'] ?? null;
             $category_data = $s_category_id ? CategoryFrontEnd::where('id', $s_category_id)->first() : null;
+
+
+            $form = DynamicForm::showForm($data);
 
             $log_book                  = new LogBook;
             $log_book->dynamic_form_id = $data['dyn_form_id'] ?? null;
