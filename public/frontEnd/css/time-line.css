@@ -288,10 +288,10 @@ span.timelineIcons {
     background-color: #777;
     color: #fff;
     border-radius: 4px;
-    padding: 7px 6px;
+    padding: 7px 16px;
     order: 3;
     display: block;
-    margin-left: 12px;
+    margin-left: 6px;
     line-height: 24px;
     position: relative;
 }
@@ -413,9 +413,15 @@ input#date_range_input {
 }
 
 .timelineInput .pop-notifbox {
-    right: 54px;
+    /* right: 54px; */
+    left: 0;
+    top: 50px;
+}
+.rightSideInput .pop-notifbox {
+    right: 0;
+    display: inline-table;
     left: inherit;
-    top: 0;
+    top: 50px;
 }
 
 .timelineInput .pop-notification::after {
