@@ -279,19 +279,19 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
 
 
 <script>
-    const inputs = document.querySelectorAll('.dd-input');
+    // const inputs = document.querySelectorAll('.dd-input');
 
-    inputs.forEach(input => {
-        input.addEventListener('change', () => {
-            if (input.checked) {
-                inputs.forEach(otherInput => {
-                    if (otherInput !== input) {
-                        otherInput.checked = false;
-                    }
-                });
-            }
-        });
-    });
+    // inputs.forEach(input => {
+    //     input.addEventListener('change', () => {
+    //         if (input.checked) {
+    //             inputs.forEach(otherInput => {
+    //                 if (otherInput !== input) {
+    //                     otherInput.checked = false;
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
 
     document.getElementById('open_form_view').addEventListener('click', function() {
         document.getElementById('viewDaily_log').style.display = 'block';
