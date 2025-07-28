@@ -112,7 +112,7 @@ class DailyLogsController extends ServiceUserManagementController
             }
 
             Log::info($su_logs);
-            $today = date('Y-m-d');
+            // $today = date('Y-m-d');
             // $log_book_records = DB::table('log_book')
             //     ->select('log_book.*', 'user.name as staff_name')
             //     // ->where('log_book.logType', 1)
@@ -123,26 +123,38 @@ class DailyLogsController extends ServiceUserManagementController
             //     ->where('log_book.home_id',$home_id)
             //     ->orderBy('date', 'desc')->get();
 
+            $today = date('Y-m-d');
 
             $log_book_records = DB::table('log_book')
                 ->select('log_book.*', 'user.name as staff_name')
+                ->join('user', 'log_book.user_id', '=', 'user.id')
                 ->whereIn('log_book.id', $su_logs)
+                ->where('log_book.home_id', $home_id)
                 ->where(function ($query) use ($today) {
                     $query->where(function ($q) use ($today) {
-                        // Daily logs
                         $q->where('log_book.logType', 1)
                             ->whereDate('log_book.date', '=', $today);
-                    })->orWhere(function ($q) use ($today) {
-                        // Weekly or Monthly logs
-                        $q->whereIn('log_book.logType', [2, 3])
-                            ->whereDate('log_book.start_date', '<=', $today)
-                            ->whereDate('log_book.end_date', '>=', $today);
-                    });
+                    })
+                        ->orWhere(function ($q) use ($today) {
+                            $q->where('log_book.logType', 2)
+                                ->whereDate('log_book.start_date', '<=', $today)
+                                ->whereDate('log_book.end_date', '>=', $today);
+                        })
+                        ->orWhere(function ($q) use ($today) {
+                            $q->where('log_book.logType', 3)
+                                ->whereDate('log_book.start_date', '<=', $today)
+                                ->whereDate('log_book.end_date', '>=', $today);
+                        });
                 })
-                ->join('user', 'log_book.user_id', '=', 'user.id')
-                ->where('log_book.home_id', $home_id)
+                ->orderBy('log_book.dynamic_form_id') // Sort for grouping
+                ->orderByRaw("FIELD(log_book.logType, 1, 2, 3)") // Prioritize: daily > weekly > monthly
                 ->orderBy('log_book.date', 'desc')
-                ->get();
+                ->get()
+                ->unique('dynamic_form_id') // ✅ Only one log per dynamic_form_id
+                ->values();
+
+
+
 
             //  echo "<pre>"; print_r($log_book_records); die;
 
@@ -316,7 +328,7 @@ class DailyLogsController extends ServiceUserManagementController
                 if ($key['is_late']) {
                     $given_date_without_time    = date('Y-m-d', strtotime($key['date']));
 
-                    
+
                     $created_at_without_time    = date('Y-m-d', strtotime($key['created_at']));
                     if ($given_date_without_time == $created_at_without_time) {
                         $key = Arr::add($key, 'late_time_text', date('H:i', strtotime($key['created_at'])));
@@ -1259,7 +1271,6 @@ class DailyLogsController extends ServiceUserManagementController
         //die();
         if (isset($_GET['key'])) {
             $service_user_id = $_GET['key'];
-
         } else {
             $service_user_id = "";
         }
@@ -1548,7 +1559,7 @@ class DailyLogsController extends ServiceUserManagementController
         return view('frontEnd.serviceUserManagement.monthly_log', compact('user_id', 'service_user_id', 'service_user_name', 'home_id', 'su_home_id', 'log_book_records', 'su_logs', 'categorys', 'service_users', 'staff_members'));
     }
 
-    
+
     public function view_log_form_data($dynamic_form_id = null)
     {
         $result = DynamicForm::showFormLogWithValue($dynamic_form_id, false);
