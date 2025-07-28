@@ -532,13 +532,6 @@
                                     </div>
                                     <!-- End off Customer popup -->
 
-
-
-
-
-
-
-
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">

@@ -544,23 +544,19 @@ span.ps10 {
 
                                         <!-- notification start -->
                                         <section class="panel m-0">
-                                            <header class="panel-heading"> Notification
-                                                <!-- <span class="tools pull-right">
-                                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                                <a href="javascript:;" class="fa fa-cog"></a> <a href="javascript:;" class="fa fa-times"></a>
-                                            </span> -->
-
-                                            </header>
+                                            <header class="panel-heading"> Notification</header>
                                             <div class="panel-body  min-ht-0 srvc_usr_ntf">
                                                 @include('frontEnd.serviceUserManagement.elements.su_profile_notification')
                                             </div>
                                         </section>
 
-                                        
+                                        @include('frontEnd.serviceUserManagement.elements.profile.care_team')
                                     </div>
                                 </div>
                             </div>
-                            
+                            @include('frontEnd.serviceUserManagement.elements.profile.care_history')
+                            @include('frontEnd.serviceUserManagement.elements.profile.contacts')
+                            @include('frontEnd.serviceUserManagement.elements.profile.profile_detail_info')
                         </div>
                     </div>
                 </section>
@@ -570,10 +566,8 @@ span.ps10 {
     </section>
 </section>
 <!--main content end-->
-@include('frontEnd.serviceUserManagement.elements.profile.care_team')
-@include('frontEnd.serviceUserManagement.elements.profile.care_history')
-@include('frontEnd.serviceUserManagement.elements.profile.contacts')
-@include('frontEnd.serviceUserManagement.elements.profile.profile_detail_info')
+
+
 
 @include('frontEnd.serviceUserManagement.elements.daily_record')
 @include('frontEnd.serviceUserManagement.elements.health_record')

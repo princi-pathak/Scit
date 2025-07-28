@@ -287,6 +287,9 @@
   <!--Core js-->
   <script src="{{ url('public/frontEnd/js/bs3/bootstrap.min.js') }}"></script>
   <script src="{{ url('public/frontEnd/js/hover-dropdown.js') }}"></script>
+    <!-- Js PaiChart graph  -->
+   <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+   
   <script src="{{ url('public/frontEnd/jobs/js/custom.js')}}"></script>
   <!--<script src="{{ url('public/frontEnd/js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js" type="text/javascript"></script>
@@ -311,8 +314,7 @@
   <script src="{{ url('public/frontEnd/js/moment-timezone-data.js') }}"></script>
   <script src='https://cdn.form.io/formiojs/formio.full.min.js'></script>
 
-  <!-- Js PaiChart graph  -->
-   <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
    
   <script>
     function PrintDivwithvalue(th) {
@@ -398,6 +400,12 @@
         printWindow.print();
       }, 300);
     }
+
+
+
+
+
+    
   </script>
 </body>
 @include('frontEnd.common.take_call')
