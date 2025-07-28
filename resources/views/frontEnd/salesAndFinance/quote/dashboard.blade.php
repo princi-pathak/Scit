@@ -1,30 +1,12 @@
-
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 @extends('frontEnd.layouts.master')
 
 
 <section class="wrapper">
-
     <div class="panel">
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-body row">
-                        <div class="col-md-3">
-                            <div class="pageTitle" style="padding: 5px;">
-                                <h3>Quote Dashboard</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div></div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="pageTitleBtn" style="padding: 0;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <header class="panel-heading px-5">
+            <h4>Quote Dashboard</h4>
+        </header>
 
         <div class="p-20">
             <div class="row">
@@ -213,28 +195,25 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3">
-                    <div class="panel panel-default link_box" style="margin-top: 20px;">
-                        <div class="panel-body">
-                            <div id='PieChart'></div>
+             <div class="col-lg-3">
+                <div class="card link_box mt-4">
+                    <div class="card-body">
+                        <div id='PieChart'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card link_box mt-4">
+                    <div class="card-body">
+                        <div id="lineChart">
+                            <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-6">
-                    <div class="panel panel-default link_box" style="margin-top: 20px;">
-                        <div class="panel-body">
-                            <div id="lineChart">
-                                <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
             </div>
         </div>
     </div>
 </section>
 
-
-<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 
