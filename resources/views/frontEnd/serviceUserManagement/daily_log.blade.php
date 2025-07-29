@@ -288,10 +288,9 @@
                                                                 {{ $key['staff_name'] }}</span>
                                                         </span>
                                                         <span class="viewEditIcon">
-                                                            <a href="#!" class="dyn-form-view-data" id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}
-"><i
-                                                                    class="fa fa-edit"></i></a>
-                                                            <a href="#!"><i class="fa fa-eye"></i></a>
+                                                            <a href="#!" class="dyn-form-view-data" id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
+                                                                    class="fa fa-eye"></i></a>
+                                                            {{-- <a href="#!"><i class="fa fa-eye"></i></a> --}}
                                                         </span>
                                                         @if (isset($key['category_name']) && !empty($key['category_name']))
                                                             <h1 class="title_time_log">
@@ -368,10 +367,9 @@
                                                                     {{ $key['staff_name'] }}</span>
                                                             </span>
                                                             <span class="viewEditIcon">
-                                                                <a href="#!" class="dyn-form-view-data" id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}
-"><i 
-                                                                        class="fa fa-edit"></i></a>
-                                                                <a href="#!"><i class="fa fa-eye"></i></a>
+                                                                <a href="#!" class="dyn-form-view-data" id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i 
+                                                                        class="fa fa-eye"></i></a>
+                                                                {{-- <a href="#!"><i class="fa fa-edit"></i></a> --}}
                                                             </span>
                                                         </div>
 

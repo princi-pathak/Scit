@@ -969,7 +969,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	// Route::match(['get','post'], '/system/plans/delete/{plan_id}', 'App\Http\Controllers\frontEnd\SystemManagement\PlanBuilderController@delete');
 
 	// -------- Service Management ------------------------//
-
 	Route::match(['get', 'post'], '/service-user-management', 'App\Http\Controllers\frontEnd\ServiceUserManagementController@service_users');
 	Route::match(['get', 'post'], '/service/user-profile/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\ProfileController@index');
 
@@ -1002,7 +1001,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::match(['get', 'post'], '/service/weekly-logs', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController@weekly_log');
 	Route::match(['get', 'post'], '/service/monthly-logs', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController@monthly_log');
 	Route::get('/service/daily-log-form/view/data/{dynamic_form_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController@view_log_form_data');
-
+	Route::post('/service/logbook/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@add');
 
 	//Backend Logs Download
 	Route::get('/service/logbook/download', 'App\Http\Controllers\frontEnd\ServiceUserManagement\PDFLogsController@download');
@@ -1018,12 +1017,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/service/risks/{su_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RiskController@index');
 	Route::get('/service/risk/view/{risk_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RiskController@view');
 	Route::get('/service/risk/risksfilter', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RiskController@risksfilter');
+
 	//risk RMP
 	Route::post('/service/risk/rmp/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RiskController@add_rmp_risk');
 	Route::get('/service/risk/rmp/view/{su_risk_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RiskController@view_rmp_risk');
+
 	//edit only a single records info
 	Route::post('/service/risk/rmp/edit/{su_rmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RiskController@edit_rmp_risk');
-
 	Route::get('/service/risk/inc-rec/view/{su_risk_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RiskController@view_inc_rec_risk');
 	//edit multiple records at a time - details, review etc. 
 
@@ -1166,6 +1166,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::match(['get', 'post'], '/service/rmp/edit_rmp/{su_rmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RmpController@edit_rmp');
 	Route::get('/service/rmp/delete/{su_rmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RmpController@delete');
 	Route::match(['get', 'post'], '/service/rmp/edit', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RmpController@edit');
+	Route::match(['get', 'post'], '/service/rmp/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\RmpController@form');
+
 
 	//BMP
 	Route::match(['get', 'post'], '/service/bmp/view/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@index');
@@ -1174,6 +1176,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/service/bmp/delete/{su_bmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@delete');
 	Route::get('/service/bmp/view_bmp/{su_bmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@view_bmp');
 	Route::post('/service/rmp/edit_bmp/{su_bmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@edit_bmp');
+
+	Route::match(['get', 'post'], '/service/bmp/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@form');
+
 
 	//IncidentReport
 	Route::match(['get', 'post'], '/service/incident-report/views/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\IncidentController@index');
