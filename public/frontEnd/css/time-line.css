@@ -37,6 +37,7 @@
     margin-right: 6px;
     display: flex;
     padding: 9px 10px;
+    min-width: 480px;
 }
 
 .msg-time-chat .msg-in .text .second p {
@@ -426,10 +427,67 @@ input#date_range_input {
 
 .timelineInput .pop-notification::after {
     content: "\f0d9";
-    font-family: fontawesome;
+    font-family: 'fontawesome';
     right: -8px;
     position: absolute;
     top: 2px;
     color: #fff;
     transform: rotate(180deg);
+}
+
+
+/*  nEW CSS */
+
+  /*09 Aug 2018*/
+    .back_opt {
+        background: #1f88b5;
+        border-radius: 100%;
+        color: #fff;
+        font-size: 20px;
+        padding: 8px 18px;
+        z-index: 999;
+        cursor: pointer;
+        height: 45px;
+        width: 45px;
+        display: inline-block;
+    }
+
+    .back_opt:hover i {
+        color: #fff;
+    }
+
+    i.fa.fa.fa-h-square {
+        color: #1f88b5;
+        font-size: 25px;
+    }
+
+    .space_bottom {
+        margin-bottom: 7px !important;
+    }
+
+    .timeline,
+    #logs_articles {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: table;
+        position: relative;
+        table-layout: fixed;
+        width: 100%;
+        min-height: 50vh;
+    }
+
+    .timeline .time-show {
+        margin-right: 0px;
+        text-align: center;
+    }
+
+   .rmpTimelineright {
+    margin-top: 72px;
+    margin-bottom: 24px;
+}
+.input-group.popovr.rmpTimeLft {
+    justify-content: end;
+}
+.rmpTimeRit{
+    
 }
