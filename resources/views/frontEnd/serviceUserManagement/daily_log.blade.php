@@ -99,6 +99,10 @@
             margin-left: 14px;
             color: #1f88b5;
         }
+        span.viewEditIcon {
+        position: absolute;
+        right: 24px;
+    }
     </style>
 
 
