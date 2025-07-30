@@ -1,50 +1,6 @@
 @extends('frontEnd.layouts.master')
 @section('title','Health Record')
 @section('content')
-<style type="text/css">
-    /*09 Aug 2018*/
-    .back_opt {
-        background: #1f88b5;
-        border-radius: 100%;
-        color: #fff;
-        font-size: 20px;
-        padding: 8px 18px;
-        z-index: 999;
-        cursor: pointer;
-        height: 45px;
-        width: 45px;
-        display: inline-block;
-    }
-
-    .back_opt:hover i {
-        color: #fff;
-    }
-
-    i.fa.fa.fa-h-square {
-        color: #1f88b5;
-        font-size: 25px;
-    }
-
-    .space_bottom {
-        margin-bottom: 7px !important;
-    }
-
-    .timeline,
-    #logs_articles {
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: table;
-        position: relative;
-        table-layout: fixed;
-        width: 100%;
-        min-height: 50vh;
-    }
-
-    .timeline .time-show {
-        margin-right: 0px;
-        text-align: center;
-    }
-</style>
 
 <link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
 
@@ -167,7 +123,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                             @endphp
 
                             @foreach ($log_book_records as $index => $key )
-
                             @php
                             $color = $colors[$index % count($colors)]; // Cycle through colors if more records than colors
                             @endphp

@@ -5,7 +5,10 @@ namespace App\Http\Controllers\frontEnd\ServiceUserManagement;
 use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use DB, Auth;
+use Auth;
+use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use App\LogBook, App\ServiceUser, App\ServiceUserLogBook, App\LogBookComment, App\CategoryFrontEnd, App\DynamicFormBuilder, App\User, App\DynamicForm;
 use Illuminate\Support\Arr;
 
@@ -309,8 +312,51 @@ class DailyLogsController extends ServiceUserManagementController
                 ->join('category', 'log_book.category_id', '=', 'category.id')
                 ->where('log_book.home_id', $home_id)
                 ->orderBy('date', 'desc')->get();
-            //print_r($log_book_records);
-            //die;
+
+            
+            // $today = Carbon::today();
+            // $startOfWeek = $today->copy()->startOfWeek();  // Monday
+            // $endOfWeek = $today->copy()->endOfWeek();      // Sunday
+            // $startOfMonth = $today->copy()->startOfMonth();
+            // $endOfMonth = $today->copy()->endOfMonth();
+
+            // $log_book_records = DB::table('log_book')
+            //     ->select(
+            //         'log_book.dynamic_form_id',
+            //         DB::raw('MIN(log_book.created_at) as created_at'),
+            //         DB::raw('MIN(log_book.id) as id'),
+            //         DB::raw('MIN(log_book.date) as date'),
+            //         DB::raw('MIN(user.name) as staff_name'),
+            //         DB::raw('MIN(log_book.is_late) as is_late'),
+            //         DB::raw('MIN(log_book.logType) as logType'),
+            //         DB::raw('MIN(category.name) as category_name'),
+            //         DB::raw('MIN(log_book.details) as details'),
+            //         DB::raw('MIN(category.color) as category_color'),
+            //         DB::raw('MIN(category.icon) as category_icon')
+            //     )
+            //     ->join('user', 'log_book.user_id', '=', 'user.id')
+            //     ->join('category', 'log_book.category_id', '=', 'category.id')
+            //     ->whereIn('log_book.id', $su_logs)
+            //     ->where('log_book.home_id', $home_id)
+            //     ->where(function ($query) use ($today, $startOfWeek, $endOfWeek, $startOfMonth, $endOfMonth) {
+            //         $query->where(function ($q) use ($today) {
+            //             $q->where('log_book.logType', 1)
+            //                 ->whereDate('log_book.date', '=', $today);
+            //         })->orWhere(function ($q) use ($startOfWeek, $endOfWeek) {
+            //             $q->where('log_book.logType', 2)
+            //                 ->whereDate('log_book.date', '>=', $startOfWeek)
+            //                 ->whereDate('log_book.date', '<=', $endOfWeek);
+            //         })->orWhere(function ($q) use ($startOfMonth, $endOfMonth) {
+            //             $q->where('log_book.logType', 3)
+            //                 ->whereDate('log_book.date', '>=', $startOfMonth)
+            //                 ->whereDate('log_book.date', '<=', $endOfMonth);
+            //         });
+            //     })
+            //     ->groupBy('log_book.dynamic_form_id', 'log_book.date')
+            //     ->orderBy('log_book.date', 'desc')
+            //     ->get();
+
+            // echo "<pre>"; print_r($log_book_records);die;
 
             $log_book_records = collect($log_book_records)->map(function ($x) {
                 return (array) $x;

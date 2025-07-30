@@ -429,7 +429,6 @@ span.ps10 {
                                                                     <div class="panel-body">
                                                                         <div class="wdgt-value">Plans</div>
                                                                     </div>
-
                                                                 </section>
                                                             </a>
                                                         </div>
@@ -578,8 +577,8 @@ span.ps10 {
 @include('frontEnd.serviceUserManagement.elements.plans')
 @include('frontEnd.serviceUserManagement.elements.file_manager')
 @include('frontEnd.serviceUserManagement.elements.bmp-rmp')
-@include('frontEnd.serviceUserManagement.elements.rmp')
-@include('frontEnd.serviceUserManagement.elements.bmp')
+{{-- @include('frontEnd.serviceUserManagement.elements.rmp') --}}
+{{-- @include('frontEnd.serviceUserManagement.elements.bmp') --}}
 @include('frontEnd.serviceUserManagement.elements.mood')
 @include('frontEnd.serviceUserManagement.elements.incident_report')
 @include('frontEnd.serviceUserManagement.elements.living_skill')
