@@ -290,7 +290,7 @@
                                                                     echo strtoupper($str[0]);
                                                                     $whatIWant = substr($user_data[0]['name'], strpos($user_data[0]['name'], " ") + 1);
                                                                     $str1 =  str_split($whatIWant);
-                                                                    echo strtoupper($str1[0]);
+                                                                    echo ($str1) ? strtoupper($str1[0]) : "ABC";
                                                                     ?>
                                                                 </div>
                                                             </div>
