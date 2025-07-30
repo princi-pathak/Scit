@@ -477,7 +477,7 @@ class DynamicFormController extends Controller
 
         // dd($dyn_forms);
         foreach ($dyn_forms as $key => $value) {
-            // $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
+            $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
             if ($value->date == '') {
                 $date = '';
@@ -499,6 +499,12 @@ class DynamicFormController extends Controller
                 $end_brct = '';
             }
 
+            if(!empty($value->time)){
+                $time = $value->time;
+            } else {
+                $time = '00:00';
+            }
+
             $color = $colors[$key % count($colors)]; // Cycle through colors if more records than colors
 
 
@@ -512,7 +518,8 @@ class DynamicFormController extends Controller
 
                                 <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
 
-                                <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '"><span><input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $value->title . ' " maxlength="255"/></span></a>
+                                <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '"><span>
+                                    <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title.' - '.$value->title . ' " maxlength="255"/></span></a>
                                 
                                 <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
                                     <i class="fa fa-cog"></i>
@@ -526,7 +533,7 @@ class DynamicFormController extends Controller
                                         </ul>
                                     </div>
                                 </span>
-                                <span class="ritOrdring three rightdate"> ' . $date . ' </span>
+                                <span class="ritOrdring three rightdate"> ' . $date . ' - '. $time .'</span>
                                 <span class="rightArrow"></span>
                             </div>
                         </div>
@@ -542,8 +549,8 @@ class DynamicFormController extends Controller
 
                                <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
                                 <a href="#" class="dyn-form-view-data" id="' . $value->id . '"><span>
-                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $value->title . '" maxlength="255"/></span></a>
-                                <span class="timLineDate">' . $date . '</span>
+                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' .$form_title.' - '.$value->title . '" maxlength="255"/></span></a>
+                                <span class="timLineDate">' . $date . ' - '. $time .'</span>
                                 <span class="arrow"></span>
 
                                 <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">

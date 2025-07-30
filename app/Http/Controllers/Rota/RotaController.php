@@ -1281,6 +1281,7 @@ class RotaController extends Controller
       return view('rotaStaff.payroll_glossary', $data);
     }
     public function rota_management_dashboard(){
+      
       return view('rotaStaff.rota_management_dashboard');
     }
 
