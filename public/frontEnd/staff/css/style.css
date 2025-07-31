@@ -1606,7 +1606,18 @@ margin: 0px 10px 0px 10px;
 .card .detail {
     padding: 10px;
 }
+.detail .headline p {
+    font-weight: 700;
+    line-height: 22px;
+    font-size: 16px;
+    color: #333230;
 
+    display: -webkit-box;
+  -webkit-line-clamp: 1; /* Show approx 20 words depending on screen */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .card .payroll {
     background-image: url(https://app.brighthr.com/671b1754a7825827ddd6.png);
     background-repeat: no-repeat;
@@ -1616,6 +1627,16 @@ margin: 0px 10px 0px 10px;
     color: #fff;
 }
 
+.more-headline p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Show approx 20 words depending on screen */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.more-headline p span.see-more-card {
+  display: inline;
+}
 .card .payroll .sub-heading {
     color: #fff;
 }
