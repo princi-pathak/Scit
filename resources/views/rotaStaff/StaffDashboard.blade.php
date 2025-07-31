@@ -75,7 +75,7 @@
   }
 
   .tab-first-infos a {
-    background: #e10078 !important;
+    /* background: #e10078 !important; */
     border-radius: 5px !important;
   }
 
@@ -289,7 +289,7 @@
         <div class="row my-3">
           <div class="col-md-4 my-2">
             <div class="card">
-              <div class="detail-area">
+              <div class="detail-area turbotalent">
                 <div>
                   <h2 class="heading">Turbotalent</h2>
                 </div>
@@ -327,8 +327,9 @@
                 </div>
                 <div class="more-headline">
                   <p>Stores all your employee salaries and wages in one place, alongside tax codes and
-                    National Insurance numbers. You can also run regular payroll reports, giving you
-                    information to enter into your payroll system or to send to your accountant. <span class="see-more-card"><a href="#" style="text-decoration: none;">See More</a></span>
+                    National Insurance numbers.   <span class="see-more-card"><a href="#" style="text-decoration: none;">See More</a></span>
+                    <!--You can also run regular payroll reports, giving you
+                    information to enter into your payroll system or to send to your accountant. -->
                   </p>
                 </div>
               </div>

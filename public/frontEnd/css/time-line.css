@@ -439,55 +439,121 @@ input#date_range_input {
 /*  nEW CSS */
 
   /*09 Aug 2018*/
-    .back_opt {
-        background: #1f88b5;
-        border-radius: 100%;
-        color: #fff;
-        font-size: 20px;
-        padding: 8px 18px;
-        z-index: 999;
-        cursor: pointer;
-        height: 45px;
-        width: 45px;
-        display: inline-block;
-    }
+.back_opt {
+    background: #1f88b5;
+    border-radius: 100%;
+    color: #fff;
+    font-size: 20px;
+    padding: 8px 18px;
+    z-index: 999;
+    cursor: pointer;
+    height: 45px;
+    width: 45px;
+    display: inline-block;
+}
 
-    .back_opt:hover i {
-        color: #fff;
-    }
+.back_opt:hover i {
+    color: #fff;
+}
 
-    i.fa.fa.fa-h-square {
-        color: #1f88b5;
-        font-size: 25px;
-    }
+i.fa.fa.fa-h-square {
+    color: #1f88b5;
+    font-size: 25px;
+}
 
-    .space_bottom {
-        margin-bottom: 7px !important;
-    }
+.space_bottom {
+    margin-bottom: 7px !important;
+}
 
-    .timeline,
-    #logs_articles {
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: table;
-        position: relative;
-        table-layout: fixed;
-        width: 100%;
-        min-height: 50vh;
-    }
+.timeline,
+#logs_articles {
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    position: relative;
+    table-layout: fixed;
+    width: 100%;
+    min-height: 50vh;
+}
+.timeline .time-show {
+    margin-right: 0px;
+    text-align: center;
+}
 
-    .timeline .time-show {
-        margin-right: 0px;
-        text-align: center;
-    }
 
-   .rmpTimelineright {
+/* Start css rmpTimeline */
+
+.rmpTimelineright {
     margin-top: 72px;
     margin-bottom: 24px;
 }
 .input-group.popovr.rmpTimeLft {
     justify-content: end;
 }
-.rmpTimeRit{
-    
+.rmpTimeRit .rmpWithPlusInput{
+    display: flex;
+    width: 60%;
+}
+
+
+.rmpTimeRit .timLineDate{
+    order: unset;
+    margin-right: 6px;
+}
+
+.rmpTimeLft .rmpWithPlusInput{
+    display: flex;
+    width: 60%;
+}
+.rmpWithPlusInput input{
+    height: 40px;
+}
+
+.rightSideInput.rmpTimeLft, .rightSideInput.rmpTimeRit{
+    margin-top: 0;
+}
+.rightSideInput.rmpTimeLft::after {
+    left: inherit;
+    right: -35px;
+}
+
+.rmpTimeLft .rmpWithPlusInput input {
+    order: 2;
+}
+.rmpTimeRit .rmpWithPlusInput input{
+    /* padding-left: 34px; */
+}
+.rmpTimeLft .rmpWithPlusInput input{
+    padding-left: 46px;
+}
+.rmpTimeRit .rmpWithPlusInput .input-plus {
+    /* left: 152px;
+    right: inherit;
+    top: 4px; */
+       right: 191px;
+    top: 6px;
+}
+.rmpTimeLft .rmpWithPlusInput .input-plus{
+    left: 206px;
+    top: 6px;
+ 
+}
+.input-plusbox.form-group.col-xs-12.p-0.detail{
+     position: absolute;
+    z-index: 9;
+    background: #fff;
+    width: 73%;
+    padding-bottom: 14px !important;
+}
+.detail.leftTextarea {
+    left: 23%;
+    padding-bottom: 14px !important;
+}
+.detail.rightTextarea {
+    right: 23%;
+    padding-bottom: 14px !important;
+}
+.rmpTimeRit .arrow {
+    left: 0;
+    transform: rotate(180deg);
 }
