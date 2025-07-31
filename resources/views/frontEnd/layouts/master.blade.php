@@ -110,6 +110,9 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <link href="{{ url('public/frontEnd/jobs/css/dashboard.css') }}" rel="stylesheet">
 
+<link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
+
+
 
     <style type="text/css">
       .chat_opt {

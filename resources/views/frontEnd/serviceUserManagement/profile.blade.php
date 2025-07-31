@@ -334,14 +334,17 @@ span.ps10 {
                                 <a href="{{url('/select/report?key='.base64_encode($service_user_id))}}" class="" title="Report" srvcUserId="{{ $service_user_id }}"><i class="fa fa-file-o"></i></a>
                                 {{-- <a href="#!" onclick="toggleDropdown()" class="" title="Logs" srvcUserId="{{ $service_user_id }}"><i class="fa fa-address-book-o"></i></a> --}}
                                 <div class="dropdown">
-                                    <a href="#!" onclick="toggleDropdown(event)" class="" title="Logs">
+                                    {{-- <a href="#!" onclick="toggleDropdown(event)" class="" title="Logs">
+                                        <i class="fa fa-address-book-o"></i>
+                                    </a> --}}
+                                    <a href="{{ url('/service/daily-logs?key='.$service_user_id) }}" class="" title="Logs">
                                         <i class="fa fa-address-book-o"></i>
                                     </a>
-                                    <div id="myDropdown" class="dropdown-content">
+                                    {{-- <div id="myDropdown" class="dropdown-content">
                                         <a href="{{ url('/service/daily-logs?key='.$service_user_id) }}">Daily Log</a>
                                         <a href="{{ url('/service/weekly-logs?key='.$service_user_id) }}">Weekly Log</a>
                                         <a href="{{ url('/service/monthly-logs?key='.$service_user_id) }}">Monthly Log</a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </span>
                         </div>
