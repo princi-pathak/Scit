@@ -10,7 +10,10 @@ class TaskAllocationController extends StaffManagementController
     public function index($staff_member_id) {
        
         $sm_home_id = User::where('id',$staff_member_id)->value('home_id');
-        if(Auth::user()->home_id != $sm_home_id){
+        $home_ids = Auth::user()->home_id;
+        $ex_home_ids = explode(',', $home_ids);
+        $home_id=$ex_home_ids[0];
+        if($home_id != $sm_home_id){
             die; 
         }
 
@@ -164,9 +167,11 @@ class TaskAllocationController extends StaffManagementController
     public function add(Request $request) {
 
         if($request->isMethod('post')) {
-
+                $home_ids = Auth::user()->home_id;
+                $ex_home_ids = explode(',', $home_ids);
+                $home_id=$ex_home_ids[0];
                 $data = $request->all();
-                $home_id               = Auth::user()->home_id;
+                // $home_id               = $home_id;
                 $task                  = new StaffTaskAllocation;
                 $task->title           = $data['task_title'];
                 $task->staff_member_id = $data['staff_member_id'];
@@ -190,8 +195,10 @@ class TaskAllocationController extends StaffManagementController
         if(!empty($task_record)) {
 
             $sm_home_id = User::where('id', $task_record->staff_member_id)->value('home_id');
-
-            if($sm_home_id == Auth::user()->home_id) {
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id=$ex_home_ids[0];
+            if($sm_home_id == $home_id) {
 
                 $res = StaffTaskAllocation::where('id', $task_id)->update(['is_deleted' => '1']);
                 echo $res;
@@ -224,7 +231,10 @@ class TaskAllocationController extends StaffManagementController
                     if(!empty($sm_task)) {
                         $staff_member_id = $sm_task->staff_member_id;
                         $sm_home_id      = User::where('id',$staff_member_id)->value('home_id');
-                        if(Auth::user()->home_id == $sm_home_id){
+                        $home_ids = Auth::user()->home_id;
+                        $ex_home_ids = explode(',', $home_ids);
+                        $home_id=$ex_home_ids[0];
+                        if($home_id == $sm_home_id){
                             
                             $sm_task->details = $data['edit_task_details'][$key];
                             $sm_task->save();
