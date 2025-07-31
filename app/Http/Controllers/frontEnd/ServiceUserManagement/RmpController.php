@@ -133,34 +133,35 @@ class RmpController extends ServiceUserManagementController
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr rightSideInput rmpTimeRit">
                                 <span class="timLineDate">29-07-2025 - 2</span>
-                                <div>
-                                <input type="hidden" name="su_rmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_rmp_id_' . $value->id . '">
-                                <input type="text" class="form-control" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' .
-                    $time . ' ' . $end_brct . '" maxlength="255"/>
-                                <div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>   
-                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
-                                        <i class="fa fa-cog"></i>
-                                        <div class="pop-notifbox">
-                                            <ul class="pop-notification" type="none">
-                                                <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '" > <span> <i class="fa fa-eye"></i> </span> View </a> </li>
-                                                <li> <a href="#" class="edit_rmp_details" su_rmp_id="' . $value->id . '"> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li>
-                                                <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                            </ul>
-                                        </div>
-                                    </span>
-                                </div>
+                                <span class="arrow"></span>
+                                <div class="rmpWithPlusInput">
+                                    <input type="hidden" name="su_rmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_rmp_id_' . $value->id . '">
+                                    <input type="text" class="form-control" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' .
+                        $time . ' ' . $end_brct . '" maxlength="255"/>
+                                    <div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>   
+                                        <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
+                                            <i class="fa fa-cog"></i>
+                                            <div class="pop-notifbox">
+                                                <ul class="pop-notification" type="none">
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '" > <span> <i class="fa fa-eye"></i> </span> View </a> </li>
+                                                    <li> <a href="#" class="edit_rmp_details" su_rmp_id="' . $value->id . '"> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li>
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
 
                         <!-- Details textarea -->
-                        <div class="col-xs-12 input-plusbox form-group p-0 detail">
-                            <label class="col-sm-1 col-xs-12 color-themecolor r-p-0"> Details: </label>
-                            <div class="col-sm-11 r-p-0">
+                        <div class="col-xs-12 input-plusbox form-group p-0 detail rightTextarea">
+                            <label class="col-sm-12 col-xs-12 color-themecolor r-p-0"> Details: </label>
+                            <div class="col-sm-12 r-p-0">
                                 <div class="input-group">
                                     <textarea class="form-control tick_text edit_rcrd txtarea edit_rmp_details_' . $value->id . '" name="edit_rmp_details[]" disabled rows="5" value="" maxlength="1000">' . $value->details . '</textarea>
-                                    <div class="input-group-addon cus-inpt-grp-addon sbt_tick_area"">
+                                    <div class="d-none input-group-addon cus-inpt-grp-addon sbt_tick_area"">
                                         <div class="tick_show sbt_btn_tick_div ' . $tick_btn_class . '">' . $details_check . '</div>
                                     </div>
                                    <!--  <span class="input-group-addon cus-inpt-grp-addon color-grey settings tick_show ' . $tick_btn_class . '">' . $details_check . '
@@ -170,13 +171,14 @@ class RmpController extends ServiceUserManagementController
                         </div>
                     </div>  ';
             } else {
-                echo   '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel delete-row rows rmpTimelineright">
+                echo   '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel delete-row rows ">
                         <div class="form-group p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr rightSideInput rmpTimeLft">
+                                <span class="arrow"></span>
                                 <span class="timLineDate">29-07-2025 - 2</span>
-                                <div>
+                                <div class="rmpWithPlusInput">
                                 <input type="hidden" name="su_rmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_rmp_id_' . $value->id . '">
                                 <input type="text" class="form-control" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' .
                     $time . ' ' . $end_brct . '" maxlength="255"/>
@@ -198,12 +200,12 @@ class RmpController extends ServiceUserManagementController
                         </div>
 
                         <!-- Details textarea -->
-                        <div class="col-xs-12 input-plusbox form-group p-0 detail">
-                            <label class="col-sm-1 col-xs-12 color-themecolor r-p-0"> Details: </label>
-                            <div class="col-sm-11 r-p-0">
+                        <div class="col-xs-12 input-plusbox form-group p-0 detail leftTextarea">
+                            <label class="col-sm-12 col-xs-12 color-themecolor r-p-0"> Details: </label>
+                            <div class="col-sm-12 r-p-0">
                                 <div class="input-group">
                                     <textarea class="form-control tick_text edit_rcrd txtarea edit_rmp_details_' . $value->id . '" name="edit_rmp_details[]" disabled rows="5" value="" maxlength="1000">' . $value->details . '</textarea>
-                                    <div class="input-group-addon cus-inpt-grp-addon sbt_tick_area"">
+                                    <div class="d-none input-group-addon cus-inpt-grp-addon sbt_tick_area"">
                                         <div class="tick_show sbt_btn_tick_div ' . $tick_btn_class . '">' . $details_check . '</div>
                                     </div>
                                    <!--  <span class="input-group-addon cus-inpt-grp-addon color-grey settings tick_show ' . $tick_btn_class . '">' . $details_check . '
