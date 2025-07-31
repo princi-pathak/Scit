@@ -7586,7 +7586,7 @@ div.tagsinput span.tag {
     background-color: #fff;
 }
 
-.pop-notification::before {
+/* .pop-notification::before {
     box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.8);
     content: "";
     height: 6px;
@@ -7595,7 +7595,7 @@ div.tagsinput span.tag {
     top: 52px;
     width: 7px;
     z-index: -1;
-}
+} */
 
 .pop-notification::after {
     content: "\f0d9";
@@ -9300,4 +9300,14 @@ ul.pop-notification>li a:hover i {
 
 .close {
     top: 8px;
+}
+
+.modal-backdrop.in {
+    display: none;
+}
+.modal {
+    background: #000000a6;
+}
+.modal-dialog {
+    margin: 7% auto;
 }
