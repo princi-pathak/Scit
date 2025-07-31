@@ -99,10 +99,11 @@
             margin-left: 14px;
             color: #1f88b5;
         }
+
         span.viewEditIcon {
-        position: absolute;
-        right: 24px;
-    }
+            position: absolute;
+            right: 24px;
+        }
     </style>
 
 
@@ -146,12 +147,12 @@
 
     <!--Core CSS -->
     <!-- <link href="{{ url('public/frontEnd/daily_logs/bs3/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-                <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
-                <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
+                    <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
+                    <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
 
     <!-- Custom styles for this template -->
     <!-- <link href="{{ url('public/frontEnd/daily_logs/css/style.css') }}" rel="stylesheet" type="text/css">
-                <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
+                    <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
 
     <section id="container">
 
@@ -240,9 +241,9 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                            </div> -->
+                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                </div> -->
                 </div>
 
                 <div class="row">
@@ -292,7 +293,8 @@
                                                                 {{ $key['staff_name'] }}</span>
                                                         </span>
                                                         <span class="viewEditIcon">
-                                                            <a href="#!" class="dyn-form-view-data" id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
+                                                            <a href="#!" class="dyn-form-view-data"
+                                                                id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                     class="fa fa-eye"></i></a>
                                                             {{-- <a href="#!"><i class="fa fa-eye"></i></a> --}}
                                                         </span>
@@ -300,7 +302,7 @@
                                                             <h1 class="title_time_log">
                                                                 <span style="color:{{ $key['category_color'] ?? '' }};">
                                                                     {{ $key['category_name'] }} {{ $logType }}
-                                                                </span> 
+                                                                </span>
                                                             </h1>
                                                         @else
                                                             <h1 class="title_time_log">
@@ -371,7 +373,8 @@
                                                                     {{ $key['staff_name'] }}</span>
                                                             </span>
                                                             <span class="viewEditIcon">
-                                                                <a href="#!" class="dyn-form-view-data" id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i 
+                                                                <a href="#!" class="dyn-form-view-data"
+                                                                    id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                         class="fa fa-eye"></i></a>
                                                                 {{-- <a href="#!"><i class="fa fa-edit"></i></a> --}}
                                                             </span>
@@ -427,7 +430,7 @@
                                                 </div>
                                             </div>
                                         </article>
-                                    @endif  
+                                    @endif
                                 @endforeach
                             </div>
 
@@ -537,13 +540,26 @@
                     <form method="" id="dynFormFormData">
                         <div class="row">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7">User: </label>
+                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7">Child: </label>
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_id" disabled="">
                                             <option value="0"> N/A Child </option>
                                             @foreach ($service_users as $value)
                                                 <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
+                                <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Category: </label>
+                                <div class="col-md-9 col-sm-10 col-xs-12">
+                                    <div class="select-style">
+                                        <select name="category" class='su_name' required>
+                                            <option disabled selected value> -- select an option -- </option>
+                                            @foreach ($categorys as $key)
+                                                <option value="{{ $key['id'] }}">{{ $key['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -670,41 +686,41 @@
                     }
                 });
                 return false;
-            });     
-        });
-
-          let viewdatawithvalueFormio = () => {
-        // console.log($('#dynamic_form_idformio').val());
-        let dynamic_form_idformio = $("#dynamic_form_idformio").val();
-        var token = "<?= csrf_token() ?>";
-        var settings = {
-            "url": "{{url('/service/patterndataformiovaule')}}",
-            "method": "POST",
-            "data": {
-                dynamic_form_idformio: dynamic_form_idformio,
-                _token: token
-            },
-            //dataType: "json",
-        };
-        $.ajax(settings).done(function(response) {
-            // console.log(response[0].pattern);
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
-
-            Formio.createForm(document.getElementById('formioView'), {
-                components: JSON.parse(response[0].pattern)
-            }, {
-                readOnly: seteditvalueeditable
-            }).then(function(form) {
-                form.submission = {
-                    data: JSON.parse(response[0].pattern_data)
-                }
-                // form.getComponent('email').setValue('rksonkar356@gmail.com');
             });
-
         });
-    }
+
+        let viewdatawithvalueFormio = () => {
+            // console.log($('#dynamic_form_idformio').val());
+            let dynamic_form_idformio = $("#dynamic_form_idformio").val();
+            var token = "<?= csrf_token() ?>";
+            var settings = {
+                "url": "{{ url('/service/patterndataformiovaule') }}",
+                "method": "POST",
+                "data": {
+                    dynamic_form_idformio: dynamic_form_idformio,
+                    _token: token
+                },
+                //dataType: "json",
+            };
+            $.ajax(settings).done(function(response) {
+                // console.log(response[0].pattern);
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
+
+                Formio.createForm(document.getElementById('formioView'), {
+                    components: JSON.parse(response[0].pattern)
+                }, {
+                    readOnly: seteditvalueeditable
+                }).then(function(form) {
+                    form.submission = {
+                        data: JSON.parse(response[0].pattern_data)
+                    }
+                    // form.getComponent('email').setValue('rksonkar356@gmail.com');
+                });
+
+            });
+        }
 
 
         document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
@@ -2658,6 +2674,3 @@
     @include('frontEnd.serviceUserManagement.elements.add_log')
     @include('frontEnd.serviceUserManagement.elements.comments')
 @endsection
-
-
-
