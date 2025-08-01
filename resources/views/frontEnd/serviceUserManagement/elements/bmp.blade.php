@@ -3,7 +3,6 @@
 @section('content')
 
 
-<link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
 
 <section id="container">
     <!--main content start-->
@@ -805,7 +804,6 @@
             $('body').addClass('body-overflow');
 
               var service_user_id = "{{ request()->segment(count(request()->segments())) }}";
-
 
             $.ajax({
                 type : 'get',
