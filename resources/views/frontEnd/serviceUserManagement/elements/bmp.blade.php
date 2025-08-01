@@ -3,7 +3,6 @@
 @section('content')
 
 
-<link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
 
 <section id="container">
     <!--main content start-->
@@ -60,11 +59,23 @@
           
             </div>
 
-            <div class="logged-bmp-btn">
-                  <div class="modal-space modal-pading view-bmp-record">  
-                                    <!-- record shown using Ajax -->               
+            <!--  -->
+            <div class="row">
+                    <div class="col-sm-12">
+                        <div class="timeline">
+                            <article class="timeline-item alt">
+                                <div class="text-right">
+                                    <div class="time-show first">
+                                        <a href="#" class="btn btn-primary" id="today">Today</a>
+                                    </div>
+                                </div>
+                            </article>
+                            <div class="logged-bmp-btn">
+                                <div class="modal-space modal-pading view-bmp-record">    </div>
                             </div>
-            </div>
+                        </div>
+                    </div>
+                </div>
 
             <!-- page end-->
         </section>
@@ -793,7 +804,6 @@
             $('body').addClass('body-overflow');
 
               var service_user_id = "{{ request()->segment(count(request()->segments())) }}";
-
 
             $.ajax({
                 type : 'get',

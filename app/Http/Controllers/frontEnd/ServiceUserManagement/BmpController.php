@@ -88,6 +88,10 @@ class BmpController extends ServiceUserManagementController
             $tick_btn_class = "sbt-edit-bmp-record submit-edit-logged-record";
         }
         // dd($bmp_form);
+        $loop = 1;
+               $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
+        shuffle($colors);
+
         foreach ($bmp_form as $key => $value) {
             $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
@@ -119,35 +123,86 @@ class BmpController extends ServiceUserManagementController
             } else {
                 $time = '00:00';
             }
+             
 
-            echo '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel rows">
-                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+             $color = $colors[$key % count($colors)];
+             if ($loop % 2 == 0) {
+                  echo '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows rmpTimelineright">
+                        <div class="form-group p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                                <div class="input-group popovr">
-                                    <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
-                                    <input type="text" class="form-control" name="bmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' . $time . $end_brct . '" maxlength="255"/>
-                                     
-                                    <div class="input-plus color-green"> <i class="fa fa-plus"></i> 
-                                    </div>   
-                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
-                                        <i class="fa fa-cog"></i>
-                                        <div class="pop-notifbox">
-                                            <ul class="pop-notification" type="none">
-                                                <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View</a> </li>
-                                                <li> <a href="#" class="edit_bmp_details" su_bmp_id=' . $value->id . '> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li> 
-                                                <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                            </ul>
-                                        </div>
-                                    </span>
+                                <div class="input-group popovr rightSideInput rmpTimeRit">
+                                    <span class="timLineDate">29-07-2025 - 2</span>
+                                    <span class="arrow"></span>
+                                    <div class="rmpWithPlusInput">
+                                        <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' . $time . $end_brct . '" maxlength="255"/>
+                                        
+                                        <div class="input-plus color-green"> <i class="fa fa-plus"></i> 
+                                        </div>   
+                                        <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
+                                            <i class="fa fa-cog"></i>
+                                            <div class="pop-notifbox">
+                                                <ul class="pop-notification" type="none">
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View</a> </li>
+                                                    <li> <a href="#" class="edit_bmp_details" su_bmp_id=' . $value->id . '> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li> 
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Details textarea -->
-                        <div class="col-xs-12 input-plusbox form-group p-0 detail">
-                            <label class="col-sm-1 col-xs-12 color-themecolor r-p-0"> Details: </label>
-                            <div class="col-sm-11 r-p-0">
+                        <div class="col-xs-12 input-plusbox form-group p-0 detail rightTextarea">
+                            <label class="col-sm-12 col-xs-12 color-themecolor r-p-0"> Details: </label>
+                            <div class="col-sm-12 r-p-0">
+                                <div class="input-group">
+                                    <textarea class="form-control tick_text edit_rcrd txtarea edit_bmp_details_' . $value->id . '" name="edit_bmp_details[]" disabled rows="5" value="" maxlength="1000s">' . $value->details . '</textarea>
+                                   
+                                    <div class="input-group-addon cus-inpt-grp-addon sbt_tick_area"">
+                                        <div class="tick_show sbt_btn_tick_div ' . $tick_btn_class . '">' . $details_check . '</div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>  ';
+             } else {
+                  echo '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows">
+                        <div class="form-group p-0 add-rcrd">
+                            <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
+                            <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
+                                <div class="input-group popovr rightSideInput timelineInput rmpTimeLft">
+                                    <span class="timLineDate">29-07-2025 - 2</span>
+                                    <span class="arrow"></span>
+                                    <div class="rmpWithPlusInput">
+                                        <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' . $time . $end_brct . '" maxlength="255"/>
+                                        
+                                        <div class="input-plus color-green"> <i class="fa fa-plus"></i> 
+                                        </div>   
+                                        <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
+                                            <i class="fa fa-cog"></i>
+                                            <div class="pop-notifbox">
+                                                <ul class="pop-notification" type="none">
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View</a> </li>
+                                                    <li> <a href="#" class="edit_bmp_details" su_bmp_id=' . $value->id . '> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li> 
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Details textarea -->
+                        <div class="col-xs-12 input-plusbox form-group p-0 detail leftTextarea">
+                            <label class="col-sm-12 col-xs-12 color-themecolor r-p-0"> Details: </label>
+                            <div class="col-sm-12 r-p-0">
                                 <div class="input-group">
                                     <textarea class="form-control tick_text edit_rcrd txtarea edit_bmp_details_' . $value->id . '" name="edit_bmp_details[]" disabled rows="5" value="" maxlength="1000s">' . $value->details . '</textarea>
                                     <div class="input-group-addon cus-inpt-grp-addon sbt_tick_area"">
@@ -157,6 +212,9 @@ class BmpController extends ServiceUserManagementController
                             </div>
                         </div>
                     </div>  ';
+             }
+              $loop++;
+          
         }
         echo $pagination;
     }
