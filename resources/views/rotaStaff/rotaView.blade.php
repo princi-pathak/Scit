@@ -236,11 +236,11 @@
                 <button type="button" class="filter_btn">Clear all filter</button>
               </div>
               <div class="col-lg-3 col-md-3">
-                <select name="sortBy" class="form-select form-control">
-                  <option value="Name (A-Z)">Name (A-Z)</option>
-                  <option value="Name (Z-A)">Name (Z-A)</option>
-                  <option value="Start date (Newest first)">Start date (Newest first)</option>
-                  <option value="Start date (Oldest first)">Start date (Oldest first)</option>
+                <select name="sortBy" id="sortBy" class="form-select form-control">
+                  <option value="1">Name (A-Z)</option>
+                  <option value="2">Name (Z-A)</option>
+                  <option value="3">Start date (Newest first)</option>
+                  <option value="4">Start date (Oldest first)</option>
                 </select>
               </div>
               <div id="result"></div>
@@ -788,27 +788,37 @@
 
     const inputHandler = function(e) {
       var search_name = e.target.value;
-      $.ajax({
-        url: "{{ url('/get_record_of_rota') }}",
-        type: "post",
-        dataType: 'json',
-        data: {
-          search_name: search_name,
-          _token: token
-        },
-        success: function(result) {
-          console.log(result);
-          if (isAuthenticated(result) == false) {
-              return false;
-          }
-        }
-      });
-      result.innerHTML = e.target.value;
+      // $.ajax({
+      //   url: "{{ url('/get_record_of_rota') }}",
+      //   type: "post",
+      //   dataType: 'json',
+      //   data: {
+      //     search_name: search_name,
+      //     _token: token
+      //   },
+      //   success: function(result) {
+      //     console.log(result);
+      //     if (isAuthenticated(result) == false) {
+      //         return false;
+      //     }
+      //   }
+      // });
+      // result.innerHTML = e.target.value;
+      filter_data(null,search_name,null);
     }
 
     source.addEventListener('input', inputHandler);
     source.addEventListener('propertychange', inputHandler);
-
+    $('#sortBy').on('change',function(){
+      var sortBy=$(this).val();
+      filter_data(null,null,sortBy);
+    });
+    $('#search_date').on('change',function(){
+      var search_date=$(this).val();
+      alert(search_date)
+      filter_data(search_date,null,null);
+    });
+    
     $('#rename_save_btn').on('click', function() {
       var rota_id = document.getElementById('renameid').value;
       var rota_name = document.getElementById('team-name').value;
@@ -1102,5 +1112,73 @@
       $('.hide2').css('display', 'block');
       $('.hide1').css('display', 'none');
     }
+  }
+  function filter_data(date=null,name=null,sortBy=null){
+    var token = "<?= csrf_token() ?>";
+    $.ajax({
+      url: "{{ url('/get_all_rota_data') }}",
+      dataType: 'json',
+      data: {
+        date:date,
+        name:name,
+        sortBy:sortBy,
+        _token: token
+      },
+      success: function(result) {
+        console.log(result);
+        if (isAuthenticated(result) == false) {
+            return false;
+        }
+        document.getElementById('active_publish_rota_count').innerHTML = result.active_publish_rota_count;
+        document.getElementById('active_unpublish_rota_count').innerHTML = result.active_unpublish_rota_count;
+        document.getElementById('old_publish_rota_count').innerHTML = result.old_publish_rota_count;
+        document.getElementById('old_unpublish_rota_count').innerHTML = result.old_unpublish_rota_count;
+
+        if (result.new_active.length === 0) {
+          document.querySelector('#new_publish_rota').innerHTML='<p class="pb-8">Rotas that are currently active and in progress will appear here.</p>';
+        } else {
+          document.querySelector('#new_publish_rota').innerHTML='';
+          for (let index = 0; index < result.new_active.length; index++) {
+            document.querySelector('#new_publish_rota').insertAdjacentHTML(
+              'afterbegin', result.new_active[index]
+            );
+          }
+        }
+
+        if (result.new_inactive.length === 0) {
+          document.querySelector('#new_unpublish_rota').innerHTML='<p class="pb-8">Rotas that are currently active and not in progress will appear here.</p>';
+        } else {
+          document.querySelector('#new_unpublish_rota').innerHTML='';
+          for (let index = 0; index < result.new_inactive.length; index++) {
+            document.querySelector('#new_unpublish_rota').insertAdjacentHTML(
+              'afterbegin', result.new_inactive[index]
+            );
+          }
+        }
+
+        if (result.old_active.length === 0) {
+          document.querySelector('#old_publish_rota').innerHTML='<p class="pb-8">Rotas that are no longer active but are still published will appear here.</p>';
+        } else {
+          document.querySelector('#old_publish_rota').innerHTML='';
+          for (let index = 0; index < result.old_active.length; index++) {
+            document.querySelector('#old_publish_rota').insertAdjacentHTML(
+              'afterbegin', result.old_active[index]
+            );
+          }
+        }
+
+        if (result.old_inactive.length === 0) {
+          document.querySelector('#old_unpublish_rota').innerHTML='<p class="pb-8">Rotas that are no longer active but are still unpublished will appear here.</p>';
+        } else {
+          document.querySelector('#old_unpublish_rota').innerHTML='';
+          for (let index = 0; index < result.old_inactive.length; index++) {
+            document.querySelector('#old_unpublish_rota').insertAdjacentHTML(
+              'afterbegin', result.old_inactive[index]
+            );
+          }
+        }
+
+      }
+    });
   }
 </script>
