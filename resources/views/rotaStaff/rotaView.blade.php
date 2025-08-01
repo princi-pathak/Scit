@@ -301,20 +301,20 @@
                 <h4 class="d-none"><a href="#">Create new Rota</a></h4>
               </div> -->
               <div class="col-lg-3 col-md-3">
-                <input type="date" placeholder="Select range..." class="form-control">
+                <input type="date" placeholder="Select range..." id="old_search_date" class="form-control">
               </div>
               <div class="col-lg-3 col-md-3">
-                <input type="text" class="form-control" placeholder="Rota name...">
+                <input type="text" class="form-control" id="old_rota_name_search" placeholder="Rota name...">
               </div>
               <div class="col-md-3">
                 <button type="button" class="filter_btn">Clear all filter</button>
               </div>
               <div class="col-md-3 col-lg-3">
-                  <select name="" class="form-select form-control" id="">
-                    <option value="">Name (A-Z)</option>
-                    <option value="">Name (Z-A )</option>
-                    <option value="">Start date (Newest first)</option>
-                    <option value="">Start date (Oldest first)</option>
+                  <select name="" class="form-select form-control" id="old_sortBy">
+                    <option value="1">Name (A-Z)</option>
+                    <option value="2">Name (Z-A )</option>
+                    <option value="3">Start date (Newest first)</option>
+                    <option value="4">Start date (Oldest first)</option>
                   </select>
                 </div>
              
@@ -804,19 +804,35 @@
       //   }
       // });
       // result.innerHTML = e.target.value;
-      filter_data(null,search_name,null);
+      filter_data(null,search_name,null,1);
     }
 
     source.addEventListener('input', inputHandler);
     source.addEventListener('propertychange', inputHandler);
     $('#sortBy').on('change',function(){
       var sortBy=$(this).val();
-      filter_data(null,null,sortBy);
+      filter_data(null,null,sortBy,1);
     });
     $('#search_date').on('change',function(){
       var search_date=$(this).val();
-      alert(search_date)
-      filter_data(search_date,null,null);
+      // alert(search_date)
+      filter_data(search_date,null,null,1);
+    });
+
+    $('#old_search_date').on('change',function(){
+      var old_search_date=$(this).val();
+      // alert(old_search_date)
+      filter_data(old_search_date,null,null,2);
+    });
+    $('#old_rota_name_search').on('input',function(){
+      var old_rota_name_search=$(this).val();
+      // alert(old_rota_name_search)
+      filter_data(null,old_rota_name_search,null,2);
+    });
+    $('#old_sortBy').on('change',function(){
+      var old_sortBy=$(this).val();
+      // alert(old_sortBy)
+      filter_data(null,null,old_sortBy,2);
     });
     
     $('#rename_save_btn').on('click', function() {
@@ -1113,7 +1129,7 @@
       $('.hide1').css('display', 'none');
     }
   }
-  function filter_data(date=null,name=null,sortBy=null){
+  function filter_data(date=null,name=null,sortBy=null,type){
     var token = "<?= csrf_token() ?>";
     $.ajax({
       url: "{{ url('/get_all_rota_data') }}",
@@ -1122,6 +1138,7 @@
         date:date,
         name:name,
         sortBy:sortBy,
+        type:type,
         _token: token
       },
       success: function(result) {
@@ -1140,7 +1157,7 @@
           document.querySelector('#new_publish_rota').innerHTML='';
           for (let index = 0; index < result.new_active.length; index++) {
             document.querySelector('#new_publish_rota').insertAdjacentHTML(
-              'afterbegin', result.new_active[index]
+              'beforeend', result.new_active[index]
             );
           }
         }
@@ -1151,7 +1168,7 @@
           document.querySelector('#new_unpublish_rota').innerHTML='';
           for (let index = 0; index < result.new_inactive.length; index++) {
             document.querySelector('#new_unpublish_rota').insertAdjacentHTML(
-              'afterbegin', result.new_inactive[index]
+              'beforeend', result.new_inactive[index]
             );
           }
         }
@@ -1162,7 +1179,7 @@
           document.querySelector('#old_publish_rota').innerHTML='';
           for (let index = 0; index < result.old_active.length; index++) {
             document.querySelector('#old_publish_rota').insertAdjacentHTML(
-              'afterbegin', result.old_active[index]
+              'beforeend', result.old_active[index]
             );
           }
         }
@@ -1173,7 +1190,7 @@
           document.querySelector('#old_unpublish_rota').innerHTML='';
           for (let index = 0; index < result.old_inactive.length; index++) {
             document.querySelector('#old_unpublish_rota').insertAdjacentHTML(
-              'afterbegin', result.old_inactive[index]
+              'beforeend', result.old_inactive[index]
             );
           }
         }
