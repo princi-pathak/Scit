@@ -840,10 +840,36 @@ class RotaController extends Controller
       $old_active = array();
       $old_inactive = array();
       $old = array();
-
+      // echo json_encode($_GET);die;
+      $reqdate=$_GET['date'] ?? '';
+      $reqname=$_GET['name'] ?? '';
+      $reqsortBy=$_GET['sortBy'] ?? '';
       $current_date = Carbon::now()->format('Y-m-d');
+      if($reqdate){
+        if($reqdate >= $current_date){
+          // echo json_encode($_GET);die;
+          $new_rota = Rota::where('deleted_status', 1)->where('rota_start_date', '>=', $reqdate)->where('rota_end_date', '>=', $reqdate)->orderBy('rota_name', 'ASC')->get(); 
+        }else{
+          $new_rota=array();
+        }
+      }else if($reqname){
+        $new_rota = Rota::where('deleted_status', 1)->where('rota_start_date', '>=', $current_date)->where('rota_end_date', '>=', $current_date)->Where('rota_name', 'like', '%' . $reqname . '%')->orderBy('rota_name', 'ASC')->get(); 
+      }else if($reqsortBy){
+        $rota_query=Rota::where('deleted_status', 1)->where('rota_start_date', '>=', $current_date)->where('rota_end_date', '>=', $current_date);
+        if ($reqsortBy == 1) {
+            $rota_query->orderBy('rota_name', 'ASC'); 
+        } elseif ($reqsortBy == 2) {
+            $rota_query->orderBy('rota_name', 'DESC');
+        } elseif ($reqsortBy == 3) {
+            $rota_query->orderBy('rota_start_date', 'DESC');
+        } elseif ($reqsortBy == 4) {
+            $rota_query->orderBy('rota_start_date', 'ASC');
+        }
+        $new_rota = $rota_query->get(); 
+      }else{
+        $new_rota = Rota::where('deleted_status', 1)->where('rota_start_date', '>=', $current_date)->where('rota_end_date', '>=', $current_date)->orderBy('rota_name', 'ASC')->get();
+      }
 
-      $new_rota = Rota::where('deleted_status', 1)->where('rota_start_date', '>=', $current_date)->where('rota_end_date', '>=', $current_date)->orderBy('rota_name', 'ASC')->get(); 
       foreach($new_rota as $new_rotas){
           if($new_rotas->status === 1){
               $count_emp_active = RotaAssignEmployee::where(['rota_id' => $new_rotas->id, 'status'=> 1])->count();

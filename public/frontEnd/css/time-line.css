@@ -326,7 +326,7 @@ span.timelineIcons {
     border-radius: 4px;
     padding: 7px 6px;
     display: block;
-    margin-right: 12px;
+    margin-right: 6px;
     line-height: 24px;
     position: relative;
 }
@@ -480,6 +480,10 @@ i.fa.fa.fa-h-square {
     text-align: center;
 }
 
+span.viewEditIcon {
+    position: absolute;
+    right: 24px;
+}
 
 /* Start css rmpTimeline */
 
@@ -507,6 +511,7 @@ i.fa.fa.fa-h-square {
 }
 .rmpWithPlusInput input{
     height: 40px;
+    border: 0;
 }
 
 .rightSideInput.rmpTimeLft, .rightSideInput.rmpTimeRit{
@@ -540,9 +545,9 @@ i.fa.fa.fa-h-square {
 }
 .input-plusbox.form-group.col-xs-12.p-0.detail{
      position: absolute;
-    z-index: 9;
+    z-index: 8;
     background: #fff;
-    width: 73%;
+    width: 74%;
     padding-bottom: 14px !important;
 }
 .detail.leftTextarea {
@@ -557,3 +562,5 @@ i.fa.fa.fa-h-square {
     left: 0;
     transform: rotate(180deg);
 }
+
+ 
