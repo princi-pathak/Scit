@@ -3446,9 +3446,9 @@ margin: 0px 10px 0px 10px;
     border: 1px solid #1f88b54f; 
 }
 
-.accordion-button:not(.collapsed) {
+/* .accordion-button:not(.collapsed) {
     color: #333333 !important;
-}
+} */
 
 #tabTwo .accordion .head .heading {
     font-weight: 600;
@@ -4006,7 +4006,7 @@ margin: 0px 10px 0px 10px;
 
 #timeline .accordion .accordion-body .w_full .hour_box {
     border-right: 1px solid #bbc0c359;
-    height: 2.75rem;
+    height: 5.5rem;
     display: inline-block;
     padding: 2px;
 }
@@ -4052,9 +4052,9 @@ margin: 0px 10px 0px 10px;
     font-weight: 500;
 }
 
-#exampleModalShiftModal .modal-dialog {
+/* #exampleModalShiftModal .modal-dialog {
     max-width: 50rem; 
-}
+} */
 
 #exampleModalShiftModal .modal-dialog .modal-header {
     background-color: #1f88b5;
@@ -4110,8 +4110,8 @@ margin: 0px 10px 0px 10px;
     border: none;
     outline: none;
     background-color: inherit;
-    border: 2px solid #e10078;
-    background-color: #e10078;
+    border: 2px solid #1F88B5;
+    background-color: #1F88B5;
     color: #fff;
     font-weight: 600;
     transition: all 0.5s ease-in-out;
@@ -4128,8 +4128,8 @@ margin: 0px 10px 0px 10px;
     border: none;
     outline: none;
     background-color: inherit;
-    border: 2px solid #e10078;
-    background-color: #e10078;
+    border: 2px solid #1F88B5;
+    background-color: #1F88B5;
     color: #fff;
     font-weight: 600;
     transition: all 0.5s ease-in-out;
@@ -4326,4 +4326,23 @@ margin: 0px 10px 0px 10px;
     border-bottom: 1px solid #e3e1e1;
     padding-top: 10px;
     background: #f1f2f7;
+}
+.addAnnualBtn{
+    display: flex;
+}
+.addAnnualBtn input{
+    margin-right: 10px;
+}
+.print_and_publish_button .rotaWtBtn{
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+.editRota .accordion-item .accordion-header{
+    margin: 15px;
+    background: #1f88b5;
+    border-radius: 4px;
+}
+.editRota .accordion-item .accordion-header .accordion-button:not(.collapsed){
+    background-color: transparent;
+    color: #fff;
 }
