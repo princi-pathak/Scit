@@ -59,11 +59,23 @@
           
             </div>
 
-            <div class="logged-bmp-btn">
-                  <div class="modal-space modal-pading view-bmp-record">  
-                                    <!-- record shown using Ajax -->               
+            <!--  -->
+            <div class="row">
+                    <div class="col-sm-12">
+                        <div class="timeline">
+                            <article class="timeline-item alt">
+                                <div class="text-right">
+                                    <div class="time-show first">
+                                        <a href="#" class="btn btn-primary" id="today">Today</a>
+                                    </div>
+                                </div>
+                            </article>
+                            <div class="logged-bmp-btn">
+                                <div class="modal-space modal-pading view-bmp-record">    </div>
                             </div>
-            </div>
+                        </div>
+                    </div>
+                </div>
 
             <!-- page end-->
         </section>
