@@ -93,20 +93,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">  </h4>
+                <h4 class="modal-title"> Behaviour Management Plans </h4>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
+                    {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
                         <button class="btn label-default logged-btn active logged-bmp-btn" type="button"> Logged Plans </button>
                         <button class="btn label-default search-btn active" type="button"> Search </button><!--adg-->
-                    </div>
+                    </div> --}}
                     <!-- Add new Details -->
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="bmp_form">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 text-right">User: </label>
+                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 text-right">Child: </label>
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_n_id" >
@@ -156,7 +156,7 @@
                             </div>
                             <div class="modal-footer m-t-0 m-b-15 modal-bttm">
                                 <!-- <input type="hidden" name="plan_detail" value=""> -->
-                                <input type="hidden" name="service_user_id" value="{{ request()->query('service_user_id') }}">
+                                <input type="hidden" name="service_user_id" value="{{ $service_user_id }}">
                                 <input type="hidden" name="location_id" value="{{ $this_location_id }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
@@ -788,40 +788,40 @@
 
 <script>
     //pagination of bmp
-    $(document).ready(function(){
-        //$(document).on('click','.bmp_paginate .pagination li', function(){
-        $(document).on('click','#BMPAddModal .pagination li', function(){
+    // $(document).ready(function(){
+    //     //$(document).on('click','.bmp_paginate .pagination li', function(){
+    //     $(document).on('click','#BMPAddModal .pagination li', function(){
     
-            var page_no = $(this).children('a').text();
-            if(page_no == '') {
-                return false;
-            }
-            if(isNaN(page_no)) {
-                var new_url = $(this).children('a').attr('href');
-                page_no = new_url[new_url.length -1];
-            }
-            $('.loader').show();
-            $('body').addClass('body-overflow');
+    //         var page_no = $(this).children('a').text();
+    //         if(page_no == '') {
+    //             return false;
+    //         }
+    //         if(isNaN(page_no)) {
+    //             var new_url = $(this).children('a').attr('href');
+    //             page_no = new_url[new_url.length -1];
+    //         }
+    //         $('.loader').show();
+    //         $('body').addClass('body-overflow');
 
-              var service_user_id = "{{ request()->segment(count(request()->segments())) }}";
+    //           var service_user_id = "{{ request()->segment(count(request()->segments())) }}";
 
-            $.ajax({
-                type : 'get',
-                url  : "{{ url('/service/bmp/view/') }}"+'/'+service_user_id+"?page="+page_no,
-                success : function(resp) {
-                    if(isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    $('.view-bmp-record').html(resp);
+    //         $.ajax({
+    //             type : 'get',
+    //             url  : "{{ url('/service/bmp/view/') }}"+'/'+service_user_id+"?page="+page_no,
+    //             success : function(resp) {
+    //                 if(isAuthenticated(resp) == false) {
+    //                     return false;
+    //                 }
+    //                 $('.view-bmp-record').html(resp);
 
-                    $('.loader').hide();
-                    $('body').removeClass('body-overflow');
-                }
-            });
-            return false;
+    //                 $('.loader').hide();
+    //                 $('body').removeClass('body-overflow');
+    //             }
+    //         });
+    //         return false;
 
-        });
-    });
+    //     });
+    // });
 
     // $('#search_bmp_type').on('change', function(){
     //     var searchType = document.getElementById('search_bmp_type').value;

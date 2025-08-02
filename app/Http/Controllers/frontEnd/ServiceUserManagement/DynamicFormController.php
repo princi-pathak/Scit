@@ -277,6 +277,7 @@ class DynamicFormController extends Controller
                             //Behaviour Management
                             $insert_behaviour_managment = array(
                                 'service_user_id' => $data['service_user_id'],
+                                'dynamic_form_id' => $form_insert_id,
                                 'title' => $data['title'],
                                 'details' => $data['details'],
                                 'sent_to' => 2,
