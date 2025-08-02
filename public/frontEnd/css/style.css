@@ -3169,8 +3169,8 @@ a.reprt-icon {
 }
 
 .tm-avatar img {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     float: left;
@@ -4885,6 +4885,7 @@ span.customSelect.changed {
 .boxed-page .container .wrapper {
     background: #F1F2F7;
     min-height: 900px;
+    
 }
 
 .boxed-page .brand {
@@ -8305,6 +8306,7 @@ ul.pop-notification>li>a {
     width: 100% !important;
     text-align: justify;
     text-justify: inter-word;
+    background: #eff4fd;
 }
 
 .prf-contacts .inactive-header {
@@ -8331,13 +8333,15 @@ ul.pop-notification>li>a {
 }
 
 .prf-contacts .accordion-header {
-    /*background: #ffffff none repeat scroll 0 0;*/
+    background: #f1f2f7 none repeat scroll 0 0;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     margin: 5px 0 0;
-    padding: 5px 20px;
+    color: #1f88b5;
+    padding: 14px 20px;
+    border-bottom: 1px solid #ccc;
 }
 
 .prf-contacts .accordion-content {
@@ -9308,6 +9312,6 @@ ul.pop-notification>li a:hover i {
 .modal {
     background: #000000a6;
 }
-.modal-dialog {
+/* .modal-dialog {
     margin: 7% auto;
-}
+} */
