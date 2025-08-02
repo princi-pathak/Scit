@@ -4,7 +4,8 @@ namespace App\Http\Controllers\frontEnd\ServiceUserManagement;
 
 use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
-use DB, Auth;
+use DB;
+use Illuminate\Support\Facades\Auth;
 use App\DynamicFormBuilder, App\DynamicForm, App\ServiceUserHealthRecord, App\Notification, App\ServiceUser, App\User, App\EarningScheme, App\DynamicFormLocation;
 
 class HealthRecordController extends ServiceUserManagementController
