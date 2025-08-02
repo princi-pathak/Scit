@@ -91,7 +91,7 @@
 
     .location-info .previousAdd {
         color: #767676;
-        background: #f1f2f7;
+        /* background: #f1f2f7; */
         font-family: 'Open Sans', sans-serif;
         font-size: 13px;
         font-weight: 500;
@@ -555,10 +555,11 @@ span.ps10 {
                                             </header>
                                             <div class="panel-body  min-ht-0 srvc_usr_ntf">
                                                 @include('frontEnd.serviceUserManagement.elements.su_profile_notification')
+                                                @include('frontEnd.serviceUserManagement.elements.profile.care_team')
                                             </div>
                                         </section>
 
-                                        @include('frontEnd.serviceUserManagement.elements.profile.care_team')
+                                        
                                     </div>
                                 </div>
                             </div>
