@@ -227,7 +227,7 @@
                                         <textarea name="notes" placeholder="Notes regarding the absence" id="textarea" cols="10" class="form-control" rows="3"></textarea>
                                     </div>
                                 </div>
-                                <div class="addA">
+                                <div class="addAnnualBtn">
                                     <input type="submit" class="absance-btn" value="Add absence">
                                     <a href="{{ url('/rota') }}" class="dash-btn">Back to dashboard</a>
                                 </div>

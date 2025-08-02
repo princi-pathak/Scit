@@ -94,7 +94,7 @@
                             <p>Once a shift has been added you can publish this rota.</p>
                         </div>
                         <div class="d-flex print_and_publish_button">
-                            <div>
+                            <div class="rotaWtBtn">
                                 <!-- Button trigger modal -->
                                 @if($rota_data->status === 1)
                                 <button type="button" onclick="renamedata(<?= $rota_data->id ?>,'<?= $rota_data->rota_name ?>',<?= $rota_data->status ?>)" class="publish_btn">
@@ -108,7 +108,7 @@
                                 @endif
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModalPublish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal" id="exampleModalPublish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div class="rotaWtBtn">
                                 <button type="button" class="print_btn" onclick="window.print()">Print rota</button>
                             </div>
                         </div>
@@ -226,7 +226,7 @@
                             style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
                         </div>
                     </div>
-                    <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion editRota" id="accordionPanelsStayOpenExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -325,7 +325,7 @@
     @endforeach
 </section>
 <!-- Modal -->
-<div class="modal fade addShift" id="exampleModalAddShift" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+<div class="modal addShift" id="exampleModalAddShift" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog" style="display: block; max-width: 50rem;">
         <div class="modal-content">
             <div class="modal-body">
@@ -535,15 +535,15 @@
     </div>
 </div>
 <!-- shift  Modal start here-->
-<div class="modal fade" id="exampleModalShiftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal" id="exampleModalShiftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Shift details</h1>
+                <h2 class="modal-title" id="exampleModalLabel">Shift details</h2>
                 <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close">&#10006;</button>
             </div>
             <div class="modal-body shift_detail_modal_body">
-                <div class="container remove-padding M-right" id="multiForm" style="display: block;">
+                <div class="remove-padding M-right" id="multiForm" style="display: block;">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row" id="form1" style="display: block;">
@@ -559,7 +559,7 @@
                                                     <input type="hidden" id="rota_shift_id">
                                                     <div class="row my-2">
                                                         <label for="assign_work" class="col-sm-3 col-form-label">Assigned worker</label>
-                                                        <div class="col-sm-3 col-md-5 position-rel">
+                                                        <div class="col-sm-9 position-rel">
                                                             <div class="position-rel" style="position: relative;">
                                                                 <input type="hidden" id="users_update_id">
                                                                 <input type="" id="show_emp_name" onclick="showSelect(event)" placeholder="Select employee" class="form-control select_employee_btn"
@@ -572,35 +572,35 @@
                                                     </div>
                                                     <div class="row my-2">
                                                         <label for="date_of_shift" class="col-sm-3 col-form-label">Shift day</label>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-9">
                                                             <input type="date" class="form-control" id="date_of_shift">
                                                         </div>
                                                     </div>
                                                     <div class="row my-2">
                                                         <label for="edit_start_time" class="col-sm-3 col-form-label">Shift time</label>
                                                         <!-- <div class="col-sm-5"> -->
-                                                        <div class="col-auto">
+                                                        <div class="col-sm-4">
                                                             <input type="datetime-local" class="col-sm-2 form-control" id="edit_start_time" aria-describedby="emailHelp" value="<?php echo date('Y-m-d'); ?> 09:00" placeholder="">
                                                         </div>
-                                                        <div class="col-auto">
+                                                        <div class="col-sm-1">
                                                             <span class="btew-time">to</span>
                                                         </div>
-                                                        <div class="col-auto">
+                                                        <div class="col-sm-4">
                                                             <input type="datetime-local" class="col-sm-2 form-control" id="edit_end_time" value="<?php echo date('Y-m-d'); ?> 17:00" aria-describedby="emailHelp" placeholder="">
                                                         </div>
                                                         <!-- </div> -->
                                                     </div>
                                                     <div class="row my-2">
                                                         <label for="edit_break_time" class="col-sm-3 col-form-label">Break duration</label>
-                                                        <div class="col-auto">
+                                                        <div class="col-sm-9">
                                                             <input type="number" class="form-control" id="edit_break_time" placeholder="Last name" min="1" max="60">
                                                             <p id="lastNamError">
                                                             </p>
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <label for="emailAdd" class="col-sm-12">Add a note</label>
-                                                        <div class="col-md-12">
+                                                        <label for="emailAdd" class="col-sm-3">Add a note</label>
+                                                        <div class="col-sm-9">
                                                             <textarea name="" class="form-control" id="description" cols="40" rows="3"></textarea>
                                                         </div>
                                                     </div>

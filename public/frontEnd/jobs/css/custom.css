@@ -2637,7 +2637,7 @@ ul#supplierList {
 /* 18-feb-2025 custom tooltip css */
 .wrapper {
   position: relative;
-  -webkit-transform: translateZ(0);
+  /* -webkit-transform: translateZ(0); */
   -webkit-font-smoothing: antialiased;
   color: #333230;
   min-height: calc(100vh - 120px);
