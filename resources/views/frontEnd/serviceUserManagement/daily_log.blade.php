@@ -373,7 +373,7 @@
                                                                     {{ $key['staff_name'] }}</span>
                                                             </span>
                                                             <span class="viewEditIcon">
-                                                                <a href="#!" class="dyn-form-view-data-eye"
+                                                                <a href="#!" class="dyn-form-view-data"
                                                                     id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                         class="fa fa-eye"></i></a>
                                                                 {{-- <a href="#!"><i class="fa fa-edit"></i></a> --}}

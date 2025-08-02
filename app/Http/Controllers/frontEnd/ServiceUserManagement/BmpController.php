@@ -27,6 +27,8 @@ class BmpController extends ServiceUserManagementController
             $data = $_POST;
         }
 
+        // dd($data);
+
         if (isset($data['su_bmp_id'])) {
             $su_bmp_ids = $data['su_bmp_id'];
             if (!empty($su_bmp_ids)) {
@@ -42,21 +44,33 @@ class BmpController extends ServiceUserManagementController
                 }
             }
         }
+
         //in search case editing end
         $this_location_id = DynamicFormLocation::getLocationIdByTag('bmp');
-
         //$form_bildr_ids_data = DynamicFormBuilder::select('id')->whereRaw('FIND_IN_SET(?,location_ids)',$this_location_id)->get()->toArray();
         //$form_bildr_ids = array_map(function($v) { return $v['id']; }, $form_bildr_ids_data);
-        $bmp_record     = DynamicForm::where('location_id', $this_location_id)
-            //whereIn('form_builder_id',$form_bildr_ids)
-            ->where('service_user_id', $service_user_id)
-            ->where('is_deleted', '0')
-            ->orderBy('id', 'desc');
-        /*$bmp_record = ServiceUserBmp::where('is_deleted','0')
-                                    ->where('service_user_id', $service_user_id)
-                                    ->where('home_id', $home_id)
-                                    ->orderBy('id','desc');*/
+
+        // $bmp_record     = DynamicForm::where('location_id', $this_location_id)
+        //     //whereIn('form_builder_id',$form_bildr_ids)
+        //     ->where('service_user_id', $service_user_id)
+        //     ->where('is_deleted', '0')
+        //     ->orderBy('id', 'desc');
+
+        // $bmp_record = ServiceUserBmp::where('is_deleted','0')
+        //                             ->where('service_user_id', $service_user_id)
+        //                             ->where('home_id', $home_id)
+        //                             ->orderBy('id','desc');
+
+        $bmp_record = ServiceUserBmp::leftJoin('dynamic_form', 'dynamic_form.id', '=', 'su_bmp.dynamic_form_id')
+                                    ->select('su_bmp.*', 'dynamic_form.form_builder_id')
+                                   ->where('su_bmp.is_deleted','0')
+                                    ->where('su_bmp.service_user_id', $service_user_id)
+                                    ->where('su_bmp.home_id', $home_id)
+                                    ->orderBy('su_bmp.id','desc');
+
         //->get();
+
+        // dd($bmp_record);
 
         $pagination = '';
 
@@ -87,12 +101,14 @@ class BmpController extends ServiceUserManagementController
 
             $tick_btn_class = "sbt-edit-bmp-record submit-edit-logged-record";
         }
-        // dd($bmp_form);
+        
         $loop = 1;
-               $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
+        
+        $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
         shuffle($colors);
 
         foreach ($bmp_form as $key => $value) {
+        
             $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
             $details_check = (!empty($value->details)) ? '<i class="fa fa-check"></i>' : '';
@@ -125,8 +141,8 @@ class BmpController extends ServiceUserManagementController
             }
              
 
-             $color = $colors[$key % count($colors)];
-             if ($loop % 2 == 0) {
+            $color = $colors[$key % count($colors)];
+            if ($loop % 2 == 0) {
                   echo '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows rmpTimelineright">
                         <div class="form-group p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
@@ -585,8 +601,8 @@ class BmpController extends ServiceUserManagementController
 
             //$su_log_book_category = DB::table('su_log_book_category')->get();
             $care_team_job_title = CareTeamJobTitle::where('is_deleted', '0')
-                ->where('home_id', $home_id)
-                ->get();
+                                                    ->where('home_id', $home_id)
+                                                    ->get();
             $su_in_danger        = ServiceUserCareCenter::where('service_user_id', $service_user_id)->where('care_type', 'D')->count();
             $su_req_cb           = ServiceUserCareCenter::where('service_user_id', $service_user_id)->where('care_type', 'R')->count();
             $su_contact          = ServiceUserContacts::where('service_user_id', $service_user_id)->where('is_deleted', '0')->get();
@@ -621,6 +637,8 @@ class BmpController extends ServiceUserManagementController
                 ->where('is_deleted', '0')
                 ->get()
                 ->toArray();
+
+            $data['service_user_id'] = $service_user_id;
 
             return view('frontEnd.serviceUserManagement.elements.bmp', $data);
         } else {
