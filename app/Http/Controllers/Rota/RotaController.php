@@ -633,7 +633,8 @@ class RotaController extends Controller
       
       //get employee detail
       foreach($employeeArray as $usersValue){
-        $rota['name'] = User::where('home_id',$home_id)->where('id', $usersValue)->where('is_deleted', 0)->pluck('name');
+        // $rota['name'] = User::where('home_id',$home_id)->where('id', $usersValue)->where('is_deleted', 0)->pluck('name');
+        $rota['name'] = ServiceUser::where('home_id',$home_id)->where('id', $usersValue)->where('is_deleted', 0)->pluck('name');
         $rota['user_id'] = $usersValue;
         $rota['rotaId'] = $request->id;
         //shift
