@@ -117,27 +117,28 @@ class MFCController extends ServiceUserManagementController
             if ($mfc_rcrd_date != $pre_date) {
                 $pre_date = $mfc_rcrd_date;
 
-                echo '</div>
-                <div class="daily-rcd-head">
-                    <div class="col-md-12 col-sm-12 col-xs-12 cog-panel p-0 r-p-15 record_row ">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <a  class="date-tab">
-                                <span class="pull-left">
-                                   ' . date('d F Y', strtotime($mfc_rcrd_date)) . '
-                                </span>
-                               <i class="fa fa-angle-right pull-right"></i>
-                            </a>
+                echo '
+                </div>
+                    <div class="daily-rcd-head">
+                        <div class="col-md-6 col-sm-6 col-xs-6 cog-panel p-0 r-p-15 record_row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <a  class="date-tab">
+                                    <span class="pull-left">
+                                    ' . date('d F Y', strtotime($mfc_rcrd_date)) . '
+                                    </span>
+                                <i class="fa fa-angle-right pull-right"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <div class="daily-rcd-content">';
             } else {
             }
 
             echo '
-                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel p-0 r-p-15 record_row rows">
+                <div class="col-md-6 col-sm-6 col-xs-6 cog-panel p-0 r-p-15 record_row rows">
                     
-                    <div class="form-group col-md-9 col-sm-9 col-xs-12 r-p-0">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12 r-p-0">
                         <div class="input-group popovr">
                             <input type="text" name="edit_su_record_desc[]" class="form-control cus-control edit_record_desc_' . $value->id . ' edit_mfc_rcrd"  disabled  value="' . ucfirst($title) . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>';
 
