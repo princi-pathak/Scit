@@ -1015,106 +1015,78 @@
         id: id,
         _token: token
       },
-      success: function(result) {
+      success: function (result) {
         console.log(result);
-        console.log(result.length);
-        if (isAuthenticated(result) == false) {
-            return false;
-        }
-        var total_emp_hours = 0;
-        var total_emp_minutes = 0;
-        var total_emp_minutes_with_break = 0;
 
-        for (let index = 0; index < result.length; index++) {
-          console.log(result[index].name);
-          var startTime = moment(result[index].shift_start_time[index].shift_start_time);
-          var endTime = moment(result[index].shift_end_time[index].shift_end_time);
+        if (isAuthenticated(result) === false) return false;
 
-          // calculate total duration
-          var duration = moment.duration(endTime.diff(startTime));
-          console.log(duration);
-          // duration in hours
-          var hours = parseInt(duration.asHours());
+        // Clear existing records
+        const recordContainer = document.querySelector('#add_emp_record');
+        if (!recordContainer) return console.error('#add_emp_record not found');
+        $(".shrink_all").html('');
+        
 
-          var total_emp_hours = total_emp_hours + hours;
-          // duration in minutes
-          var minutes = parseInt(duration.asMinutes()) % 60;
+        let total_emp_minutes = 0;
+        let total_emp_minutes_with_break = 0;
+        let total_emp_hours = 0;
 
-          minutes_with_break = minutes + result[index].break;
+        result.forEach((emp, empIndex) => {
+          let emp_total_minutes = 0;
+          let emp_total_break = 0;
 
-          var startDate = moment(result[index].rota_start_date);
-          var endDate = moment(result[index].rota_end_date);
-          var rota_day_date = moment(result[index].rota_day_date);
+          for (let i = 0; i < emp.shift_start_time.length; i++) {
+            let startTime = moment(emp.shift_start_time[i].shift_start_time);
+            let endTime = moment(emp.shift_end_time[i].shift_end_time);
+            let breakMin = parseInt(emp.break[i].break || 0);
 
-          let loopData = '';
-
-          for (var m = moment(startDate); m.diff(endDate, 'days') <= 0; m.add(1, 'days')) {
-            const dateIsSame = moment(m).isSame(moment(rota_day_date));
-            console.log(`Date is Same: ${dateIsSame}`);
-            if (dateIsSame == true) {
-              loopData += `<p class='ms-2 fw-bolder' style="color:#ad005c;">${m.format('dd').charAt(0)}</p>`;
-            } else {
-              loopData += `<p class='ms-2 fw-bolder'>${m.format('dd').charAt(0)}</p>`;
-            }
+            let duration = moment.duration(endTime.diff(startTime));
+            let minutes = parseInt(duration.asMinutes());
+            emp_total_minutes += minutes;
+            emp_total_break += breakMin;
           }
 
-          total_emp_minutes = total_emp_minutes + minutes;
-          total_emp_minutes_with_break = total_emp_minutes_with_break + minutes_with_break;
+          let durationWithoutBreak = moment.duration(emp_total_minutes, 'minutes');
+          let durationWithBreak = moment.duration(emp_total_minutes + emp_total_break, 'minutes');
 
+          total_emp_minutes += emp_total_minutes;
+          total_emp_minutes_with_break += emp_total_minutes + emp_total_break;
 
-          document.querySelector('#add_emp_record').insertAdjacentHTML(
-            'afterbegin',
-            `<div class="d-flex align-items-center shrink_all">
-                              <div class="w_19 py-2" style="overflow-x: scroll; overflow-y: hidden;">` + result[index].name + `</div>
-                              <div class="w_19 py-2" style="overflow-x: scroll; overflow-y: hidden;">40 hrs</div>
-                              <div class="w_19 py-2 ps-2">
-                                <span class="d-flex">
-                                 ${loopData}
-                                </span>
-                              </div>
-                              <div class="w_19 py-2">
-                                <div class="w_full">${result[index].break[index].break} min</div>
-                              </div>
-                              <div class="w_19 py-2">
-                                <div id="without_break">
-                                  <div class="w_full hide2">${hours} hour and ${minutes} minutes.</div>
-                                  <div class="w_full hide1">${hours} hour and ${minutes_with_break} minutes.</div>
-                                </div>
-                                <div id="with_break">
-                                </div>
-                              </div>
-                            </div>`
-          );
-        }
-        console.log(total_emp_minutes_with_break);
+          // rota days loop
+          let loopData = '';
+          let startDate = moment(emp.rota_start_date);
+          let endDate = moment(emp.rota_end_date);
+          let rotaDay = moment(emp.rota_day_date);
 
-        if (total_emp_minutes > 60) {
-          var hours = (total_emp_minutes / 60);
-          var rhours = Math.floor(hours);
-          var minutes = (hours - rhours) * 60;
-          var rminutes = Math.round(minutes);
-          rhours = rhours + total_emp_hours;
-        }
+          for (let m = moment(startDate); m.diff(endDate, 'days') <= 0; m.add(1, 'days')) {
+            const dateIsSame = m.isSame(rotaDay, 'day');
+            loopData += `<p class='ms-2 fw-bolder' ${dateIsSame ? "style='color:#ad005c;'" : ''}>${m.format('dd').charAt(0)}</p>`;
+          }
 
-        if (total_emp_minutes_with_break > 60) {
-          var hours_break = (total_emp_minutes_with_break / 60);
-          var rhours_break = Math.floor(hours_break);
-          var minutes_break = (hours_break - rhours_break) * 60;
-          var rminutes_break = Math.round(minutes_break);
-          rhours_break = rhours_break + total_emp_hours;
-        }
+          recordContainer.insertAdjacentHTML('beforeend', `
+            <div class="d-flex align-items-center shrink_all">
+              <div class="w_19 py-2" style="overflow-x: scroll; overflow-y: hidden;">${emp.name}</div>
+              <div class="w_19 py-2" style="overflow-x: scroll; overflow-y: hidden;">${durationWithoutBreak.hours()} hrs</div>
+              <div class="w_19 py-2 ps-2"><span class="d-flex">${loopData}</span></div>
+              <div class="w_19 py-2">
+                <div class="w_full">${emp_total_break} min</div>
+              </div>
+              <div class="w_19 py-2">
+                <div id="without_break">
+                  <div class="w_full hide2">${durationWithoutBreak.hours()} hour and ${durationWithoutBreak.minutes()} minutes.</div>
+                  <div class="w_full hide1">${durationWithBreak.hours()} hour and ${durationWithBreak.minutes()} minutes.</div>
+                </div>
+              </div>
+            </div>
+          `);
+        });
 
-        if (rhours == undefined || rminutes == undefined) {
-          rhours = total_emp_hours;
-          rminutes = 0;
-        }
-        var total_duration = rhours + ' hour and ' + rminutes + ' minutes.';
-        var total_duration_break = rhours_break + ' hour and ' + rminutes_break + ' minutes.';
+        // Final total calculations
+        const totalWithoutBreak = moment.duration(total_emp_minutes, 'minutes');
+        const totalWithBreak = moment.duration(total_emp_minutes_with_break, 'minutes');
 
-
-        document.getElementById('total_emp_hour').innerHTML = total_duration;
-        document.getElementById('total_emp_hour_with_break').innerHTML = total_duration_break;
-        document.getElementById('week_total').innerHTML = total_duration;
+        document.getElementById('total_emp_hour').innerHTML = `${totalWithoutBreak.hours()} hour and ${totalWithoutBreak.minutes()} minutes.`;
+        document.getElementById('total_emp_hour_with_break').innerHTML = `${totalWithBreak.hours()} hour and ${totalWithBreak.minutes()} minutes.`;
+        document.getElementById('week_total').innerHTML = `${totalWithoutBreak.hours()} hour and ${totalWithoutBreak.minutes()} minutes.`;
       }
     });
 

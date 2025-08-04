@@ -30,6 +30,14 @@
         text-align: right;
         margin-bottom: 25px;
     }
+    .add-margin h4 {
+        font-weight: 600;
+        font-size: 20px;
+    }
+    .date-of-weak-shift {
+        color: #1f88b5;
+    }
+
 </style>
 @foreach($rota as $rota_data)
 <div class="row">
@@ -242,13 +250,14 @@
                                     $period = \Carbon\CarbonPeriod::create(date("Y-m-d", strtotime($rota_data->rota_start_date)), date("Y-m-d", strtotime($rota_data->rota_end_date)));
                                     $i = 1;
                                     foreach ($period as $date) {
+                                        $shift_count=App\RotaShift::where('rota_id', $rota_data->id)->where('rota_day_date', $date->format('Y-m-d'))->where('status', 1)->count();
                                     ?>
                                         <div class="d-flex">
                                             <div class="date-of-shift">
                                                 <strong>{{$date->format('D j M')}}</strong>
                                             </div>
                                             <div class="amount-of-shift">
-                                                <p><span id="shift_count"></span> shifts</p>
+                                                <p><span id="shift_count">{{$shift_count}}</span> shifts</p>
                                             </div>
                                             <div class="add-shift-btn">
                                                 <!-- Button trigger modal -->
@@ -260,19 +269,20 @@
                                         </div>
                                         <?php
                                         $rota_shift = App\RotaShift::where('rota_id', $rota_data->id)->where('rota_day_date', $date->format('Y-m-d'))->where('status', 1)->get();
-                                        $userdata = array();
+                                        // $userdata = array();
                                         foreach ($rota_shift as $rota_shifts) {
                                             $shift_id = $rota_shifts->id;
                                             $shift_start = $rota_shifts->shift_start_time;
                                             $shift_end = $rota_shifts->shift_end_time;
                                             $description = $rota_shifts->description;
 
-                                            $list_emp = App\RotaAssignEmployee::where('rota_id', $rota_data->id)->where('shift_id', $shift_id)->where('status', 1)->get();
-                                            foreach ($list_emp as $emp_ids) {
-                                                $userdata[] = App\ServiceUser::where('id', $emp_ids->emp_id)->get();
-                                            }
-                                        }
-                                        foreach ($userdata as $user_data) {
+                                            $list_emp = App\RotaAssignEmployee::where('rota_id', $rota_data->id)->where('shift_id', $shift_id)->where('status', 1)->first();
+                                            // foreach ($list_emp as $emp_ids) {
+                                            //     $userdata[] = App\ServiceUser::where('id', $emp_ids->emp_id)->get();
+                                            // }
+                                            $user_data = App\ServiceUser::where('id', $list_emp->emp_id)->first();
+                                        // }
+                                        // foreach ($userdata as $user_data) {
                                         ?>
                                             <div class="w_full">
                                                 <?php for ($count = 0; $count < 24; $count++) {
@@ -280,15 +290,15 @@
                                                                           </div>";
                                                 } ?>
                                                 <!-- Button shift modal -->
-                                                <button type="button" class="shift_timing_btn" onclick="view_user_data(<?php echo $shift_id; ?>,`<?php echo $user_data[0]['id']; ?>`)" style="width: `+hours*4.16667+`%;  left: `+hours*4.16667+`%;" style="sdisplay: none;" data-testid="Shift card" style="width: 33.3333%; left: 37.5%;">
+                                                <button type="button" class="shift_timing_btn" onclick="view_user_data(<?php echo $shift_id; ?>,`<?php echo $user_data->id; ?>`)" style="width: `+hours*4.16667+`%;  left: `+hours*4.16667+`%;" style="sdisplay: none;" data-testid="Shift card" style="width: 33.3333%; left: 37.5%;">
                                                     <div class="d-flex align-items-center">
                                                         <div class="">
                                                             <div class="name_of_member">
                                                                 <div class="">
                                                                     <?php
-                                                                    $str = str_split($user_data[0]['name']);
+                                                                    $str = str_split($user_data->name);
                                                                     echo strtoupper($str[0]);
-                                                                    $whatIWant = substr($user_data[0]['name'], strpos($user_data[0]['name'], " ") + 1);
+                                                                    $whatIWant = substr($user_data->name, strpos($user_data->name, " ") + 1);
                                                                     $str1 =  str_split($whatIWant);
                                                                     echo ($str1) ? strtoupper($str1[0]) : "";
                                                                     ?>
@@ -297,7 +307,7 @@
                                                         </div>
                                                         <div class="">
                                                             <div class="d-flex align-items-center">
-                                                                <div class="name_of_person">{{ $user_data[0]['name'] }}</div>
+                                                                <div class="name_of_person">{{ $user_data->name }}</div>
                                                                 <div class="shift_timeing_duration">{{ \Carbon\Carbon::parse($shift_start)->format('h:i') }} - {{ \Carbon\Carbon::parse($shift_end) ->format('h:i') }}</div>
                                                             </div>
                                                             <div class="">{{ $description }}</div>
@@ -326,10 +336,10 @@
 </section>
 <!-- Modal -->
 <div class="modal addShift" id="exampleModalAddShift" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog" style="display: block; max-width: 50rem;">
+    <div class="modal-dialog modal-lg" style="display: block;">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="container remove-padding M-right" id="multiForm" style="display: block;">
+                <div class="remove-padding M-right" id="multiForm" style="display: block;">
                     <form action="" method="post" id="select">
                         <div class="row">
                             <div class="col-md-12">
@@ -358,39 +368,40 @@
                                 <div class="row" id="form1" style="display: block;">
                                     <div class="col-md-12">
                                         <div class="employees-info">
-                                            <div class="add-margin col-md-12">
-                                                <h4>Create new shift</h4>
-                                                <span class="date-of-weak-shift" id="rota_shift_day_show"></span>
-                                            </div>
-                                            <div class="row">
+                                            
+                                            <div class="row">                                             
+                                                <div class="add-margin col-md-12">
+                                                    <h4>Create new shift</h4>
+                                                    <span class="date-of-weak-shift" id="rota_shift_day_show"></span>
+                                                </div>
                                                 <div class="col-md-12" id="showDiv">
                                                     <form class="employees-data" onsubmit="return validateform()">
                                                         <div class="row">
                                                             <input type="hidden" id="rota_shift_day_date">
-                                                            <label for="firstName" class="col-sm-2 col-form-label">Shift time</label>
+                                                            <label for="firstName" class="col-sm-3 col-form-label">Shift time</label>
                                                             <!-- <div class="col-sm-5"> -->
-                                                            <div class="col-auto mb-3">
+                                                            <div class="col-sm-4 mb-3">
                                                                 <input type="datetime-local" class="col-sm-2 form-control" id="start_time" aria-describedby="emailHelp" value="<?php echo date('Y-m-d'); ?> 09:00" placeholder="">
                                                             </div>
-                                                            <div class="col-auto">
+                                                            <div class="col-sm-1">
                                                                 <span class="btew-time">to</span>
                                                             </div>
-                                                            <div class="col-auto mb-3">
+                                                            <div class="col-sm-4 mb-3">
                                                                 <input type="datetime-local" class="col-sm-2 form-control" id="end_time" value="<?php echo date('Y-m-d'); ?> 17:00" aria-describedby="emailHelp" placeholder="">
                                                             </div>
                                                             <!-- </div> -->
                                                         </div>
                                                         <div class="row">
-                                                            <label for="lastName" class="col-sm-2 col-form-label">Break duration</label>
-                                                            <div class="col-auto">
+                                                            <label for="lastName" class="col-sm-3 col-form-label">Break duration</label>
+                                                            <div class="col-sm-9">
                                                                 <input type="number" id="break_time" class="form-control" placeholder="Minutes">
                                                                 <p id="lastNamError">
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <label for="emailAdd" class="col-sm-2 col-form-label">Add a note</label>
-                                                            <div class="col-md-4">
+                                                        <div class="row m-t-10">
+                                                            <label for="emailAdd" class="col-sm-3 col-form-label">Add a note</label>
+                                                            <div class="col-md-9">
                                                                 <textarea name="" class="form-control" id="shift_notes" cols="40" rows="5"></textarea>
                                                             </div>
                                                         </div>
@@ -407,11 +418,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="container remove-padding">
+                                <div class="remove-padding">
                                     <div class="row" id="form2" style="display: none;">
                                         <div class="col-md-12">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="add-margin col-md-12">
                                                     <h4>Assign employees to <span id="assign_emp_date"></span>, <span id="shift_time_show"></span></h4>
                                                     <span class="date-of-weak-shift">Find an Childs or a team</span>
                                                 </div>
@@ -500,12 +511,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="container remove-padding">
+                                <div class="remove-padding">
                                     <div class="row" id="form3" style="display: none;">
                                         <div class="col-md-12">
                                             <div class="employment-details">
                                                 <div class="row my-2">
-                                                    <div class="col-md-12">
+                                                    <div class="add-margin col-md-12">
                                                         <h4>Shift summary</h4>
                                                         <p>Shift will be created for <strong> <span id="show_shift_date"></span>, <span id="show_shift_time"></span>.</strong></p>
                                                     </div>
