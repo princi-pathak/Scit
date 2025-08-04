@@ -27,6 +27,7 @@
 
     .small-box.ScrollStyle {
         display: flex;
+        min-height: 190px;
     }
 
     .ScrollStyle {
@@ -37,6 +38,19 @@
 
     .settingFlex {
         display: flex;
+    }
+    .small-box.ScrollStyle .pop-notifbox{
+            right: -70px;
+            top: 30px;
+            left: auto;
+    }
+        .setting-sze .pop-notification::after {
+        top: -23px;
+        left: 47%;
+        right: 0;
+        margin: auto;
+        content: "\f0d8";
+        color: #1f88b5;
     }
 </style>
 
