@@ -2,7 +2,7 @@
 @section('title','Behaviour Management Plan')
 @section('content')
 
-
+    <link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
 
 <section id="container">
     <!--main content start-->

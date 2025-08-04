@@ -86,8 +86,6 @@
                     </div>
                 </div>
 
-
-
                 <!-- page end-->
             </section>
         </section>
@@ -107,11 +105,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
+                        {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                             <button class="btn label-default add-new-btn active" type="button"> Add New </button>
-                            {{-- <button class="btn label-default logged-btn active logged_rmp_btn" type="button"> Logged Plans</button>
-                            <button class="btn label-default search-btn active" type="button"> Search </button> --}}
-                        </div>
+                            <button class="btn label-default logged-btn active logged_rmp_btn" type="button"> Logged Plans</button>
+                            <button class="btn label-default search-btn active" type="button"> Search </button>
+                        </div> --}}
                         <!-- Add new Details -->
                         <div class="add-new-box risk-tabs custm-tabs">
                             <form method="post" action="" id="rmp_form">
@@ -274,7 +272,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> User: </label>
+                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Child: </label>
                             <div class="col-md-11 col-sm-11 col-xs-12">
                                 <div class="select-style">
                                     <select name="su_id" disabled="disabled">

@@ -570,8 +570,8 @@
   
 </section>
 <!-- Rename Modal -->
-<div class="modal fade" id="renameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal" id="renameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Rename rota</h1>
@@ -593,7 +593,7 @@
 <!-- Rename Modal End -->
 
 <!-- Publish Modal -->
-<div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="publishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -616,7 +616,7 @@
 <!-- Publish Modal End-->
 
 <!-- Unpublish Modal -->
-<div class="modal fade" id="unpublishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="unpublishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -638,7 +638,7 @@
 </div>
 <!-- Unpublish Modal End-->
 <!-- Modal View start -->
-<div class="modal fade" id="exampleModalViewDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="exampleModalViewDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="max-width: 70rem;">
     <div class="modal-content">
       <div class="modal-header">
@@ -1017,6 +1017,7 @@
       },
       success: function(result) {
         console.log(result);
+        console.log(result.length);
         if (isAuthenticated(result) == false) {
             return false;
         }
@@ -1026,8 +1027,8 @@
 
         for (let index = 0; index < result.length; index++) {
           console.log(result[index].name);
-          var startTime = moment(result[index].shift_start_time);
-          var endTime = moment(result[index].shift_end_time);
+          var startTime = moment(result[index].shift_start_time[index].shift_start_time);
+          var endTime = moment(result[index].shift_end_time[index].shift_end_time);
 
           // calculate total duration
           var duration = moment.duration(endTime.diff(startTime));
@@ -1072,7 +1073,7 @@
                                 </span>
                               </div>
                               <div class="w_19 py-2">
-                                <div class="w_full">${result[index].break} min</div>
+                                <div class="w_full">${result[index].break[index].break} min</div>
                               </div>
                               <div class="w_19 py-2">
                                 <div id="without_break">

@@ -1092,6 +1092,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/service/mfc/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MFCController@add');
 	Route::match(['get', 'post'], '/service/mfc/edit/{su_mfc_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MFCController@edit');
 	Route::match(['get', 'post'], '/service/mfc/delete/{su_mfc_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MFCController@delete');
+	Route::match(['get', 'post'], '/service/missing-care-form-records/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MFCController@form');
+
 
 	//BMP_RMP in  Daily Record ServiceUserManagement
 	Route::match(['get', 'post'], '/service/bmp-rmps/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpRmpController@index');
@@ -1186,10 +1188,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/service/incident-report/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\IncidentController@add_incident');
 	Route::post('/service/incident-report/edit_incident/{su_incident_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\IncidentController@edit_incident');
 	Route::get('/service/incident-report/delete/{su_incident_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\IncidentController@delete');
+	Route::match(['get', 'post'], '/service/incident-report/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\IncidentController@form');
+
 
 	//ServiceUser LogBook
 	Route::match(['get', 'post'], '/service/logsbook/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@index');
-	Route::post('/service/logbook/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@add');
+	// Route::post('/service/logbook/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@add');
 	Route::get('/forms', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@forms');
 	Route::get('/service/logbook/view/{log_book_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@view');
 
