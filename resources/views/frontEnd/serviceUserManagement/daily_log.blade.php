@@ -147,12 +147,12 @@
 
     <!--Core CSS -->
     <!-- <link href="{{ url('public/frontEnd/daily_logs/bs3/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-                        <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
-                        <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
+                            <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
+                            <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
 
     <!-- Custom styles for this template -->
     <!-- <link href="{{ url('public/frontEnd/daily_logs/css/style.css') }}" rel="stylesheet" type="text/css">
-                        <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
+                            <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
 
     <section id="container">
 
@@ -241,9 +241,9 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                    </div> -->
+                                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                        </div> -->
                 </div>
 
                 <div class="row">
@@ -552,7 +552,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
+                            {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Category: </label>
                                 <div class="col-md-9 col-sm-10 col-xs-12">
                                     <div class="select-style">
@@ -564,7 +564,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Form: </label>
                                 <div class="col-md-11 col-sm-11 col-xs-12">
@@ -620,78 +620,77 @@
          * Adding tooltips
          */
 
-        $(document).on('click', '.dyn-form-view-data-eye', function(e) { 
-             e.preventDefault();
-
-             alert("gfdgdf");
-            // var previous_model_id = $(this).closest('.modal').attr('id');
-            // var dynamic_form_id = $(this).attr('id');
-            // var form_id = $(this).closest('form').attr('id');
-
-            // $('.loader').show();
-            // $('body').addClass('body-overflow');
-
-            // $.ajax({
-            //     type: 'get',
-            //     url: "{{ url('/service/daily-log-form/view/data') }}" + '/' + dynamic_form_id,
-            //     dataType: 'json',
-            //     success: function(resp) {
-
-            //         if (isAuthenticated(resp) == false) {
-            //             return false;
-            //         }
-
-            //         var response = resp['response'];
-            //         var form_builder_id = resp['form_builder_id'];
-            //         var form_title = resp['form_title'];
-            //         var service_user_id = resp['service_user_id'];
-            //         var form_data = resp['form_data'];
-            //         var form_alert = resp['form_alert'];
-
-            //         if (response == true) {
-
-            //             $('#' + previous_model_id).modal('hide');
-            //             var view_modal = '#DynFormViewModal';
-
-            //             $(view_modal).modal('show');
-            //             $(view_modal + ' .mdl-back-btn').attr('pre_modal',
-            //                 previous_model_id);
-
-            //             $(view_modal + ' .dynamic_form_select').val(form_builder_id);
-            //             if (service_user_id != null) {
-            //                 $(view_modal + ' .su_id').val(service_user_id);
-            //             } else {
-            //                 $(view_modal + ' .su_id').val(0);
-            //             }
-            //             $(view_modal + ' .dynamic_form_id').val(dynamic_form_id);
-            //             $(view_modal + ' .dynamic-form-fields').html(form_data);
-
-            //             // setTimeout(function () {
-            //             //     autosize($("textarea"));
-            //             // },200);
-
-            //         } else {
-            //             //show error message
-            //             $('#' + form_id + '  span.popup_error_txt').text(
-            //                 "{{ COMMON_ERROR }}");
-            //             $('#' + form_id + ' .popup_error').show();
-            //             setTimeout(function() {
-            //                 $('#' + form_id + ' .popup_error').fadeOut()
-            //             }, 5000);
-            //         }
-            //         viewdatawithvalueFormio();
-            //         $('.loader').hide();
-            //         $('body').removeClass('body-overflow');
-            //     }
-            // });
-            // return false;
-        });
-
-
         $(document).ready(function() {
             $('.timeline-icon').tooltip();
             $('.time_abbre').tooltip();
 
+
+            $(document).on('click', '.dyn-form-view-data-eye', function(e) {
+                e.preventDefault();
+
+                alert("gfdgdf");
+                var previous_model_id = $(this).closest('.modal').attr('id');
+                var dynamic_form_id = $(this).attr('id');
+                var form_id = $(this).closest('form').attr('id');
+
+                $('.loader').show();
+                $('body').addClass('body-overflow');
+
+                $.ajax({
+                    type: 'get',
+                    url: "{{ url('/service/daily-log-form/view/data') }}" + '/' + dynamic_form_id,
+                    dataType: 'json',
+                    success: function(resp) {
+
+                        if (isAuthenticated(resp) == false) {
+                            return false;
+                        }
+
+                        var response = resp['response'];
+                        var form_builder_id = resp['form_builder_id'];
+                        var form_title = resp['form_title'];
+                        var service_user_id = resp['service_user_id'];
+                        var form_data = resp['form_data'];
+                        var form_alert = resp['form_alert'];
+
+                        if (response == true) {
+
+                            $('#' + previous_model_id).modal('hide');
+                            var view_modal = '#DynFormViewModal';
+
+                            $(view_modal).modal('show');
+                            $(view_modal + ' .mdl-back-btn').attr('pre_modal',
+                                previous_model_id);
+
+                            $(view_modal + ' .dynamic_form_select').val(form_builder_id);
+                            if (service_user_id != null) {
+                                $(view_modal + ' .su_id').val(service_user_id);
+                            } else {
+                                $(view_modal + ' .su_id').val(0);
+                            }
+                            $(view_modal + ' .dynamic_form_id').val(dynamic_form_id);
+                            $(view_modal + ' .dynamic-form-fields').html(form_data);
+
+                            // setTimeout(function () {
+                            //     autosize($("textarea"));
+                            // },200);
+
+                        } else {
+                            //show error message
+                            $('#' + form_id + '  span.popup_error_txt').text(
+                                "{{ COMMON_ERROR }}");
+                            $('#' + form_id + ' .popup_error').show();
+                            setTimeout(function() {
+                                $('#' + form_id + ' .popup_error').fadeOut()
+                            }, 5000);
+                        }
+                        viewdatawithvalueFormio();
+                        $('.loader').hide();
+                        $('body').removeClass('body-overflow');
+                    }
+                });
+                return false;
+            });
 
 
         });
@@ -730,11 +729,11 @@
         }
 
 
-        // document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
-        //     btn.addEventListener('click', function() {
-        //         $('#DynFormViewModal').modal('show');
-        //     });
-        // });
+        document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                $('#DynFormViewModal').modal('show');
+            });
+        });
 
 
         /**

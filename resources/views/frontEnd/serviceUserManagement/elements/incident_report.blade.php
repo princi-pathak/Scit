@@ -1,12 +1,98 @@
-<style>
-    /* .search_incident_date {
-        display: none;
-    }
+@extends('frontEnd.layouts.master')
+@section('title', 'Incident Report')
+@section('content')
 
-    .search_incident_title {
-        display: none;
-    } */
-</style>
+  <link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
+
+    <section id="container">
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="row">
+                    <div class="pull-right">
+                        <div class="filter_buttons"
+                            style="text-align:right;padding-right:150px;display:inline-block; padding-bottom: 10px;">
+                            <a data-toggle="modal" href="#rmpModal" class="btn btn-primary col-6" id=''>Add New</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- page start-->
+                <div class="row" style="margin-bottom:30px;">
+                    <div class="col-md-1 col-lg-1">
+                        <a class="back_opt col-3" onclick="history.back()">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                    </div>
+                    <!-- sourabh -->
+                    <div class="col-md-2 col-lg-2">
+                        <select class="form-control" name="service_user" id="service_user" <?php if (isset($service_user_id)) {
+                            echo 'disabled';
+                        } ?>>
+                            <option value="">Select Child</option>
+                            @foreach ($service_users as $val)
+                                <option <?php if (isset($service_user_id)) {
+                                    if ($service_user_id == $val['id']) {
+                                        echo 'Selected';
+                                    }
+                                } ?> value="{{ $val['id'] }}">{{ $val['name'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- sourabh -->
+                    <div class="col-md-3 col-lg-3" style="margin-left: -10px;">
+                        <div class="form-group datepicker-sttng date-sttng">
+                            <label class="col-md-2 col-sm-1 col-xs-12 p-t-7" style="display: none;"> Date: </label>
+                            <div class="col-md-10 col-sm-10 col-xs-12">
+                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
+                                    class="input-group date">
+                                    <input id="date_range_input" style="cursor: pointer;" name="daterange"
+                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value=""
+                                        readonly="" size="16" class="form-control log-book-datetime">
+                                    <span class="input-group-btn add-on datetime-picker2">
+                                        <button onclick="showDate()" class="btn btn-primary" type="button"><span
+                                                class="glyphicon glyphicon-calendar"></span></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- sourabh -->
+                    <div class="col-md-2 col-lg-2" style="padding-bottom:10px; margin-left: -10px;">
+                        <input type="text" class="form-control" id="keywordhr" onKeyPress="hrmyFunctionkey()"
+                            name="keywordhr" placeholder="Keyword">
+                    </div>
+                    <!-- sourabh -->
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="timeline">
+                            <article class="timeline-item alt">
+                                <div class="text-right">
+                                    <div class="time-show first">
+                                        <a href="#" class="btn btn-primary" id="today">Today</a>
+                                    </div>
+                                </div>
+                            </article>
+                            <div class="logged_rmp_btn">
+                                <div class="modal-space modal-pading view-incident-record">
+                                    <!-- record shown using Ajax -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- page end-->
+            </section>
+        </section>
+        <!--main content end-->
+
+    </section>
+
 <!-- Add SUIncidentReport Modal -->
 <div class="modal fade my_plan_model" id="IncidentAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -125,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="dynamic-incident-form-fields">
-                                {!! $form_pattern['incident_report'] !!}
+                                {{-- {!! $form_pattern['incident_report'] !!} --}}
                             </div> -->
                             <!-- </div> -->
 
@@ -394,7 +480,7 @@
 <script>
     //logged btn click view incident title
     $(document).ready(function() {
-        $(document).on('click', '.logged-incident-btn', function() {
+        // $(document).on('click', '.logged-incident-btn', function() {
 
             $('.loader').show();
             $('body').addClass('body-overflow');
@@ -420,7 +506,7 @@
                 }
             });
             return false;
-        });
+        // });
     });
 </script>
 
@@ -712,3 +798,4 @@
     //     }
     // });
 </script>
+@endsection
