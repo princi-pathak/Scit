@@ -185,53 +185,60 @@
             });
         });
 
-        // function applyFormFilter() {
-        //     var staffId = $('#staff_member').val();
-        //     var childId = $('#service_user').val();
-        //     let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
-        //     let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
-        //     var title = $('#keyword').val();
+        
+    </script>
 
+   <script type="text/javascript">
+        $('#service_user').change(function() {
+            alert("dfsdf");
+            let staff_member = $('#staff_member').val();
+            let service_user = $('#service_user').val();
+            let category_id = $('#select_category').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let keyword = $('#keyword').val();
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
 
-        //     let formdata = {
-        //         'staff_id' : staffId,
-        //         'child_id' : childId, 
+            $.ajax({
+                type: 'post',
+                url: "{{ url('/service/dynamic-forms') }}",
+                data: data,
+                success: function(resp) {
+                    console.log(resp)
+                    if (isAuthenticated(resp) == false) {
+                        return false;
+                    }
+                     console.log("resp from the ", resp);
+                    if (resp == '') {
+                        $('.view-dyn-record').html(
+                            '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'
+                        );
+                    } else {
+                        $('.view-dyn-record').html("");
+                        $('.view-dyn-record').html(resp);
+                    }
+                }
+            });
+            return false;
 
-
-        //         'start_date' : start_date,
-        //         'end_date' : end_date,
-        //         'title' : title
-        //     };
-        //     console.log(formdata);
-
-        //     $.ajax({
-        //         type: 'post',
-        //         url: "{{ url('/service/dynamic-forms') }}" + '?search=' + search,
-        //         data: formdata,
-        //         success: function(resp) {
-        //             if (isAuthenticated(resp) == false) {
-        //                 return false;
-        //             }
-        //             if (resp == '') {
-        //                 $('#searched-dyn-records-form .searched-record').html('No Records found.');
-        //             } else {
-        //                 $('#searched-dyn-records-form .searched-record').html(resp);
-        //             }
-        //             $('.loader').hide();
-        //             $('body').removeClass('body-overflow');
-        //         }
-        //     });
-        //     return false;
-        // }
-
-        // Apply filter automatically on change
-        $('#staff_member, #service_user, #date_range_input').on('change', applyFormFilter);
-
-        // For title field, use keyup so it filters as user types
-        $('#keyword').on('keyup', function() {
-            clearTimeout($(this).data('timer')); // clear previous timer
-            var timer = setTimeout(applyFormFilter, 500); // delay to prevent too many requests
-            $(this).data('timer', timer);
         });
     </script>
 
