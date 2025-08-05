@@ -210,7 +210,6 @@ class LogBookController extends ServiceUserManagementController
 
     public function add(Request $request)
     {
-        // dd($request);
         // echo "<pre>"; print_r($request->all());die;
         if ($request->isMethod('post')) {
             //sourabh geo location
@@ -279,7 +278,7 @@ class LogBookController extends ServiceUserManagementController
             $latest_date  = LogBook::select('log_book.*')->orderBy('date', 'desc')->take(1)->value('date');
             $latest_date  = date('Y-m-d H:i:s', strtotime($latest_date));
             $given_date   = date('Y-m-d H:i:s', strtotime($data['log_date']));
-            // $given_date    = date('Y-m-d H:i:s');
+            // $given_date    = date('d-m-Y H:i:s');
             $latest_date_without_time    = date('Y-m-d', strtotime($latest_date));
             $given_date_without_time    = date('Y-m-d', strtotime($given_date));
             $current_date_without_time    = date('Y-m-d');
@@ -300,7 +299,7 @@ class LogBookController extends ServiceUserManagementController
             $log_book_record->dynamic_form_id = $form_insert_id;
             $log_book_record->category_name   = $category_name;
             $log_book_record->category_icon   = $category_icon;
-            $log_book_record->date    = date('Y-m-d H:i:s', strtotime($data['log_date']));
+            $log_book_record->date    = $given_date;
             $log_book_record->details = $data['log_detail'];
             $log_book_record->home_id = $login_home_id;
             $log_book_record->user_id = Auth::user()->id;

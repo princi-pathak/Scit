@@ -86,9 +86,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
                 <!-- page end-->
             </section>
         </section>
@@ -811,7 +808,6 @@
             return false;
         });
     </script>
-
 
     <!-- <script>
         //3 tabs script

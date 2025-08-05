@@ -147,12 +147,12 @@
 
     <!--Core CSS -->
     <!-- <link href="{{ url('public/frontEnd/daily_logs/bs3/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-                            <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
-                            <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
+    <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
 
     <!-- Custom styles for this template -->
     <!-- <link href="{{ url('public/frontEnd/daily_logs/css/style.css') }}" rel="stylesheet" type="text/css">
-                            <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
+    <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
 
     <section id="container">
 
@@ -234,6 +234,21 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="Select_staff_inner">
+                        <div class="datepicker-sttng date-sttng">
+                            <label style="display: none;"> Log Type: </label>
+                            <div>
+                                <select class="form-control" style="min-width:200px;" id="select_log_type"
+                                    name="log_type" required />
+                                <option selected value="all">Log Type All</option>
+                                <option value="1">Daily Log</option>
+                                <option value="2">Weekly Log</option>
+                                <option value="3">Monthly Log</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <!-- sourabh -->
                     <div class="Select_staff_inner">
                         <input type="text" class="form-control" id="keyword" onKeyPress="myFunctionkey()"
@@ -241,9 +256,9 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                        </div> -->
+                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                            </div> -->
                 </div>
 
                 <div class="row">
@@ -293,7 +308,7 @@
                                                                 {{ $key['staff_name'] }}</span>
                                                         </span>
                                                         <span class="viewEditIcon">
-                                                            <a href="#!" class="dyn-form-view-data"
+                                                            <a href="#!" class="openModelDailyLog"
                                                                 id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                     class="fa fa-eye"></i></a>
                                                             {{-- <a href="#!"><i class="fa fa-eye"></i></a> --}}
@@ -373,7 +388,7 @@
                                                                     {{ $key['staff_name'] }}</span>
                                                             </span>
                                                             <span class="viewEditIcon">
-                                                                <a href="#!" class="dyn-form-view-data"
+                                                                <a href="#!" class="openModelDailyLog"
                                                                     id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                         class="fa fa-eye"></i></a>
                                                                 {{-- <a href="#!"><i class="fa fa-edit"></i></a> --}}
@@ -521,7 +536,7 @@
 <!-- Su Daily Log Book Modal End --> --}}
 
     <!-- View/Edit dynamic form -->
-    <div class="modal fade" id="DynFormViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="DynFormViewModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -552,7 +567,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Category: </label>
                                 <div class="col-md-9 col-sm-10 col-xs-12">
                                     <div class="select-style">
@@ -564,7 +579,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Form: </label>
                                 <div class="col-md-11 col-sm-11 col-xs-12">
@@ -625,7 +640,7 @@
             $('.time_abbre').tooltip();
 
 
-            $(document).on('click', '.dyn-form-view-data-eye', function(e) {
+            $(document).on('click', '.openModelDailyLog', function(e) {
                 e.preventDefault();
 
                 alert("gfdgdf");
@@ -656,7 +671,7 @@
                         if (response == true) {
 
                             $('#' + previous_model_id).modal('hide');
-                            var view_modal = '#DynFormViewModal';
+                            var view_modal = '#DynFormViewModal1';
 
                             $(view_modal).modal('show');
                             $(view_modal + ' .mdl-back-btn').attr('pre_modal',
@@ -731,7 +746,7 @@
 
         document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                $('#DynFormViewModal').modal('show');
+                $('#DynFormViewModal1').modal('show');
             });
         });
 
