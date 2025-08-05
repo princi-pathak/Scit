@@ -108,7 +108,7 @@ class DynamicFormController extends Controller
 
                         case 2:
                             // Weekly Log
-                          
+
                             // Date after 1 week
                             $nextWeek = Carbon::now()->addWeek()->format('Y-m-d');
 
@@ -445,9 +445,13 @@ class DynamicFormController extends Controller
         }*/
         //$this_location_id = DynamicFormLocation::getLocationIdByTag('bmp');
 
+        $today = Carbon::now()->format('Y-m-d');
+        $oneMonthAgo = Carbon::now()->subMonth()->format('Y-m-d');
+
         $dyn_record       = DynamicForm:: //where('location_id',$this_location_id)
             //whereIn('form_builder_id',$form_bildr_ids)
             where('home_id', $home_id)
+            ->whereBetween('created_at', [$oneMonthAgo, $today])
             ->where('is_deleted', '0')
             ->orderBy('id', 'desc');
 
@@ -475,40 +479,40 @@ class DynamicFormController extends Controller
 
 
         // Check if it's an AJAX filter call
-    if ($request->isMethod('post') && $request->input('filter') == 1) {
+        if ($request->isMethod('post') && $request->input('filter') == 1) {
 
-        if ($request->filled('staff_member')) {
-            $dyn_record->where('user_id', $request->input('staff_member'));
+            if ($request->filled('staff_member')) {
+                $dyn_record->where('user_id', $request->input('staff_member'));
+            }
+
+            if ($request->filled('service_user')) {
+                $dyn_record->where('service_user_id', $request->input('service_user'));
+            }
+
+            if ($request->filled('category_id') && $request->input('category_id') !== 'all') {
+                $dyn_record->where('category_id', $request->input('category_id'));
+            }
+
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+                $dyn_record->whereBetween('created_at', [
+                    $request->input('start_date') . ' 00:00:00',
+                    $request->input('end_date') . ' 23:59:59'
+                ]);
+            }
+
+            if ($request->filled('keyword')) {
+                $keyword = $request->input('keyword');
+                $dyn_record->where(function ($query) use ($keyword) {
+                    $query->where('title', 'like', "%{$keyword}%")
+                        ->orWhere('title', 'like', "%{$keyword}%");
+                });
+            }
+
+            $dyn_forms = $dyn_record->get(); // Get filtered data
+        } else {
+            // No filters — get paginated result
+            $dyn_forms = $dyn_record->paginate();
         }
-
-        if ($request->filled('service_user')) {
-            $dyn_record->where('service_user_id', $request->input('service_user'));
-        }
-
-        if ($request->filled('category_id') && $request->input('category_id') !== 'all') {
-            $dyn_record->where('category_id', $request->input('category_id'));
-        }
-
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $dyn_record->whereBetween('created_at', [
-                $request->input('start_date') . ' 00:00:00',
-                $request->input('end_date') . ' 23:59:59'
-            ]);
-        }
-
-        if ($request->filled('keyword')) {
-            $keyword = $request->input('keyword');
-            $dyn_record->where(function ($query) use ($keyword) {
-                $query->where('title', 'like', "%{$keyword}%")
-                      ->orWhere('form_data', 'like', "%{$keyword}%");
-            });
-        }
-
-        $dyn_forms = $dyn_record->get(); // Get filtered data
-    } else {
-        // No filters — get paginated result
-        $dyn_forms = $dyn_record->paginate();
-    }
 
         $loop = 1;
 
@@ -539,7 +543,7 @@ class DynamicFormController extends Controller
                 $end_brct = '';
             }
 
-            if(!empty($value->time)){
+            if (!empty($value->time)) {
                 $time = $value->time;
             } else {
                 $time = '00:00';
@@ -559,7 +563,7 @@ class DynamicFormController extends Controller
                                 <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
 
                                 <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '"><span>
-                                    <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title.' - '.$value->title . ' " maxlength="255"/></span></a>
+                                    <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . ' " maxlength="255"/></span></a>
                                 
                                 <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
                                     <i class="fa fa-cog"></i>
@@ -573,7 +577,7 @@ class DynamicFormController extends Controller
                                         </ul>
                                     </div>
                                 </span>
-                                <span class="ritOrdring three rightdate"> ' . $date . ' - '. $time .'</span>
+                                <span class="ritOrdring three rightdate"> ' . $date . ' - ' . $time . '</span>
                                 <span class="rightArrow"></span>
                             </div>
                         </div>
@@ -589,8 +593,8 @@ class DynamicFormController extends Controller
 
                                <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
                                 <a href="#" class="dyn-form-view-data" id="' . $value->id . '"><span>
-                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' .$form_title.' - '.$value->title . '" maxlength="255"/></span></a>
-                                <span class="timLineDate">' . $date . ' - '. $time .'</span>
+                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/></span></a>
+                                <span class="timLineDate">' . $date . ' - ' . $time . '</span>
                                 <span class="arrow"></span>
 
                                 <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
