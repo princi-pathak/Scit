@@ -184,11 +184,9 @@
                     .format('YYYY-MM-DD'));
             });
         });
-
-        
     </script>
 
-   <script type="text/javascript">
+    <script type="text/javascript">
         $('#service_user').change(function() {
             alert("dfsdf");
             let staff_member = $('#staff_member').val();
@@ -226,7 +224,59 @@
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }
-                     console.log("resp from the ", resp);
+                    console.log("resp from the ", resp);
+                    if (resp == '') {
+                        $('.view-dyn-record').html(
+                            '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'
+                        );
+                    } else {
+                        $('.view-dyn-record').html("");
+                        $('.view-dyn-record').html(resp);
+                    }
+                }
+            });
+            return false;
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#staff_member').change(function() {
+            let staff_member = $('#staff_member').val();
+            let service_user = $('#service_user').val();
+            let category_id = $('#select_category').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let keyword = $('#keyword').val();
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+
+            $.ajax({
+                type: 'post',
+                url: "{{ url('/service/dynamic-forms') }}",
+                data: data,
+                success: function(resp) {
+                    console.log(resp)
+                    if (isAuthenticated(resp) == false) {
+                        return false;
+                    }
+                    console.log("resp from the ", resp);
                     if (resp == '') {
                         $('.view-dyn-record').html(
                             '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'

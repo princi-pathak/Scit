@@ -433,7 +433,7 @@ class DynamicFormController extends Controller
         die;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
@@ -444,33 +444,72 @@ class DynamicFormController extends Controller
             $data = $_POST;
         }*/
         //$this_location_id = DynamicFormLocation::getLocationIdByTag('bmp');
+
         $dyn_record       = DynamicForm:: //where('location_id',$this_location_id)
             //whereIn('form_builder_id',$form_bildr_ids)
             where('home_id', $home_id)
             ->where('is_deleted', '0')
             ->orderBy('id', 'desc');
 
-        $pagination = '';
-        if (isset($_GET['search'])) {
-            if (!empty($_GET['search'])) {
+        // $pagination = '';
+        // if (isset($_GET['search'])) {
+        //     if (!empty($_GET['search'])) {
 
-                if ($_GET['searchType'] ==  1) {
-                    $dyn_forms = $dyn_record->where('title', 'like', '%' . $_GET['search'] . '%')->get();
-                }
-                if ($_GET['searchType'] ==  2) {
-                    $search_date = date('Y-m-d', strtotime($_GET['search'])) . ' 00:00:00';
-                    $search_date_next = date('Y-m-d', strtotime('+1 day', strtotime($_GET['search']))) . ' 00:00:00';
-                    $dyn_forms = $dyn_record->where('created_at', '>', $search_date)->where('created_at', '<', $search_date_next)->get();
-                }
-            }
-        } else {
-            $dyn_forms = $dyn_record->paginate();
-            if ($dyn_forms->links() != '') {
-                $pagination .= '<div class="m-l-15 position-botm ">'; //bmp_paginate
-                $pagination .= $dyn_forms->links();
-                $pagination .= '</div>';
-            }
+        //         if ($_GET['searchType'] ==  1) {
+        //             $dyn_forms = $dyn_record->where('title', 'like', '%' . $_GET['search'] . '%')->get();
+        //         }
+        //         if ($_GET['searchType'] ==  2) {
+        //             $search_date = date('Y-m-d', strtotime($_GET['search'])) . ' 00:00:00';
+        //             $search_date_next = date('Y-m-d', strtotime('+1 day', strtotime($_GET['search']))) . ' 00:00:00';
+        //             $dyn_forms = $dyn_record->where('created_at', '>', $search_date)->where('created_at', '<', $search_date_next)->get();
+        //         }
+        //     }
+        // } else {
+        //     $dyn_forms = $dyn_record->paginate();
+        //     if ($dyn_forms->links() != '') {
+        //         $pagination .= '<div class="m-l-15 position-botm ">'; //bmp_paginate
+        //         $pagination .= $dyn_forms->links();
+        //         $pagination .= '</div>';
+        //     }
+        // }
+
+
+        // Check if it's an AJAX filter call
+    if ($request->isMethod('post') && $request->input('filter') == 1) {
+
+        if ($request->filled('staff_member')) {
+            $dyn_record->where('user_id', $request->input('staff_member'));
         }
+
+        if ($request->filled('service_user')) {
+            $dyn_record->where('service_user_id', $request->input('service_user'));
+        }
+
+        if ($request->filled('category_id') && $request->input('category_id') !== 'all') {
+            $dyn_record->where('category_id', $request->input('category_id'));
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $dyn_record->whereBetween('created_at', [
+                $request->input('start_date') . ' 00:00:00',
+                $request->input('end_date') . ' 23:59:59'
+            ]);
+        }
+
+        if ($request->filled('keyword')) {
+            $keyword = $request->input('keyword');
+            $dyn_record->where(function ($query) use ($keyword) {
+                $query->where('title', 'like', "%{$keyword}%")
+                      ->orWhere('form_data', 'like', "%{$keyword}%");
+            });
+        }
+
+        $dyn_forms = $dyn_record->get(); // Get filtered data
+    } else {
+        // No filters — get paginated result
+        $dyn_forms = $dyn_record->paginate();
+    }
+
         $loop = 1;
 
         $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
