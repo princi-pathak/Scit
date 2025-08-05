@@ -128,6 +128,9 @@ class DailyLogsController extends ServiceUserManagementController
 
             $today = date('Y-m-d');
 
+            $today_date = Carbon::now()->format('Y-m-d');
+            $oneMonthAgo = Carbon::now()->subMonth()->format('Y-m-d');
+
             $log_book_records = DB::table('log_book')
                 ->select('log_book.*', 'user.name as staff_name')
                 ->join('user', 'log_book.user_id', '=', 'user.id')
@@ -152,6 +155,7 @@ class DailyLogsController extends ServiceUserManagementController
                 ->orderBy('log_book.dynamic_form_id') // Sort for grouping
                 ->orderByRaw("FIELD(log_book.logType, 1, 2, 3)") // Prioritize: daily > weekly > monthly
                 ->orderBy('log_book.date', 'desc')
+                ->whereBetween('log_book.created_at', [$oneMonthAgo, $today_date])
                 ->get()
                 ->unique('dynamic_form_id') // ✅ Only one log per dynamic_form_id
                 ->values();

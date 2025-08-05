@@ -97,8 +97,8 @@
                             <label style="display: none;"> Date: </label>
                             <div>
                                 @php
-                                    echo $today = \Carbon\Carbon::now()->format('d-m-Y');
-                                    echo $oneMonthAgo = \Carbon\Carbon::now()->subMonth()->format('d-m-Y');
+                                    $today = \Carbon\Carbon::now()->format('d-m-Y');
+                                    $oneMonthAgo = \Carbon\Carbon::now()->subMonth()->format('d-m-Y');
                                 @endphp
                                 <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
                                     class="input-group date">

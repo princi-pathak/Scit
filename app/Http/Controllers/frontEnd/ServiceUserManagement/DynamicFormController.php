@@ -455,6 +455,10 @@ class DynamicFormController extends Controller
             ->where('is_deleted', '0')
             ->orderBy('id', 'desc');
 
+
+        //    $data =  $dyn_record->get();
+        //     dd($data);
+
         // $pagination = '';
         // if (isset($_GET['search'])) {
         //     if (!empty($_GET['search'])) {
