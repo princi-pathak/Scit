@@ -62,6 +62,9 @@ class IncidentController extends ServiceUserManagementController
             }
         }
 
+        $loop = 1;
+        $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
+        shuffle($colors);
         foreach ($incident_form as $key => $value) {
 
             $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
@@ -87,15 +90,21 @@ class IncidentController extends ServiceUserManagementController
                 $end_brct = '';
             }
 
-            echo '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel remove-incident-row">
+            $color = $colors[$key % count($colors)];
+
+            if ($loop % 2 == 0) {
+                echo '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel remove-incident-row rmpTimelineright">
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                                <div class="input-group popovr">
+                                <div class="input-group popovr rightSideInput rmpTimeRit">
+                                 <span class="timLineDate">29-07-2025 - 2</span>
+                                 <span class="arrow"></span>
+                                 <div class="rmpWithPlusInput">
                                     <input type="hidden" name="" value="' . $value->id . '" disabled="disabled" class="edit_incident_id_' . $value->id . '">
-                                    <input type="text" class="form-control" name="incident_title_name" disabled value="' . $title . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>
+                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $title . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>
                             
-                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
+                                    <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                         <i class="fa fa-cog"></i>
                                         <div class="pop-notifbox">
                                             <ul class="pop-notification" type="none">
@@ -105,9 +114,39 @@ class IncidentController extends ServiceUserManagementController
                                         </div>
                                     </span>
                                 </div>
+                                </div>
                             </div>
                         </div>
                     </div>  ';
+            } else {
+                echo  '
+                    <div class="col-md-6 col-sm-6 col-xs-6 cog-panel remove-incident-row">
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                            <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
+                            <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
+                                <div class="input-group popovr rightSideInput timelineInput rmpTimeLft">
+                                <span class="arrow"></span>
+                                <span class="timLineDate">29-07-2025 - 2</span>
+                                    <div class="rmpWithPlusInput">
+                                        <input type="hidden" name="" value="' . $value->id . '" disabled="disabled" class="edit_incident_id_' . $value->id . '">
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $title . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>
+                                
+                                        <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
+                                            <i class="fa fa-cog"></i>
+                                            <div class="pop-notifbox">
+                                                <ul class="pop-notification" type="none">
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id=' . $value->id . '> <span> <i class="fa fa-eye"></i> </span> View/Edit </a> </li>                                          
+                                                    <li> <a href="#" class="dyn_form_del_btn" id=' . $value->id . '> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>                                            
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> ';
+            }
+            $loop++;
         }
         echo $pagination;
     }

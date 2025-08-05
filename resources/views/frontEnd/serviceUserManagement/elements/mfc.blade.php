@@ -86,9 +86,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
                 <!-- page end-->
             </section>
         </section>
@@ -811,7 +808,15 @@
             return false;
         });
     </script>
-
+<script>
+    $(document).ready(function(){
+        $(document).on('click','.daily-rcd-head', function(){
+            $(this).next('.daily-rcd-content').slideToggle();
+            $(this).find('i').toggleClass('fa-angle-down');
+            $('.input-plusbox').hide();
+        });
+    });
+</script>
 
     <!-- <script>
         //3 tabs script
