@@ -426,15 +426,24 @@ input#date_range_input {
 }
 
 .timelineInput .pop-notification::after {
-    content: "\f0d9";
+    content: "\f0d7";
     font-family: 'fontawesome';
-    right: -8px;
+    left: 10px;
+    right: auto;
     position: absolute;
-    top: 2px;
+    top: -22px;
     color: #fff;
     transform: rotate(180deg);
 }
-
+.pop-notification::after {
+    content: "\f0d8";
+    font-family: fontawesome;
+    right: 12px;
+    left: auto;
+    position: absolute;
+    top: -24px;
+    color: #fff;
+}
 
 /*  nEW CSS */
 
@@ -541,7 +550,12 @@ span.viewEditIcon {
 .rmpTimeLft .rmpWithPlusInput .input-plus{
     left: 206px;
     top: 6px;
- 
+    
+}
+.input-plus{
+     color: #fff;
+    font-size: 20px;
+    line-height: 32px;
 }
 .input-plusbox.form-group.col-xs-12.p-0.detail{
      position: absolute;
