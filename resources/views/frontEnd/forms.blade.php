@@ -96,10 +96,16 @@
                         <div class="datepicker-sttng date-sttng">
                             <label style="display: none;"> Date: </label>
                             <div>
+                                @php
+                                    $today = \Carbon\Carbon::now()->format('d-m-Y');
+                                    $oneMonthAgo = \Carbon\Carbon::now()->subMonth()->format('d-m-Y');
+                                @endphp
                                 <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
                                     class="input-group date">
                                     <input id="date_range_input" style="cursor: pointer;" name="daterange"
-                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" readonly=""
+                                        {{-- value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}"  --}}
+                                        value="{{ $oneMonthAgo }} - {{ $today }}" 
+                                        type="text" readonly=""
                                         size="16" class="form-control log-book-datetime">
                                     <span class="input-group-btn add-on datetime-picker2">
                                         <button onclick="showDate()" class="btn btn-primary" type="button"><span
@@ -172,7 +178,6 @@
             $('#date_range_input').click();
         }
 
-
         $(function() {
             $('input[name="daterange"]').daterangepicker({
                 opens: 'left',
@@ -184,11 +189,105 @@
                     .format('YYYY-MM-DD'));
             });
         });
+
+        function get_dates() {
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let categoy_id = $("#select_category").val();
+            // return [newFormat, newFormat2, selected_category];
+            return [start_date.format('YYYY-MM-DD'), end_date.format('YYYY-MM-DD'), parseInt(categoy_id)];
+        }
+
+        function pdf() {
+            // get_dates();
+            var start = get_dates()[0];
+            var end = get_dates()[1];
+            var category_id = parseInt(get_dates()[2]);
+            var link = document.getElementById("pdf");
+            let url =
+                `{{ url('/service/logbook/download?end=${end}&start=${start}&category_id=${category_id}&format=pdf&service_user_id=' . $service_user_id) }}`;
+            url = url.replaceAll('&amp;', '&')
+            link.setAttribute("href", url);
+            return false;
+        }
+
+        function getFormData(data) {
+            $.ajax({
+                type: 'post',
+                url: "{{ url('/service/dynamic-forms') }}",
+                data: data,
+                success: function(resp) {
+                    console.log(resp)
+                    if (isAuthenticated(resp) == false) {
+                        return false;
+                    }
+                    console.log("resp from the ", resp);
+                    if (resp == '') {
+                        $('.view-dyn-record').html(
+                            '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'
+                        );
+                    } else {
+                        $('.view-dyn-record').html("");
+                        $('.view-dyn-record').html(resp);
+                    }
+                }
+            });
+        }
     </script>
 
+    <!-- Daterange Filter -->
+    <script>
+        $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+            let staff_member = $('#staff_member').val();
+            let start_date = picker.startDate.format('DD-MM-YYYY');
+            let end_date = picker.endDate.format('DD-MM-YYYY');
+            let service_user = $('#service_user').val();
+            let keyword = $('#keyword').val();
+            $(this).val(start_date + ' - ' + end_date);
+
+            let today = new Date;
+            let todayFormat = ("0" + today.getDate()).slice(-2) + "-" + ("0" + (today.getMonth() + 1)).slice(-2) +
+                "-" +
+                today.getFullYear();
+
+            if (start_date == todayFormat && end_date == todayFormat) {
+                $('#today').text('Today');
+            } else {
+                $('#today').text(start_date + ' - ' + end_date);
+            }
+
+            let category_id = $("#select_category").val();
+
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': picker.startDate.format('YYYY-MM-DD'),
+                    'end_date': picker.endDate.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': picker.startDate.format('YYYY-MM-DD'),
+                    'end_date': picker.endDate.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+
+
+            getFormData(data);
+            return false;
+
+        });
+    </script>
+
+    {{-- Filter for child  --}}
     <script type="text/javascript">
         $('#service_user').change(function() {
-            alert("dfsdf");
             let staff_member = $('#staff_member').val();
             let service_user = $('#service_user').val();
             let category_id = $('#select_category').val();
@@ -214,31 +313,13 @@
                     'filter': 1,
                     'keyword': keyword
                 };
-
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/dynamic-forms') }}",
-                data: data,
-                success: function(resp) {
-                    console.log(resp)
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    console.log("resp from the ", resp);
-                    if (resp == '') {
-                        $('.view-dyn-record').html(
-                            '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'
-                        );
-                    } else {
-                        $('.view-dyn-record').html("");
-                        $('.view-dyn-record').html(resp);
-                    }
-                }
-            });
+            getFormData(data);
             return false;
+
         });
     </script>
 
+    {{-- Filter for staff --}}
     <script type="text/javascript">
         $('#staff_member').change(function() {
             let staff_member = $('#staff_member').val();
@@ -267,29 +348,45 @@
                     'keyword': keyword
                 };
 
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/dynamic-forms') }}",
-                data: data,
-                success: function(resp) {
-                    console.log(resp)
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    console.log("resp from the ", resp);
-                    if (resp == '') {
-                        $('.view-dyn-record').html(
-                            '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'
-                        );
-                    } else {
-                        $('.view-dyn-record').html("");
-                        $('.view-dyn-record').html(resp);
-                    }
-                }
-            });
+            getFormData(data);
             return false;
 
         });
+    </script>
+    
+
+    {{-- Filter for keyword --}}
+    <script>
+        function myFunctionkey() {
+            let staff_member = $('#staff_member').val();
+            let service_user = $('#service_user').val();
+            let category_id = $('#select_category').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let keyword = $('#keyword').val();
+            // alert(keyword)
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            getFormData(data);
+            return false;
+        }
     </script>
 
     @include('frontEnd.serviceUserManagement.elements.comments')

@@ -83,7 +83,7 @@ class MFCController extends ServiceUserManagementController
             $pre_date = date('y-m-d', strtotime($mfc_records['0']->created_at));
         }
 
-        //echo '<pre>'; print_r($mfc_records); die;
+        // echo '<pre>'; print_r($mfc_records); die;
 
         foreach ($mfc_records as $key => $value) {
 
@@ -121,6 +121,7 @@ class MFCController extends ServiceUserManagementController
                 </div>
                     <div class="daily-rcd-head">
                         <div class="col-md-6 col-sm-6 col-xs-6 cog-panel p-0 r-p-15 record_row ">
+
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <a  class="date-tab">
                                     <span class="pull-left">
@@ -137,41 +138,40 @@ class MFCController extends ServiceUserManagementController
 
             echo '
                 <div class="col-md-6 col-sm-6 col-xs-6 cog-panel p-0 r-p-15 record_row rows">
-                    
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 r-p-0">
                         <div class="input-group popovr">
                             <input type="text" name="edit_su_record_desc[]" class="form-control cus-control edit_record_desc_' . $value->id . ' edit_mfc_rcrd"  disabled  value="' . ucfirst($title) . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>';
 
-            if (!empty($value->info)) {
-                echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';
-            }
-            echo '<input type="hidden" name="edit_su_record_id[]" value="' . $value->id . '" disabled="disabled" class="edit_record_id_' . $value->id . '" />
-                                <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
-                                <i class="fa fa-cog"></i>
-                                <div class="pop-notifbox">
-                                    <ul class="pop-notification" type="none">';
-            /*if(isset($add_new_case)) { 
+                        if (!empty($value->info)) {
+                            echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';
+                        }
+                        echo '<input type="hidden" name="edit_su_record_id[]" value="' . $value->id . '" disabled="disabled" class="edit_record_id_' . $value->id . '" />
+                                            <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
+                                            <i class="fa fa-cog"></i>
+                                            <div class="pop-notifbox">
+                                                <ul class="pop-notification" type="none">';
+                                /*if(isset($add_new_case)) { 
                                         echo '<li> <a href="#" su_mfc_id="'.$value->id.'" class="edit_record_btn"> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li>';
                                         }*/
-            echo '<li> <a href="#" id="' . $value->id . '" class="dyn-form-view-data"> <span class="color-red"> <i class="fa fa-eye clr-blue"></i> </span> View/Edit </a> 
-                                        </li>
-                                        <li> <a href="#" id="' . $value->id . '" class="dyn_form_del_btn"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                    </ul>
+                        echo '<li> <a href="#" id="' . $value->id . '" class="dyn-form-view-data"> <span class="color-red"> <i class="fa fa-eye clr-blue"></i> </span> View/Edit </a> 
+                                                    </li>
+                                                    <li> <a href="#" id="' . $value->id . '" class="dyn_form_del_btn"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
                                 </div>
-                            </span>
-                        </div>
-                    </div>
 
                     <div class="input-plusbox form-group col-xs-12 p-0 detail">
                         <label class="cus-label color-themecolor"> Details: </label>
-                        <div class="cus-input">
-                            <div class="input-group">
-                                <textarea rows="5" name="edit_su_record_detail[]" disabled class="form-control tick_text txtarea edit_detail_' . $value->id . ' edit_mfc_rcrd " value="" maxlength="1000">' . $value->info . '</textarea>
-                                <span class="input-group-addon cus-inpt-grp-addon color-grey settings tick_show"></span>
+                            <div class="cus-input">
+                                <div class="input-group">
+                                    <textarea rows="5" name="edit_su_record_detail[]" disabled class="form-control tick_text txtarea edit_detail_' . $value->id . ' edit_mfc_rcrd " value="" maxlength="1000">' . $value->info . '</textarea>
+                                    <span class="input-group-addon cus-inpt-grp-addon color-grey settings tick_show"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 ';
         }
 
