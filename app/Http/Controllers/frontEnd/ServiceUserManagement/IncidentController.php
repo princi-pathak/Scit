@@ -124,7 +124,7 @@ class IncidentController extends ServiceUserManagementController
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                                <div class="input-group popovr rightSideInput timelineInput rmpTimeLft">
+                                <div class="input-group popovr timelineInput rmpTimeLft">
                                 <span class="arrow"></span>
                                 <span class="timLineDate">29-07-2025 - 2</span>
                                     <div class="rmpWithPlusInput">
