@@ -189,13 +189,13 @@
                                                                 <ul class="pop-notification" type="none">
                                                                     <li> <a href="#" data-dismiss="modal"
                                                                             aria-hidden="true" class="dyn-form-view-data"
-                                                                            id="{{ $key['id'] }}"> <span> <i
+                                                                              id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span> <i
                                                                                     class="fa fa-eye"></i> </span> View
                                                                         </a> </li>
-                                                                    <li> <a href="#" class="edit_rmp_details"
+                                                                    {{-- <li> <a href="#" class="edit_rmp_details"
                                                                             su_rmp_id="{{ $key['id'] }}"> <span> <i
                                                                                     class="fa fa-pencil"></i> </span> Edit
-                                                                        </a> </li>
+                                                                        </a> </li> --}}
                                                                     <li> <a href="#" class="dyn_form_del_btn"
                                                                             id="{{ $key['id'] }}"> <span
                                                                                 class="color-red"> <i
@@ -216,19 +216,19 @@
                                                     <div class="second" style="background-color: {{ $color }};">
                                                         <span
                                                             class="input-group-addon cus-inpt-grp-addon clr-blue settings"
-                                                            style="background-color: ' . $color . ';">
+                                                            style="background-color: {{ $color }};">
                                                             <i class="fa fa-cog"></i>
                                                             <div class="pop-notifbox">
                                                                 <ul class="pop-notification" type="none">
                                                                     <li> <a href="#" data-dismiss="modal"
                                                                             aria-hidden="true" class="dyn-form-view-data"
-                                                                            id="' . $value->id . '"> <span> <i
+                                                                           id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span> <i
                                                                                     class="fa fa-eye"></i> </span> View
                                                                         </a> </li>
-                                                                    <li> <a href="#" class="edit_rmp_details"
+                                                                    {{-- <li> <a href="#" class="edit_rmp_details"
                                                                             su_rmp_id="' . $value->id . '"> <span> <i
                                                                                     class="fa fa-pencil"></i> </span> Edit
-                                                                        </a> </li>
+                                                                        </a> </li> --}}
                                                                     <li> <a href="#" class="dyn_form_del_btn"
                                                                             id="' . $value->id . '"> <span
                                                                                 class="color-red"> <i

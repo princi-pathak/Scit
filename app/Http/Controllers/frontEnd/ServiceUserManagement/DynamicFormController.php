@@ -204,6 +204,7 @@ class DynamicFormController extends Controller
                                 'care_team_id' => 0,
                                 'title' => $data['title'],
                                 'status' => 1,
+                                'dynamic_form_id' => $form_insert_id,
                                 'details' => $data['details'],
                                 'formdata' => json_encode($data['data']),
                                 'is_deleted' => 0,

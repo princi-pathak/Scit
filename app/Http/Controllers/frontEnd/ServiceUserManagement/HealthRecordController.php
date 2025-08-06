@@ -86,6 +86,7 @@ class HealthRecordController extends ServiceUserManagementController
         //filter    
         $log_book_records = DB::table('su_health_record')
             ->select('su_health_record.*', 'service_user.name as staff_name')
+            ->leftJoin('dynamic_form', 'dynamic_form.id', '=', 'su_health_record.dynamic_form_id')
             ->where('su_health_record.service_user_id', $service_user_id)
             ->where('su_health_record.is_deleted', "0")
             ->where('su_health_record.home_id', $home_id)
@@ -260,7 +261,8 @@ class HealthRecordController extends ServiceUserManagementController
                         'service_user_id' => $data['service_user_id'],
                         'contact_id' => 0,
                         'care_team_id' => 0,
-                        'title'=>$data['title'],
+                        'dynamic_form_id' => $form->id,
+                        'title'=> $data['title'],
                         'status' => 1,
                         'details'=>$data['details'],
                         'is_deleted' => 0,
