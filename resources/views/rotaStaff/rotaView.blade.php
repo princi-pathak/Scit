@@ -1023,7 +1023,8 @@
         // Clear existing records
         const recordContainer = document.querySelector('#add_emp_record');
         if (!recordContainer) return console.error('#add_emp_record not found');
-        $(".shrink_all").html('');
+        // $(".shrink_all").html('');
+        $(".dynamic_data").html('');
         
 
         let total_emp_minutes = 0;
@@ -1063,7 +1064,7 @@
           }
 
           recordContainer.insertAdjacentHTML('beforeend', `
-            <div class="d-flex align-items-center shrink_all">
+            <div class="d-flex align-items-center shrink_all dynamic_data">
               <div class="w_19 py-2" style="overflow-x: scroll; overflow-y: hidden;">${emp.name}</div>
               <div class="w_19 py-2" style="overflow-x: scroll; overflow-y: hidden;">${durationWithoutBreak.hours()} hrs</div>
               <div class="w_19 py-2 ps-2"><span class="d-flex">${loopData}</span></div>

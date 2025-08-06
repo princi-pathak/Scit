@@ -772,12 +772,20 @@ class RotaController extends Controller
         // ->where('rota_assign_employees.emp_id', 'rota_assign_employees.user_id')
         // ->get();
 
+        // $rota = DB::table('rota_assign_employees')
+        // ->join('rota_shift', 'rota_assign_employees.shift_id', '=', 'rota_shift.id')
+        // ->select('rota_shift.id as rota_shift_id','rota_assign_employees.id as assigned_id', 'rota_shift.rota_day_date', 'rota_shift.shift_start_time', 'rota_shift.shift_end_time', 'rota_shift.break','rota_shift.description')
+        // ->where('rota_assign_employees.rota_id', $request->rota_id)
+        // ->where('rota_assign_employees.emp_id', $request->user_id)
+        // ->get();
+        // Ram commit above code because user click on single shift and it's return array so always show the firs row data
         $rota = DB::table('rota_assign_employees')
         ->join('rota_shift', 'rota_assign_employees.shift_id', '=', 'rota_shift.id')
         ->select('rota_shift.id as rota_shift_id','rota_assign_employees.id as assigned_id', 'rota_shift.rota_day_date', 'rota_shift.shift_start_time', 'rota_shift.shift_end_time', 'rota_shift.break','rota_shift.description')
         ->where('rota_assign_employees.rota_id', $request->rota_id)
         ->where('rota_assign_employees.emp_id', $request->user_id)
-        ->get();
+        ->where('rota_shift.id',$request->shift_id)
+        ->first();
 
         echo json_encode($rota); 
     }
