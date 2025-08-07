@@ -19,7 +19,8 @@
                     <header class="panel-heading">
                         <h4 class="head">Add <span id="employee_name_head"></span> for <span id="emp_name_leave"></span>
                             <?php
-                            $name_first =  App\ServiceUser::select('name')->where('home_id', Auth::user()->home_id)->where('is_deleted', 0)->first();
+                            // $name_first =  App\ServiceUser::select('name')->where('home_id', Auth::user()->home_id)->where('is_deleted', 0)->first();
+                            $name_first =  App\User::select('name')->where('home_id', Auth::user()->home_id)->where('is_deleted', 0)->first();
                             echo $name_first->name;
                             ?> </h4>
                     </header>

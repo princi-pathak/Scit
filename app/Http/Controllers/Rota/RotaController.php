@@ -179,7 +179,8 @@ class RotaController extends Controller
       $home_ids = Auth::user()->home_id;
       $ex_home_ids = explode(',', $home_ids);
       $home_id=$ex_home_ids[0];
-      $data = ServiceUser::where('home_id', $home_id)->orderBy('id', 'DESC')->get();
+      // $data = ServiceUser::where('home_id', $home_id)->orderBy('id', 'DESC')->get();
+      $data = User::where('home_id', $home_id)->where('is_deleted', 0)->orderBy('id', 'DESC')->get();
       echo json_encode($data);
     }
 
@@ -260,7 +261,8 @@ class RotaController extends Controller
       $home_ids = Auth::user()->home_id;
       $ex_home_ids = explode(',', $home_ids);
       $home_id=$ex_home_ids[0];
-      $user = ServiceUser::where('home_id', $home_id)->orderBy('name', 'DESC')->where('is_deleted', 0)->get();
+      // $user = ServiceUser::where('home_id', $home_id)->orderBy('name', 'DESC')->where('is_deleted', 0)->get();
+      $user = User::where('home_id', 1)->orderBy('name', 'DESC')->where('is_deleted', 0)->get();
       // dd($user);
       $leave = array();
       $complete_hours = array();
@@ -349,7 +351,7 @@ class RotaController extends Controller
         $userdata = array();
         
         foreach($list_emp as $emp_ids){
-            $userdata[] = ServiceUser::where('id', $emp_ids->emp_id)->get();
+            $userdata[] = User::where('id', $emp_ids->emp_id)->get();
         }
         $data['user_name'] = $userdata;
         echo json_encode($data);
@@ -389,17 +391,26 @@ class RotaController extends Controller
         foreach($leave as $value){
             $leave_name = LeaveType::where('id', $value->leave_type)->pluck('leave_name'); 
             $leave_color = LeaveType::where('id', $value->leave_type)->pluck('color'); 
-            $user_name  =  ServiceUser::where('id', $value->user_id)->pluck('name');
+            // $user_name  =  ServiceUser::where('id', $value->user_id)->pluck('name');
+            $user_name  =  User::where('id', $value->user_id)->pluck('name');
             $arr['title'] =  $user_name;
             $arr['color'] =  $leave_color[0];
             $arr['start'] = $value->start_date;
             $arr['end'] = $value->end_date;
             array_push($recordArray,$arr);
         }
+        // $data['pending_leave'] = DB::table('staff_leaves')
+        //                     ->join('service_user', 'staff_leaves.user_id', '=', 'service_user.id')
+        //                     ->join('leave_type', 'leave_type.id', '=', 'staff_leaves.leave_type')
+        //                     ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','service_user.name','service_user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
+        //                     ->where('staff_leaves.is_deleted', 1 )
+        //                     ->where('staff_leaves.leave_status', 0)
+        //                     ->where('staff_leaves.home_id', $home_id)
+        //                     ->get();
         $data['pending_leave'] = DB::table('staff_leaves')
-                            ->join('service_user', 'staff_leaves.user_id', '=', 'service_user.id')
+                            ->join('user', 'staff_leaves.user_id', '=', 'user.id')
                             ->join('leave_type', 'leave_type.id', '=', 'staff_leaves.leave_type')
-                            ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','service_user.name','service_user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
+                            ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','user.name','user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
                             ->where('staff_leaves.is_deleted', 1 )
                             ->where('staff_leaves.leave_status', 0)
                             ->where('staff_leaves.home_id', $home_id)
@@ -421,7 +432,8 @@ class RotaController extends Controller
         $data['leave'] = $id;
         $data['sidebar'] = '';
         $data['leavetype'] = LeaveType::where('status', 1)->get();
-        $data['users'] = ServiceUser::where('home_id', $home_id)->where('is_deleted',0)->get();
+        // $data['users'] = ServiceUser::where('home_id', $home_id)->where('is_deleted',0)->get();
+        $data['users'] = User::where('home_id', $home_id)->where('is_deleted', 0)->get();
         // dd($data);
         return view('rotaStaff.add_leave', $data);
     }
@@ -575,7 +587,8 @@ class RotaController extends Controller
     function leave_pending(){
         $data['last_leave'] = Staffleaves::latest()->first();
         $last_leave = Staffleaves::latest()->first();
-        $user = ServiceUser::where('id', $last_leave->user_id)->get();
+        // $user = ServiceUser::where('id', $last_leave->user_id)->get();
+        $user = User::where('id', $last_leave->user_id)->get();
         foreach($user as $user_data){
             $user_name = $user_data->name;
         }
@@ -633,8 +646,8 @@ class RotaController extends Controller
       
       //get employee detail
       foreach($employeeArray as $usersValue){
-        // $rota['name'] = User::where('home_id',$home_id)->where('id', $usersValue)->where('is_deleted', 0)->pluck('name');
-        $rota['name'] = ServiceUser::where('home_id',$home_id)->where('id', $usersValue)->where('is_deleted', 0)->pluck('name');
+        $rota['name'] = User::where('id', $usersValue)->where('is_deleted', 0)->pluck('name');
+        // $rota['name'] = ServiceUser::where('home_id',$home_id)->where('id', $usersValue)->where('is_deleted', 0)->pluck('name');
         $rota['user_id'] = $usersValue;
         $rota['rotaId'] = $request->id;
         //shift

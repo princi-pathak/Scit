@@ -280,7 +280,7 @@
                                             // foreach ($list_emp as $emp_ids) {
                                             //     $userdata[] = App\ServiceUser::where('id', $emp_ids->emp_id)->get();
                                             // }
-                                            $user_data = App\ServiceUser::where('id', $list_emp->emp_id)->first();
+                                            $user_data = App\User::where('id', $list_emp->emp_id)->first();
                                         // }
                                         // foreach ($userdata as $user_data) {
                                         ?>
@@ -358,7 +358,7 @@
                                         </li>
                                         <li class="Address-details detail" id="bg1" style="color: rgb(153, 153, 153); background-color: rgb(255, 255, 255);">
                                             <span class="s-font">Assign
-                                                Childs</span>
+                                                Staff</span>
                                         </li>
                                         <li class="Employment-details detail" id="bg2" style="color: rgb(153, 153, 153); background-color: rgb(255, 255, 255);">
                                             <span class="s-font">Summary</span>
