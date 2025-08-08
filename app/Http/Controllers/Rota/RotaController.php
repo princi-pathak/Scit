@@ -188,7 +188,8 @@ class RotaController extends Controller
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id=$ex_home_ids[0];
-        $data['user'] = ServiceUser::where('home_id', $home_id)->get();
+        // $data['user'] = ServiceUser::where('home_id', $home_id)->get();
+        $data['user'] = User::where('home_id', $home_id)->get();
         $data['sidebar'] = 'rota';
         $data['rota'] =   Rota::where('deleted_status', 1)->orderBy('id','DESC')->where('home_id', $home_id)->take(1)->get();
         $rota =   Rota::where('deleted_status', 1)->orderBy('id','DESC')->where('home_id', $home_id)->take(1)->get();
@@ -835,7 +836,8 @@ class RotaController extends Controller
     	if(Auth::check()){
      
         $date = carbon::parse($request->date)->format('Y-m-d');
-
+        $date_plus_one = Carbon::parse('Now +1 days')->format('Y-m-d');
+        // $annual6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
         $data['annual'] =  Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->count();
         $data['sickness'] = Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->count();
         $data['lateness'] =  Staffleaves::where('start_date', '=', $date)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->count();
@@ -1281,21 +1283,37 @@ class RotaController extends Controller
   }
 
   public function pending_request_data(Request $request){
+    // echo json_encode($request->all());die;
     $data['count'] = DB::table('staff_leaves')->where('staff_leaves.is_deleted', 1 )->where('staff_leaves.leave_status', 0)->count();
     if($request->type == 1){
+      // $data['pending_leave'] = DB::table('staff_leaves')
+      // ->join('service_user', 'staff_leaves.user_id', '=', 'service_user.id')
+      // ->join('leave_type', 'leave_type.id', '=', 'staff_leaves.leave_type')
+      // ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','service_user.name','service_user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
+      // ->orderBy('staff_leaves.id', 'DESC')
+      // ->where('staff_leaves.is_deleted', 1 )
+      // ->where('staff_leaves.leave_status', 0)
+      // ->get();
       $data['pending_leave'] = DB::table('staff_leaves')
-      ->join('service_user', 'staff_leaves.user_id', '=', 'service_user.id')
+      ->join('user', 'staff_leaves.user_id', '=', 'user.id')
       ->join('leave_type', 'leave_type.id', '=', 'staff_leaves.leave_type')
-      ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','service_user.name','service_user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
+      ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','user.name','user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
       ->orderBy('staff_leaves.id', 'DESC')
       ->where('staff_leaves.is_deleted', 1 )
       ->where('staff_leaves.leave_status', 0)
       ->get();
     } elseif ($request->type == 2) {
+      // $data['pending_leave'] = DB::table('staff_leaves')
+      // ->join('service_user', 'staff_leaves.user_id', '=', 'service_user.id')
+      // ->join('leave_type', 'leave_type.id', '=', 'staff_leaves.leave_type')
+      // ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','service_user.name','service_user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
+      // ->where('staff_leaves.is_deleted', 1 )
+      // ->where('staff_leaves.leave_status', 0)
+      // ->get();
       $data['pending_leave'] = DB::table('staff_leaves')
-      ->join('service_user', 'staff_leaves.user_id', '=', 'service_user.id')
+      ->join('user', 'staff_leaves.user_id', '=', 'user.id')
       ->join('leave_type', 'leave_type.id', '=', 'staff_leaves.leave_type')
-      ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','service_user.name','service_user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
+      ->select('leave_type.leave_name','leave_type.color','leave_type.id as leavetype_id','user.name','user.id as user_id','staff_leaves.start_date', 'staff_leaves.end_date','staff_leaves.id as staffleave_id', 'staff_leaves.days', 'staff_leaves.notes')
       ->where('staff_leaves.is_deleted', 1 )
       ->where('staff_leaves.leave_status', 0)
       ->get();
