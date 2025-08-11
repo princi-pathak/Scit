@@ -836,8 +836,6 @@ class RotaController extends Controller
     	if(Auth::check()){
      
         $date = carbon::parse($request->date)->format('Y-m-d');
-        $date_plus_one = Carbon::parse('Now +1 days')->format('Y-m-d');
-        // $annual6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
         $data['annual'] =  Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->count();
         $data['sickness'] = Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->count();
         $data['lateness'] =  Staffleaves::where('start_date', '=', $date)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->count();
