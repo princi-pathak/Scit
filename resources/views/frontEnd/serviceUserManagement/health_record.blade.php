@@ -168,7 +168,7 @@
                                                     </div>
 
                                                     <div class="second" style="background-color: {{ $color }};">
-                                                        <p>{{ $key['title'] }}</p>
+                                                        <p>{{ $key['title'] }} - {{ $key['form_title'] }}</p>
                                                         {{-- <span class="timelineIcons">
                                                 <label class="timelinedropdown">
                                                     <div class="dd-button"><i class="fa fa-cog"></i> </div>
@@ -195,12 +195,12 @@
                                                                     {{-- <li> <a href="#" class="edit_rmp_details"
                                                                             su_rmp_id="{{ $key['id'] }}"> <span> <i
                                                                                     class="fa fa-pencil"></i> </span> Edit
-                                                                        </a> </li> --}}
+                                                                        </a> </li>
                                                                     <li> <a href="#" class="dyn_form_del_btn"
                                                                             id="{{ $key['id'] }}"> <span
                                                                                 class="color-red"> <i
                                                                                     class="fa fa-exclamation-circle"></i>
-                                                                            </span> Remove </a> </li>
+                                                                            </span> Remove </a> </li> --}}
                                                                 </ul>
                                                             </div>
                                                         </span>
@@ -228,16 +228,16 @@
                                                                     {{-- <li> <a href="#" class="edit_rmp_details"
                                                                             su_rmp_id="' . $value->id . '"> <span> <i
                                                                                     class="fa fa-pencil"></i> </span> Edit
-                                                                        </a> </li> --}}
+                                                                        </a> </li>
                                                                     <li> <a href="#" class="dyn_form_del_btn"
                                                                             id="' . $value->id . '"> <span
                                                                                 class="color-red"> <i
                                                                                     class="fa fa-exclamation-circle"></i>
-                                                                            </span> Remove </a> </li>
+                                                                            </span> Remove </a> </li> --}}
                                                                 </ul>
                                                             </div>
                                                         </span>
-                                                        <p>{{ $key['title'] }}</p>
+                                                        <p>{{ $key['title'] }} - {{ $key['form_title'] }}</p>
                                                     </div>
                                                     <div class="first">{{ date('d M Y', strtotime($key['created_at'])) }}
                                                     </div>
@@ -247,7 +247,6 @@
                                     @endif
                                 @endforeach
                             </div>
-
                         </div>
                     </div>
                 </div>

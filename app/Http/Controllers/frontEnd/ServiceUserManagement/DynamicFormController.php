@@ -204,8 +204,8 @@ class DynamicFormController extends Controller
                                 'care_team_id' => 0,
                                 'title' => $data['title'],
                                 'status' => 1,
-                                'dynamic_form_id' => $form_insert_id,
                                 'details' => $data['details'],
+                                'dynamic_form_id' => $form_insert_id,
                                 'formdata' => json_encode($data['data']),
                                 'is_deleted' => 0,
                                 'created_at' => date('Y-m-d H:i:s'),
@@ -449,12 +449,16 @@ class DynamicFormController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         $oneMonthAgo = Carbon::now()->subMonth()->format('Y-m-d');
 
-        $dyn_record       = DynamicForm:: //where('location_id',$this_location_id)
-            //whereIn('form_builder_id',$form_bildr_ids)
-            where('home_id', $home_id)
-            ->whereBetween('created_at', [$oneMonthAgo, $today])
-            ->where('is_deleted', '0')
-            ->orderBy('id', 'desc');
+        
+        // $today = date('Y-m-d');
+
+        $dyn_record  = DynamicForm:: //where('location_id',$this_location_id)
+                        //whereIn('form_builder_id',$form_bildr_ids)
+                        where('home_id', $home_id)
+                        ->whereDate('created_at', '=', $today)
+                        // ->whereBetween('created_at', [$oneMonthAgo, $today])
+                        ->where('is_deleted', '0')
+                        ->orderBy('id', 'desc');
 
 
         //    $data =  $dyn_record->get();
@@ -567,7 +571,8 @@ class DynamicFormController extends Controller
 
                                 <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
 
-                                <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '"><span>
+                                <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '">
+                                <span>
                                     <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . ' " maxlength="255"/></span></a>
                                 
                                 <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
@@ -597,7 +602,8 @@ class DynamicFormController extends Controller
                             <div class="input-group popovr timelineInput">
 
                                <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
-                                <a href="#" class="dyn-form-view-data" id="' . $value->id . '"><span>
+                                <a href="#" class="dyn-form-view-data" id="' . $value->id . '">
+                                <span class="inputTextLefttoRight">
                                 <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/></span></a>
                                 <span class="timLineDate">' . $date . ' - ' . $time . '</span>
                                 <span class="arrow"></span>

@@ -154,8 +154,8 @@ class DailyLogsController extends ServiceUserManagementController
                 })
                 ->orderBy('log_book.dynamic_form_id') // Sort for grouping
                 ->orderByRaw("FIELD(log_book.logType, 1, 2, 3)") // Prioritize: daily > weekly > monthly
-                ->orderBy('log_book.date', 'desc')
-                ->whereBetween('log_book.created_at', [$oneMonthAgo, $today_date])
+                ->orderBy('log_book.created_at', 'desc')
+                // ->whereBetween('log_book.created_at', [$oneMonthAgo, $today_date])
                 ->get()
                 ->unique('dynamic_form_id') // ✅ Only one log per dynamic_form_id
                 ->values();
@@ -248,12 +248,12 @@ class DailyLogsController extends ServiceUserManagementController
                     // Log::info("Logs.");
                     // Log::info($log_book_records);
 
-                //      // ✅ Log Type Filter Added
+                     // ✅ Log Type Filter Added
                 // if ($request->has('log_type') && $request->log_type != 'all') {
                 //     $log_book_records = $log_book_records->where('log_book.logType', $request->log_type);
                 // }
 
-
+                
 
                     if (isset($request->category_id) && $request->category_id != 'NaN') {
                         $log_book_records = $log_book_records->where('log_book.category_id', $request->category_id);
