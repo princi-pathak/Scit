@@ -879,7 +879,10 @@ class CalendarEventController extends Controller
 		} else {
 			if(!empty($calendar)){
 				$su_home_id = ServiceUser::where('id',$calendar->service_user_id)->value('home_id');
-		        if($su_home_id != Auth::user()->home_id){
+				$home_ids = Auth::user()->home_id;
+				$ex_home_ids = explode(',', $home_ids);
+				$home_id = $ex_home_ids[0];
+		        if($su_home_id != $home_id){
 		            return redirect('/')->with('error',UNAUTHORIZE_ERR); 
 		        }
 			}

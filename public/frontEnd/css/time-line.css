@@ -521,6 +521,7 @@ span.viewEditIcon {
 .rmpWithPlusInput input{
     height: 40px;
     border: 0;
+    color: #fff;
 }
 
 .rightSideInput.rmpTimeLft, .rightSideInput.rmpTimeRit{
@@ -533,12 +534,9 @@ span.viewEditIcon {
 
 .rmpTimeLft .rmpWithPlusInput input {
     order: 2;
-}
-.rmpTimeRit .rmpWithPlusInput input{
-    /* padding-left: 34px; */
-}
-.rmpTimeLft .rmpWithPlusInput input{
     padding-left: 46px;
+    color: #fff;
+    text-align: right;
 }
 .rmpTimeRit .rmpWithPlusInput .input-plus {
     /* left: 152px;
@@ -577,4 +575,34 @@ span.viewEditIcon {
     transform: rotate(180deg);
 }
 
- 
+ .rightSideDate{
+    padding-left: 120px;
+ }
+ .leftsideDate{
+     padding-right: 120px;
+ }
+.inputTextLefttoRight input{
+    text-align: right;
+}
+
+.leftmsg .pop-notifbox {
+    /* right: 54px; */
+    left: 0;
+    top: 38px;
+}
+.rightmsg .pop-notifbox {
+    right: 0;
+    display: inline-table;
+    left: inherit;
+    top: 38px;
+}
+.leftmsg .pop-notification::after {
+    top: -17px;
+    left: 10px;
+}
+.rightmsg .pop-notification::after{
+    top: -17px;
+}
+.rightmsg  .input-group-addon, .leftmsg  .input-group-addon{
+    color: #fff;
+}

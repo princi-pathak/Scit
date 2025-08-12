@@ -280,7 +280,7 @@
                                             // foreach ($list_emp as $emp_ids) {
                                             //     $userdata[] = App\ServiceUser::where('id', $emp_ids->emp_id)->get();
                                             // }
-                                            $user_data = App\ServiceUser::where('id', $list_emp->emp_id)->first();
+                                            $user_data = App\User::where('id', $list_emp->emp_id)->first();
                                         // }
                                         // foreach ($userdata as $user_data) {
                                         ?>
@@ -358,7 +358,7 @@
                                         </li>
                                         <li class="Address-details detail" id="bg1" style="color: rgb(153, 153, 153); background-color: rgb(255, 255, 255);">
                                             <span class="s-font">Assign
-                                                Childs</span>
+                                                Staff</span>
                                         </li>
                                         <li class="Employment-details detail" id="bg2" style="color: rgb(153, 153, 153); background-color: rgb(255, 255, 255);">
                                             <span class="s-font">Summary</span>
@@ -802,27 +802,27 @@
             },
             success: function(result) {
                 console.log(result);
-                console.log(result[0]['rota_day_date']);
+                console.log(result['rota_day_date']);
                 $('#edit_rota_id').val(rota_id);
                 $('#edit_shift_id').val(shift_id);
                 $('#edit_user_id').val(user_id);
-                $('#assigned_user_id').val(result[0]['assigned_id']);
-                $('#rota_shift_id').val(result[0]['rota_shift_id']);
-                $('#date_of_shift').val(result[0]['rota_day_date']);
-                $('#edit_start_time').val(result[0]['shift_start_time']);
-                $('#edit_end_time').val(result[0]['shift_end_time']);
-                $('#edit_break_time').val(result[0]['break']);
-                $('#description').val(result[0]['description']);
+                $('#assigned_user_id').val(result['assigned_id']);
+                $('#rota_shift_id').val(result['rota_shift_id']);
+                $('#date_of_shift').val(result['rota_day_date']);
+                $('#edit_start_time').val(result['shift_start_time']);
+                $('#edit_end_time').val(result['shift_end_time']);
+                $('#edit_break_time').val(result['break']);
+                $('#description').val(result['description']);
 
-                var start = moment(result[0]['shift_start_time'], "HH:mm:ss").format("HH:mm");
-                var end = moment(result[0]['shift_end_time'], "HH:mm:ss").format("HH:mm");
+                var start = moment(result['shift_start_time'], "HH:mm:ss").format("HH:mm");
+                var end = moment(result['shift_end_time'], "HH:mm:ss").format("HH:mm");
 
-                var startTime = moment(result[0]['shift_start_time']);
-                var endTime = moment(result[0]['shift_end_time']);
+                var startTime = moment(result['shift_start_time']);
+                var endTime = moment(result['shift_end_time']);
                 var duration = moment.duration(endTime.diff(startTime));
                 console.log(duration);
                 var hours_for_edit = parseInt(duration.asHours());
-                document.getElementById('duration_of_shift').innerHTML = hours_for_edit + " hour with " + result[0]['break'] + " mins break";
+                document.getElementById('duration_of_shift').innerHTML = hours_for_edit + " hour with " + result['break'] + " mins break";
             }
         });
         $('#exampleModalShiftModal').modal('show');
