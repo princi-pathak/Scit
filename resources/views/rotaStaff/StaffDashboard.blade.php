@@ -109,7 +109,7 @@
                     </h3>
                   </div>
                   <div class="crical-info-prt"> </div>
-                  <a onclick="change_leaves_data('<?php echo \Carbon\Carbon::parse('Now -3 days')->format('D d M'); ?>')">
+                  <a onclick="change_leaves_data('{{ \Carbon\Carbon::parse('Now -3 days')->format('Y-m-d') }}')">
                     <div class="stock-crical-info">
                       <h2>{{ $total_leave_min_three }} </h2>
                     </div>
@@ -120,7 +120,7 @@
                     <h3>{{ \Carbon\Carbon::parse('Now -2 days')->format('D d M') }}</h3>
                   </div>
                   <div class="crical-info-prt"> </div>
-                  <a onclick="change_leaves_data('<?php echo \Carbon\Carbon::parse('Now -2 days')->format('D d M'); ?>')">
+                  <a onclick="change_leaves_data('{{ \Carbon\Carbon::parse('Now -2 days')->format('Y-m-d') }}')">
                     <div class="stock-crical-info">
                       <h2>{{ $total_leave_min_two }}</h2>
                     </div>
@@ -131,7 +131,7 @@
                     <h3>{{ \Carbon\Carbon::parse('Now -1 days')->format('D d M') }}</h3>
                   </div>
                   <div class="crical-info-prt"> </div>
-                  <a onclick="change_leaves_data('<?php echo \Carbon\Carbon::parse('Now -1 days')->format('D d M'); ?>')">
+                  <a onclick="change_leaves_data('{{ \Carbon\Carbon::parse('Now -1 days')->format('Y-m-d') }}')">
                     <div class="stock-crical-info">
                       <h2>{{ $total_leave_min_one }}</h2>
                     </div>
@@ -142,7 +142,7 @@
                     <h3> {{ \Carbon\Carbon::now()->format('D d M') }}</h3>
                   </div>
                   <div class="crical-info-prt"> </div>
-                  <a onclick="change_leaves_data('<?php echo \Carbon\Carbon::now()->format('D d M'); ?>')">
+                  <a onclick="change_leaves_data('{{ \Carbon\Carbon::Now()->format('Y-m-d') }}')">
                     <div class="stock-crical-info">
                       <h2>{{ $total_leave_current }}</h2>
                     </div>
@@ -153,7 +153,7 @@
                     <h3>{{ \Carbon\Carbon::parse('Now +1 days')->format('D d M') }}</h3>
                   </div>
                   <div class="crical-info-prt"> </div>
-                  <a onclick="change_leaves_data('<?php echo \Carbon\Carbon::parse('Now +1 days')->format('D d M'); ?>')">
+                  <a onclick="change_leaves_data('{{ \Carbon\Carbon::parse('Now +1 days')->format('Y-m-d') }}')">
                     <div class="stock-crical-info">
                       <h2>{{ $total_leave_plus_one }}</h2>
                     </div>
@@ -164,7 +164,7 @@
                     <h3>{{ \Carbon\Carbon::parse('Now +2 days')->format('D d M') }}</h3>
                   </div>
                   <div class="crical-info-prt"> </div>
-                  <a onclick="change_leaves_data('<?php echo \Carbon\Carbon::parse('Now +2 days')->format('D d M'); ?>')">
+                  <a onclick="change_leaves_data('{{ \Carbon\Carbon::parse('Now +2 days')->format('Y-m-d') }}')">
                     <div class="stock-crical-info">
                       <h2>{{ $total_leave_plus_two }}</h2>
                     </div>
@@ -337,7 +337,7 @@
           </div>
           <div class="col-md-4 my-2">
             <div class="card">
-              <a href="{{ url('/recruitment') }}" style="text-decoration: none;">
+              <!-- <a href="{{ url('/recruitment') }}" style="text-decoration: none;"> -->
                 <div class="turbotalent">
                   <div>
                     <h2 class="heading">Recruitment</h2>
@@ -346,7 +346,7 @@
                     <p class="sub-heading">navigator</p>
                   </div>
                 </div>
-              </a>
+              <!-- </a> -->
               <div class="detail">
                 <div class="headline">
                   <p>Manage job vacancies.</p>
@@ -425,7 +425,7 @@
     </div>
   </div>
 </section>
-<!-- @include('rotaStaff.components.footer') -->
+@include('rotaStaff.components.footer')
 
 <script>
   function change_leaves_data(date) {

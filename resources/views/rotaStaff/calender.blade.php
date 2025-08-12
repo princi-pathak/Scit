@@ -159,7 +159,7 @@ th .fc-scrollgrid-sync-inner {
 
         if (words.length >= 2) {
           const lastNameInitial = words[words.length - 1][0];
-          return `${firstNameInitial}${lastNameInitial}`;
+          return `${firstNameInitial}${lastNameInitial || ''}`;
         } else {
           return firstNameInitial;
         }
@@ -272,9 +272,9 @@ th .fc-scrollgrid-sync-inner {
                 console.log(result.pending_leave[i]['name'][0]);
                 var name = result.pending_leave[i]['name'];
                 var myArray = name.split(' ');
-                first = myArray[0].charAt(0);
-                second = myArray[1].charAt(0);
-                fs = first.concat(second);
+                let first = myArray[0]?.charAt(0) || '';
+                let second = myArray[1]?.charAt(0) || '';
+                let fs = first.concat(second);
                 var node = `<div class="col-md-6 my-2">
               <div class="pending_rquest">
                 <div class="parent_div">
