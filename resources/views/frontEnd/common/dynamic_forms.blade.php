@@ -605,7 +605,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             var previous_model_id = $(this).closest('.modal').attr('id');
             var dynamic_form_id = $(this).attr('id');
             var form_id = $(this).closest('form').attr('id');
-
+            console.log("dynamic_form_id2", dynamic_form_id);
             $('.loader').show();
             $('body').addClass('body-overflow');
 

@@ -103,8 +103,8 @@
                                 <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
                                     class="input-group date">
                                     <input id="date_range_input" style="cursor: pointer;" name="daterange"
-                                        {{-- value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}"  --}}
-                                        value="{{ $oneMonthAgo }} - {{ $today }}" 
+                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" 
+                                        {{-- value="{{ $oneMonthAgo }} - {{ $today }}"  --}}
                                         type="text" readonly=""
                                         size="16" class="form-control log-book-datetime">
                                     <span class="input-group-btn add-on datetime-picker2">

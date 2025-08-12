@@ -250,7 +250,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 <form method="" id="dynFormFormData">
                     <div class="row">
                         <div class="mb-3 col-md-12 col-sm-12 col-12 p-0">
-                            <label class="col-md-1 col-sm-1 col-12 pt-2">User: </label>
+                            <label class="col-md-1 col-sm-1 col-12 pt-2">Child: </label>
                             <div class="col-md-11 col-sm-11 col-12">
                                 <div class="select-style">
                                     <select name="service_user_id" class="su_id form-select" disabled="">
