@@ -176,10 +176,11 @@ class RmpController extends ServiceUserManagementController
                     </div>  ';
             } else {
                 echo   '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel delete-row rows ">
+
                         <div class="form-group p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                                <div class="input-group popovr rightSideInput timelineInput rmpTimeLft">
+                                <div class="input-group popovr timelineInput rmpTimeLft">
                                 <span class="arrow"></span>
                                 <span class="timLineDate">29-07-2025 - 2</span>
                                 <div class="rmpWithPlusInput">
@@ -199,7 +200,6 @@ class RmpController extends ServiceUserManagementController
                                     </span>
                                 </div>
                                 </div>
-
                             </div>
                         </div>
 

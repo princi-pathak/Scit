@@ -146,13 +146,13 @@
     @endphp
 
     <!--Core CSS -->
-    <!-- <link href="{{ url('public/frontEnd/daily_logs/bs3/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css"> -->
+    {{-- <link href="{{ url('public/frontEnd/daily_logs/bs3/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"> --}}
+    {{-- <link href="{{ url('public/frontEnd/daily_logs/css/bootstrap-reset.css') }}" rel="stylesheet" type="text/css"> --}}
+    {{-- <link href="{{ url('public/frontEnd/daily_logs/font-awesome/css/font-awesome.css') }}" rel="stylesheet"  type="text/css">  --}}
 
     <!-- Custom styles for this template -->
-    <!-- <link href="{{ url('public/frontEnd/daily_logs/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> -->
+    {{-- <link href="{{ url('public/frontEnd/daily_logs/css/style.css') }}" rel="stylesheet" type="text/css"> --}}
+    {{-- <link href="{{ url('public/frontEnd/daily_logs/css/style-responsive.css') }}" rel="stylesheet" type="text/css"> --}}
 
     <section id="container">
 
@@ -206,11 +206,17 @@
                         <div class="datepicker-sttng date-sttng">
                             <label style="display: none;"> Date: </label>
                             <div>
+                                @php
+                                    $today = \Carbon\Carbon::now()->format('d-m-Y');
+                                    $oneMonthAgo = \Carbon\Carbon::now()->subMonth()->format('d-m-Y');
+                                @endphp
                                 <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
                                     class="input-group date">
-                                    <input id="date_range_input" style="cursor: pointer;" name="daterange"
-                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value=""
-                                        readonly="" size="16" class="form-control log-book-datetime">
+                                    <input id="date_range_input_log" style="cursor: pointer;" name="daterange"
+                                        {{-- value="{{ $oneMonthAgo }} - {{ $today }}" --}}
+                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}"
+                                        type="text" readonly=""
+                                        size="16" class="form-control log-book-datetime">
                                     <span class="input-group-btn add-on datetime-picker2">
                                         <button onclick="showDate()" class="btn btn-primary" type="button"><span
                                                 class="glyphicon glyphicon-calendar"></span></button>
@@ -239,8 +245,8 @@
                         <div class="datepicker-sttng date-sttng">
                             <label style="display: none;"> Log Type: </label>
                             <div>
-                                <select class="form-control" style="min-width:200px;" id="select_log_type"
-                                    name="log_type" required />
+                                <select class="form-control" style="min-width:200px;" id="select_log_type" name="log_type"
+                                    required />
                                 <option selected value="all">Log Type All</option>
                                 <option value="1">Daily Log</option>
                                 <option value="2">Weekly Log</option>
@@ -256,9 +262,9 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                            </div> -->
+                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                </div> -->
                 </div>
 
                 <div class="row">
@@ -308,7 +314,7 @@
                                                                 {{ $key['staff_name'] }}</span>
                                                         </span>
                                                         <span class="viewEditIcon">
-                                                            <a href="#!" class="openModelDailyLog"
+                                                            <a href="#!" class="dyn-form-view-data"
                                                                 id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                     class="fa fa-eye"></i></a>
                                                             {{-- <a href="#!"><i class="fa fa-eye"></i></a> --}}
@@ -388,7 +394,7 @@
                                                                     {{ $key['staff_name'] }}</span>
                                                             </span>
                                                             <span class="viewEditIcon">
-                                                                <a href="#!" class="openModelDailyLog"
+                                                                <a href="#!" class="dyn-form-view-data"
                                                                     id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                         class="fa fa-eye"></i></a>
                                                                 {{-- <a href="#!"><i class="fa fa-edit"></i></a> --}}
@@ -536,7 +542,7 @@
 <!-- Su Daily Log Book Modal End --> --}}
 
     <!-- View/Edit dynamic form -->
-    <div class="modal fade" id="DynFormViewModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="DynFormViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -567,7 +573,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
+                            {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Category: </label>
                                 <div class="col-md-9 col-sm-10 col-xs-12">
                                     <div class="select-style">
@@ -579,7 +585,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Form: </label>
                                 <div class="col-md-11 col-sm-11 col-xs-12">
@@ -631,11 +637,10 @@
 
     <!-- Date Range Initialization -->
     <script>
-        /**
-         * Adding tooltips
-         */
-
         $(document).ready(function() {
+            /**
+             * Adding tooltips
+             */
             $('.timeline-icon').tooltip();
             $('.time_abbre').tooltip();
 
@@ -643,7 +648,6 @@
             $(document).on('click', '.openModelDailyLog', function(e) {
                 e.preventDefault();
 
-                alert("gfdgdf");
                 var previous_model_id = $(this).closest('.modal').attr('id');
                 var dynamic_form_id = $(this).attr('id');
                 var form_id = $(this).closest('form').attr('id');
@@ -671,7 +675,7 @@
                         if (response == true) {
 
                             $('#' + previous_model_id).modal('hide');
-                            var view_modal = '#DynFormViewModal1';
+                            var view_modal = '#DynFormViewModal';
 
                             $(view_modal).modal('show');
                             $(view_modal + ' .mdl-back-btn').attr('pre_modal',
@@ -707,8 +711,12 @@
                 return false;
             });
 
-
         });
+
+        
+  
+        
+
 
         let viewdatawithvalueFormio = () => {
             // console.log($('#dynamic_form_idformio').val());
@@ -743,13 +751,11 @@
             });
         }
 
-
-        document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                $('#DynFormViewModal1').modal('show');
-            });
-        });
-
+        // document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
+        //     btn.addEventListener('click', function() {
+        //         $('#DynFormViewModal').modal('show');
+        //     });
+        // });
 
         /**
          * Sanitizer Function
@@ -760,25 +766,37 @@
                 /'/g,
                 "&#039;");
         }
+    </script>
 
+    {{-- date range picker --}}
+    <script>
+        function showDate() {
+            $('#date_range_input_log').click();
+        }
         $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                opens: 'left',
+            $('#date_range_input_log').daterangepicker({
                 locale: {
-                    format: 'DD/MM/YYYY'
-                }
-            }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                    .format('YYYY-MM-DD'));
+                    format: 'DD-MM-YYYY'
+                },
+                startDate: "{{ $oneMonthAgo }}",
+                endDate: "{{ $today }}"
+            });
+
+            // Get the selected range on apply
+            $('#date_range_input_log').on('apply.daterangepicker', function(ev, picker) {
+                let startDate = picker.startDate.format('YYYY-MM-DD');
+                let endDate = picker.endDate.format('YYYY-MM-DD');
+                console.log("Start Date:", startDate);
+                console.log("End Date:", endDate);
+
+                // Optional: store them in hidden fields if needed
+                $('#start_date').val(startDate);
+                $('#end_date').val(endDate);
             });
         });
     </script>
 
     <script>
-        function showDate() {
-            $('#date_range_input').click();
-        }
-
         function get_dates() {
             let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
             let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
@@ -854,98 +872,8 @@
         $('#add_new_log').click(function() {
             $('#addLogModal').modal('show');
         });
-    </script>
 
-    <!-- Comment Created Duration -->
-    <script>
-        function time_ago(time) {
-            switch (typeof time) {
-                case 'number':
-                    break;
-                case 'string':
-                    time = +new Date(time);
-                    break;
-                case 'object':
-                    if (time.constructor === Date) time = time.getTime();
-                    break;
-                default:
-                    time = +new Date();
-            }
-            var time_formats = [
-                [60, 'seconds', 1], // 60
-                [120, '1 minute ago', '1 minute from now'], // 60*2
-                [3600, 'minutes', 60], // 60*60, 60
-                [7200, '1 hour ago', '1 hour from now'], // 60*60*2
-                [86400, 'hours', 3600], // 60*60*24, 60*60
-                [172800, 'Yesterday', 'Tomorrow'], // 60*60*24*2
-                [604800, 'days', 86400], // 60*60*24*7, 60*60*24
-                [1209600, 'Last week', 'Next week'], // 60*60*24*7*4*2
-                [2419200, 'weeks', 604800], // 60*60*24*7*4, 60*60*24*7
-                [4838400, 'Last month', 'Next month'], // 60*60*24*7*4*2
-                [29030400, 'months', 2419200], // 60*60*24*7*4*12, 60*60*24*7*4
-                [58060800, 'Last year', 'Next year'], // 60*60*24*7*4*12*2
-                [2903040000, 'years', 29030400], // 60*60*24*7*4*12*100, 60*60*24*7*4*12
-                [5806080000, 'Last century', 'Next century'], // 60*60*24*7*4*12*100*2
-                [58060800000, 'centuries', 2903040000] // 60*60*24*7*4*12*100*20, 60*60*24*7*4*12*100
-            ];
-            var seconds = (+new Date() - time) / 1000,
-                token = 'ago',
-                list_choice = 1;
-
-            if (seconds == 0) {
-                return 'Just now'
-            }
-            if (seconds < 0) {
-                seconds = Math.abs(seconds);
-                token = 'from now';
-                list_choice = 2;
-            }
-            var i = 0,
-                format;
-            while (format = time_formats[i++])
-                if (seconds < format[0]) {
-                    if (typeof format[2] == 'string') {
-                        return format[list_choice];
-                    } else {
-                        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
-                    }
-
-                }
-            return time;
-        }
-    </script>
-
-    <!-- Category Filter -->
-    <script>
-        $('#select_category').on('change', function() {
-            let staff_member = $('#staff_member').val();
-            let category_id = $(this).val();
-            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
-            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
-            let service_user = $('#service_user').val();
-            let keyword = $('#keyword').val();
-
-
-            if (category_id && category_id != 'all')
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'category_id': category_id,
-                    'filter': 1,
-                    'keyword': keyword
-                };
-            else
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'filter': 1,
-                    'keyword': keyword
-                };
-
+        function getDailyLogData(data) {
             $.ajax({
                 type: 'get',
                 url: "{{ url('/service/daily-logs') }}",
@@ -1260,6 +1188,103 @@
                     }
                 }
             });
+        }
+    </script>
+
+    <!-- Comment Created Duration -->
+    <script>
+        function time_ago(time) {
+            switch (typeof time) {
+                case 'number':
+                    break;
+                case 'string':
+                    time = +new Date(time);
+                    break;
+                case 'object':
+                    if (time.constructor === Date) time = time.getTime();
+                    break;
+                default:
+                    time = +new Date();
+            }
+            var time_formats = [
+                [60, 'seconds', 1], // 60
+                [120, '1 minute ago', '1 minute from now'], // 60*2
+                [3600, 'minutes', 60], // 60*60, 60
+                [7200, '1 hour ago', '1 hour from now'], // 60*60*2
+                [86400, 'hours', 3600], // 60*60*24, 60*60
+                [172800, 'Yesterday', 'Tomorrow'], // 60*60*24*2
+                [604800, 'days', 86400], // 60*60*24*7, 60*60*24
+                [1209600, 'Last week', 'Next week'], // 60*60*24*7*4*2
+                [2419200, 'weeks', 604800], // 60*60*24*7*4, 60*60*24*7
+                [4838400, 'Last month', 'Next month'], // 60*60*24*7*4*2
+                [29030400, 'months', 2419200], // 60*60*24*7*4*12, 60*60*24*7*4
+                [58060800, 'Last year', 'Next year'], // 60*60*24*7*4*12*2
+                [2903040000, 'years', 29030400], // 60*60*24*7*4*12*100, 60*60*24*7*4*12
+                [5806080000, 'Last century', 'Next century'], // 60*60*24*7*4*12*100*2
+                [58060800000, 'centuries', 2903040000] // 60*60*24*7*4*12*100*20, 60*60*24*7*4*12*100
+            ];
+            var seconds = (+new Date() - time) / 1000,
+                token = 'ago',
+                list_choice = 1;
+
+            if (seconds == 0) {
+                return 'Just now'
+            }
+            if (seconds < 0) {
+                seconds = Math.abs(seconds);
+                token = 'from now';
+                list_choice = 2;
+            }
+            var i = 0,
+                format;
+            while (format = time_formats[i++])
+                if (seconds < format[0]) {
+                    if (typeof format[2] == 'string') {
+                        return format[list_choice];
+                    } else {
+                        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
+                    }
+
+                }
+            return time;
+        }
+    </script>
+
+    <!-- Category Filter -->
+    <script>
+        $('#select_category').on('change', function() {
+            let staff_member = $('#staff_member').val();
+            let category_id = $(this).val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let service_user = $('#service_user').val();
+            let log_type = $('#select_log_type').val();
+            let keyword = $('#keyword').val();
+
+
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'log_type': log_type,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'log_type': log_type,
+                    'keyword': keyword
+                };
+            getDailyLogData(data);
+
             return false;
         });
     </script>
@@ -1272,6 +1297,7 @@
             let end_date = picker.endDate.format('DD-MM-YYYY');
             let service_user = $('#service_user').val();
             let keyword = $('#keyword').val();
+            let log_type = $('#select_log_type').val();
             $(this).val(start_date + ' - ' + end_date);
 
             let today = new Date;
@@ -1295,6 +1321,7 @@
                     'end_date': picker.endDate.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             else
@@ -1304,330 +1331,12 @@
                     'start_date': picker.startDate.format('YYYY-MM-DD'),
                     'end_date': picker.endDate.format('YYYY-MM-DD'),
                     'filter': 1,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
 
-
-            $.ajax({
-                type: 'get',
-                url: "{{ url('/service/daily-logs') }}",
-                data: data,
-                success: function(resp) {
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                            <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                    `));
-                                }
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]
-                                    ['category_color']);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                            <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                    ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                </span>
-                                            </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${escapeHtml(resp.log_book_records[i]['title'] || '')}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp
-                                            .log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                // image sourabh
-                                if (resp.log_book_records[i]['image_name'] != '') {
-                                    $(pannel_body).append($(`
-                                <div class="logimg"><a href="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}"><img class="" src="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}" style="width:100px" /></a></div>
-                                            `));
-                                }
-                                // image
-
-                                $(pannel_body).append($(` <div class="comment-number-bnt-info">
-                        <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                    Comments
-                                    <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments'] || 0}</span>
-                                    </a> </div>
-                                    `));
-                                pannel_body.append(date_field);
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                            <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                    `));
-                                }
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]
-                                    ['category_color']);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                            <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                    ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                </span>
-                                            </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${escapeHtml(resp.log_book_records[i]['title'] || '')}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                details.className = "comment-detail-info-area";
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp
-                                            .log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                // image sourabh
-                                if (resp.log_book_records[i]['image_name'] != '') {
-                                    $(pannel_body).append($(`
-                                <div class="logimg"><a href="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}"><img class="" src="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}" style="width:100px" /></a></div>
-                                            `));
-                                }
-                                // image
-
-                                $(pannel_body).append($(`<div class="comment-number-bnt-info">
-                        <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                    Comments
-                                    <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments'] || 0}</span>
-                                    </a></div>
-                                    `));
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                    }
-                }
-            });
-
+            getDailyLogData(data);
+            return false;
         });
     </script>
 
@@ -1647,6 +1356,7 @@
             let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
             let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
             let keyword = $('#keyword').val();
+            let log_type = $('#select_log_type').val();
             if (category_id && category_id != 'all')
                 data = {
                     'staff_member': staff_member,
@@ -1655,6 +1365,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             else
@@ -1664,330 +1375,16 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
+            getDailyLogData(data);
 
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/daily-logs') }}",
-                data: data,
-                success: function(resp) {
-                    console.log(resp)
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]
-                                    ['category_color']);
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp
-                                            .log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                // image sourabh
-                                if (resp.log_book_records[i]['image_name'] != '') {
-                                    $(pannel_body).append($(`
-                                <div class="logimg"><a href="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}"><img class="" src="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}" style="width:100px" /></a></div>
-                                            `));
-                                }
-                                // image
-                                $(pannel_body).append($(`
-                            <div class="comment-number-bnt-info"> <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments'] || 0}</span>
-                                        </a> </div>
-                                        `));
-
-                                pannel_body.append(date_field);
-
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]
-                                    ['category_color']);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                details.className = "comment-detail-info-area";
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp
-                                            .log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                // image sourabh
-                                if (resp.log_book_records[i]['image_name'] != '') {
-                                    $(pannel_body).append($(`
-                                <div class="logimg"><a href="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}"><img class="" src="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}" style="width:100px" /></a></div>
-                                            `));
-                                }
-                                // image
-
-                                $(pannel_body).append($(`
-                            <div class="comment-number-bnt-info">  <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments'] || 0}</span>
-                                        </a> </div>
-                                        `));
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                        return true;
-                    }
-                }
-            });
             return false;
 
         });
     </script>
+    {{-- Fiter on Staff or serice user --}}
     <script type="text/javascript">
         $('#staff_member').change(function() {
             let staff_member = $('#staff_member').val();
@@ -1996,6 +1393,7 @@
             let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
             let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
             let keyword = $('#keyword').val();
+            let log_type = $('#select_log_type').val();
             if (category_id && category_id != 'all')
                 data = {
                     'staff_member': staff_member,
@@ -2004,6 +1402,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
             else
@@ -2013,333 +1412,53 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
+                    'log_type' : log_type,
+                    'keyword': keyword
+                };
+            getDailyLogData(data);
+            return false;
+        });
+    </script>
+    <!-- sourabh -->
+
+    {{-- FIter on log type like daily weekly and monthly --}}
+    <script type="text/javascript">
+        $('#select_log_type').change(function() {
+            let staff_member = $('#staff_member').val();
+            let service_user = $('#service_user').val();
+            let category_id = $('#select_category').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let keyword = $('#keyword').val();
+            let log_type = $('#select_log_type').val();
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'log_type' : log_type,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
 
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/daily-logs') }}",
-                data: data,
-                success: function(resp) {
-                    console.log(resp)
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]
-                                    ['category_color']);
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ] || 'fa fa-question');
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp
-                                            .log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                // image sourabh
-                                if (resp.log_book_records[i]['image_name'] != '') {
-                                    $(pannel_body).append($(`
-                                <div class="logimg"><a href="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}"><img class="" src="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}" style="width:100px" /></a></div>
-                                            `));
-                                }
-                                // image
-                                $(pannel_body).append($(`
-                            <div class="comment-number-bnt-info">  <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments'] || 0}</span>
-                                        </a></div>
-                                        `));
-
-                                pannel_body.append(date_field);
-
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]
-                                    ['category_color']);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                details.className = "comment-detail-info-area";
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp
-                                            .log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                // image sourabh
-                                if (resp.log_book_records[i]['image_name'] != '') {
-                                    $(pannel_body).append($(`
-                                <div class="logimg"><a href="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}"><img class="" src="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}" style="width:100px" /></a></div>
-                                            `));
-                                }
-                                // image
-
-                                $(pannel_body).append($(`
-                            <div class="comment-number-bnt-info"> <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments'] || 0}</span>
-                                        </a> </div>
-                                        `));
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                        return true;
-                    }
-                }
-            });
+            getDailyLogData(data);
             return false;
 
         });
     </script>
-    <!-- sourabh -->
     <script>
-        //$('#keyword').keypress(function(){
         function myFunctionkey() {
             let staff_member = $('#staff_member').val();
             let service_user = $('#service_user').val();
@@ -2347,7 +1466,7 @@
             let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
             let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
             let keyword = $('#keyword').val();
-            // alert(keyword)
+            let log_type = $('#select_log_type').val();
             if (category_id && category_id != 'all')
                 data = {
                     'staff_member': staff_member,
@@ -2356,6 +1475,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
             else
@@ -2365,332 +1485,14 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
-
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/daily-logs') }}",
-                data: data,
-                success: function(resp) {
-                    console.log(resp)
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("style", "background:" + resp.log_book_records[i][
-                                    'category_color'
-                                ]);
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i]['category_icon']);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                        'created_at'
-                                    ])
-                                    .format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp.log_book_records[
-                                    i][
-                                    'created_at'
-                                ]).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i')
-                                    .format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                            'DD-MM-YYYY H:i')
-                                        .format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i]['details']);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i]['date']);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i][
-                                                'late_time_text'
-                                            ]);
-                                        span_date_field.append(span_date_field_text);
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(resp
-                                            .log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                // image sourabh
-                                if (resp.log_book_records[i]['image_name'] != '') {
-                                    $(pannel_body).append($(`
-                                <div class="logimg"><a href="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}"><img class="" src="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}" style="width:100px" /></a></div>
-                                            `));
-                                }
-                                // image
-                                $(pannel_body).append($(`
-                            <div class="comment-number-bnt-info">  <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments'] || 0}</span>
-                                        </a> </div>
-                                        `));
-
-                                pannel_body.append(date_field);
-
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:" + resp.log_book_records[i][
-                                    'category_color'
-                                ]);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i]['category_icon']);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                        'created_at'
-                                    ])
-                                    .format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp.log_book_records[
-                                    i][
-                                    'created_at'
-                                ]).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i')
-                                    .format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                            'DD-MM-YYYY H:i')
-                                        .format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                details.className = "comment-detail-info-area";
-                                var details_text = document.createTextNode(resp.log_book_records[i]['details']);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i]['date']);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i][
-                                                'late_time_text'
-                                            ]);
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(resp
-                                            .log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                // image sourabh
-                                if (resp.log_book_records[i]['image_name'] != '') {
-                                    $(pannel_body).append($(`
-                                <div class="logimg"><a href="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}"><img class="" src="{{ url('upload/events/') }}/${resp.log_book_records[i]['image_name']}" style="width:100px" /></a></div>
-                                            `));
-                                }
-                                // image
-
-                                $(pannel_body).append($(` <div class="comment-number-bnt-info">
-                            <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments'] || 0}</span>
-                                        </a> </div>
-                                        `));
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                        return true;
-                    }
-                }
-            });
+            getDailyLogData(data);
             return false;
         }
     </script>
     <!-- sourabh -->
-
-
 
     @include('frontEnd.serviceUserManagement.elements.add_log')
     @include('frontEnd.serviceUserManagement.elements.comments')

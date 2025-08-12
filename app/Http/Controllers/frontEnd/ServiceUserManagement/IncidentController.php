@@ -67,7 +67,7 @@ class IncidentController extends ServiceUserManagementController
         shuffle($colors);
         foreach ($incident_form as $key => $value) {
 
-            $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
+            $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
             // if($value->date == '' ) {  
             //     $date = '';
@@ -98,11 +98,11 @@ class IncidentController extends ServiceUserManagementController
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr rightSideInput rmpTimeRit">
-                                 <span class="timLineDate">29-07-2025 - 2</span>
+                                 <span class="timLineDate"> '. $date.'  '.$value->time .'</span>
                                  <span class="arrow"></span>
                                  <div class="rmpWithPlusInput">
                                     <input type="hidden" name="" value="' . $value->id . '" disabled="disabled" class="edit_incident_id_' . $value->id . '">
-                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $title . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>
+                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $form_title . ' ' .$value->title . '" maxlength="255"/>
                             
                                     <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                         <i class="fa fa-cog"></i>
@@ -117,19 +117,19 @@ class IncidentController extends ServiceUserManagementController
                                 </div>
                             </div>
                         </div>
-                    </div>  ';
+                    </div>  '; 
             } else {
                 echo  '
                     <div class="col-md-6 col-sm-6 col-xs-6 cog-panel remove-incident-row">
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                                <div class="input-group popovr rightSideInput timelineInput rmpTimeLft">
+                                <div class="input-group popovr timelineInput rmpTimeLft">
                                 <span class="arrow"></span>
-                                <span class="timLineDate">29-07-2025 - 2</span>
+                                <span class="timLineDate"> '. $date. '  '.$value->time .'</span>
                                     <div class="rmpWithPlusInput">
                                         <input type="hidden" name="" value="' . $value->id . '" disabled="disabled" class="edit_incident_id_' . $value->id . '">
-                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $title . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $form_title . ' ' . $value->title. '" maxlength="255"/>
                                 
                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>

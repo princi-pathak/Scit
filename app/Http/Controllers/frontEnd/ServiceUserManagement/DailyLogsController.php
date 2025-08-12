@@ -128,6 +128,9 @@ class DailyLogsController extends ServiceUserManagementController
 
             $today = date('Y-m-d');
 
+            $today_date = Carbon::now()->format('Y-m-d');
+            $oneMonthAgo = Carbon::now()->subMonth()->format('Y-m-d');
+
             $log_book_records = DB::table('log_book')
                 ->select('log_book.*', 'user.name as staff_name')
                 ->join('user', 'log_book.user_id', '=', 'user.id')
@@ -151,7 +154,8 @@ class DailyLogsController extends ServiceUserManagementController
                 })
                 ->orderBy('log_book.dynamic_form_id') // Sort for grouping
                 ->orderByRaw("FIELD(log_book.logType, 1, 2, 3)") // Prioritize: daily > weekly > monthly
-                ->orderBy('log_book.date', 'desc')
+                ->orderBy('log_book.created_at', 'desc')
+                // ->whereBetween('log_book.created_at', [$oneMonthAgo, $today_date])
                 ->get()
                 ->unique('dynamic_form_id') // ✅ Only one log per dynamic_form_id
                 ->values();
@@ -209,6 +213,8 @@ class DailyLogsController extends ServiceUserManagementController
 
             if ($request->filter == '1') {
                 if (!empty($data)) {
+
+                    
                     //sourabh staff member and Child filter
                     if ($request->service_user == '' && $request->staff_member == '') {
                         $service_userss = ServiceUser::select('id')
@@ -223,15 +229,11 @@ class DailyLogsController extends ServiceUserManagementController
                             // ->where('su_log_book.user_id',$user_id)
                             ->where('su_log_book.service_user_id', $request->service_user)->get()->toArray();
                     } else if ($request->service_user == '' && $request->staff_member != '') {
-
-
-
                         $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')
                             ->where('su_log_book.user_id', $request->staff_member)->get()->toArray();
                     } else if ($request->service_user != '' && $request->staff_member != '') {
                         $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')->where('su_log_book.user_id', $request->staff_member)->where('su_log_book.service_user_id', $request->service_user)->get()->toArray();
                     }
-
 
                     $log_book_records = DB::table('log_book')
                         ->select('log_book.*', 'user.name as staff_name', 'category.color as category_color')
@@ -241,21 +243,23 @@ class DailyLogsController extends ServiceUserManagementController
                         ->join('category', 'log_book.category_id', '=', 'category.id')
                         ->where('log_book.home_id', $home_id)
                         ->orderBy('date', 'desc');
-                    //print_r($log_book_records);
-                    //die;
-                    // $log_book_records = LogBook::select('log_book.*')
-                    //                         ->orderBy('date','desc');
-
+                    //print_r($log_book_records); die;
+                    // $log_book_records = LogBook::select('log_book.*')->orderBy('date','desc');
                     // Log::info("Logs.");
                     // Log::info($log_book_records);
+
+                     // ✅ Log Type Filter Added
+                // if ($request->has('log_type') && $request->log_type != 'all') {
+                //     $log_book_records = $log_book_records->where('log_book.logType', $request->log_type);
+                // }
+
+                
 
                     if (isset($request->category_id) && $request->category_id != 'NaN') {
                         $log_book_records = $log_book_records->where('log_book.category_id', $request->category_id);
                         // Log::info("Category Logs.");
                         // Log::info($log_book_records->get()->toArray());
                     }
-
-
                     if (isset($request->start_date) && $request->start_date != 'null') {
                         $log_book_records = $log_book_records->whereDate('log_book.date', '>=', $request->start_date);
                         // Log::info("Start Date Logs.");
@@ -272,7 +276,6 @@ class DailyLogsController extends ServiceUserManagementController
                         // Log::info("End Date Logs.");
                         // Log::info($log_book_records->get()->toArray());
                     }
-
 
                     // $log_book_records = $log_book_records->get()->toArray();
                     $log_book_records = $log_book_records->get();
@@ -293,9 +296,7 @@ class DailyLogsController extends ServiceUserManagementController
                             }
                         }
                     }
-
                     $categorys = CategoryFrontEnd::select('category.*')->orderBy('name', 'asc')->get()->toArray();
-
                     return compact('log_book_records', 'categorys');
                 }
             }

@@ -83,12 +83,14 @@ class MFCController extends ServiceUserManagementController
             $pre_date = date('y-m-d', strtotime($mfc_records['0']->created_at));
         }
 
-        //echo '<pre>'; print_r($mfc_records); die;
+        // echo '<pre>'; print_r($mfc_records); die;
 
+        $loop = 1;
+         $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
+        shuffle($colors);   
         foreach ($mfc_records as $key => $value) {
 
             $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
-
 
             $first = 0;
 
@@ -114,65 +116,139 @@ class MFCController extends ServiceUserManagementController
 
             $mfc_rcrd_date = date('Y-m-d', strtotime($value->created_at));
 
-            if ($mfc_rcrd_date != $pre_date) {
-                $pre_date = $mfc_rcrd_date;
+            $color = $colors[$key % count($colors)];
+            if ($loop % 2 == 0) {
+
+                if ($mfc_rcrd_date != $pre_date) {
+                    $pre_date = $mfc_rcrd_date;
+
+                    echo '
+                    </div>
+                        <div class="row daily-rcd-head rightSideDate">
+                            <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 cog-panel p-0 r-p-15 record_row ">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <a  class="date-tab">                                    
+                                        <span class="pull-left">
+                                        AAAA
+                                        ' . date('d F Y', strtotime($mfc_rcrd_date)) . '
+                                        </span>
+                                    <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                </div>                            
+                            </div>
+                        </div>
+                    <div class="daily-rcd-content">';
+                } else {
+                }
 
                 echo '
-                </div>
-                    <div class="daily-rcd-head">
-                        <div class="col-md-6 col-sm-6 col-xs-6 cog-panel p-0 r-p-15 record_row ">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <a  class="date-tab">
-                                    <span class="pull-left">
-                                    ' . date('d F Y', strtotime($mfc_rcrd_date)) . '
-                                    </span>
-                                <i class="fa fa-angle-right pull-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                <div class="daily-rcd-content">';
-            } else {
-            }
+                        <div class="col-md-7 col-sm-7 col-xs-7 cog-panel col-md-offset-2 p-0 r-p-15 record_row rows">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 r-p-0">
+                                <div class="input-group popovr rightSideInput rmpTimeRit">
+                                   <span class="timLineDate">29-07-2025 - 2</span>
+                                   <div class="rmpWithPlusInput">
+                                    <input type="text" name="edit_su_record_desc[]" style="background-color: ' . $color . ';" class="form-control cus-control edit_record_desc_' . $value->id . ' edit_mfc_rcrd"  disabled  value="' . ucfirst($title) . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>';
 
-            echo '
-                <div class="col-md-6 col-sm-6 col-xs-6 cog-panel p-0 r-p-15 record_row rows">
-                    
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 r-p-0">
-                        <div class="input-group popovr">
-                            <input type="text" name="edit_su_record_desc[]" class="form-control cus-control edit_record_desc_' . $value->id . ' edit_mfc_rcrd"  disabled  value="' . ucfirst($title) . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>';
-
-            if (!empty($value->info)) {
-                echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';
-            }
-            echo '<input type="hidden" name="edit_su_record_id[]" value="' . $value->id . '" disabled="disabled" class="edit_record_id_' . $value->id . '" />
-                                <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
-                                <i class="fa fa-cog"></i>
-                                <div class="pop-notifbox">
-                                    <ul class="pop-notification" type="none">';
-            /*if(isset($add_new_case)) { 
-                                        echo '<li> <a href="#" su_mfc_id="'.$value->id.'" class="edit_record_btn"> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li>';
-                                        }*/
-            echo '<li> <a href="#" id="' . $value->id . '" class="dyn-form-view-data"> <span class="color-red"> <i class="fa fa-eye clr-blue"></i> </span> View/Edit </a> 
-                                        </li>
-                                        <li> <a href="#" id="' . $value->id . '" class="dyn_form_del_btn"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                    </ul>
+                if (!empty($value->info)) {
+                    echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';
+                }
+                echo '<input type="hidden" name="edit_su_record_id[]" value="' . $value->id . '" disabled="disabled" class="edit_record_id_' . $value->id . '" />
+                                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
+                                                    <i class="fa fa-cog"></i>
+                                                    <div class="pop-notifbox">
+                                                        <ul class="pop-notification" type="none">';
+                /*if(isset($add_new_case)) { 
+                                                echo '<li> <a href="#" su_mfc_id="'.$value->id.'" class="edit_record_btn"> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li>';
+                                                }*/
+                echo '<li> <a href="#" id="' . $value->id . '" class="dyn-form-view-data"> <span class="color-red"> <i class="fa fa-eye clr-blue"></i> </span> View/Edit </a> 
+                                                            </li>
+                                                            <li> <a href="#" id="' . $value->id . '" class="dyn_form_del_btn"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                    </div>
                                 </div>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="input-plusbox form-group col-xs-12 p-0 detail">
-                        <label class="cus-label color-themecolor"> Details: </label>
-                        <div class="cus-input">
-                            <div class="input-group">
-                                <textarea rows="5" name="edit_su_record_detail[]" disabled class="form-control tick_text txtarea edit_detail_' . $value->id . ' edit_mfc_rcrd " value="" maxlength="1000">' . $value->info . '</textarea>
-                                <span class="input-group-addon cus-inpt-grp-addon color-grey settings tick_show"></span>
                             </div>
+
+                                <div class="input-plusbox form-group col-xs-12 p-0 detail">
+                                    <label class="cus-label color-themecolor"> Details: </label>
+                                    <div class="cus-input">
+                                        <div class="input-group">
+                                            <textarea rows="5" name="edit_su_record_detail[]" disabled class="form-control tick_text txtarea edit_detail_' . $value->id . ' edit_mfc_rcrd " value="" maxlength="1000">' . $value->info . '</textarea>
+                                            <span class="input-group-addon cus-inpt-grp-addon color-grey settings tick_show"></span>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
-                    </div>
-                </div>
-                ';
+                    ';
+            } else {
+
+
+                if ($mfc_rcrd_date != $pre_date) {
+                    $pre_date = $mfc_rcrd_date;
+
+                    echo '
+                        </div>
+                            <div class="row daily-rcd-head leftsideDate">
+                                <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 cog-panel p-0 r-p-15 record_row ">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <a  class="date-tab">
+                                            <span class="pull-left">
+                                            ' . date('d F Y', strtotime($mfc_rcrd_date)) . '
+                                            </span>
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                        </a>
+                                    </div>                            
+                                </div>
+                            </div>
+                        <div class="daily-rcd-content">';
+                } else {
+                }
+
+                echo '
+                        <div class="col-md-7 col-sm-7 col-xs-7 cog-panel col-md-offset-2 p-0 r-p-15 record_row rows">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 r-p-0">
+                                <div class="input-group popovr timelineInput rmpTimeLft">
+
+                                <span class="timLineDate">29-07-2025 - 2</span>
+                                <div class="rmpWithPlusInput">
+                                    <input type="text" name="edit_su_record_desc[]" style="background-color: ' . $color . ';" class="form-control cus-control edit_record_desc_' . $value->id . ' edit_mfc_rcrd"  disabled  value="' . ucfirst($title) . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>';
+
+                if (!empty($value->info)) {
+                    echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';
+                }
+                echo '<input type="hidden" name="edit_su_record_id[]" value="' . $value->id . '" disabled="disabled" class="edit_record_id_' . $value->id . '" />
+                                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
+                                                    <i class="fa fa-cog"></i>
+                                                    <div class="pop-notifbox">
+                                                        <ul class="pop-notification" type="none">';
+                /*if(isset($add_new_case)) { 
+                                                echo '<li> <a href="#" su_mfc_id="'.$value->id.'" class="edit_record_btn"> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li>';
+                                                }*/
+                echo '<li> <a href="#" id="' . $value->id . '" class="dyn-form-view-data"> <span class="color-red"> <i class="fa fa-eye clr-blue"></i> </span> View/Edit </a> 
+                                                            </li>
+                                                            <li> <a href="#" id="' . $value->id . '" class="dyn_form_del_btn"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-plusbox form-group col-xs-12 p-0 detail">
+                                    <label class="cus-label color-themecolor"> Details: </label>
+                                    <div class="cus-input">
+                                        <div class="input-group">
+                                            <textarea rows="5" name="edit_su_record_detail[]" disabled class="form-control tick_text txtarea edit_detail_' . $value->id . ' edit_mfc_rcrd " value="" maxlength="1000">' . $value->info . '</textarea>
+                                            <span class="input-group-addon cus-inpt-grp-addon color-grey settings tick_show"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ';
+            }
+
+            $loop++;
         }
 
         echo $pagination;

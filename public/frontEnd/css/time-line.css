@@ -426,15 +426,24 @@ input#date_range_input {
 }
 
 .timelineInput .pop-notification::after {
-    content: "\f0d9";
+    content: "\f0d7";
     font-family: 'fontawesome';
-    right: -8px;
+    left: 10px;
+    right: auto;
     position: absolute;
-    top: 2px;
+    top: -22px;
     color: #fff;
     transform: rotate(180deg);
 }
-
+.pop-notification::after {
+    content: "\f0d8";
+    font-family: fontawesome;
+    right: 12px;
+    left: auto;
+    position: absolute;
+    top: -24px;
+    color: #fff;
+}
 
 /*  nEW CSS */
 
@@ -512,6 +521,7 @@ span.viewEditIcon {
 .rmpWithPlusInput input{
     height: 40px;
     border: 0;
+    color: #fff;
 }
 
 .rightSideInput.rmpTimeLft, .rightSideInput.rmpTimeRit{
@@ -524,12 +534,9 @@ span.viewEditIcon {
 
 .rmpTimeLft .rmpWithPlusInput input {
     order: 2;
-}
-.rmpTimeRit .rmpWithPlusInput input{
-    /* padding-left: 34px; */
-}
-.rmpTimeLft .rmpWithPlusInput input{
     padding-left: 46px;
+    color: #fff;
+    text-align: right;
 }
 .rmpTimeRit .rmpWithPlusInput .input-plus {
     /* left: 152px;
@@ -541,7 +548,12 @@ span.viewEditIcon {
 .rmpTimeLft .rmpWithPlusInput .input-plus{
     left: 206px;
     top: 6px;
- 
+    
+}
+.input-plus{
+     color: #fff;
+    font-size: 20px;
+    line-height: 32px;
 }
 .input-plusbox.form-group.col-xs-12.p-0.detail{
      position: absolute;
@@ -563,4 +575,34 @@ span.viewEditIcon {
     transform: rotate(180deg);
 }
 
- 
+ .rightSideDate{
+    padding-left: 120px;
+ }
+ .leftsideDate{
+     padding-right: 120px;
+ }
+.inputTextLefttoRight input{
+    text-align: right;
+}
+
+.leftmsg .pop-notifbox {
+    /* right: 54px; */
+    left: 0;
+    top: 38px;
+}
+.rightmsg .pop-notifbox {
+    right: 0;
+    display: inline-table;
+    left: inherit;
+    top: 38px;
+}
+.leftmsg .pop-notification::after {
+    top: -17px;
+    left: 10px;
+}
+.rightmsg .pop-notification::after{
+    top: -17px;
+}
+.rightmsg  .input-group-addon, .leftmsg  .input-group-addon{
+    color: #fff;
+}
