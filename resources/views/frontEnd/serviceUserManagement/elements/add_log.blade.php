@@ -181,6 +181,8 @@
     $('.submit-log').click(function() {
 
         var category = $('select[name=\'category\']').val();
+
+
         var log_title = $('input[name=\'log_title\']').val();
         var log_date = $('input[name=\'log_date\']').val();
         var log_image = $('input[name=\'log_image\']').val();
@@ -246,7 +248,7 @@
             //dataType : 'json',
 
             success: function(resp) {
-                alert(resp);
+                // alert(resp);
                 console.log("resp", resp)
                 if (isAuthenticated(resp) == false) {
                     return false;

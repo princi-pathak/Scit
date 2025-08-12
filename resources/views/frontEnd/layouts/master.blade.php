@@ -13,6 +13,8 @@
   <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>
   <!-- <link rel="shortcut icon" href="{{ asset('public/images/favicon.png') }}"> -->
 
+  
+
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/images/favicon.ico') }}">
 
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"> -->

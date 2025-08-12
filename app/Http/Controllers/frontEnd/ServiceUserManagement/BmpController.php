@@ -160,9 +160,9 @@ class BmpController extends ServiceUserManagementController
                                             <i class="fa fa-cog"></i>
                                             <div class="pop-notifbox">
                                                 <ul class="pop-notification" type="none">
-                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View</a> </li>
-                                                    <li> <a href="#" class="edit_bmp_details" su_bmp_id=' . $value->id . '> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li> 
-                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->dynamic_form_id . '"> <span> <i class="fa fa-eye"></i> </span> View</a> </li>
+                                                    <li> <a href="#" class="edit_bmp_details" su_bmp_id=' . $value->dynamic_form_id . '> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li> 
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->dynamic_form_id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
                                                 </ul>
                                             </div>
                                         </span>
@@ -204,9 +204,9 @@ class BmpController extends ServiceUserManagementController
                                             <i class="fa fa-cog"></i>
                                             <div class="pop-notifbox">
                                                 <ul class="pop-notification" type="none">
-                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View</a> </li>
-                                                    <li> <a href="#" class="edit_bmp_details" su_bmp_id=' . $value->id . '> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li> 
-                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->dynamic_form_id . '"> <span> <i class="fa fa-eye"></i> </span> View</a> </li>
+                                                    <li> <a href="#" class="edit_bmp_details" su_bmp_id=' . $value->dynamic_form_id . '> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li> 
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->dynamic_form_id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
                                                 </ul>
                                             </div>
                                         </span>

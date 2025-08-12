@@ -12,7 +12,7 @@
                     <div class="pull-right">
                         <div class="filter_buttons"
                             style="text-align:right;padding-right:150px;display:inline-block; padding-bottom: 10px;">
-                            <a data-toggle="modal" href="#rmpModal" class="btn btn-primary col-6" id=''>Add New</a>
+                            <a data-toggle="modal" href="#IncidentAddModal" class="btn btn-primary col-6" id=''>Add New</a>
                         </div>
                     </div>
                 </div>
@@ -103,11 +103,11 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
-                        <button class="btn label-default add-new-btn active" type="button"> Add New </button>
-                        <button class="btn label-default logged-btn active logged-incident-btn" type="button"> Logged Reports </button>
-                        <button class="btn label-default search-btn active" type="button"> Search </button>
-                    </div>
+                    <!--<div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">-->
+                    <!--    <button class="btn label-default add-new-btn active" id="IncidentReptView" type="button"> Add New </button>-->
+                    <!--    <button class="btn label-default logged-btn active logged-incident-btn" type="button"> Logged Reports </button>-->
+                    <!--    <button class="btn label-default search-btn active" type="button"> Search </button>-->
+                    <!--</div>-->
 
                     <!-- Add new Details -->
                     <div class="add-new-box risk-tabs custm-tabs">
