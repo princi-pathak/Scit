@@ -596,9 +596,11 @@ class DynamicFormController extends Controller
                             <div class="input-group popovr timelineInput">
 
                                <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
-                                <a href="#" class="dyn-form-view-data" id="' . $value->id . '"><span>
+                                <a href="#" class="dyn-form-view-data" id="' . $value->id . '">
+                                <span class="inputTextLefttoRight">
                                 <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/></span></a>
-                                <span class="timLineDate">' . $date . ' - ' . $time . '</span>
+                                <span class="timLineDate">' . $date . ' - ' . $time . '
+                                </span>
                                 <span class="arrow"></span>
 
                                 <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">

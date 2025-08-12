@@ -176,30 +176,29 @@ class RmpController extends ServiceUserManagementController
                     </div>  ';
             } else {
                 echo   '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel delete-row rows ">
-                        <div class="form-group p-0 add-rcrd">
-                            <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
-                            <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                                <div class="input-group popovr rightSideInput timelineInput rmpTimeLft">
-                                <span class="arrow"></span>
-                                <span class="timLineDate">29-07-2025 - 2</span>
-                                <div class="rmpWithPlusInput">
-                                <input type="hidden" name="su_rmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_rmp_id_' . $value->id . '">
-                                <input type="text" class="form-control" style="background-color: ' . $color . ';" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' .
-                    $time . ' ' . $end_brct . '" maxlength="255"/>
-                                <div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>   
-                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
-                                        <i class="fa fa-cog"></i>
-                                        <div class="pop-notifbox">
-                                            <ul class="pop-notification" type="none">
-                                                <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '" > <span> <i class="fa fa-eye"></i> </span> View </a> </li>
-                                                <li> <a href="#" class="edit_rmp_details" su_rmp_id="' . $value->id . '"> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li>
-                                                <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                            </ul>
-                                        </div>
-                                    </span>
+                            <div class="form-group p-0 add-rcrd">
+                                <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
+                                <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
+                                    <div class="input-group popovr timelineInput rmpTimeLft">
+                                    <span class="arrow"></span>
+                                    <span class="timLineDate">29-07-2025 - 2</span>
+                                    <div class="rmpWithPlusInput">
+                                    <input type="hidden" name="su_rmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_rmp_id_' . $value->id . '">
+                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' .
+                        $time . ' ' . $end_brct . '" maxlength="255"/>
+                                    <div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>   
+                                        <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
+                                            <i class="fa fa-cog"></i>
+                                            <div class="pop-notifbox">
+                                                <ul class="pop-notification" type="none">
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '" > <span> <i class="fa fa-eye"></i> </span> View </a> </li>
+                                                    <li> <a href="#" class="edit_rmp_details" su_rmp_id="' . $value->id . '"> <span> <i class="fa fa-pencil"></i> </span> Edit </a> </li>
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
                                 </div>
-                                </div>
-
                             </div>
                         </div>
 

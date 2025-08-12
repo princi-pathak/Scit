@@ -4721,7 +4721,7 @@ span.customSelect.changed {
 
 .msg-time-chat {
     overflow: hidden;
-    padding: 8px 0;
+    padding: 0px 0;
 }
 
 .msg-in a,

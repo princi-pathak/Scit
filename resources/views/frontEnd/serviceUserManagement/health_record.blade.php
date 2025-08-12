@@ -170,18 +170,18 @@
                                                     <div class="second" style="background-color: {{ $color }};">
                                                         <p>{{ $key['title'] }}</p>
                                                         {{-- <span class="timelineIcons">
-                                                <label class="timelinedropdown">
-                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
-                                                    <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
-                                                        <li><a href="#viewDaily_log" id="open_form_view" data-toggle="modal"> <i class="fa fa-eye" data-id="{{ $key['id'] }}"></i> View</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-pencil"></i> Edit </a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>
-                                                </label>
-                                            </span> --}}
+                                                            <label class="timelinedropdown">
+                                                                <div class="dd-button"><i class="fa fa-cog"></i> </div>
+                                                                <input type="checkbox" class="dd-input">
+                                                                <ul class="dd-menu">
+                                                                    <li><a href="#viewDaily_log" id="open_form_view" data-toggle="modal"> <i class="fa fa-eye" data-id="{{ $key['id'] }}"></i> View</a></li>
+                                                                    <li><a href="#!"> <i class="fa fa-pencil"></i> Edit </a></li>
+                                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
+                                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
+                                                                    <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
+                                                                </ul>
+                                                            </label>
+                                                        </span> --}}
                                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings"
                                                             style="background-color: {{ $color }};">
                                                             <i class="fa fa-cog"></i>
