@@ -4,7 +4,21 @@
 
 
 <link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
-
+<style>
+.record_row .input-group{
+    display: flex;
+}
+    .record_row .input-group input{
+        width: 50%;
+            margin: 3px 0;
+    }
+    .accodionOpen{
+        background: #a5a5a5;
+        padding: 6px 20px;
+        width: 100%;
+        display: block;
+    }
+</style>
 <section id="container">
     <!--main content start-->
     <section id="main-content">
