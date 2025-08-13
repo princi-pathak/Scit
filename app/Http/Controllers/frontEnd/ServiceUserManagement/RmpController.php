@@ -5,9 +5,10 @@ namespace App\Http\Controllers\frontEnd\ServiceUserManagement;
 use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
 use App\ServiceUser, App\FormBuilder, App\ServiceUserRmp, App\Notification, App\DynamicFormBuilder, App\DynamicForm, App\DynamicFormLocation, App\HomeLabel, App\CareTeamJobTitle, App\ServiceUserCareCenter, App\ServiceUserContacts, App\SocialApp, App\ServiceUserSocialApp, App\User;
-use DB, Auth;
+use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
+use Carbon\Carbon;
 
 class RmpController extends ServiceUserManagementController
 {
@@ -22,7 +23,6 @@ class RmpController extends ServiceUserManagementController
         if ($home_id != $su_home_id) {
             die;
         }
-
         // $home_id   = Auth::user()->home_id;
 
         //in search case editing start for plan,details and review
@@ -56,12 +56,15 @@ class RmpController extends ServiceUserManagementController
         //                             ->orderBy('id','desc')
         //                             ->get();
 
+        $today = Carbon::now()->format('Y-m-d');
+
         $this_location_id = DynamicFormLocation::getLocationIdByTag('rmp');
         $rmp_title        = DynamicForm::where('location_id', $this_location_id)
             //whereIn('form_builder_id',$form_bildr_ids)
             ->where('service_user_id', $service_user_id)
             ->where('is_deleted', '0')
-            ->orderBy('id', 'desc');
+            ->orderBy('id', 'desc')
+            ->whereDate('created_at', '=', $today);
 
         // dd($rmp_title);
 
@@ -91,8 +94,8 @@ class RmpController extends ServiceUserManagementController
             $tick_btn_class = "sbt-edit-rmp-record submit-edit-logged-record";
         }
         $loop = 1;
-             $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
-        shuffle($colors);      
+        $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
+        shuffle($colors);
 
         foreach ($rmp_form_title as $key => $value) {
 
@@ -102,46 +105,32 @@ class RmpController extends ServiceUserManagementController
             //$plan_check    = (!empty($value->plan)) ? '<i class="fa fa-check"></i>' : '';
             //$review_check  = (!empty($value->review)) ? '<i class ="fa fa-check"></i>' : '';
 
-            // if($value->date == '' ) {  
-            //     $date = '';
-            // }  else {
-            //     $date = date('d-m-Y', strtotime($value->date));
+            // if ((!empty($date)) || (!empty($value->time))) {
+            //     $start_brct = '(';
+            //     $end_brct = ')';
+            // } else {
+            //     $start_brct = '';
+            //     $end_brct = '';
             // }
 
-            if ($value->created_at == '') {
-                $date = '';
-            } else {
-                $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
-            }
+            $date = !empty($value->date) ? date('d-m-Y', strtotime($value->date)) : '';
+            $time = !empty($value->time) ? $value->time : '';
 
-            if ((!empty($date)) || (!empty($value->time))) {
-                $start_brct = '(';
-                $end_brct = ')';
-            } else {
-                $start_brct = '';
-                $end_brct = '';
-            }
+            $datetime = ($date || $time) ? trim($date . ' : ' . $time, ' :') : '00-00-0000 : 00-00';
 
-            if (!empty($value->time)) {
-                $time = $value->time;
-            } else {
-                $time = '00:00';
-            }
-            
-                 $color = $colors[$key % count($colors)];
+            $color = $colors[$key % count($colors)];
             if ($loop % 2 == 0) {
-                
+
                 echo   '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel delete-row rows rmpTimelineright">
                         <div class="form-group p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr rightSideInput rmpTimeRit">
-                                <span class="timLineDate">29-07-2025 - 2</span>
+                                <span class="timLineDate">' . $datetime . '</span>
                                 <span class="arrow"></span>
                                 <div class="rmpWithPlusInput">
                                     <input type="hidden" name="su_rmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_rmp_id_' . $value->id . '">
-                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' .
-                        $time . ' ' . $end_brct . '" maxlength="255"/>
+                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
                                     <div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>   
                                         <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>
@@ -176,17 +165,15 @@ class RmpController extends ServiceUserManagementController
                     </div>  ';
             } else {
                 echo   '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel delete-row rows ">
-
                         <div class="form-group p-0 add-rcrd">
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr timelineInput rmpTimeLft">
                                 <span class="arrow"></span>
-                                <span class="timLineDate">29-07-2025 - 2</span>
+                                <span class="timLineDate">' . $datetime . '</span>
                                 <div class="rmpWithPlusInput">
                                 <input type="hidden" name="su_rmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_rmp_id_' . $value->id . '">
-                                <input type="text" class="form-control" style="background-color: ' . $color . ';" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . ' ' . $start_brct . $date . ' : ' .
-                    $time . ' ' . $end_brct . '" maxlength="255"/>
+                                <input type="text" class="form-control" style="background-color: ' . $color . ';" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
                                 <div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>   
                                     <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                         <i class="fa fa-cog"></i>
@@ -200,6 +187,7 @@ class RmpController extends ServiceUserManagementController
                                     </span>
                                 </div>
                                 </div>
+
                             </div>
                         </div>
 
