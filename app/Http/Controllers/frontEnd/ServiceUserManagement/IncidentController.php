@@ -6,14 +6,15 @@ use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
 use App\ServiceUser, App\ServiceUserIncidentReport, App\Notification,  App\DynamicFormBuilder, App\DynamicForm, App\DynamicFormLocation, App\HomeLabel, App\CareTeamJobTitle, App\ServiceUserCareCenter, App\ServiceUserContacts, App\SocialApp, App\ServiceUserSocialApp, App\User;
 use DB, Session, Auth;
+use Carbon\Carbon;
 
 class IncidentController extends ServiceUserManagementController
 {
 
     public function index($service_user_id = null)
     {
-
         $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
+        // $home_id = Auth::user()->home_id;
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id = $ex_home_ids[0];
@@ -21,14 +22,17 @@ class IncidentController extends ServiceUserManagementController
             die;
         }
 
-        // $home_id = Auth::user()->home_id;
+        $today = Carbon::now()->format('Y-m-d');
 
         $this_location_id = DynamicFormLocation::getLocationIdByTag('incident_report');
         $incident_record  = DynamicForm::where('location_id', $this_location_id)
-            //whereIn('form_builder_id',$form_bildr_ids)
-            ->where('service_user_id', $service_user_id)
-            ->where('is_deleted', '0')
-            ->orderBy('id', 'desc');
+                            ->select('dynamic_form.*', 'dynamic_form_builder.title as form_name')
+                            ->join('dynamic_form_builder', 'dynamic_form_builder.id', '=', 'dynamic_form.form_builder_id')
+                            //whereIn('form_builder_id',$form_bildr_ids)
+                            ->where('service_user_id', $service_user_id)
+                            ->whereDate('dynamic_form.created_at', '=', $today)
+                            ->where('is_deleted', '0')
+                            ->orderBy('id', 'desc');
 
         /*$incident_record = ServiceUserIncidentReport::where('is_deleted','0')
                                     ->where('service_user_id', $service_user_id)
@@ -67,28 +71,16 @@ class IncidentController extends ServiceUserManagementController
         shuffle($colors);
         foreach ($incident_form as $key => $value) {
 
-            $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
-
             // if($value->date == '' ) {  
             //     $date = '';
             // }  else {
             //     $date = date('d-m-Y', strtotime($value->date));
             // }
 
+            $date = !empty($value->date) ? date('d-m-Y', strtotime($value->date)) : '';
+            $time = !empty($value->time) ? $value->time : '';
 
-            if ($value->created_at == '') {
-                $date = '';
-            } else {
-                $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
-            }
-
-            if ((!empty($date)) || (!empty($value->time))) {
-                $start_brct = '(';
-                $end_brct = ')';
-            } else {
-                $start_brct = '';
-                $end_brct = '';
-            }
+            $datetime = ($date || $time) ? trim($date . ' : ' . $time, ' :') : ' 00-00-0000 : 00-00';
 
             $color = $colors[$key % count($colors)];
 
@@ -98,11 +90,11 @@ class IncidentController extends ServiceUserManagementController
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr rightSideInput rmpTimeRit">
-                                 <span class="timLineDate"> '. $date.'  '.$value->time .'</span>
+                                 <span class="timLineDate"> '. $datetime.'</span>
                                  <span class="arrow"></span>
                                  <div class="rmpWithPlusInput">
                                     <input type="hidden" name="" value="' . $value->id . '" disabled="disabled" class="edit_incident_id_' . $value->id . '">
-                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $form_title . ' ' .$value->title . '" maxlength="255"/>
+                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $value->form_name . ' : ' .$value->title . '" maxlength="255"/>
                             
                                     <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                         <i class="fa fa-cog"></i>
@@ -126,10 +118,10 @@ class IncidentController extends ServiceUserManagementController
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr timelineInput rmpTimeLft">
                                 <span class="arrow"></span>
-                                <span class="timLineDate"> '. $date. '  '.$value->time .'</span>
+                                <span class="timLineDate"> '. $datetime. '</span>
                                     <div class="rmpWithPlusInput">
                                         <input type="hidden" name="" value="' . $value->id . '" disabled="disabled" class="edit_incident_id_' . $value->id . '">
-                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $form_title . ' ' . $value->title. '" maxlength="255"/>
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $value->form_name . ' - ' . $value->title. '" maxlength="255"/>
                                 
                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>
