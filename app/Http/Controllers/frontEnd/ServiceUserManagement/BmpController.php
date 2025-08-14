@@ -5,7 +5,8 @@ namespace App\Http\Controllers\frontEnd\ServiceUserManagement;
 use App\Http\Controllers\frontEnd\ServiceUserManagementController;
 use Illuminate\Http\Request;
 use App\ServiceUser, App\FormBuilder, App\ServiceUserBmp, App\Notification, App\DynamicFormBuilder, App\DynamicForm, App\DynamicFormLocation, App\HomeLabel, App\CareTeamJobTitle, App\ServiceUserCareCenter, App\ServiceUserContacts, App\SocialApp, App\ServiceUserSocialApp, App\ServiceUserMoney, App\ServiceUserMoneyRequest, App\User;
-use DB, Auth;
+use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
@@ -15,6 +16,7 @@ class BmpController extends ServiceUserManagementController
     public function index($service_user_id = null)
     {
         $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
+        // $home_id = Auth::user()->home_id;
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id = $ex_home_ids[0];
@@ -22,13 +24,10 @@ class BmpController extends ServiceUserManagementController
             die;
         }
 
-        // $home_id = Auth::user()->home_id;
         //in search case editing start for plan,details and review
         if (isset($_POST)) {
             $data = $_POST;
         }
-
-        // dd($data);
 
         if (isset($data['su_bmp_id'])) {
             $su_bmp_ids = $data['su_bmp_id'];
@@ -66,14 +65,14 @@ class BmpController extends ServiceUserManagementController
         $today = Carbon::now()->format('Y-m-d');
 
         $bmp_record = ServiceUserBmp::leftJoin('dynamic_form', 'dynamic_form.id', '=', 'su_bmp.dynamic_form_id')
-            ->select('su_bmp.*', 'dynamic_form.form_builder_id')
-            ->where('su_bmp.is_deleted', '0')
-            ->where('su_bmp.service_user_id', $service_user_id)
-            ->where('su_bmp.home_id', $home_id)
-            ->whereDate('su_bmp.created_at', '=', $today)
-            ->orderBy('su_bmp.id', 'desc');
-
-        //->get();
+                        ->join('dynamic_form_builder', 'dynamic_form_builder.id','=','dynamic_form.form_builder_id')
+                        ->select('su_bmp.*', 'dynamic_form.form_builder_id', 'dynamic_form.date', 'dynamic_form.time', 'dynamic_form_builder.title as form_title')
+                        ->where('su_bmp.is_deleted', '0')
+                        ->where('su_bmp.service_user_id', $service_user_id)
+                        ->where('su_bmp.home_id', $home_id)
+                        ->whereDate('su_bmp.created_at', '=', $today)
+                        ->orderBy('su_bmp.id', 'desc');
+                        // ->get();
 
         // dd($bmp_record);
 
@@ -91,9 +90,7 @@ class BmpController extends ServiceUserManagementController
                     $search_date_next = date('Y-m-d', strtotime('+1 day', strtotime($_GET['search']))) . ' 00:00:00';
                     $bmp_form = $bmp_record->where('created_at', '>', $search_date)->where('created_at', '<', $search_date_next)->get();
                 }
-
                 // $bmp_form = $bmp_record->where('title','like','%'.$_GET['search'].'%')->get();
-
                 $tick_btn_class = "search-bmp-btn search-bmp-rmp-btn";
             }
         } else {
@@ -108,49 +105,18 @@ class BmpController extends ServiceUserManagementController
         }
 
         $loop = 1;
-
         $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
         shuffle($colors);
 
         foreach ($bmp_form as $key => $value) {
-
-            $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
-
             $details_check = (!empty($value->details)) ? '<i class="fa fa-check"></i>' : '';
             //$plan_check    = (!empty($value->plan)) ? '<i class="fa fa-check"></i>' : '';
             //$review_check  = (!empty($value->review)) ? '<i class ="fa fa-check"></i>' : '';
-
-            // if ($value->date == '') {
-            //     $date = '';
-            // } else {
-            //     $date = date('d-m-Y', strtotime($value->date));
-            // }
-
-            // if ($value->created_at == '') {
-            //     $date = '';
-            // } else {
-            //     $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
-            // }
-
-            // if ((!empty($date)) || (!empty($value->time))) {
-            //     $start_brct = '(';
-            //     $end_brct = ')';
-            // } else {
-            //     $start_brct = '';
-            //     $end_brct = '';
-            // }
-
-            // if (!empty($value->time)) {
-            //     $time = $value->time;
-            // } else {
-            //     $time = '00:00';
-            // }
 
             $date = !empty($value->date) ? date('d-m-Y', strtotime($value->date)) : '';
             $time = !empty($value->time) ? $value->time : '';
 
             $datetime = ($date || $time) ? trim($date . ' : ' . $time, ' :') : ' 00-00-0000 : 00-00';
-
 
             $color = $colors[$key % count($colors)];
             if ($loop % 2 == 0) {
@@ -163,7 +129,7 @@ class BmpController extends ServiceUserManagementController
                                     <span class="arrow"></span>
                                     <div class="rmpWithPlusInput">
                                         <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
-                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $value->form_title . ' - ' . $value->title . '" maxlength="255"/>
                                         
                                         <div class="input-plus color-green" style="background-color: ' . $color . ';"> <i class="fa fa-plus"></i> 
                                         </div>   
@@ -207,7 +173,7 @@ class BmpController extends ServiceUserManagementController
                                     <span class="arrow"></span>
                                     <div class="rmpWithPlusInput">
                                         <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
-                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $value->form_title . ' - ' . $value->title . '" maxlength="255"/>
                                         
                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>

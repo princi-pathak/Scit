@@ -666,7 +666,7 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
     });
 </script>
 
-<script>
+{{-- <script>
     $(document).ready(function() {
         $(document).on('click', '.dyn_form_del_btn', function() {
 
@@ -710,7 +710,7 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
             return false;
         });
     });
-</script>
+</script> --}}
 
 <script>
     //logged btn click view bmp title
@@ -922,20 +922,7 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
     });
 </script>
 
-<script>
-    /*$('.send_to').selectize({
-        maxItems: null,
-        valueField: 'id',
-        labelField: 'title',
-        searchField: 'title',
-        options: [
-            {id: 1, title: 'Spectrometer', url: 'http://en.wikipedia.org/wiki/Spectrometers'},
-            {id: 2, title: 'Star Chart', url: 'http://en.wikipedia.org/wiki/Star_chart'},
-            {id: 3, title: 'Electrical Tape', url: 'http://en.wikipedia.org/wiki/Electrical_tape'}
-        ],
-        create: false
-    });*/
-</script>
+
 
 <!-- <script>
     //making editable click on edit of listing
@@ -950,139 +937,12 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
         });
     });
 </script> -->
-<!-- <script>
-    //saving all editable record
-    $(document).ready(function() {
-        $(document).on('click', '.sbt-edit-dyn-record', function() {
-            var enabled = 0;
-            $('.view-dyn-record .edit_rcrd').each(function(index) {
-                var is_disable = $(this).attr('disabled');
-                if (is_disable == undefined) {
-                    enabled = 1;
-                }
-            });
-            if (enabled == 0) {
-                return false;
-            }
-            var formdata = $('#edit-bmp-form').serialize();
 
-            $('.loader').show();
-            $('body').addClass('body-overflow');
-
-            $.ajax({
-                type: 'post',
-                url: "{{ url('service/dynamic-form/edit-details') }}",
-                data: formdata,
-                success: function(resp) {
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    $('.view-dyn-record').html(resp);
-                    $('span.popup_success_txt').text('Updated Successsfully');
-                    $('.popup_success').show();
-                    setTimeout(function() {
-                        $(".popup_success").fadeOut()
-                    }, 5000);
-
-                    $('.loader').hide();
-                    $('body').removeClass('body-overflow');
-                }
-            });
-            return false;
-        });
-    });
-</script> -->
 
 <!-- dynamic form end -->
 
-<!-- <script>
-    $(document).ready(function() {
-        $('.dynamic_form_select').on('change', function() {
 
-            var form_select = $(this);
-            var model_id = form_select.closest('.modal').attr('id');
 
-            var form_id = form_select.val();
-            var form_title = $('.dynamic_form_select option:selected').text();
-
-            if (form_id > 0) {
-
-                $('.loader').show();
-                $('body').addClass('body-overflow');
-
-                $.ajax({
-                    type: 'get',
-                    url: "{{ url('/service/dynamic-form/view/pattern') }}" + '/' + form_id,
-                    dataType: "json",
-                    success: function(resp) {
-
-                        if (isAuthenticated(resp) == false) {
-                            return false;
-                        }
-
-                        var response = resp['response'];
-                        if (response == true) {
-
-                            var pattern = resp['pattern'];
-                            $('#' + model_id + ' .dynamic-form-fields').html(pattern);
-                            $('#' + model_id + ' .dynamic_form_h3').html(form_title +
-                                ' Details');
-
-                            $('.dpYears').datepicker({
-                                //format: 'dd/mm/yyyy',
-                            }).on('changeDate', function(e) {
-                                $(this).datepicker('hide');
-                            });
-
-                            //form_select.parent().removeClass('red_border');           
-                        }
-
-                        $('.loader').hide();
-                        $('body').removeClass('body-overflow');
-                    }
-                });
-
-            } else {
-                //$('.dynamic-form-fields').
-                //$('.entry-default-fields').hide();
-            }
-        });
-    });
-</script> -->
-<!-- <script>
-    $(document).ready(function() {
-        $('.sbt-dyn-form-btn').click(function() {
-
-            var model_id = $(this).closest('.modal').attr('id');
-            var service_user = $('#' + model_id + ' .su_n_id');
-            var form_builder = $('#' + model_id + ' .dynamic_form_select');
-            var service_user_id = service_user.val().trim();
-            var form_builder_id = form_builder.val().trim();
-            var err = 0;
-
-            if (service_user_id == 0) {
-                service_user.parent().addClass('red_border');
-                err = 1;
-            } else {
-                service_user.parent().removeClass('red_border');
-            }
-
-            if (form_builder_id == 0) {
-                form_builder.parent().addClass('red_border');
-                err = 1;
-            } else {
-                form_builder.parent().removeClass('red_border');
-            }
-
-            if (err == 1) {
-                return false;
-            } else {
-                return true;
-            }
-
-        });
-    });
-</script>   -->
 <script>
     let loaddataontable = () => {
         let formid = $("#formid").val();

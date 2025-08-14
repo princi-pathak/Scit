@@ -164,24 +164,9 @@
                                             <div class="message-body msg-in rightmsg">
                                                 <span class="arrow"></span>
                                                 <div class="text">
-                                                    <div class="first"> {{ date('d M Y', strtotime($key['created_at'])) }}
-                                                    </div>
-
+                                                    <div class="first"> {{ date('d M Y', strtotime($key['form_date'])) }} - {{ $key['form_time'] }}</div>
                                                     <div class="second" style="background-color: {{ $color }};">
-                                                        <p>{{ $key['title'] }} - {{ $key['form_title'] }}</p>
-                                                        {{-- <span class="timelineIcons">
-                                                <label class="timelinedropdown">
-                                                    <div class="dd-button"><i class="fa fa-cog"></i> </div>
-                                                    <input type="checkbox" class="dd-input">
-                                                    <ul class="dd-menu">
-                                                        <li><a href="#viewDaily_log" id="open_form_view" data-toggle="modal"> <i class="fa fa-eye" data-id="{{ $key['id'] }}"></i> View</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-pencil"></i> Edit </a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Daily</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Weekly</a></li>
-                                                        <li><a href="#!"> <i class="fa fa-calendar-o"></i> Monthly</a></li>
-                                                    </ul>
-                                                </label>
-                                            </span> --}}
+                                                        <p>{{ $key['form_name'] }} - {{ $key['form_title'] }}</p>
                                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings"
                                                             style="background-color: {{ $color }};">
                                                             <i class="fa fa-cog"></i>
@@ -190,17 +175,13 @@
                                                                     <li> <a href="#" data-dismiss="modal"
                                                                             aria-hidden="true" class="dyn-form-view-data"
                                                                               id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span> <i
-                                                                                    class="fa fa-eye"></i> </span> View
-                                                                        </a> </li>
-                                                                    {{-- <li> <a href="#" class="edit_rmp_details"
-                                                                            su_rmp_id="{{ $key['id'] }}"> <span> <i
-                                                                                    class="fa fa-pencil"></i> </span> Edit
+                                                                                    class="fa fa-eye"></i> </span> View/Edit
                                                                         </a> </li>
                                                                     <li> <a href="#" class="dyn_form_del_btn"
-                                                                            id="{{ $key['id'] }}"> <span
+                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span
                                                                                 class="color-red"> <i
                                                                                     class="fa fa-exclamation-circle"></i>
-                                                                            </span> Remove </a> </li> --}}
+                                                                            </span> Remove </a> </li>
                                                                 </ul>
                                                             </div>
                                                         </span>
@@ -216,30 +197,26 @@
                                                     <div class="second" style="background-color: {{ $color }};">
                                                         <span
                                                             class="input-group-addon cus-inpt-grp-addon clr-blue settings"
-                                                            style="background-color: {{ $color }};">
+                                                            style="background-color: {{ $color }};">   
                                                             <i class="fa fa-cog"></i>
                                                             <div class="pop-notifbox">
                                                                 <ul class="pop-notification" type="none">
                                                                     <li> <a href="#" data-dismiss="modal"
                                                                             aria-hidden="true" class="dyn-form-view-data"
                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span> <i
-                                                                                    class="fa fa-eye"></i> </span> View
-                                                                        </a> </li>
-                                                                    {{-- <li> <a href="#" class="edit_rmp_details"
-                                                                            su_rmp_id="' . $value->id . '"> <span> <i
-                                                                                    class="fa fa-pencil"></i> </span> Edit
+                                                                                    class="fa fa-eye"></i> </span> View/Edit
                                                                         </a> </li>
                                                                     <li> <a href="#" class="dyn_form_del_btn"
-                                                                            id="' . $value->id . '"> <span
+                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span
                                                                                 class="color-red"> <i
                                                                                     class="fa fa-exclamation-circle"></i>
-                                                                            </span> Remove </a> </li> --}}
+                                                                            </span> Remove </a> </li>
                                                                 </ul>
                                                             </div>
                                                         </span>
-                                                        <p>{{ $key['title'] }} - {{ $key['form_title'] }}</p>
+                                                        <p>{{ $key['form_name'] }} - {{ $key['form_title'] }}</p>
                                                     </div>
-                                                    <div class="first">{{ date('d M Y', strtotime($key['created_at'])) }}
+                                                    <div class="first">{{ date('d M Y', strtotime($key['form_date'])) }} - {{ $key['form_time'] }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -399,7 +376,6 @@
             return false;
         }
     </script>
-
     <!-- Daily Log Comments -->
 
     <!-- Comment Created Duration -->
@@ -2300,8 +2276,6 @@
 
         }
     </script>
-
-
 
     @include('frontEnd.serviceUserManagement.elements.add_health_record')
     @include('frontEnd.serviceUserManagement.elements.comments')

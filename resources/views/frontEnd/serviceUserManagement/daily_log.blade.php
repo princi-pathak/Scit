@@ -104,6 +104,10 @@
             position: absolute;
             right: 24px;
         }
+
+        .arrow {
+            border-left: 0px solid #777777 !important;
+        }
     </style>
 
 
@@ -213,10 +217,8 @@
                                 <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
                                     class="input-group date">
                                     <input id="date_range_input_log" style="cursor: pointer;" name="daterange"
-                                        {{-- value="{{ $oneMonthAgo }} - {{ $today }}" --}}
-                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}"
-                                        type="text" readonly=""
-                                        size="16" class="form-control log-book-datetime">
+                                        {{-- value="{{ $oneMonthAgo }} - {{ $today }}" --}} value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}"
+                                        type="text" readonly="" size="16" class="form-control log-book-datetime">
                                     <span class="input-group-btn add-on datetime-picker2">
                                         <button onclick="showDate()" class="btn btn-primary" type="button"><span
                                                 class="glyphicon glyphicon-calendar"></span></button>
@@ -262,9 +264,9 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                </div> -->
+                                                                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                    </div> -->
                 </div>
 
                 <div class="row">
@@ -713,9 +715,9 @@
 
         });
 
-        
-  
-        
+
+
+
 
 
         let viewdatawithvalueFormio = () => {
@@ -1375,7 +1377,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             getDailyLogData(data);
@@ -1402,7 +1404,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             else
@@ -1412,7 +1414,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             getDailyLogData(data);
@@ -1439,7 +1441,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             else
@@ -1449,7 +1451,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
 
@@ -1475,7 +1477,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             else
