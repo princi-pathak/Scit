@@ -37,7 +37,7 @@
     margin-right: 6px;
     display: flex;
     padding: 9px 10px;
-    min-width: 480px;
+    min-width: 434px;
 }
 
 .msg-time-chat .msg-in .text .second p {
@@ -620,4 +620,23 @@ span.viewEditIcon {
 }
 .rightmsg  .input-group-addon, .leftmsg  .input-group-addon{
     color: #fff;
+}
+
+.rightmsg .input-group-addon:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 1px;
+    height: 20px;
+    background: #fff;
+}
+.leftmsg .input-group-addon:before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0px;
+    width: 1px;
+    height: 20px;
+    background: #fff;
 }
