@@ -2640,7 +2640,7 @@ ul#supplierList {
   /* -webkit-transform: translateZ(0); */
   -webkit-font-smoothing: antialiased;
   color: #333230;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 0px);
 }
 
 .wrapper .custom-tooltip {
