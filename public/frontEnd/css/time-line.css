@@ -19,7 +19,7 @@
 }
 
 .timeline-messages .msg-in.leftmsg .arrow {
-    right: -3px;
+    right: -2px;
     left: inherit;
     border-left: 8px solid #949496 !important;
 }
@@ -295,6 +295,7 @@ span.timelineIcons {
     margin-left: 6px;
     line-height: 24px;
     position: relative;
+    min-width: 180px;
 }
 
 .rightSideInput {
@@ -329,6 +330,7 @@ span.timelineIcons {
     margin-right: 6px;
     line-height: 24px;
     position: relative;
+    min-width: 180px;
 }
 
 .pop-notifbox.active {
@@ -406,7 +408,7 @@ span.timelineIcons {
 }
 
 input#date_range_input {
-    width: 190px;
+    width: 100%;
 }
 
 .form-group.has-feedback {
@@ -425,6 +427,10 @@ input#date_range_input {
     top: 50px;
 }
 
+.rmpTimeLft .pop-notifbox {
+    right: inherit;
+    left: 0;
+}
 .timelineInput .pop-notification::after {
     content: "\f0d7";
     font-family: 'fontawesome';
@@ -464,11 +470,11 @@ input#date_range_input {
 .back_opt:hover i {
     color: #fff;
 }
-
+/* 
 i.fa.fa.fa-h-square {
     color: #1f88b5;
     font-size: 25px;
-}
+} */
 
 .space_bottom {
     margin-bottom: 7px !important;
@@ -541,9 +547,13 @@ span.viewEditIcon {
 .rmpTimeRit .rmpWithPlusInput .input-plus {
     /* left: 152px;
     right: inherit;
-    top: 4px; */
+    top: 4px; 
        right: 191px;
-    top: 6px;
+    top: 6px;*/
+    color: #fff;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-right: 5px;
 }
 .rmpTimeLft .rmpWithPlusInput .input-plus{
     left: 206px;
@@ -551,9 +561,10 @@ span.viewEditIcon {
     
 }
 .input-plus{
-     color: #fff;
-    font-size: 20px;
-    line-height: 32px;
+    color: #fff;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-left: 5px;
 }
 .input-plusbox.form-group.col-xs-12.p-0.detail{
      position: absolute;
@@ -575,12 +586,16 @@ span.viewEditIcon {
     transform: rotate(180deg);
 }
 
- .rightSideDate{
+ /* .rightSideDate{
     padding-left: 120px;
  }
  .leftsideDate{
      padding-right: 120px;
- }
+ } */
+ .logged-mfc-list .rightSideInput::after,  .logged-mfc-list .timelineInput::after {
+   display: none;
+}
+
 .inputTextLefttoRight input{
     text-align: right;
 }

@@ -7807,7 +7807,7 @@ ul.pop-notification>li>a {
 }
 
 
-.input-plus {
+/* .input-plus {
     display: inline-block;
     font-size: 24px;
     position: absolute;
@@ -7815,7 +7815,7 @@ ul.pop-notification>li>a {
     top: 0;
     padding-right: 10px;
     cursor: pointer;
-}
+} */
 
 .txtarea {
     resize: none;

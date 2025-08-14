@@ -149,10 +149,10 @@ class MFCController extends ServiceUserManagementController
                                    <div class="rmpWithPlusInput">
                                     <input type="text" name="edit_su_record_desc[]" style="background-color: ' . $color . ';" class="form-control cus-control edit_record_desc_' . $value->id . ' edit_mfc_rcrd"  disabled  value="' . ucfirst($title) . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>';
 
-                if (!empty($value->info)) {
-                    echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';
-                }
-                echo '<input type="hidden" name="edit_su_record_id[]" value="' . $value->id . '" disabled="disabled" class="edit_record_id_' . $value->id . '" />
+                    if (!empty($value->info)) {
+                        echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';
+                    }
+                    echo '<input type="hidden" name="edit_su_record_id[]" value="' . $value->id . '" disabled="disabled" class="edit_record_id_' . $value->id . '" />
                                                     <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                                     <i class="fa fa-cog"></i>
                                                     <div class="pop-notifbox">
@@ -206,7 +206,7 @@ class MFCController extends ServiceUserManagementController
                 }
 
                 echo '
-                        <div class="col-md-7 col-sm-7 col-xs-7 cog-panel col-md-offset-2 p-0 r-p-15 record_row rows">
+                        <div class="col-md-7 col-sm-7 col-xs-7 cog-panel col-md-offset-3 p-0 r-p-15 record_row rows">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 r-p-0">
                                 <div class="input-group popovr timelineInput rmpTimeLft">
 
