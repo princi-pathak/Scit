@@ -131,7 +131,7 @@ class BmpController extends ServiceUserManagementController
                                         <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
                                         <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $value->form_title . ' - ' . $value->title . '" maxlength="255"/>
                                         
-                                        <div class="input-plus color-green"> <i class="fa fa-plus"></i> 
+                                        <div class="input-plus color-green" style="background-color: ' . $color . ';"> <i class="fa fa-plus"></i> 
                                         </div>   
                                         <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>
@@ -175,8 +175,6 @@ class BmpController extends ServiceUserManagementController
                                         <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
                                         <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $value->form_title . ' - ' . $value->title . '" maxlength="255"/>
                                         
-                                        <div class="input-plus color-green"> <i class="fa fa-plus"></i> 
-                                        </div>   
                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>
                                             <div class="pop-notifbox">
@@ -187,6 +185,7 @@ class BmpController extends ServiceUserManagementController
                                                 </ul>
                                             </div>
                                         </span>
+                                        <div class="input-plus color-green" style="background-color: ' . $color . ';"> <i class="fa fa-plus"></i>  </div> 
                                     </div>
                                 </div>
                             </div>
