@@ -85,11 +85,12 @@ class HealthRecordController extends ServiceUserManagementController
 
         //filter    
         $log_book_records = DB::table('su_health_record')
-            ->select('su_health_record.*', 'service_user.name as staff_name', 'dynamic_form.form_builder_id', 'dynamic_form_builder.title as form_title')
+            ->select('su_health_record.*', 'service_user.name as staff_name', 'dynamic_form.form_builder_id', 'dynamic_form_builder.title as form_name', 'dynamic_form.title as form_title', 'dynamic_form.date as form_date', 'dynamic_form.time as form_time')
             ->leftJoin('dynamic_form', 'dynamic_form.id', '=', 'su_health_record.dynamic_form_id')
             ->leftJoin('dynamic_form_builder', 'dynamic_form_builder.id', '=', 'dynamic_form.form_builder_id')
             ->where('su_health_record.service_user_id', $service_user_id)
             ->where('su_health_record.is_deleted', "0")
+            ->where('dynamic_form.is_deleted', "0")
             ->where('su_health_record.home_id', $home_id)
             ->whereDate('su_health_record.created_at', '=', $today)
             ->join('service_user', 'su_health_record.service_user_id', '=', 'service_user.id')
