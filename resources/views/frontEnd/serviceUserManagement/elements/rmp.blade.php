@@ -114,7 +114,7 @@
                         <div class="add-new-box risk-tabs custm-tabs">
                             <form method="post" action="" id="rmp_form">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                    <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 text-right">User: </label>
+                                    <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 text-right">Child: </label>
                                     <div class="col-md-11 col-sm-11 col-xs-12">
                                         <div class="select-style">
                                             <select name="service_user_id" class="su_n_id">
@@ -538,7 +538,7 @@
         $(document).ready(function() {
             $(document).on('click', '.edit_rmp_details', function() {
                 var su_rmp_id = $(this).attr('su_rmp_id');
-
+                
                 $('.edit_rmp_details_' + su_rmp_id).removeAttr('disabled');
                 $('.edit_rmp_review_' + su_rmp_id).removeAttr('disabled');
                 $('.edit_rmp_plan_' + su_rmp_id).removeAttr('disabled');

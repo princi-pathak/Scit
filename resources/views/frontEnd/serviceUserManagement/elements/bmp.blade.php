@@ -1,5 +1,5 @@
 @extends('frontEnd.layouts.master')
-@section('title','Behaviour Management Plan')
+@section('title','behavior Management Plan')
 @section('content')
 
     <link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
@@ -87,13 +87,13 @@
 
 
 
-<!-- Add Behaviour Management Plans Modal -->
+<!-- Add behavior Management Plans Modal -->
 <div class="modal fade my_plan_model" id="BMPAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"> Behaviour Management Plans </h4>
+                <h4 class="modal-title"> Behavior Management Plans </h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -156,7 +156,7 @@
                             </div>
                             <div class="modal-footer m-t-0 m-b-15 modal-bttm">
                                 <!-- <input type="hidden" name="plan_detail" value=""> -->
-                                <input type="hidden" name="service_user_id" value="{{ $service_user_id }}">
+                                {{-- <input type="hidden" name="service_user_id" value="{{ $service_user_id }}"> --}}
                                 <input type="hidden" name="location_id" value="{{ $this_location_id }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
@@ -235,10 +235,10 @@
         </div>
     </div>
 </div>
-<!-- Add Behaviour Management Plans Modal End -->
+<!-- Add behavior Management Plans Modal End -->
 
 <!-- View/Edit BMP Plan -->
-<!-- <div class="modal fade" id="bmpModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal fade" id="bmpModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -251,7 +251,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                        <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> User: </label>
+                        <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Child: </label>
                         <div class="col-md-11 col-sm-11 col-xs-12">
                             <div class="select-style">
                                 <select name="su_id" disabled="disabled">
@@ -309,6 +309,7 @@
                             </div>
                         </div>
                         <div class="edit-dynamic-bmp-form-fields">
+                              <!-- created form fields from controller will be placed here -->
                         </div>
                         
                     </div>
@@ -337,24 +338,24 @@
         });
 
         // FOR bmp back btn while view/edit
-        // $(document).on('click','.view-bmp-back-btn', function(){
-        //     $('#BMPAddModal').modal('show');
-        // });
+        $(document).on('click','.view-bmp-back-btn', function(){
+            $('#BMPAddModal').modal('show');
+        });
         // FOR bmp/rmp in daily record back btn while view/edit
-        // $(document).on('click','.plan-back-btn1', function(){
-        //     $('#PlanRecordModal').modal('show');
-        // });
+        $(document).on('click','.plan-back-btn1', function(){
+            $('#PlanRecordModal').modal('show');
+        });
         // For bmp view modal submit
-        // $(document).on('click','.sbt-bmp-back-btn', function(){
-        //     $('#BMPAddModal').modal('show');
-        // });
+        $(document).on('click','.sbt-bmp-back-btn', function(){
+            $('#BMPAddModal').modal('show');
+        });
         //For bmp/rmp view modal submit
-        // $(document).on('click','.sbt-plan-back-btn', function(){
-        //     $('#PlanRecordModal').modal('show');
-        // });
-        // $('#BMPAddModal').on('scroll',function(){
-        //     $('.dpYears').datepicker('place')
-        // });
+        $(document).on('click','.sbt-plan-back-btn', function(){
+            $('#PlanRecordModal').modal('show');
+        });
+        $('#BMPAddModal').on('scroll',function(){
+            $('.dpYears').datepicker('place')
+        });
     })
 </script>
 
@@ -427,7 +428,7 @@
             $('.loader').show();
             $('body').addClass('body-overflow');
 
-             var service_user_id = "{{ request()->segment(count(request()->segments())) }}";
+             var service_user_id = "{{ $service_user_id }}";
 
 
             $.ajax({
@@ -458,10 +459,11 @@
     $(document).ready(function(){
         $(document).on('click','.edit_bmp_details', function(){
             var su_bmp_id = $(this).attr('su_bmp_id');
+            // alert(su_bmp_id);
            
             $('.edit_bmp_details_'+su_bmp_id).removeAttr('disabled');
-            // $('.edit_bmp_review_'+su_bmp_id).removeAttr('disabled');
-            // $('.edit_bmp_plan_'+su_bmp_id).removeAttr('disabled');
+            $('.edit_bmp_review_'+su_bmp_id).removeAttr('disabled');
+            $('.edit_bmp_plan_'+su_bmp_id).removeAttr('disabled');
             $('.edit_bmp_id_'+su_bmp_id).removeAttr('disabled');
             $(this).closest('.cog-panel').find('.input-plusbox').toggle();
         });
@@ -483,6 +485,7 @@
                 return false;
             }
             var formdata =  $('#edit-bmp-form').serialize();
+            console.log(formdata);
            
             $('.loader').show();
             $('body').addClass('body-overflow');
@@ -509,7 +512,7 @@
     });
 </script>
 
-<!-- <script>
+<script>
     // delete the bmp record
     $(document).ready(function(){
         $(document).on('click','.delete-bmp-btn', function(){
@@ -547,11 +550,11 @@
             return false;
         });
     });
-</script> -->
+</script>
 
 <script>
     //view bmp form with values
-    /*$(document).ready(function(){
+    $(document).ready(function(){
         $(document).on('click','.bmp-view', function(){
             
             var view_btn = $(this);
@@ -625,7 +628,7 @@
             });
             return false;
         });
-    });*/
+    });
 </script>
 
 <script>
@@ -758,7 +761,7 @@
             
             var formdata = $('#searched-bmp-records-form').serialize();
             //alert(formdata); //return false;
-              var service_user_id = "{{ request()->segment(count(request()->segments())) }}";
+              var service_user_id = "{{ $service_user_id }}";
 
             $('.loader').show();
             $('body').addClass('body-overflow');
@@ -788,53 +791,39 @@
 
 <script>
     //pagination of bmp
-    // $(document).ready(function(){
-    //     //$(document).on('click','.bmp_paginate .pagination li', function(){
-    //     $(document).on('click','#BMPAddModal .pagination li', function(){
+    $(document).ready(function(){
+        //$(document).on('click','.bmp_paginate .pagination li', function(){
+        $(document).on('click','#BMPAddModal .pagination li', function(){
     
-    //         var page_no = $(this).children('a').text();
-    //         if(page_no == '') {
-    //             return false;
-    //         }
-    //         if(isNaN(page_no)) {
-    //             var new_url = $(this).children('a').attr('href');
-    //             page_no = new_url[new_url.length -1];
-    //         }
-    //         $('.loader').show();
-    //         $('body').addClass('body-overflow');
+            var page_no = $(this).children('a').text();
+            if(page_no == '') {
+                return false;
+            }
+            if(isNaN(page_no)) {
+                var new_url = $(this).children('a').attr('href');
+                page_no = new_url[new_url.length -1];
+            }
+            $('.loader').show();
+            $('body').addClass('body-overflow');
 
-    //           var service_user_id = "{{ request()->segment(count(request()->segments())) }}";
+              var service_user_id = "{{ $service_user_id }}";
 
-    //         $.ajax({
-    //             type : 'get',
-    //             url  : "{{ url('/service/bmp/view/') }}"+'/'+service_user_id+"?page="+page_no,
-    //             success : function(resp) {
-    //                 if(isAuthenticated(resp) == false) {
-    //                     return false;
-    //                 }
-    //                 $('.view-bmp-record').html(resp);
+            $.ajax({
+                type : 'get',
+                url  : "{{ url('/service/bmp/view/') }}"+'/'+service_user_id+"?page="+page_no,
+                success : function(resp) {
+                    if(isAuthenticated(resp) == false) {
+                        return false;
+                    }
+                    $('.view-bmp-record').html(resp);
 
-    //                 $('.loader').hide();
-    //                 $('body').removeClass('body-overflow');
-    //             }
-    //         });
-    //         return false;
+                    $('.loader').hide();
+                    $('body').removeClass('body-overflow');
+                }
+            });
+            return false;
 
-    //     });
-    // });
-
-    // $('#search_bmp_type').on('change', function(){
-    //     var searchType = document.getElementById('search_bmp_type').value;
-    //     if(searchType == 1){
-    //         $('.search_bmp_title').show();
-    //     } else {
-    //         $('.search_bmp_title').hide();
-    //     }
-    //     if(searchType == 2){
-    //         $('.search_bmp_date').show();
-    //     } else {
-    //         $('.search_bmp_date').hide();
-    //     }
-    // });
+        });
+    });
 </script>
 @endsection

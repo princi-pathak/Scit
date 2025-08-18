@@ -68,7 +68,6 @@
             bottom: 0px;
         }
 
-
         .logimg img {
             width: 100px;
             height: 60px;
@@ -110,8 +109,6 @@
         }
     </style>
 
-
-
     @php
         if (!function_exists('time_diff_string')) {
             function time_diff_string($from, $to, $full = false)
@@ -146,7 +143,6 @@
                 return $string ? implode(', ', $string) . ' ago' : 'just now';
             }
         }
-
     @endphp
 
     <!--Core CSS -->
@@ -248,11 +244,11 @@
                             <label style="display: none;"> Log Type: </label>
                             <div>
                                 <select class="form-control" style="min-width:200px;" id="select_log_type" name="log_type"
-                                    required />
-                                <option selected value="all">Log Type All</option>
-                                <option value="1">Daily Log</option>
-                                <option value="2">Weekly Log</option>
-                                <option value="3">Monthly Log</option>
+                                    required>
+                                    <option selected value="all">Log Type All</option>
+                                    <option value="1">Daily Log</option>
+                                    <option value="2">Weekly Log</option>
+                                    <option value="3">Monthly Log</option>
                                 </select>
                             </div>
                         </div>
@@ -264,9 +260,9 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                                                                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                    </div> -->
+                                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                                </div> -->
                 </div>
 
                 <div class="row">
