@@ -285,7 +285,7 @@
         });
     </script>
 
-    {{-- Filter for child  --}}
+    <!-- {{-- Filter for child  --}} -->
     <script type="text/javascript">
         $('#service_user').change(function() {
             let staff_member = $('#staff_member').val();
@@ -319,7 +319,7 @@
         });
     </script>
 
-    {{-- Filter for staff --}}
+    <!-- {{-- Filter for staff --}} -->
     <script type="text/javascript">
         $('#staff_member').change(function() {
             let staff_member = $('#staff_member').val();
@@ -355,7 +355,7 @@
     </script>
     
 
-    {{-- Filter for keyword --}}
+   <!-- {{-- Filter for keyword --}} -->
     <script>
         function myFunctionkey() {
             let staff_member = $('#staff_member').val();
