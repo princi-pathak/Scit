@@ -538,7 +538,7 @@
         $(document).ready(function() {
             $(document).on('click', '.edit_rmp_details', function() {
                 var su_rmp_id = $(this).attr('su_rmp_id');
-
+                
                 $('.edit_rmp_details_' + su_rmp_id).removeAttr('disabled');
                 $('.edit_rmp_review_' + su_rmp_id).removeAttr('disabled');
                 $('.edit_rmp_plan_' + su_rmp_id).removeAttr('disabled');
