@@ -12,7 +12,6 @@ use Carbon\Carbon;
 
 class BmpController extends ServiceUserManagementController
 {
-
     public function index($service_user_id = null)
     {
         $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
@@ -52,18 +51,21 @@ class BmpController extends ServiceUserManagementController
 
         $today = Carbon::now()->format('Y-m-d');
 
-        $bmp_record     = DynamicForm::where('location_id', $this_location_id)
-            //whereIn('form_builder_id',$form_bildr_ids)
-            ->where('service_user_id', $service_user_id)
-            ->whereDate('created_at', '=', $today)
-            ->where('is_deleted', '0')
-            ->orderBy('id', 'desc');
+
+        $bmp_record   = DynamicForm::where('location_id', $this_location_id)
+                        ->join('dynamic_form_builder', 'dynamic_form_builder.id','=','dynamic_form.form_builder_id')
+                        ->select('dynamic_form.*', 'dynamic_form_builder.title as form_title')
+                        //whereIn('form_builder_id',$form_bildr_ids)
+                        ->where('service_user_id', $service_user_id)
+                        ->where('is_deleted', '0')
+                        ->whereDate('dynamic_form.created_at', '=', $today)
+                        ->orderBy('id', 'desc');
+                        // ->get();
 
         // $bmp_record = ServiceUserBmp::where('is_deleted','0')
         //                             ->where('service_user_id', $service_user_id)
         //                             ->where('home_id', $home_id)
         //                             ->orderBy('id','desc');
-       
 
 
 
@@ -74,8 +76,8 @@ class BmpController extends ServiceUserManagementController
         //                 ->where('su_bmp.service_user_id', $service_user_id)
         //                 ->where('su_bmp.home_id', $home_id)
         //                 ->whereDate('su_bmp.created_at', '=', $today)
-        //                 ->orderBy('su_bmp.id', 'desc');
-        //                 // ->get();
+        //                 ->orderBy('su_bmp.id', 'desc')
+        //                 ->get();
 
         // dd($bmp_record);
 
@@ -112,7 +114,6 @@ class BmpController extends ServiceUserManagementController
         shuffle($colors);
 
         foreach ($bmp_form as $key => $value) {
-              $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
             $details_check = (!empty($value->details)) ? '<i class="fa fa-check"></i>' : '';
             //$plan_check    = (!empty($value->plan)) ? '<i class="fa fa-check"></i>' : '';
             //$review_check  = (!empty($value->review)) ? '<i class ="fa fa-check"></i>' : '';
@@ -133,7 +134,7 @@ class BmpController extends ServiceUserManagementController
                                     <span class="arrow"></span>
                                     <div class="rmpWithPlusInput">
                                         <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
-                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $value->form_title . ' - ' . $value->title . '" maxlength="255"/>
                                         
                                         <div class="input-plus color-green" style="background-color: ' . $color . ';"> <i class="fa fa-plus"></i> 
                                         </div>   
@@ -162,6 +163,7 @@ class BmpController extends ServiceUserManagementController
                                     <div class="input-group-addon cus-inpt-grp-addon sbt_tick_area"">
                                         <div class="tick_show sbt_btn_tick_div ' . $tick_btn_class . '">' . $details_check . '</div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -176,7 +178,7 @@ class BmpController extends ServiceUserManagementController
                                     <span class="arrow"></span>
                                     <div class="rmpWithPlusInput">
                                         <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
-                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="bmp_title_name" disabled value="' . $value->form_title . ' - ' . $value->title . '" maxlength="255"/>
                                         
                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>
@@ -292,19 +294,23 @@ class BmpController extends ServiceUserManagementController
             $home_ids = Auth::user()->home_id;
             $ex_home_ids = explode(',', $home_ids);
             $home_id = $ex_home_ids[0];
-
+            // print_r($home_id);
             $su_bmp_ids = $data['su_bmp_id'];
             if (!empty($su_bmp_ids)) {
                 foreach ($su_bmp_ids as $key => $record_id) {
-                    // $record = ServiceUserBmp::find($record_id);
+                    //$record = ServiceUserBmp::find($record_id);
                     $record = DynamicForm::find($record_id);
                     $su_home_id = ServiceUser::where('id', $record->service_user_id)->value('home_id');
+                  
                     if ($home_id == $su_home_id) {
+                        echo "done";
                         $record->details = $data['edit_bmp_details'][$key];
+
                         // $record->plan    = $data['edit_bmp_plan'][$key];
                         // $record->review  = $data['edit_bmp_review'][$key];
                         if ($record->save()) {
-
+                            echo "saave data";
+                            die;
                             $notification                             = new Notification;
                             $notification->service_user_id            = $record->service_user_id;
                             $notification->event_id                   = $record->id;

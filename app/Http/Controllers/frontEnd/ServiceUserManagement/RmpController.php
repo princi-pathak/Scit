@@ -130,7 +130,7 @@ class RmpController extends ServiceUserManagementController
                                 <span class="arrow"></span>
                                 <div class="rmpWithPlusInput">
                                     <input type="hidden" name="su_rmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_rmp_id_' . $value->id . '">
-                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
+                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="rmp_title_name" disabled value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>  
                                     <div class="input-plus color-green" style="background-color: ' . $color . ';"> <i class="fa fa-plus"></i> </div>   
                                         <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>
