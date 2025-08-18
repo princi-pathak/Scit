@@ -45,6 +45,7 @@
 
         .message-body.msg-in.rightmsg {
             left: 318px;
+            top: 6px;
         }
 
         .timeline-messages .msg-in.rightmsg .arrow {

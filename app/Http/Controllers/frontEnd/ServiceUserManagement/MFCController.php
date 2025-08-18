@@ -157,7 +157,7 @@ class MFCController extends ServiceUserManagementController
                         echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';
                     }
                     echo '<input type="hidden" name="edit_su_record_id[]" value="' . $value->id . '" disabled="disabled" class="edit_record_id_' . $value->id . '" />
-                                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
+                                                    <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                                     <i class="fa fa-cog"></i>
                                                     <div class="pop-notifbox">
                                                         <ul class="pop-notification" type="none">';

@@ -320,8 +320,10 @@ class ProfileController extends ServiceUserManagementController
             if (!empty($careteam)) {
 
                 $su_home_id  = ServiceUser::where('id', $careteam->service_user_id)->value('home_id');
-                $usr_home_id = Auth::user()->home_id;
-
+                // $usr_home_id = Auth::user()->home_id;
+                $home_ids = Auth::user()->home_id;
+                $ex_home_ids = explode(',', $home_ids);
+                $usr_home_id = $ex_home_ids[0];
                 if ($su_home_id != $usr_home_id) {
                     return redirect('/')->with('error', UNAUTHORIZE_ERR);
                 }
@@ -372,7 +374,10 @@ class ProfileController extends ServiceUserManagementController
         if (!empty($careteam)) {
 
             $su_home_id     = ServiceUser::where('id', $careteam->service_user_id)->value('home_id');
-            if ($su_home_id != Auth::user()->home_id) {
+            $home_ids = Auth::user()->home_id;
+            $ex_home_ids = explode(',', $home_ids);
+            $home_id = $ex_home_ids[0];
+            if ($su_home_id != $home_id) {
                 return redirect('/')->with('error', UNAUTHORIZE_ERR);
             }
 
@@ -632,9 +637,11 @@ class ProfileController extends ServiceUserManagementController
         if (empty($service_user)) {
             return false;
         }
-
+        $home_ids = Auth::user()->home_id;
+        $ex_home_ids = explode(',', $home_ids);
+        $home_id = $ex_home_ids[0];
         $su_home_id = $service_user->home_id;
-        if ($su_home_id != Auth::user()->home_id) {
+        if ($su_home_id != $home_id) {
             echo 'AUTH_ERR';
             die;
         }
@@ -681,7 +688,7 @@ class ProfileController extends ServiceUserManagementController
                 $log_book_record->title   = ucfirst($service_user->name) . ' ' . $log_title;
                 $log_book_record->date    = date('Y-m-d H:i:s');
                 $log_book_record->details = $wear_detail; //clothing info
-                $log_book_record->home_id = Auth::user()->home_id;
+                $log_book_record->home_id = $home_id;
                 $log_book_record->user_id = Auth::user()->id;
                 $log_book_record->category_name = "Attendance";
                 $log_book_record->category_icon = "fa fa-clock-o";
@@ -708,7 +715,7 @@ class ProfileController extends ServiceUserManagementController
             $notification->event_id                   = $su_afc->id;
             $notification->notification_event_type_id = '13';
             $notification->event_action               = 'ADD';
-            $notification->home_id                    = Auth::user()->home_id;
+            $notification->home_id                    = $home_id;
             $notification->user_id                    = Auth::user()->id;
             $notification->save();
 
