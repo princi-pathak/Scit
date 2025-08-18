@@ -10,7 +10,6 @@ use Carbon\Carbon;
 
 class IncidentController extends ServiceUserManagementController
 {
-
     public function index($service_user_id = null)
     {
         $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');

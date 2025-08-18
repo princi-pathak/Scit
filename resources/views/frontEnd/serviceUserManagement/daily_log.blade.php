@@ -68,7 +68,6 @@
             bottom: 0px;
         }
 
-
         .logimg img {
             width: 100px;
             height: 60px;
@@ -104,13 +103,12 @@
             position: absolute;
             right: 24px;
         }
-
-        .arrow {
-            border-left: 0px solid #777777 !important;
+        .timeline-desk .badge.red-bg{
+            position: absolute;
+            right: 56px;
+            top: 16px;        
         }
     </style>
-
-
 
     @php
         if (!function_exists('time_diff_string')) {
@@ -146,7 +144,6 @@
                 return $string ? implode(', ', $string) . ' ago' : 'just now';
             }
         }
-
     @endphp
 
     <!--Core CSS -->
@@ -217,8 +214,8 @@
                                 <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
                                     class="input-group date">
                                     <input id="date_range_input_log" style="cursor: pointer;" name="daterange"
-                                        {{-- value="{{ $oneMonthAgo }} - {{ $today }}" --}} value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}"
-                                        type="text" readonly="" size="16" class="form-control log-book-datetime">
+                                        value="{{ $oneMonthAgo }} - {{ $today }}" type="text" readonly=""
+                                        size="16" class="form-control log-book-datetime">
                                     <span class="input-group-btn add-on datetime-picker2">
                                         <button onclick="showDate()" class="btn btn-primary" type="button"><span
                                                 class="glyphicon glyphicon-calendar"></span></button>
@@ -248,11 +245,11 @@
                             <label style="display: none;"> Log Type: </label>
                             <div>
                                 <select class="form-control" style="min-width:200px;" id="select_log_type" name="log_type"
-                                    required />
-                                <option selected value="all">Log Type All</option>
-                                <option value="1">Daily Log</option>
-                                <option value="2">Weekly Log</option>
-                                <option value="3">Monthly Log</option>
+                                    required>
+                                    <option selected value="all">Log Type All</option>
+                                    <option value="1">Daily Log</option>
+                                    <option value="2">Weekly Log</option>
+                                    <option value="3">Monthly Log</option>
                                 </select>
                             </div>
                         </div>
@@ -264,9 +261,11 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                                                                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                    </div> -->
+
+                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                    </div> -->
+
                 </div>
 
                 <div class="row">
@@ -301,8 +300,7 @@
                                                     <div class="panel-body">
                                                         <span class="arrow"></span>
                                                         @if ($key['is_late'] == '1')
-                                                            <span class="badge badge-pill red-bg"
-                                                                style="position:absolute;right:30px;">Late</span>
+                                                            <span class="badge badge-pill red-bg">Late</span>
                                                         @endif
                                                         <span style="background:{{ $key['category_color'] ?? '' }};"
                                                             data-toggle="tooltip" data-placement="left"
@@ -378,8 +376,7 @@
                                                     <div class="panel-body">
                                                         <span class="arrow-alt"></span>
                                                         @if ($key['is_late'] == '1')
-                                                            <span class="badge badge-pill red-bg"
-                                                                style="position:absolute;right:30px;">Late</span>
+                                                            <span class="badge badge-pill red-bg">Late</span>
                                                         @endif
 
                                                         <span style="background:{{ $key['category_color'] ?? '' }};"
@@ -715,9 +712,9 @@
 
         });
 
-
-
-
+        
+  
+        
 
 
         let viewdatawithvalueFormio = () => {
@@ -1377,7 +1374,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type': log_type,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
             getDailyLogData(data);
@@ -1404,7 +1401,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type': log_type,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
             else
@@ -1414,7 +1411,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type': log_type,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
             getDailyLogData(data);
@@ -1441,7 +1438,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type': log_type,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
             else
@@ -1451,7 +1448,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type': log_type,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
 
@@ -1477,7 +1474,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type': log_type,
+                    'log_type' : log_type,
                     'keyword': keyword
                 };
             else
