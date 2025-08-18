@@ -878,7 +878,8 @@ class CalendarEventController extends Controller
 
 		} else {
 			if(!empty($calendar)){
-				$su_home_id = ServiceUser::where('id',$calendar->service_user_id)->value('home_id');
+				// $su_home_id = ServiceUser::where('id',$calendar->service_user_id)->value('home_id');
+				$su_home_id = User::where('id',$calendar->service_user_id)->value('home_id');
 				$home_ids = Auth::user()->home_id;
 				$ex_home_ids = explode(',', $home_ids);
 				$home_id = $ex_home_ids[0];
