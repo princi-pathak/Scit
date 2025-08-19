@@ -13,7 +13,7 @@ use Carbon\Carbon;
 class RmpController extends ServiceUserManagementController
 {
 
-    public function index($service_user_id = null)
+    public function index($service_user_id = null, Request $request)
     {
 
         $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
@@ -56,15 +56,15 @@ class RmpController extends ServiceUserManagementController
         //                             ->orderBy('id','desc')
         //                             ->get();
 
-        $today = Carbon::now()->format('Y-m-d');
+        // $today = Carbon::now()->format('Y-m-d');
 
         $this_location_id = DynamicFormLocation::getLocationIdByTag('rmp');
         $rmp_title        = DynamicForm::where('location_id', $this_location_id)
             //whereIn('form_builder_id',$form_bildr_ids)
             ->where('service_user_id', $service_user_id)
             ->where('is_deleted', '0')
-            ->orderBy('id', 'desc')
-            ->whereDate('created_at', '=', $today);
+            ->orderBy('id', 'desc');
+            // ->whereDate('created_at', '=', $today);
 
         // dd($rmp_title);
 
@@ -93,6 +93,48 @@ class RmpController extends ServiceUserManagementController
             }
             $tick_btn_class = "sbt-edit-rmp-record submit-edit-logged-record";
         }
+
+                // Check if it's an AJAX filter call
+        if ($request->isMethod('post') && $request->input('filter') == 1) {
+
+            // if ($request->filled('staff_member')) {
+            //     $bmp_record->where('user_id', $request->input('staff_member'));
+            // }
+
+            if ($request->filled('service_user')) {
+                $rmp_title->where('service_user_id', $request->input('service_user'));
+            }
+
+            if ($request->filled('category_id') && $request->input('category_id') !== 'all') {
+                $rmp_title->where('category_id', $request->input('category_id'));
+            }
+
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+                $start = Carbon::parse($request->input('start_date'))->startOfDay();
+                $end   = Carbon::parse($request->input('end_date'))->endOfDay();
+
+                $rmp_title->whereBetween('dynamic_form.created_at', [$start, $end]);
+            }
+
+            if ($request->filled('keyword')) {
+                $keyword = $request->input('keyword');
+                $rmp_title->where(function ($query) use ($keyword) {
+                    $query->where('title', 'like', "%{$keyword}%")
+                        ->orWhere('title', 'like', "%{$keyword}%");
+                });
+            }
+
+            $rmp_form_title = $rmp_title->get(); // Get filtered data
+
+        } else {
+
+            $today = Carbon::today();
+            $rmp_title->whereDate('dynamic_form.created_at', $today);
+
+            // No filters — get paginated result
+            $rmp_form_title = $rmp_title->paginate();
+        }
+        
         $loop = 1;
         $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
         shuffle($colors);

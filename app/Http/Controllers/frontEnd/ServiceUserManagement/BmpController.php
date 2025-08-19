@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class BmpController extends ServiceUserManagementController
 {
-    public function index($service_user_id = null)
+    public function index($service_user_id = null, Request $request)
     {
         $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
         // $home_id = Auth::user()->home_id;
@@ -49,8 +49,6 @@ class BmpController extends ServiceUserManagementController
         //$form_bildr_ids_data = DynamicFormBuilder::select('id')->whereRaw('FIND_IN_SET(?,location_ids)',$this_location_id)->get()->toArray();
         //$form_bildr_ids = array_map(function($v) { return $v['id']; }, $form_bildr_ids_data);
 
-        $today = Carbon::now()->format('Y-m-d');
-
 
         $bmp_record   = DynamicForm::where('location_id', $this_location_id)
                         ->join('dynamic_form_builder', 'dynamic_form_builder.id','=','dynamic_form.form_builder_id')
@@ -58,7 +56,7 @@ class BmpController extends ServiceUserManagementController
                         //whereIn('form_builder_id',$form_bildr_ids)
                         ->where('service_user_id', $service_user_id)
                         ->where('is_deleted', '0')
-                        ->whereDate('dynamic_form.created_at', '=', $today)
+                        // ->whereDate('dynamic_form.created_at', '=', $today)
                         ->orderBy('id', 'desc');
                         // ->get();
 
@@ -107,6 +105,48 @@ class BmpController extends ServiceUserManagementController
             }
 
             $tick_btn_class = "sbt-edit-bmp-record submit-edit-logged-record";
+        }
+
+
+        // Check if it's an AJAX filter call
+        if ($request->isMethod('post') && $request->input('filter') == 1) {
+
+            // if ($request->filled('staff_member')) {
+            //     $bmp_record->where('user_id', $request->input('staff_member'));
+            // }
+
+            if ($request->filled('service_user')) {
+                $bmp_record->where('service_user_id', $request->input('service_user'));
+            }
+
+            if ($request->filled('category_id') && $request->input('category_id') !== 'all') {
+                $bmp_record->where('category_id', $request->input('category_id'));
+            }
+
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+                $start = Carbon::parse($request->input('start_date'))->startOfDay();
+                $end   = Carbon::parse($request->input('end_date'))->endOfDay();
+
+                $bmp_record->whereBetween('dynamic_form.created_at', [$start, $end]);
+            }
+
+            if ($request->filled('keyword')) {
+                $keyword = $request->input('keyword');
+                $bmp_record->where(function ($query) use ($keyword) {
+                    $query->where('title', 'like', "%{$keyword}%")
+                        ->orWhere('title', 'like', "%{$keyword}%");
+                });
+            }
+
+            $bmp_form = $bmp_record->get(); // Get filtered data
+
+        } else {
+
+            $today = Carbon::today();
+            $bmp_record->whereDate('dynamic_form.created_at', $today);
+
+            // No filters — get paginated result
+            $bmp_form = $bmp_record->paginate();
         }
 
         $loop = 1;
@@ -288,7 +328,7 @@ class BmpController extends ServiceUserManagementController
     {
 
         $data = $request->all();
-        echo '<pre>'; print_r($data); die;
+        // echo '<pre>'; print_r($data); die;
 
         if (isset($data['su_bmp_id'])) {
             $home_ids = Auth::user()->home_id;
