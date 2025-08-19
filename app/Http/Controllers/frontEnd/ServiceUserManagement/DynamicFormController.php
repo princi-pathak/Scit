@@ -541,68 +541,64 @@ class DynamicFormController extends Controller
 
             if ($loop % 2 == 0) {
 
-                echo '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows">
-                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                        <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
-                        <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                            <div class="input-group popovr rightSideInput">
-
-                                <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
-
-                                <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '">
-                                <span>
-                                    <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . ' " maxlength="255"/></span></a>
-                                
-                                <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
-                                    <i class="fa fa-cog"></i>
-                                    <div class="pop-notifbox">
-                                        <ul class="pop-notification" type="none">
-                                            <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
-                                            <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
-                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
-                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>
-                                        </ul>
+                echo '  <div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                                <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
+                                    <div class="input-group popovr rightSideInput">
+                                        <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '">
+                                            <span>
+                                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . ' " maxlength="255"/>
+                                            </span>
+                                        </a>
+                                        
+                                        <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
+                                            <i class="fa fa-cog"></i>
+                                            <div class="pop-notifbox">
+                                                <ul class="pop-notification" type="none">
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
+                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
+                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                        <span class="ritOrdring three rightdate"> ' . $date . ' - ' . $time . '</span>
+                                        <span class="rightArrow"></span>
                                     </div>
-                                </span>
-                                <span class="ritOrdring three rightdate"> ' . $date . ' - ' . $time . '</span>
-                                <span class="rightArrow"></span>
+                                </div>
                             </div>
-                        </div>
-                        </div>
-                    </div>  ';
+                        </div>  ';
             } else {
 
-                echo '<div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows">
-                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                        <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
-                        <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                            <div class="input-group popovr timelineInput">
+                echo '  <div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                                <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
+                                    <div class="input-group popovr timelineInput">
+                                        <a href="#" class="dyn-form-view-data" id="' . $value->id . '">
+                                            <span class="inputTextLefttoRight">
+                                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
+                                            </span>
+                                        </a>
+                                        <span class="timLineDate">' . $date . ' - ' . $time . ' </span>
+                                        <span class="arrow"></span>
 
-                               <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
-                                <a href="#" class="dyn-form-view-data" id="' . $value->id . '">
-                                <span class="inputTextLefttoRight">
-                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/></span></a>
-                                <span class="timLineDate">' . $date . ' - ' . $time . '
-                                </span>
-                                <span class="arrow"></span>
-
-                                <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
-                                    <i class="fa fa-cog"></i>
-                                    <div class="pop-notifbox">
-                                        <ul class="pop-notification" type="none">
-                                            <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
-                                            <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
-                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
-                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>
-                                        </ul>
+                                        <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="cursor:pointer; background-color: ' . $color . ';">
+                                            <i class="fa fa-cog"></i>
+                                            <div class="pop-notifbox">
+                                                <ul class="pop-notification" type="none">
+                                                    <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
+                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
+                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>
+                                                </ul>
+                                            </div>
+                                        </span>
                                     </div>
-                                </span>
+                                </div>
                             </div>
-                        </div>
-                        </div>
-                    </div>  ';
+                        </div> ';
             }
 
             $loop++;
