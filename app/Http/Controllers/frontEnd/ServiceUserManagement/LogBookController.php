@@ -210,7 +210,7 @@ class LogBookController extends ServiceUserManagementController
 
     public function add(Request $request)
     {
-        // echo "<pre>"; print_r($request->all());die;
+        echo "<pre>"; print_r($request->all()); die;
         if ($request->isMethod('post')) {
             //sourabh geo location
             // $ip = '49.35.41.195'; //For static IP address get

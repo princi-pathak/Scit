@@ -783,19 +783,5 @@
 
         });
     });
-
-    // $('#search_incident_type').on('change', function() {
-    //     var searchType = document.getElementById('search_incident_type').value;
-    //     if (searchType == 1) {
-    //         $('.search_incident_title').show();
-    //     } else {
-    //         $('.search_incident_title').hide();
-    //     }
-    //     if (searchType == 2) {
-    //         $('.search_incident_date').show();
-    //     } else {
-    //         $('.search_incident_date').hide();
-    //     }
-    // });
 </script>
 @endsection

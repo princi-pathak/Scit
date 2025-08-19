@@ -11,6 +11,8 @@ Route::post('/check-out-activity', 'App\Http\Controllers\Android\AndroidApiContr
 Route::post('/get-user-activity', 'App\Http\Controllers\Android\AndroidApiController@get_user_activity');
 // Route::post('/qrcode', 'Android\AndroidApiController@QRCode');
 Route::post('/get-company-data', 'App\Http\Controllers\Android\AndroidApiController@get_company_data');
+// Ram 19/08/2025
+Route::post('get-homes',[AndroidApiController::class,'get_homes']);
 
 /*
 |--------------------------------------------------------------------------

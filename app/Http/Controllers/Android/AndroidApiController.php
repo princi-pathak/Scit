@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 use Validator;
 use Hash;
-use App\User, App\Admin;
+use App\User, App\Admin, App\Home;
 use App\LeaveType, App\Staffleaves, App\LoginInActivity, App\ServiceUser;
 
 
@@ -117,6 +117,24 @@ class AndroidApiController extends Controller
     //     }
     //     return json_encode($result);
     // }
+    // Ram 19/08/2025 code for get homes
+    public function get_homes(Request $request){
+        $validator = Validator::make($request->all(), [
+            'company_name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first(), 'Data' => array()], 200);
+        }
+        $admin_id = Admin::where('company', 'like', $request->company_name)->where('is_deleted', 0)->value('id');
+        if($admin_id){
+            $homes = Home::select('id', 'title')->where('admin_id', $admin_id)->where('is_deleted', '0')->get();
+            return response()->json(['success'=> true, 'message'=>'All Homes.','Data'=> $homes],200);
+        }else{
+            return response()->json(['success' => false, 'message' => 'Company Name is not correct.', 'Data' => array()], 200);
+        }
+        
+    }
     public function user_login(Request $request)
     {
         if($request->user_name===null)
@@ -127,9 +145,13 @@ class AndroidApiController extends Controller
         {
             return response()->json(['success'=> false, 'message'=>'Please provide valid password..!'], 200);
         }
+        if($request->home_id == null){
+            return response()->json(['success'=> false, 'message'=>'Please provide home id..!'], 200);
+        }
 
         $recordArray = array();
-        $check_username = ServiceUser::where('user_name', $request->user_name)->first();
+        // $check_username = ServiceUser::where('user_name', $request->user_name)->first();
+        $check_username = User::where('user_name', $request->user_name)->first();
         if (!$check_username) {
             return response()->json(['success'=> false, 'message'=>'Invalid Email Address!'], 200);
         }
@@ -139,28 +161,29 @@ class AndroidApiController extends Controller
 
         }else{
             $data['id'] = $check_username->id;
-            $data['home_id'] = $check_username->home_id;
+            // $data['home_id'] = $check_username->home_id;
+            $data['home_id'] = $request->home_id;
             $data['name'] = $check_username->name;
             $data['user_name'] = $check_username->user_name;
             $data['phone_no'] = $check_username->phone_no;
-            $data['date_of_birth'] = $check_username->date_of_birth;
-            $data['section'] = $check_username->section;
-            $data['admission_number'] = $check_username->admission_number;
-            $data['short_description'] = $check_username->short_description;
-            $data['height'] = $check_username->height;
-            $data['weight'] = $check_username->weight;
-            $data['hair_and_eyes'] = $check_username->hair_and_eyes;
-            $data['markings'] = $check_username->markings;
+            $data['date_of_birth'] = $check_username->date_of_birth ?? "";
+            $data['section'] = $check_username->section ?? "";
+            $data['admission_number'] = $check_username->admission_number ?? "";
+            $data['short_description'] = $check_username->short_description ?? "";
+            $data['height'] = $check_username->height ?? "";
+            $data['weight'] = $check_username->weight ?? "";
+            $data['hair_and_eyes'] = $check_username->hair_and_eyes ?? "";
+            $data['markings'] = $check_username->markings ?? "";
             $data['image'] = $check_username->image;
             $data['email'] = $check_username->email;
             $data['personal_info'] = $check_username->personal_info;
-            $data['education_history'] = $check_username->education_history;
-            $data['bereavement_issues'] = $check_username->bereavement_issues;
-            $data['drug_n_alcohol_issues'] = $check_username->drug_n_alcohol_issues;
-            $data['mental_health_issues'] = $check_username->mental_health_issues;
-            $data['current_location'] = $check_username->current_location;
-            $data['previous_location'] = $check_username->previous_location;
-            $data['mobile'] = $check_username->mobile;
+            $data['education_history'] = $check_username->education_history ?? "";
+            $data['bereavement_issues'] = $check_username->bereavement_issues ?? "";
+            $data['drug_n_alcohol_issues'] = $check_username->drug_n_alcohol_issues ?? "";
+            $data['mental_health_issues'] = $check_username->mental_health_issues ?? "";
+            $data['current_location'] = $check_username->current_location ?? "";
+            $data['previous_location'] = $check_username->previous_location ?? "";
+            $data['mobile'] = $check_username->mobile ?? "";
             // $data['last_loc_area_type'] = $check_username->last_loc_area_type;
             // $data['location_get_interval'] = $check_username->location_get_interval;
             $data['created_at'] = $check_username->created_at;
@@ -309,8 +332,10 @@ class AndroidApiController extends Controller
             return response()->json(['success'=> false, 'message'=>'Please provide home id..!'], 200);
         } else {
 
-            $record = ServiceUser::where('id', $request->user_id)->where('is_deleted', 0)->where('home_id', $request->home_id)->get();
-            if( $record->count() == 1 ){
+            // $record = ServiceUser::where('id', $request->user_id)->where('is_deleted', 0)->where('home_id', $request->home_id)->get();
+            $record = User::where('id', $request->user_id)->where('is_deleted', 0)->whereRaw('FIND_IN_SET(?, home_id)', [$request->home_id])->exists();
+            // if( $record->count() == 1 ){
+            if( $record){
                 $activity = new LoginInActivity();
                 $activity->user_id = $request->user_id;
                 $activity->login_date = date('Y-m-d');
@@ -348,9 +373,12 @@ class AndroidApiController extends Controller
             return response()->json(['success'=> false, 'message'=>'Please provide us home id..!'], 200);
         }
 
-        $record = ServiceUser::where('id', $request->user_id)->where('is_deleted', 0)->where('home_id', $request->home_id)->get();
-        if( $record->count() == 1 ){
-            $response = LoginInActivity::where('id', $request->activity_id)->where('user_id', $request->user_id)->where('company_id', $request->company_id)->update(['check_out_time'=>date("Y-m-d H:i:s"), 'latitude_out'=> $request->latitude_out, 'longitude_out'=>$request->longitude_out]);
+        // $record = ServiceUser::where('id', $request->user_id)->where('is_deleted', 0)->where('home_id', $request->home_id)->get();
+        $record = User::where('id', $request->user_id)->where('is_deleted', 0)->whereRaw('FIND_IN_SET(?, home_id)', [$request->home_id])->exists();
+        // if( $record->count() == 1 ){
+        if( $record){
+            // $response = LoginInActivity::where('id', $request->activity_id)->where('user_id', $request->user_id)->where('company_id', $request->company_id)->update(['check_out_time'=>date("Y-m-d H:i:s"), 'latitude_out'=> $request->latitude_out, 'longitude_out'=>$request->longitude_out]);
+            $response = LoginInActivity::where('id', $request->activity_id)->where('user_id', $request->user_id)->update(['check_out_time'=>date("Y-m-d H:i:s"), 'latitude_out'=> $request->latitude_out, 'longitude_out'=>$request->longitude_out]);
 
             if($response){
                 return response()->json(['success'=>true,'message'=>'Checked out successfully..! ','Data'=>$response], 200);
