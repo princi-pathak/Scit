@@ -393,7 +393,6 @@
             $('body').addClass('body-overflow');
 
             var service_user_id = "{{ $service_user_id }}";
-            //  alert(1); 
             $.ajax({
                 type: 'get',
                 url: "{{ url('/service/rmp/view') }}" + '/' + service_user_id,
@@ -416,6 +415,23 @@
             });
             return false;
             // });
+            
+        });
+
+           function showDate() {
+            $('#date_range_input').click();
+        }
+
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
+                    .format('YYYY-MM-DD'));
+            });
         });
     </script>
 
@@ -546,6 +562,147 @@
                 $(this).closest('.cog-panel').find('.input-plusbox').toggle();
             });
         });
+
+          function getFormData(data) {
+            var service_user_id = "{{ $service_user_id }}";
+            $.ajax({
+                type: 'post',
+                  url: "{{ url('/service/rmp/view') }}" + '/' + service_user_id,
+                data: data,
+                success: function(resp) {
+                    console.log(resp)
+                    if (isAuthenticated(resp) == false) {
+                        return false;
+                    }
+                    console.log("resp from the ", resp);
+                    if (resp == '') {
+                        $('.logged-rmp-plan-shown').html(
+                            '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'
+                        );
+                    } else {
+                        $('.logged-rmp-plan-shown').html("");
+                        $('.logged-rmp-plan-shown').html(resp);
+                    }
+                }
+            });
+        }
+    </script>
+        <!-- Daterange Filter -->
+    <script>
+        $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+            let staff_member = $('#staff_member').val();
+            let start_date = picker.startDate.format('DD-MM-YYYY');
+            let end_date = picker.endDate.format('DD-MM-YYYY');
+            let service_user = $('#service_user').val();
+            let keyword = $('#keyword').val();
+            $(this).val(start_date + ' - ' + end_date);
+
+            let today = new Date;
+            let todayFormat = ("0" + today.getDate()).slice(-2) + "-" + ("0" + (today.getMonth() + 1)).slice(-2) +
+                "-" +
+                today.getFullYear();
+
+            if (start_date == todayFormat && end_date == todayFormat) {
+                $('#today').text('Today');
+            } else {
+                $('#today').text(start_date + ' - ' + end_date);
+            }
+
+            let category_id = $("#select_category").val();
+
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': picker.startDate.format('YYYY-MM-DD'),
+                    'end_date': picker.endDate.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': picker.startDate.format('YYYY-MM-DD'),
+                    'end_date': picker.endDate.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+
+
+            getFormData(data);
+            return false;
+
+        });
+    </script>
+
+    <!-- {{-- Filter for child  --}} -->
+    <script type="text/javascript">
+        $('#service_user').change(function() {
+            let staff_member = $('#staff_member').val();
+            let service_user = $('#service_user').val();
+            let category_id = $('#select_category').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let keyword = $('#keyword').val();
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            getFormData(data);
+            return false;
+
+        });
+    </script>
+
+      <!-- {{-- Filter for keyword --}} -->
+    <script>
+        function myFunctionkey() {
+            let staff_member = $('#staff_member').val();
+            let service_user = $('#service_user').val();
+            let category_id = $('#select_category').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let keyword = $('#keyword').val();
+            // alert(keyword)
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            getFormData(data);
+            return false;
+        }
     </script>
 
     <script>
