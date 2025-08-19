@@ -8,7 +8,7 @@
     }
 
     .employees-info .save-btn {
-        background-color: #e10078;
+        /* background-color: #e10078; */
         font-weight: 600;
     }
 
@@ -37,7 +37,9 @@
     .date-of-weak-shift {
         color: #1f88b5;
     }
-
+    .modal-content .modal-header .modal-title{
+        color: #fff;
+    }
 </style>
 @foreach($rota as $rota_data)
 <div class="row">
@@ -120,12 +122,12 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to @if($rota_data->status === 0)
+                                                <h4 class="modal-title" id="exampleModalLabel">Are you sure you want to @if($rota_data->status === 0)
                                                     Publish
                                                     @endif
                                                     @if($rota_data->status === 1)
                                                     Unpublish
-                                                    @endif this rota?</h1>
+                                                    @endif this rota?</h4>
                                                 <button type="button" class="modal_close_btn" data-bs-dismiss="modal" aria-label="Close"> &#10006; </button>
                                             </div>
                                             <div class="modal-body">

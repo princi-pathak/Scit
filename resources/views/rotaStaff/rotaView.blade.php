@@ -94,18 +94,21 @@
     box-shadow: rgb(0 0 0 / 25%) 0px 2px 8px;
   }
 
-  .modal-header {
+  .modal-content .modal-header {
     background-color: #1f88b5;
     color: #fff;
-    display: block;
+    display: flex;
   }
+    .modal-content .modal-header h4.modal-title{
+      color: #fff;
+    }
 
   .modal-dialog .close_btn_modal {
     border: none;
     outline: none;
     background-color: inherit;
-    color: #e10078;
-    border: 2px solid #e10078;
+    color: #1f88b5;
+    border: 2px solid #1f88b5;
     padding: 5px 16px;
     border-radius: 5px;
     font-weight: 600;
@@ -113,16 +116,16 @@
   }
 
   .modal-dialog .close_btn_modal:hover {
-    background-color: #ad005c;
+    background-color: #0d688e;
     color: #fff;
-    border: 2px solid #ad005c;
+    border: 2px solid #0d688e;
   }
 
   .modal-dialog .save_btn_modal {
     border: none;
     outline: none;
     padding: 8px 20px;
-    background-color: #e10078;
+    background-color: #1f88b5;
     color: #fff;
     border-radius: 5px;
     font-weight: 600;
@@ -130,8 +133,8 @@
   }
 
   .modal-dialog .save_btn_modal:hover {
-    background-color: #ad005c;
-    border-color: #ad005c;
+    background-color: #0d688e;
+    border-color: #0d688e;
   }
 
   .modal-header .modal_close_btn {
@@ -574,12 +577,20 @@
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Rename rota</h1>
-        <button type="button" class="modal_close_btn" data-bs-dismiss="modal" aria-label="Close"> ✖ </button>
+        <h4 class="modal-title">Rename rota</h4>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"> ✖ </button>
       </div>
+
+      <!-- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Rename rotar</h4>
+        </div> -->
+
       <div class="modal-body">
-        <div class="col-md-5">
-          <input type="text" id="team-name" class="form-control">
+        <div class="col-md-12">
+          <div class="p-t-20 p-b-20">
+             <input type="text" id="team-name" class="form-control">
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -642,11 +653,63 @@
   <div class="modal-dialog" style="max-width: 70rem;">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Evening Shift</h1>
+        <h4 class="modal-title" id="exampleModalLabel">Evening Shift</h4>
         <button type="button" class="modal_close_btn" data-bs-dismiss="modal" aria-label="Close"> ✖ </button>
       </div>
       <div class="modal-body">
-        <div class="d-flex align-items-center">
+
+      <div class="eveningShiftTable">       
+        <div class="weekCont">
+           <div class="d-flex">
+              <label>Select Week</label>
+              <select name="" class="form-select form-control" id="rota_starting_date"> </select>
+           </div>
+           <div class="">
+             <span>Week total our: <strong><span id="week_total"></span> (Incl. breaks)</strong></span>
+           </div>
+        </div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Current Contracted/h</th>
+                <th>Days worked</th>
+                <th>Breaks (Total)</th>
+                <th>Total/h</th>
+                <th>
+                  <input type="checkbox" id="" name="">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>Doe</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>Doe</td>
+              </tr>
+              <tr>
+                <td>Mary</td>
+                <td>Moe</td>
+                <td>mary</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>Doe</td>
+              </tr>
+              <tr>
+                <td>July</td>
+                <td>Dooley</td>
+                <td>july</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>Doe</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- <div class="d-flex align-items-center">
           <span class="me-3">Select Week</span>
           <div class="col-md-3 col-lg-3 me-3">
             <select name="" class="form-select form-control" id="rota_starting_date">
@@ -686,7 +749,7 @@
               <p class="fw-bolder hide1" id="total_emp_hour_with_break"></p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

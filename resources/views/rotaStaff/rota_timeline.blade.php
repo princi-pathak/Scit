@@ -8,7 +8,7 @@
     }
 
     .employees-info .save-btn {
-        background-color: #e10078;
+        /* background-color: #e10078; */
         font-weight: 600;
     }
 
