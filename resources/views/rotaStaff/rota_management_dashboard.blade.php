@@ -81,7 +81,14 @@
                                         </div>
                                     </a>
                                 </div>
-
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <a href="{{ url('/staff/logs') }}">
+                                        <div class="sys-mngmnt-box">
+                                            <div class="sys-mngmnticon"> <i class="fa fa-id-card" aria-hidden="true"></i> </div>
+                                            <p>Staff Logs </p>
+                                        </div>
+                                    </a>
+                                </div>
 
 
 
