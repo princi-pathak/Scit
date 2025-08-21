@@ -119,10 +119,10 @@
 
                             <div class="form-group modal-footer m-t-0 modal-bttm">
                                 <button class="btn btn-default cancel-log" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
-                                <input type="hidden" name="id" value="">
-                                <input type="hidden" name="service_user_id" value="{{ $service_user_id }}">
+                                {{-- <input type="hidden" name="id" value=""> --}}
+                                {{-- <input type="hidden" name="service_user_id" value="{{ $service_user_id }}"> --}}
                                 <input type="hidden" name="location_id" value="9">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
                                 <button class="btn btn-warning submit-log hide-field" type="button"> Submit </button>
                             </div>
                         </div>
