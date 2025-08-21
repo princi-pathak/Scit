@@ -192,11 +192,11 @@
                                                 </td>
                                                 <td>{{ $val->reason }}</td>
                                                 <td><?php if(empty($val->check_out_time)){?>
-                                                    Pending...
+                                                    <button class="btn btn-info">Pending...</button>
                                                <?php } else if($val->is_valid == 1){?>
-                                                        <button>Valid</button>
+                                                        <button class="btn btn-warning" onclick="is_valid({{$val->id}},0)">Valid</button>
                                                     <?php }else{?>
-                                                        <button>In-valid</button>
+                                                        <button class="btn btn-warning" onclick="is_valid({{$val->id}},1)">In-valid</button>
                                                     <?php }?>
                                                 </td>
                                             </tr>
@@ -277,11 +277,11 @@ function log_filter_function(){
                     var status;
                     data.forEach((value) => {
                         if(value.check_out_time == '' || value.check_out_time == null){
-                            status="Pending...";
+                            status="<button class='btn btn-info'>Pending...</button>";
                         }else if(value.is_valid == 1){
-                            status="Valid";
+                            status = `<button class='btn btn-warning' onclick="is_valid('${value.id}', 0)">Valid</button>`;
                         }else{
-                            status="In-valid";
+                            status = `<button class='btn btn-warning' onclick="is_valid('${value.id}', 1)">In-valid</button>`;
                         }
                         html_data += `
                             <tr>
@@ -303,6 +303,40 @@ function log_filter_function(){
                 alert('Error - ' + errorMessage + "\nMessage: " + error);
             }
         });
+    }
+}
+function is_valid(id,update_value){
+    if((id === '') || (id === undefined) || (update_value === '') || (update_value === undefined)){
+        alert("Something went wrong! Please try again later");
+        return false;
+    }else{
+        var message=(update_value == 0) ? 'In-valid':'Valid';
+        if(confirm("Do you really want to "+message)){
+            $.ajax({
+                type: "POST",
+                url: "{{url('/satff/log/view/is_valid')}}",
+                data: {id:id,update_value:update_value,_token:"{{ csrf_token() }}"},
+                success: function(response) {
+                    console.log(response);
+                    // return false;
+                    if (typeof isAuthenticated === "function") {
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
+                    }
+                    if (response.success === true) {
+                        location.reload();
+                    }else{
+                        alert("Something went wrong! Please try again later");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
     }
 }
 </script>

@@ -7,7 +7,7 @@ use App\Rota, App\User, App\RotaShift, App\RotaAssignEmployee,App\LeaveType, App
 use Session, DB;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use Auth;
+use Auth,Validator;
 
 class RotaController extends Controller
 {
@@ -1398,6 +1398,44 @@ class RotaController extends Controller
       // echo "<pre>";print_r($request->all());die;
       $logs = LoginInActivity::where('user_id', $request->log)->whereMonth('login_date',$request->month)->whereYear('login_date',$request->year)->orderBy('id', 'DESC')->where('is_deleted', 0)->get();
       return response()->json(['success'=>true,'data'=>$logs]);
+    }
+    public function satff_log_view_is_valid(Request $request){
+      // echo "<pre>";print_r($request->all());die;
+      $validator=Validator::make($request->all(),
+        [
+            'id' =>'required|integer|exists:login_activities,id',
+            'update_value' =>'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()], 200);
+        }
+        try{
+          $update=LoginInActivity::find($request->id);
+          $update->is_valid=$request->update_value;
+          $update->save();
+          return response()->json(['success' => true,'message' =>'Updated successfully','data' => new \stdClass()], 200);
+        } catch (\Exception $e) {
+
+            // Log::error('Update Logs Is_valid: ' . $e->getMessage());
+            return response()->json(['success' => false,'message' =>$e->getMessage(),'data' => new \stdClass()], 500);
+        }
+    }
+    public function staff_timesheet(Request $request){
+      $staff_id=base64_decode($request->staff);
+      $staff=User::find($staff_id);
+      if($staff){
+        $month=date('m');
+        $year=date('Y');
+        $data['logs'] = LoginInActivity::where('user_id', $staff_id)->whereMonth('login_date',$month)->whereYear('login_date',$year)->orderBy('id', 'DESC')->where('is_deleted', 0)->get();
+        $data['staff']=$staff;
+        // echo "<pre>";print_r($data['logs']);die;
+        return view('rotaStaff.staff_timesheet',$data);
+      }else{
+        return redirect('staff/logs')->with('staff_error','Staff is not found');
+      }
+    }
+    public function staff_timesheet_add(Request $request){
+       return view('rotaStaff.staff_timesheet_add');
     }
 
 }

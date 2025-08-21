@@ -1,6 +1,6 @@
 @extends('frontEnd.layouts.master')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@section('title','Staff Logs')
+@section('title','Staff Timesheet')
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
@@ -132,16 +132,24 @@
             <div class="col-md-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
-                        <h4>Staff Logs</h4>
+                        <h4>Staff Timesheet</h4>
                     </header>
                     <div class="panel-body">
                         <div class="col-lg-12">
-                            <div class="jobsection">
-                                <!-- <a href="#" class="btn btn-warning" onclick="modal_show()"><i class="fa fa-plus"></i> Add</a> -->
-                                <!-- <a href="#" class="btn btn-warning" id="impExpClickbtnPopup">Import/Export</a> -->
-                                <!-- <div class="searchFilter">
-                                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn btn btn-default2">Show Search Filter</a>
-                                </div> -->
+                            <div class="jobsection justify-content-between align-items-center">
+                                <div class="d-flex justify-content-end gap-4 align-items-center">
+                                    <a href="javascript:void(0)" class="btn btn-warning modal_open" data-action="add"><i class="fa fa-plus"></i> Add</a>
+                                    <label for="fromDate" class="mb-0">Category:</label>
+                                    <select name="category" id="category" class="form-control">
+                                        <option selected="" disabled="">Select Category</option>
+                                        <option value="1">Sleep</option>
+                                        <option value="2">Disturbance</option>
+                                        <option value="3">Wake Night</option>
+                                        <option value="4">Annual Leave</option>
+                                        <option value="5">On Call</option>
+                                    </select>
+                                    <button type="button" class="btn btn-warning" onclick="location.reload()">Reset</button>
+                                </div>
                             </div>
                         </div>
                         <!-- <div class="col-lg-12">
@@ -221,49 +229,23 @@
                                 <!-- <div class="delete_table_row">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
                                 </div> -->
-                                <table class="table border-top border-bottom tablechange" id="satffLogsTable">
+                                <table class="table border-top border-bottom tablechange" id="satffTimesheetTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Staff Name</th>
-                                            <th>Email</th>
-                                            <th>Today Status</th>
+                                            <th>{{date('F Y')}}</th>
+                                            <th>Hours</th>
+                                            <th>Sleep</th>
+                                            <th>Disturbance</th>
+                                            <th>Wake Night</th>
+                                            <th>Annual Leave</th>
+                                            <th>On Call</th>
+                                            <th>Comments</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody id="user_data">
-                                        <?php foreach ($user_data as $key => $val) {
-                                            $date=date('Y-m-d');
-                                            $logs=App\LoginInActivity::where('user_id', $val->id)->whereDate('login_date',$date)->orderBy('id', 'DESC')->where('is_deleted', 0)->first();
-                                        ?>
-                                            <tr>
-                                                
-                                                <td>{{ ++$key }}</td>
-                                                <td>{{$val->name}}</td>
-                                                <td>{{$val->email}}</td>
-                                                <td>
-                                                    @if(empty($logs) || $logs->check_out_time != '')
-                                                        <button type="button" class="btn btn-danger">Logged Out</button>
-                                                    @else
-                                                        <button type="button" class="btn sel_design_layout">Logged In</button>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <div class="pageTitleBtn p-0">
-                                                        <div class="dropdown">
-                                                            <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
-                                                                Action <i class="fa fa-caret-down"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu dropdown-menu-right fade-up m-0">
-                                                                <a href="{{url('staff/log/view?log=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Log View</a>
-                                                                <a href="{{url('staff/timesheet?staff=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Staff Timesheet</a>
-                                                                <!-- <a onclick="return confirm('Are you sure to reject it?')" href="{{url('/reject_expense?key=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Reject</a> -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
+                                       
                                     </tbody>
                                 </table>
                             </div> <!-- End off main Table -->
@@ -273,6 +255,56 @@
             </div>
         </div>
     </div>
+    <!-- Modal start here -->
+<div class="modal fade" id="stafftimesheetModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h4 class="modal-title" id="ModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <form id="form_data" class="customerForm">
+                            @csrf
+                            <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="staff_id" id="staff_id" value="<?php if(isset($staff)){echo $staff->id;}?>">
+                            <input type="hidden" name="login_user_id" id="login_user_id" value="{{Auth::user()->id}}">
+                            <div class="mb-3">
+                                <label class="mb-2 col-form-label">Category <span class="radStar">*</span></label>
+                                    <select class="form-control editInput selectOptions" id="category_id" name="category_id">
+                                        <option selected="" disabled="">Select Category</option>
+                                        <option value="1">Sleep</option>
+                                        <option value="2">Disturbance</option>
+                                        <option value="3">Wake Night</option>
+                                        <option value="4">Annual Leave</option>
+                                        <option value="5">On Call</option>
+                                    </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label mb-2">Hours <span class="radStar">*</span></label>
+                                <input type="text" class="form-control editInput textareaInput" name="hours" id="hours" value="" placeholder="Enter Hours">
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label mb-2">Comment <span class="radStar">*</span></label>
+                                <textarea class="form-control textareaInput" id="comment" name="comment" rows="10" placeholder="Enter Your Comment"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div> <!-- End row -->
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="save_data">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end here -->
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 <script>
@@ -281,6 +313,17 @@
             $(".alert").fadeOut();
         }, 3000);
     });
-    new DataTable('#satffLogsTable');
+    new DataTable('#satffTimesheetTable');
+</script>
+<script>
+    $(document).on('click','.modal_open',function(){
+        var data=($(this).data('action'));
+        if(data === 'add'){
+            $("#ModalLabel").text("Add Staff Timesheet");
+        }else{
+            $("#ModalLabel").text("Edit Staff Timesheet");
+        }
+        $("#stafftimesheetModal").modal('show');
+    });
 </script>
 @endsection
