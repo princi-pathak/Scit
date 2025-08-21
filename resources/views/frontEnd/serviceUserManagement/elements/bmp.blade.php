@@ -846,7 +846,7 @@
     });
 
           function getFormData(data) {
-            
+                var service_user_id = "{{ $service_user_id }}";
             $.ajax({
                 type: 'post',
                 url  : "{{ url('/service/bmp/view/') }}"+'/'+service_user_id,
