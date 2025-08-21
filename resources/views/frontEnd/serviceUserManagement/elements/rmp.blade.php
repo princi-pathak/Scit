@@ -418,7 +418,7 @@
             
         });
 
-           function showDate() {
+        function showDate() {
             $('#date_range_input').click();
         }
 
@@ -587,7 +587,8 @@
             });
         }
     </script>
-        <!-- Daterange Filter -->
+    
+    <!-- Daterange Filter -->
     <script>
         $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
             let staff_member = $('#staff_member').val();
@@ -671,7 +672,7 @@
         });
     </script>
 
-      <!-- {{-- Filter for keyword --}} -->
+    <!-- {{-- Filter for keyword --}} -->
     <script>
         function myFunctionkey() {
             let staff_member = $('#staff_member').val();
@@ -928,7 +929,6 @@
             });
 
             function update_search_list() {
-
 
                 // var searchType = document.getElementById('search_type').value;
                 var searchType = 2;
