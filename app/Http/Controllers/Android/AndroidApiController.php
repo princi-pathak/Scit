@@ -372,13 +372,16 @@ class AndroidApiController extends Controller
         if($request->home_id == null){
             return response()->json(['success'=> false, 'message'=>'Please provide us home id..!'], 200);
         }
+        if($request->reason == null){
+            return response()->json(['success'=> false, 'message'=>'Please provide us reason..!'], 200);
+        }
 
         // $record = ServiceUser::where('id', $request->user_id)->where('is_deleted', 0)->where('home_id', $request->home_id)->get();
         $record = User::where('id', $request->user_id)->where('is_deleted', 0)->whereRaw('FIND_IN_SET(?, home_id)', [$request->home_id])->exists();
         // if( $record->count() == 1 ){
         if( $record){
             // $response = LoginInActivity::where('id', $request->activity_id)->where('user_id', $request->user_id)->where('company_id', $request->company_id)->update(['check_out_time'=>date("Y-m-d H:i:s"), 'latitude_out'=> $request->latitude_out, 'longitude_out'=>$request->longitude_out]);
-            $response = LoginInActivity::where('id', $request->activity_id)->where('user_id', $request->user_id)->update(['check_out_time'=>date("Y-m-d H:i:s"), 'latitude_out'=> $request->latitude_out, 'longitude_out'=>$request->longitude_out]);
+            $response = LoginInActivity::where('id', $request->activity_id)->where('user_id', $request->user_id)->update(['check_out_time'=>date("Y-m-d H:i:s"), 'latitude_out'=> $request->latitude_out, 'longitude_out'=>$request->longitude_out,'reason'=>$request->reason]);
 
             if($response){
                 return response()->json(['success'=>true,'message'=>'Checked out successfully..! ','Data'=>$response], 200);
