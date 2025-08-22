@@ -213,6 +213,14 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/add-rota-data', 'App\Http\Controllers\Rota\RotaController@store');
 	Route::get('/rota-planner', 'App\Http\Controllers\Rota\RotaController@rota_calender_view');
 
+	// Staff logs
+	Route::get('staff/logs','App\Http\Controllers\Rota\RotaController@staff_logs');
+	Route::get('staff/log/view','App\Http\Controllers\Rota\RotaController@staff_log_view');
+	Route::post('satff/log/view/filter','App\Http\Controllers\Rota\RotaController@satff_log_view_filter');
+	Route::post('satff/log/view/is_valid','App\Http\Controllers\Rota\RotaController@satff_log_view_is_valid');
+	Route::get('staff/timesheet','App\Http\Controllers\Rota\RotaController@staff_timesheet');
+	Route::get('staff/timesheet/add','App\Http\Controllers\Rota\RotaController@staff_timesheet_add');
+
 	Route::post('/add-shift-data', 'App\Http\Controllers\Rota\RotaController@add_shift_data');
 	Route::post('/get-all-users', 'App\Http\Controllers\Rota\RotaController@get_all_users');
 	Route::post('/assign_rota_users', 'App\Http\Controllers\Rota\RotaController@assign_rota_users');

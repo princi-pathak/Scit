@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Rota;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Rota, App\User, App\RotaShift, App\RotaAssignEmployee,App\LeaveType, App\Staffleaves,  App\ServiceUser, App\AccessRight ; 
+use App\Rota, App\User, App\RotaShift, App\RotaAssignEmployee,App\LeaveType, App\Staffleaves,  App\ServiceUser, App\AccessRight, App\LoginInActivity ; 
 use Session, DB;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use Auth;
+use Auth,Validator;
 
 class RotaController extends Controller
 {
@@ -1370,6 +1370,72 @@ class RotaController extends Controller
     public function rota_management_dashboard(){
       
       return view('rotaStaff.rota_management_dashboard');
+    }
+    public function staff_logs(){
+      $home_ids = Auth::user()->home_id;
+      $ex_home_ids = explode(',', $home_ids);
+      $home_id=$ex_home_ids[0];
+      $data['user_data']=User::where('is_deleted', 0)->whereRaw('FIND_IN_SET(?, home_id)', [$home_id])->get();
+      // echo "<pre>";print_r($data['user_data']);die;
+      return view('rotaStaff.staff_logs',$data);
+    }
+    public function staff_log_view(Request $request){
+      $staff_id=base64_decode($request->log);
+      $staff=User::find($staff_id);
+      if($staff){
+        $month=date('m');
+        $year=date('Y');
+        $data['logs'] = LoginInActivity::where('user_id', $staff_id)->whereMonth('login_date',$month)->whereYear('login_date',$year)->orderBy('id', 'DESC')->where('is_deleted', 0)->get();
+        $data['staff']=$staff;
+        $data['years'] = range(date('Y'), 2000);
+        // echo "<pre>";print_r($data['logs']);die;
+        return view('rotaStaff.staff_log_view',$data);
+      }else{
+        return redirect('staff/logs')->with('staff_error','Staff is not found');
+      }
+    }
+    public function satff_log_view_filter(Request $request){
+      // echo "<pre>";print_r($request->all());die;
+      $logs = LoginInActivity::where('user_id', $request->log)->whereMonth('login_date',$request->month)->whereYear('login_date',$request->year)->orderBy('id', 'DESC')->where('is_deleted', 0)->get();
+      return response()->json(['success'=>true,'data'=>$logs]);
+    }
+    public function satff_log_view_is_valid(Request $request){
+      // echo "<pre>";print_r($request->all());die;
+      $validator=Validator::make($request->all(),
+        [
+            'id' =>'required|integer|exists:login_activities,id',
+            'update_value' =>'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()], 200);
+        }
+        try{
+          $update=LoginInActivity::find($request->id);
+          $update->is_valid=$request->update_value;
+          $update->save();
+          return response()->json(['success' => true,'message' =>'Updated successfully','data' => new \stdClass()], 200);
+        } catch (\Exception $e) {
+
+            // Log::error('Update Logs Is_valid: ' . $e->getMessage());
+            return response()->json(['success' => false,'message' =>$e->getMessage(),'data' => new \stdClass()], 500);
+        }
+    }
+    public function staff_timesheet(Request $request){
+      $staff_id=base64_decode($request->staff);
+      $staff=User::find($staff_id);
+      if($staff){
+        $month=date('m');
+        $year=date('Y');
+        $data['logs'] = LoginInActivity::where('user_id', $staff_id)->whereMonth('login_date',$month)->whereYear('login_date',$year)->orderBy('id', 'DESC')->where('is_deleted', 0)->get();
+        $data['staff']=$staff;
+        // echo "<pre>";print_r($data['logs']);die;
+        return view('rotaStaff.staff_timesheet',$data);
+      }else{
+        return redirect('staff/logs')->with('staff_error','Staff is not found');
+      }
+    }
+    public function staff_timesheet_add(Request $request){
+       return view('rotaStaff.staff_timesheet_add');
     }
 
 }

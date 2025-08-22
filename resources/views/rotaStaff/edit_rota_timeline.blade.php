@@ -552,7 +552,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Shift details</h2>
+                <h3 class="modal-title" id="exampleModalLabel">Shift details</h3>
                 <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close">&#10006;</button>
             </div>
             <div class="modal-body shift_detail_modal_body">
