@@ -209,12 +209,12 @@
                             <div>
                                 @php
                                     $today = \Carbon\Carbon::now()->format('d-m-Y');
-                                    $oneMonthAgo = \Carbon\Carbon::now()->subMonth()->format('d-m-Y');
+                                    // $oneMonthAgo = \Carbon\Carbon::now()->subMonth()->format('d-m-Y');
                                 @endphp
                                 <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
                                     class="input-group date">
                                     <input id="date_range_input_log" style="cursor: pointer;" name="daterange"
-                                        value="{{ $oneMonthAgo }} - {{ $today }}" type="text" readonly=""
+                                        value="{{ $today }} - {{ $today }}" type="text" readonly=""
                                         size="16" class="form-control log-book-datetime">
                                     <span class="input-group-btn add-on datetime-picker2">
                                         <button onclick="showDate()" class="btn btn-primary" type="button"><span
@@ -541,7 +541,7 @@
 <!-- Su Daily Log Book Modal End --> --}}
 
     <!-- View/Edit dynamic form -->
-    <div class="modal fade" id="DynFormViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    {{-- <div class="modal fade" id="DynFormViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -572,19 +572,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
-                                <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Category: </label>
-                                <div class="col-md-9 col-sm-10 col-xs-12">
-                                    <div class="select-style">
-                                        <select name="category" class='su_name' required>
-                                            <option disabled selected value> -- select an option -- </option>
-                                            @foreach ($categorys as $key)
-                                                <option value="{{ $key['id'] }}">{{ $key['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> --}}
+                           
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Form: </label>
                                 <div class="col-md-11 col-sm-11 col-xs-12">
@@ -631,7 +619,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- View/Edit dynamic form End -->
 
     <!-- Date Range Initialization -->
@@ -717,38 +705,38 @@
         
 
 
-        let viewdatawithvalueFormio = () => {
-            // console.log($('#dynamic_form_idformio').val());
-            let dynamic_form_idformio = $("#dynamic_form_idformio").val();
-            var token = "<?= csrf_token() ?>";
-            var settings = {
-                "url": "{{ url('/service/patterndataformiovaule') }}",
-                "method": "POST",
-                "data": {
-                    dynamic_form_idformio: dynamic_form_idformio,
-                    _token: token
-                },
-                //dataType: "json",
-            };
-            $.ajax(settings).done(function(response) {
-                // console.log(response[0].pattern);
-                if (isAuthenticated(response) == false) {
-                    return false;
-                }
+        // let viewdatawithvalueFormio = () => {
+        //     // console.log($('#dynamic_form_idformio').val());
+        //     let dynamic_form_idformio = $("#dynamic_form_idformio").val();
+        //     var token = "<?= csrf_token() ?>";
+        //     var settings = {
+        //         "url": "{{ url('/service/patterndataformiovaule') }}",
+        //         "method": "POST",
+        //         "data": {
+        //             dynamic_form_idformio: dynamic_form_idformio,
+        //             _token: token
+        //         },
+        //         //dataType: "json",
+        //     };
+        //     $.ajax(settings).done(function(response) {
+        //         // console.log(response[0].pattern);
+        //         if (isAuthenticated(response) == false) {
+        //             return false;
+        //         }
 
-                Formio.createForm(document.getElementById('formioView'), {
-                    components: JSON.parse(response[0].pattern)
-                }, {
-                    readOnly: seteditvalueeditable
-                }).then(function(form) {
-                    form.submission = {
-                        data: JSON.parse(response[0].pattern_data)
-                    }
-                    // form.getComponent('email').setValue('rksonkar356@gmail.com');
-                });
+        //         Formio.createForm(document.getElementById('formioView'), {
+        //             components: JSON.parse(response[0].pattern)
+        //         }, {
+        //             readOnly: seteditvalueeditable
+        //         }).then(function(form) {
+        //             form.submission = {
+        //                 data: JSON.parse(response[0].pattern_data)
+        //             }
+        //             // form.getComponent('email').setValue('rksonkar356@gmail.com');
+        //         });
 
-            });
-        }
+        //     });
+        // }
 
         // document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
         //     btn.addEventListener('click', function() {
@@ -777,7 +765,7 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
-                startDate: "{{ $oneMonthAgo }}",
+                startDate: "{{ $today }}",
                 endDate: "{{ $today }}"
             });
 
