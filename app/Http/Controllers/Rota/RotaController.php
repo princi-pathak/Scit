@@ -7,6 +7,7 @@ use App\Rota, App\User, App\RotaShift, App\RotaAssignEmployee,App\LeaveType, App
 use Session, DB;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use App\Models\PersonalManagement\TimeSheet;
 use Auth,Validator;
 
 class RotaController extends Controller
@@ -1424,11 +1425,13 @@ class RotaController extends Controller
       $staff_id=base64_decode($request->staff);
       $staff=User::find($staff_id);
       if($staff){
+        $data['staff']=$staff;
         $month=date('m');
         $year=date('Y');
-        $data['logs'] = LoginInActivity::where('user_id', $staff_id)->whereMonth('login_date',$month)->whereYear('login_date',$year)->orderBy('id', 'DESC')->where('is_deleted', 0)->get();
-        $data['staff']=$staff;
-        // echo "<pre>";print_r($data['logs']);die;
+        $data['time_sheet'] = TimeSheet::with('user')->where('user_id', $staff_id)->whereMonth('date',$month)->whereYear('date',$year)->where('deleted_at', null)->orderBy('created_at', 'desc')->get();
+        // echo "<pre>";print_r($data['time_sheet']);die;
+        $shift_assign=RotaAssignEmployee::with('shift')->where('emp_id',$staff_id)->get();
+        // echo "<pre>";print_r($shift_assign);die;
         return view('rotaStaff.staff_timesheet',$data);
       }else{
         return redirect('staff/logs')->with('staff_error','Staff is not found');

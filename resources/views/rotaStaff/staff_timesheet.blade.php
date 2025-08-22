@@ -245,7 +245,20 @@
                                         </tr>
                                     </thead>
                                     <tbody id="user_data">
-                                       
+                                       <?php foreach($time_sheet as $key=>$val){?>
+                                            <tr>
+                                                <td>{{ ++$key }}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        <?php }?>
                                     </tbody>
                                 </table>
                             </div> <!-- End off main Table -->
@@ -264,19 +277,23 @@
                 <h4 class="modal-title" id="ModalLabel"></h4>
             </div>
             <div class="modal-body">
-                <div class="col-md-12 col-lg-12 col-xl-12">
-                    <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_success popup_alrt_msg" style="display: none;">
+                    <div class="popup_notification-box">
+                        <div class="alert alert-success alert m-0" role="alert">
+                            <button type="button" class="close close-msg-btn"><span aria-hidden="true">×</span></button>
+                            <strong>Success!</strong> <span class="popup_success_txt"></span>.
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <form id="form_data" class="customerForm">
                             @csrf
-                            <input type="hidden" name="id" id="id">
-                            <input type="hidden" name="staff_id" id="staff_id" value="<?php if(isset($staff)){echo $staff->id;}?>">
-                            <input type="hidden" name="login_user_id" id="login_user_id" value="{{Auth::user()->id}}">
+                            <input type="hidden" name="time_sheet_id" id="id">
+                            <input type="hidden" name="user_id" id="user_id" value="<?php if(isset($staff)){echo $staff->id;}?>">
                             <div class="mb-3">
                                 <label class="mb-2 col-form-label">Category <span class="radStar">*</span></label>
-                                    <select class="form-control editInput selectOptions" id="category_id" name="category_id">
+                                    <select class="form-control editInput selectOptions checkInput" id="category_id" name="category_id">
                                         <option selected="" disabled="">Select Category</option>
                                         <option value="1">Sleep</option>
                                         <option value="2">Disturbance</option>
@@ -287,11 +304,11 @@
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label mb-2">Hours <span class="radStar">*</span></label>
-                                <input type="text" class="form-control editInput textareaInput" name="hours" id="hours" value="" placeholder="Enter Hours">
+                                <input type="text" class="form-control editInput textareaInput checkInput" name="hours" id="hours" value="" placeholder="Enter Hours">
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label mb-2">Comment <span class="radStar">*</span></label>
-                                <textarea class="form-control textareaInput" id="comment" name="comment" rows="10" placeholder="Enter Your Comment"></textarea>
+                                <textarea class="form-control textareaInput checkInput" id="comments" name="comments" rows="10" placeholder="Enter Your Comment"></textarea>
                             </div>
                         </form>
                     </div>
@@ -324,6 +341,70 @@
             $("#ModalLabel").text("Edit Staff Timesheet");
         }
         $("#stafftimesheetModal").modal('show');
+    });
+    $(document).on('input','#hours', function(){
+        this.value = this.value.replace(/[^0-9.]/g, '');
+        if ((this.value.match(/\./g) || []).length > 1) {
+            this.value = this.value.slice(0, -1);
+        }
+        let floatVal = parseFloat(this.value);
+        if (!isNaN(floatVal)) {
+            if (floatVal <= 0) this.value = '';
+            if (floatVal > 24) this.value = '24';
+        }
+    });
+    $("#save_data").on('click',function(){
+        var error=0;
+        $('.checkInput').each(function(){
+            var formfield=$(this).val();
+            if(formfield == '' || formfield == undefined){
+                error=1;
+                $(this).css('border','1px solid red');
+                $(this).focus();
+                return false;
+            }else{
+                $(this).css('border','');
+                error=0;
+            }
+        });
+        if(error == 1){
+            return false;
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "{{ url('/my-profile/time-sheet/add') }}",
+                data: new FormData($("#form_data")[0]),
+                async: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    // return false;
+                    if (typeof isAuthenticated === "function") {
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
+                    }
+                    if (response.success === true) {
+                        // location.reload();
+                        $(".popup_alrt_msg").show();
+                        $(".alert-success").show();
+                        $(".popup_success_txt").text(response.message);
+                        setTimeout(function(){
+                            location.reload();
+                        }, 3000);
+                    }else{
+                        alert("Something went wrong! Please try again later");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
     });
 </script>
 @endsection
