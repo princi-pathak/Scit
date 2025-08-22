@@ -99,9 +99,10 @@
     color: #fff;
     display: flex;
   }
-    .modal-content .modal-header h4.modal-title{
-      color: #fff;
-    }
+
+  .modal-content .modal-header h4.modal-title {
+    color: #fff;
+  }
 
   .modal-dialog .close_btn_modal {
     border: none;
@@ -191,10 +192,9 @@
     height: auto;
   }
 
-  /* .tab-content>.active {
-    display: block;
-    opacity: 1;
-} */
+.shrink_all .py-2{
+  white-space: nowrap;
+}
 </style>
 <!-- Top Bar Info Section End Here -->
 
@@ -250,26 +250,26 @@
             </div>
           </form>
           <div class="my-5 publish_rota_content">
-              <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-center">
-                  <h4>Published rotas</h4>
-                  <span class="no_of_rota_publish" id="active_publish_rota_count"></span>
-                </div>
-                <div class="toggle_btns">
-                  <button class="view_all_btn" onclick="showRotaPublish()" id="viewPublish">View all</button>
-                  <button class="show_less_btn" onclick="lessRotaPublish()" id="lessPublish">Show less</button>
-                </div>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center">
+                <h4>Published rotas</h4>
+                <span class="no_of_rota_publish" id="active_publish_rota_count"></span>
               </div>
-              <div class="content_about_publish" id="beforePublishRota">
-                 
-                      <h5>In progress</h5>
-                      <div id="new_publish_rota"></div>
-                  
-                  <div class="publishedRotasList p-t-20">
-                      <h5>Future rotas</h5>
-                      <p class="pb-8 radtext">Rotas that are starting in the future will appear here.</p>
-                  </div>
+              <div class="toggle_btns">
+                <button class="view_all_btn" onclick="showRotaPublish()" id="viewPublish">View all</button>
+                <button class="show_less_btn" onclick="lessRotaPublish()" id="lessPublish">Show less</button>
               </div>
+            </div>
+            <div class="content_about_publish" id="beforePublishRota">
+
+              <h5>In progress</h5>
+              <div id="new_publish_rota"></div>
+
+              <div class="publishedRotasList p-t-20">
+                <h5>Future rotas</h5>
+                <p class="pb-8 radtext">Rotas that are starting in the future will appear here.</p>
+              </div>
+            </div>
           </div>
           <div class="unpublish_rota_content">
             <div class="d-flex justify-content-between">
@@ -295,7 +295,7 @@
           </div>
         </div>
         <div id="oldRotas" class="tab-pane">
-            <form class="active-rots-slt-from">
+          <form class="active-rots-slt-from">
             <div class="row">
               <div class="col-lg-12">
                 <h3>Old rotas</h3>
@@ -313,19 +313,19 @@
                 <button type="button" class="filter_btn">Clear all filter</button>
               </div>
               <div class="col-md-3 col-lg-3">
-                  <select name="" class="form-select form-control" id="old_sortBy">
-                    <option value="1">Name (A-Z)</option>
-                    <option value="2">Name (Z-A )</option>
-                    <option value="3">Start date (Newest first)</option>
-                    <option value="4">Start date (Oldest first)</option>
-                  </select>
-                </div>
-             
-            </div>
-             <div class="row">
-                
-                
+                <select name="" class="form-select form-control" id="old_sortBy">
+                  <option value="1">Name (A-Z)</option>
+                  <option value="2">Name (Z-A )</option>
+                  <option value="3">Start date (Newest first)</option>
+                  <option value="4">Start date (Oldest first)</option>
+                </select>
               </div>
+
+            </div>
+            <div class="row">
+
+
+            </div>
           </form>
           <div class="row">
             <div class="my-5 publish_rota_content">
@@ -345,27 +345,27 @@
                 </div>
               </div>
             </div>
-          
-          <div class="unpublish_rota_content">
-            <div class="d-flex justify-content-between">
-              <div class="d-flex align-items-center">
-                <h4>Unpublished rotas</h4>
-                <span class="no_of_rota_publish" id="old_unpublish_rota_count"></span>
-              </div>
-              <div class="toggle_btns">
-                <button class="view_all_btn" onclick="unPublishview()" id="viewUnpublish" style="display: none;">View all</button>
-                <button class="show_less_btn" onclick="unPublishless()" id="lessUnpublish">Show less</button>
+
+            <div class="unpublish_rota_content">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <h4>Unpublished rotas</h4>
+                  <span class="no_of_rota_publish" id="old_unpublish_rota_count"></span>
+                </div>
+                <div class="toggle_btns">
+                  <button class="view_all_btn" onclick="unPublishview()" id="viewUnpublish" style="display: none;">View all</button>
+                  <button class="show_less_btn" onclick="unPublishless()" id="lessUnpublish">Show less</button>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-12 col-lg-12" id="unpublish_rota_content_detail">
-            <div id="old_unpublish_rota">
+            <div class="col-md-12 col-lg-12" id="unpublish_rota_content_detail">
+              <div id="old_unpublish_rota">
+              </div>
             </div>
-          </div>
           </div>
         </div>
         <div id="createRota" class="tab-pane">
-           <form action="{{ url('/add-rota-data') }}" method="POST" class="select-rota formOne" id="createRota">
+          <form action="{{ url('/add-rota-data') }}" method="POST" class="select-rota formOne" id="createRota">
             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
             <div class="row">
               <div class="col-md-12 mt-4">
@@ -568,9 +568,9 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
 
-  
+
 </section>
 <!-- Rename Modal -->
 <div class="modal" id="renameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -589,7 +589,7 @@
       <div class="modal-body">
         <div class="col-md-12">
           <div class="p-t-20 p-b-20">
-             <input type="text" id="team-name" class="form-control">
+            <input type="text" id="team-name" class="form-control">
           </div>
         </div>
       </div>
@@ -650,7 +650,7 @@
 <!-- Unpublish Modal End-->
 <!-- Modal View start -->
 <div class="modal" id="exampleModalViewDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="max-width: 70rem;">
+  <div class="modal-dialog modal-lg" style="max-width: 70rem;">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="exampleModalLabel">Evening Shift</h4>
@@ -658,60 +658,9 @@
       </div>
       <div class="modal-body">
 
-      <div class="eveningShiftTable">       
-        <div class="weekCont">
-           <div class="d-flex">
-              <label>Select Week</label>
-              <select name="" class="form-select form-control" id="rota_starting_date"> </select>
-           </div>
-           <div class="">
-             <span>Week total our: <strong><span id="week_total"></span> (Incl. breaks)</strong></span>
-           </div>
-        </div>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Employee</th>
-                <th>Current Contracted/h</th>
-                <th>Days worked</th>
-                <th>Breaks (Total)</th>
-                <th>Total/h</th>
-                <th>
-                  <input type="checkbox" id="" name="">
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>Doe</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>Doe</td>
-              </tr>
-              <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>Doe</td>
-              </tr>
-              <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>Doe</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center">
           <span class="me-3">Select Week</span>
-          <div class="col-md-3 col-lg-3 me-3">
+          <div class="col-md-4 col-lg-4 me-3">
             <select name="" class="form-select form-control" id="rota_starting_date">
             </select>
           </div>
@@ -719,15 +668,15 @@
         </div>
         <div class="w_full view_detail_modal">
           <div class="d-flex align-items-center shrink_all">
-            <div class="w_19 py-2">Employee</div>
-            <div class="w_19 py-2">Current contracted hours</div>
-            <div class="w_19 py-2 ps-2">Days worked</div>
-            <div class="w_19 py-2">
-              <div class="w_full">Breaks</div>
+            <div class="py-2">Employee</div>
+            <div class="py-2">Curr. contracted hrs</div>
+            <div class="py-2 ps-2">Days worked</div>
+            <div class="py-2 d-flex">
+              <div class="">Breaks</div>
               <small>(Total)</small>
             </div>
-            <div class="w_19 py-2">
-              <div class="w_full">Total hours</div>
+            <div class="py-2 d-flex">
+              <div class="w_full">Total hrs</div>
               <form action="">
                 <small class="d-flex align-items-center">
                   Incl. breaks?
@@ -744,18 +693,18 @@
         </div>
         <div class="w_full row_detail" id="add_emp_record">
           <div class="d-flex align-items-center justify-content-end hour_count">
-            <div class="w_19 m-0 py-3">
+            <div class="m-0 py-3">
               <p class="fw-bolder hide2" id="total_emp_hour"></p>
               <p class="fw-bolder hide1" id="total_emp_hour_with_break"></p>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
 </div>
 <!-- Modal View end -->
-@include('rotaStaff.components.footer') 
+@include('rotaStaff.components.footer')
 <script>
   $(document).ready(function() {
 
@@ -789,7 +738,7 @@
       success: function(result) {
         console.log(result);
         if (isAuthenticated(result) == false) {
-            return false;
+          return false;
         }
         document.getElementById('active_publish_rota_count').innerHTML = result.active_publish_rota_count;
         document.getElementById('active_unpublish_rota_count').innerHTML = result.active_unpublish_rota_count;
@@ -867,37 +816,37 @@
       //   }
       // });
       // result.innerHTML = e.target.value;
-      filter_data(null,search_name,null,1);
+      filter_data(null, search_name, null, 1);
     }
 
     source.addEventListener('input', inputHandler);
     source.addEventListener('propertychange', inputHandler);
-    $('#sortBy').on('change',function(){
-      var sortBy=$(this).val();
-      filter_data(null,null,sortBy,1);
+    $('#sortBy').on('change', function() {
+      var sortBy = $(this).val();
+      filter_data(null, null, sortBy, 1);
     });
-    $('#search_date').on('change',function(){
-      var search_date=$(this).val();
+    $('#search_date').on('change', function() {
+      var search_date = $(this).val();
       // alert(search_date)
-      filter_data(search_date,null,null,1);
+      filter_data(search_date, null, null, 1);
     });
 
-    $('#old_search_date').on('change',function(){
-      var old_search_date=$(this).val();
+    $('#old_search_date').on('change', function() {
+      var old_search_date = $(this).val();
       // alert(old_search_date)
-      filter_data(old_search_date,null,null,2);
+      filter_data(old_search_date, null, null, 2);
     });
-    $('#old_rota_name_search').on('input',function(){
-      var old_rota_name_search=$(this).val();
+    $('#old_rota_name_search').on('input', function() {
+      var old_rota_name_search = $(this).val();
       // alert(old_rota_name_search)
-      filter_data(null,old_rota_name_search,null,2);
+      filter_data(null, old_rota_name_search, null, 2);
     });
-    $('#old_sortBy').on('change',function(){
-      var old_sortBy=$(this).val();
+    $('#old_sortBy').on('change', function() {
+      var old_sortBy = $(this).val();
       // alert(old_sortBy)
-      filter_data(null,null,old_sortBy,2);
+      filter_data(null, null, old_sortBy, 2);
     });
-    
+
     $('#rename_save_btn').on('click', function() {
       var rota_id = document.getElementById('renameid').value;
       var rota_name = document.getElementById('team-name').value;
@@ -914,7 +863,7 @@
         success: function(result) {
           console.log(result);
           if (isAuthenticated(result) == false) {
-              return false;
+            return false;
           }
           location.reload();
         }
@@ -934,7 +883,7 @@
         success: function(result) {
           console.log(result);
           if (isAuthenticated(result) == false) {
-              return false;
+            return false;
           }
           location.reload();
         }
@@ -954,7 +903,7 @@
         success: function(result) {
           console.log(result);
           if (isAuthenticated(result) == false) {
-              return false;
+            return false;
           }
           location.reload();
         }
@@ -1042,7 +991,7 @@
       success: function(result) {
         console.log(result);
         if (isAuthenticated(result) == false) {
-            return false;
+          return false;
         }
         location.reload();
       }
@@ -1063,7 +1012,7 @@
       success: function(result) {
         console.log(result);
         if (isAuthenticated(result) == false) {
-            return false;
+          return false;
         }
         $('#rota_starting_date').append("<option>Week 1 - " + result + "</option>");
       }
@@ -1078,7 +1027,7 @@
         id: id,
         _token: token
       },
-      success: function (result) {
+      success: function(result) {
         console.log(result);
 
         if (isAuthenticated(result) === false) return false;
@@ -1088,7 +1037,7 @@
         if (!recordContainer) return console.error('#add_emp_record not found');
         // $(".shrink_all").html('');
         $(".dynamic_data").html('');
-        
+
 
         let total_emp_minutes = 0;
         let total_emp_minutes_with_break = 0;
@@ -1136,8 +1085,8 @@
               </div>
               <div class="w_19 py-2">
                 <div id="without_break">
-                  <div class="w_full hide2">${durationWithoutBreak.hours()} hour and ${durationWithoutBreak.minutes()} minutes.</div>
-                  <div class="w_full hide1">${durationWithBreak.hours()} hour and ${durationWithBreak.minutes()} minutes.</div>
+                  <div class="w_full hide2">${durationWithoutBreak.hours()} hrs and ${durationWithoutBreak.minutes()} mins.</div>
+                  <div class="w_full hide1">${durationWithBreak.hours()} hrs and ${durationWithBreak.minutes()} mins.</div>
                 </div>
               </div>
             </div>
@@ -1148,9 +1097,9 @@
         const totalWithoutBreak = moment.duration(total_emp_minutes, 'minutes');
         const totalWithBreak = moment.duration(total_emp_minutes_with_break, 'minutes');
 
-        document.getElementById('total_emp_hour').innerHTML = `${totalWithoutBreak.hours()} hour and ${totalWithoutBreak.minutes()} minutes.`;
-        document.getElementById('total_emp_hour_with_break').innerHTML = `${totalWithBreak.hours()} hour and ${totalWithBreak.minutes()} minutes.`;
-        document.getElementById('week_total').innerHTML = `${totalWithoutBreak.hours()} hour and ${totalWithoutBreak.minutes()} minutes.`;
+        document.getElementById('total_emp_hour').innerHTML = `${totalWithoutBreak.hours()} hrs and ${totalWithoutBreak.minutes()} mins.`;
+        document.getElementById('total_emp_hour_with_break').innerHTML = `${totalWithBreak.hours()} hrs and ${totalWithBreak.minutes()} mins.`;
+        document.getElementById('week_total').innerHTML = `${totalWithoutBreak.hours()} hrs and ${totalWithoutBreak.minutes()} mins.`;
       }
     });
 
@@ -1166,22 +1115,23 @@
       $('.hide1').css('display', 'none');
     }
   }
-  function filter_data(date=null,name=null,sortBy=null,type){
+
+  function filter_data(date = null, name = null, sortBy = null, type) {
     var token = "<?= csrf_token() ?>";
     $.ajax({
       url: "{{ url('/get_all_rota_data') }}",
       dataType: 'json',
       data: {
-        date:date,
-        name:name,
-        sortBy:sortBy,
-        type:type,
+        date: date,
+        name: name,
+        sortBy: sortBy,
+        type: type,
         _token: token
       },
       success: function(result) {
         console.log(result);
         if (isAuthenticated(result) == false) {
-            return false;
+          return false;
         }
         document.getElementById('active_publish_rota_count').innerHTML = result.active_publish_rota_count;
         document.getElementById('active_unpublish_rota_count').innerHTML = result.active_unpublish_rota_count;
@@ -1189,9 +1139,9 @@
         document.getElementById('old_unpublish_rota_count').innerHTML = result.old_unpublish_rota_count;
 
         if (result.new_active.length === 0) {
-          document.querySelector('#new_publish_rota').innerHTML='<p class="pb-8">Rotas that are currently active and in progress will appear here.</p>';
+          document.querySelector('#new_publish_rota').innerHTML = '<p class="pb-8">Rotas that are currently active and in progress will appear here.</p>';
         } else {
-          document.querySelector('#new_publish_rota').innerHTML='';
+          document.querySelector('#new_publish_rota').innerHTML = '';
           for (let index = 0; index < result.new_active.length; index++) {
             document.querySelector('#new_publish_rota').insertAdjacentHTML(
               'beforeend', result.new_active[index]
@@ -1200,9 +1150,9 @@
         }
 
         if (result.new_inactive.length === 0) {
-          document.querySelector('#new_unpublish_rota').innerHTML='<p class="pb-8">Rotas that are currently active and not in progress will appear here.</p>';
+          document.querySelector('#new_unpublish_rota').innerHTML = '<p class="pb-8">Rotas that are currently active and not in progress will appear here.</p>';
         } else {
-          document.querySelector('#new_unpublish_rota').innerHTML='';
+          document.querySelector('#new_unpublish_rota').innerHTML = '';
           for (let index = 0; index < result.new_inactive.length; index++) {
             document.querySelector('#new_unpublish_rota').insertAdjacentHTML(
               'beforeend', result.new_inactive[index]
@@ -1211,9 +1161,9 @@
         }
 
         if (result.old_active.length === 0) {
-          document.querySelector('#old_publish_rota').innerHTML='<p class="pb-8">Rotas that are no longer active but are still published will appear here.</p>';
+          document.querySelector('#old_publish_rota').innerHTML = '<p class="pb-8">Rotas that are no longer active but are still published will appear here.</p>';
         } else {
-          document.querySelector('#old_publish_rota').innerHTML='';
+          document.querySelector('#old_publish_rota').innerHTML = '';
           for (let index = 0; index < result.old_active.length; index++) {
             document.querySelector('#old_publish_rota').insertAdjacentHTML(
               'beforeend', result.old_active[index]
@@ -1222,9 +1172,9 @@
         }
 
         if (result.old_inactive.length === 0) {
-          document.querySelector('#old_unpublish_rota').innerHTML='<p class="pb-8">Rotas that are no longer active but are still unpublished will appear here.</p>';
+          document.querySelector('#old_unpublish_rota').innerHTML = '<p class="pb-8">Rotas that are no longer active but are still unpublished will appear here.</p>';
         } else {
-          document.querySelector('#old_unpublish_rota').innerHTML='';
+          document.querySelector('#old_unpublish_rota').innerHTML = '';
           for (let index = 0; index < result.old_inactive.length; index++) {
             document.querySelector('#old_unpublish_rota').insertAdjacentHTML(
               'beforeend', result.old_inactive[index]
