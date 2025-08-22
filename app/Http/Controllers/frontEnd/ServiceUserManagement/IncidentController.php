@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class IncidentController extends ServiceUserManagementController
 {
-    public function index($service_user_id = null)
+    public function index($service_user_id = null, Request $request)
     {
         $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
         // $home_id = Auth::user()->home_id;
@@ -25,13 +25,13 @@ class IncidentController extends ServiceUserManagementController
 
         $this_location_id = DynamicFormLocation::getLocationIdByTag('incident_report');
         $incident_record  = DynamicForm::where('location_id', $this_location_id)
-                            ->select('dynamic_form.*', 'dynamic_form_builder.title as form_name')
-                            ->join('dynamic_form_builder', 'dynamic_form_builder.id', '=', 'dynamic_form.form_builder_id')
-                            //whereIn('form_builder_id',$form_bildr_ids)
-                            ->where('service_user_id', $service_user_id)
-                            ->whereDate('dynamic_form.created_at', '=', $today)
-                            ->where('is_deleted', '0')
-                            ->orderBy('id', 'desc');
+            ->select('dynamic_form.*', 'dynamic_form_builder.title as form_name')
+            ->join('dynamic_form_builder', 'dynamic_form_builder.id', '=', 'dynamic_form.form_builder_id')
+            //whereIn('form_builder_id',$form_bildr_ids)
+            ->where('service_user_id', $service_user_id)
+            // ->whereDate('dynamic_form.created_at', '=', $today)
+            ->where('is_deleted', '0')
+            ->orderBy('id', 'desc');
 
         /*$incident_record = ServiceUserIncidentReport::where('is_deleted','0')
                                     ->where('service_user_id', $service_user_id)
@@ -65,6 +65,46 @@ class IncidentController extends ServiceUserManagementController
             }
         }
 
+        if ($request->isMethod('post') && $request->input('filter') == 1) {
+
+            // if ($request->filled('staff_member')) {
+            //     $bmp_record->where('user_id', $request->input('staff_member'));
+            // }
+
+            if ($request->filled('service_user')) {
+                $incident_record->where('service_user_id', $request->input('service_user'));
+            }
+
+            if ($request->filled('category_id') && $request->input('category_id') !== 'all') {
+                $incident_record->where('category_id', $request->input('category_id'));
+            }
+
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+                $start = Carbon::parse($request->input('start_date'))->startOfDay();
+                $end   = Carbon::parse($request->input('end_date'))->endOfDay();
+
+                $incident_record->whereBetween('dynamic_form.created_at', [$start, $end]);
+            }
+
+            if ($request->filled('keyword')) {
+                $keyword = $request->input('keyword');
+                $incident_record->where(function ($query) use ($keyword) {
+                    $query->where('dynamic_form.title', 'like', "%{$keyword}%")
+                        ->orWhere('dynamic_form.title', 'like', "%{$keyword}%");
+                });
+            }
+
+            $incident_form = $incident_record->get(); // Get filtered data
+
+        } else {
+
+            $today = Carbon::today();
+            $incident_record->whereDate('dynamic_form.created_at', $today);
+
+            // No filters — get paginated result
+            $incident_form = $incident_record->paginate();
+        }
+
         $loop = 1;
         $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
         shuffle($colors);
@@ -89,11 +129,11 @@ class IncidentController extends ServiceUserManagementController
                             <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr rightSideInput rmpTimeRit">
-                                 <span class="timLineDate"> '. $datetime.'</span>
+                                 <span class="timLineDate"> ' . $datetime . '</span>
                                  <span class="arrow"></span>
                                  <div class="rmpWithPlusInput">
                                     <input type="hidden" name="" value="' . $value->id . '" disabled="disabled" class="edit_incident_id_' . $value->id . '">
-                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $value->form_name . ' : ' .$value->title . '" maxlength="255"/>
+                                    <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $value->form_name . ' : ' . $value->title . '" maxlength="255"/>
                             
                                     <span class="ritOrdring two input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                         <i class="fa fa-cog"></i>
@@ -108,7 +148,7 @@ class IncidentController extends ServiceUserManagementController
                                 </div>
                             </div>
                         </div>
-                    </div>  '; 
+                    </div>  ';
             } else {
                 echo  '
                     <div class="col-md-6 col-sm-6 col-xs-6 cog-panel remove-incident-row">
@@ -117,10 +157,10 @@ class IncidentController extends ServiceUserManagementController
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr timelineInput rmpTimeLft">
                                 <span class="arrow"></span>
-                                <span class="timLineDate"> '. $datetime. '</span>
+                                <span class="timLineDate"> ' . $datetime . '</span>
                                     <div class="rmpWithPlusInput">
                                         <input type="hidden" name="" value="' . $value->id . '" disabled="disabled" class="edit_incident_id_' . $value->id . '">
-                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $value->form_name . ' - ' . $value->title. '" maxlength="255"/>
+                                        <input type="text" class="form-control" style="background-color: ' . $color . ';" name="incident_title_name" disabled value="' . $value->form_name . ' - ' . $value->title . '" maxlength="255"/>
                                 
                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings" style="background-color: ' . $color . ';">
                                             <i class="fa fa-cog"></i>
