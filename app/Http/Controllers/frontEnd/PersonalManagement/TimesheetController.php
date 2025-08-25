@@ -33,8 +33,10 @@ class TimesheetController extends Controller
             $ex_home_ids = explode(',', $home_ids);
             $home_id = $ex_home_ids[0];
             $validated['home_id'] = $home_id;
-            $validated['time'] = \Carbon\Carbon::now()->format('H:i:s');
-            $validated['date'] = \Carbon\Carbon::now()->format('Y-m-d');
+            if (empty($validated['time_sheet_id'])) {
+                $validated['time'] = \Carbon\Carbon::now()->format('H:i:s');
+                $validated['date'] = \Carbon\Carbon::now()->format('Y-m-d');
+            }
             TimeSheet::updateOrCreate(['id' => $validated['time_sheet_id']], $validated);
 
             if (empty($validated['time_sheet_id'])) {
