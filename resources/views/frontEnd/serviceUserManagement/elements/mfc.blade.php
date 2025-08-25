@@ -1,22 +1,23 @@
 @extends('frontEnd.layouts.master')
 @section('title', 'Missing/Absent From Care')
 @section('content')
-<link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
-<style>
-.record_row .input-group{
-    display: flex;
-}
-    /* .record_row .input-group input{
-        width: 50%;
-            margin: 3px 0;
-    } */
-    .accodionOpen{
-        background: #a5a5a5;
-        padding: 6px 20px;
-        width: 100%;
-        display: block;
-    }
-</style>
+    <link rel="stylesheet" href="{{ url('public\frontEnd\css\time-line.css') }}">
+    <style>
+        .record_row .input-group {
+            display: flex;
+        }
+
+        /* .record_row .input-group input{
+                width: 50%;
+                    margin: 3px 0;
+            } */
+        .accodionOpen {
+            background: #a5a5a5;
+            padding: 6px 20px;
+            width: 100%;
+            display: block;
+        }
+    </style>
 
     <section id="container">
         <!--main content start-->
@@ -129,27 +130,27 @@
 
                                 <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
 
-                                                    <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Add: </label>
-                                                    <div class="col-md-11 col-sm-11 col-xs-12">
-                                                    <div class="select-bi" style="width:100%;float:left;">
-                                                        <?php
-                                                        $mfc_options = App\MFC::where('home_id', Auth::user()->home_id)
-                                                            ->where('status', '1')
-                                                            ->where('is_deleted', '0')
-                                                            ->orderBy('id', 'desc')
-                                                            ->get()
-                                                            ->toArray();
-                                                        ?>
-                                                        <select class="js-example-placeholder-single-mfc form-control" style="width:100%;" name="mfc_id">
-                                                            <option value=""></option>
-                                                            @foreach ($mfc_options as $value)
-                                                                <option value="{{ $value['id'] }}">{{ $value['description'] }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                        <p class="help-block"> Select MFC. </p>
-                                                    </div>
-                                            </div> -->
+                                                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Add: </label>
+                                                            <div class="col-md-11 col-sm-11 col-xs-12">
+                                                            <div class="select-bi" style="width:100%;float:left;">
+                                                                <?php
+                                                                $mfc_options = App\MFC::where('home_id', Auth::user()->home_id)
+                                                                    ->where('status', '1')
+                                                                    ->where('is_deleted', '0')
+                                                                    ->orderBy('id', 'desc')
+                                                                    ->get()
+                                                                    ->toArray();
+                                                                ?>
+                                                                <select class="js-example-placeholder-single-mfc form-control" style="width:100%;" name="mfc_id">
+                                                                    <option value=""></option>
+                                                                    @foreach ($mfc_options as $value)
+    <option value="{{ $value['id'] }}">{{ $value['description'] }}</option>
+    @endforeach
+                                                                </select>
+                                                            </div>
+                                                                <p class="help-block"> Select MFC. </p>
+                                                            </div>
+                                                    </div> -->
 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                     <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 text-right">Child: </label>
@@ -201,18 +202,18 @@
                                 <!-- <form method="post" action="{{ url('/service/daily-record/edit') }}" id="edit_record_form"> -->
                                 <!-- risk-tabs -->
                                 <!-- <div class="">
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Details</h3>
-                                                </div>
-                                                <div class="dynamic-mfc-fields modal-space ">
-                                                        $form_pattern['su_mfc']
-                                                </div>
-                                            </div> -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Details</h3>
+                                                        </div>
+                                                        <div class="dynamic-mfc-fields modal-space ">
+                                                                $form_pattern['su_mfc']
+                                                        </div>
+                                                    </div> -->
                                 <div class="dynamic-form-fields"> </div>
 
                                 <!-- <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="uploadPopImg mt-0 hideImageDiv"><img class="my-2 imagePreview" src="" width="100px"></div>
-                                        </div> -->
+                                                    <div class="uploadPopImg mt-0 hideImageDiv"><img class="my-2 imagePreview" src="" width="100px"></div>
+                                                </div> -->
 
                                 <div class="form-group modal-footer m-t-0 modal-bttm">
                                     <!-- <a class="bottm-btns" href="{{ url('/service/calendar/' . $service_user_id) }}" ><div class="pull-left"><i class="fa fa-calendar"></i></div></a> -->
@@ -251,22 +252,22 @@
                                 <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Search</h3>
                             </div>
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 type-field">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Type: </label>
-                                        <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
-                                            <div class="select-style">
-                                                <select name="mfc_search_type">
-                                                    <option value='title' selected=""> Title </option>
-                                                    <option value='date'> Date </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div> -->
+                                                <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Type: </label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
+                                                    <div class="select-style">
+                                                        <select name="mfc_search_type">
+                                                            <option value='title' selected=""> Title </option>
+                                                            <option value='date'> Date </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div> -->
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Title: </label>
-                                        <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15 title">
-                                            <input type="text" name="search_mfc_record" class="form-control" maxlength="255">
-                                        </div>
-                                    </div> -->
+                                                <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Title: </label>
+                                                <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15 title">
+                                                    <input type="text" name="search_mfc_record" class="form-control" maxlength="255">
+                                                </div>
+                                            </div> -->
                             <div class="col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd srch-field">
                                 <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Date: </label>
                                 <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
@@ -404,9 +405,6 @@
         });
     </script>
     <script>
-        //click search btn
-        // $('input[name=\'mfc_date\']').closest('.srch-field').hide();
-
         $(document).ready(function() {
 
             $('input[name=\'search_mfc_record\']').keydown(function(event) {
@@ -441,97 +439,96 @@
                 }
             });
 
-            $(document).on('click', '.search_mfc_rcrd_btn', function() {
+            // $(document).on('click', '.search_mfc_rcrd_btn', function() {
 
-                var mfc_search_type = $('select[name=\'mfc_search_type\']');
-                var search_input = $('input[name=\'search_mfc_record\']');
-                var mfc_search_date = $('input[name=\'mfc_date\']');
+            //     var mfc_search_type = $('select[name=\'mfc_search_type\']');
+            //     var search_input = $('input[name=\'search_mfc_record\']');
+            //     var mfc_search_date = $('input[name=\'mfc_date\']');
 
-                var search = search_input.val();
+            //     var search = search_input.val();
 
-                var mfc_date = mfc_search_date.val();
-                var mfc_search_type = mfc_search_type.val();
-                var mfc_search_type = 2;
+            //     var mfc_date = mfc_search_date.val();
+            //     var mfc_search_type = mfc_search_type.val();
+            //     var mfc_search_type = 2;
 
-                search = jQuery.trim(search);
-                search = search.replace(/[&\/\\#,+()$~%.'":*?<>^@{}]/g, '');
+            //     search = jQuery.trim(search);
+            //     search = search.replace(/[&\/\\#,+()$~%.'":*?<>^@{}]/g, '');
 
-                if (mfc_search_type == 'title') {
-                    if (search == '') {
-                        search_input.addClass('red_border');
-                        return false;
-                    } else {
-                        search_input.removeClass('red_border');
-                    }
-                } else {
-                    if (mfc_date == '') {
-                        mfc_search_date.addClass('red_border');
-                        return false;
-                    } else {
-                        mfc_search_date.removeClass('red_border');
-                    }
+            //     if (mfc_search_type == 'title') {
+            //         if (search == '') {
+            //             search_input.addClass('red_border');
+            //             return false;
+            //         } else {
+            //             search_input.removeClass('red_border');
+            //         }
+            //     } else {
+            //         if (mfc_date == '') {
+            //             mfc_search_date.addClass('red_border');
+            //             return false;
+            //         } else {
+            //             mfc_search_date.removeClass('red_border');
+            //         }
 
-                }
-                //for editing functionality
-                //check validations
-                var error = 0;
-                //var enabled = 0;
-                $('.srchd-mfc-rcrds .edit_mfc_rcrd').each(function(index) {
-                    var is_disable = $(this).attr('disabled');
-                    if (is_disable == undefined) { //if it is not disabled
-                        var title = $(this).val();
-                        title = jQuery.trim(title);
+            //     }
+            //     //for editing functionality
+            //     //check validations
+            //     var error = 0;
+            //     //var enabled = 0;
+            //     $('.srchd-mfc-rcrds .edit_mfc_rcrd').each(function(index) {
+            //         var is_disable = $(this).attr('disabled');
+            //         if (is_disable == undefined) { //if it is not disabled
+            //             var title = $(this).val();
+            //             title = jQuery.trim(title);
 
-                        if (title == '' || title == '0') {
-                            $(this).addClass('red_border');
-                            error = 1;
-                        } else {
-                            $(this).removeClass('red_border');
-                        }
-                        //enabled = 1;
-                    }
-                });
-                if (error == 1) {
-                    return false;
-                }
-                /*if(enabled == 0){
-                    return false;
-                }*/
-                var formdata = $('#srchd-mfc-rcrds-form').serialize();
-                var service_user_id = $('.selected_su_id').val();
-                if (service_user_id == undefined) {
-                    service_user_id = "{{ $service_user_id }}";
-                }
+            //             if (title == '' || title == '0') {
+            //                 $(this).addClass('red_border');
+            //                 error = 1;
+            //             } else {
+            //                 $(this).removeClass('red_border');
+            //             }
+            //             //enabled = 1;
+            //         }
+            //     });
+            //     if (error == 1) {
+            //         return false;
+            //     }
+            //     /*if(enabled == 0){
+            //         return false;
+            //     }*/
+            //     var formdata = $('#srchd-mfc-rcrds-form').serialize();
+            //     var service_user_id = $('.selected_su_id').val();
+            //     if (service_user_id == undefined) {
+            //         service_user_id = "{{ $service_user_id }}";
+            //     }
 
-                $('.loader').show();
-                $('body').addClass('body-overflow');
+            //     $('.loader').show();
+            //     $('body').addClass('body-overflow');
 
-                $.ajax({
-                    type: 'post',
-                    url: "{{ url('/service/mfc-records') }}" + '/' + service_user_id + '?search=' +
-                        search + '&mfc_date=' + mfc_date + '&mfc_search_type=' + mfc_search_type,
-                    data: formdata,
-                    success: function(resp) {
-                        if (isAuthenticated(resp) == false) {
-                            return false;
-                        }
-                        if (resp == '') {
+            //     $.ajax({
+            //         type: 'post',
+            //         url: "{{ url('/service/mfc-records') }}" + '/' + service_user_id + '?search=' +
+            //             search + '&mfc_date=' + mfc_date + '&mfc_search_type=' + mfc_search_type,
+            //         data: formdata,
+            //         success: function(resp) {
+            //             if (isAuthenticated(resp) == false) {
+            //                 return false;
+            //             }
+            //             if (resp == '') {
 
-                            $('.srchd-mfc-rcrds').html('No Records found.');
-                        } else {
+            //                 $('.srchd-mfc-rcrds').html('No Records found.');
+            //             } else {
 
-                            $('.srchd-mfc-rcrds').html(resp);
-                        }
-                        $('input[name=\'search\']').val('');
-                        $('.loader').hide();
-                        $('body').removeClass('body-overflow');
-                    }
-                });
-                return false;
-            });
+            //                 $('.srchd-mfc-rcrds').html(resp);
+            //             }
+            //             $('input[name=\'search\']').val('');
+            //             $('.loader').hide();
+            //             $('body').removeClass('body-overflow');
+            //         }
+            //     });
+            //     return false;
+            // });
         });
     </script>
-
     <script>
         $(document).ready(function() {
 
@@ -775,9 +772,6 @@
                         // $('#mfcModal').modal('hide');
                         // $('.dynamic-mfc-fields').find('input').val('');
                         // $('.dynamic-mfc-fields').find('textarea').val('');
-
-
-
                     }
                 });
                 return false;
@@ -824,15 +818,160 @@
     </script>
 
     <script>
-    $(document).ready(function(){
-        $(document).on('click','.daily-rcd-head', function(){
-            $(this).next('.daily-rcd-content').slideToggle();
-            $(this).find('i').toggleClass('fa-angle-down');
-            $('.input-plusbox').hide();
+        $(document).ready(function() {
+            $(document).on('click', '.daily-rcd-head', function() {
+                $(this).next('.daily-rcd-content').slideToggle();
+                $(this).find('i').toggleClass('fa-angle-down');
+                $('.input-plusbox').hide();
+            });
         });
-    });
-</script>
 
+        function getFormData(data) {
+
+              var service_user_id = $('.selected_su_id').val();
+            if (service_user_id == undefined) {
+                service_user_id = "{{ $service_user_id }}";
+            }
+            $.ajax({
+                type: 'post',
+                url: "{{ url('/service/mfc-records') }}" + '/' + service_user_id,
+                data: data,
+                success: function(resp) {
+                    console.log(resp)
+                    if (isAuthenticated(resp) == false) {
+                        return false;
+                    }
+                    console.log("resp from the ", resp);
+                    if (resp == '') {
+                        $('.logged-mfc-list').html(
+                            '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'
+                        );
+                    } else {
+                        $('.logged-mfc-list').html("");
+                        $('.logged-mfc-list').html(resp);
+                    }
+                }
+            });
+        }
+    </script>
+
+    <!-- Daterange Filter -->
+    <script>
+        $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+            let staff_member = $('#staff_member').val();
+            let start_date = picker.startDate.format('DD-MM-YYYY');
+            let end_date = picker.endDate.format('DD-MM-YYYY');
+            let service_user = $('#service_user').val();
+            let keyword = $('#keyword').val();
+            $(this).val(start_date + ' - ' + end_date);
+
+            let today = new Date;
+            let todayFormat = ("0" + today.getDate()).slice(-2) + "-" + ("0" + (today.getMonth() + 1)).slice(-2) +
+                "-" +
+                today.getFullYear();
+
+            if (start_date == todayFormat && end_date == todayFormat) {
+                $('#today').text('Today');
+            } else {
+                $('#today').text(start_date + ' - ' + end_date);
+            }
+
+            let category_id = $("#select_category").val();
+
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': picker.startDate.format('YYYY-MM-DD'),
+                    'end_date': picker.endDate.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': picker.startDate.format('YYYY-MM-DD'),
+                    'end_date': picker.endDate.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+
+
+            getFormData(data);
+            return false;
+
+        });
+    </script>
+
+    <!-- {{-- Filter for child  --}} -->
+    <script type="text/javascript">
+        $('#service_user').change(function() {
+            let staff_member = $('#staff_member').val();
+            let service_user = $('#service_user').val();
+            let category_id = $('#select_category').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let keyword = $('#keyword').val();
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            getFormData(data);
+            return false;
+
+        });
+    </script>
+
+    <!-- {{-- Filter for keyword --}} -->
+    <script>
+        function myFunctionkey() {
+            let staff_member = $('#staff_member').val();
+            let service_user = $('#service_user').val();
+            let category_id = $('#select_category').val();
+            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
+            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
+            let keyword = $('#keyword').val();
+            // alert(keyword)
+            if (category_id && category_id != 'all')
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'category_id': category_id,
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            else
+                data = {
+                    'staff_member': staff_member,
+                    'service_user': service_user,
+                    'start_date': start_date.format('YYYY-MM-DD'),
+                    'end_date': end_date.format('YYYY-MM-DD'),
+                    'filter': 1,
+                    'keyword': keyword
+                };
+            getFormData(data);
+            return false;
+        }
+    </script>
 
     <!-- <script>
         //3 tabs script
