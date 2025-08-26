@@ -103,10 +103,11 @@
             position: absolute;
             right: 24px;
         }
-        .timeline-desk .badge.red-bg{
+
+        .timeline-desk .badge.red-bg {
             position: absolute;
             right: 56px;
-            top: 16px;        
+            top: 16px;
         }
     </style>
 
@@ -262,9 +263,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                    </div> -->
+                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                        </div> -->
 
                 </div>
 
@@ -700,44 +701,6 @@
 
         });
 
-        
-  
-        
-
-
-        // let viewdatawithvalueFormio = () => {
-        //     // console.log($('#dynamic_form_idformio').val());
-        //     let dynamic_form_idformio = $("#dynamic_form_idformio").val();
-        //     var token = "<?= csrf_token() ?>";
-        //     var settings = {
-        //         "url": "{{ url('/service/patterndataformiovaule') }}",
-        //         "method": "POST",
-        //         "data": {
-        //             dynamic_form_idformio: dynamic_form_idformio,
-        //             _token: token
-        //         },
-        //         //dataType: "json",
-        //     };
-        //     $.ajax(settings).done(function(response) {
-        //         // console.log(response[0].pattern);
-        //         if (isAuthenticated(response) == false) {
-        //             return false;
-        //         }
-
-        //         Formio.createForm(document.getElementById('formioView'), {
-        //             components: JSON.parse(response[0].pattern)
-        //         }, {
-        //             readOnly: seteditvalueeditable
-        //         }).then(function(form) {
-        //             form.submission = {
-        //                 data: JSON.parse(response[0].pattern_data)
-        //             }
-        //             // form.getComponent('email').setValue('rksonkar356@gmail.com');
-        //         });
-
-        //     });
-        // }
-
         // document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
         //     btn.addEventListener('click', function() {
         //         $('#DynFormViewModal').modal('show');
@@ -809,7 +772,6 @@
     <!-- Daily Log Comments -->
     <script>
         function daily_log_comment(logId, service_user_id) {
-            // alert(service_user_id)
             localStorage.setItem('log_book_id', logId);
             $('.loader').show();
             $('body').addClass('body-overflow');
@@ -877,7 +839,6 @@
                         const container = document.querySelector('#logs_articles');
                         removeAllChildNodes(container);
                         let previous_date = '';
-                        console.log()
                         // if (!service_user && !resp.log_book_records.date) {
 
                         // } else {
@@ -942,9 +903,29 @@
                                 $(created_at).append($(
                                     `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
                                 ));
-
-
                                 pannel_body.append(created_at);
+
+                                var viewEditIcon = document.createElement("span");
+
+                                viewEditIcon.className = "viewEditIcon";
+
+                                // create anchor
+                                var a = document.createElement("a");
+                                a.href = "#!";
+                                a.className = "dyn-form-view-data";
+                                a.id = resp.log_book_records[i]['dynamic_form_id']; // use dynamic_form_id from response
+
+                                // create <i> icon
+                                var icon = document.createElement("i");
+                                icon.className = "fa fa-eye";
+
+                                // append icon → anchor → span
+                                a.appendChild(icon);
+                                viewEditIcon.appendChild(a);
+
+                                // append the span after created_at
+                                pannel_body.append(viewEditIcon);
+
                                 if (previous_date != moment.utc(resp.log_book_records[i]['date'],
                                         'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
                                     $(log_atricles).append($(`
@@ -1078,8 +1059,28 @@
                                     `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
                                 ));
 
-
                                 pannel_body.append(created_at);
+
+                                var viewEditIcon = document.createElement("span");
+
+                                viewEditIcon.className = "viewEditIcon";
+
+                                // create anchor
+                                var a = document.createElement("a");
+                                a.href = "#!";
+                                a.className = "dyn-form-view-data";
+                                a.id = resp.log_book_records[i]['dynamic_form_id']; // use dynamic_form_id from response
+
+                                // create <i> icon
+                                var icon = document.createElement("i");
+                                icon.className = "fa fa-eye";
+
+                                // append icon → anchor → span
+                                a.appendChild(icon);
+                                viewEditIcon.appendChild(a);
+
+                                // append the span after created_at
+                                pannel_body.append(viewEditIcon);
 
                                 if (previous_date != moment.utc(resp.log_book_records[i]['date'],
                                         'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
@@ -1154,13 +1155,9 @@
                                         </a>
                                         `));
                                 pannel_body.append(date_field);
-
                                 pannel.append(pannel_body);
-
                                 timeline_desk.append(pannel);
-
                                 article_left.append(timeline_desk);
-
                                 log_atricles.append(article_left);
                             }
                         }
@@ -1362,7 +1359,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             getDailyLogData(data);
@@ -1389,7 +1386,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             else
@@ -1399,7 +1396,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             getDailyLogData(data);
@@ -1426,7 +1423,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             else
@@ -1436,7 +1433,7 @@
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
 
@@ -1462,7 +1459,7 @@
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'category_id': category_id,
                     'filter': 1,
-                    'log_type' : log_type,
+                    'log_type': log_type,
                     'keyword': keyword
                 };
             else
