@@ -101,9 +101,8 @@
                                     <p class="help-block"> Choose a user and the type of form you want to fill. </p>
                                 </div>
                             </div>
-                              <div class="dynamic-form-fields"></div>
 
-                         
+                            <div class="dynamic-form-fields"></div>
 
                             <!-- new image -->
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
@@ -120,7 +119,9 @@
                             <div class="form-group modal-footer m-t-0 modal-bttm">
                                 <button class="btn btn-default cancel-log" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                                 {{-- <input type="hidden" name="id" value=""> --}}
-                                {{-- <input type="hidden" name="service_user_id" value="{{ $service_user_id }}"> --}}
+                                @if(isset($_GET['key']))
+                                    <input type="hidden" name="service_user_id" value="{{ $service_user_id }}">
+                                @endif
                                 <input type="hidden" name="location_id" value="9">
                                 {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
                                 <button class="btn btn-warning submit-log hide-field" type="button"> Submit </button>
@@ -181,15 +182,15 @@
     $('.submit-log').click(function() {
 
         var category = $('select[name=\'category\']').val();
-
-
         var log_title = $('input[name=\'log_title\']').val();
         var log_date = $('input[name=\'log_date\']').val();
         var log_image = $('input[name=\'log_image\']').val();
         var log_detail = $('.log-detail').val();
         var token = $('input[name=\'_token\']').val();
 
-        //var formdata = $('#su-log-book-form').serialize();
+        var formdata = $('#su-log-book-form').serialize();
+        console.log("formdata1", formdata);
+        console.log("formdata2", new FormData($("#su-log-book-form")[0]));
 
         var error = 0;
 
@@ -200,28 +201,28 @@
             $('select[name=\'category\']').removeClass('red_border');
         }
 
-        // if(log_date == ''){ 
-        //     $('input[name=\'log_date\']').addClass('red_border');
-        //     error = 1;
-        // }else{ 
-        //     $('input[name=\'log_date\']').removeClass('red_border');
-        // }
+        if(log_date == ''){ 
+            $('input[name=\'log_date\']').addClass('red_border');
+            error = 1;
+        }else{ 
+            $('input[name=\'log_date\']').removeClass('red_border');
+        }
 
-        // if(log_title == ''){ 
+        if(log_title == ''){ 
 
-        //     $('input[name=\'log_title\']').addClass('red_border');
-        //     error = 1;
-        // }else{
+            $('input[name=\'log_title\']').addClass('red_border');
+            error = 1;
+        }else{
 
-        //     $('input[name=\'log_title\']').removeClass('red_border');
-        // }
+            $('input[name=\'log_title\']').removeClass('red_border');
+        }
 
-        // if(log_detail == ''){ 
-        //     $('textarea[name=\'log_detail\']').addClass('red_border');
-        //     error = 1;
-        // }else{ 
-        //     $('textarea[name=\'log_detail\']').removeClass('red_border');
-        // }
+        if(log_detail == ''){ 
+            $('textarea[name=\'log_detail\']').addClass('red_border');
+            error = 1;
+        }else{ 
+            $('textarea[name=\'log_detail\']').removeClass('red_border');
+        }
 
         // if(log_image == ''){ 
         //     $('input[name=\'log_image\']').addClass('red_border');
@@ -240,12 +241,12 @@
         $.ajax({
             type: 'post',
             url: "{{ url('/service/logbook/add') }}",
-            data: new FormData($("#su-log-book-form")[0]),
+            data: $('#su-log-book-form').serialize(),
             async: false,
             cache: false,
-            contentType: false,
-            processData: false,
-            //dataType : 'json',
+            // contentType: false,
+            // processData: false,
+            // dataType : 'json',
 
             success: function(resp) {
                 // alert(resp);
