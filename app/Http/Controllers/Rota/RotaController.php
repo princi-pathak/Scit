@@ -7,6 +7,7 @@ use App\Rota, App\User, App\RotaShift, App\RotaAssignEmployee,App\LeaveType, App
 use Session, DB;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use App\Models\PersonalManagement\TimeSheet;
 use Auth,Validator;
 
 class RotaController extends Controller
@@ -1424,11 +1425,13 @@ class RotaController extends Controller
       $staff_id=base64_decode($request->staff);
       $staff=User::find($staff_id);
       if($staff){
+        $data['staff']=$staff;
         $month=date('m');
         $year=date('Y');
-        $data['logs'] = LoginInActivity::where('user_id', $staff_id)->whereMonth('login_date',$month)->whereYear('login_date',$year)->orderBy('id', 'DESC')->where('is_deleted', 0)->get();
-        $data['staff']=$staff;
-        // echo "<pre>";print_r($data['logs']);die;
+        $data['time_sheet'] = TimeSheet::with('user')->where('user_id', $staff_id)->whereMonth('date',$month)->whereYear('date',$year)->where('deleted_at', null)->orderBy('created_at', 'desc')->get();
+        // echo "<pre>";print_r($data['time_sheet']);die;
+        $shift_assign=RotaAssignEmployee::with('shift')->where('emp_id',$staff_id)->get();
+        // echo "<pre>";print_r($shift_assign);die;
         return view('rotaStaff.staff_timesheet',$data);
       }else{
         return redirect('staff/logs')->with('staff_error','Staff is not found');
@@ -1436,6 +1439,62 @@ class RotaController extends Controller
     }
     public function staff_timesheet_add(Request $request){
        return view('rotaStaff.staff_timesheet_add');
+    }
+    public function timesheet_filter(Request $request){
+      // echo "<pre>";print_r($request->all());die;
+      $time_sheet = TimeSheet::with('user')->where('user_id', $request->staff_id)->whereDate('date',$request->date)->where('deleted_at', null)->orderBy('created_at', 'desc')->get();
+      $category_type='';
+      $html='';
+      foreach($time_sheet as $key=> $val){
+        $total_hours=RotaAssignEmployee::where('emp_id',$val->user_id)->whereDate('created_at',$val->date)->sum('total_hours');
+        if($val->category_id == 1){
+            $category_type="Sleep";
+        }else if($val->category_id == 2){
+            $category_type="Disturbance";
+        }else if($val->category_id == 3){
+            $category_type="Wake Night";
+        }else if($val->category_id == 4){
+            $category_type="Annual Leave";
+        }else{
+            $category_type="On Call";
+        }
+        $ex_time = explode('.', $val->hours);
+        $hour = isset($ex_time[0]) ? $ex_time[0] . "h" : "0h";
+        $min  = isset($ex_time[1]) ? $ex_time[1] . "min" : "0min";
+        $html.='<tr>
+                  <td>'. ++$key .'</td>
+                  <td>'. $val->date .'</td>
+                  <td>'. $this->formatHours($total_hours) .'</td>
+                  <td>'. $category_type .'</td>
+                  <td>'. $hour.' '. $min .'</td>
+                  <td>'. $val->comments .'</td>
+                  <td>
+                      <div class="pageTitleBtn p-0">
+                          <div class="dropdown">
+                              <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                  Action <i class="fa fa-caret-down"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right fade-up m-0">
+                                  <a href="javascript:void(0)" class="dropdown-item col-form-label modal_open" data-action="edit" data-id="'.$val->id.'" data-category_id="'.$val->category_id.'" data-hours="'.$val->hours.'" data-comments="'.$val->comments.'">Edit</a>
+                                  <!-- <a href="javascript:void(0)" class="dropdown-item col-form-label">View Details</a> -->
+                                  <a onclick="time_delete('.$val->id.')" href="javascript:void(0)" class="dropdown-item col-form-label">Delete</a>
+                              </div>
+                          </div>
+                      </div>
+                  </td>
+              </tr>';
+      }
+      return response()->json(['success'=>true,'data'=>$html]);
+    }
+    function formatHours($decimalHours) {
+      if ($decimalHours == 0 || $decimalHours == null) {
+          return "";
+      }
+
+      $hours = floor($decimalHours);
+      $minutes = round(($decimalHours - $hours) * 60);
+
+      return "{$hours}h {$minutes}min";
     }
 
 }

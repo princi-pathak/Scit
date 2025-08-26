@@ -220,6 +220,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('satff/log/view/is_valid','App\Http\Controllers\Rota\RotaController@satff_log_view_is_valid');
 	Route::get('staff/timesheet','App\Http\Controllers\Rota\RotaController@staff_timesheet');
 	Route::get('staff/timesheet/add','App\Http\Controllers\Rota\RotaController@staff_timesheet_add');
+	Route::post('staff/timesheet_filter','App\Http\Controllers\Rota\RotaController@timesheet_filter');
 
 	Route::post('/add-shift-data', 'App\Http\Controllers\Rota\RotaController@add_shift_data');
 	Route::post('/get-all-users', 'App\Http\Controllers\Rota\RotaController@get_all_users');
