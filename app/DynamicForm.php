@@ -2015,6 +2015,7 @@ class DynamicForm extends Model //FormBuilder
 
     public static function saveForm($data)
     {
+        
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id=$ex_home_ids[0];
