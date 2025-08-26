@@ -139,7 +139,7 @@
                             <div class="jobsection justify-content-between align-items-center">
                                 <div class="d-flex justify-content-end gap-4 align-items-center">
                                     <a href="javascript:void(0)" class="btn btn-warning modal_open" data-action="add"><i class="fa fa-plus"></i> Add</a>
-                                    <label for="fromDate" class="mb-0">Category:</label>
+                                    <label for="fromDate" class="mb-0">Date:</label>
                                     <!-- <select name="category" id="category" class="form-control">
                                         <option selected="" disabled="">Select Category</option>
                                         <option value="1">Sleep</option>
@@ -225,7 +225,7 @@
                                 </div>
                             </div>
                             @endif
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_alrt_msg" style="display:none">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_alrt_msgblade" style="display:none">
                                 <div class="popup_notification-box">
                                     <div class="alert alert-success alert-dismissible m-0" role="alert">
                                         <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
@@ -490,7 +490,7 @@ function time_delete(id){
                             return false;
                         }
                     }
-                    $(".popup_alrt_msg").show();
+                    $(".popup_alrt_msgblade").show();
                     $(".alert-success").show();
                     $(".popup_success_txt").text(response.message);
                     setTimeout(function(){
@@ -522,7 +522,10 @@ $(document).on('change','#date_timesheet',function(){
                     return false;
                 }
             }
+            var table = $('#satffTimesheetTable').DataTable();
+            table.destroy();
             $("#user_data").html(response.data);
+            $('#satffTimesheetTable').DataTable();
         },
         error: function(xhr, status, error) {
             console.log(xhr);
