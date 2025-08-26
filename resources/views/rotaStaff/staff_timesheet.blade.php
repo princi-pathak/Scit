@@ -140,14 +140,15 @@
                                 <div class="d-flex justify-content-end gap-4 align-items-center">
                                     <a href="javascript:void(0)" class="btn btn-warning modal_open" data-action="add"><i class="fa fa-plus"></i> Add</a>
                                     <label for="fromDate" class="mb-0">Category:</label>
-                                    <select name="category" id="category" class="form-control">
+                                    <!-- <select name="category" id="category" class="form-control">
                                         <option selected="" disabled="">Select Category</option>
                                         <option value="1">Sleep</option>
                                         <option value="2">Disturbance</option>
                                         <option value="3">Wake Night</option>
                                         <option value="4">Annual Leave</option>
                                         <option value="5">On Call</option>
-                                    </select>
+                                    </select> -->
+                                    <input type="date" name="" id="date_timesheet">
                                     <button type="button" class="btn btn-warning" onclick="location.reload()">Reset</button>
                                 </div>
                             </div>
@@ -224,6 +225,14 @@
                                 </div>
                             </div>
                             @endif
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_alrt_msg" style="display:none">
+                                <div class="popup_notification-box">
+                                    <div class="alert alert-success alert-dismissible m-0" role="alert">
+                                        <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Success!</strong> <span class="popup_success_txt"></span>.
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="maimtable productDetailTable mb-4  table-responsive">
                                 <!-- <div class="delete_table_row">
@@ -234,18 +243,67 @@
                                         <tr>
                                             <th>#</th>
                                             <th>{{date('F Y')}}</th>
-                                            <th>Hours</th>
-                                            <th>Sleep</th>
-                                            <th>Disturbance</th>
-                                            <th>Wake Night</th>
-                                            <th>Annual Leave</th>
-                                            <th>On Call</th>
+                                            <th>Total Shitf Hours</th>
+                                            <th>Category Type</th>
+                                            <th>Extra Hours</th>
                                             <th>Comments</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody id="user_data">
-                                       
+                                        <?php
+                                            function formatHours($decimalHours) {
+                                                if ($decimalHours == 0 || $decimalHours == null) {
+                                                    return "";
+                                                }
+
+                                                $hours = floor($decimalHours);
+                                                $minutes = round(($decimalHours - $hours) * 60);
+
+                                                return "{$hours}h {$minutes}min";
+                                            }
+                                            $category_type='';
+                                            foreach($time_sheet as $key=>$val){
+                                                if($val->category_id == 1){
+                                                    $category_type='Sleep';
+                                                }else if($val->category_id == 2){
+                                                    $category_type='Disturbance';
+                                                }else if($val->category_id == 3){
+                                                    $category_type='Wake Night';
+                                                }else if($val->category_id == 4){
+                                                    $category_type='Annual Leave';
+                                                }else{
+                                                    $category_type='On Call';
+                                                }
+
+                                            $total_hours=App\RotaAssignEmployee::where('emp_id',$val->user_id)->whereDate('created_at',$val->date)->sum('total_hours');
+                                            $ex_time = explode('.', $val->hours);
+                                            $hour = isset($ex_time[0]) ? $ex_time[0] . 'h' : '0h';
+                                            $min  = isset($ex_time[1]) ? $ex_time[1] . 'min' : '0min';
+                                        ?>
+                                       <tr>
+                                            <td>{{++$key}}</td>
+                                            <td>{{$val->date}}</td>
+                                            <td>{{ formatHours($total_hours) }}</td>
+                                            <td>{{$category_type}}</td>
+                                            <td>{{ $hour }} {{ $min }}</td>
+                                            <td>{{ $val->comments }}</td>
+                                            <td>
+                                                <div class="pageTitleBtn p-0">
+                                                    <div class="dropdown">
+                                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                                            Action <i class="fa fa-caret-down"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right fade-up m-0">
+                                                            <a href="javascript:void(0)" class="dropdown-item col-form-label modal_open" data-action="edit" data-id="{{$val->id}}" data-category_id="{{$val->category_id}}" data-hours="{{$val->hours}}" data-comments="{{$val->comments}}">Edit</a>
+                                                            <!-- <a href="javascript:void(0)" class="dropdown-item col-form-label">View Details</a> -->
+                                                            <a onclick="time_delete({{$val->id}})" href="javascript:void(0)" class="dropdown-item col-form-label">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                       </tr>
+                                       <?php }?>
                                     </tbody>
                                 </table>
                             </div> <!-- End off main Table -->
@@ -264,19 +322,23 @@
                 <h4 class="modal-title" id="ModalLabel"></h4>
             </div>
             <div class="modal-body">
-                <div class="col-md-12 col-lg-12 col-xl-12">
-                    <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_success popup_alrt_msg" style="display: none;">
+                    <div class="popup_notification-box">
+                        <div class="alert alert-success alert m-0" role="alert">
+                            <button type="button" class="close close-msg-btn"><span aria-hidden="true">×</span></button>
+                            <strong>Success!</strong> <span class="popup_success_txt"></span>.
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <form id="form_data" class="customerForm">
                             @csrf
-                            <input type="hidden" name="id" id="id">
-                            <input type="hidden" name="staff_id" id="staff_id" value="<?php if(isset($staff)){echo $staff->id;}?>">
-                            <input type="hidden" name="login_user_id" id="login_user_id" value="{{Auth::user()->id}}">
+                            <input type="hidden" name="time_sheet_id" id="id">
+                            <input type="hidden" name="user_id" id="user_id" value="<?php if(isset($staff)){echo $staff->id;}?>">
                             <div class="mb-3">
                                 <label class="mb-2 col-form-label">Category <span class="radStar">*</span></label>
-                                    <select class="form-control editInput selectOptions" id="category_id" name="category_id">
+                                    <select class="form-control editInput selectOptions checkInput" id="category_id" name="category_id">
                                         <option selected="" disabled="">Select Category</option>
                                         <option value="1">Sleep</option>
                                         <option value="2">Disturbance</option>
@@ -287,11 +349,15 @@
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label mb-2">Hours <span class="radStar">*</span></label>
-                                <input type="text" class="form-control editInput textareaInput" name="hours" id="hours" value="" placeholder="Enter Hours">
+                                <input type="text" class="form-control editInput textareaInput checkInput" name="hours" id="hours" value="" placeholder="Enter Hours">
+                                <small class="form-text text-muted">
+                                    Please enter hours in decimal format.  
+                                    Example: <b>2.15</b> means 2 hours 15 minutes, <b>1.30</b> means 1 hour 30 minutes.
+                                </small>
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label mb-2">Comment <span class="radStar">*</span></label>
-                                <textarea class="form-control textareaInput" id="comment" name="comment" rows="10" placeholder="Enter Your Comment"></textarea>
+                                <textarea class="form-control textareaInput checkInput" id="comments" name="comments" rows="10" placeholder="Enter Your Comment"></textarea>
                             </div>
                         </form>
                     </div>
@@ -321,9 +387,149 @@
         if(data === 'add'){
             $("#ModalLabel").text("Add Staff Timesheet");
         }else{
+            var category_id=$(this).data('category_id');
+            var hours=$(this).data('hours');
+            var comments=$(this).data('comments');
+            var id=$(this).data('id');
+            $("#category_id").val(category_id);
+            $("#hours").val(hours);
+            $("#comments").val(comments);
+            $("#id").val(id);
             $("#ModalLabel").text("Edit Staff Timesheet");
         }
         $("#stafftimesheetModal").modal('show');
     });
+    $(document).on('input','#hours', function(){
+        this.value = this.value.replace(/[^0-9.]/g, '');
+        if ((this.value.match(/\./g) || []).length > 1) {
+            this.value = this.value.slice(0, -1);
+        }
+        let floatVal = parseFloat(this.value);
+        if (!isNaN(floatVal)) {
+            if (floatVal <= 0) this.value = '';
+            if (floatVal > 24) this.value = '24.00';
+        }
+        let parts = this.value.split('.');
+        let hours = parseInt(parts[1]);
+        if(parts[1] && parts[1].length > 2){
+            parts[1] = parts[1].slice(0, 2);
+            this.value = parts.join('.');
+        }
+        if(parts[1] && parts[1] >= '59'){
+            let update=parts[0]=Number(parts[0])+Number(1);
+            this.value = update+'.00';
+        }
+    });
+    $("#save_data").on('click',function(){
+        var error=0;
+        $('.checkInput').each(function(){
+            var formfield=$(this).val();
+            if(formfield == '' || formfield == undefined){
+                error=1;
+                $(this).css('border','1px solid red');
+                $(this).focus();
+                return false;
+            }else{
+                $(this).css('border','');
+                error=0;
+            }
+        });
+        if(error == 1){
+            return false;
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "{{ url('/my-profile/time-sheet/add') }}",
+                data: new FormData($("#form_data")[0]),
+                async: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    // return false;
+                    if (typeof isAuthenticated === "function") {
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
+                    }
+                    if (response.success === true) {
+                        // location.reload();
+                        $(".popup_alrt_msg").show();
+                        $(".alert-success").show();
+                        $(".popup_success_txt").text(response.message);
+                        setTimeout(function(){
+                            location.reload();
+                        }, 3000);
+                    }else{
+                        alert("Something went wrong! Please try again later");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    });
+function time_delete(id){
+    if(id === ''){
+        alert("Something went wrong! Please try again later");
+        return false;
+    }else{
+        if(confirm("Are you sure to delete it?")){
+            $.ajax({
+                type: "delete",
+                url: "{{ url('/my-profile/time-sheet/delete') }}/"+id,
+                // data: {id:id,_token:"{{csrf_token()}}"},
+                success: function(response) {
+                    console.log(response);
+                    if (typeof isAuthenticated === "function") {
+                        if (isAuthenticated(response) == false) {
+                            return false;
+                        }
+                    }
+                    $(".popup_alrt_msg").show();
+                    $(".alert-success").show();
+                    $(".popup_success_txt").text(response.message);
+                    setTimeout(function(){
+                        location.reload();
+                    }, 3000);
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+}
+$(document).on('change','#date_timesheet',function(){
+    var date=$(this).val();
+    var staff_id='<?php echo $staff->id;?>';
+    $.ajax({
+        type: "post",
+        url: "{{ url('/staff/timesheet_filter') }}",
+        data: {date:date,staff_id:staff_id,_token:"{{csrf_token()}}"},
+        success: function(response) {
+            console.log(response);
+            // return false;
+            if (typeof isAuthenticated === "function") {
+                if (isAuthenticated(response) == false) {
+                    return false;
+                }
+            }
+            $("#user_data").html(response.data);
+        },
+        error: function(xhr, status, error) {
+            console.log(xhr);
+            var errorMessage = xhr.status + ': ' + xhr.statusText;
+            alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+        }
+    });
+});
 </script>
 @endsection

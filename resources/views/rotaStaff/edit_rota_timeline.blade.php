@@ -15,6 +15,7 @@
     .employee-name {
         max-height: 38vh;
         overflow-y: auto;
+        border: 1px solid #eee;
     }
 
     .modal {
