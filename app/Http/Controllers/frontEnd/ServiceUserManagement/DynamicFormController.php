@@ -21,7 +21,6 @@ class DynamicFormController extends Controller
         $form_builder_id = $request->form_builder_id;
         $service_user_id = $request->service_user_id;
         $form = DynamicForm::showForm($form_builder_id, $service_user_id);
-        //   	dd($form);
         return $form;
     }
 
@@ -31,19 +30,15 @@ class DynamicFormController extends Controller
         $data = $request->input();
 
         if (!empty($data)) {
-            // dd($request);
             $home_ids = Auth::user()->home_id;
             $ex_home_ids = explode(',', $home_ids);
             $home_id = $ex_home_ids[0];
             $form_insert_id = DynamicForm::saveForm($data);
-            // dd($form_insert_id);
-            // echo "dfdf"; die;
 
             if ($form_insert_id != 0) {
 
                 //if this dynamic form is mfc form then manage earning points
                 $location_ids = DynamicFormBuilder::where('id', $data['dynamic_form_builder_id'])->value('location_ids');
-                // dd($location_ids);
                 $location_ids_arr = explode(',', $location_ids);
                 if (in_array('5', $location_ids_arr)) {
                     EarningScheme::updateEarning($data['service_user_id']);
@@ -51,7 +46,6 @@ class DynamicFormController extends Controller
                 //update earning scheme in case of mfc form ends here
                 //sourabh log insert
                 $logtype = DynamicFormBuilder::where('id', $data['dynamic_form_builder_id'])->value('logtype');
-                // dd($logtype); 
 
                 $logtype_arr = explode(',', $logtype);
 
@@ -310,9 +304,6 @@ class DynamicFormController extends Controller
                     }
                 }
 
-
-
-
                 // foreach ($logtype_arr as $val) {
 
                 //     if ($val == 1 || $val == 10) {
@@ -355,10 +346,9 @@ class DynamicFormController extends Controller
             $home_id = $ex_home_ids[0];
             // $home_id = Auth::user()->home_id;
             $dynamic_form_id = $request->dynamic_form_id;
-            $form            = DynamicForm::where('dynamic_form.id', $dynamic_form_id)->first();
+            $form = DynamicForm::where('dynamic_form.id', $dynamic_form_id)->first();
             //join('service_user as su','su.id','=','dynamic_form.service_user_id') ->where('su.home_id',$home_id)
-            // echo "<pre>";
-            //  print_r(json_encode($data['data']));
+            // echo "<pre>"; print_r(json_encode($data['data']));
             //($data['data']==null)?"hello" +die() :json_encode($data['data']);
             //  die();
 
@@ -436,8 +426,6 @@ class DynamicFormController extends Controller
 
     public function index(Request $request)
     {
-
-        // dd($request);
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id = $ex_home_ids[0];
@@ -570,7 +558,6 @@ class DynamicFormController extends Controller
                             </div>
                         </div>  ';
             } else {
-
                 echo '  <div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                 <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
@@ -608,6 +595,8 @@ class DynamicFormController extends Controller
 
     public function su_daily_log_add(Request $request)
     {
+        // dd($request);
+
         // echo "<pre>"; print_r($request->input()); die;
 
         if ($request->isMethod('post')) {
@@ -657,6 +646,7 @@ class DynamicFormController extends Controller
             $log_book->user_id         = Auth::user()->id;
             $log_book->title           = $dyn_form->title ?? $title_detail->title;
             $log_book->date            = date('Y-m-d H:i:s');
+
             $log_book->start_date = !empty($data['start_date'])
                 ? Carbon::createFromFormat('d-m-Y', $data['start_date'])->format('Y-m-d')
                 : null;
@@ -664,6 +654,7 @@ class DynamicFormController extends Controller
             $log_book->end_date = !empty($data['end_date'])
                 ? Carbon::createFromFormat('d-m-Y', $data['end_date'])->format('Y-m-d')
                 : null;
+                
             $log_book->details         = $dyn_form->details ?? $title_detail->detail;
             $log_book->category_id     = $s_category_id;
             $log_book->category_name   = $category_data ? $category_data->name : null;
