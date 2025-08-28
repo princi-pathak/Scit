@@ -263,9 +263,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                        </div> -->
+                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                            </div> -->
 
                 </div>
 
@@ -313,6 +313,10 @@
                                                             title="{{ $key['created_at'] }}">{{ time_diff_string(date('d-m-Y H:i', strtotime($key['created_at'])), 'now') }}
                                                             <span style="color:black;font-weight:400;font-size:14px;">by
                                                                 {{ $key['staff_name'] }}</span>
+                                                            @if (!empty($key['child_name']))
+                                                                | <span
+                                                                    style="color:black;font-weight:400;font-size:14px;">{{ $key['child_name'] }}</span>
+                                                            @endif
                                                         </span>
                                                         <span class="viewEditIcon">
                                                             <a href="#!" class="dyn-form-view-data"
@@ -320,18 +324,19 @@
                                                                     class="fa fa-eye"></i></a>
                                                             {{-- <a href="#!"><i class="fa fa-eye"></i></a> --}}
                                                         </span>
-                                                        @if (isset($key['category_name']) && !empty($key['category_name']))
-                                                            <h1 class="title_time_log">
-                                                                <span style="color:{{ $key['category_color'] ?? '' }};">
-                                                                    {{ $key['category_name'] }} {{ $logType }}
-                                                                </span>
-                                                            </h1>
-                                                        @else
-                                                            <h1 class="title_time_log">
-                                                                <span class="log_title">{{ $key['title'] }}
-                                                                    {{ $logType }}</span>
-                                                            </h1>
-                                                        @endif
+
+                                                        {{-- @if (isset($key['category_name']) && !empty($key['category_name'])) --}}
+                                                        <h1 class="title_time_log">
+                                                            <span style="color:{{ $key['category_color'] ?? '' }};">
+                                                                {{ $key['category_name'] }} </span> | <span
+                                                                class="log_title">{{ $key['title'] }}
+                                                            </span>
+                                                        </h1>
+                                                        {{-- @endif --}}
+                                                        {{-- <h1 class="title_time_log">
+                                                                <span class="log_title">{{ $logType }}</span>
+                                                            </h1> --}}
+
 
                                                         @if (!empty($key['image_name']))
                                                             <div class="logimg">
@@ -344,15 +349,20 @@
                                                         @endif
 
                                                         <p class="comment-detail-info-area">{{ $key['details'] }}</p>
+                                                        <?php //echo $key['date'];
+                                                        ?>
                                                         <p class="daily_log_time">
-                                                            {{ date('d-m-Y H:i', strtotime($key['date'])) }}
+                                                            {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
+                                                                class="log_title">{{ $logType }} </span>
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
                                                                         style="color:red;">{{ $key['late_time_text'] }}</span>
+                                                                    | <span class="log_title">{{ $logType }}</span>
                                                                 @else
                                                                     | <span
                                                                         style="color:red;">{{ date('d-m-Y H:i', strtotime($key['created_at'])) }}</span>
+                                                                    | <span class="log_title">{{ $logType }}</span>
                                                                 @endif
                                                             @endif
                                                         </p>
@@ -392,6 +402,10 @@
                                                                 <span
                                                                     style="color:black;font-weight:400;font-size:14px;">by
                                                                     {{ $key['staff_name'] }}</span>
+                                                                @if (!empty($key['child_name']))
+                                                                    | <span
+                                                                        style="color:black;font-weight:400;font-size:14px;">{{ $key['child_name'] }}</span>
+                                                                @endif
                                                             </span>
                                                             <span class="viewEditIcon">
                                                                 <a href="#!" class="dyn-form-view-data"
@@ -401,18 +415,12 @@
                                                             </span>
                                                         </div>
 
-                                                        @if (isset($key['category_name']) && !empty($key['category_name']))
-                                                            <h1 class="title_time_log">
-                                                                <span style="color:{{ $key['category_color'] ?? '' }};">
-                                                                    {{ $key['category_name'] }} {{ $logType }}
-                                                                </span>
-                                                            </h1>
-                                                        @else
-                                                            <h1 class="title_time_log">
-                                                                <span class="log_title">{{ $key['title'] }}
-                                                                    {{ $logType }}</span>
-                                                            </h1>
-                                                        @endif
+                                                        <h1 class="title_time_log">
+                                                            <span style="color:{{ $key['category_color'] ?? '' }};">
+                                                                {{ $key['category_name'] }} </span> | <span
+                                                                class="log_title">{{ $key['title'] }}
+                                                            </span>
+                                                        </h1>
 
                                                         @if (!empty($key['image_name']))
                                                             <div class="logimg">
@@ -426,7 +434,8 @@
 
                                                         <p class="comment-detail-info-area">{{ $key['details'] }}</p>
                                                         <p class="daily_log_time">
-                                                            {{ date('d-m-Y H:i', strtotime($key['date'])) }}
+                                                            {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
+                                                                class="log_title">{{ $logType }} </span>
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
@@ -772,6 +781,7 @@
     <!-- Daily Log Comments -->
     <script>
         function daily_log_comment(logId, service_user_id) {
+            console.log(service_user_id);
             localStorage.setItem('log_book_id', logId);
             $('.loader').show();
             $('body').addClass('body-overflow');
@@ -845,6 +855,14 @@
 
                         // }
                         for (var i = 0; i < resp.log_book_records.length; i++) {
+                            var logTypeValue = resp.log_book_records[i]['logType'];
+                            if (logTypeValue == "1") {
+                                logType = "Daily Log";
+                            } else if (logTypeValue == "2") {
+                                logType = "Weekly Log";
+                            } else if (logTypeValue == "3") {
+                                logType = "Monthly Log";
+                            }
 
                             if (i % 2 != 0) {
                                 var log_atricles = document.getElementById("logs_articles");
@@ -901,7 +919,7 @@
                                     .log_book_records[i]['created_at']).fromNow());
                                 created_at.append(created_at_text);
                                 $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
+                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span> | <span style="color:black;font-weight:400;font-size:14px;"> ${resp.log_book_records[i]['child_name']}</span>`
                                 ));
                                 pannel_body.append(created_at);
 
@@ -913,7 +931,9 @@
                                 var a = document.createElement("a");
                                 a.href = "#!";
                                 a.className = "dyn-form-view-data";
-                                a.id = resp.log_book_records[i]['dynamic_form_id']; // use dynamic_form_id from response
+                                a.id = resp.log_book_records[i][
+                                    'dynamic_form_id'
+                                ]; // use dynamic_form_id from response
 
                                 // create <i> icon
                                 var icon = document.createElement("i");
@@ -958,9 +978,9 @@
 
                                 var date_field = document.createElement("p");
                                 date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
+                                // var date_text = document.createTextNode(resp.log_book_records[i][
+                                //     'date'
+                                // ]);
                                 if (resp.log_book_records[i]['is_late']) {
                                     if (resp.log_book_records[i]['late_time_text']) {
                                         var span_date_field = document.createElement("span");
@@ -983,7 +1003,10 @@
                                         date_field.append(span_date_field);
                                     }
                                 }
-                                date_field.prepend(date_text);
+                                date_field.setAttribute("data-logtype", logType);
+                                logTypeText = logType;
+                                date_field.textContent = resp.log_book_records[i]['date'] + " | " + logTypeText;
+                                // date_field.prepend(date_text);
                                 // image sourabh
                                 if (resp.log_book_records[i]['image_name'] != '') {
                                     $(pannel_body).append($(`
@@ -1056,7 +1079,7 @@
                                     .log_book_records[i]['created_at']).fromNow());
                                 created_at.append(created_at_text);
                                 $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
+                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span> | <span style="color:black;font-weight:400;font-size:14px;"> ${resp.log_book_records[i]['child_name']}</span> `
                                 ));
 
                                 pannel_body.append(created_at);
@@ -1069,7 +1092,9 @@
                                 var a = document.createElement("a");
                                 a.href = "#!";
                                 a.className = "dyn-form-view-data";
-                                a.id = resp.log_book_records[i]['dynamic_form_id']; // use dynamic_form_id from response
+                                a.id = resp.log_book_records[i][
+                                    'dynamic_form_id'
+                                ]; // use dynamic_form_id from response
 
                                 // create <i> icon
                                 var icon = document.createElement("i");
@@ -1114,9 +1139,9 @@
 
                                 var date_field = document.createElement("p");
                                 date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
+                                // var date_text = document.createTextNode(resp.log_book_records[i][
+                                //     'date'
+                                // ]);
                                 if (resp.log_book_records[i]['is_late']) {
                                     if (resp.log_book_records[i]['late_time_text']) {
                                         var span_date_field = document.createElement("span");
@@ -1138,7 +1163,10 @@
                                         date_field.append(span_date_field);
                                     }
                                 }
-                                date_field.prepend(date_text);
+                                   date_field.setAttribute("data-logtype", logType);
+                                logTypeText = logType;
+                                date_field.textContent = resp.log_book_records[i]['date'] + " | " + logTypeText;
+                                // date_field.prepend(date_text);
                                 // image sourabh
                                 if (resp.log_book_records[i]['image_name'] != '') {
                                     $(pannel_body).append($(

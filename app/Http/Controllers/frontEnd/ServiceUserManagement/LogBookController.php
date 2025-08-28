@@ -278,7 +278,7 @@ class LogBookController extends ServiceUserManagementController
 
             $latest_date  = LogBook::select('log_book.*')->orderBy('date', 'desc')->take(1)->value('date');
             $latest_date  = date('Y-m-d H:i:s', strtotime($latest_date));
-            $given_date   = date('Y-m-d H:i:s', strtotime($data['log_date']));
+            $given_date   = date('Y-m-d H:i:s', strtotime($data['date'] . ' ' . $data['time']));
             // $given_date    = date('d-m-Y H:i:s');
             $latest_date_without_time    = date('Y-m-d', strtotime($latest_date));
             $given_date_without_time    = date('Y-m-d', strtotime($given_date));
@@ -293,7 +293,7 @@ class LogBookController extends ServiceUserManagementController
             $category_icon = CategoryFrontEnd::where('id', $data['category'])->value('icon');
             $category_name = CategoryFrontEnd::where('id', $data['category'])->value('name');
 
-            $log_book_record->title   = $data['log_title'];
+            $log_book_record->title   = $data['title'];
             $log_book_record->category_id = $data['category'];
             $log_book_record->formdata = json_encode($data['data']);
             $log_book_record->start_date =  date('Y-m-d');
@@ -301,7 +301,7 @@ class LogBookController extends ServiceUserManagementController
             $log_book_record->category_name   = $category_name;
             $log_book_record->category_icon   = $category_icon;
             $log_book_record->date    = $given_date;
-            $log_book_record->details = $data['log_detail'];
+            $log_book_record->details = $data['details'];
             $log_book_record->home_id = $login_home_id;
             $log_book_record->user_id = Auth::user()->id;
             $log_book_record->image_name = $log_image;

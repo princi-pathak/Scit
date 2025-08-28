@@ -60,6 +60,8 @@ class DynamicFormController extends Controller
                 $currentDate = Carbon::now()->format('Y-m-d');
 
                 foreach ($logtype_arr as $val) {
+
+
                     switch ($val) {
                         case 1:
                             //Daily record
@@ -69,7 +71,7 @@ class DynamicFormController extends Controller
                                 'category_id' => 3,
                                 'category_name' => 'Visitor',
                                 'category_icon' => 'fa fa-users',
-                                'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
+                                'date' => date('Y-m-d H:i:s', strtotime($data['date'] . ' ' . $data['time'])),
                                 'formdata' => json_encode($data['data']),
                                 'details' => $data['details'],
                                 'start_date' => $currentDate,
@@ -112,7 +114,7 @@ class DynamicFormController extends Controller
                                 'category_id' => 3,
                                 'category_name' => 'Visitor',
                                 'category_icon' => 'fa fa-users',
-                                'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
+                                'date' => date('Y-m-d H:i:s', strtotime($data['date'] . ' ' . $data['time'])),
                                 'start_date' => $currentDate,
                                 'end_date' => $nextWeek,
                                 'formdata' => json_encode($data['data']),
@@ -156,7 +158,7 @@ class DynamicFormController extends Controller
                                 'category_id' => 3,
                                 'category_name' => 'Visitor',
                                 'category_icon' => 'fa fa-users',
-                                'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
+                                'date' => date('Y-m-d H:i:s', strtotime($data['date'] . ' ' . $data['time'])),
                                 'start_date' => $currentDate,
                                 'end_date' => $nextMonth,
                                 'formdata' => json_encode($data['data']),

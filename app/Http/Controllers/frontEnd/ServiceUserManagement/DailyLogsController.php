@@ -28,19 +28,19 @@ class DailyLogsController extends ServiceUserManagementController
         $home_id = $ex_home_ids[0];
         // $home_id = Auth::user()->home_id;
         $user_id = Auth::user()->id;
-        $today = date('Y-m-d 00:0:00');
+        $today = Carbon::today();
+
         $service_users = ServiceUser::select('id', 'name')
             ->where('home_id', $home_id)
             ->where('is_deleted', '0')
             ->get();
 
         //staff_member
-        $staff_members  =   User::where('is_deleted', '0')
+        $staff_members = User::where('is_deleted', '0')
             ->where('home_id', $home_id)
             ->get();
         //$service_user_id ="";
         if ($service_user_id != '') {
-            //print_r($data);  die();
             $su_home_id = ServiceUser::where('id', $service_user_id)->value('home_id');
             $service_user_name = ServiceUser::where('id', $service_user_id)->value('name');
             // if($su_home_id != $home_id){
@@ -115,7 +115,6 @@ class DailyLogsController extends ServiceUserManagementController
             }
 
             Log::info($su_logs);
-            // $today = date('Y-m-d');
             // $log_book_records = DB::table('log_book')
             //     ->select('log_book.*', 'user.name as staff_name')
             //     // ->where('log_book.logType', 1)
@@ -126,7 +125,6 @@ class DailyLogsController extends ServiceUserManagementController
             //     ->where('log_book.home_id',$home_id)
             //     ->orderBy('date', 'desc')->get();
 
-            $today = date('Y-m-d');
 
             $today_date = Carbon::now()->format('Y-m-d');
             $oneMonthAgo = Carbon::now()->subMonth()->format('Y-m-d');
@@ -155,13 +153,9 @@ class DailyLogsController extends ServiceUserManagementController
                 ->orderBy('log_book.dynamic_form_id') // Sort for grouping
                 ->orderByRaw("FIELD(log_book.logType, 1, 2, 3)") // Prioritize: daily > weekly > monthly
                 ->orderBy('log_book.created_at', 'desc')
-                // ->whereBetween('log_book.created_at', [$oneMonthAgo, $today_date])
                 ->get()
                 ->unique('dynamic_form_id') // ✅ Only one log per dynamic_form_id
                 ->values();
-
-
-
 
             //  echo "<pre>"; print_r($log_book_records); die;
 
@@ -170,7 +164,6 @@ class DailyLogsController extends ServiceUserManagementController
             })->toArray();
 
 
-            // dd($log_book_records);
             // $log_book_records = LogBook::select('log_book.*')
             //                             ->whereIn('log_book.id',$su_logs)
             //                             ->whereDate('log_book.date', '=', $today)
@@ -207,9 +200,7 @@ class DailyLogsController extends ServiceUserManagementController
             // }
 
             $su_logs = ServiceUserLogBook::select('su_log_book.log_book_id')->get()->toArray();
-            //echo"<pre>";
-            //print_r($su_logs);
-            //die;
+            // echo"<pre>"; print_r($su_logs); die;
 
             if ($request->filter == '1') {
                 if (!empty($data)) {
@@ -235,14 +226,16 @@ class DailyLogsController extends ServiceUserManagementController
                     }
 
                     $log_book_records = DB::table('log_book')
-                        ->select('log_book.*', 'user.name as staff_name', 'category.color as category_color')
+                        ->select('log_book.*', 'user.name as staff_name', 'category.color as category_color', 'service_user.name as child_name')
                         // ->where('log_book.logType', 1)
                         ->whereIn('log_book.id', $su_logss)
                         ->join('user', 'log_book.user_id', '=', 'user.id')
                         ->join('category', 'log_book.category_id', '=', 'category.id')
+                        ->join('dynamic_form', 'log_book.dynamic_form_id', '=', 'dynamic_form.id')
+                        ->join('service_user', 'service_user.id', '=', 'dynamic_form.service_user_id')
                         ->where('log_book.home_id', $home_id)
                         ->orderBy('date', 'desc');
-
+                    // dd($log_book_records);
                     // $log_book_records = LogBook::select('log_book.*')->orderBy('date','desc');
                     // Log::info("Logs.");
                     // Log::info($log_book_records);
@@ -257,16 +250,17 @@ class DailyLogsController extends ServiceUserManagementController
                         // Log::info("Category Logs.");
                         // Log::info($log_book_records->get()->toArray());
                     }
-                    if (isset($request->start_date) && $request->start_date != 'null') {
-                        $log_book_records = $log_book_records->whereDate('log_book.date', '>=', $request->start_date);
-                        // Log::info("Start Date Logs.");
-                        // Log::info($log_book_records->get()->toArray());
+                    if (
+                        !empty($request->start_date) && !empty($request->end_date)
+                        && $request->start_date !== 'null' && $request->end_date !== 'null'
+                    ) {
+
+                        $startDate = \Carbon\Carbon::parse($request->start_date)->format('Y-m-d');
+                        $endDate   = \Carbon\Carbon::parse($request->end_date)->format('Y-m-d');
+
+                        $log_book_records = $log_book_records->whereBetween('log_book.date', [$startDate, $endDate]);
                     }
-                    if (isset($request->end_date) && $request->end_date != 'null') {
-                        $log_book_records = $log_book_records->whereDate('log_book.date', '<=', $request->end_date);
-                        // Log::info("End Date Logs.");
-                        // Log::info($log_book_records->get()->toArray());
-                    }
+
                     //sourabh
                     if (isset($request->keyword) && $request->keyword != 'null') {
                         $log_book_records = $log_book_records->where('log_book.details', 'like', '%' . $request->keyword . '%');
@@ -299,7 +293,6 @@ class DailyLogsController extends ServiceUserManagementController
             }
 
             Log::info($su_logs);
-            $today = date('Y-m-d');
             // $log_book_records = DB::table('log_book')
             //     ->select('log_book.*', 'user.name as staff_name', 'category.color as category_color')
             //     //->select('log_book.*', 'user.name as staff_name')
@@ -311,10 +304,6 @@ class DailyLogsController extends ServiceUserManagementController
             //     ->where('log_book.home_id', $home_id)
             //     ->orderBy('date', 'desc')->get();
 
-                
-
-            
-            $today = Carbon::today();
             $startOfWeek = $today->copy()->startOfWeek();  // Monday
             $endOfWeek = $today->copy()->endOfWeek();      // Sunday
             $startOfMonth = $today->copy()->startOfMonth();
@@ -323,19 +312,24 @@ class DailyLogsController extends ServiceUserManagementController
             $log_book_records = DB::table('log_book')
                 ->select(
                     'log_book.dynamic_form_id',
-                    DB::raw('MIN(log_book.created_at) as created_at'),
+                    DB::raw('MIN(dynamic_form.created_at) as created_at'),
                     DB::raw('MIN(log_book.id) as id'),
-                    DB::raw('MIN(log_book.date) as date'),
+                    DB::raw('MIN(dynamic_form.date) as date'),
+                    DB::raw('MIN(dynamic_form.title) as title'),
                     DB::raw('MIN(user.name) as staff_name'),
+                    DB::raw('MIN(dynamic_form.service_user_id) as service_user_id'),
+                    DB::raw('MIN(service_user.name) as child_name'),
                     DB::raw('MIN(log_book.is_late) as is_late'),
                     DB::raw('MIN(log_book.logType) as logType'),
                     DB::raw('MIN(category.name) as category_name'),
-                    DB::raw('MIN(log_book.details) as details'),
+                    DB::raw('MIN(dynamic_form.details) as details'),
                     DB::raw('MIN(category.color) as category_color'),
                     DB::raw('MIN(category.icon) as category_icon')
                 )
                 ->join('user', 'log_book.user_id', '=', 'user.id')
                 ->join('category', 'log_book.category_id', '=', 'category.id')
+                ->join('dynamic_form', 'log_book.dynamic_form_id', '=', 'dynamic_form.id')
+                ->join('service_user', 'service_user.id', '=', 'dynamic_form.service_user_id')
                 ->whereIn('log_book.id', $su_logs)
                 ->where('log_book.home_id', $home_id)
                 ->where(function ($query) use ($today) {
@@ -363,7 +357,7 @@ class DailyLogsController extends ServiceUserManagementController
             $log_book_records = collect($log_book_records)->map(function ($x) {
                 return (array) $x;
             })->toArray();
-            
+
             // $log_book_records = LogBook::select('log_book.*')
             //                             ->whereIn('log_book.id',$su_logs)
             //                             ->whereDate('log_book.date', '=', $today)

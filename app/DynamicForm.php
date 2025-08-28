@@ -77,7 +77,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
                                          <div class="col-md-10 col-sm-12 col-xs-12 r-p-0">
                                              <div class="input-group popovr">
-                                                 <input type="text" class="form-control trans static_title" placeholder="" name="time" value="" />
+                                                 <input type="time" class="form-control trans static_title" placeholder="" name="time" value="" />
                                              </div>
                                          </div>
                                      </div>
