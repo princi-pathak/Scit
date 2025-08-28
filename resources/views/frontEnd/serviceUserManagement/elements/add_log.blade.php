@@ -4,6 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                
                 <h4 class="modal-title">Daily Log</h4>
             </div>
             <div class="modal-body">
@@ -13,7 +14,7 @@
                     <form id="su-log-book-form">
                         @csrf
                         <div class="add-new-box risk-tabs custm-tabs">
-
+                            <input type="hidden" name="dynamic_form_log_book_id" id="dynamic_form_log_book_id">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Child: </label>
                                 <div class="col-md-9 col-sm-10 col-xs-12">
@@ -35,7 +36,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Title: </label>
                                 <div class="col-md-9 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
@@ -43,7 +44,7 @@
                                     </div>
                                     <p class="help-block"> Enter the Title of Log and add details below.</p>
                                 </div>
-                            </div> --}}
+                            </div>
                          
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Category: </label>
@@ -59,7 +60,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 datepicker-sttng date-sttng">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 datepicker-sttng date-sttng">
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Date: </label>
                                 <div class="col-md-9 col-sm-10 col-xs-12">
                                     <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date"> <!--  dpYears  -->
@@ -70,16 +71,16 @@
                                         </span>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
 
-                            {{-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Details: </label>
                                 <div class="col-md-9 col-sm-10 col-xs-12">
                                     <div class="select-bi">
                                         <textarea name="log_detail" class="form-control detail-info-txt log-detail" rows="3"></textarea>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
 
                               <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Add: </label>
@@ -101,7 +102,8 @@
                                     <p class="help-block"> Choose a user and the type of form you want to fill. </p>
                                 </div>
                             </div>
-
+                            <input type="hidden" id="log_dynamic_form_id" name="log_dynamic_form_id">
+                            <input type="hidden" id="formDataLogs" name="formDataLogs">
                             <div class="dynamic-form-fields"></div>
 
                             <!-- new image -->

@@ -263,9 +263,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                            </div> -->
+                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                </div> -->
 
                 </div>
 
@@ -319,10 +319,10 @@
                                                             @endif
                                                         </span>
                                                         <span class="viewEditIcon">
-                                                            <a href="#!" class="dyn-form-view-data"
-                                                                id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
+                                                            <a href="#!" class="dyn-form-view-data-log-book"
+                                                                id="{{ isset($key['id']) ? $key['id'] : null }}"
+                                                                dynamic_form_id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                     class="fa fa-eye"></i></a>
-                                                            {{-- <a href="#!"><i class="fa fa-eye"></i></a> --}}
                                                         </span>
 
                                                         {{-- @if (isset($key['category_name']) && !empty($key['category_name'])) --}}
@@ -473,164 +473,6 @@
         <!--main content end-->
 
     </section>
-
-    {{-- <!-- Su Daily Log Book Modal -->
-<div class="modal fade" id="dailyLogEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">ijijjijjj</h4>
-            </div>
-            <div class="modal-body">
-                 <div class="row">
-                    <div class="add-new-box risk-tabs custm-tabs">
-                        <form method="post" action="" id="">
-                            
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child: </label>
-                                <div class="col-md-8 col-sm-10 col-xs-12">
-                                    <div class="select-bi" style="width:100%;float:left;">
-                                        <select name="s_user_id" class="form-control" required="" id="records_list" style="width:100%;">
-                                            <option value="0"> Select Child </option>
-                                            <option value="19">Mick</option>
-                                            <option value="21">Rock</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd" id="weekly" style="display: none;">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Weekly log date:</label>
-                                <div class="col-md-4 col-sm-10 col-xs-12 ">
-                                    <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
-                                        <input name="start_date" readonly="" class="form-control trans" id="week_start_date" type="text" value="">
-                                        <span class="input-group-btn add-on">
-                                            <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-10 col-xs-12 ">
-                                    <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
-                                        <input name="end_date" readonly="" id="week_end_date" class="form-control trans" type="text" value="">
-                                        <span class="input-group-btn add-on">
-                                            <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng" id="monthly" style="display: none;">
-                                <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                    <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Date: </label>
-                                    <div class="col-md-8 col-sm-10 col-xs-12">
-                                        <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
-                                            <input name="date" size="16" readonly="" class="form-control trans" type="text" value="">
-                                            <span class="input-group-btn add-on">
-                                                <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group modal-footer m-t-0 modal-bttm">
-                                <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
-                                <input type="hidden" name="dyn_form_id" value="594" id="dyn_form_id">
-                                <input type="hidden" name="logtype" value="1" id="logtype">
-                                <input type="hidden" name="_token" value="cG4MtI10KpKLjQVd2s52Yc9NExa3zzsfdCxtfd1p">
-                                <button class="btn btn-warning sbt-su-dyn-frm-log" type="submit"> Submit </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Su Daily Log Book Modal End --> --}}
-
-    <!-- View/Edit dynamic form -->
-    {{-- <div class="modal fade" id="DynFormViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <a class="close edit_dyn_form" href="">
-                        <i class="fa fa-pencil" title="Edit Form"></i>
-                    </a>
-                    <a class="close mdl-back-btn previous_modal_btn" pre_modal="" href="" data-toggle="modal"
-                        data-dismiss="modal" aria-hidden="true">
-                        <i class="fa fa-arrow-left" title="View Previous Modal"></i>
-                    </a>
-                    <h4 class="modal-title">View Details</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="" id="dynFormFormData">
-                        <div class="row">
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7">Child: </label>
-                                <div class="col-md-11 col-sm-11 col-xs-12">
-                                    <div class="select-style">
-                                        <select name="service_user_id" class="su_id" disabled="">
-                                            <option value="0"> N/A Child </option>
-                                            @foreach ($service_users as $value)
-                                                <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Form: </label>
-                                <div class="col-md-11 col-sm-11 col-xs-12">
-                                    <div class="select-style">
-                                        <select name="dynamic_form_builder_id" class="dynamic_form_select"
-                                            disabled="">
-                                            <option value="0"> Select Form </option>
-                                            <?php foreach ($dynamic_forms as $value) {
-                                            $location_ids_arr = explode(',', $value['location_ids']); ?>
-                                            <option value="{{ $value['id'] }}"> {{ $value['title'] }} </option>
-                                            <?php  } ?>
-                                        </select>
-                                    </div>
-                                    <!-- <p class="help-block"> Choose a user and the type of form you want to fill. </p> -->
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="below-divider"></div>
-                            </div>
-
-                            <!-- alert messages -->
-                            @include('frontEnd.common.popup_alert_messages')
-
-                            <!-- Add new Details -->
-                            <div class="risk-tabs">
-                                <!-- dynamic form fields will be shown here -->
-                                <div class="dynamic-form-fields"> </div>
-
-                            </div>
-                        </div>
-                        <div class="modal-footer m-t-0">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="dynamic_form_id" class="dynamic_form_id" value="">
-                            <input type="hidden" name="formdata" id="setformdata" value="">
-                            <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
-                                Cancel
-                            </button>
-                            <!-- <button class="btn btn-warning sbt_edit_bmp_btn" id="vw-sbt-bmp-plan" type="button"> Continue </button> -->
-                            <button class="btn btn-warning e-sbt-dyn-form-btn" disabled="" id=""
-                                type="button" data-dismiss="modal" aria-hidden="true"> Save </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- View/Edit dynamic form End -->
 
     <!-- Date Range Initialization -->
     <script>
@@ -1163,7 +1005,7 @@
                                         date_field.append(span_date_field);
                                     }
                                 }
-                                   date_field.setAttribute("data-logtype", logType);
+                                date_field.setAttribute("data-logtype", logType);
                                 logTypeText = logType;
                                 date_field.textContent = resp.log_book_records[i]['date'] + " | " + logTypeText;
                                 // date_field.prepend(date_text);
@@ -1505,6 +1347,135 @@
         }
     </script>
     <!-- sourabh -->
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.dyn-form-view-data-log-book', function(e) {
+                e.preventDefault();
+                var id = $(this).attr('id');
+                var dynamic_form_id = $(this).attr('dynamic_form_id');
+                var getFormUrl = "{{ route('get.dynamic.form.daily.log', ['id' => ':id']) }}";
+
+                $.ajax({
+                    url: getFormUrl.replace(':id', id),
+                    type: 'GET',
+                    success: function(response) {
+
+                        
+                    // if (isAuthenticated(resp) == false) {
+                    //     return false;
+                    // }
+
+                        // Replace modal content with response data
+                        // $('#dynamicFormContent').html(response);
+                        console.log(response);
+                        $(".su_name").val(response.dynamicForm.service_user_id).trigger(
+                            "change");
+                        $('input[name="log_title"]').val(response.log_book_records.title);
+                        $('#log_dynamic_form_id').val(response.log_book_records.dynamic_form_id);
+                        $('#dynamic_form_log_book_id').val(response.log_book_records.id);
+                        $('select[name="category"]').val(response.log_book_records.category_id);
+                        $('input[name="log_date"]').val(response.log_book_records.date);
+                        $('textarea[name="log_detail"]').val(response.log_book_records.details);
+                        // $("#formDataLogs").val(response.dynamicForm.form_data);
+                        $('select[name="dynamic_form_builder_id"]').val(response
+                            .dynamicForm.form_builder_id).trigger('change');
+                         $(".dynamic-form-fields").empty();
+                        // $(".dynamic-form-fields").html(response.dynamicForm.form_data);
+                        loaddataontableformLog();
+                        // viewdatawithvalueFormioOnLogs();
+                        setTimeout(function() {
+                            
+                            // $(".dynamic-form-fields").append('<div class="below-divider"></div>');
+
+                            // $(".dynamic-form-fields").html('<div class="below-divider"></div>' + response.dynamicForm
+                            //     .form_data);
+
+
+                        }, 1000);
+                    },
+                    error: function() {
+                        $('.dynamic-form-fields').html(
+                            '<p class="text-danger">Error loading data.</p>');
+                    }
+                });
+
+
+
+
+
+
+                $('#addLogModal').modal('show'); // open modal
+            });
+        });
+
+            let loaddataontableformLog = () => {
+        let formid = $("#formid").val();
+        let home_id = $("#home_id").val();
+        var token = "<?= csrf_token() ?>";
+        //alert(token);
+        var settings = {
+            "url": "{{ url('/service/patterndataformio') }}",
+            "method": "POST",
+            "data": {
+                patterndata: formid,
+                home_id: home_id,
+                _token: token
+            },
+            //dataType: "json",
+        };
+        $.ajax(settings).done(function(response) {
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
+            //console.log(response);
+            Formio.createForm(document.getElementById('formiotest'), {
+                components: JSON.parse(response)
+            });
+        });
+
+
+        // console.log(formid);
+        // console.log(home_id);
+
+        // console.log(pattendata);
+        //console.log($('#getdatamodel').val());
+
+    }
+
+            let viewdatawithvalueFormioOnLogs = () => {
+        // console.log($('#dynamic_form_idformio').val());
+        let dynamic_form_idformio = $("#log_dynamic_form_id").val();
+        var token = "<?= csrf_token() ?>";
+        var settings = {
+            "url": "{{ url('/service/patterndataformiovaule') }}",
+            "method": "POST",
+            "data": {
+                dynamic_form_idformio: dynamic_form_idformio,
+                _token: token
+            },
+            //dataType: "json",
+        };
+        $.ajax(settings).done(function(response) {
+            // console.log(response[0].pattern);
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
+
+            Formio.createForm(document.getElementById('formioView'), {
+                components: JSON.parse(response[0].pattern)
+            }, {
+                readOnly: seteditvalueeditable
+            }).then(function(form) {
+                form.submission = {
+                    data: JSON.parse(response[0].pattern_data)
+                }
+                // form.getComponent('email').setValue('rksonkar356@gmail.com');
+            });
+
+        });
+    }
+    </script>
 
     @include('frontEnd.serviceUserManagement.elements.add_log')
     @include('frontEnd.serviceUserManagement.elements.comments')

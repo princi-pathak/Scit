@@ -1605,4 +1605,18 @@ class DailyLogsController extends ServiceUserManagementController
         $result = DynamicForm::showFormLogWithValue($dynamic_form_id, false);
         return $result;
     }
+
+    public function getDynamicFormDailyLog($id)
+    {
+
+        $data['log_book_records'] = DB::table('log_book')
+            ->where('log_book.id', $id)
+            ->first();
+        // dd($data['log_book_records']->dynamic_form_id);
+
+        $data['dynamicForm'] = DynamicForm::showFormLogWithValue($data['log_book_records']->dynamic_form_id, true);
+
+
+        return response()->json($data);
+    }
 }

@@ -77,7 +77,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
                                          <div class="col-md-10 col-sm-12 col-xs-12 r-p-0">
                                              <div class="input-group popovr">
-                                                 <input type="time" class="form-control trans static_title" placeholder="" name="time" value="" />
+                                                 <input type="text" class="form-control trans static_title" placeholder="" name="time" value="" />
                                              </div>
                                          </div>
                                      </div>
@@ -751,13 +751,13 @@ class DynamicForm extends Model //FormBuilder
 
         $form_info    = DynamicForm::select('dynamic_form.pattern_data', 'dynamic_form.form_builder_id', 'dynamic_form.date', 'dynamic_form.created_at', 'u.name', 'dynamic_form.title', 'dynamic_form.time', 'dynamic_form.details', 'dynamic_form.alert_status', 'dynamic_form.form_builder_id', 'dynamic_form.service_user_id', 'dynamic_form.image_path')
             ->join('user as u', 'u.id', 'dynamic_form.user_id')
-            ->join('log_book')
+            // ->join('log_book')
             ->where('dynamic_form.id', $dynamic_form_id)
             // ->where('su.home_id',$home_id)
             ->where('dynamic_form.home_id', $home_id)
             ->first();
 
-            dd($form_info);
+            // dd($form_info);
         $form_values  = array();
 
         if (!empty($form_info)) {
@@ -805,7 +805,7 @@ class DynamicForm extends Model //FormBuilder
                                         <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Staff Created: </label>
                                         <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                             <div class="input-group popovr">
-                                                <input type="text" class="form-control trans" placeholder="" name="" value="' . $form_info->name . ' (' . date('d-m-Y h:i a', strtotime($form_info->created_at)) . ')" ' . $disabled . ' readonly/>
+                                                <input type="text" class="form-control trans" placeholder="" name="" value="' . $form_info->name . ' (' . date('d-m-Y h:i a', strtotime($form_info->created_at)) . ')" ' . $disabled . ' />
                                             </div>
                                         </div>
                                     </div>
@@ -815,7 +815,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Title: </label>
                                          <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                              <div class="input-group popovr">
-                                                 <input type="text" class="form-control trans static_title" placeholder="" '.$disabled.' name="title" value="'.$form_info->title.'" readonly/>
+                                                 <input type="text" class="form-control trans static_title" placeholder="" '.$disabled.' name="title" value="'.$form_info->title.'" />
                                              </div>
                                          </div>
                                      </div>
@@ -826,7 +826,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Date: </label>
                                          <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                            <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
-                                             <input name="date" size="16" readonly="" class="form-control trans" type="text" '.$disabled.' value="'.date('d-m-Y h:i a', strtotime($form_info->date)).'" readonly>
+                                             <input name="date" size="16" class="form-control trans" type="text" '.$disabled.' value="'.date('d-m-Y h:i a', strtotime($form_info->date)).'" readonly>
                                              <span class="input-group-btn add-on">
                                                <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
                                              </span>
@@ -840,7 +840,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
                                          <div class="col-md-10 col-sm-12 col-xs-12 p-r-0">
                                              <div class="input-group popovr">
-                                                 <input type="text" class="form-control trans static_title" placeholder="" '.$disabled.' name="time" value="'. $form_info->time .'" readonly/>
+                                                 <input type="time" class="form-control trans static_title" placeholder="" '.$disabled.' name="time" value="'. $form_info->time .'" />
                                              </div>
                                          </div>
                                      </div>
@@ -850,7 +850,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Detail: </label>
                                          <div class="col-md-10 col-sm-12 col-xs-12 p-r-0">
                                              <div class="input-group popovr">
-                                                <textarea class="form-control trans" placeholder="" '.$disabled.' name="details" readonly>'. $form_info->details .'</textarea>
+                                                <textarea class="form-control trans" placeholder="" '.$disabled.' name="details" >'. $form_info->details .'</textarea>
                                              </div>
                                          </div>
                                      </div>
@@ -2015,7 +2015,6 @@ class DynamicForm extends Model //FormBuilder
 
     public static function saveForm($data)
     {
-        
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id=$ex_home_ids[0];
