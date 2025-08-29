@@ -334,7 +334,7 @@ class RmpController extends ServiceUserManagementController
         }
         $service_user_id = $record->service_user_id;
 
-        $res = $this->index($service_user_id);
+        $res = $this->index($service_user_id, request());
         echo $res;
     }
 

@@ -324,8 +324,13 @@
   <script>
     function PrintDivwithvalue(th) {
       var divContents = document.getElementById("formioView").innerHTML;
-      var imagelocalpath = "<?php echo adminImgPath ?>";
-      var finalpath = imagelocalpath + '/' + $(th).data('id');
+      var imagelocalpath;
+      if($(th).data('id')){
+        imagelocalpath="<?php echo env('APP_URL').adminImgPath ?>"+ '/' + $(th).data('id');
+      }else{
+        imagelocalpath="<?php echo env('APP_URL').adminImgPath.'/default_user.jpg'?>";
+      }
+      var finalpath = imagelocalpath;
       var divContentImage = document.getElementById("previewContainer2");
       console.log(divContentImage);
       if (divContentImage !== "" && divContentImage !== null) {
@@ -343,7 +348,7 @@
       printWindow.document.write('</head><body > <div class="masterprintmainarea">');
       printWindow.document.write('<div class="header">');
       printWindow.document.write('<img src="' + finalpath + '" style="height:80px;">');
-      printWindow.document.write('<img src="{{url(' / public / images / scits.png ')}}" style="float:right;height:80px;">');
+      printWindow.document.write("<img src='{{ url('/public/images/scits.png') }}' style='float:right;height:80px;'>");
       printWindow.document.write('</div>');
       printWindow.document.write(divContentImage);
       printWindow.document.write(divContents);
