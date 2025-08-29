@@ -165,7 +165,7 @@
                     <div class="pull-right">
                         <div class="filter_buttons"
                             style="text-align:right;padding-right:150px;display:inline-block; padding-bottom: 10px;">
-                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add
+                            <a href="#!" class="btn btn-primary col-6" id='add_new_log_form'>Add
                                 New</a>
                             <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log'
                                 style="background-color:#d9534f;color:white;">PDF Export</a>
@@ -263,9 +263,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                </div> -->
+                                                                                                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                                                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                                                        </div> -->
 
                 </div>
 
@@ -408,8 +408,9 @@
                                                                 @endif
                                                             </span>
                                                             <span class="viewEditIcon">
-                                                                <a href="#!" class="dyn-form-view-data"
-                                                                    id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
+                                                                <a href="#!" class="dyn-form-view-data-log-book"
+                                                                     id="{{ isset($key['id']) ? $key['id'] : null }}"
+                                                                dynamic_form_id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                         class="fa fa-eye"></i></a>
                                                                 {{-- <a href="#!"><i class="fa fa-edit"></i></a> --}}
                                                             </span>
@@ -483,6 +484,21 @@
             $('.timeline-icon').tooltip();
             $('.time_abbre').tooltip();
 
+            $(document).on("click", "#add_new_log_form", function(e) {
+                e.preventDefault();
+
+                // Reset form inside modal
+                $("#addLogModal form")[0].reset();
+                $(".dynamic-form-log-fields").empty();
+                // document.getElementById('dynamic_form_builder_log').disabled = false;
+
+                $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", false);
+
+
+
+                // Finally, open modal
+                $("#addLogModal").modal("show");
+            });
 
             $(document).on('click', '.openModelDailyLog', function(e) {
                 e.preventDefault();
@@ -527,7 +543,7 @@
                                 $(view_modal + ' .su_id').val(0);
                             }
                             $(view_modal + ' .dynamic_form_id').val(dynamic_form_id);
-                            $(view_modal + ' .dynamic-form-fields').html(form_data);
+                            $(view_modal + ' .dynamic-form-log-fields').html(form_data);
 
                             // setTimeout(function () {
                             //     autosize($("textarea"));
@@ -552,11 +568,6 @@
 
         });
 
-        // document.querySelectorAll('.openModelDailyLog').forEach(function(btn) {
-        //     btn.addEventListener('click', function() {
-        //         $('#DynFormViewModal').modal('show');
-        //     });
-        // });
 
         /**
          * Sanitizer Function
@@ -772,7 +783,7 @@
                                 // create anchor
                                 var a = document.createElement("a");
                                 a.href = "#!";
-                                a.className = "dyn-form-view-data";
+                                a.className = "dyn-form-view-data-log-book";
                                 a.id = resp.log_book_records[i][
                                     'dynamic_form_id'
                                 ]; // use dynamic_form_id from response
@@ -933,7 +944,7 @@
                                 // create anchor
                                 var a = document.createElement("a");
                                 a.href = "#!";
-                                a.className = "dyn-form-view-data";
+                                a.className = "dyn-form-view-data-log-book";
                                 a.id = resp.log_book_records[i][
                                     'dynamic_form_id'
                                 ]; // use dynamic_form_id from response
@@ -1350,6 +1361,7 @@
 
     <script>
         $(document).ready(function() {
+
             $(document).on('click', '.dyn-form-view-data-log-book', function(e) {
                 e.preventDefault();
                 var id = $(this).attr('id');
@@ -1361,120 +1373,61 @@
                     type: 'GET',
                     success: function(response) {
 
-                        
-                    // if (isAuthenticated(resp) == false) {
-                    //     return false;
-                    // }
-
-                        // Replace modal content with response data
-                        // $('#dynamicFormContent').html(response);
                         console.log(response);
                         $(".su_name").val(response.dynamicForm.service_user_id).trigger(
                             "change");
                         $('input[name="log_title"]').val(response.log_book_records.title);
-                        $('#log_dynamic_form_id').val(response.log_book_records.dynamic_form_id);
+                        $('#log_dynamic_form_id').val(response.log_book_records
+                            .dynamic_form_id);
                         $('#dynamic_form_log_book_id').val(response.log_book_records.id);
                         $('select[name="category"]').val(response.log_book_records.category_id);
                         $('input[name="log_date"]').val(response.log_book_records.date);
                         $('textarea[name="log_detail"]').val(response.log_book_records.details);
                         // $("#formDataLogs").val(response.dynamicForm.form_data);
-                        $('select[name="dynamic_form_builder_id"]').val(response
-                            .dynamicForm.form_builder_id).trigger('change');
-                         $(".dynamic-form-fields").empty();
-                        // $(".dynamic-form-fields").html(response.dynamicForm.form_data);
-                        loaddataontableformLog();
-                        // viewdatawithvalueFormioOnLogs();
+                        $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm
+                            .form_builder_id).trigger('change');
+                        $(".dynamic-form-log-fields").empty();
+
+                        var schema = JSON.parse(response.pattern); // form structure
+                        var savedData = response.pattern_data ? JSON.parse(response
+                            .pattern_data) : {}; // user entered values
                         setTimeout(function() {
-                            
-                            // $(".dynamic-form-fields").append('<div class="below-divider"></div>');
 
-                            // $(".dynamic-form-fields").html('<div class="below-divider"></div>' + response.dynamicForm
-                            //     .form_data);
+                            $(".dynamic-form-log-fields").html(
+                                '<div class="below-divider"></div>' + response
+                                .dynamicForm
+                                .form_data);
 
+                            Formio.createForm(document.getElementById('formioView1'), {
+                                components: schema
 
+                            }).then(function(form) {
+                                // Pass values into the form
+                                form.submission = {
+                                    data: savedData
+                                };
+
+                                // Capture changes if you want to save
+                                form.on('change', function(submission) {
+                                    $("#formDataLogs").val(JSON
+                                        .stringify(submission.data));
+                                });
+                            });
                         }, 1000);
                     },
                     error: function() {
-                        $('.dynamic-form-fields').html(
+                        $('.dynamic-form-log-fields').html(
                             '<p class="text-danger">Error loading data.</p>');
                     }
                 });
-
-
-
-
-
+                document.getElementById('dynamic_form_builder_log').disabled = true;
+                    $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", true);
 
                 $('#addLogModal').modal('show'); // open modal
             });
-        });
 
-            let loaddataontableformLog = () => {
-        let formid = $("#formid").val();
-        let home_id = $("#home_id").val();
-        var token = "<?= csrf_token() ?>";
-        //alert(token);
-        var settings = {
-            "url": "{{ url('/service/patterndataformio') }}",
-            "method": "POST",
-            "data": {
-                patterndata: formid,
-                home_id: home_id,
-                _token: token
-            },
-            //dataType: "json",
-        };
-        $.ajax(settings).done(function(response) {
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
-            //console.log(response);
-            Formio.createForm(document.getElementById('formiotest'), {
-                components: JSON.parse(response)
-            });
-        });
-
-
-        // console.log(formid);
-        // console.log(home_id);
-
-        // console.log(pattendata);
-        //console.log($('#getdatamodel').val());
-
-    }
-
-            let viewdatawithvalueFormioOnLogs = () => {
-        // console.log($('#dynamic_form_idformio').val());
-        let dynamic_form_idformio = $("#log_dynamic_form_id").val();
-        var token = "<?= csrf_token() ?>";
-        var settings = {
-            "url": "{{ url('/service/patterndataformiovaule') }}",
-            "method": "POST",
-            "data": {
-                dynamic_form_idformio: dynamic_form_idformio,
-                _token: token
-            },
-            //dataType: "json",
-        };
-        $.ajax(settings).done(function(response) {
-            // console.log(response[0].pattern);
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
-
-            Formio.createForm(document.getElementById('formioView'), {
-                components: JSON.parse(response[0].pattern)
-            }, {
-                readOnly: seteditvalueeditable
-            }).then(function(form) {
-                form.submission = {
-                    data: JSON.parse(response[0].pattern_data)
-                }
-                // form.getComponent('email').setValue('rksonkar356@gmail.com');
-            });
 
         });
-    }
     </script>
 
     @include('frontEnd.serviceUserManagement.elements.add_log')

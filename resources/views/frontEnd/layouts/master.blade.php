@@ -406,7 +406,89 @@
       }, 300);
     }
 
+    function PrintDivwithvalueLog(th) {
+      var divContents = document.getElementById("formioView1").innerHTML;
+      var imagelocalpath = "<?php echo adminImgPath ?>";
+      var finalpath = imagelocalpath + '/' + $(th).data('id');
+      var divContentImage = document.getElementById("previewContainer2");
+      console.log(divContentImage);
+      if (divContentImage !== "" && divContentImage !== null) {
+        var divContentImage = document.getElementById('previewContainer2').innerHTML;
+      } else {
+        var divContentImage = "";
+      }
+      var printWindow = window.open('', '', 'height=600,width=600');
+      printWindow.document.write('<html><head><title>Print DIV Content</title>');
+      printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">');
+      printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">');
+      printWindow.document.write('<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
+      printWindow.document.write('<link href="{{ url(' public / backEnd / css / amarjeet.css ')}}" rel="stylesheet" type="text/css" >');
+      printWindow.document.write('<link href="{{ url(' public / backEnd / css / pdfstyle.css ')}}" rel="stylesheet" type="text/css" >');
+      printWindow.document.write('</head><body > <div class="masterprintmainarea">');
+      printWindow.document.write('<div class="header">');
+      printWindow.document.write('<img src="' + finalpath + '" style="height:80px;">');
+      printWindow.document.write('<img src="{{url(' / public / images / scits.png ')}}" style="float:right;height:80px;">');
+      printWindow.document.write('</div>');
+      printWindow.document.write(divContentImage);
+      printWindow.document.write(divContents);
+      printWindow.document.write('</div>');
+      printWindow.document.write('<div class="footer">');
+      printWindow.document.write('<div class="footer-section-area">');
+      printWindow.document.write('© {{ date(' Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
+      printWindow.document.write('</div>');
+      printWindow.document.write('</div>');
+      printWindow.document.write('</div> </body></html>');
+      setTimeout(() => {
+        printWindow.document.close();
+        // printWindow.document.focus();
+        printWindow.print();
+      }, 300);
+    }
 
+    function PrintDivLog(th) {
+
+      var imagelocalpath = "<?php echo adminImgPath ?>";
+
+      // console.log(imagelocalpath);
+      var finalpath = imagelocalpath + '/' + $(th).data('id');
+      //console.log(finalpath);
+      // let imagepathdata="public/images/admin/"+"$(th).data('id')";
+      var divContents = document.getElementById("formiotest").innerHTML;
+      var divContentImage = document.getElementById("previewContainer");
+      console.log(divContentImage);
+      if (divContentImage !== "" && divContentImage !== null) {
+        var divContentImage = document.getElementById('previewContainer').innerHTML;
+      } else {
+        var divContentImage = "";
+      }
+      var printWindow = window.open('', '', 'height=600,width=600');
+      printWindow.document.write('<html><head><title>Print DIV Content</title>');
+      printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">');
+      printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">');
+      printWindow.document.write('<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
+      printWindow.document.write('<link href="{{ url(' public / backEnd / css / amarjeet.css ')}}" rel="stylesheet" type="text/css" >');
+      printWindow.document.write('<link href="{{ url(' public / backEnd / css / pdfstyle.css ')}}" rel="stylesheet" type="text/css" >');
+      printWindow.document.write('</head><body ><div class="masterprintmainarea">');
+      printWindow.document.write('<div class="header">');
+      printWindow.document.write('<img src="' + finalpath + '" style="height:80px;">');
+      printWindow.document.write('<img src="{{url(' / public / images / scits.png ')}}" style="float:right;height:80px;">');
+      printWindow.document.write('</div>');
+      printWindow.document.write(divContentImage);
+      printWindow.document.write(divContents);
+      printWindow.document.write('</div>');
+      printWindow.document.write('<div class="footer">');
+      printWindow.document.write('<div class="footer-section-area">');
+      printWindow.document.write('© {{ date(' Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
+      printWindow.document.write('</div>');
+      printWindow.document.write('</div>');
+      printWindow.document.write('</div></body></html>');
+
+      setTimeout(() => {
+        printWindow.document.close();
+        // printWindow.document.focus();
+        printWindow.print();
+      }, 300);
+    }
 
 
 

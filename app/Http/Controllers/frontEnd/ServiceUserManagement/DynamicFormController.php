@@ -24,6 +24,14 @@ class DynamicFormController extends Controller
         return $form;
     }
 
+       public function view_form_pattern_log(Request $request)
+    {
+        $form_builder_id = $request->form_builder_id;
+        $service_user_id = $request->service_user_id;
+        $form = DynamicForm::showFormLog($form_builder_id, $service_user_id);
+        return $form;
+    }
+
     public function save_form(Request $request)
     {
 

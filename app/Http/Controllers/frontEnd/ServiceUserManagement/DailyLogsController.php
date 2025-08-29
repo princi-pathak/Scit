@@ -312,17 +312,17 @@ class DailyLogsController extends ServiceUserManagementController
             $log_book_records = DB::table('log_book')
                 ->select(
                     'log_book.dynamic_form_id',
-                    DB::raw('MIN(dynamic_form.created_at) as created_at'),
+                    DB::raw('MIN(log_book.created_at) as created_at'),
                     DB::raw('MIN(log_book.id) as id'),
-                    DB::raw('MIN(dynamic_form.date) as date'),
-                    DB::raw('MIN(dynamic_form.title) as title'),
+                    DB::raw('MIN(log_book.date) as date'),
+                    DB::raw('MIN(log_book.title) as title'),
                     DB::raw('MIN(user.name) as staff_name'),
                     DB::raw('MIN(dynamic_form.service_user_id) as service_user_id'),
                     DB::raw('MIN(service_user.name) as child_name'),
                     DB::raw('MIN(log_book.is_late) as is_late'),
                     DB::raw('MIN(log_book.logType) as logType'),
                     DB::raw('MIN(category.name) as category_name'),
-                    DB::raw('MIN(dynamic_form.details) as details'),
+                    DB::raw('MIN(log_book.details) as details'),
                     DB::raw('MIN(category.color) as category_color'),
                     DB::raw('MIN(category.icon) as category_icon')
                 )
@@ -1612,9 +1612,10 @@ class DailyLogsController extends ServiceUserManagementController
         $data['log_book_records'] = DB::table('log_book')
             ->where('log_book.id', $id)
             ->first();
-        // dd($data['log_book_records']->dynamic_form_id);
-
+            
         $data['dynamicForm'] = DynamicForm::showFormLogWithValue($data['log_book_records']->dynamic_form_id, true);
+        $data['pattern'] = DynamicFormBuilder::where('id', $data['dynamicForm']['form_builder_id'])->value('pattern');
+        $data['pattern_data'] = DynamicForm::where('id', $data['log_book_records']->dynamic_form_id)->value('pattern_data');
 
 
         return response()->json($data);
