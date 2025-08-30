@@ -196,10 +196,11 @@ class MFCController extends ServiceUserManagementController
                 // }
 
                 echo '
-                        <div class="col-md-7 col-sm-7 col-xs-7 cog-panel col-md-offset-2 p-0 r-p-15 record_row rows">
+                        <div class="col-md-6 col-sm-6 col-xs-6 cog-panel  r-p-15 record_row rows rmpTimelineright">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 r-p-0">
                                 <div class="input-group popovr rightSideInput rmpTimeRit">
                                    <span class="timLineDate">' . $datetime . '</span>
+                                   <span class="arrow"></span>
                                    <div class="rmpWithPlusInput">
                                     <input type="text" name="edit_su_record_desc[]" style="background-color: ' . $color . ';" class="form-control cus-control edit_record_desc_' . $value->id . ' edit_mfc_rcrd"  disabled  value="' . ucfirst($value->form_title) . ' - ' . $value->title . '" maxlength="255"/>';
 
@@ -260,10 +261,10 @@ class MFCController extends ServiceUserManagementController
                 // }
 
                 echo '
-                        <div class="col-md-7 col-sm-7 col-xs-7 cog-panel col-md-offset-3 p-0 r-p-15 record_row rows">
+                        <div class="col-md-6 col-sm-6 col-xs-6 cog-panel r-p-15 record_row rows">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 r-p-0">
                                 <div class="input-group popovr timelineInput rmpTimeLft">
-
+                                 <span class="arrow"></span>
                                 <span class="timLineDate">' . $datetime . '</span>
                                 <div class="rmpWithPlusInput">
                                     <input type="text" name="edit_su_record_desc[]" style="background-color: ' . $color . ';" class="form-control cus-control edit_record_desc_' . $value->id . ' edit_mfc_rcrd"  disabled  value="' . ucfirst($value->form_title) . ' - ' . $value->title . '" maxlength="255"/>';

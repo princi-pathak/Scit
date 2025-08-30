@@ -631,7 +631,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to unpublish this rota?</h1>
+        <h4 class="modal-title" id="exampleModalLabel">Are you sure you want to unpublish this rota?</h4>
         <button type="button" class="modal_close_btn" data-bs-dismiss="modal" aria-label="Close"> ✖ </button>
       </div>
       <div class="modal-body">
