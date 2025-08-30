@@ -4,10 +4,10 @@ $image_id = $data['image_id'];
 
 if($image_id != '')
 {
-	$image = adminImgPath.'/'.$image_id;
+	$image = env('APP_URL').adminImgPath.'/'.$image_id;
 }
 else{
-	$image = adminImgPath.'/default_user.jpg';
+	$image = env('APP_URL').adminImgPath.'/default_user.jpg';
 }
 
 

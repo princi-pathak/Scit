@@ -243,9 +243,9 @@
                                                 <td>{{$val->email}}</td>
                                                 <td>
                                                     @if(empty($logs) || $logs->check_out_time != '')
-                                                        <button type="button" class="btn btn-danger">Logged Out</button>
+                                                        <button type="button" class="btn btn-danger">Checked Out</button>
                                                     @else
-                                                        <button type="button" class="btn sel_design_layout">Logged In</button>
+                                                        <button type="button" class="btn sel_design_layout">Checked In</button>
                                                     @endif
                                                 </td>
                                                 <td>

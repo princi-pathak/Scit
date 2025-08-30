@@ -372,9 +372,9 @@ class AndroidApiController extends Controller
         if($request->home_id == null){
             return response()->json(['success'=> false, 'message'=>'Please provide us home id..!'], 200);
         }
-        if($request->reason == null){
-            return response()->json(['success'=> false, 'message'=>'Please provide us reason..!'], 200);
-        }
+        // if($request->reason == null){
+        //     return response()->json(['success'=> false, 'message'=>'Please provide us reason..!'], 200);
+        // }
 
         // $record = ServiceUser::where('id', $request->user_id)->where('is_deleted', 0)->where('home_id', $request->home_id)->get();
         $record = User::where('id', $request->user_id)->where('is_deleted', 0)->whereRaw('FIND_IN_SET(?, home_id)', [$request->home_id])->exists();
