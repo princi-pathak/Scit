@@ -515,8 +515,8 @@ class LogBookController extends ServiceUserManagementController
 
                 $latest_date  = LogBook::select('log_book.*')->orderBy('date', 'desc')->take(1)->value('date');
                 $latest_date  = date('Y-m-d H:i:s', strtotime($latest_date));
-                $given_date   = date('Y-m-d H:i:s', strtotime($data['date'] . ' ' . $data['time']));
-                // $given_date    = date('d-m-Y H:i:s');
+                // $given_date   = date('Y-m-d H:i:s', strtotime($data['date'] . ' ' . $data['time']));
+                $given_date    = date('d-m-Y H:i:s');
                 $latest_date_without_time    = date('Y-m-d', strtotime($latest_date));
                 $given_date_without_time    = date('Y-m-d', strtotime($given_date));
                 $current_date_without_time    = date('Y-m-d');

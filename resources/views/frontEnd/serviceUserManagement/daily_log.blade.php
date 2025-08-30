@@ -263,9 +263,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                                                                                                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                                                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                                                        </div> -->
+                                                                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                                                                </div> -->
 
                 </div>
 
@@ -409,8 +409,8 @@
                                                             </span>
                                                             <span class="viewEditIcon">
                                                                 <a href="#!" class="dyn-form-view-data-log-book"
-                                                                     id="{{ isset($key['id']) ? $key['id'] : null }}"
-                                                                dynamic_form_id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
+                                                                    id="{{ isset($key['id']) ? $key['id'] : null }}"
+                                                                    dynamic_form_id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"><i
                                                                         class="fa fa-eye"></i></a>
                                                                 {{-- <a href="#!"><i class="fa fa-edit"></i></a> --}}
                                                             </span>
@@ -784,9 +784,9 @@
                                 var a = document.createElement("a");
                                 a.href = "#!";
                                 a.className = "dyn-form-view-data-log-book";
-                                a.id = resp.log_book_records[i][
-                                    'dynamic_form_id'
-                                ]; // use dynamic_form_id from response
+
+                                a.setAttribute("id", resp.log_book_records[i]['id']);
+                                a.setAttribute("dynamic_form_id", resp.log_book_records[i]['dynamic_form_id']);
 
                                 // create <i> icon
                                 var icon = document.createElement("i");
@@ -945,9 +945,8 @@
                                 var a = document.createElement("a");
                                 a.href = "#!";
                                 a.className = "dyn-form-view-data-log-book";
-                                a.id = resp.log_book_records[i][
-                                    'dynamic_form_id'
-                                ]; // use dynamic_form_id from response
+                                a.setAttribute("id", resp.log_book_records[i]['id']);
+                                a.setAttribute("dynamic_form_id", resp.log_book_records[i]['dynamic_form_id']);
 
                                 // create <i> icon
                                 var icon = document.createElement("i");
@@ -1421,7 +1420,7 @@
                     }
                 });
                 document.getElementById('dynamic_form_builder_log').disabled = true;
-                    $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", true);
+                $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", true);
 
                 $('#addLogModal').modal('show'); // open modal
             });
