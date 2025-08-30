@@ -26,6 +26,7 @@ use App\Http\Controllers\frontEnd\salesFinance\PreInvoiceController;
 use App\Http\Controllers\Rota\StaffController;
 use App\Http\Controllers\Rota\AnnualLeaveController;
 use App\Http\Controllers\frontEnd\salesFinance\leave_tracker\LeaveTrackerController;
+use App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -967,6 +968,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/service/dynamic-form/save', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@save_form');
 	Route::post('/service/dynamic-form/edit', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@edit_form');
 	Route::post('/service/dynamic-form/view/pattern', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@view_form_pattern');
+	Route::post('/service/dynamic-form/view/pattern_log', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@view_form_pattern_log');
 	Route::post('/service/patterndataformio', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@patterndataformio');
 	Route::post('/service/patterndataformiovaule', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@patterndataformiovalue');
 	Route::get('/service/dynamic-form/view/data/{dynamic_form_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@view_form_data');
@@ -1011,6 +1013,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::match(['get', 'post'], '/service/monthly-logs', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController@monthly_log');
 	Route::get('/service/daily-log-form/view/data/{dynamic_form_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController@view_log_form_data');
 	// Route::post('/service/logbook/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\LogBookController@add');
+	Route::get('/get-dynamic-form-daily-log/{id}', [DailyLogsController::class, 'getDynamicFormDailyLog'])->name('get.dynamic.form.daily.log');
+
 
 	//Backend Logs Download
 	Route::get('/service/logbook/download', 'App\Http\Controllers\frontEnd\ServiceUserManagement\PDFLogsController@download');
