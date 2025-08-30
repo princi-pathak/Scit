@@ -264,7 +264,7 @@ class RotaController extends Controller
       $ex_home_ids = explode(',', $home_ids);
       $home_id=$ex_home_ids[0];
       // $user = ServiceUser::where('home_id', $home_id)->orderBy('name', 'DESC')->where('is_deleted', 0)->get();
-      $user = User::where('home_id', 1)->orderBy('name', 'DESC')->where('is_deleted', 0)->get();
+      $user = User::where('home_id', $home_id)->orderBy('name', 'DESC')->where('is_deleted', 0)->get();
       // dd($user);
       $leave = array();
       $complete_hours = array();

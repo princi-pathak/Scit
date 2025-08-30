@@ -252,7 +252,7 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
         </div>
     </div>
 </div>
-<!-- View/Edit dynamic form End -->
+<!-- View/Edit dynamic form End --> 
 
 
 <!-- Su Daily Log Book Modal -->
@@ -311,23 +311,32 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
                                 </div>
                             </div>
 
-                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng" id="monthly">
-                                <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                    <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Date: </label>
-                                    <div class="col-md-8 col-sm-10 col-xs-12">
-                                        <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date=""
-                                            class="input-group date dpYears">
-                                            <input name="date" size="16" readonly=""
-                                                class="form-control trans" type="text" value="">
-                                            <span class="input-group-btn add-on">
-                                                <button class="btn btn-primary" type="button"><i
-                                                        class="fa fa-calendar"></i></button>
-                                            </span>
-                                        </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel p-0 datepicker-sttng" id="monthly">
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Monthly Log Date: </label>
+                                <div class="col-md-4 col-sm-10 col-xs-12">
+                                    <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date=""
+                                        class="input-group date dpYears">
+                                        <input name="start_date" readonly="" id="month_start_date"
+                                            class="form-control trans" type="text" value="">
+                                        <span class="input-group-btn add-on">
+                                            <button class="btn btn-primary" type="button"><i
+                                                    class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-10 col-xs-12">
+                                    <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date=""
+                                        class="input-group date dpYears">
+                                        <input name="end_date" readonly="" id="month_end_date"
+                                            class="form-control trans" type="text" value="">
+                                        <span class="input-group-btn add-on">
+                                            <button class="btn btn-primary" type="button"><i
+                                                    class="fa fa-calendar"></i></button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="form-group modal-footer m-t-0 modal-bttm">
                                 <button class="btn btn-default" type="button" data-dismiss="modal"
                                     aria-hidden="true"> Cancel </button>
@@ -507,9 +516,9 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
                         $('#' + form_id + ' .popup_success').show();
                         setTimeout(function() {
                             $('#' + form_id + ' .popup_success').fadeOut(
-                        function() {
-                                location.reload()
-                            })
+                                function() {
+                                    location.reload()
+                                })
                         }, 5000);
 
                         $('#' + model_id + ' .dynamic_form_select').val('0');
@@ -906,7 +915,7 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
                     if (resp == '') {
                         $('.view-dyn-record').html(
                             '<div class="text-center p-b-20" style="width:100%">No Records found.</div>'
-                            );
+                        );
                     } else {
                         $('.view-dyn-record').html(resp);
                     }
@@ -1061,10 +1070,36 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
                 var endDate = `${dd2}-${mm2}-${yyyy2}`;
                 endInput.value = endDate;
 
-
+                monthly.style.display = 'none';
                 weekly.style.display = 'block';
                 $('.logtitle').text("Add Record To Child's Weekly Log");
             } else if (logtype == 3) {
+
+                var startInput = document.getElementById('month_start_date');
+                var endInput = document.getElementById('month_end_date');
+
+                var today = new Date();
+
+                // Format today's date
+                var yyyy = today.getFullYear();
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); // month is 0-indexed
+                var dd = String(today.getDate()).padStart(2, '0');
+
+                var startDate = `${dd}-${mm}-${yyyy}`;
+                startInput.value = startDate;
+
+                // Add 1 month for end date
+                var nextMonth = new Date(today);
+                nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+                var yyyy2 = nextMonth.getFullYear();
+                var mm2 = String(nextMonth.getMonth() + 1).padStart(2, '0');
+                var dd2 = String(nextMonth.getDate()).padStart(2, '0');
+
+                var endDate = `${dd2}-${mm2}-${yyyy2}`;
+                endInput.value = endDate;
+
+
                 weekly.style.display = 'none';
                 monthly.style.display = 'block';
                 $('.logtitle').text("Add Record To Child's Monthly Log");
@@ -1076,7 +1111,7 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
 
 
         $('.sbt-su-dyn-frm-log').click(function() {
-            alert("save");
+            // alert("save");
             var dyn_form_id = $('input[name=\'dyn_form_id\']').val();
             var s_user_id = $('select[name=\'s_user_id\']').val();
             var s_category_id = $('select[name=\'s_category_id\']').val();
@@ -1123,6 +1158,9 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
             if (logtype == 2) {
                 dataToSend.start_date = $('#week_start_date').val();
                 dataToSend.end_date = $('#week_end_date').val();
+            } else if(logtype == 3){
+                dataToSend.start_date = $('#month_start_date').val();
+                dataToSend.end_date = $('#month_end_date').val();
             }
             console.log("dataToSend", dataToSend);
 
@@ -1195,25 +1233,25 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
             printWindow.document.write('<html><head><title>Print DIV Content</title>');
             printWindow.document.write(
                 '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">'
-                );
+            );
             printWindow.document.write(
                 '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">'
-                );
+            );
             printWindow.document.write(
                 '<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
             printWindow.document.write(
                 '<link href="{{ url('
-                                public / backEnd / css / amarjeet.css ') }}" rel="stylesheet" type="text/css" >'
-                );
+                                                                                public / backEnd / css / amarjeet.css ') }}" rel="stylesheet" type="text/css" >'
+            );
             printWindow.document.write(
                 '<link href="{{ url('
-                                public / backEnd / css / pdfstyle.css ') }}" rel="stylesheet" type="text/css" >'
-                );
+                                                                                public / backEnd / css / pdfstyle.css ') }}" rel="stylesheet" type="text/css" >'
+            );
             printWindow.document.write('</head><body > <div class="masterprintmainarea">');
             printWindow.document.write('<div class="header">');
             printWindow.document.write(
                 '<img src="{{ url(' / public / images / scits.png ') }}" style="float:right;height:80px;">'
-                );
+            );
             printWindow.document.write('</div>');
             // printWindow.document.write(divContents);
             printWindow.document.write('</div>');
@@ -1221,8 +1259,8 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
             printWindow.document.write('<div class="footer-section-area">');
             printWindow.document.write(
                 '© {{ date('
-                                Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk '
-                );
+                                                                                Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk '
+            );
             printWindow.document.write('</div>');
             printWindow.document.write('</div>');
             printWindow.document.write('</div> </body></html>');

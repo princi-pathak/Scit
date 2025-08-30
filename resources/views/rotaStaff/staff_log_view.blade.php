@@ -173,8 +173,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Login Date</th>
-                                            <th>Login</th>
-                                            <th>Logout</th>
+                                            <th>Check In Time</th>
+                                            <th>Check Out Time</th>
                                             <th>Reason</th>
                                             <th>Status</th>
                                         </tr>
@@ -251,8 +251,8 @@ function log_filter_function(){
                     }
                 }
                 if (response.success === true) {
-                    // var table = $('#expend_cash_table').DataTable();
-                    // table.destroy();
+                    var table = $('#staffLogViewTable').DataTable();
+                    table.destroy();
                     var data = response.data;
                     let html_data = '';
                     let index = 1;
@@ -296,6 +296,7 @@ function log_filter_function(){
                     });
 
                     $("#staff_log_view_data").html(html_data); 
+                    $('#staffLogViewTable').DataTable();
                 }
             },
             error: function(xhr, status, error) {
