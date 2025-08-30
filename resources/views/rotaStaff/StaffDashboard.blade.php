@@ -236,7 +236,7 @@
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="tab-first-infos">
-                  <h3><a href="{{ url('absence/type=1') }}">Request time off</a></h3>
+                  <h3><a href="{{ url('absence/type=2') }}">Request time off</a></h3>
                 </div>
                 <div class="main-equal-side">
                   <div class="main-sidebar-crial">

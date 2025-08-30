@@ -578,7 +578,7 @@
                                                                 <input type="hidden" id="users_update_id">
                                                                 <input type="" id="show_emp_name" onclick="showSelect(event)" placeholder="Select employee" class="form-control select_employee_btn"
                                                                     id="staticEmail" value="">
-                                                                <span class="position-abs" style="position: absolute;right: 20px; top: 8px; color: #a1a9b3; font-size: 20px;"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                                <span class="position-abs" style="position: absolute;right: 12px; top: 3px; color: #a1a9b3; font-size: 20px;"><i class="fa fa-search" aria-hidden="true"></i></span>
                                                                 <ul class="customSelect" id="selectDropdown">
                                                                 </ul>
                                                             </div>
