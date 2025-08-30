@@ -593,7 +593,7 @@ span.viewEditIcon {
      padding-right: 120px;
  } */
  .logged-mfc-list .rightSideInput::after,  .logged-mfc-list .timelineInput::after {
-   display: none;
+   /* display: none; */
 }
 
 .inputTextLefttoRight input{
