@@ -80,7 +80,29 @@ class RotaController extends Controller
         $other7 =  Staffleaves::where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
         $leave['total_leave_plus_three'] =  $annual7 + $sickness7 + $lateness7 + $other7;
 
+        // echo "<pre>";print_r(Auth::user());die;
+        $renaming_hour=Auth::user()->holiday_entitlement;
+        $staff_leave =  Staffleaves::where('user_id',Auth::user()->id)->whereYear('start_date', date('Y'))->where('leave_type', 1)->where('is_deleted', 1)->where('home_id',  $home_id)->where('leave_status', 1)->get();
         
+        $allowance_hour=0;
+        if(count($staff_leave) > 0){
+          $leave_count=0;
+          foreach ($staff_leave as $val) {
+              $start = new \DateTime($val->start_date);
+              if (!empty($val->end_date)) {
+                  $end = new \DateTime($val->end_date);
+              } else {
+                  $end = $start;
+              }
+              $diff = $start->diff($end);
+              $leave_count += $diff->days + 1;
+          }
+          $total_hours=RotaAssignEmployee::where('emp_id',Auth::user()->id)->whereYear('created_at',date('Y'))->sum('total_hours');
+          $allowance_hour = $total_hours * $leave_count;
+        }
+        // echo $allowance_hour;die;
+        $leave['renaming_hour']=$renaming_hour - $allowance_hour;
+        $leave['allowance_hour']=$allowance_hour;
         return view('rotaStaff.StaffDashboard', ['sidebar' => 'dashborad'], $leave);
     }
 
@@ -427,10 +449,11 @@ class RotaController extends Controller
         return view('rotaStaff.calender', ['sidebar' => 'calender'], $data);
     }
 
-    function annual_leave_view($id){
+    function annual_leave_view($id,Request $request){
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id=$ex_home_ids[0];
+        $data['staff_id']=($request->staff ?? "");
         $data['leave'] = $id;
         $data['sidebar'] = '';
         $data['leavetype'] = LeaveType::where('status', 1)->get();
@@ -528,7 +551,7 @@ class RotaController extends Controller
     }
 
     function add_leave(Request $request){
-      
+      // echo "<pre>";print_r($request->all());die;
         if($request->ongoingLeave == "yes"){
             $ongoingLeave = 1;
         }else {
@@ -581,12 +604,17 @@ class RotaController extends Controller
             'created_at'=>date("Y-m-d H:i:s"),
             'updated_at'=>date("Y-m-d H:i:s")  
         );
-        $data = Staffleaves::insert($add_leave);
-        return redirect('/pending-request');
+        // $data = Staffleaves::insert($add_leave);
+        if(isset($request->staff_id) && $request->staff_id !=''){
+          return redirect('/pending-request?staff_id=' .$request->staff_id);
+        }else{
+          return redirect('/pending-request');
+        }
+        
        
     }
 
-    function leave_pending(){
+    function leave_pending(Request $request){
         $data['last_leave'] = Staffleaves::latest()->first();
         $last_leave = Staffleaves::latest()->first();
         // $user = ServiceUser::where('id', $last_leave->user_id)->get();
@@ -596,6 +624,7 @@ class RotaController extends Controller
         }
         $data['username'] = $user_name;
         $data['sidebar'] = 'action';
+        $data['staff_id']=($request->staff_id ?? "");
         return view('rotaStaff.leave_pending', $data);
     }
 
@@ -1359,7 +1388,7 @@ class RotaController extends Controller
       return view('rotaStaff.information_checker', $data);
     }
 
-    public function overtime(){
+    public function overtime(Request $request){
       $data['sidebar'] = 'dashborad';
       return view('rotaStaff.overtime', $data);
     }
@@ -1495,6 +1524,9 @@ class RotaController extends Controller
       $minutes = round(($decimalHours - $hours) * 60);
 
       return "{$hours}h {$minutes}min";
+    }
+    function rota_absence(Request $request){
+      return view('rotaStaff.absence',);
     }
 
 }

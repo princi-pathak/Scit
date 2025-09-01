@@ -83,6 +83,19 @@
     height: auto !important;
   }
 </style>
+<?php 
+  function formatHours($decimalHours) {
+    
+    if ($decimalHours == 0 || $decimalHours == null) {
+        return "0h 0min";
+    }
+
+    $hours = floor($decimalHours);
+    $minutes = round(($decimalHours - $hours) * 60);
+
+    return "{$hours}h {$minutes}min";
+  }
+?>
 <section class="wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -244,8 +257,8 @@
                     <div class="crical-strok"> </div>
                   </div>
                   <div class="crical-content-bar">
-                    <h4><strong>-5 hrs 0 mins</strong> remaining</h4>
-                    <h4><strong>0 hrs 0 mins</strong> allowance</h4>
+                    <h4><strong><?php echo formatHours($renaming_hour);?></strong> remaining</h4>
+                    <h4><strong><?php echo formatHours($allowance_hour);?></strong> allowance</h4>
                   </div>
                 </div>
                 <p class="next">Next up - No absences coming up</p>
@@ -259,7 +272,7 @@
               </div>
               <div class="tab-pane fade p-1" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="tab-first-infos">
-                  <h3><a href="{{ url('absence/type=1') }}">Request time off</a></h3>
+                  <h3><a href="{{ url('absence/type=2') }}">Request time off</a></h3>
                 </div>
                 <div class="main-equal-side">
                   <div class="main-sidebar-crial">
