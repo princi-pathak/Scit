@@ -200,7 +200,7 @@
                 $.ajax({
                     type: 'post',
                     //url : "{{ url('/service/dynamic-form/view/pattern') }}"+'/'+form_builder_id+'/'+su_id,
-                    url: "{{ url('/service/dynamic-form/view/pattern') }}",
+                    url: "{{ url('/service/dynamic-form/view/pattern_log') }}",
                     data: {
                         'form_builder_id': form_builder_id,
                         'service_user_id': service_user_id
@@ -238,14 +238,19 @@
                                     }
                                 }
                             });
-
-
                         }
 
                         $('.loader').hide();
                         $('body').removeClass('body-overflow');
-                        if (!$("#dynamic_form_log_book_id").val()) {
-                            loaddataontable()
+
+                        let formE2 = document.getElementById("addLogModal");
+                        let mode = formE2.getAttribute("data-mode");
+
+
+                        if (mode === "add") {
+                            // 🔹 Add mode logic
+                            console.log("Form is in ADD mode");
+                            loaddataontableLog()
                         }
                     }
                 });
@@ -256,6 +261,33 @@
         });
 
     });
+
+    let loaddataontableLog = () => {
+        let formid = $("#formid").val();
+        let home_id = $("#home_id").val();
+        var token = "<?= csrf_token() ?>";
+        // alert(token);
+        var settings = {
+            "url": "{{ url('/service/patterndataformio') }}",
+            "method": "POST",
+            "data": {
+                patterndata: formid,
+                home_id: home_id,
+                _token: token
+            },
+            //dataType: "json",
+        };
+        $.ajax(settings).done(function(response) {
+            // alert("sdio");
+            if (isAuthenticated(response) == false) {
+                return false;
+            }
+            console.log("loaddataontableLog", response);
+            Formio.createForm(document.getElementById('formiotestForm'), {
+                components: JSON.parse(response)
+            });
+        });
+    }
 </script>
 
 <!-- Add Log to ServiceUser LogBook -->
@@ -350,7 +382,9 @@
                     }, 5000);
                 } else {
                     if (resp == 3) {
-                        $('span.popup_success_txt').text('Daily log Eddied Successsfully');
+                        $('.loader').show();
+                        $('body').addClass('body-overflow');
+                        $('span.popup_success_txt').text('Daily log eddied successfully');
                         $('.popup_success').show();
                         setTimeout(function() {
                             $(".popup_success").fadeOut();
@@ -365,7 +399,7 @@
                         $('textarea[name=\'log_detail\']').val('');
 
                         //show success message
-                        $('span.popup_success_txt').text('Daily log Added Successsfully');
+                        $('span.popup_success_txt').text('Daily log added successfully');
                         $('.popup_success').show();
                         setTimeout(function() {
                             $(".popup_success").fadeOut();

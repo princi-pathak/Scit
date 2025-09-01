@@ -499,8 +499,8 @@
 
                 $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", false);
 
-
-
+                let formEl = document.getElementById("addLogModal"); 
+                formEl.setAttribute("data-mode", "add");
                 // Finally, open modal
                 $("#addLogModal").modal("show");
             });
@@ -1253,7 +1253,7 @@
 
         });
     </script>
-    {{-- Fiter on Staff or serice user --}}
+    {{-- Staff or serice user --}}
     <script type="text/javascript">
         $('#staff_member').change(function() {
             let staff_member = $('#staff_member').val();
@@ -1378,19 +1378,19 @@
                     success: function(response) {
 
                         console.log(response);
-                        $(".su_name").val(response.dynamicForm.service_user_id).trigger(
-                            "change");
+                        $(".su_name").val(response.dynamicForm.service_user_id).trigger("change");
                         $('input[name="log_title"]').val(response.log_book_records.title);
-                        $('#log_dynamic_form_id').val(response.log_book_records
-                            .dynamic_form_id);
+                        $('#log_dynamic_form_id').val(response.log_book_records.dynamic_form_id);
                         $('#dynamic_form_log_book_id').val(response.log_book_records.id);
                         $('select[name="category"]').val(response.log_book_records.category_id);
                         $('input[name="log_date"]').val(response.log_book_records.date);
                         $('textarea[name="log_detail"]').val(response.log_book_records.details);
                         // $("#formDataLogs").val(response.dynamicForm.form_data);
-                        $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm
-                            .form_builder_id).trigger('change');
+                        $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm.form_builder_id).trigger('change');
                         $(".dynamic-form-log-fields").empty();
+
+                        let formE = document.getElementById("addLogModal"); 
+                        formE.setAttribute("data-mode", "edit");
 
                         var schema = JSON.parse(response.pattern); // form structure
                         var savedData = response.pattern_data ? JSON.parse(response

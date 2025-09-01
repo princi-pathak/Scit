@@ -24,7 +24,7 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_n_id">
-                                            <option selected disabled> Select Child </option>
+                                            <!-- <option selected disabled> Select Child </option> -->
                                             @foreach ($service_users as $value)
                                                 <option value="{{ $value['id'] }}"
                                                     {{ $service_user_id == $value['id'] ? 'selected' : '' }}>
