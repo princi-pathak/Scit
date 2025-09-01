@@ -109,6 +109,11 @@
             right: 56px;
             top: 16px;
         }
+  
+    .panel .panel-body .arrow {
+        border-right: 8px solid #ffffffff !important;
+        border-left: inherit !important;
+    }
     </style>
 
     @php
@@ -1424,7 +1429,6 @@
 
                 $('#addLogModal').modal('show'); // open modal
             });
-
 
         });
     </script>
