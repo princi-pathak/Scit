@@ -109,6 +109,11 @@
             right: 56px;
             top: 16px;
         }
+  
+    .panel .panel-body .arrow {
+        border-right: 8px solid #ffffffff !important;
+        border-left: inherit !important;
+    }
     </style>
 
     @php
@@ -494,77 +499,77 @@
 
                 $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", false);
 
-
-
+                let formEl = document.getElementById("addLogModal"); 
+                formEl.setAttribute("data-mode", "add");
                 // Finally, open modal
                 $("#addLogModal").modal("show");
             });
 
-            $(document).on('click', '.openModelDailyLog', function(e) {
-                e.preventDefault();
+            // $(document).on('click', '.openModelDailyLog', function(e) {
+            //     e.preventDefault();
 
-                var previous_model_id = $(this).closest('.modal').attr('id');
-                var dynamic_form_id = $(this).attr('id');
-                var form_id = $(this).closest('form').attr('id');
+            //     var previous_model_id = $(this).closest('.modal').attr('id');
+            //     var dynamic_form_id = $(this).attr('id');
+            //     var form_id = $(this).closest('form').attr('id');
 
-                $('.loader').show();
-                $('body').addClass('body-overflow');
+            //     $('.loader').show();
+            //     $('body').addClass('body-overflow');
 
-                $.ajax({
-                    type: 'get',
-                    url: "{{ url('/service/daily-log-form/view/data') }}" + '/' + dynamic_form_id,
-                    dataType: 'json',
-                    success: function(resp) {
+            //     $.ajax({
+            //         type: 'get',
+            //         url: "{{ url('/service/daily-log-form/view/data') }}" + '/' + dynamic_form_id,
+            //         dataType: 'json',
+            //         success: function(resp) {
 
-                        if (isAuthenticated(resp) == false) {
-                            return false;
-                        }
+            //             if (isAuthenticated(resp) == false) {
+            //                 return false;
+            //             }
 
-                        var response = resp['response'];
-                        var form_builder_id = resp['form_builder_id'];
-                        var form_title = resp['form_title'];
-                        var service_user_id = resp['service_user_id'];
-                        var form_data = resp['form_data'];
-                        var form_alert = resp['form_alert'];
+            //             var response = resp['response'];
+            //             var form_builder_id = resp['form_builder_id'];
+            //             var form_title = resp['form_title'];
+            //             var service_user_id = resp['service_user_id'];
+            //             var form_data = resp['form_data'];
+            //             var form_alert = resp['form_alert'];
 
-                        if (response == true) {
+            //             if (response == true) {
 
-                            $('#' + previous_model_id).modal('hide');
-                            var view_modal = '#DynFormViewModal';
+            //                 $('#' + previous_model_id).modal('hide');
+            //                 var view_modal = '#DynFormViewModal';
 
-                            $(view_modal).modal('show');
-                            $(view_modal + ' .mdl-back-btn').attr('pre_modal',
-                                previous_model_id);
+            //                 $(view_modal).modal('show');
+            //                 $(view_modal + ' .mdl-back-btn').attr('pre_modal',
+            //                     previous_model_id);
 
-                            $(view_modal + ' .dynamic_form_select').val(form_builder_id);
-                            if (service_user_id != null) {
-                                $(view_modal + ' .su_id').val(service_user_id);
-                            } else {
-                                $(view_modal + ' .su_id').val(0);
-                            }
-                            $(view_modal + ' .dynamic_form_id').val(dynamic_form_id);
-                            $(view_modal + ' .dynamic-form-log-fields').html(form_data);
+            //                 $(view_modal + ' .dynamic_form_select').val(form_builder_id);
+            //                 if (service_user_id != null) {
+            //                     $(view_modal + ' .su_id').val(service_user_id);
+            //                 } else {
+            //                     $(view_modal + ' .su_id').val(0);
+            //                 }
+            //                 $(view_modal + ' .dynamic_form_id').val(dynamic_form_id);
+            //                 $(view_modal + ' .dynamic-form-log-fields').html(form_data);
 
-                            // setTimeout(function () {
-                            //     autosize($("textarea"));
-                            // },200);
+            //                 // setTimeout(function () {
+            //                 //     autosize($("textarea"));
+            //                 // },200);
 
-                        } else {
-                            //show error message
-                            $('#' + form_id + '  span.popup_error_txt').text(
-                                "{{ COMMON_ERROR }}");
-                            $('#' + form_id + ' .popup_error').show();
-                            setTimeout(function() {
-                                $('#' + form_id + ' .popup_error').fadeOut()
-                            }, 5000);
-                        }
-                        viewdatawithvalueFormio();
-                        $('.loader').hide();
-                        $('body').removeClass('body-overflow');
-                    }
-                });
-                return false;
-            });
+            //             } else {
+            //                 //show error message
+            //                 $('#' + form_id + '  span.popup_error_txt').text(
+            //                     "{{ COMMON_ERROR }}");
+            //                 $('#' + form_id + ' .popup_error').show();
+            //                 setTimeout(function() {
+            //                     $('#' + form_id + ' .popup_error').fadeOut()
+            //                 }, 5000);
+            //             }
+            //             viewdatawithvalueFormio();
+            //             $('.loader').hide();
+            //             $('body').removeClass('body-overflow');
+            //         }
+            //     });
+            //     return false;
+            // });
 
         });
 
@@ -1248,7 +1253,7 @@
 
         });
     </script>
-    {{-- Fiter on Staff or serice user --}}
+    {{-- Staff or serice user --}}
     <script type="text/javascript">
         $('#staff_member').change(function() {
             let staff_member = $('#staff_member').val();
@@ -1373,19 +1378,19 @@
                     success: function(response) {
 
                         console.log(response);
-                        $(".su_name").val(response.dynamicForm.service_user_id).trigger(
-                            "change");
+                        $(".su_name").val(response.dynamicForm.service_user_id).trigger("change");
                         $('input[name="log_title"]').val(response.log_book_records.title);
-                        $('#log_dynamic_form_id').val(response.log_book_records
-                            .dynamic_form_id);
+                        $('#log_dynamic_form_id').val(response.log_book_records.dynamic_form_id);
                         $('#dynamic_form_log_book_id').val(response.log_book_records.id);
                         $('select[name="category"]').val(response.log_book_records.category_id);
                         $('input[name="log_date"]').val(response.log_book_records.date);
                         $('textarea[name="log_detail"]').val(response.log_book_records.details);
                         // $("#formDataLogs").val(response.dynamicForm.form_data);
-                        $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm
-                            .form_builder_id).trigger('change');
+                        $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm.form_builder_id).trigger('change');
                         $(".dynamic-form-log-fields").empty();
+
+                        let formE = document.getElementById("addLogModal"); 
+                        formE.setAttribute("data-mode", "edit");
 
                         var schema = JSON.parse(response.pattern); // form structure
                         var savedData = response.pattern_data ? JSON.parse(response
@@ -1424,7 +1429,6 @@
 
                 $('#addLogModal').modal('show'); // open modal
             });
-
 
         });
     </script>

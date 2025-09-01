@@ -202,95 +202,184 @@ class DailyLogsController extends ServiceUserManagementController
             $su_logs = ServiceUserLogBook::select('su_log_book.log_book_id')->get()->toArray();
             // echo"<pre>"; print_r($su_logs); die;
 
+            // if ($request->filter == '1') {
+            //     if (!empty($data)) {
+            //         dd($data);
+            //         //sourabh staff member and Child filter
+            //         if ($request->service_user == '' && $request->staff_member == '') {
+            //             $service_userss = ServiceUser::select('id')
+            //                 ->where('home_id', $home_id)
+            //                 ->where('is_deleted', '0')
+            //                 ->get()->toArray();
+            //             $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')
+            //                 // ->where('su_log_book.user_id',$user_id)
+            //                 ->whereIn('su_log_book.service_user_id', $service_userss)->get()->toArray();
+            //         } else if ($request->service_user != '' && $request->staff_member == '') {
+            //             $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')
+            //                 // ->where('su_log_book.user_id',$user_id)
+            //                 ->where('su_log_book.service_user_id', $request->service_user)->get()->toArray();
+            //         } else if ($request->service_user == '' && $request->staff_member != '') {
+            //             $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')
+            //                 ->where('su_log_book.user_id', $request->staff_member)->get()->toArray();
+            //         } else if ($request->service_user != '' && $request->staff_member != '') {
+            //             $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')->where('su_log_book.user_id', $request->staff_member)->where('su_log_book.service_user_id', $request->service_user)->get()->toArray();
+            //         }
+
+            //         $log_book_records = DB::table('log_book')
+            //             ->select(
+            //                 'log_book.dynamic_form_id',
+            //                 DB::raw('MIN(log_book.created_at) as created_at'),
+            //                 DB::raw('MIN(log_book.id) as id'),
+            //                 DB::raw('MIN(log_book.date) as date'),
+            //                 DB::raw('MIN(log_book.title) as title'),
+            //                 DB::raw('MIN(user.name) as staff_name'),
+            //                 DB::raw('MIN(dynamic_form.service_user_id) as service_user_id'),
+            //                 DB::raw('MIN(service_user.name) as child_name'),
+            //                 DB::raw('MIN(log_book.is_late) as is_late'),
+            //                 DB::raw('MIN(log_book.logType) as logType'),
+            //                 DB::raw('MIN(category.name) as category_name'),
+            //                 DB::raw('MIN(log_book.details) as details'),
+            //                 DB::raw('MIN(category.color) as category_color'),
+            //                 DB::raw('log_book.logType as logType'),
+            //                 DB::raw('MIN(category.icon) as category_icon')
+            //             )
+            //             ->join('user', 'log_book.user_id', '=', 'user.id')
+            //             ->join('category', 'log_book.category_id', '=', 'category.id')
+            //             ->join('dynamic_form', 'log_book.dynamic_form_id', '=', 'dynamic_form.id')
+            //             ->join('service_user', 'service_user.id', '=', 'dynamic_form.service_user_id')
+            //             ->whereIn('log_book.id', $su_logs)
+            //             ->where('log_book.home_id', $home_id)
+            //             ->groupBy('log_book.dynamic_form_id', 'log_book.date', 'log_book.logType')
+            //             ->orderBy('log_book.date', 'desc');
+
+            //         // ✅ Log Type Filter
+            //         if ($request->has('log_type') && $request->log_type != 'all') {
+            //             $log_book_records = $log_book_records->where('log_book.logType', $request->log_type);
+            //         }
+
+            //         // Category filter
+            //         if (isset($request->category_id) && $request->category_id != 'NaN') {
+            //             $log_book_records = $log_book_records->where('log_book.category_id', $request->category_id);
+            //             // Log::info("Category Logs.");
+            //             // Log::info($log_book_records->get()->toArray());
+            //         }
+
+            //         // Date range filter
+            //         if (
+            //             !empty($request->start_date) && !empty($request->end_date)
+            //             && $request->start_date !== 'null' && $request->end_date !== 'null'
+            //         ) {
+
+            //             $startDate = \Carbon\Carbon::parse($request->start_date)->format('Y-m-d');
+            //             $endDate   = \Carbon\Carbon::parse($request->end_date)->format('Y-m-d');
+            //             $log_book_records = $log_book_records->whereBetween('log_book.date', [$startDate, $endDate]);
+            //         }
+
+            //         //keyword filter
+            //         if (isset($request->keyword) && $request->keyword != 'null') {
+            //             $log_book_records = $log_book_records->where('log_book.title', 'like', '%' . $request->keyword . '%');
+            //         }
+
+            //         $log_book_records = $log_book_records->get();
+            //         $log_book_records = collect($log_book_records)->map(function ($x) {
+            //             return (array) $x;
+            //         })->toArray();
+
+            //         foreach ($log_book_records as $key) {
+            //             $key['date'] = date("d-m-Y H:i", strtotime($key['date']));
+            //             $comments = LogBookComment::where('log_book_id', $key['id'])->get();
+            //             $key = Arr::add($key, 'comments', $comments->count());
+            //             if ($key['is_late']) {
+            //                 $given_date_without_time    = date('Y-m-d', strtotime($key['date']));
+            //                 $created_at_without_time    = date('Y-m-d', strtotime($key['created_at']));
+            //                 if ($given_date_without_time == $created_at_without_time) {
+            //                     // $key = Arr::add($key, 'late_time_text', date('H:i', strtotime($key['created_at'])));
+            //                     // $key = Arr::add($key, 'late_date_text', date('d-m-Y', strtotime($key['created_at'])));
+            //                 }
+            //             }
+            //         }
+            //         $categorys = CategoryFrontEnd::select('category.*')->orderBy('name', 'asc')->get()->toArray();
+            //         return compact('log_book_records', 'categorys');
+            //     }
+            // }
+
             if ($request->filter == '1') {
-                if (!empty($data)) {
+                $log_book_records = DB::table('log_book')
+                    ->select(
+                        'log_book.dynamic_form_id',
+                        DB::raw('MIN(log_book.created_at) as created_at'),
+                        DB::raw('MIN(log_book.id) as id'),
+                        DB::raw('MIN(log_book.date) as date'),
+                        DB::raw('MIN(log_book.title) as title'),
+                        DB::raw('MIN(user.name) as staff_name'),
+                        DB::raw('MIN(dynamic_form.service_user_id) as service_user_id'),
+                        DB::raw('MIN(service_user.name) as child_name'),
+                        DB::raw('MIN(log_book.is_late) as is_late'),
+                        DB::raw('MIN(log_book.logType) as logType'),
+                        DB::raw('MIN(category.name) as category_name'),
+                        DB::raw('MIN(log_book.details) as details'),
+                        DB::raw('MIN(category.color) as category_color'),
+                        DB::raw('MIN(category.icon) as category_icon')
+                    )
+                    ->join('user', 'log_book.user_id', '=', 'user.id')
+                    ->join('category', 'log_book.category_id', '=', 'category.id')
+                    ->join('dynamic_form', 'log_book.dynamic_form_id', '=', 'dynamic_form.id')
+                    ->join('service_user', 'service_user.id', '=', 'dynamic_form.service_user_id')
+                    ->where('log_book.home_id', $home_id)
+                    ->groupBy('log_book.dynamic_form_id', 'log_book.date')
+                    ->orderBy('log_book.date', 'desc');
 
-                    //sourabh staff member and Child filter
-                    if ($request->service_user == '' && $request->staff_member == '') {
-                        $service_userss = ServiceUser::select('id')
-                            ->where('home_id', $home_id)
-                            ->where('is_deleted', '0')
-                            ->get()->toArray();
-                        $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')
-                            // ->where('su_log_book.user_id',$user_id)
-                            ->whereIn('su_log_book.service_user_id', $service_userss)->get()->toArray();
-                    } else if ($request->service_user != '' && $request->staff_member == '') {
-                        $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')
-                            // ->where('su_log_book.user_id',$user_id)
-                            ->where('su_log_book.service_user_id', $request->service_user)->get()->toArray();
-                    } else if ($request->service_user == '' && $request->staff_member != '') {
-                        $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')
-                            ->where('su_log_book.user_id', $request->staff_member)->get()->toArray();
-                    } else if ($request->service_user != '' && $request->staff_member != '') {
-                        $su_logss = ServiceUserLogBook::select('su_log_book.log_book_id')->where('su_log_book.user_id', $request->staff_member)->where('su_log_book.service_user_id', $request->service_user)->get()->toArray();
-                    }
-
-                    $log_book_records = DB::table('log_book')
-                        ->select('log_book.*', 'user.name as staff_name', 'category.color as category_color', 'service_user.name as child_name')
-                        // ->where('log_book.logType', 1)
-                        ->whereIn('log_book.id', $su_logss)
-                        ->join('user', 'log_book.user_id', '=', 'user.id')
-                        ->join('category', 'log_book.category_id', '=', 'category.id')
-                        ->join('dynamic_form', 'log_book.dynamic_form_id', '=', 'dynamic_form.id')
-                        ->join('service_user', 'service_user.id', '=', 'dynamic_form.service_user_id')
-                        ->where('log_book.home_id', $home_id)
-                        ->orderBy('date', 'desc');
-                    // dd($log_book_records);
-                    // $log_book_records = LogBook::select('log_book.*')->orderBy('date','desc');
-                    // Log::info("Logs.");
-                    // Log::info($log_book_records);
-
-                    // ✅ Log Type Filter Added
-                    // if ($request->has('log_type') && $request->log_type != 'all') {
-                    //     $log_book_records = $log_book_records->where('log_book.logType', $request->log_type);
-                    // }
-
-                    if (isset($request->category_id) && $request->category_id != 'NaN') {
-                        $log_book_records = $log_book_records->where('log_book.category_id', $request->category_id);
-                        // Log::info("Category Logs.");
-                        // Log::info($log_book_records->get()->toArray());
-                    }
-                    if (
-                        !empty($request->start_date) && !empty($request->end_date)
-                        && $request->start_date !== 'null' && $request->end_date !== 'null'
-                    ) {
-
-                        $startDate = \Carbon\Carbon::parse($request->start_date)->format('Y-m-d');
-                        $endDate   = \Carbon\Carbon::parse($request->end_date)->format('Y-m-d');
-
-                        $log_book_records = $log_book_records->whereBetween('log_book.date', [$startDate, $endDate]);
-                    }
-
-                    //sourabh
-                    if (isset($request->keyword) && $request->keyword != 'null') {
-                        $log_book_records = $log_book_records->where('log_book.details', 'like', '%' . $request->keyword . '%');
-                        // Log::info("End Date Logs.");
-                        // Log::info($log_book_records->get()->toArray());
-                    }
-
-                    // $log_book_records = $log_book_records->get()->toArray();
-                    $log_book_records = $log_book_records->get();
-                    $log_book_records = collect($log_book_records)->map(function ($x) {
-                        return (array) $x;
-                    })->toArray();
-
-                    foreach ($log_book_records as $key) {
-                        $key['date'] = date("d-m-Y H:i", strtotime($key['date']));
-                        $comments = LogBookComment::where('log_book_id', $key['id'])->get();
-                        $key = Arr::add($key, 'comments', $comments->count());
-                        if ($key['is_late']) {
-                            $given_date_without_time    = date('Y-m-d', strtotime($key['date']));
-                            $created_at_without_time    = date('Y-m-d', strtotime($key['created_at']));
-                            if ($given_date_without_time == $created_at_without_time) {
-                                $key = Arr::add($key, 'late_time_text', date('H:i', strtotime($key['created_at'])));
-                                $key = Arr::add($key, 'late_date_text', date('d-m-Y', strtotime($key['created_at'])));
-                            }
-                        }
-                    }
-                    $categorys = CategoryFrontEnd::select('category.*')->orderBy('name', 'asc')->get()->toArray();
-                    return compact('log_book_records', 'categorys');
+                // 🔹 Staff filter
+                if ($request->filled('staff_member')) {
+                    $log_book_records->where('log_book.user_id', $request->staff_member);
                 }
+
+                // 🔹 Child filter
+                if ($request->filled('service_user')) {
+                    $log_book_records->where('dynamic_form.service_user_id', $request->service_user);
+                }
+
+                // 🔹 Log Type Filter
+                if ($request->filled('log_type') && $request->log_type !== 'all') {
+                    $log_book_records->where('log_book.logType', $request->log_type);
+                }
+
+                // 🔹 Category filter
+                if ($request->filled('category_id') && $request->category_id !== 'NaN') {
+                    $log_book_records->where('log_book.category_id', $request->category_id);
+                }
+
+                // 🔹 Date range filter
+                if (
+                    !empty($request->start_date) && !empty($request->end_date)
+                    && $request->start_date !== 'null' && $request->end_date !== 'null'
+                ) {
+                    $startDate = \Carbon\Carbon::parse($request->start_date)->format('Y-m-d');
+                    $endDate   = \Carbon\Carbon::parse($request->end_date)->format('Y-m-d');
+                    $log_book_records->whereBetween('log_book.date', [$startDate, $endDate]);
+                } 
+                // else {
+                //     $currentDate = Carbon::today()->format('Y-m-d'); 
+                //     $log_book_records->whereDate('log_book.date', $currentDate);
+                // }
+
+                // 🔹 Keyword filter
+                if ($request->filled('keyword') && $request->keyword !== 'null') {
+                    $log_book_records->where('log_book.title', 'like', '%' . $request->keyword . '%');
+                }
+
+                $log_book_records = $log_book_records->get()->map(function ($x) {
+                    $x = (array) $x;
+                    $x['date'] = date("d-m-Y H:i", strtotime($x['date']));
+                    $x['comments'] = LogBookComment::where('log_book_id', $x['id'])->count();
+                    return $x;
+                })->toArray();
+
+                $categorys = CategoryFrontEnd::select('category.*')->orderBy('name', 'asc')->get()->toArray();
+
+                return compact('log_book_records', 'categorys');
             }
+
 
             Log::info($su_logs);
             // $log_book_records = DB::table('log_book')
@@ -1612,7 +1701,7 @@ class DailyLogsController extends ServiceUserManagementController
         $data['log_book_records'] = DB::table('log_book')
             ->where('log_book.id', $id)
             ->first();
-            
+
         $data['dynamicForm'] = DynamicForm::showFormLogWithValue($data['log_book_records']->dynamic_form_id, true);
         $data['pattern'] = DynamicFormBuilder::where('id', $data['dynamicForm']['form_builder_id'])->value('pattern');
         $data['pattern_data'] = DynamicForm::where('id', $data['log_book_records']->dynamic_form_id)->value('pattern_data');
