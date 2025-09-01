@@ -1,450 +1,234 @@
-@include('rotaStaff.components.header')
-@include('rotaStaff.pyrll_user_prfile_tmplte')
-@include('rotaStaff.pyrll_stylsheet')
+@extends('frontEnd.layouts.master')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title','Staff Timesheet')
+<link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+@section('content')
+
 <style>
-.hr_gap{
-  height: 15px;
-}
-.leave_yr{
-  float: right;
-  margin-right: -390px;
-  width: 50%;
-}
-.fil_ab_n_leave_yr_prnt{
-  width: 100%;
-}
-.uppr_stats{
-  width: 100%;
-  height: 200px;
-  text-align: center;
-  font-size: 23px;
-  font-weight: bold;
-  display: block;
-  float: left;
-}
-.uppr_stat_all_itms{
-  margin-top: 30px;
-  font-size: 17px;
-  font-weight: 500;
-}
-.uppr_stat_itm{
-  width: 33%;
-  float: left;
-  text-align: center;
-  display: block;
-}
-.crrnt_n_ftre{
-  font-size: 16px;
-  float: left;
-  margin-top: 30px;
-}
-.sick_icn{
-  width: 175px;
-  height: 90px;
-  background-color: grey;
-}
-.crrnt_n_ftre_section_1{
-  float: left;
-  width: 100%;
-  margin-top: 8px;
-  height: 150px;
-}
-.crrnt_n_ftre_section_2{
-  float: left;
-  width: 100%;
-  height: 150px;
-}
-.crrnt_n_ftre_section_3{
-  float: left;
-  width: 100%;
-  height: 150px;
-}
-.txt_n_bxes_prnt{
+    table.tablechange tbody td {
+        font-size: 12px;
+        white-space: nowrap;
+    }
 
-}
-.txt_n_bxes_chld_1{
-  float: left;
-  width: 20%;
-  font-size: 18px;
-  font-weight: 500;
-}
-.txt_n_bxes_chld_2{
-  float: left;
-  width: 20%;
-  font-size: 18px;
-  font-weight: 500;
-}
-.txt_n_bxes_chld_3{
-  float: left;
-  width: 20%;
-  font-size: 18px;
-  font-weight: 500;
-}
-.crrnt_n_ftre_icns{
-  float: right;
-}
+    .image_delete {
+        cursor: pointer;
+    }
 
-.accordion {
-  background-color: #eee;
-  color: black;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  text-align: left;
-  border: none;
-  outline: none;
-  transition: 0.4s;
-}
+    .textbox {
+        box-sizing: border-box;
+        perspective: 500px;
+        position: relative;
+        text-align: left;
+    }
 
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .accordion:hover {
-  background-color: #ccc;
-}
+    .textbox input {
+        padding: 10px 14px;
+        width: 100%;
+    }
 
-/* Style the accordion panel. Note: hidden by default */
-.panel {
-  padding: 0 18px;
-  background-color: white;
-  display: none;
-  overflow: hidden;
-}
-.inbetween_block{
-  width: 100%;
-  float: left;
-  height: 20px;
-}
+    .textbox input::placeholder {
+        color: #ccc;
+    }
+
+    .textbox .autoCompleteJob {
+        left: 0;
+        position: absolute;
+        top: calc(100% + 5px);
+        width: 100%;
+    }
+
+    .textbox .autoCompleteJob .item {
+        animation: showItem .3s ease forwards;
+        background-color: #fff;
+        box-shadow: 0 8px 8px -10px rgba(0, 0, 0, .4);
+        box-sizing: border-box;
+        color: #7C8487;
+        cursor: pointer;
+        display: block;
+        font-size: .8rem;
+        opacity: 0;
+        outline: none;
+        padding: 10px;
+        text-decoration: none;
+        transform-origin: top;
+        /* transform: rotateX(-90deg); */
+        transform: translateX(10px);
+    }
+
+    .textbox .autoCompleteJob .item:hover,
+    .textbox .autoCompleteJob .item:focus {
+        background-color: #fafafa;
+        color: #D1822B;
+    }
+
+    @keyframes showItem {
+        0% {
+            opacity: 0;
+            /* transform: rotateX(-90deg); */
+            transform: translateX(10px);
+        }
+
+        100% {
+            opacity: 1;
+            /* transform: rotateX(0); */
+            transform: translateX(0);
+        }
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 38px;
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        font-size: 14px;
+    }
+
+    .select2-container .select2-selection--single .select2-selection__arrow {
+        height: 100%;
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        padding: 4px;
+    }
+
+    .select2-container .select2-selection--multiple {
+        min-height: 32px !important;
+    }
+
+    .parent-container {
+        position: absolute;
+        background: #fff;
+        width: 190px;
+    }
+
+    #productList li:hover {
+        cursor: pointer;
+    }
+
+    .dropdown-item {
+        padding: 6px 15px;
+        font-size: 13px;
+        color: #212529;
+        text-align: inherit;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        background-color: transparent;
+        border: 0;
+        border-radius: 0;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #212529;
+    }
 </style>
 
-<hr>
+<!--main content start-->
+<section class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <div class="panel">
+                    <header class="panel-heading px-5">
+                        <h4>Staff Timesheet</h4>
+                    </header>
+                    <div class="panel-body">
+                        <div class="col-lg-12">
+                            <div class="jobsection justify-content-between align-items-center">
+                                <div class="d-flex justify-content-end gap-4 align-items-center">
+                                    <a href="javascript:void(0)" class="btn btn-warning modal_open" data-action="add"><i class="fa fa-plus"></i> Add</a>
+                                    <label for="fromDate" class="mb-0">Date:</label>
+                                    
+                                    <input type="date" name="" id="date_timesheet">
+                                    <button type="button" class="btn btn-warning" onclick="location.reload()">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12">
+                            @if(session('message'))
+                            <div class="alert alert-success text-center success_message mt-3 m-auto" style="height:50px; width:50%">
+                                <p>{{ session('message') }}</p>
+                            </div>
+                            @endif
+                            @if(session('staff_error'))
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_alrt_msg">
+                                <div class="popup_notification-box">
+                                    <div class="alert alert-danger alert-dismissible m-0" role="alert">
+                                        <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Success!</strong> <span class="popup_error_txt">{{ session('staff_error') }}</span>.
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_alrt_msgblade" style="display:none">
+                                <div class="popup_notification-box">
+                                    <div class="alert alert-success alert-dismissible m-0" role="alert">
+                                        <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Success!</strong> <span class="popup_success_txt"></span>.
+                                    </div>
+                                </div>
+                            </div>
 
-
-<div class = "fil_ab_n_leave_yr_prnt">
-  <div class = "flt_lft_wdth_100_var" style = "--wdth_prcntge: 50%">
-    Filter absences<br>
-    <select>
-     <option value ="All absences">All absences</option>
-     <option value ="Annual leave">Annual leave</option>
-     <option value ="Lateness">Lateness</option>
-     <option value ="Sickness">Sickness</option>
-     <option value ="Furlough">Furlough</option>
-     <option value ="Other">Other</option>
-    </select>
-  </div>
-  <div class = "leave_yr">
-    Leave year<br>
-    <select>
-     <option value ="2016">01 Jan 2016 - 31 Dec 2016</option>
-     <option value ="2017">01 Jan 2017 - 31 Dec 2017</option>
-     <option value ="2018">01 Jan 2018 - 31 Dec 2018</option>
-     <option value ="2019">01 Jan 2019 - 31 Dec 2019</option>
-     <option value ="2020">01 Jan 2020 - 31 Dec 2020</option>
-     <option value ="2021">01 Jan 2021 - 31 Dec 2021</option>
-     <option value ="2022">01 Jan 2022 - 31 Dec 2022</option>
-     <option value ="2023">01 Jan 2023 - 31 Dec 2023</option>
-     <option value ="2024">01 Jan 2024 - 31 Dec 2024</option>
-    </select>
-  </div>
-</div>
-<div class = "uppr_stats">
-  All absences
-  <div class = "uppr_stat_all_itms">
-    <div class = "uppr_stat_itm">
-      Annual leave to take
-      <div class = "occurences">
-        161 hrs 0 mins out of 224 hrs 0 mins
-      </div>
-      <div class = "rptble_btn_1" style = "--bckgrnd_clr: rgb(61,176,241); --wdth_prcntge: 168px;  --margin_: 8px auto">
-        <a href="{{ url('/add_annual_leave') }}">
-        Add annual leave</a>
-      </div>
-    </div>
-    <div class = "uppr_stat_itm"">
-      Sickness
-      <div class = "occurences">
-        2
-        <span style = "color: grey">Occurences</span>
-      </div>
-      <div class = "rptble_btn_1" style = "--bckgrnd_clr: rgb(61,176,241); --wdth_prcntge: 168px;  --margin_: 8px auto">
-        <a href = "{{ url('/add_sickness') }}">
-        Add</a>
-      </div>
-    </div>
-    <div class = "uppr_stat_itm">
-      Lateness
-      <div class = "occurences">
-        0
-        <span style = "color: grey">Occurences</span>
-      </div>
-      <div class = "rptble_btn_1" style = "--bckgrnd_clr: rgb(61,176,241); --wdth_prcntge: 168px;  --margin_: 8px auto">
-        <a href = "{{ url('/add_lateness') }}">
-        Add</a>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-
-<button class="accordion">Current & future <span style = "font-size: 14">(click to expand)</span></button>
-<div class="panel">
-  <p>
-    <div class = "crrnt_n_ftre">
-    Current & future
-    </div> 
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
+                            <div class="maimtable productDetailTable mb-4  table-responsive">
+                                <!-- <div class="delete_table_row">
+                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
+                                </div> -->
+                                <table class="table border-top border-bottom tablechange" id="satffTimesheetTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{{date('F Y')}}</th>
+                                            <th>Total Shitf Hours</th>
+                                            <th>Category Type</th>
+                                            <th>Extra Hours</th>
+                                            <th>Comments</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="user_data">
+                                        
+                                       <tr>
+                                            <td>1</td>
+                                            <td>{{date('Y-m-d')}}</td>
+                                            <td>1 Hour</td>
+                                            <td>On Call</td>
+                                            <td>1h 15min</td>
+                                            <td>Test</td>
+                                            <td>
+                                                <div class="pageTitleBtn p-0">
+                                                    <div class="dropdown">
+                                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                                            Action <i class="fa fa-caret-down"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right fade-up m-0">
+                                                            <a href="javascript:void(0)" class="dropdown-item col-form-label modal_open">Edit</a>
+                                                            <!-- <a href="javascript:void(0)" class="dropdown-item col-form-label">View Details</a> -->
+                                                            <a href="javascript:void(0)" class="dropdown-item col-form-label">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                       </tr>
+                                    </tbody>
+                                </table>
+                            </div> <!-- End off main Table -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Sickness </a></span><br>
-        <span style = "font-size: 16px">Fri 24 Feb 2023 (Ongoing)</span><br>
-        <span style = "font-size: 14px">hjjkj</span><br>
-        <span style = "font-size: 12px">Logged by michael carter</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
     </div>
-    <div class = "crrnt_n_ftre_section_2">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Sickness</a></span><br>
-        <span style = "font-size: 15px">Sat 25 Feb 2023 (Ongoing)</span><br>
-        <span style = "font-size: 12px">Logged by michael carter</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-  </p>
-</div>
-
-
-<div class = "inbetween_block">
-</div>
-
-
-<button class="accordion">Absence history</button>
-<div class="panel">
-  <p>
-    <div class = "crrnt_n_ftre">
-    Absence history
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Mandatory leave </a></span><br>
-        <span style = "font-size: 16px">Fri 24 Feb 2023 (Ongoing)</span><br>
-        <span style = "font-size: 14px">hjjkj</span><br>
-        <span style = "font-size: 12px">Logged by michael carter</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-  </p>
-</div>
-
-
-<div class = "inbetween_block">
-</div>
-
-
-<button class="accordion">Public holidays</button>
-<div class="panel">
-  <p>
-    <div class = "crrnt_n_ftre">
-    Public Holidays
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-        </div>
-      </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-    <div class = "crrnt_n_ftre_section_1">
-      <div class = "txt_n_bxes_chld_1">
-        <div class = "sick_icn">
-      </div>
-    </div>
-      <div class = "txt_n_bxes_chld_2">
-        <span style = "font-size: 16px; color: rgb(61,176,241)">
-        <a href = "{{ url('/update_sickness') }}">
-        Public Holiday </a></span><br>
-        <span style = "font-size: 16px">Mon 02 Jan 2023 (7 hrs)</span><br>
-        <span style = "font-size: 12px">New Year's Day (substitute day)</span>
-      </div>
-      <div class = "crrnt_n_ftre_icns">
-        <i class = "fa fa-file"></i>
-        <i class = "fa fa-file"></i>
-      </div>
-    </div>
-  </p>
-</div>
-
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 <script>
-  var acc = document.getElementsByClassName("accordion");
-  var i;
-
-  for (i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function() {
-      /* Toggle between adding and removing the "active" class,
-      to highlight the button that controls the panel */
-      this.classList.toggle("active");
-
-      /* Toggle between hiding and showing the active panel */
-      var panel = this.nextElementSibling;
-      if (panel.style.display === "block") {
-        panel.style.display = "none";
-      } else {
-        panel.style.display = "block";
-      }
+    $(document).ready(function(){
+        setTimeout(function() {
+            $(".alert").fadeOut();
+        }, 3000);
     });
-  }
+    new DataTable('#satffTimesheetTable');
 </script>
+@endsection
