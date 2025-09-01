@@ -58,7 +58,7 @@ class DynamicForm extends Model //FormBuilder
                                      </div>
                                  </div>
 
-                                 <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
+                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
                                      <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Date: </label>
                                          <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
@@ -70,14 +70,14 @@ class DynamicForm extends Model //FormBuilder
                                            </div>
                                          </div>
                                      </div>
-                                 </div>
+                                </div>
 
                                  <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                      <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
                                          <div class="col-md-10 col-sm-12 col-xs-12 r-p-0">
                                              <div class="input-group popovr">
-                                                 <input type="text" class="form-control trans static_title" placeholder="" name="time" value="" />
+                                                <input type="time" class="form-control trans static_title" placeholder="" name="time" value="" />
                                              </div>
                                          </div>
                                      </div>
@@ -207,7 +207,7 @@ class DynamicForm extends Model //FormBuilder
         return $result;
     }
 
-        public static function showFormLog($form_builder_id = null, $service_user_id = null)
+    public static function showFormLog($form_builder_id = null, $service_user_id = null)
     { //show empty form 
 
         //here $service_user_id is used to get care team, staff and contacts of a yp, if its send to value is yes
@@ -272,7 +272,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
                                          <div class="col-md-10 col-sm-12 col-xs-12 r-p-0">
                                              <div class="input-group popovr">
-                                                 <input type="text" class="form-control trans static_title" placeholder="" name="time" value="" />
+                                                 <input type="time" class="form-control trans static_title" placeholder="" name="time" value="" />
                                              </div>
                                          </div>
                                      </div>
@@ -386,7 +386,7 @@ class DynamicForm extends Model //FormBuilder
                 </div>
                 ';
             }
-            $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12 cog-panel' id='formiotest1'></div>";
+            $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12 cog-panel' id='formiotestForm'></div>";
           
             $formdata .= '';
 
@@ -965,7 +965,6 @@ class DynamicForm extends Model //FormBuilder
             // }
 
             $form_builder_id = $form_info->form_builder_id;
-
         }
 
         //first get the form default id from tag
@@ -974,9 +973,7 @@ class DynamicForm extends Model //FormBuilder
         if (!empty($form_builder)) {
 
             //$form_builder->pattern = json_decode($form_builder->pattern);
-            // echo "<pre>";
-            //  print_r($form_values);
-            //  die;
+            // echo "<pre>"; print_r($form_values); die;
             //static fields
             if ($enable == true) {
                 $disabled = '';
@@ -2224,7 +2221,6 @@ class DynamicForm extends Model //FormBuilder
 
     public static function alertDynamicForm()
     {
-
         $form_alert = DynamicForm::select('dynamic_form.id', 'dynamic_form.alert_status', 'dynamic_form.title', 'dynamic_form.alert_date', 'su.name', 'dynamic_form.service_user_id')
             ->join('service_user as su', 'su.id', 'dynamic_form.service_user_id')
             ->where('dynamic_form.alert_status', 1)
@@ -2242,8 +2238,6 @@ class DynamicForm extends Model //FormBuilder
         $su_name     = DB::table('service_user')->where('id', $service_user_id)->value('name');
 
         $d_form_name = DB::table('dynamic_form_builder')->where('id', $dynamic_form_builder_id)->value('title');
-
-
 
         if ($type == 'ct') {
             $care_team = DB::table('su_care_team')

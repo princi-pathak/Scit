@@ -666,7 +666,7 @@ class DynamicFormController extends Controller
             $log_book->category_id     = $s_category_id;
             $log_book->category_name   = $category_data ? $category_data->name : null;
             $log_book->category_icon   = $category_data ? $category_data->icon : null;
-            $log_book->formdata        = $dyn_form->pattern_data;
+            // $log_book->formdata        = $dyn_form->pattern_data;
             $log_book->logType         = $data['logtype'] ?? null;
             $log_book->save();
 
