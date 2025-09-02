@@ -88,6 +88,18 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!-- new image -->
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                                <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Image: </label>
+                                <div class="col-md-9 col-sm-10 col-xs-12">
+                                    <div class="select-bi">
+                                        <input type="file" name="log_image"
+                                            class="form-control detail-info-txt log-image">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- new image -->
                             <input type="hidden" class="dynamic_form_log_select">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Add: </label>
@@ -115,17 +127,6 @@
                             <input type="hidden" id="formDataLogs" name="formDataLogs">
                             <div class="dynamic-form-log-fields"></div>
 
-                            <!-- new image -->
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Image: </label>
-                                <div class="col-md-9 col-sm-10 col-xs-12">
-                                    <div class="select-bi">
-                                        <input type="file" name="log_image"
-                                            class="form-control detail-info-txt log-image">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- new image -->
 
 
                             <div class="form-group modal-footer m-t-0 modal-bttm">

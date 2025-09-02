@@ -19,18 +19,20 @@
     }
 
     .second {
-        width: 100%px;
+        width: 100%;
         background-color: whitesmoke;
         border-radius: 4px;
-        /* box-shadow: 5px 5px 5px #aaaaaa */
         border: 1px solid #ebebeb;
         padding: 5px;
+        display: flex;
+        justify-content: space-between;
     }
 
     .text1 {
         font-size: 12px;
         font-weight: 500;
         color: #56575b
+        text-align: justify;
     }
 
     .text2 {
@@ -45,6 +47,8 @@
         font-weight: 500;
         margin-right: 4px;
         color: #828386
+        width: 120px;
+        display: block;
     }
 
     .text3o {
@@ -90,20 +94,20 @@
                 <div class="row">
 
                     <form id="su-log-book-form">
-                        <div class="add-new-box risk-tabs custm-tabs">
+                        <div class="add-new-box risk-tabs custm-tabs p-15">
 
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Add Comment: </label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <div class="select-bi">
-                                        <textarea name="comment" class="form-control detail-info-txt comment" rows="3" style="margin-left:15px;"></textarea>
+                            <div class="row">
+                                <label class="col-md-12 col-sm-12 col-xs-12"> Add Comment: </label>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="select-bi m-t-10">
+                                        <textarea name="comment" class="form-control detail-info-txt comment" rows="8"></textarea>
                                     </div>
                                 </div>
                             </div>
 
                             
                             <div class="">
-                                <div id="daily_log_comments_list" style="width: 100%;padding: 0 50px; height: 200px; overflow: auto;">
+                                <div id="daily_log_comments_list" style="width: 100%; height: 200px; overflow: auto;">
                                 </div>
                             </div>
 
