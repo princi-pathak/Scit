@@ -21,8 +21,10 @@
                                 <p class="mb-1"> <strong> Description </strong></p>
                                 <p class="mb-2">{{ $last_leave->notes }}</p>
                                 <div class="mt-5">
-                                    <?php if($staff_id == ''){?>
+                                    <?php if($staff_id == '' && $manager == ''){?>
                                      <a href="{{ url('/rota-dashboard') }}" class="dash-btn">Back to dashboard</a>
+                                    <?php }else if($manager !=''){?>
+                                        <a href="{{ url('/my-profile/').'/'.$manager }}" class="dash-btn">Back to dashboard</a>
                                     <?php }else{?>
                                         <a href="{{ url('/staff/profile/').'/'.$staff_id }}" class="dash-btn">Back to dashboard</a>
                                     <?php }?>

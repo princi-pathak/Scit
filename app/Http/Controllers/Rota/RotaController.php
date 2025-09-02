@@ -27,8 +27,11 @@ class RotaController extends Controller
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id=$ex_home_ids[0];
-        $leave['sickness'] = Staffleaves::where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 2)->where('home_id', $home_id)->count();
-        $leave['lateness'] = Staffleaves::where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 3)->where('home_id', $home_id)->count();
+        $sickness = Staffleaves::where('user_id',Auth::user()->id)->where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 2)->where('home_id', $home_id)->count();
+        $lateness = Staffleaves::where('user_id',Auth::user()->id)->where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 3)->where('home_id', $home_id)->count();
+        $leave['totalSickLateLeave']=$lateness+$sickness;
+        $leave['sickness']=$sickness;
+        $leave['lateness']=$lateness;
 
         $date_min_three = Carbon::parse('Now -3 days')->format('Y-m-d');
         
@@ -67,7 +70,7 @@ class RotaController extends Controller
         $leave['total_leave_plus_one'] =  $annual5 +$sickness5 + $lateness5 + $lateness5 + $other5;
 
         $date_plus_two = Carbon::parse('Now +2 days')->format('Y-m-d');
-        $annual6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+        $annual6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
         $sickness6 = Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
         $lateness6 =  Staffleaves::where('start_date', '=', $date_plus_two)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
         $other6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
@@ -81,7 +84,16 @@ class RotaController extends Controller
         $leave['total_leave_plus_three'] =  $annual7 + $sickness7 + $lateness7 + $other7;
 
         // echo "<pre>";print_r(Auth::user());die;
-        $renaming_hour=Auth::user()->holiday_entitlement;
+        $renaming_hour = Auth::user()->holiday_entitlement;
+
+        if ($renaming_hour === null || trim($renaming_hour) === '') {
+            $renaming_hour = 0;
+        } elseif (!is_numeric($renaming_hour)) {
+            $renaming_hour = 0;
+        } else {
+            // agar number hai to int bana do
+            $renaming_hour = (int)$renaming_hour;
+        }
         $staff_leave =  Staffleaves::where('user_id',Auth::user()->id)->whereYear('start_date', date('Y'))->where('leave_type', 1)->where('is_deleted', 1)->where('home_id',  $home_id)->where('leave_status', 1)->get();
         
         $allowance_hour=0;
@@ -103,6 +115,7 @@ class RotaController extends Controller
         // echo $allowance_hour;die;
         $leave['renaming_hour']=$renaming_hour - $allowance_hour;
         $leave['allowance_hour']=$allowance_hour;
+        $leave['over_time']=TimeSheet::where(['home_id'=>$home_id,'user_id'=>Auth::user()->id])->whereNull('deleted_at')->sum('hours');
         return view('rotaStaff.StaffDashboard', ['sidebar' => 'dashborad'], $leave);
     }
 
@@ -454,6 +467,7 @@ class RotaController extends Controller
         $ex_home_ids = explode(',', $home_ids);
         $home_id=$ex_home_ids[0];
         $data['staff_id']=($request->staff ?? "");
+        $data['manager_id']=($request->manager ?? "");
         $data['leave'] = $id;
         $data['sidebar'] = '';
         $data['leavetype'] = LeaveType::where('status', 1)->get();
@@ -604,9 +618,11 @@ class RotaController extends Controller
             'created_at'=>date("Y-m-d H:i:s"),
             'updated_at'=>date("Y-m-d H:i:s")  
         );
-        // $data = Staffleaves::insert($add_leave);
+        $data = Staffleaves::insert($add_leave);
         if(isset($request->staff_id) && $request->staff_id !=''){
           return redirect('/pending-request?staff_id=' .$request->staff_id);
+        }else if(isset($request->manager_id) && $request->manager_id !=''){
+          return redirect('/pending-request?manager=' .$request->manager_id);
         }else{
           return redirect('/pending-request');
         }
@@ -625,6 +641,7 @@ class RotaController extends Controller
         $data['username'] = $user_name;
         $data['sidebar'] = 'action';
         $data['staff_id']=($request->staff_id ?? "");
+        $data['manager']=($request->manager ?? "");
         return view('rotaStaff.leave_pending', $data);
     }
 
