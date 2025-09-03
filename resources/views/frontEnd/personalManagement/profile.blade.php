@@ -312,7 +312,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-4 col-xs-12">
                                                 <div class="profile-nav alt">
-                                                    <a href="{{ url('/rota-dashboard') }}">
+                                                    <a href="{{ url('/rota-dashboard?user='.base64_encode($manager_id)) }}">
                                                         <section class="panel text-center">
                                                             <div class="user-heading alt wdgt-row bg-blue">
                                                                 <i class="fa fa-sliders"></i>

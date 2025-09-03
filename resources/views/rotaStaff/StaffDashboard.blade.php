@@ -456,12 +456,14 @@
 <script>
   function change_leaves_data(date) {
     var token = "<?= csrf_token() ?>";
+    var user_id="<?php echo $user_id;?>"
     $.ajax({
       url: "{{ url('/get_leave_record_for_1_week') }}",
       type: "post",
       dataType: 'json',
       data: {
         date: date,
+        user_id:user_id,
         _token: token
       },
       success: function(result) {
@@ -481,12 +483,14 @@
 
     var token = "<?= csrf_token() ?>";
     var date = moment().format('YYYY-MM-DD');
+    var user_id="<?php echo $user_id;?>"
     $.ajax({
       url: "{{ url('/get_leave_record_for_1_week') }}",
       type: "post",
       dataType: 'json',
       data: {
         date: date,
+        user_id:user_id,
         _token: token
       },
       success: function(result) {
