@@ -709,9 +709,10 @@ aside.right-side-info {
 .crical-content-bar h4 strong {
     font-weight: 600;
 }
-
+p.next i{
+    font-size: 22px;
+}
 p.next {
-    padding-top: 46px;
     font-weight: 300;
     margin-bottom: 40px;
 }
@@ -721,7 +722,7 @@ p.next {
     margin-top: 10px;
 }
 
-.ntn-prt h5 a {
+/* .ntn-prt h5 a {
     background-color: #fff;
     text-decoration: none;
     border: 2px solid #1f88b5;
@@ -731,9 +732,9 @@ p.next {
     font-weight: 400;
     color: #1f88b5;
     margin-right: 13px;
-}
+} */
 
-.ntn-prt h6 a {
+.ntn-prt a {
     background-color: #fff;
     text-decoration: none;
     color: rgb(112 196 249);
@@ -742,16 +743,23 @@ p.next {
     font-size: 16px;
     border-radius: 2px;
     font-weight: 400;
-    margin-right: 13px;
+    margin: 0 6px;
+    width: -webkit-fill-available;
+    text-align: center;
+    transition: .6s;
+}
+.ntn-prt a:hover{
+    background-color: #1F88B5;
+    color: #fff;
 }
 
-.ntn-prt h6 {
+/* .ntn-prt h6 {
     margin-top: 10px;
 }
 
 .ntn-prt h6 {
     margin-top: 3px;
-}
+} */
 
 .btn-info-sep p {
     margin-bottom: 29px;
@@ -1808,7 +1816,7 @@ margin: 0px 10px 0px 10px;
     font-weight: 600;
 }
 
-.employees-data label {
+.employees-data label.col-form-label {
     margin-bottom: 25px;
     font-size: 14px;
 }
@@ -3388,7 +3396,6 @@ margin: 0px 10px 0px 10px;
     color: #fff;
 }
 
-
 #tabOne .accordion .accordion-body ul {
     list-style-type: none;
     padding: 0px;
@@ -4215,14 +4222,25 @@ margin: 0px 10px 0px 10px;
 
 .view_detail_modal {
     border-bottom: 2px solid  #d9d9d9;
+    background: #eff2f7;
+    padding: 5px 10px;
+    margin-top: 12px;
+    border-radius: 3px
 }
 
+div#without_break {
+    padding: 0 10px;
+}
+.d-flex.align-items-center.shrink_all.dynamic_data {
+    border-top: 1px solid #eee;
+}
 .view_detail_modal .custom_checkbox {
     border: 1px solid #1f88b5;
     border-radius: 2px;
     display: inline-block;
     margin-left: 10px;
 }
+
 
 .view_detail_modal .custom_checkbox span {
     background-color: #fff;
@@ -4326,10 +4344,15 @@ margin: 0px 10px 0px 10px;
     color: #1f88b5;
 }
 
-.accordion-body .d-flex {
+.accordion-body .addSoftBtmBorder {
+    display: flex;
     border-bottom: 1px solid #e3e1e1;
     padding-top: 10px;
     background: #f1f2f7;
+}
+.accordion-body button.shift_timing_btn {
+     padding: 6px; 
+     background: #f1f2f7; 
 }
 .addAnnualBtn{
     display: flex;
@@ -4366,4 +4389,8 @@ margin: 0px 10px 0px 10px;
 }
 .employee-name {
     border: 1px solid #eee;
+}
+.modelFooterBorder{
+    border-top: 1px solid #eee;
+    padding-top: 14px;
 }
