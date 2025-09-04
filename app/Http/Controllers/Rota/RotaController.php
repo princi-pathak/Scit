@@ -947,7 +947,7 @@ class RotaController extends Controller
     }
 
     function get_leave_record_for_1_week(Request $request){
-     
+
     	if(Auth::check()){
         $date = carbon::parse($request->date)->format('Y-m-d');
         if($request->user_id == ''){
@@ -956,10 +956,10 @@ class RotaController extends Controller
           $data['lateness'] =  Staffleaves::where('start_date', '=', $date)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->count();
           $data['other'] =  Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->count();
         }else{
-          $data['annual'] =  Staffleaves::where('user_id',$request->id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->count();
-          $data['sickness'] = Staffleaves::where('user_id',$request->id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->count();
-          $data['lateness'] =  Staffleaves::where('user_id',$request->id)->where('start_date', '=', $date)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->count();
-          $data['other'] =  Staffleaves::where('user_id',$request->id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['annual'] =  Staffleaves::where('user_id',$request->user_id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['sickness'] = Staffleaves::where('user_id',$request->user_id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['lateness'] =  Staffleaves::where('user_id',$request->user_id)->where('start_date', '=', $date)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['other'] =  Staffleaves::where('user_id',$request->user_id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->count();
         }
 
         echo json_encode($data);
