@@ -195,6 +195,8 @@ class BmpController extends ServiceUserManagementController
 
                         <!-- Details textarea -->
                         <div class="col-xs-12 input-plusbox form-group p-0 detail rightTextarea">
+                            <form method="post" id="edit-bmp-form">
+                                <input type="hidden" name="su_bmp_id[]" value="'.$value->id.'">
                             <label class="col-sm-12 col-xs-12 color-themecolor r-p-0"> Details: </label>
                             <div class="col-sm-12 r-p-0">
                                 <div class="input-group">
@@ -206,6 +208,7 @@ class BmpController extends ServiceUserManagementController
                                     
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>  ';
             } else {
@@ -238,6 +241,8 @@ class BmpController extends ServiceUserManagementController
 
                         <!-- Details textarea -->
                         <div class="col-xs-12 input-plusbox form-group p-0 detail leftTextarea">
+                        <form method="post" id="edit-bmp-form">
+                                <input type="hidden" name="su_bmp_id[]" value="'.$value->id.'">
                             <label class="col-sm-12 col-xs-12 color-themecolor r-p-0"> Details: </label>
                             <div class="col-sm-12 r-p-0">
                                 <div class="input-group">
@@ -247,6 +252,7 @@ class BmpController extends ServiceUserManagementController
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>  ';
             }
@@ -326,7 +332,7 @@ class BmpController extends ServiceUserManagementController
 
     public function edit(Request $request)
     {
-
+        // dd($request);
         $data = $request->all();
         // echo '<pre>'; print_r($data); die;
 
@@ -343,14 +349,11 @@ class BmpController extends ServiceUserManagementController
                     $su_home_id = ServiceUser::where('id', $record->service_user_id)->value('home_id');
                   
                     if ($home_id == $su_home_id) {
-                        echo "done";
                         $record->details = $data['edit_bmp_details'][$key];
 
                         // $record->plan    = $data['edit_bmp_plan'][$key];
                         // $record->review  = $data['edit_bmp_review'][$key];
                         if ($record->save()) {
-                            echo "saave data";
-                            die;
                             $notification                             = new Notification;
                             $notification->service_user_id            = $record->service_user_id;
                             $notification->event_id                   = $record->id;
@@ -366,7 +369,7 @@ class BmpController extends ServiceUserManagementController
         }
         $service_user_id = $record->service_user_id;
 
-        $res = $this->index($service_user_id);
+        $res = $this->index($service_user_id, request());
         echo $res;
     }
 

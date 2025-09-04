@@ -192,6 +192,8 @@ class RmpController extends ServiceUserManagementController
 
                         <!-- Details textarea -->
                         <div class="col-xs-12 input-plusbox form-group p-0 detail rightTextarea">
+                        <form method="post" id="edit-rmp-form">
+                        <input type="hidden" name="su_rmp_id[]" value="'.$value->id.'">
                             <label class="col-sm-12 col-xs-12 color-themecolor r-p-0"> Details: </label>
                             <div class="col-sm-12 r-p-0">
                                 <div class="input-group">
@@ -203,6 +205,7 @@ class RmpController extends ServiceUserManagementController
                                     </span> -->
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>  ';
             } else {
@@ -236,6 +239,8 @@ class RmpController extends ServiceUserManagementController
 
                         <!-- Details textarea -->
                         <div class="col-xs-12 input-plusbox form-group p-0 detail leftTextarea">
+                         <form method="post" id="edit-rmp-form">
+                            <input type="hidden" name="su_rmp_id[]" value="'.$value->id.'">
                             <label class="col-sm-12 col-xs-12 color-themecolor r-p-0"> Details: </label>
                             <div class="col-sm-12 r-p-0">
                                 <div class="input-group">
@@ -247,6 +252,7 @@ class RmpController extends ServiceUserManagementController
                                     </span> -->
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>  ';
             }
@@ -299,7 +305,7 @@ class RmpController extends ServiceUserManagementController
 
     public function edit(Request $request)
     {
-
+        // dd($request);
         $data = $request->all();
         if (isset($data['su_rmp_id'])) {
             $home_ids = Auth::user()->home_id;
