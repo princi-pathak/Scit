@@ -18,8 +18,10 @@
         color: #000
     }
 
+
+
     .second {
-        width: 100%;
+        /* width: 100%; */
         background-color: whitesmoke;
         border-radius: 4px;
         border: 1px solid #ebebeb;
@@ -31,7 +33,7 @@
     .text1 {
         font-size: 12px;
         font-weight: 500;
-        color: #56575b
+        color: #56575b;
         text-align: justify;
     }
 
@@ -39,14 +41,14 @@
         font-size: 13px;
         font-weight: 500;
         margin-left: 6px;
-        color: #56575b
+        color: #56575b;
     }
 
     .text3 {
         font-size: 13px;
         font-weight: 500;
         margin-right: 4px;
-        color: #828386
+        color: #828386;
         width: 120px;
         display: block;
     }
@@ -121,10 +123,7 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
-
-
             </div>
         </div>
     </div>

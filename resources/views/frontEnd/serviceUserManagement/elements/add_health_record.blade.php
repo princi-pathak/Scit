@@ -666,52 +666,6 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
     });
 </script>
 
-{{-- <script>
-    $(document).ready(function() {
-        $(document).on('click', '.dyn_form_del_btn', function() {
-
-            if (!confirm('{{ DEL_CONFIRM }}')) {
-                return false;
-            }
-
-            var this_record = $(this);
-            var dyn_form_id = this_record.attr('id');
-
-            $('.loader').show();
-            $('body').addClass('body-overflow');
-
-            $.ajax({
-                type: 'get',
-                url: "{{ url('/service/dynamic-form/delete') }}" + '/' + dyn_form_id,
-                success: function(resp) {
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 1) {
-                        this_record.closest('.rows').remove();
-
-                        //show success delete message
-                        $('span.popup_success_txt').text("{{ DEL_RECORD }}");
-                        $('.popup_success').show();
-                        setTimeout(function() {
-                            $(".popup_success").fadeOut()
-                        }, 5000);
-                    } else {
-                        //show delete message error
-                        $('span.popup_error_txt').text('{{ COMMON_ERROR }}');
-                        $('.popup_error').show();
-                    }
-
-                    $('.loader').hide();
-                    $('body').removeClass('body-overflow');
-                }
-            });
-
-            return false;
-        });
-    });
-</script> --}}
-
 <script>
     //logged btn click view bmp title
     $(document).ready(function() {
@@ -792,49 +746,49 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
         });
 
         //when bmp search confirm button is clicked
-        $(document).on('click', '#dynmicFormModal .search-dyn-btn', function() {
-            update_search_list()
-            return false;
-        });
+        // $(document).on('click', '#dynmicFormModal .search-dyn-btn', function() {
+        //     update_search_list()
+        //     return false;
+        // });
 
-        function update_search_list() {
-            var search_input = $('input[name=\'search_dyn_record\']');
-            var search = search_input.val();
+        // function update_search_list() {
+        //     var search_input = $('input[name=\'search_dyn_record\']');
+        //     var search = search_input.val();
 
-            search = jQuery.trim(search);
-            search = search.replace(/[&\/\\#,+()$~%.'":*?<>^@{}]/g, '');
+        //     search = jQuery.trim(search);
+        //     search = search.replace(/[&\/\\#,+()$~%.'":*?<>^@{}]/g, '');
 
-            if (search == '') {
-                search_input.addClass('red_border');
-                return false;
-            } else {
-                search_input.removeClass('red_border');
-            }
+        //     if (search == '') {
+        //         search_input.addClass('red_border');
+        //         return false;
+        //     } else {
+        //         search_input.removeClass('red_border');
+        //     }
 
-            var formdata = $('#searched-dyn-records-form').serialize();
+        //     var formdata = $('#searched-dyn-records-form').serialize();
 
-            $('.loader').show();
-            $('body').addClass('body-overflow');
+        //     $('.loader').show();
+        //     $('body').addClass('body-overflow');
 
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/dynamic-forms') }}" + '?search=' + search,
-                data: formdata,
-                success: function(resp) {
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == '') {
-                        $('#searched-dyn-records-form .searched-record').html('No Records found.');
-                    } else {
-                        $('#searched-dyn-records-form .searched-record').html(resp);
-                    }
-                    $('.loader').hide();
-                    $('body').removeClass('body-overflow');
-                }
-            });
-            return false;
-        }
+        //     $.ajax({
+        //         type: 'post',
+        //         url: "{{ url('/service/dynamic-forms') }}" + '?search=' + search,
+        //         data: formdata,
+        //         success: function(resp) {
+        //             if (isAuthenticated(resp) == false) {
+        //                 return false;
+        //             }
+        //             if (resp == '') {
+        //                 $('#searched-dyn-records-form .searched-record').html('No Records found.');
+        //             } else {
+        //                 $('#searched-dyn-records-form .searched-record').html(resp);
+        //             }
+        //             $('.loader').hide();
+        //             $('body').removeClass('body-overflow');
+        //         }
+        //     });
+        //     return false;
+        // }
     });
 </script>
 
@@ -941,74 +895,3 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
 
 <!-- dynamic form end -->
 
-
-
-<script>
-    let loaddataontable = () => {
-        let formid = $("#formid").val();
-        let home_id = $("#home_id").val();
-        var token = "<?= csrf_token() ?>";
-        //alert(token);
-        var settings = {
-            "url": "{{ url('/service/patterndataformio') }}",
-            "method": "POST",
-            "data": {
-                patterndata: formid,
-                home_id: home_id,
-                _token: token
-            },
-            //dataType: "json",
-        };
-        $.ajax(settings).done(function(response) {
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
-            //console.log(response);
-            Formio.createForm(document.getElementById('formiotest'), {
-                components: JSON.parse(response)
-            });
-        });
-
-
-        // console.log(formid);
-        // console.log(home_id);
-
-        // console.log(pattendata);
-        //console.log($('#getdatamodel').val());
-
-    }
-    let viewdatawithvalueFormio = () => {
-        // console.log($('#dynamic_form_idformio').val());
-        let dynamic_form_idformio = $("#dynamic_form_idformio").val();
-        var token = "<?= csrf_token() ?>";
-        var settings = {
-            "url": "{{ url('/service/patterndataformiovaule') }}",
-            "method": "POST",
-            "data": {
-                dynamic_form_idformio: dynamic_form_idformio,
-                _token: token
-            },
-            //dataType: "json",
-        };
-        $.ajax(settings).done(function(response) {
-            // console.log(response[0].pattern);
-            if (isAuthenticated(response) == false) {
-                return false;
-            }
-
-            Formio.createForm(document.getElementById('formioView'), {
-                components: JSON.parse(response[0].pattern)
-            }, {
-                readOnly: seteditvalueeditable
-            }).then(function(form) {
-                form.submission = {
-                    data: JSON.parse(response[0].pattern_data)
-                }
-                // form.getComponent('email').setValue('rksonkar356@gmail.com');
-            });
-
-        });
-
-
-    }
-</script>

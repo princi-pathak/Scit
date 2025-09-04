@@ -27,7 +27,11 @@
 
         .timeline .time-show .btn {
             min-width: 150px;
+            cursor: auto;
         }
+
+        /* .timeline .time-show.first a.btn {
+        } */
 
         #logs_articles {
             border-collapse: collapse;
@@ -113,6 +117,11 @@
         .panel .panel-body .arrow {
             border-right: 8px solid #ffffffff !important;
             border-left: inherit !important;
+        }
+
+        .comment-list {
+
+            width: 100%;
         }
     </style>
 
@@ -268,9 +277,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                                                                                                                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                                                                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                                                                    </div> -->
+                                                                                                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                                                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                                                                            </div> -->
 
                 </div>
 
@@ -665,7 +674,7 @@
                         $("#daily_log_comments_list").append(
                             `
                         <div class="d-flex justify-content-center py-2" style="margin-top:10px;">
-                                <div class="second py-2 px-2"> <span class="text1">${comment.comment}</span>
+                                <div class="second py-2 px-2 comment-list"> <span class="text1">${comment.comment}</span>
                                     <div class="d-flex justify-content-between py-1 pt-2" style="text-align:right;">
                                         <div><span class="text3">${d_format}</span></div>
                                     </div>
@@ -869,7 +878,8 @@
                                 }
                                 date_field.setAttribute("data-logtype", logType);
                                 logTypeText = logType;
-                                date_field.textContent = moment(resp.log_book_records[i]['date'], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm') + " | " + logTypeText;
+                                date_field.textContent = moment(resp.log_book_records[i]['date'],
+                                    'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm') + " | " + logTypeText;
                                 // date_field.prepend(date_text);
                                 // image sourabh
                                 if (resp.log_book_records[i]['image_name'] != '') {
@@ -1028,7 +1038,8 @@
                                 }
                                 date_field.setAttribute("data-logtype", logType);
                                 logTypeText = logType;
-                                date_field.textContent = moment(resp.log_book_records[i]['date'], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm') + " | " + logTypeText;
+                                date_field.textContent = moment(resp.log_book_records[i]['date'],
+                                    'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm') + " | " + logTypeText;
                                 // date_field.prepend(date_text);
                                 // image sourabh
                                 if (resp.log_book_records[i]['image_name'] != '') {
@@ -1388,7 +1399,7 @@
                             "change");
                         $('input[name="log_title"]').val(response.log_book_records.title);
                         $('#log_dynamic_form_id').val(response.log_book_records
-                        .dynamic_form_id);
+                            .dynamic_form_id);
                         $('#dynamic_form_log_book_id').val(response.log_book_records.id);
                         $('select[name="category"]').val(response.log_book_records.category_id);
                         $('input[name="log_date"]').val(response.log_book_records.date);
