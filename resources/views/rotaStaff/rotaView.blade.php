@@ -192,9 +192,9 @@
     height: auto;
   }
 
-.shrink_all .py-2{
-  white-space: nowrap;
-}
+  .shrink_all .py-2 {
+    white-space: nowrap;
+  }
 </style>
 <!-- Top Bar Info Section End Here -->
 
@@ -650,52 +650,53 @@
 <!-- Unpublish Modal End-->
 <!-- Modal View start -->
 <div class="modal" id="exampleModalViewDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" style="max-width: 70rem;">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="exampleModalLabel">Evening Shift</h4>
         <button type="button" class="modal_close_btn" data-bs-dismiss="modal" aria-label="Close"> ✖ </button>
       </div>
       <div class="modal-body">
-
-        <div class="d-flex align-items-center">
-          <span class="me-3">Select Week</span>
-          <div class="col-md-4 col-lg-4 me-3">
-            <select name="" class="form-select form-control" id="rota_starting_date">
-            </select>
-          </div>
-          <span>Week total our: <strong><span id="week_total"></span> (Incl. breaks)</strong></span>
-        </div>
-        <div class="w_full view_detail_modal">
-          <div class="d-flex align-items-center shrink_all">
-            <div class="py-2">Employee</div>
-            <div class="py-2">Curr. contracted hrs</div>
-            <div class="py-2 ps-2">Days worked</div>
-            <div class="py-2 d-flex">
-              <div class="">Breaks</div>
-              <small>(Total)</small>
+        <div class="p-b-30">
+          <div class="d-flex align-items-center">
+            <span class="me-3">Select Week</span>
+            <div class="col-md-4 col-lg-4 me-3">
+              <select name="" class="form-select form-control" id="rota_starting_date">
+              </select>
             </div>
-            <div class="py-2 d-flex">
-              <div class="w_full">Total hrs</div>
-              <form action="">
-                <small class="d-flex align-items-center">
-                  Incl. breaks?
-                  <label for="break_check">
-                    <input type="checkbox" class="d-none" onchange="add_break(this)" id="break_check" value="1">
-                    <span class="custom_checkbox">
-                      <span class="d-flex align-items-center justify-content-center"><i class="fa fa-check" aria-hidden="true"></i></span>
-                    </span>
-                  </label>
-                </small>
-              </form>
+            <span>Week total our: <strong><span id="week_total"></span> (Incl. breaks)</strong></span>
+          </div>
+          <div class="w_full view_detail_modal">
+            <div class="d-flex align-items-center shrink_all">
+              <div class="py-2">Employee</div>
+              <div class="py-2">Curr. contracted hrs</div>
+              <div class="py-2 ps-2">Days worked</div>
+              <div class="py-2 d-flex">
+                <div class="">Breaks</div>
+                <small>(Total)</small>
+              </div>
+              <div class="py-2 d-flex">
+                <div class="w_full">Total hrs</div>
+                <form action="">
+                  <small class="d-flex align-items-center">
+                    Incl. breaks?
+                    <label for="break_check">
+                      <input type="checkbox" class="d-none" onchange="add_break(this)" id="break_check" value="1">
+                      <span class="custom_checkbox">
+                        <span class="d-flex align-items-center justify-content-center"><i class="fa fa-check" aria-hidden="true"></i></span>
+                      </span>
+                    </label>
+                  </small>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="w_full row_detail" id="add_emp_record">
-          <div class="d-flex align-items-center justify-content-end hour_count">
-            <div class="m-0 py-3">
-              <p class="fw-bolder hide2" id="total_emp_hour"></p>
-              <p class="fw-bolder hide1" id="total_emp_hour_with_break"></p>
+          <div class="w_full row_detail" id="add_emp_record">
+            <div class="d-flex align-items-center justify-content-end hour_count">
+              <div class="m-0 py-3">
+                <p class="fw-bolder hide2" id="total_emp_hour"></p>
+                <p class="fw-bolder hide1" id="total_emp_hour_with_break"></p>
+              </div>
             </div>
           </div>
         </div>
@@ -1077,9 +1078,9 @@
 
           recordContainer.insertAdjacentHTML('beforeend', `
             <div class="d-flex align-items-center shrink_all dynamic_data">
-              <div class="w_19 py-2" style="overflow-x: scroll; overflow-y: hidden;">${emp.name}</div>
-              <div class="w_19 py-2" style="overflow-x: scroll; overflow-y: hidden;">${durationWithoutBreak.hours()} hrs</div>
-              <div class="w_19 py-2 ps-2"><span class="d-flex">${loopData}</span></div>
+              <div class="w_19 py-2">${emp.name}</div>
+              <div class="w_19 py-2">${durationWithoutBreak.hours()} hrs</div>
+              <div class="w_19 py-2"><span class="d-flex">${loopData}</span></div>
               <div class="w_19 py-2">
                 <div class="w_full">${emp_total_break} min</div>
               </div>
