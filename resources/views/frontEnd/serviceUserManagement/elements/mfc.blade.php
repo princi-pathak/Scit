@@ -8,9 +8,9 @@
         }
 
         /* .record_row .input-group input{
-                width: 50%;
-                    margin: 3px 0;
-            } */
+                    width: 50%;
+                        margin: 3px 0;
+                } */
         .accodionOpen {
             background: #a5a5a5;
             padding: 6px 20px;
@@ -76,7 +76,7 @@
 
                     <!-- sourabh -->
                     <div class="col-md-2 col-lg-2" style="padding-bottom:10px; margin-left: -10px;">
-                        <input type="text" class="form-control" id="keywordhr" onKeyPress="hrmyFunctionkey()"
+                        <input type="text" class="form-control" id="keywordhr" onKeyPress="mfcMyFunctionkey()"
                             name="keywordhr" placeholder="Keyword">
                     </div>
                     <!-- sourabh -->
@@ -130,27 +130,27 @@
 
                                 <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
 
-                                                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Add: </label>
-                                                            <div class="col-md-11 col-sm-11 col-xs-12">
-                                                            <div class="select-bi" style="width:100%;float:left;">
-                                                                <?php
-                                                                $mfc_options = App\MFC::where('home_id', Auth::user()->home_id)
-                                                                    ->where('status', '1')
-                                                                    ->where('is_deleted', '0')
-                                                                    ->orderBy('id', 'desc')
-                                                                    ->get()
-                                                                    ->toArray();
-                                                                ?>
-                                                                <select class="js-example-placeholder-single-mfc form-control" style="width:100%;" name="mfc_id">
-                                                                    <option value=""></option>
-                                                                    @foreach ($mfc_options as $value)
+                                                                <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Add: </label>
+                                                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                                                <div class="select-bi" style="width:100%;float:left;">
+                                                                    <?php
+                                                                    $mfc_options = App\MFC::where('home_id', Auth::user()->home_id)
+                                                                        ->where('status', '1')
+                                                                        ->where('is_deleted', '0')
+                                                                        ->orderBy('id', 'desc')
+                                                                        ->get()
+                                                                        ->toArray();
+                                                                    ?>
+                                                                    <select class="js-example-placeholder-single-mfc form-control" style="width:100%;" name="mfc_id">
+                                                                        <option value=""></option>
+                                                                        @foreach ($mfc_options as $value)
     <option value="{{ $value['id'] }}">{{ $value['description'] }}</option>
     @endforeach
-                                                                </select>
-                                                            </div>
-                                                                <p class="help-block"> Select MFC. </p>
-                                                            </div>
-                                                    </div> -->
+                                                                    </select>
+                                                                </div>
+                                                                    <p class="help-block"> Select MFC. </p>
+                                                                </div>
+                                                        </div> -->
 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                     <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 text-right">Child: </label>
@@ -202,18 +202,18 @@
                                 <!-- <form method="post" action="{{ url('/service/daily-record/edit') }}" id="edit_record_form"> -->
                                 <!-- risk-tabs -->
                                 <!-- <div class="">
-                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                                            <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Details</h3>
-                                                        </div>
-                                                        <div class="dynamic-mfc-fields modal-space ">
-                                                                $form_pattern['su_mfc']
-                                                        </div>
-                                                    </div> -->
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Details</h3>
+                                                            </div>
+                                                            <div class="dynamic-mfc-fields modal-space ">
+                                                                    $form_pattern['su_mfc']
+                                                            </div>
+                                                        </div> -->
                                 <div class="dynamic-form-fields"> </div>
 
                                 <!-- <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="uploadPopImg mt-0 hideImageDiv"><img class="my-2 imagePreview" src="" width="100px"></div>
-                                                </div> -->
+                                                        <div class="uploadPopImg mt-0 hideImageDiv"><img class="my-2 imagePreview" src="" width="100px"></div>
+                                                    </div> -->
 
                                 <div class="form-group modal-footer m-t-0 modal-bttm">
                                     <!-- <a class="bottm-btns" href="{{ url('/service/calendar/' . $service_user_id) }}" ><div class="pull-left"><i class="fa fa-calendar"></i></div></a> -->
@@ -252,22 +252,22 @@
                                 <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Search</h3>
                             </div>
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 type-field">
-                                                <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Type: </label>
-                                                <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
-                                                    <div class="select-style">
-                                                        <select name="mfc_search_type">
-                                                            <option value='title' selected=""> Title </option>
-                                                            <option value='date'> Date </option>
-                                                        </select>
+                                                    <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Type: </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
+                                                        <div class="select-style">
+                                                            <select name="mfc_search_type">
+                                                                <option value='title' selected=""> Title </option>
+                                                                <option value='date'> Date </option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div> -->
+                                                </div> -->
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
-                                                <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Title: </label>
-                                                <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15 title">
-                                                    <input type="text" name="search_mfc_record" class="form-control" maxlength="255">
-                                                </div>
-                                            </div> -->
+                                                    <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Title: </label>
+                                                    <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15 title">
+                                                        <input type="text" name="search_mfc_record" class="form-control" maxlength="255">
+                                                    </div>
+                                                </div> -->
                             <div class="col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd srch-field">
                                 <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Date: </label>
                                 <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
@@ -404,8 +404,8 @@
             });
         });
 
-        
-     function showDate() {
+
+        function showDate() {
             $('#date_range_input').click();
         }
 
@@ -845,7 +845,7 @@
 
         function getFormData(data) {
 
-              var service_user_id = $('.selected_su_id').val();
+            var service_user_id = $('.selected_su_id').val();
             if (service_user_id == undefined) {
                 service_user_id = "{{ $service_user_id }}";
             }
@@ -875,10 +875,9 @@
     <!-- Daterange Filter -->
     <script>
         $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-            let staff_member = $('#staff_member').val();
             let start_date = picker.startDate.format('DD-MM-YYYY');
             let end_date = picker.endDate.format('DD-MM-YYYY');
-            let service_user = $('#service_user').val();
+            let service_user = "{{ $service_user_id }}";
             let keyword = $('#keyword').val();
             $(this).val(start_date + ' - ' + end_date);
 
@@ -893,63 +892,16 @@
                 $('#today').text(start_date + ' - ' + end_date);
             }
 
-            let category_id = $("#select_category").val();
-
-            if (category_id && category_id != 'all')
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': picker.startDate.format('YYYY-MM-DD'),
-                    'end_date': picker.endDate.format('YYYY-MM-DD'),
-                    'category_id': category_id,
-                    'filter': 1,
-                    'keyword': keyword
-                };
-            else
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': picker.startDate.format('YYYY-MM-DD'),
-                    'end_date': picker.endDate.format('YYYY-MM-DD'),
-                    'filter': 1,
-                    'keyword': keyword
-                };
+            data = {
+                'service_user': service_user,
+                'start_date': picker.startDate.format('YYYY-MM-DD'),
+                'end_date': picker.endDate.format('YYYY-MM-DD'),
+                'filter': 1,
+                'keyword': keyword
+            };
 
 
-            getFormData(data);
-            return false;
 
-        });
-    </script>
-
-    <!-- {{-- Filter for child  --}} -->
-    <script type="text/javascript">
-        $('#service_user').change(function() {
-            let staff_member = $('#staff_member').val();
-            let service_user = $('#service_user').val();
-            let category_id = $('#select_category').val();
-            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
-            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
-            let keyword = $('#keyword').val();
-            if (category_id && category_id != 'all')
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'category_id': category_id,
-                    'filter': 1,
-                    'keyword': keyword
-                };
-            else
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'filter': 1,
-                    'keyword': keyword
-                };
             getFormData(data);
             return false;
 
@@ -958,33 +910,20 @@
 
     <!-- {{-- Filter for keyword --}} -->
     <script>
-        function myFunctionkey() {
-            let staff_member = $('#staff_member').val();
-            let service_user = $('#service_user').val();
-            let category_id = $('#select_category').val();
+        function mfcMyFunctionkey() {
+            let service_user = "{{ $service_user_id }}";
             let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
             let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
             let keyword = $('#keyword').val();
             // alert(keyword)
-            if (category_id && category_id != 'all')
                 data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'category_id': category_id,
-                    'filter': 1,
-                    'keyword': keyword
-                };
-            else
-                data = {
-                    'staff_member': staff_member,
                     'service_user': service_user,
                     'start_date': start_date.format('YYYY-MM-DD'),
                     'end_date': end_date.format('YYYY-MM-DD'),
                     'filter': 1,
                     'keyword': keyword
                 };
+              
             getFormData(data);
             return false;
         }

@@ -1192,7 +1192,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::match(['get', 'post'], '/service/bmp/edit', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@edit');
 	Route::get('/service/bmp/delete/{su_bmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@delete');
 	Route::get('/service/bmp/view_bmp/{su_bmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@view_bmp');
-	Route::post('/service/rmp/edit_bmp/{su_bmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@edit_bmp');
+	Route::post('/service/bmp/edit_bmp/{su_bmp_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@edit_bmp');
 
 	Route::match(['get', 'post'], '/service/bmp/{service_user_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\BmpController@form');
 
@@ -1586,6 +1586,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get', 'post'], '/users/delete/{id}', 'App\Http\Controllers\backEnd\UserController@delete');
 	Route::get('/users/certificates/delete/{id}', 'App\Http\Controllers\backEnd\UserController@delete_certificates');
 	Route::match(['get', 'post'], '/users/send-set-pass-link/{user_id}', 'App\Http\Controllers\backEnd\UserController@send_user_set_pass_link_mail');
+	Route::match(['get', 'post'], '/user/logs/{user_id}', 'App\Http\Controllers\backEnd\UserController@user_log');
+	Route::post('/user/is_valid/', 'App\Http\Controllers\backEnd\UserController@is_valid');
+	Route::get('/user/logs/delete/{id}', 'App\Http\Controllers\backEnd\UserController@logs_delete');
 
 	// Ram 04/07/2024 here paths for Job Manageent
 	Route::match(['get', 'post'], 'jobs_list', 'App\Http\Controllers\backEnd\JobsController@jobs_list');

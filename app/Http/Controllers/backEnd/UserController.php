@@ -4,11 +4,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session; 
-use App\User, App\Home, App\UserQualification, App\AccessLevel;  
+use App\User, App\Home, App\UserQualification, App\AccessLevel,  App\LoginInActivity;  
 use DB; 
 use Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\CompanyDepartment;
+use App\Models\PersonalManagement\TimeSheet;
+use Validator;
 
 class UserController extends Controller
 {
@@ -433,6 +435,82 @@ class UserController extends Controller
     //     }  
 
     // }
+    public function user_log(Request $request, $user_id){
+        $u_home_id = User::where('id',$user_id)->value('home_id');
+        $home_id = Session::get('scitsAdminSession')->home_id;
+        if($home_id == $u_home_id) {
+            if(isset($request->month)){
+                $month=$request->month;
+                $year=$request->year;
+            }else{
+                $month=date('m');
+                $year=date('Y');
+            }
+            $u_annual = LoginInActivity::where('user_id', $user_id)->whereMonth('login_date',$month)->whereYear('login_date',$year)->orderBy('id', 'DESC')->where('is_deleted', 0);
+            $search = '';
+
+            if(isset($request->limit))
+            {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else{
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 25;
+                }
+            }
+
+            if(isset($request->search))
+            {
+                $search = trim($request->search);
+                $u_annual = $u_annual->where('reason','like','%'.$search.'%');             //search by date or title
+            }
+
+            $u_annual_leave = $u_annual->paginate(25);
+        } else {
+            return redirect('admin/')->with('error',UNAUTHORIZE_ERR);
+        }
+        $page = 'user-annual-leave';
+        $years = range(date('Y'), 2000);
+        return view('backEnd.user.user_log', compact('page','limit', 'user_id','u_annual_leave','search','years'));
+    }
+    public function is_valid(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator=Validator::make($request->all(),
+        [
+            'id' =>'required|integer|exists:login_activities,id',
+            'update_value' =>'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()], 200);
+        }
+        try{
+          $update=LoginInActivity::find($request->id);
+          $update->is_valid=$request->update_value;
+          $update->save();
+          return response()->json(['success' => true,'message' =>'Updated successfully','data' => new \stdClass()], 200);
+        } catch (\Exception $e) {
+
+            Log::error('Admin Update Logs Is_valid: ' . $e->getMessage());
+            return response()->json(['success' => false,'message' =>$e->getMessage(),'data' => new \stdClass()], 500);
+        }
+    }
+    public function logs_delete($id){
+        try{
+          $update=LoginInActivity::find($id);
+          if(!$update){
+            return redirect()->back()->with('error','Id does not exist.');
+          }
+          $update->is_deleted=1;
+          $update->save();
+          return redirect()->back()->with('success','Log Deleted successfully done.');
+        } catch (\Exception $e) {
+            Log::error('Admin Update Logs Delete: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
+        }
+    }
     
 }
 

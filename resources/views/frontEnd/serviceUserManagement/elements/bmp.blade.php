@@ -172,7 +172,7 @@
                     </div>
                   
                     <!-- logged plans -->
-                    <div class="logged-box risk-tabs custm-tabs">
+                    {{-- <div class="logged-box risk-tabs custm-tabs">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h3 class="m-t-0 m-b-20 clr-blue fnt-20"> Logged Records </h3>
                         </div>
@@ -187,7 +187,7 @@
                                 <button class="btn btn-warning sbt-edit-bmp-record" type="button"> Confirm</button>
                             </div>
                         </form>                            
-                    </div>
+                    </div> --}}
 
                     <!-- Search Box -->
                     <div class="search-box risk-tabs custm-tabs">

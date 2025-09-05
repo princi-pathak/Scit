@@ -92,16 +92,8 @@ class MFCController extends ServiceUserManagementController
         // Check if it's an AJAX filter call
         if ($request->isMethod('post') && $request->input('filter') == 1) {
 
-            // if ($request->filled('staff_member')) {
-            //     $bmp_record->where('user_id', $request->input('staff_member'));
-            // }
-
             if ($request->filled('service_user')) {
                 $mfc_records->where('service_user_id', $request->input('service_user'));
-            }
-
-            if ($request->filled('category_id') && $request->input('category_id') !== 'all') {
-                $mfc_records->where('category_id', $request->input('category_id'));
             }
 
             if ($request->filled('start_date') && $request->filled('end_date')) {
@@ -144,24 +136,10 @@ class MFCController extends ServiceUserManagementController
 
             $first = 0;
 
-            // if($value->date == '' ) {  
-            //     $date = '';
-            // }  else {
-            //     $date = date('d-m-Y', strtotime($value->date));
-            // }
-
-            if ($value->created_at == '') {
+            if($value->date == '' ) {  
                 $date = '';
-            } else {
-                $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
-            }
-
-            if ((!empty($date)) || (!empty($value->time))) {
-                $start_brct = '(';
-                $end_brct = ')';
-            } else {
-                $start_brct = '';
-                $end_brct = '';
+            }  else {
+                $date = date('d-m-Y', strtotime($value->date));
             }
 
             $mfc_rcrd_date = date('Y-m-d', strtotime($value->created_at));

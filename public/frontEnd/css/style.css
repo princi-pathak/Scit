@@ -4516,7 +4516,7 @@ span.customSelect.changed {
 }
 
 .time_abbre {
-    width: 250px;
+    /* width: 250px; */
     font-size: 16px;
     font-weight: 300;
     margin: 0 0 5px;

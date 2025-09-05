@@ -115,16 +115,16 @@
                         </div>
                     </div>
                     <!-- <div class="col-md-3 col-lg-2" style="padding-bottom:10px; margin-left: -84px;">
-                            <div class="form-group datepicker-sttng date-sttng">
-                                <label class="col-md-3 col-sm-1 col-xs-12 p-t-7" style="display: none;"> Category: </label>
-                                <div class="col-md-7 col-sm-10 col-xs-12">
-                                    <select class="form-control" style="min-width:200px;" id="select_category" name="category_timeline" required />
-                                         <option disabled value> -- select an option -- </option> --
-                                        <option selected value="all">All</option>
-                                    </select>
+                                <div class="form-group datepicker-sttng date-sttng">
+                                    <label class="col-md-3 col-sm-1 col-xs-12 p-t-7" style="display: none;"> Category: </label>
+                                    <div class="col-md-7 col-sm-10 col-xs-12">
+                                        <select class="form-control" style="min-width:200px;" id="select_category" name="category_timeline" required />
+                                             <option disabled value> -- select an option -- </option> --
+                                            <option selected value="all">All</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </div> -->
+                            </div> -->
                     <!-- sourabh -->
                     <div class="col-md-2 col-lg-2" style="padding-bottom:10px; margin-left: -10px;">
                         <input type="text" class="form-control" id="keywordhr" onKeyPress="hrmyFunctionkey()"
@@ -132,9 +132,9 @@
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                        </div> -->
+                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                            </div> -->
                 </div>
 
                 <div class="row">
@@ -148,7 +148,7 @@
                                 </div>
                             </article>
 
-                            <div class="timeline-messages" id="logs_articles">
+                            <div class="timeline-messages" id="logs_articles_health">
                                 @php
                                     $colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
                                     shuffle($colors); // Randomizes the order
@@ -165,7 +165,8 @@
                                             <div class="message-body msg-in rightmsg">
                                                 <span class="arrow"></span>
                                                 <div class="text">
-                                                    <div class="first"> {{ date('d M Y', strtotime($key['form_date'])) }} - {{ $key['form_time'] }}</div>
+                                                    <div class="first"> {{ date('d M Y', strtotime($key['form_date'])) }} -
+                                                        {{ $key['form_time'] }}</div>
                                                     <div class="second" style="background-color: {{ $color }};">
                                                         <p>{{ $key['form_name'] }} - {{ $key['form_title'] }}</p>
                                                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings"
@@ -175,12 +176,13 @@
                                                                 <ul class="pop-notification" type="none">
                                                                     <li> <a href="#" data-dismiss="modal"
                                                                             aria-hidden="true" class="dyn-form-view-data"
-                                                                              id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span> <i
-                                                                                    class="fa fa-eye"></i> </span> View/Edit
+                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}">
+                                                                            <span> <i class="fa fa-eye"></i> </span>
+                                                                            View/Edit
                                                                         </a> </li>
                                                                     <li> <a href="#" class="dyn_form_del_btn"
-                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span
-                                                                                class="color-red"> <i
+                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}">
+                                                                            <span class="color-red"> <i
                                                                                     class="fa fa-exclamation-circle"></i>
                                                                             </span> Remove </a> </li>
                                                                 </ul>
@@ -198,18 +200,19 @@
                                                     <div class="second" style="background-color: {{ $color }};">
                                                         <span
                                                             class="input-group-addon cus-inpt-grp-addon clr-blue settings"
-                                                            style="background-color: {{ $color }};">   
+                                                            style="background-color: {{ $color }};">
                                                             <i class="fa fa-cog"></i>
                                                             <div class="pop-notifbox">
                                                                 <ul class="pop-notification" type="none">
                                                                     <li> <a href="#" data-dismiss="modal"
                                                                             aria-hidden="true" class="dyn-form-view-data"
-                                                                           id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span> <i
-                                                                                    class="fa fa-eye"></i> </span> View/Edit
+                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}">
+                                                                            <span> <i class="fa fa-eye"></i> </span>
+                                                                            View/Edit
                                                                         </a> </li>
                                                                     <li> <a href="#" class="dyn_form_del_btn"
-                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}"> <span
-                                                                                class="color-red"> <i
+                                                                            id="{{ isset($key['dynamic_form_id']) ? $key['dynamic_form_id'] : null }}">
+                                                                            <span class="color-red"> <i
                                                                                     class="fa fa-exclamation-circle"></i>
                                                                             </span> Remove </a> </li>
                                                                 </ul>
@@ -217,7 +220,8 @@
                                                         </span>
                                                         <p>{{ $key['form_name'] }} - {{ $key['form_title'] }}</p>
                                                     </div>
-                                                    <div class="first">{{ date('d M Y', strtotime($key['form_date'])) }} - {{ $key['form_time'] }}
+                                                    <div class="first">{{ date('d M Y', strtotime($key['form_date'])) }}
+                                                        - {{ $key['form_time'] }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -291,32 +295,33 @@
         //     });
         // });
 
-        document.getElementById('open_form_view').addEventListener('click', function() {
-            document.getElementById('viewDaily_log').style.display = 'block';
+        // document.getElementById('open_form_view').addEventListener('click', function() {
+        //     document.getElementById('viewDaily_log').style.display = 'block';
 
-            $.ajax({
-                type: 'get',
-                url: "{{ url('/service/health-records') }}" + '/' + service_user_id,
-                data: data,
-                success: function(resp) {
-                    console.log(resp);
-                    return false;
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
+        //     $.ajax({
+        //         type: 'get',
+        //         url: "{{ url('/service/health-records') }}" + '/' + service_user_id,
+        //         data: data,
+        //         success: function(resp) {
+        //             console.log(resp);
+        //             if (isAuthenticated(resp) == false) {
+        //                 return false;
+        //             }
+        //             if (resp == 0) {
+        //                 $('span.popup_error_txt').text('Error Occured');
+        //                 $('.popup_error').show();
+        //             } else {
+        //                 const container = document.querySelector('#logs_articles_health');
+        //                 removeAllChildNodes(container);
+        //                 let previous_date = '';
 
-                        return true;
-                    }
-                }
-            });
-        });
+        //                 return true;
+        //             }
+        //             return false;
+
+        //         }
+        //     });
+        // });
     </script>
     <!-- Date Range Initialization -->
     <script>
@@ -359,9 +364,9 @@
         function get_dates() {
             let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
             let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
-            let categoy_id = $("#select_category").val();
+            // let categoy_id = $("#select_category").val();
             // return [newFormat, newFormat2, selected_category];
-            return [start_date.format('YYYY-MM-DD'), end_date.format('YYYY-MM-DD'), parseInt(categoy_id)];
+            return [start_date.format('YYYY-MM-DD'), end_date.format('YYYY-MM-DD')];
         }
 
         function pdf() {
@@ -371,7 +376,7 @@
             var category_id = parseInt(get_dates()[2]);
             var link = document.getElementById("pdf");
             let url =
-                `{{ url('/service/logbook/download?end=${end}&start=${start}&category_id=${category_id}&format=pdf&service_user_id=' . $service_user_id) }}`;
+                `{{ url('/service/logbook/download?end=${end}&start=${start}&format=pdf&service_user_id=' . $service_user_id) }}`;
             url = url.replaceAll('&amp;', '&')
             link.setAttribute("href", url);
             return false;
@@ -437,356 +442,6 @@
             return time;
         }
     </script>
-
-    <!-- Category Filter -->
-
-    <!-- Daterange Filter -->
-    <!-- <script>
-        $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-            let staff_member = $('#staff_member').val();
-            let start_date = picker.startDate.format('DD-MM-YYYY');
-            let end_date = picker.endDate.format('DD-MM-YYYY');
-            let service_user = $('#service_user').val();
-            let keyword = $('#keyword').val();
-            $(this).val(start_date + ' - ' + end_date);
-
-            let today = new Date;
-            let todayFormat = ("0" + today.getDate()).slice(-2) + "-" + ("0" + (today.getMonth() + 1)).slice(-2) +
-                "-" + today.getFullYear();
-
-            if (start_date == todayFormat && end_date == todayFormat) {
-                $('#today').text('Today');
-            } else {
-                $('#today').text(start_date + ' - ' + end_date);
-            }
-
-            let category_id = $("#select_category").val();
-
-            if (category_id && category_id != 'all')
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': picker.startDate.format('YYYY-MM-DD'),
-                    'end_date': picker.endDate.format('YYYY-MM-DD'),
-                    'category_id': category_id,
-                    'filter': 1,
-                    'keyword': keyword
-                };
-            else
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': picker.startDate.format('YYYY-MM-DD'),
-                    'end_date': picker.endDate.format('YYYY-MM-DD'),
-                    'filter': 1,
-                    'keyword': keyword
-                };
-
-
-            $.ajax({
-                type: 'get',
-                url: "{{ url('/service/daily-logs') }}",
-                data: data,
-                success: function(resp) {
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                            <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                    `));
-                                }
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]['category_color']);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                            <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                    ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                </span>
-                                            </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${escapeHtml(resp.log_book_records[i]['title'])}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp.log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-
-                                $(pannel_body).append($(`
-                        <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                    Comments
-                                    <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments']}</span>  
-                                    </a>
-                                    `));
-                                pannel_body.append(date_field);
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                            <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                    `));
-                                }
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]['category_color']);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                            <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                    ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                </span>
-                                            </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${escapeHtml(resp.log_book_records[i]['title'])}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp.log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-
-                                $(pannel_body).append($(`
-                        <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                    Comments
-                                    <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments']}</span>  
-                                    </a>
-                                    `));
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                    }
-                }
-            });
-
-        });
-    </script> -->
-
     <script>
         function removeAllChildNodes(parent) {
             while (parent.firstChild) {
@@ -794,991 +449,156 @@
             }
         }
     </script>
-    <!-- sourabh -->
-    <!-- <script type="text/javascript">
-        $('#service_user').change(function() {
-            let staff_member = $('#staff_member').val();
-            let service_user = $('#service_user').val();
-            let category_id = $('#select_category').val();
-            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
-            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
-            let keyword = $('#keyword').val();
-            if (category_id && category_id != 'all')
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'category_id': category_id,
-                    'filter': 1,
-                    'keyword': keyword
-                };
-            else
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'filter': 1,
-                    'keyword': keyword
-                };
 
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/daily-logs') }}",
-                data: data,
-                success: function(resp) {
-                    console.log(resp)
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]['category_color']);
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp.log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                $(pannel_body).append($(`
-                            <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments']}</span>  
-                                        </a>
-                                        `));
-
-                                pannel_body.append(date_field);
-
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]['category_color']);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp.log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-
-                                $(pannel_body).append($(`
-                            <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments']}</span>  
-                                        </a>
-                                        `));
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                        return true;
-                    }
-                }
-            });
-            return false;
-
-        });
-    </script> -->
-    <!-- <script type="text/javascript">
-        $('#staff_member').change(function() {
-            let staff_member = $('#staff_member').val();
-            let service_user = $('#service_user').val();
-            let category_id = $('#select_category').val();
-            let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
-            let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
-            let keyword = $('#keyword').val();
-            if (category_id && category_id != 'all')
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'category_id': category_id,
-                    'filter': 1,
-                    'keyword': keyword
-                };
-            else
-                data = {
-                    'staff_member': staff_member,
-                    'service_user': service_user,
-                    'start_date': start_date.format('YYYY-MM-DD'),
-                    'end_date': end_date.format('YYYY-MM-DD'),
-                    'filter': 1,
-                    'keyword': keyword
-                };
-
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/daily-logs') }}",
-                data: data,
-                success: function(resp) {
-                    console.log(resp)
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]['category_color']);
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp.log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-                                $(pannel_body).append($(`
-                            <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments']}</span>  
-                                        </a>
-                                        `));
-
-                                pannel_body.append(date_field);
-
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-                                if (resp.log_book_records[i]['is_late'] == '1') {
-                                    $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                }
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:" + resp
-                                    .log_book_records[i]['category_color']);
-                                timeline_icon.setAttribute("title",
-                                    `${resp.log_book_records[i]['category_name']}`);
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", resp.log_book_records[i][
-                                    'category_icon'
-                                ]);
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-                                if (resp.log_book_records[i]['category_name'])
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-                                else
-                                    $(pannel_body).append($(
-                                        `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                    ));
-
-                                var details = document.createElement("p");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'date'
-                                ]);
-                                if (resp.log_book_records[i]['is_late']) {
-                                    if (resp.log_book_records[i]['late_time_text']) {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(resp
-                                            .log_book_records[i]['late_time_text']);
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    } else {
-                                        var span_date_field = document.createElement("span");
-                                        span_date_field.setAttribute("style", "color:red");
-                                        var span_date_field_text = document.createTextNode(moment.utc(
-                                            resp.log_book_records[i]['created_at']).format(
-                                            'DD-MM-YYYY HH:mm'));
-                                        span_date_field.append(span_date_field_text);
-                                        date_field.append(' | ');
-                                        date_field.append(span_date_field);
-                                    }
-                                }
-                                date_field.prepend(date_text);
-
-                                $(pannel_body).append($(`
-                            <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments']}</span>  
-                                        </a>
-                                        `));
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                        return true;
-                    }
-                }
-            });
-            return false;
-
-        });
-    </script>
-            <!-- sourabh --
-            <script>
-                //$('#keyword').keypress(function(){
-                function myFunctionkey() {
-                    let staff_member = $('#staff_member').val();
-                    let service_user = $('#service_user').val();
-                    let category_id = $('#select_category').val();
-                    let start_date = $('input[name="daterange"]').data('daterangepicker').startDate;
-                    let end_date = $('input[name="daterange"]').data('daterangepicker').endDate;
-                    let keyword = $('#keyword').val();
-                    // alert(keyword)
-                    if (category_id && category_id != 'all')
-                        data = {
-                            'staff_member': staff_member,
-                            'service_user': service_user,
-                            'start_date': start_date.format('YYYY-MM-DD'),
-                            'end_date': end_date.format('YYYY-MM-DD'),
-                            'category_id': category_id,
-                            'filter': 1,
-                            'keyword': keyword
-                        };
-                    else
-                        data = {
-                            'staff_member': staff_member,
-                            'service_user': service_user,
-                            'start_date': start_date.format('YYYY-MM-DD'),
-                            'end_date': end_date.format('YYYY-MM-DD'),
-                            'filter': 1,
-                            'keyword': keyword
-                        };
-
-                    $.ajax({
-                        type: 'post',
-                        url: "{{ url('/service/daily-logs') }}",
-                        data: data,
-                        success: function(resp) {
-                            console.log(resp)
-                            if (isAuthenticated(resp) == false) {
-                                return false;
-                            }
-                            if (resp == 0) {
-                                $('span.popup_error_txt').text('Error Occured');
-                                $('.popup_error').show();
-                            } else {
-                                const container = document.querySelector('#logs_articles');
-                                removeAllChildNodes(container);
-                                let previous_date = '';
-                                for (var i = 0; i < resp.log_book_records.length; i++) {
-                                    if (i % 2 != 0) {
-                                        var log_atricles = document.getElementById("logs_articles");
-                                        var article_left = document.createElement("article");
-                                        article_left.setAttribute("class", "timeline-item");
-
-                                        var timeline_desk = document.createElement("div");
-                                        timeline_desk.setAttribute("class", "timeline-desk");
-
-                                        var pannel = document.createElement("div");
-                                        pannel.setAttribute("class", "panel");
-
-                                        var pannel_body = document.createElement("div");
-                                        pannel_body.setAttribute("class", "panel-body");
-
-                                        var arrow = document.createElement("span");
-                                        arrow.setAttribute("class", "arrow");
-
-                                        pannel_body.append(arrow);
-
-                                        if (resp.log_book_records[i]['is_late'] == '1') {
-                                            $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                        }
-
-
-
-                                        var timeline_icon = document.createElement("span");
-                                        timeline_icon.setAttribute("class", "timeline-icon");
-                                        timeline_icon.setAttribute("data-toggle", "tooltip");
-                                        timeline_icon.setAttribute("style", "background:" + resp.log_book_records[i][
-                                            'category_color'
-                                        ]);
-                                        timeline_icon.setAttribute("data-placement", "left");
-                                        timeline_icon.setAttribute("title",
-                                            `${resp.log_book_records[i]['category_name']}`);
-
-                                        var fa_check = document.createElement("i");
-                                        fa_check.setAttribute("class", resp.log_book_records[i]['category_icon']);
-
-                                        timeline_icon.append(fa_check);
-
-                                        pannel_body.append(timeline_icon);
-
-                                        var created_at = document.createElement("span");
-                                        created_at.setAttribute("class", "time_abbre");
-                                        created_at.setAttribute("data-toggle", "tooltip");
-                                        created_at.setAttribute("data-placement", "top");
-                                        created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                            'created_at'
-                                        ]).format('DD-MM-YYYY HH:mm'));
-
-                                        var created_at_text = document.createTextNode(moment.utc(resp.log_book_records[
-                                            i]['created_at']).fromNow());
-                                        created_at.append(created_at_text);
-                                        $(created_at).append($(
-                                            `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                        ));
-
-
-                                        pannel_body.append(created_at);
-                                        if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                                'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                            $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                            previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                                'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                        }
-
-                                        if (resp.log_book_records[i]['category_name'])
-                                            $(pannel_body).append($(
-                                                `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title']}</span></h1>`
-                                            ));
-                                        else
-                                            $(pannel_body).append($(
-                                                `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                            ));
-
-                                        var details = document.createElement("p");
-                                        var details_text = document.createTextNode(resp.log_book_records[i]['details']);
-                                        details.append(details_text)
-
-                                        pannel_body.append(details);
-
-                                        var date_field = document.createElement("p");
-                                        date_field.setAttribute("class", "daily_log_time");
-                                        var date_text = document.createTextNode(resp.log_book_records[i]['date']);
-                                        if (resp.log_book_records[i]['is_late']) {
-                                            if (resp.log_book_records[i]['late_time_text']) {
-                                                var span_date_field = document.createElement("span");
-                                                span_date_field.setAttribute("style", "color:red");
-                                                var span_date_field_text = document.createTextNode(resp
-                                                    .log_book_records[i]['late_time_text']);
-                                                span_date_field.append(span_date_field_text);
-                                                // date_field.append(' | '+resp.log_book_records[i]['late_date_text']+' ');
-                                                date_field.append(' | ');
-                                                date_field.append(span_date_field);
-                                            } else {
-                                                var span_date_field = document.createElement("span");
-                                                span_date_field.setAttribute("style", "color:red");
-                                                var span_date_field_text = document.createTextNode(moment.utc(resp
-                                                    .log_book_records[i]['created_at']).format(
-                                                    'DD-MM-YYYY HH:mm'));
-                                                span_date_field.append(span_date_field_text);
-                                                date_field.append(' | ');
-                                                date_field.append(span_date_field);
-                                            }
-                                        }
-                                        date_field.prepend(date_text);
-                                        $(pannel_body).append($(`
-                            <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments']}</span>  
-                                        </a>
-                                        `));
-
-                                        pannel_body.append(date_field);
-
-
-
-                                        pannel.append(pannel_body);
-
-                                        timeline_desk.append(pannel);
-
-                                        article_left.append(timeline_desk);
-                                        log_atricles.append(article_left);
-                                    } else {
-                                        var log_atricles = document.getElementById("logs_articles");
-                                        var article_left = document.createElement("article");
-                                        article_left.setAttribute("class", "timeline-item alt");
-
-                                        var timeline_desk = document.createElement("div");
-                                        timeline_desk.setAttribute("class", "timeline-desk");
-
-                                        var pannel = document.createElement("div");
-                                        pannel.setAttribute("class", "panel");
-
-                                        var pannel_body = document.createElement("div");
-                                        pannel_body.setAttribute("class", "panel-body");
-
-                                        var arrow = document.createElement("span");
-                                        arrow.setAttribute("class", "arrow-alt");
-
-                                        pannel_body.append(arrow);
-
-                                        if (resp.log_book_records[i]['is_late'] == '1') {
-                                            $(pannel_body).append($(`
-                                <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
-                                        `));
-                                        }
-
-                                        var timeline_icon = document.createElement("span");
-                                        timeline_icon.setAttribute("class", "timeline-icon");
-                                        timeline_icon.setAttribute("data-toggle", "tooltip");
-                                        timeline_icon.setAttribute("data-placement", "right");
-                                        timeline_icon.setAttribute("style", "background:" + resp.log_book_records[i][
-                                            'category_color'
-                                        ]);
-                                        timeline_icon.setAttribute("title",
-                                            `${resp.log_book_records[i]['category_name']}`);
-
-                                        var fa_check = document.createElement("i");
-                                        fa_check.setAttribute("class", resp.log_book_records[i]['category_icon']);
-
-                                        timeline_icon.append(fa_check);
-
-                                        pannel_body.append(timeline_icon);
-
-                                        var created_at = document.createElement("span");
-                                        created_at.setAttribute("class", "time_abbre");
-                                        created_at.setAttribute("data-toggle", "tooltip");
-                                        created_at.setAttribute("data-placement", "top");
-                                        created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                            'created_at'
-                                        ]).format('DD-MM-YYYY HH:mm'));
-
-                                        var created_at_text = document.createTextNode(moment.utc(resp.log_book_records[
-                                            i]['created_at']).fromNow());
-                                        created_at.append(created_at_text);
-                                        $(created_at).append($(
-                                            `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                        ));
-
-
-                                        pannel_body.append(created_at);
-
-                                        if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                                'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                            $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                            previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                                'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                        }
-
-                                        if (resp.log_book_records[i]['category_name'])
-                                            $(pannel_body).append($(
-                                                `<h1 class="title_time_log"><span style="color: ${resp.log_book_records[i]['category_color']}">${resp.log_book_records[i]['category_name']}</span> | <span>${resp.log_book_records[i]['title']}</span></h1>`
-                                            ));
-                                        else
-                                            $(pannel_body).append($(
-                                                `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                            ));
-
-                                        var details = document.createElement("p");
-                                        var details_text = document.createTextNode(resp.log_book_records[i]['details']);
-                                        details.append(details_text)
-
-                                        pannel_body.append(details);
-
-                                        var date_field = document.createElement("p");
-                                        date_field.setAttribute("class", "daily_log_time");
-                                        var date_text = document.createTextNode(resp.log_book_records[i]['date']);
-                                        if (resp.log_book_records[i]['is_late']) {
-                                            if (resp.log_book_records[i]['late_time_text']) {
-                                                var span_date_field = document.createElement("span");
-                                                span_date_field.setAttribute("style", "color:red");
-                                                var span_date_field_text = document.createTextNode(resp
-                                                    .log_book_records[i]['late_time_text']);
-                                                span_date_field.append(span_date_field_text);
-                                                date_field.append(' | ');
-                                                date_field.append(span_date_field);
-                                            } else {
-                                                var span_date_field = document.createElement("span");
-                                                span_date_field.setAttribute("style", "color:red");
-                                                var span_date_field_text = document.createTextNode(moment.utc(resp
-                                                    .log_book_records[i]['created_at']).format(
-                                                    'DD-MM-YYYY HH:mm'));
-                                                span_date_field.append(span_date_field_text);
-                                                date_field.append(' | ');
-                                                date_field.append(span_date_field);
-                                            }
-                                        }
-                                        date_field.prepend(date_text);
-
-                                        $(pannel_body).append($(`
-                            <a data-toggle="modal" onclick="daily_log_comment(${resp.log_book_records[i]['id']})" data-id="${resp.log_book_records[i]['date']}" href="#commentsModal" id="commentModal2" class="btn daily_log_comments_btn" style="background-color:#1f88b5;color:white;float:right;font-size: 10px;padding: 4px;margin-bottom:15px;">
-                                        Comments
-                                        <span id="_${resp.log_book_records[i]['id']}" class="badge badge-primary badge-pill comment_badge">${resp.log_book_records[i]['comments']}</span>  
-                                        </a>
-                                        `));
-                                        pannel_body.append(date_field);
-
-                                        pannel.append(pannel_body);
-
-                                        timeline_desk.append(pannel);
-
-                                        article_left.append(timeline_desk);
-
-                                        log_atricles.append(article_left);
-                                    }
-
-                                }
-
-                                /**
-                                 * Adding tooltips after filtering
-                                 */
-
-                                $('.timeline-icon').tooltip();
-                                $('.time_abbre').tooltip();
-                                return true;
-                            }
-                        }
-                    });
-                    return false;
-                }
-            </script> -->
-    <!-- sourabh -->
     <script>
+        function getHealthRecordData(data) {
+            var service_user_id = "{{ $service_user_id }}";
+            $.ajax({
+                type: 'get',
+                url: "{{ url('/service/health-records') }}" + '/' + service_user_id,
+                data: data,
+                success: function(resp) {
+                    console.log("respHealth", resp);
+
+                    // return false;
+                    if (isAuthenticated(resp) == false) {
+                        return false;
+                    }
+                    if (resp == 0) {
+                        $('span.popup_error_txt').text('Error Occured');
+                        $('.popup_error').show();
+                    } else {
+                        const container = document.querySelector('#logs_articles_health');
+                        removeAllChildNodes(container);
+
+                        let previous_date = '';
+                        // Define your color palette
+                        let colors = ['#8fd6d6', '#f57775', '#bda4ec', '#fed65a', '#81b56b'];
+
+                        // Shuffle colors randomly
+                        colors = colors.sort(() => Math.random() - 0.5);
+                        for (let i = 0; i < resp.log_book_records.length; i++) {
+
+
+                            // alert(resp.log_book_records[i]);
+                            let key = resp.log_book_records[i];
+                            let color = colors[i % colors.length]; // cycle through colors
+
+                            // Main container
+                            let msgTimeChat = document.createElement("div");
+                            msgTimeChat.classList.add("msg-time-chat");
+
+                            // Message body
+                            let msgBody = document.createElement("div");
+                            msgBody.classList.add("message-body", "msg-in");
+
+                            // Alternate left/right
+                            if ((i + 1) % 2 === 0) {
+                                msgBody.classList.add("rightmsg");
+                            } else {
+                                msgBody.classList.add("leftmsg");
+                            }
+
+                            let arrow = document.createElement("span");
+                            arrow.classList.add("arrow");
+                            msgBody.appendChild(arrow);
+
+                            let textDiv = document.createElement("div");
+                            textDiv.classList.add("text");
+
+                            if ((i + 1) % 2 === 0) {
+                                // Right side → first date/time, then content
+                                let first = document.createElement("div");
+                                first.classList.add("first");
+                               first.textContent = moment(key['form_date']).format("DD MMM YYYY") + " - " + moment(key['form_time'], "HH:mm:ss").format("HH:mm");
+
+                                let second = document.createElement("div");
+                                second.classList.add("second");
+                                second.style.backgroundColor = color;
+
+                                let p = document.createElement("p");
+                                p.textContent = `${key['form_name']} - ${key['form_title']}`;
+                                second.appendChild(p);
+
+                                let spanSettings = document.createElement("span");
+                                spanSettings.classList.add("input-group-addon", "cus-inpt-grp-addon",
+                                    "clr-blue", "settings");
+                                spanSettings.style.backgroundColor = color;
+                                spanSettings.innerHTML = `
+                                        <i class="fa fa-cog"></i>
+                                        <div class="pop-notifbox">
+                                            <ul class="pop-notification" type="none">
+                                                <li><a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="${key['dynamic_form_id'] ?? ''}">
+                                                    <span><i class="fa fa-eye"></i></span> View/Edit
+                                                </a></li>
+                                                <li><a href="#" class="dyn_form_del_btn" id="${key['dynamic_form_id'] ?? ''}">
+                                                    <span class="color-red"><i class="fa fa-exclamation-circle"></i></span> Remove
+                                                </a></li>
+                                            </ul>
+                                        </div>
+                                    `;
+                                second.appendChild(spanSettings);
+
+                                textDiv.appendChild(first);
+                                textDiv.appendChild(second);
+
+                            } else {
+                                // Left side → first content, then date/time
+                                let second = document.createElement("div");
+                                second.classList.add("second");
+                                second.style.backgroundColor = color;
+
+                                let spanSettings = document.createElement("span");
+                                spanSettings.classList.add("input-group-addon", "cus-inpt-grp-addon",
+                                    "clr-blue", "settings");
+                                spanSettings.style.backgroundColor = color;
+                                spanSettings.innerHTML = `
+                                                <i class="fa fa-cog"></i>
+                                                <div class="pop-notifbox">
+                                                    <ul class="pop-notification" type="none">
+                                                        <li><a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="${key['dynamic_form_id'] ?? ''}">
+                                                            <span><i class="fa fa-eye"></i></span> View/Edit
+                                                        </a></li>
+                                                        <li><a href="#" class="dyn_form_del_btn" id="${key['dynamic_form_id'] ?? ''}">
+                                                            <span class="color-red"><i class="fa fa-exclamation-circle"></i></span> Remove
+                                                        </a></li>
+                                                    </ul>
+                                                </div>
+                                            `;
+
+                                let p = document.createElement("p");
+                                p.textContent = `${key['form_name']} - ${key['form_title']}`;
+
+                                second.appendChild(spanSettings);
+                                second.appendChild(p);
+
+                                let first = document.createElement("div");
+                                first.classList.add("first");
+                                first.textContent = moment(key['form_date']).format("DD MMM YYYY") + " - " + moment(key['form_time'], "HH:mm:ss").format("HH:mm");
+
+                                textDiv.appendChild(second);
+                                textDiv.appendChild(first);
+                            }
+
+                            msgBody.appendChild(textDiv);
+                            msgTimeChat.appendChild(msgBody);
+
+                            // Append to container
+                            document.getElementById("logs_articles_health").appendChild(msgTimeChat);
+                        }
+
+
+                        /**
+                         * Adding tooltips after filtering
+                         */
+
+                        $('.timeline-icon').tooltip();
+                        $('.time_abbre').tooltip();
+                        return true;
+                    }
+                }
+            });
+        }
         $('#date_range_input').on('apply.daterangepicker', function(ev, picker) {
             let start_date = picker.startDate.format('YYYY-MM-DD');
             let end_date = picker.endDate.format('YYYY-MM-DD');
@@ -1804,230 +624,8 @@
                 'filter': 1,
                 'keyword': keyword
             };
-            $.ajax({
-                type: 'get',
-                url: "{{ url('/service/health-records') }}" + '/' + service_user_id,
-                data: data,
-                success: function(resp) {
-                    console.log(resp);
-                    return false;
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
 
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("style", "background:null");
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("title", "");
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", "fa fa-h-square");
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-                                if (previous_date != moment.utc(resp.log_book_records[i]['created_at'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['created_at'], 'YYYY-MM-DD H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['created_at'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-
-                                $(pannel_body).append($(
-                                    `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                ));
-
-                                var details = document.createElement("p");
-                                details.setAttribute("class", "space_bottom");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'created_at'
-                                ]);
-
-                                date_field.prepend(date_text);
-
-
-                                pannel_body.append(date_field);
-
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:null");
-                                timeline_icon.setAttribute("title", "");
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", "fa fa fa-h-square");
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp
-                                    .log_book_records[i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['created_at'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['created_at'], 'YYYY-MM-DD H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['created_at'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-
-                                $(pannel_body).append($(
-                                    `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                ));
-
-                                var details = document.createElement("p");
-                                details.setAttribute("class", "space_bottom");
-                                var details_text = document.createTextNode(resp.log_book_records[i][
-                                    'details'
-                                ]);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i][
-                                    'created_at'
-                                ]);
-
-                                date_field.prepend(date_text);
-
-
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                        return true;
-                    }
-                }
-            });
+            getHealthRecordData(data);
             return false;
         });
     </script>
@@ -2055,224 +653,7 @@
                 'filter': 1,
                 'keyword': keyword
             };
-            //alert(service_user_id)
-            //alert(data)
-            $.ajax({
-                type: 'get',
-                url: "{{ url('/service/health-records') }}" + '/' + service_user_id,
-                data: data,
-                success: function(resp) {
-                    console.log(resp)
-                    //return false;
-                    if (isAuthenticated(resp) == false) {
-                        return false;
-                    }
-                    if (resp == 0) {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
-                    } else {
-                        const container = document.querySelector('#logs_articles');
-                        removeAllChildNodes(container);
-                        let previous_date = '';
-                        for (var i = 0; i < resp.log_book_records.length; i++) {
-                            if (i % 2 != 0) {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow");
-
-                                pannel_body.append(arrow);
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("style", "background:null");
-                                timeline_icon.setAttribute("data-placement", "left");
-                                timeline_icon.setAttribute("title", "");
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", "fa fa-h-square");
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp.log_book_records[
-                                    i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-                                if (previous_date != moment.utc(resp.log_book_records[i]['created_at'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['created_at'], 'YYYY-MM-DD H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['created_at'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-
-                                $(pannel_body).append($(
-                                    `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title']}</span></h1>`
-                                ));
-
-                                var details = document.createElement("p");
-                                details.setAttribute("class", "space_bottom");
-                                var details_text = document.createTextNode(resp.log_book_records[i]['details']);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i]['created_at']);
-
-                                date_field.prepend(date_text);
-
-
-                                pannel_body.append(date_field);
-
-
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-                                log_atricles.append(article_left);
-                            } else {
-                                var log_atricles = document.getElementById("logs_articles");
-                                var article_left = document.createElement("article");
-                                article_left.setAttribute("class", "timeline-item alt");
-
-                                var timeline_desk = document.createElement("div");
-                                timeline_desk.setAttribute("class", "timeline-desk");
-
-                                var pannel = document.createElement("div");
-                                pannel.setAttribute("class", "panel");
-
-                                var pannel_body = document.createElement("div");
-                                pannel_body.setAttribute("class", "panel-body");
-
-                                var arrow = document.createElement("span");
-                                arrow.setAttribute("class", "arrow-alt");
-
-                                pannel_body.append(arrow);
-
-
-
-                                var timeline_icon = document.createElement("span");
-                                timeline_icon.setAttribute("class", "timeline-icon");
-                                timeline_icon.setAttribute("data-toggle", "tooltip");
-                                timeline_icon.setAttribute("data-placement", "right");
-                                timeline_icon.setAttribute("style", "background:null");
-                                timeline_icon.setAttribute("title", "");
-
-                                var fa_check = document.createElement("i");
-                                fa_check.setAttribute("class", "fa fa fa-h-square");
-
-                                timeline_icon.append(fa_check);
-
-                                pannel_body.append(timeline_icon);
-
-                                var created_at = document.createElement("span");
-                                created_at.setAttribute("class", "time_abbre");
-                                created_at.setAttribute("data-toggle", "tooltip");
-                                created_at.setAttribute("data-placement", "top");
-                                created_at.setAttribute("title", moment.utc(resp.log_book_records[i][
-                                    'created_at'
-                                ]).format('DD-MM-YYYY HH:mm'));
-
-                                var created_at_text = document.createTextNode(moment.utc(resp.log_book_records[
-                                    i]['created_at']).fromNow());
-                                created_at.append(created_at_text);
-                                $(created_at).append($(
-                                    `<span style="color:black;font-weight:400;font-size:14px;"> by ${resp.log_book_records[i]['staff_name']}</span>`
-                                ));
-
-
-                                pannel_body.append(created_at);
-
-                                if (previous_date != moment.utc(resp.log_book_records[i]['created_at'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['created_at'], 'YYYY-MM-DD H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['created_at'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
-                                }
-
-
-                                $(pannel_body).append($(
-                                    `<h1 class="title_time_log"><span>${resp.log_book_records[i]['title'] || ''}</span></h1>`
-                                ));
-
-                                var details = document.createElement("p");
-                                details.setAttribute("class", "space_bottom");
-                                var details_text = document.createTextNode(resp.log_book_records[i]['details']);
-                                details.append(details_text)
-
-                                pannel_body.append(details);
-
-                                var date_field = document.createElement("p");
-                                date_field.setAttribute("class", "daily_log_time");
-                                var date_text = document.createTextNode(resp.log_book_records[i]['created_at']);
-
-                                date_field.prepend(date_text);
-
-
-                                pannel_body.append(date_field);
-
-                                pannel.append(pannel_body);
-
-                                timeline_desk.append(pannel);
-
-                                article_left.append(timeline_desk);
-
-                                log_atricles.append(article_left);
-                            }
-
-                        }
-
-                        /**
-                         * Adding tooltips after filtering
-                         */
-
-                        $('.timeline-icon').tooltip();
-                        $('.time_abbre').tooltip();
-                        return true;
-                    }
-                }
-            });
+            getHealthRecordData(data);
             return false;
 
         }
