@@ -47,19 +47,20 @@ class LogBookCommentsController extends ServiceUserManagementController
     public function store(Request $request) {
         $rules = [
             'comment'           => 'required',
-            'service_user_id'   => 'required',
+            // 'service_user_id'   => 'required',
             'log_book_id'       => 'required',
         ];
         $this->validate($request, $rules);
         $log_book_id = $request->get('log_book_id');
         $service_user_id = $request->get('service_user_id');
-        // $serviceUserLogBook = ServiceUserLogBook::where([
-        //     'log_book_id' => $log_book_id,
-        //     'service_user_id' => $service_user_id
-        // ])->first();
-        // if (!$serviceUserLogBook) {
-        //     throw new Exception("Not found");
-        // }
+
+        $serviceUserLogBook = ServiceUserLogBook::where([
+            'log_book_id' => $log_book_id,
+            // 'service_user_id' => $service_user_id
+        ])->first();
+        if (!$serviceUserLogBook) {
+            throw new Exception("Not found");
+        }
         $logbBook = LogBook::find($log_book_id);
         if (!$logbBook) {
             throw new Exception("Not found");
