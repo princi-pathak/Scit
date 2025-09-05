@@ -4,126 +4,6 @@
 <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
 @section('content')
 
-<style>
-    table.tablechange tbody td {
-        font-size: 12px;
-        white-space: nowrap;
-    }
-
-    .image_delete {
-        cursor: pointer;
-    }
-
-    .textbox {
-        box-sizing: border-box;
-        perspective: 500px;
-        position: relative;
-        text-align: left;
-    }
-
-    .textbox input {
-        padding: 10px 14px;
-        width: 100%;
-    }
-
-    .textbox input::placeholder {
-        color: #ccc;
-    }
-
-    .textbox .autoCompleteJob {
-        left: 0;
-        position: absolute;
-        top: calc(100% + 5px);
-        width: 100%;
-    }
-
-    .textbox .autoCompleteJob .item {
-        animation: showItem .3s ease forwards;
-        background-color: #fff;
-        box-shadow: 0 8px 8px -10px rgba(0, 0, 0, .4);
-        box-sizing: border-box;
-        color: #7C8487;
-        cursor: pointer;
-        display: block;
-        font-size: .8rem;
-        opacity: 0;
-        outline: none;
-        padding: 10px;
-        text-decoration: none;
-        transform-origin: top;
-        /* transform: rotateX(-90deg); */
-        transform: translateX(10px);
-    }
-
-    .textbox .autoCompleteJob .item:hover,
-    .textbox .autoCompleteJob .item:focus {
-        background-color: #fafafa;
-        color: #D1822B;
-    }
-
-    @keyframes showItem {
-        0% {
-            opacity: 0;
-            /* transform: rotateX(-90deg); */
-            transform: translateX(10px);
-        }
-
-        100% {
-            opacity: 1;
-            /* transform: rotateX(0); */
-            transform: translateX(0);
-        }
-    }
-
-    .select2-container--default .select2-selection--single {
-        height: 38px;
-        padding: 5px;
-        border-radius: 4px;
-        border: 1px solid #ced4da;
-        font-size: 14px;
-    }
-
-    .select2-container .select2-selection--single .select2-selection__arrow {
-        height: 100%;
-    }
-
-    .select2-container .select2-selection--single .select2-selection__rendered {
-        padding: 4px;
-    }
-
-    .select2-container .select2-selection--multiple {
-        min-height: 32px !important;
-    }
-
-    .parent-container {
-        position: absolute;
-        background: #fff;
-        width: 190px;
-    }
-
-    #productList li:hover {
-        cursor: pointer;
-    }
-
-    .dropdown-item {
-        padding: 6px 15px;
-        font-size: 13px;
-        color: #212529;
-        text-align: inherit;
-        text-decoration: none;
-        display: block;
-        width: 100%;
-        background-color: transparent;
-        border: 0;
-        border-radius: 0;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .dropdown-item:hover {
-        background-color: #f8f9fa;
-        color: #212529;
-    }
-</style>
 
 <!--main content start-->
 <section class="wrapper">
@@ -132,89 +12,692 @@
             <div class="col-md-12 p-0">
                 <div class="panel">
                     <header class="panel-heading px-5">
-                        <h4>Staff Timesheet</h4>
+                        <h4>Absence</h4>
                     </header>
                     <div class="panel-body">
-                        <div class="col-lg-12">
-                            <div class="jobsection justify-content-between align-items-center">
-                                <div class="d-flex justify-content-end gap-4 align-items-center">
-                                    <a href="javascript:void(0)" class="btn btn-warning modal_open" data-action="add"><i class="fa fa-plus"></i> Add</a>
-                                    <label for="fromDate" class="mb-0">Date:</label>
-                                    
-                                    <input type="date" name="" id="date_timesheet">
-                                    <button type="button" class="btn btn-warning" onclick="location.reload()">Reset</button>
+                        <div class="absenceFiler">
+                            <div>
+                                <label>Filter absences</label>
+                                <div>
+                                    <select id="absenceFilter" class="form-select form-control">
+                                        <option value="allAbsences">All absences</option>
+                                        <option value="annualLeave">Annual leave</option>
+                                        <option value="lateness">Lateness</option>
+                                        <option value="sickness">Sickness</option>
+                                        <option value="furloughs">Furloughs</option>
+                                        <option value="otherAbsences">Other absences</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="col-lg-12">
-                            @if(session('message'))
-                            <div class="alert alert-success text-center success_message mt-3 m-auto" style="height:50px; width:50%">
-                                <p>{{ session('message') }}</p>
-                            </div>
-                            @endif
-                            @if(session('staff_error'))
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_alrt_msg">
-                                <div class="popup_notification-box">
-                                    <div class="alert alert-danger alert-dismissible m-0" role="alert">
-                                        <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
-                                        <strong>Success!</strong> <span class="popup_error_txt">{{ session('staff_error') }}</span>.
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12 popup_alrt_msgblade" style="display:none">
-                                <div class="popup_notification-box">
-                                    <div class="alert alert-success alert-dismissible m-0" role="alert">
-                                        <button type="button" class="close close-msg-btn"><span aria-hidden="true">&times;</span></button>
-                                        <strong>Success!</strong> <span class="popup_success_txt"></span>.
-                                    </div>
+                            <div>
+                                <label>Leave year</label>
+                                <div>
+                                    <select class="form-select form-control">
+                                        <option value="">01 Jan 2016 - 31 Dec 2016</option>
+                                        <option value="">02 Jan 2016 - 31 Dec 2016</option>
+                                        <option value="">03 Jan 2016 - 31 Dec 2016</option>
+                                        <option value="">04 Jan 2016 - 31 Dec 2016</option>
+                                        <option value="">05 Jan 2016 - 31 Dec 2016</option>
+                                        <option value="">06 Jan 2016 - 31 Dec 2016</option>
+                                        <option value="">07 Jan 2016 - 31 Dec 2016</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="maimtable productDetailTable mb-4  table-responsive">
-                                <!-- <div class="delete_table_row">
-                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="btn btn-danger">Delete</a>
-                                </div> -->
-                                <table class="table border-top border-bottom tablechange" id="satffTimesheetTable">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>{{date('F Y')}}</th>
-                                            <th>Total Shitf Hours</th>
-                                            <th>Category Type</th>
-                                            <th>Extra Hours</th>
-                                            <th>Comments</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="user_data">
-                                        
-                                       <tr>
-                                            <td>1</td>
-                                            <td>{{date('Y-m-d')}}</td>
-                                            <td>1 Hour</td>
-                                            <td>On Call</td>
-                                            <td>1h 15min</td>
-                                            <td>Test</td>
-                                            <td>
-                                                <div class="pageTitleBtn p-0">
-                                                    <div class="dropdown">
-                                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-expanded="false">
-                                                            Action <i class="fa fa-caret-down"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right fade-up m-0">
-                                                            <a href="javascript:void(0)" class="dropdown-item col-form-label modal_open">Edit</a>
-                                                            <!-- <a href="javascript:void(0)" class="dropdown-item col-form-label">View Details</a> -->
-                                                            <a href="javascript:void(0)" class="dropdown-item col-form-label">Delete</a>
+                        </div>
+                        <div class="allAbsences">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" text-center">
+                                        <h3>All absences</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="absenceAdd m-t-20">
+                                        <label>Annual leave to take</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>168</strong>
+                                                <span>hrs</span>
+                                            </div>
+                                            <div class="timelist">
+                                                <strong>0</strong>
+                                                <span>mins</span>
+                                            </div>
+                                            <div class="timelist">
+                                                <strong>/</strong>
+                                            </div>
+                                            <div class="timelist">
+                                                <strong>224</strong>
+                                                <span>hrs</span>
+                                            </div>
+                                            <div class="timelist">
+                                                <strong>0</strong>
+                                                <span>mins</span>
+                                            </div>
+                                        </div>
+                                        <p>(Approx 24 / 32 days) <a href="#!"><i class="fa fa-info-o"></i> </a> </p>
+                                        <div class="m-t-20">
+                                            <a href="#!" type="button" class="btn btn-warning">Add annual leave</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="absenceAdd borderLeftRight m-t-20">
+                                        <label>Sickness</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>0</strong>
+                                                <span>occurrences</span>
+                                            </div>
+
+                                        </div>
+                                        <p>(....?) <a href="#!"><i class="fa fa-info-o"></i> </a> </p>
+                                        <div class="m-t-20">
+                                            <a href="#!" type="button" class="btn btn-warning">Add</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="absenceAdd m-t-20">
+                                        <label>Lateness</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>0</strong>
+                                                <span>occurrences</span>
+                                            </div>
+
+                                        </div>
+                                        <p>(....?) <a href="#!"><i class="fa fa-info-o"></i> </a> </p>
+                                        <div class="m-t-20">
+                                            <a href="#!" type="button" class="btn btn-warning">Add</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absenceHistory m-t-40">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="absencehistoryHeading">Absence History</h3>
+                                        <div class="absenceAccordion">
+                                            <div class="panel-group" id="accordion-absence">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordion-absence" href="#collapseOne">Current & future (0)</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseOne" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12">
+                                                                <div class="row publicHoliday">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row publicHoliday m-t-15">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
-                                       </tr>
-                                    </tbody>
-                                </table>
-                            </div> <!-- End off main Table -->
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordion-absence" href="#collapseTwo">Absence history (0)</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTwo" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    Shank fatback pastrami turkey ham hock. Pastrami ball tip brisket pig salami kevin tri-tip sausage venison jowl spare ribs short loin pork chop. Shank pork chop burgdoggen shankle flank. Turducken cow salami venison, biltong ham ball tip meatloaf drumstick bacon jowl kielbasa.
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- all Absence  -->
+
+                        <div class="annualLeave">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" text-center">
+                                        <h3>Annual leave</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="absenceAdd borderLeftRight m-t-20">
+                                        <label>Remaining</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>234</strong>
+                                                <span>hrs</span>
+                                            </div>
+                                            <div class="timelist">
+                                                <strong>234</strong>
+                                                <span>mins</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="absenceAdd m-t-20">
+                                        <label>Allowance</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>234</strong>
+                                                <span>hrs</span>
+                                            </div>
+                                            <div class="timelist">
+                                                <strong>234</strong>
+                                                <span>mins</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 m-t-20 text-center">
+                                    <label>Craig has taken 56 hrs of annual leave.</label>
+                                    <a href="#!" type="button" class="btn btn-warning m-t-20">Add annual leave</a>
+                                </div>
+                            </div>
+                            <div class="absenceHistory m-t-40">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="absencehistoryHeading">Absence History</h3>
+                                        <div class="absenceAccordion">
+                                            <div class="panel-group" id="accordionAbsence">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordionAbsence" href="#collapseThree">Current & future (0)</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseThree" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12">
+                                                                <div class="row publicHoliday">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row publicHoliday m-t-15">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordionAbsence" href="#collapseFour">Absence history (0)</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseFour" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    Shank fatback pastrami turkey ham hock. Pastrami ball tip brisket pig salami kevin tri-tip sausage venison jowl spare ribs short loin pork chop. Shank pork chop burgdoggen shankle flank. Turducken cow salami venison, biltong ham ball tip meatloaf drumstick bacon jowl kielbasa.
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lateness">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" text-center">
+                                        <h3>Lateness</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 p-0">
+                                    <div class="absenceAdd borderLeftRight m-t-20">
+                                        <label>Logged</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>0</strong>
+                                                <span>occurrences</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="absenceAdd m-t-20">
+                                        <label>Total</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>0</strong>
+                                                <span>days</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 m-t-20 text-center">
+                                    <a href="#!" type="button" class="btn btn-warning">Add lateness</a>
+                                </div>
+                            </div>
+                            <div class="absenceHistory m-t-40">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="absencehistoryHeading">Absence History</h3>
+                                        <div class="absenceAccordion">
+                                            <div class="panel-group" id="accordionLateness">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordionLateness" href="#collapseLateness">Lateness history (0)</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseLateness" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12">
+                                                                <div class="row publicHoliday">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row publicHoliday m-t-15">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sickness">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" text-center">
+                                        <h3>Sickness</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 p-0">
+                                    <div class="absenceAdd borderLeftRight m-t-20">
+                                        <label>Logged</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>2</strong>
+                                                <span>occurrences</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="absenceAdd m-t-20">
+                                        <label>Total</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>0</strong>
+                                                <span>days</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 m-t-20 text-center">
+                                    <a href="#!" type="button" class="btn btn-warning">Add Sickness</a>
+                                </div>
+                            </div>
+                            <div class="absenceHistory m-t-40">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="absencehistoryHeading">Absence History</h3>
+                                        <div class="absenceAccordion">
+                                            <div class="panel-group" id="accordionSickness">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordionSickness" href="#collapseSickness">Sickness history (2)</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseSickness" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12">
+                                                                <div class="row publicHoliday">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row publicHoliday m-t-15">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="furloughs">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" text-center">
+                                        <h3>Furloughs</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 m-t-20 text-center">
+                                    <a href="#!" type="button" class="btn btn-warning">Add furlough</a>
+                                </div>
+                            </div>
+                            <div class="absenceHistory m-t-40">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="absencehistoryHeading">Absence History</h3>
+                                        <div class="absenceAccordion">
+                                            <div class="panel-group" id="accordionfurloughs">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordionfurloughs" href="#collapsefurloughs">Furloughs current & future (0)</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapsefurloughs" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12">
+                                                                <div class="row publicHoliday">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row publicHoliday m-t-15">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="otherAbsences">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" text-center">
+                                        <h3>Other Absences</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 p-0">
+                                    <div class="absenceAdd borderLeftRight m-t-20">
+                                        <label>Logged</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>2</strong>
+                                                <span>occurrences</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="absenceAdd m-t-20">
+                                        <label>Total</label>
+                                        <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <div class="timelist">
+                                                <strong>0</strong>
+                                                <span>days</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 m-t-20 text-center">
+                                    <a href="#!" type="button" class="btn btn-warning">Request other absence</a>
+                                </div>
+                            </div>
+                            <div class="absenceHistory m-t-40">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="absencehistoryHeading">Absence History</h3>
+                                        <div class="absenceAccordion">
+                                            <div class="panel-group" id="accordionOther">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordionOther" href="#collapseOther">Other absence current & future (0)</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseOther" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12">
+                                                                <div class="row publicHoliday">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row publicHoliday m-t-15">
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <i class="fa fa-certificate"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="holidayTitle">
+                                                                            <h4>Public Holiday</h4>
+                                                                            <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                            <p>New Year's Day</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="sunIcon">
+                                                                            <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                            <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -222,13 +705,27 @@
         </div>
     </div>
 </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 <script>
-    $(document).ready(function(){
-        setTimeout(function() {
-            $(".alert").fadeOut();
-        }, 3000);
+    document.addEventListener("DOMContentLoaded", function() {
+        const selectBox = document.getElementById("absenceFilter");
+        const sections = document.querySelectorAll(
+            ".allAbsences, .annualLeave, .lateness, .sickness, .furloughs, .otherAbsences"
+        );
+
+        // Default: sirf allAbsences dikhana
+        sections.forEach(div => div.style.display = "none");
+        document.querySelector(".allAbsences").style.display = "block";
+
+        selectBox.addEventListener("change", function() {
+            const value = this.value;
+            // sab hide
+            sections.forEach(div => div.style.display = "none");
+            // sirf selected show
+            const selectedDiv = document.querySelector("." + value);
+            if (selectedDiv) {
+                selectedDiv.style.display = "block";
+            }
+        });
     });
-    new DataTable('#satffTimesheetTable');
 </script>
 @endsection

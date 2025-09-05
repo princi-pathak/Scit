@@ -27,7 +27,11 @@
 
         .timeline .time-show .btn {
             min-width: 150px;
+            cursor: auto;
         }
+
+        /* .timeline .time-show.first a.btn {
+        } */
 
         #logs_articles {
             border-collapse: collapse;
@@ -109,11 +113,16 @@
             right: 56px;
             top: 16px;
         }
-  
-    .panel .panel-body .arrow {
-        border-right: 8px solid #ffffffff !important;
-        border-left: inherit !important;
-    }
+
+        .panel .panel-body .arrow {
+            border-right: 8px solid #ffffffff !important;
+            border-left: inherit !important;
+        }
+
+        .comment-list {
+
+            width: 100%;
+        }
     </style>
 
     @php
@@ -268,9 +277,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                                                                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                                                                </div> -->
+                                                                                                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                                                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                                                                            </div> -->
 
                 </div>
 
@@ -499,7 +508,7 @@
 
                 $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", false);
 
-                let formEl = document.getElementById("addLogModal"); 
+                let formEl = document.getElementById("addLogModal");
                 formEl.setAttribute("data-mode", "add");
                 // Finally, open modal
                 $("#addLogModal").modal("show");
@@ -665,7 +674,7 @@
                         $("#daily_log_comments_list").append(
                             `
                         <div class="d-flex justify-content-center py-2" style="margin-top:10px;">
-                                <div class="second py-2 px-2"> <span class="text1">${comment.comment}</span>
+                                <div class="second py-2 px-2 comment-list"> <span class="text1">${comment.comment}</span>
                                     <div class="d-flex justify-content-between py-1 pt-2" style="text-align:right;">
                                         <div><span class="text3">${d_format}</span></div>
                                     </div>
@@ -804,17 +813,23 @@
                                 // append the span after created_at
                                 pannel_body.append(viewEditIcon);
 
-                                if (previous_date != moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
-                                    $(log_atricles).append($(`
-                                                <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
-                                                    <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                                        ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
-                                                    </span>
-                                                </div>`));
-                                    previous_date = moment.utc(resp.log_book_records[i]['date'],
-                                        'DD-MM-YYYY H:i').format('DD-MM-YYYY');
+                                if (
+                                    previous_date !== moment(resp.log_book_records[i]['date'],
+                                        'YYYY-MM-DD HH:mm:ss')
+                                    .format('DD-MM-YYYY')
+                                ) {
+                                    $(log_atricles).append(`
+                                        <div class="header_section" id="1" style="display: table-row;text-align: center;padding: 20px 0;">
+                                            <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
+                                                ${moment(resp.log_book_records[i]['date'], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY')}
+                                            </span>
+                                        </div>`);
+
+                                    previous_date = moment(resp.log_book_records[i]['date'],
+                                            'YYYY-MM-DD HH:mm:ss')
+                                        .format('DD-MM-YYYY');
                                 }
+
 
                                 if (resp.log_book_records[i]['category_name'])
                                     $(pannel_body).append($(
@@ -863,7 +878,8 @@
                                 }
                                 date_field.setAttribute("data-logtype", logType);
                                 logTypeText = logType;
-                                date_field.textContent = resp.log_book_records[i]['date'] + " | " + logTypeText;
+                                date_field.textContent = moment(resp.log_book_records[i]['date'],
+                                    'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm') + " | " + logTypeText;
                                 // date_field.prepend(date_text);
                                 // image sourabh
                                 if (resp.log_book_records[i]['image_name'] != '') {
@@ -967,9 +983,9 @@
                                 if (previous_date != moment.utc(resp.log_book_records[i]['date'],
                                         'DD-MM-YYYY H:i').format('DD-MM-YYYY')) {
                                     $(log_atricles).append($(`
-                                    <div class="header_section" style="display: table-row;text-align: center;padding: 20px 0;">
+                                    <div class="header_section" id="2" style="display: table-row;text-align: center;padding: 20px 0;">
                                         <span style="width: 120px;text-align: center;font-size: 13px;background: #1f88b5;float: right;color: white;border-radius: 4px;margin-right: -60px;margin-top:10px;margin-bottom:30px;">
-                                            ${moment.utc(resp.log_book_records[i]['date'], 'DD-MM-YYYY H:i').format('DD-MM-YYYY')}
+                                            ${moment(resp.log_book_records[i]['date'], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY')}
                                         </span>
                                     </div>`));
                                     previous_date = moment.utc(resp.log_book_records[i]['date'],
@@ -1022,7 +1038,8 @@
                                 }
                                 date_field.setAttribute("data-logtype", logType);
                                 logTypeText = logType;
-                                date_field.textContent = resp.log_book_records[i]['date'] + " | " + logTypeText;
+                                date_field.textContent = moment(resp.log_book_records[i]['date'],
+                                    'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm') + " | " + logTypeText;
                                 // date_field.prepend(date_text);
                                 // image sourabh
                                 if (resp.log_book_records[i]['image_name'] != '') {
@@ -1378,18 +1395,21 @@
                     success: function(response) {
 
                         console.log(response);
-                        $(".su_name").val(response.dynamicForm.service_user_id).trigger("change");
+                        $(".su_name").val(response.dynamicForm.service_user_id).trigger(
+                            "change");
                         $('input[name="log_title"]').val(response.log_book_records.title);
-                        $('#log_dynamic_form_id').val(response.log_book_records.dynamic_form_id);
+                        $('#log_dynamic_form_id').val(response.log_book_records
+                            .dynamic_form_id);
                         $('#dynamic_form_log_book_id').val(response.log_book_records.id);
                         $('select[name="category"]').val(response.log_book_records.category_id);
                         $('input[name="log_date"]').val(response.log_book_records.date);
                         $('textarea[name="log_detail"]').val(response.log_book_records.details);
                         // $("#formDataLogs").val(response.dynamicForm.form_data);
-                        $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm.form_builder_id).trigger('change');
+                        $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm
+                            .form_builder_id).trigger('change');
                         $(".dynamic-form-log-fields").empty();
 
-                        let formE = document.getElementById("addLogModal"); 
+                        let formE = document.getElementById("addLogModal");
                         formE.setAttribute("data-mode", "edit");
 
                         var schema = JSON.parse(response.pattern); // form structure

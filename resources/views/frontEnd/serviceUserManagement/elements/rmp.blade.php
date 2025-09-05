@@ -196,7 +196,7 @@
                                 </div>
                             </form>
                             <div class="modal-footer m-t-0 recent-task-sec">
-                                <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
+                                <button class="btn btn-default" type="button" data-dismi    ss="modal" aria-hidden="true">
                                     Cancel </button>
                                 <button class="btn btn-warning sbt-edit-rmp-record" type="button"> Confirm</button>
                             </div>
@@ -723,7 +723,7 @@
                 }
                 //var service_user_id = "{{ $service_user_id }}";
                 var formdata = $('#edit-rmp-form').serialize();
-
+                console.log("formdata", formdata);
                 $('.loader').show();
                 $('body').addClass('body-overflow');
 
