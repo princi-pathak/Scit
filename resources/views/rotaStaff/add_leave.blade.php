@@ -29,6 +29,7 @@
                         <form action="{{ url('/add-leave') }}" method="POST">
                             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                             <input type="hidden" name="staff_id" id="staff_id" value="<?php echo $staff_id;?>">
+                            <input type="hidden" name="manager_id" id="manager_id" value="<?php echo $manager_id;?>">
                             <div class="first-section m-4">
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-2 col-form-label">Employee</label>
@@ -231,10 +232,12 @@
                                 </div>
                                 <div class="addAnnualBtn">
                                     <input type="submit" class="absance-btn" value="Add absence">
-                                    <?php if($staff_id==''){?>
+                                    <?php if($staff_id=='' && $manager_id == ''){?>
                                     <a href="{{ url('/rota') }}" class="dash-btn">Back to dashboard</a>
+                                    <?php }else if($manager_id !=''){?>
+                                        <a href="{{ url('/my-profile/').'/'.$manager_id }}" class="dash-btn">Back to dashboard</a>
                                     <?php }else{?>
-                                        <a href="{{ url('/staff/profile/').$staff_id }}" class="dash-btn">Back to dashboard</a>
+                                        <a href="{{ url('/staff/profile/').'/'.$staff_id }}" class="dash-btn">Back to dashboard</a>
                                     <?php }?>
                                 </div>
                             </div>

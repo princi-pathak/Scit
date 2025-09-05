@@ -21,68 +21,144 @@ class RotaController extends Controller
     public function check_access_rights(){
       // AccessRight::where('')
     }
-    public function index()
+    public function index(Request $request)
     {
         // return view('welcome');
+        $user_id=Auth::user()->id;
         $home_ids = Auth::user()->home_id;
         $ex_home_ids = explode(',', $home_ids);
         $home_id=$ex_home_ids[0];
-        $leave['sickness'] = Staffleaves::where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 2)->where('home_id', $home_id)->count();
-        $leave['lateness'] = Staffleaves::where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 3)->where('home_id', $home_id)->count();
+        if(isset($request->user) && $request->user !=''){
+          $user_id=base64_decode($request->user);
+          $sickness = Staffleaves::where('user_id',$user_id)->where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 2)->where('home_id', $home_id)->count();
+          $lateness = Staffleaves::where('user_id',$user_id)->where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 3)->where('home_id', $home_id)->count();
+          $leave['totalSickLateLeave']=$lateness+$sickness;
+          $leave['sickness']=$sickness;
+          $leave['lateness']=$lateness;
 
-        $date_min_three = Carbon::parse('Now -3 days')->format('Y-m-d');
-        
-        $annual1 =  Staffleaves::where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 1)->where('is_deleted', 1)->where('home_id',  $home_id)->where('leave_status', 1)->count();
-        $sickness1 = Staffleaves::where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $lateness1 =  Staffleaves::where('start_date', '=', $date_min_three)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $other1 =  Staffleaves::where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $leave['total_leave_min_three'] = $annual1 + $sickness1 + $lateness1 + $other1;
+          $date_min_three = Carbon::parse('Now -3 days')->format('Y-m-d');
+          
+          $annual1 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 1)->where('is_deleted', 1)->where('home_id',  $home_id)->where('leave_status', 1)->count();
+          $sickness1 = Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness1 =  Staffleaves::where('user_id',$user_id)->where('start_date', '=', $date_min_three)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other1 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_min_three'] = $annual1 + $sickness1 + $lateness1 + $other1;
 
-        $date_min_two = Carbon::parse('Now -2 days')->format('Y-m-d');
-        $annual2 =  Staffleaves::where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $sickness2 = Staffleaves::where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $lateness2 =  Staffleaves::where('start_date', '=', $date_min_two)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $other2 =  Staffleaves::where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $leave['total_leave_min_two'] =  $annual2 + $sickness2 + $lateness2 + $other2;
+          $date_min_two = Carbon::parse('Now -2 days')->format('Y-m-d');
+          $annual2 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness2 = Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness2 =  Staffleaves::where('user_id',$user_id)->where('start_date', '=', $date_min_two)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other2 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_min_two'] =  $annual2 + $sickness2 + $lateness2 + $other2;
 
-        $date_min_one = Carbon::parse('Now -1 days')->format('Y-m-d');
-        $annual3 =  Staffleaves::where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $sickness3 = Staffleaves::where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $lateness3 =  Staffleaves::where('start_date', '=', $date_min_one)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $other3 =  Staffleaves::where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $leave['total_leave_min_one'] =  $annual3 + $sickness3 + $lateness3 + $other3;
+          $date_min_one = Carbon::parse('Now -1 days')->format('Y-m-d');
+          $annual3 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness3 = Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness3 =  Staffleaves::where('user_id',$user_id)->where('start_date', '=', $date_min_one)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other3 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_min_one'] =  $annual3 + $sickness3 + $lateness3 + $other3;
 
-        $date_current = Carbon::now()->format('Y-m-d');
-        $annual4 =  Staffleaves::where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $sickness4 = Staffleaves::where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $lateness4 =  Staffleaves::where('start_date', '=', $date_current)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $other4 =  Staffleaves::where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $leave['total_leave_current'] =  $annual4 + $sickness4 + $lateness4 +$other4;
+          $date_current = Carbon::now()->format('Y-m-d');
+          $annual4 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness4 = Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness4 =  Staffleaves::where('user_id',$user_id)->where('start_date', '=', $date_current)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other4 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_current'] =  $annual4 + $sickness4 + $lateness4 +$other4;
 
-        $date_plus_one = Carbon::parse('Now +1 days')->format('Y-m-d');
-        $annual5 =  Staffleaves::where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $sickness5 = Staffleaves::where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $lateness5 =  Staffleaves::where('start_date', '=', $date_plus_one)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $other5 =  Staffleaves::where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $leave['total_leave_plus_one'] =  $annual5 +$sickness5 + $lateness5 + $lateness5 + $other5;
+          $date_plus_one = Carbon::parse('Now +1 days')->format('Y-m-d');
+          $annual5 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness5 = Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness5 =  Staffleaves::where('user_id',$user_id)->where('start_date', '=', $date_plus_one)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other5 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_plus_one'] =  $annual5 +$sickness5 + $lateness5 + $lateness5 + $other5;
 
-        $date_plus_two = Carbon::parse('Now +2 days')->format('Y-m-d');
-        $annual6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $sickness6 = Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $lateness6 =  Staffleaves::where('start_date', '=', $date_plus_two)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $other6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $leave['total_leave_plus_two'] =  $annual6 + $sickness6 + $lateness6 + $other6;
+          $date_plus_two = Carbon::parse('Now +2 days')->format('Y-m-d');
+          $annual6 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness6 = Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness6 =  Staffleaves::where('user_id',$user_id)->where('start_date', '=', $date_plus_two)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other6 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_plus_two'] =  $annual6 + $sickness6 + $lateness6 + $other6;
 
-        $date_plus_three = Carbon::parse('Now +3 days')->format('Y-m-d');
-        $annual7 =  Staffleaves::where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $sickness7 = Staffleaves::where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $lateness7 =  Staffleaves::where('start_date', '=', $date_plus_three)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $other7 =  Staffleaves::where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
-        $leave['total_leave_plus_three'] =  $annual7 + $sickness7 + $lateness7 + $other7;
+          $date_plus_three = Carbon::parse('Now +3 days')->format('Y-m-d');
+          $annual7 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness7 = Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness7 =  Staffleaves::where('user_id',$user_id)->where('start_date', '=', $date_plus_three)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other7 =  Staffleaves::where('user_id',$user_id)->where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_plus_three'] =  $annual7 + $sickness7 + $lateness7 + $other7;
+        }else{
+          $sickness = Staffleaves::where('user_id',$user_id)->where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 2)->where('home_id', $home_id)->count();
+          $lateness = Staffleaves::where('user_id',$user_id)->where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 3)->where('home_id', $home_id)->count();
+          $leave['totalSickLateLeave']=$lateness+$sickness;
+          $leave['sickness']=$sickness;
+          $leave['lateness']=$lateness;
+
+          $date_min_three = Carbon::parse('Now -3 days')->format('Y-m-d');
+          
+          $annual1 =  Staffleaves::where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 1)->where('is_deleted', 1)->where('home_id',  $home_id)->where('leave_status', 1)->count();
+          $sickness1 = Staffleaves::where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness1 =  Staffleaves::where('start_date', '=', $date_min_three)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other1 =  Staffleaves::where('start_date', '<=', $date_min_three)->where('end_date', '>=', $date_min_three)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_min_three'] = $annual1 + $sickness1 + $lateness1 + $other1;
+
+          $date_min_two = Carbon::parse('Now -2 days')->format('Y-m-d');
+          $annual2 =  Staffleaves::where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness2 = Staffleaves::where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness2 =  Staffleaves::where('start_date', '=', $date_min_two)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other2 =  Staffleaves::where('start_date', '<=', $date_min_two)->where('end_date', '>=', $date_min_two)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_min_two'] =  $annual2 + $sickness2 + $lateness2 + $other2;
+
+          $date_min_one = Carbon::parse('Now -1 days')->format('Y-m-d');
+          $annual3 =  Staffleaves::where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness3 = Staffleaves::where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness3 =  Staffleaves::where('start_date', '=', $date_min_one)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other3 =  Staffleaves::where('start_date', '<=', $date_min_one)->where('end_date', '>=', $date_min_one)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_min_one'] =  $annual3 + $sickness3 + $lateness3 + $other3;
+
+          $date_current = Carbon::now()->format('Y-m-d');
+          $annual4 =  Staffleaves::where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness4 = Staffleaves::where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness4 =  Staffleaves::where('start_date', '=', $date_current)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other4 =  Staffleaves::where('start_date', '<=', $date_current)->where('end_date', '>=', $date_current)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_current'] =  $annual4 + $sickness4 + $lateness4 +$other4;
+
+          $date_plus_one = Carbon::parse('Now +1 days')->format('Y-m-d');
+          $annual5 =  Staffleaves::where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness5 = Staffleaves::where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness5 =  Staffleaves::where('start_date', '=', $date_plus_one)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other5 =  Staffleaves::where('start_date', '<=', $date_plus_one)->where('end_date', '>=', $date_plus_one)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_plus_one'] =  $annual5 +$sickness5 + $lateness5 + $lateness5 + $other5;
+
+          $date_plus_two = Carbon::parse('Now +2 days')->format('Y-m-d');
+          $annual6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness6 = Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness6 =  Staffleaves::where('start_date', '=', $date_plus_two)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other6 =  Staffleaves::where('start_date', '<=', $date_plus_two)->where('end_date', '>=', $date_plus_two)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_plus_two'] =  $annual6 + $sickness6 + $lateness6 + $other6;
+
+          $date_plus_three = Carbon::parse('Now +3 days')->format('Y-m-d');
+          $annual7 =  Staffleaves::where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $sickness7 = Staffleaves::where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $lateness7 =  Staffleaves::where('start_date', '=', $date_plus_three)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $other7 =  Staffleaves::where('start_date', '<=', $date_plus_three)->where('end_date', '>=', $date_plus_three)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->where('home_id',  $home_id)->count();
+          $leave['total_leave_plus_three'] =  $annual7 + $sickness7 + $lateness7 + $other7;
+        }
 
         // echo "<pre>";print_r(Auth::user());die;
-        $renaming_hour=Auth::user()->holiday_entitlement;
-        $staff_leave =  Staffleaves::where('user_id',Auth::user()->id)->whereYear('start_date', date('Y'))->where('leave_type', 1)->where('is_deleted', 1)->where('home_id',  $home_id)->where('leave_status', 1)->get();
+        $renaming_hour = Auth::user()->holiday_entitlement;
+        if(isset($request->user) && $request->user !=''){
+          $userDetails=User::find($user_id)->holiday_entitlement;
+          $renaming_hour=$userDetails ?? 0;
+        }
+
+        if ($renaming_hour === null || trim($renaming_hour) === '') {
+            $renaming_hour = 0;
+        } elseif (!is_numeric($renaming_hour)) {
+            $renaming_hour = 0;
+        } else {
+            // agar number hai to int bana do
+            $renaming_hour = (int)$renaming_hour;
+        }
+        $staff_leave =  Staffleaves::where('user_id',$user_id)->whereYear('start_date', date('Y'))->where('leave_type', 1)->where('is_deleted', 1)->where('home_id',  $home_id)->where('leave_status', 1)->get();
         
         $allowance_hour=0;
         if(count($staff_leave) > 0){
@@ -97,12 +173,17 @@ class RotaController extends Controller
               $diff = $start->diff($end);
               $leave_count += $diff->days + 1;
           }
-          $total_hours=RotaAssignEmployee::where('emp_id',Auth::user()->id)->whereYear('created_at',date('Y'))->sum('total_hours');
+          $total_hours=RotaAssignEmployee::where('emp_id',$user_id)->whereYear('created_at',date('Y'))->sum('total_hours');
           $allowance_hour = $total_hours * $leave_count;
         }
         // echo $allowance_hour;die;
         $leave['renaming_hour']=$renaming_hour - $allowance_hour;
         $leave['allowance_hour']=$allowance_hour;
+        $leave['over_time']=TimeSheet::where(['home_id'=>$home_id,'user_id'=>$user_id])->whereNull('deleted_at')->sum('hours');
+        if($user_id == Auth::user()->id){
+          $user_id='';
+        }
+        $leave['user_id']=$user_id;
         return view('rotaStaff.StaffDashboard', ['sidebar' => 'dashborad'], $leave);
     }
 
@@ -454,6 +535,7 @@ class RotaController extends Controller
         $ex_home_ids = explode(',', $home_ids);
         $home_id=$ex_home_ids[0];
         $data['staff_id']=($request->staff ?? "");
+        $data['manager_id']=($request->manager ?? "");
         $data['leave'] = $id;
         $data['sidebar'] = '';
         $data['leavetype'] = LeaveType::where('status', 1)->get();
@@ -604,9 +686,11 @@ class RotaController extends Controller
             'created_at'=>date("Y-m-d H:i:s"),
             'updated_at'=>date("Y-m-d H:i:s")  
         );
-        // $data = Staffleaves::insert($add_leave);
+        $data = Staffleaves::insert($add_leave);
         if(isset($request->staff_id) && $request->staff_id !=''){
           return redirect('/pending-request?staff_id=' .$request->staff_id);
+        }else if(isset($request->manager_id) && $request->manager_id !=''){
+          return redirect('/pending-request?manager=' .$request->manager_id);
         }else{
           return redirect('/pending-request');
         }
@@ -625,6 +709,7 @@ class RotaController extends Controller
         $data['username'] = $user_name;
         $data['sidebar'] = 'action';
         $data['staff_id']=($request->staff_id ?? "");
+        $data['manager']=($request->manager ?? "");
         return view('rotaStaff.leave_pending', $data);
     }
 
@@ -862,14 +947,20 @@ class RotaController extends Controller
     }
 
     function get_leave_record_for_1_week(Request $request){
-     
+
     	if(Auth::check()){
-     
         $date = carbon::parse($request->date)->format('Y-m-d');
-        $data['annual'] =  Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->count();
-        $data['sickness'] = Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->count();
-        $data['lateness'] =  Staffleaves::where('start_date', '=', $date)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->count();
-        $data['other'] =  Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->count();
+        if($request->user_id == ''){
+          $data['annual'] =  Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['sickness'] = Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['lateness'] =  Staffleaves::where('start_date', '=', $date)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['other'] =  Staffleaves::where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->count();
+        }else{
+          $data['annual'] =  Staffleaves::where('user_id',$request->user_id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['sickness'] = Staffleaves::where('user_id',$request->user_id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 2)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['lateness'] =  Staffleaves::where('user_id',$request->user_id)->where('start_date', '=', $date)->where('leave_type', 3)->where('is_deleted', 1)->where('leave_status', 1)->count();
+          $data['other'] =  Staffleaves::where('user_id',$request->user_id)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->count();
+        }
 
         echo json_encode($data);
       } else {

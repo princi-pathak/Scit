@@ -97,7 +97,8 @@
 
                                     <li><a href="{{ url('/service/earning-scheme/'.$patient->id) }}"> <i class="{{ $labels['earning_scheme']['icon'] }}"></i> {{$labels['earning_scheme']['label']}} <span class="badge pull-right r-activity {{ $ern_schme_count['color'] }}">{{ (strlen($ern_schme_count['count']) < 2) ? '0':'' }}{{ $ern_schme_count['count'] }}</span></a></li>
                                     <!-- daily-record-list -->
-                                    <li><a href="{{ url('/service/user-profile/'.$patient->id) }}" su_id="{{ $patient->id }}" class=" su-set-btn"> <i class="{{ $labels['mfc']['icon'] }}"></i>{{ $labels['mfc']['label'] }} <span class="badge pull-right r-activity {{ $afc_status_count['color'] }}">{{ (strlen($afc_status_count['count']) < 2) ? '0':'' }}{{ $afc_status_count['count'] }}</span></a></li>
+                                    <!-- <li><a href="{{ url('/service/user-profile/'.$patient->id) }}" su_id="{{ $patient->id }}" class=" su-set-btn"> <i class="{{ $labels['mfc']['icon'] }}"></i>{{ $labels['mfc']['label'] }} <span class="badge pull-right r-activity {{ $afc_status_count['color'] }}">{{ (strlen($afc_status_count['count']) < 2) ? '0':'' }}{{ $afc_status_count['count'] }}</span></a></li> -->
+                                    <li><a href="{{ url('/service/missing-care-form-records/'.$patient->id) }}" su_id="{{ $patient->id }}" class=" su-set-btn"> <i class="{{ $labels['mfc']['icon'] }}"></i>{{ $labels['mfc']['label'] }} <span class="badge pull-right r-activity {{ $afc_status_count['color'] }}">{{ (strlen($afc_status_count['count']) < 2) ? '0':'' }}{{ $afc_status_count['count'] }}</span></a></li>
 
                                     <!-- <li><a href="javascript:;" su_id="$patient->id" class="daily-record-list su-set-btn"> <i class="fa fa-calendar"></i>$labels['daily_record']['label'] <span class="badge pull-right r-activity  $notifi_count_dr['color'] "> (strlen($notifi_count_dr['count']) < 2) ? '0':''  $notifi_count_dr['count'] </span></a></li> -->
 
@@ -105,7 +106,8 @@
 
                                     <li><a href="{{ url('/service/placement-plans/'.$patient->id) }}"> <i class="{{$labels['placement_plan']['icon']}}"></i> {{ $labels['placement_plan']['label'] }} <span class="badge pull-right r-activity {{ $notifi_pp['color'] }}">{{ (strlen($notifi_pp['count']) < 2) ? '0':'' }}{{ $notifi_pp['count'] }}</span></a></li>
 
-                                    <li><a href="{{ url('/service/user-profile/'.$patient->id) }}"> <i class="fa fa-scissors"></i> Risks <span class="badge {{ $notif_color }} pull-right r-activity">{{ (strlen($risk_notif) < 2) ? '0' : '' }}{{ $risk_notif }}</span></a></li>
+                                    <!-- <li><a href="{{ url('/service/user-profile/'.$patient->id) }}"> <i class="fa fa-scissors"></i> Risks <span class="badge {{ $notif_color }} pull-right r-activity">{{ (strlen($risk_notif) < 2) ? '0' : '' }}{{ $risk_notif }}</span></a></li> -->
+                                    <li><a href="{{ url('/service/rmp/'.$patient->id) }}"> <i class="fa fa-scissors"></i> Risks <span class="badge {{ $notif_color }} pull-right r-activity">{{ (strlen($risk_notif) < 2) ? '0' : '' }}{{ $risk_notif }}</span></a></li>
                                 </ul>
                             </section>
                         </aside>

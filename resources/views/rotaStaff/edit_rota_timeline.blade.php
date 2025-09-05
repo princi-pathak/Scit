@@ -240,7 +240,7 @@
                     <div class="accordion editRota" id="accordionPanelsStayOpenExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button" type="button" data-toggle="collapse"
                                     data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
                                     aria-controls="panelsStayOpen-collapseOne">
                                     {{ date("D j M Y", strtotime($rota_data->rota_start_date)) }} - {{ date("D j M Y", strtotime($rota_data->rota_end_date)) }}
@@ -255,7 +255,7 @@
                                     foreach ($period as $date) {
                                         $shift_count=App\RotaShift::where('rota_id', $rota_data->id)->where('rota_day_date', $date->format('Y-m-d'))->where('status', 1)->count();
                                     ?>
-                                        <div class="d-flex">
+                                        <div class="addSoftBtmBorder">
                                             <div class="date-of-shift">
                                                 <strong>{{$date->format('D j M')}}</strong>
                                             </div>
@@ -308,12 +308,12 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="">
+                                                        <div class="d-flex">
                                                             <div class="d-flex align-items-center">
                                                                 <div class="name_of_person">{{ $user_data->name }}</div>
                                                                 <div class="shift_timeing_duration">{{ \Carbon\Carbon::parse($shift_start)->format('h:i') }} - {{ \Carbon\Carbon::parse($shift_end) ->format('h:i') }}</div>
                                                             </div>
-                                                            <div class="">{{ $description }}</div>
+                                                            <div class="m-l-10">{{ $description }}</div>
                                                         </div>
                                                     </div>
                                                 </button>
@@ -626,7 +626,7 @@
                                                         <div class="col-md-4 my-3" style="opacity: 0.7; font-weight: 500;">No event on this day</div>
                                                         <p>This shift is <strong><span id="duration_of_shift"></span> </strong></p>
                                                     </div>
-                                                    <div class="form-group col-md-12 d-flex justify-content-end">
+                                                    <div class="form-group modelFooterBorder d-flex justify-content-end">
                                                         <button type="button" class="delete_modal_btn">Delete</button>
                                                         <button type="button" id="update_shift" onclick="next({id:'next',form:'form',count:1})" class="save-btn">Update shift</button>
                                                     </div>
@@ -640,9 +640,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer justify-content-start">
+            <!-- <div class="modal-footer justify-content-start">
                 <button type="button" class="close_modal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

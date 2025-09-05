@@ -200,7 +200,7 @@
             <div class="my-summary-info">
               <div class="row">
                 <div class="col-lg-12 col-md-12">
-                  <h4 class="my-summry-part">My summary</h4>
+                  <h4 class="my-summry-part">Summary</h4>
                 </div>
                 <div class="col-lg-3">
                   <div class="main-white-crical"></div>
@@ -252,21 +252,29 @@
                   <h3><a href="{{ url('absence/type=2') }}">Request time off</a></h3>
                 </div>
                 <div class="main-equal-side">
-                  <div class="main-sidebar-crial">
+                  <!-- <div class="main-sidebar-crial">
                     <div class="crical-onw-white"></div>
                     <div class="crical-strok"> </div>
-                  </div>
+                  </div> -->
+                  <div class="crical-part-info-main">
+                  <div class="crical-info-prt"> </div>
+                  <!-- <a> -->
+                    <div class="stock-crical-info">
+                      <h2>{{ $totalSickLateLeave }}</h2>
+                    </div>
+                  <!-- </a> -->
+                </div>
                   <div class="crical-content-bar">
                     <h4><strong><?php echo formatHours($renaming_hour);?></strong> remaining</h4>
                     <h4><strong><?php echo formatHours($allowance_hour);?></strong> allowance</h4>
                   </div>
                 </div>
-                <p class="next">Next up - No absences coming up</p>
+                <p class="next m-t-20">Next up - No absences coming up</p>
                 <div class="btn-info-sep">
                   <p>You've also taken</p>
                   <div class="ntn-prt">
-                    <h5><a href="#">{{ $sickness }} Lateness</a></h5>
-                    <h5><a href="#">{{ $lateness }} Sickness</a></h5>
+                    <a href="#">{{ $sickness }} Lateness</a>
+                    <a href="#">{{ $lateness }} Sickness</a>
                   </div>
                 </div>
               </div>
@@ -274,7 +282,7 @@
                 <div class="tab-first-infos">
                   <h3><a href="{{ url('absence/type=2') }}">Request time off</a></h3>
                 </div>
-                <div class="main-equal-side">
+                <!-- <div class="main-equal-side">
                   <div class="main-sidebar-crial">
                     <div class="crical-onw-white"></div>
                     <div class="crical-strok"> </div>
@@ -283,13 +291,18 @@
                     <h4><strong>-5 hrs 0 mins</strong> remaining</h4>
                     <h4><strong>0 hrs 0 mins</strong> allowance</h4>
                   </div>
-                </div>
-                <p class="next">Next up - No absences coming up</p>
+                </div> -->
+                <?php 
+                  $explode_hours=explode('.',$over_time);
+                ?>
+                <p class="next m-t-40"><i class="fa fa-clock" aria-hidden="true"></i> <strong>Time off in lieu</strong>  <?php if(!empty($explode_hours)){ echo $explode_hours[0];}else{ echo 0;}?>h <?php if(!empty($explode_hours)){ echo $explode_hours[1] ?? 0;}else{ echo 0;}?>m available to take</p>
+                <p class="next m-t-10"><i class="fa fa-money" aria-hidden="true"></i> <strong>Payable</strong> 0h 0m pending payment</p>
                 <div class="btn-info-sep">
-                  <p>You've also taken</p>
+                  <h3>Claims</h3>
+                  <p>You have 0 overtime claims pending</p>
                   <div class="ntn-prt">
-                    <h6><a href="#">0 Lateness</a></h6>
-                    <h6><a href="#">0 Sickness</a></h6>
+                    <a href="{{url('/overtime?key=').base64_encode(Auth::user()->id)}}">Overtime history</a>
+                    <a href="{{url('/my-profile/'.Auth::user()->id.'/time-sheet')}}">Log overtime</a>
                   </div>
                 </div>
               </div>
@@ -443,12 +456,14 @@
 <script>
   function change_leaves_data(date) {
     var token = "<?= csrf_token() ?>";
+    var user_id="<?php echo $user_id;?>"
     $.ajax({
       url: "{{ url('/get_leave_record_for_1_week') }}",
       type: "post",
       dataType: 'json',
       data: {
         date: date,
+        user_id:user_id,
         _token: token
       },
       success: function(result) {
@@ -468,12 +483,14 @@
 
     var token = "<?= csrf_token() ?>";
     var date = moment().format('YYYY-MM-DD');
+    var user_id="<?php echo $user_id;?>"
     $.ajax({
       url: "{{ url('/get_leave_record_for_1_week') }}",
       type: "post",
       dataType: 'json',
       data: {
         date: date,
+        user_id:user_id,
         _token: token
       },
       success: function(result) {
