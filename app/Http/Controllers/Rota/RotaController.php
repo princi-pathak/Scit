@@ -155,7 +155,6 @@ class RotaController extends Controller
         } elseif (!is_numeric($renaming_hour)) {
             $renaming_hour = 0;
         } else {
-            // agar number hai to int bana do
             $renaming_hour = (int)$renaming_hour;
         }
         $staff_leave =  Staffleaves::where('user_id',$user_id)->whereYear('start_date', date('Y'))->where('leave_type', 1)->where('is_deleted', 1)->where('home_id',  $home_id)->where('leave_status', 1)->get();
@@ -1617,6 +1616,18 @@ class RotaController extends Controller
       return "{$hours}h {$minutes}min";
     }
     function rota_absence(Request $request){
+      $user_id=base64_decode($request->manager);
+      $annual =  Staffleaves::where('user_id',$user_id)->where('leave_type', 1)->where('is_deleted', 1)->where('leave_status', 1)->count();
+      $sickness = Staffleaves::where('user_id',$user_id)->where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 2)->count();
+      $lateness = Staffleaves::where('user_id',$user_id)->where('is_deleted', 1 )->where('leave_status', 1)->where('leave_type', 3)->count();
+      $other =  Staffleaves::where('user_id',$user_id)->where('leave_type', 4)->where('is_deleted', 1)->where('leave_status', 1)->count();
+      $currentYear = date('Y');
+      $startYear = $currentYear + 1;
+      $endYear = $currentYear - 10;
+      // echo $endYear;die;
+
+      $years = range($endYear, $startYear); 
+      echo "<pre>";print_r($years);die;
       return view('rotaStaff.absence',);
     }
 
