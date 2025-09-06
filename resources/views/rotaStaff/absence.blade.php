@@ -6,6 +6,20 @@
 
 
 <!--main content start-->
+<?php 
+  function formatHours($decimalHours) {
+    
+    if ($decimalHours == 0 || $decimalHours == null) {
+        $data=['hours'=>0,'min'=>0];
+        return $data;
+    }
+
+    $hours = floor($decimalHours);
+    $minutes = round(($decimalHours - $hours) * 60);
+    $data=['hours'=>$hours,'min'=>$minutes];
+    return $data;
+  }
+?>
 <section class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -33,13 +47,9 @@
                                 <label>Leave year</label>
                                 <div>
                                     <select class="form-select form-control">
-                                        <option value="">01 Jan 2016 - 31 Dec 2016</option>
-                                        <option value="">02 Jan 2016 - 31 Dec 2016</option>
-                                        <option value="">03 Jan 2016 - 31 Dec 2016</option>
-                                        <option value="">04 Jan 2016 - 31 Dec 2016</option>
-                                        <option value="">05 Jan 2016 - 31 Dec 2016</option>
-                                        <option value="">06 Jan 2016 - 31 Dec 2016</option>
-                                        <option value="">07 Jan 2016 - 31 Dec 2016</option>
+                                        <?php foreach($years as $yearVal){ $current_year=date('Y');?>
+                                            <option value="{{$yearVal}}" <?php if($current_year == $yearVal){echo 'selected';}?>>01 Jan {{$yearVal}} - 31 Dec {{$yearVal}}</option>
+                                        <?php }?>
                                     </select>
                                 </div>
                             </div>
@@ -56,27 +66,29 @@
                                     <div class="absenceAdd m-t-20">
                                         <label>Annual leave to take</label>
                                         <div class="timeHrsMinuts m-t-20 m-b-20">
+                                            <?php $hrsmin=formatHours($renaming_hour);?>
                                             <div class="timelist">
-                                                <strong>168</strong>
+                                                <strong><?php echo $hrsmin['hours'];?></strong>
                                                 <span>hrs</span>
                                             </div>
                                             <div class="timelist">
-                                                <strong>0</strong>
+                                                <strong><?php echo $hrsmin['min'];?></strong>
                                                 <span>mins</span>
                                             </div>
                                             <div class="timelist">
                                                 <strong>/</strong>
                                             </div>
+                                            <?php $allowhrsmin=formatHours($allowance_hour);?>
                                             <div class="timelist">
-                                                <strong>224</strong>
+                                                <strong><?php echo $allowhrsmin['hours'];?></strong>
                                                 <span>hrs</span>
                                             </div>
                                             <div class="timelist">
-                                                <strong>0</strong>
+                                                <strong><?php echo $allowhrsmin['min'];?></strong>
                                                 <span>mins</span>
                                             </div>
                                         </div>
-                                        <p>(Approx 24 / 32 days) <a href="#!"><i class="fa fa-info-o"></i> </a> </p>
+                                        <!-- <p>(Approx 24 / 32 days) <a href="#!"><i class="fa fa-info-o"></i> </a> </p> -->
                                         <div class="m-t-20">
                                             <a href="#!" type="button" class="btn btn-warning">Add annual leave</a>
                                         </div>
@@ -87,12 +99,12 @@
                                         <label>Sickness</label>
                                         <div class="timeHrsMinuts m-t-20 m-b-20">
                                             <div class="timelist">
-                                                <strong>0</strong>
+                                                <strong>{{$sickness}}</strong>
                                                 <span>occurrences</span>
                                             </div>
 
                                         </div>
-                                        <p>(....?) <a href="#!"><i class="fa fa-info-o"></i> </a> </p>
+                                        <!-- <p>(....?) <a href="#!"><i class="fa fa-info-o"></i> </a> </p> -->
                                         <div class="m-t-20">
                                             <a href="#!" type="button" class="btn btn-warning">Add</a>
                                         </div>
@@ -103,12 +115,12 @@
                                         <label>Lateness</label>
                                         <div class="timeHrsMinuts m-t-20 m-b-20">
                                             <div class="timelist">
-                                                <strong>0</strong>
+                                                <strong>{{$lateness}}</strong>
                                                 <span>occurrences</span>
                                             </div>
 
                                         </div>
-                                        <p>(....?) <a href="#!"><i class="fa fa-info-o"></i> </a> </p>
+                                        <!-- <p>(....?) <a href="#!"><i class="fa fa-info-o"></i> </a> </p> -->
                                         <div class="m-t-20">
                                             <a href="#!" type="button" class="btn btn-warning">Add</a>
                                         </div>
@@ -124,12 +136,13 @@
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion-absence" href="#collapseOne">Current & future (0)</a>
+                                                            <a data-toggle="collapse" data-parent="#accordion-absence" href="#collapseOne">Current & future ({{count($current_future)}})</a>
                                                         </h4>
                                                     </div>
                                                     <div id="collapseOne" class="panel-collapse collapse">
                                                         <div class="panel-body">
                                                             <div class="col-md-12">
+                                                                <?php foreach($current_future as $cfVal){?>
                                                                 <div class="row publicHoliday">
                                                                     <div class="col-md-2">
                                                                         <div class="sunIcon">
@@ -150,8 +163,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="row publicHoliday m-t-15">
+                                                                <?php }?>
+                                                                <!-- <div class="row publicHoliday m-t-15">
                                                                     <div class="col-md-2">
                                                                         <div class="sunIcon">
                                                                             <i class="fa fa-certificate"></i>
@@ -170,7 +183,7 @@
                                                                             <a href="#!"><i class="fa fa-trash-o"></i></a>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -178,15 +191,35 @@
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion-absence" href="#collapseTwo">Absence history (0)</a>
+                                                            <a data-toggle="collapse" data-parent="#accordion-absence" href="#collapseTwo">Absence history ({{count($history)}})</a>
                                                         </h4>
                                                     </div>
                                                     <div id="collapseTwo" class="panel-collapse collapse">
                                                         <div class="panel-body">
-                                                            <div class="row">
+                                                            <!-- <div class="row">
                                                                 <div class="col-md-12">
                                                                     Shank fatback pastrami turkey ham hock. Pastrami ball tip brisket pig salami kevin tri-tip sausage venison jowl spare ribs short loin pork chop. Shank pork chop burgdoggen shankle flank. Turducken cow salami venison, biltong ham ball tip meatloaf drumstick bacon jowl kielbasa.
                                                                 </div>
+                                                            </div> -->
+                                                            <div class="row publicHoliday m-t-15">
+                                                                <div class="col-md-2">
+                                                                    <div class="sunIcon">
+                                                                        <i class="fa fa-certificate"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-8">
+                                                                    <div class="holidayTitle">
+                                                                        <h4>Public Holiday</h4>
+                                                                        <p><strong>Mon 01 Jan 2018</strong> (7 hrs)</p>
+                                                                        <p>New Year's Day</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="col-md-2">
+                                                                    <div class="sunIcon">
+                                                                        <a href="#!"><i class="fa fa-pencil-square-o"></i></a>
+                                                                        <a href="#!"><i class="fa fa-trash-o"></i></a>
+                                                                    </div>
+                                                                </div> -->
                                                             </div>
 
                                                         </div>
