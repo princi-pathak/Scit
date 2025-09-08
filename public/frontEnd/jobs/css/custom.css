@@ -3562,4 +3562,7 @@ label {
   justify-content: end;
   margin-bottom: 15px;
 }
+.overTimeBox{
+  height: 212px;
+}
     /* absence and overtime end css */

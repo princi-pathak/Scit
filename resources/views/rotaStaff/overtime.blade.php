@@ -27,42 +27,44 @@
                                     <div class="panel">
                                         <header class="panel-heading"> Time off in lieu (TOIL) </header>
                                         <div class="panel-body">
-                                            <div class="row">                                                
-                                                <div class="col-md-4">
-                                                    <div class="absenceAdd m-t-20">
-                                                        <label>TOIL logged</label>
-                                                        <div class="timeHrsMinuts m-t-20 m-b-20">
-                                                            <div class="timelist">
-                                                                <strong>0h 0m</strong>
-                                                                <span>No approved claims</span>
+                                            <div class="overTimeBox">
+                                                <div class="row">                                                
+                                                    <div class="col-md-4">
+                                                        <div class="absenceAdd m-t-20">
+                                                            <label>TOIL logged</label>
+                                                            <div class="timeHrsMinuts m-t-20 m-b-20">
+                                                                <div class="timelist">
+                                                                    <strong>0h 0m</strong>
+                                                                    <span>No approved claims</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="absenceAdd borderLeftRight m-t-20">
-                                                        <label>TOIL taken</label>
-                                                        <div class="timeHrsMinuts m-t-20 m-b-20">
-                                                            <div class="timelist">
-                                                                <strong>0h 0m </strong>
-                                                                <span>No TOIL absences</span>
+                                                    <div class="col-md-4">
+                                                        <div class="absenceAdd borderLeftRight m-t-20">
+                                                            <label>TOIL taken</label>
+                                                            <div class="timeHrsMinuts m-t-20 m-b-20">
+                                                                <div class="timelist">
+                                                                    <strong>0h 0m </strong>
+                                                                    <span>No TOIL absences</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="absenceAdd m-t-20">
-                                                        <label>TOIL balance</label>
-                                                        <div class="timeHrsMinuts m-t-20 m-b-20">
-                                                            <div class="timelist">
-                                                                <strong>0h 0m</strong>
-                                                                <span>Available to take</span>
+                                                    <div class="col-md-4">
+                                                        <div class="absenceAdd m-t-20">
+                                                            <label>TOIL balance</label>
+                                                            <div class="timeHrsMinuts m-t-20 m-b-20">
+                                                                <div class="timelist">
+                                                                    <strong>0h 0m</strong>
+                                                                    <span>Available to take</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                 <div class="col-md-12 m-t-20 text-center">
-                                                     <a href="#!" type="button" class="btn btn-warning">Use TOIL</a>
+                                                    <div class="col-md-12 m-t-20 text-center">
+                                                        <a href="#!" type="button" class="btn btn-warning">Use TOIL</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -72,42 +74,44 @@
                                     <div class="panel">
                                         <header class="panel-heading"> Payable </header>
                                         <div class="panel-body">
-                                            <div class="row">                                                
-                                                <div class="col-md-4">
-                                                    <div class="absenceAdd m-t-20">
-                                                        <label>Overtime logged</label>
-                                                        <div class="timeHrsMinuts m-t-20 m-b-20">
-                                                            <div class="timelist">
-                                                                <strong>0h 0m</strong>
-                                                                <span>No approved claims</span>
+                                            <div class="overTimeBox">
+                                                <div class="row">                                                
+                                                    <div class="col-md-4">
+                                                        <div class="absenceAdd m-t-20">
+                                                            <label>Overtime logged</label>
+                                                            <div class="timeHrsMinuts m-t-20 m-b-20">
+                                                                <div class="timelist">
+                                                                    <strong>0h 0m</strong>
+                                                                    <span>No approved claims</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="absenceAdd borderLeftRight m-t-20">
-                                                        <label>Paid</label>
-                                                        <div class="timeHrsMinuts m-t-20 m-b-20">
-                                                            <div class="timelist">
-                                                                <strong>0h 0m </strong>
-                                                                <span>Payment scheduled or paid</span>
+                                                    <div class="col-md-4">
+                                                        <div class="absenceAdd borderLeftRight m-t-20">
+                                                            <label>Paid</label>
+                                                            <div class="timeHrsMinuts m-t-20 m-b-20">
+                                                                <div class="timelist">
+                                                                    <strong>0h 0m </strong>
+                                                                    <span>Payment scheduled or paid</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="absenceAdd m-t-20">
-                                                        <label>Pending payment</label>
-                                                        <div class="timeHrsMinuts m-t-20 m-b-20">
-                                                            <div class="timelist">
-                                                                <strong>0h 0m</strong>
-                                                                <span>Approved awaiting payment</span>
+                                                    <div class="col-md-4">
+                                                        <div class="absenceAdd m-t-20">
+                                                            <label>Pending payment</label>
+                                                            <div class="timeHrsMinuts m-t-20 m-b-20">
+                                                                <div class="timelist">
+                                                                    <strong>0h 0m</strong>
+                                                                    <span>Approved awaiting payment</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                 <div class="col-md-12 m-t-20 text-center">
-                                                     <a href="#!" type="button" class="btn btn-warning">Use TOIL</a>
+                                                    <!-- <div class="col-md-12 m-t-20 text-center">
+                                                        <a href="#!" type="button" class="btn btn-warning">Use TOIL</a>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>

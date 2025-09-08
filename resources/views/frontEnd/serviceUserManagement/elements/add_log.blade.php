@@ -11,7 +11,7 @@
                 @include('frontEnd.common.popup_alert_messages')
                 <div class="row">
 
-                    <form id="su-log-book-form">
+                    <form id="su-log-book-form" enctype="multipart/form-data">
                         @csrf
                         <div class="add-new-box risk-tabs custm-tabs">
                             <input type="hidden" name="dynamic_form_log_book_id" id="dynamic_form_log_book_id">
@@ -52,7 +52,7 @@
                                 <div class="col-md-9 col-sm-10 col-xs-12">
                                     <div class="select-style">
                                         <select name="category" class='su_name' required>
-                                            <option disabled selected value> -- select an option -- </option>
+                                            <option disabled selected value> -- Select an option -- </option>
                                             @foreach ($categorys as $key)
                                                 <option value="{{ $key['id'] }}">{{ $key['name'] }}</option>
                                             @endforeach
@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- new image -->
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                                 <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Image: </label>
@@ -98,6 +98,10 @@
                                             class="form-control detail-info-txt log-image">
                                     </div>
                                 </div>
+                            </div>
+                            <div id="image-preview" style="margin-top:10px; display:none;">
+                                <img src="" alt="Preview"
+                                    style="max-width:200px; border:1px solid #ddd; padding:5px;">
                             </div>
                             <!-- new image -->
                             <input type="hidden" class="dynamic_form_log_select">
@@ -120,7 +124,7 @@
                                             } ?>
                                         </select>
                                     </div>
-                                    <p class="help-block"> Choose a user and the type of form you want to fill. </p>
+                                    <p class="help-block"> Choose a form type to fill. </p>
                                 </div>
                             </div>
                             <input type="hidden" id="log_dynamic_form_id" name="log_dynamic_form_id">
@@ -263,6 +267,20 @@
 
     });
 
+    $('input[name="log_image"]').on('change', function (e) {
+    var file = e.target.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#image-preview img').attr('src', e.target.result);
+            $('#image-preview').show();
+        }
+        reader.readAsDataURL(file);
+    } else {
+        $('#image-preview').hide();
+    }
+});
+
     let loaddataontableLog = () => {
         let formid = $("#formid").val();
         let home_id = $("#home_id").val();
@@ -356,16 +374,24 @@
             return false;
         }
 
+        // var formData = $('#su-log-book-form').serialize();
+        var formData = new FormData($('#su-log-book-form')[0]);
+        var fileInput = $('input[name="log_image"]')[0].files[0];
+        if (fileInput) {
+            formData.append('log_image', fileInput);
+        }
+        console.log(formData);
         $('.loader').show();
         $('body').addClass('body-overflow');
+
         $.ajax({
             type: 'post',
             url: "{{ url('/service/logbook/add') }}",
-            data: $('#su-log-book-form').serialize(),
+            data: formData,
             async: false,
             cache: false,
-            // contentType: false,
-            // processData: false,
+            contentType: false,
+            processData: false,
             // dataType : 'json',
 
             success: function(resp) {
