@@ -31,7 +31,7 @@
         }
 
         /* .timeline .time-show.first a.btn {
-        } */
+                        } */
 
         #logs_articles {
             border-collapse: collapse;
@@ -277,9 +277,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                                                                                                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                                                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                                                                            </div> -->
+                                                                                                                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                                                                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                                                                                            </div> -->
 
                 </div>
 
@@ -510,8 +510,13 @@
 
                 let formEl = document.getElementById("addLogModal");
                 formEl.setAttribute("data-mode", "add");
-                // Finally, open modal
-                $("#addLogModal").modal("show");
+
+                $("#addLogModal").modal({
+                    backdrop: 'static',
+                    keyboard: false,
+                    show: true // configure but don't show yet
+                });
+
             });
 
             // $(document).on('click', '.openModelDailyLog', function(e) {
@@ -1407,6 +1412,16 @@
                         // $("#formDataLogs").val(response.dynamicForm.form_data);
                         $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm
                             .form_builder_id).trigger('change');
+                        if (response.log_book_records.image_name && response.log_book_records
+                            .image_name !== "") {
+                            var url = "{{ url('upload/events/') }}";
+                            $('#image-preview img').attr('src', "{{ url('upload/events/') }}" +
+                                "/" + response.log_book_records.image_name);
+                            $('#image-preview').show();
+                        } else {
+                            $('#image-preview').hide();
+                        }
+
                         $(".dynamic-form-log-fields").empty();
 
                         let formE = document.getElementById("addLogModal");
@@ -1447,9 +1462,12 @@
                 document.getElementById('dynamic_form_builder_log').disabled = true;
                 $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", true);
 
-                $('#addLogModal').modal('show'); // open modal
+                $("#addLogModal").modal({
+                    backdrop: 'static',
+                    keyboard: false,
+                    show: true // configure but don't show yet
+                });
             });
-
         });
     </script>
 
