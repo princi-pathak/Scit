@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.master')
 
-@section('title',' User Annual Leaves')
+@section('title',' User Logs')
 
 @section('content')
 
@@ -51,13 +51,13 @@
                                 </select>
                             </div>
                             <div class="clearfix">
-                                <div class="btn-group" style="margin:25px">
+                                <!-- <div class="btn-group" style="margin:25px">
                                     <a href="{{ url('admin/user/annual-leave/add/'.$user_id) }}">
                                         <button id="editable-sample_new" class="btn btn-primary">
                                             Add Annual Leave <i class="fa fa-plus"></i>
                                         </button>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="space15"></div>
 
@@ -74,8 +74,8 @@
                                                 </select> records per page
                                             </label>
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="hidden" name="month" id="month" value="">
-                                            <input type="hidden" name="year" id="year" value="">
+                                            <input type="hidden" name="month" id="month" value="{{$selected_month}}">
+                                            <input type="hidden" name="year" id="year" value="{{$selected_year}}">
                                         </form>
                                     </div>
                                 </div>
@@ -94,9 +94,9 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Login Date</th>
-                                        <th>Check In Time</th>
-                                        <th>Check Out Time</th>
+                                        <th>Date</th>
+                                        <th>Clock In Time</th>
+                                        <th>Clock Out Time</th>
                                         <th>Reason</th>
                                         <th>Status</th>
                                         <th width="20%">Actions</th>

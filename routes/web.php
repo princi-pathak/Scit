@@ -1589,6 +1589,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get', 'post'], '/user/logs/{user_id}', 'App\Http\Controllers\backEnd\UserController@user_log');
 	Route::post('/user/is_valid/', 'App\Http\Controllers\backEnd\UserController@is_valid');
 	Route::get('/user/logs/delete/{id}', 'App\Http\Controllers\backEnd\UserController@logs_delete');
+	Route::match(['get', 'post'], '/user/timesheet/{user_id}', 'App\Http\Controllers\backEnd\UserController@user_timesheet');
+	Route::match(['get', 'post'],'/user/timesheet/edit/{user_id}', 'App\Http\Controllers\backEnd\UserController@user_timesheet_edit');
+	Route::get('/user/timesheet/delete/{user_id}', 'App\Http\Controllers\backEnd\UserController@user_timesheet_delete');
 
 	// Ram 04/07/2024 here paths for Job Manageent
 	Route::match(['get', 'post'], 'jobs_list', 'App\Http\Controllers\backEnd\JobsController@jobs_list');

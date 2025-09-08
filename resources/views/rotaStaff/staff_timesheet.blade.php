@@ -415,7 +415,7 @@
             parts[1] = parts[1].slice(0, 2);
             this.value = parts.join('.');
         }
-        if(parts[1] && parts[1] >= '59'){
+        if(parts[1] && parts[1] > '59'){
             let update=parts[0]=Number(parts[0])+Number(1);
             this.value = update+'.00';
         }
