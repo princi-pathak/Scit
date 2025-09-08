@@ -52,7 +52,7 @@
                                 <div class="col-md-9 col-sm-10 col-xs-12">
                                     <div class="select-style">
                                         <select name="category" class='su_name' required>
-                                            <option disabled selected value> -- select an option -- </option>
+                                            <option disabled selected value> -- Select an option -- </option>
                                             @foreach ($categorys as $key)
                                                 <option value="{{ $key['id'] }}">{{ $key['name'] }}</option>
                                             @endforeach
@@ -124,7 +124,7 @@
                                             } ?>
                                         </select>
                                     </div>
-                                    <p class="help-block"> Choose a user and the type of form you want to fill. </p>
+                                    <p class="help-block"> Choose a form type to fill. </p>
                                 </div>
                             </div>
                             <input type="hidden" id="log_dynamic_form_id" name="log_dynamic_form_id">

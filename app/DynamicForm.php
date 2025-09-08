@@ -214,7 +214,7 @@ class DynamicForm extends Model //FormBuilder
         //search for the customized user dynamic form, if present
         $home_id   =  Auth::user()->home_id;
         $home_idme = DB::table('service_user')->where('id', $service_user_id)->value('home_id');
-        $admin_id = DB::table('home')->where('id', $home_idme)->value('admin_id');
+        $admin_id = DB::table('home')->where('id', $home_id)->value('admin_id');
         $image_id = DB::table('admin')->where('id', $admin_id)->value('image');
         $form      =  DynamicFormBuilder::where('id', $form_builder_id)
             ->where('home_id', $home_id)
@@ -236,7 +236,7 @@ class DynamicForm extends Model //FormBuilder
             $static_fields    = ' <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="below-divider"></div>
                                         <div class="prient-btn">
-                                        <input type="button" onclick="PrintDiv(this)" data-id="' . $image_id . '"  data-image="' . $form->image . '"  value="download PDF" />
+                                        <input type="button" onclick="PrintDivLog(this)" data-id="' . $image_id . '"  data-image="' . $form->image . '"  value="download PDF" />
                                         </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
