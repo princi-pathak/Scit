@@ -10,7 +10,7 @@ use Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\CompanyDepartment;
 use App\Models\PersonalManagement\TimeSheet;
-use Validator;
+use Validator,Log;
 
 class UserController extends Controller
 {
@@ -440,13 +440,13 @@ class UserController extends Controller
         $home_id = Session::get('scitsAdminSession')->home_id;
         if($home_id == $u_home_id) {
             if(isset($request->month)){
-                $month=$request->month;
-                $year=$request->year;
+                $selected_month=$request->month;
+                $selected_year=$request->year;
             }else{
-                $month=date('m');
-                $year=date('Y');
+                $selected_month=date('m');
+                $selected_year=date('Y');
             }
-            $u_annual = LoginInActivity::where('user_id', $user_id)->whereMonth('login_date',$month)->whereYear('login_date',$year)->orderBy('id', 'DESC')->where('is_deleted', 0);
+            $u_annual = LoginInActivity::where('user_id', $user_id)->whereMonth('login_date',$selected_month)->whereYear('login_date',$selected_year)->orderBy('id', 'DESC')->where('is_deleted', 0);
             $search = '';
 
             if(isset($request->limit))
@@ -468,13 +468,13 @@ class UserController extends Controller
                 $u_annual = $u_annual->where('reason','like','%'.$search.'%');             //search by date or title
             }
 
-            $u_annual_leave = $u_annual->paginate(25);
+            $u_annual_leave = $u_annual->paginate($limit);
         } else {
             return redirect('admin/')->with('error',UNAUTHORIZE_ERR);
         }
-        $page = 'user-annual-leave';
+        $page = 'User Logs';
         $years = range(date('Y'), 2000);
-        return view('backEnd.user.user_log', compact('page','limit', 'user_id','u_annual_leave','search','years'));
+        return view('backEnd.user.user_log', compact('page','limit', 'user_id','u_annual_leave','search','years','selected_month','selected_year'));
     }
     public function is_valid(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -508,6 +508,99 @@ class UserController extends Controller
           return redirect()->back()->with('success','Log Deleted successfully done.');
         } catch (\Exception $e) {
             Log::error('Admin Update Logs Delete: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
+        }
+    }
+    public function user_timesheet(Request $request,$user_id){
+        $u_home_id = User::where('id',$user_id)->value('home_id');
+        $home_id = Session::get('scitsAdminSession')->home_id;
+        if($home_id == $u_home_id) {
+            if(isset($request->month)){
+                $month=$request->month;
+                $year=$request->year;
+            }else{
+                $month=date('m');
+                $year=date('Y');
+            }
+            // ->whereMonth('date',$month)->whereYear('date',$year)
+            $u_timesheet = TimeSheet::with('user')->where('user_id', $user_id)->where('deleted_at', null)->orderBy('created_at', 'desc');
+            // echo "<pre>";print_r($u_timesheet);die;
+            $search = '';
+
+            if(isset($request->limit))
+            {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else{
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 25;
+                }
+            }
+
+            if(isset($request->search))
+            {
+                $search = trim($request->search);
+                $u_timesheet = $u_timesheet->where('comments','like','%'.$search.'%');             //search by date or title
+            }
+
+            $u_timesheet = $u_timesheet->paginate($limit);
+        } else {
+            return redirect('admin/')->with('error',UNAUTHORIZE_ERR);
+        }
+        $page = 'User Time Sheet';
+        $year_list = range(date('Y'), 2000);
+        return view('backEnd.user.user_timesheet', compact('page','limit', 'user_id','u_timesheet','search','year_list','month','year'));
+    }
+    public function user_timesheet_edit(Request $request,$id){
+        $timeSheet    =  TimeSheet::find($id);
+        $user_id    = $timeSheet->user_id;
+        $u_home_id = User::where('id',$user_id)->value('home_id');
+        $home_id    = Session::get('scitsAdminSession')->home_id;
+        if($home_id != $u_home_id) {
+            return redirect('admin/')->with('error',UNAUTHORIZE_ERR);
+        }
+        if(!empty($timeSheet)) {
+            if($request->isMethod('post')) {   
+                $data = $request->input();
+                // echo "<pre>";print_r($data);die;
+                $validator=Validator::make($data,[
+                    'category_id' =>'required|integer',
+                    'hours' =>'required',
+                    'comments' =>'required',
+                ]);
+                if ($validator->fails()) {
+                    return redirect()->back()->with('error',$validator->errors()->first());
+                }
+                $timeSheet->category_id=$data['category_id'];
+                $timeSheet->hours=$data['hours'];
+                $timeSheet->comments=$data['comments'];
+               if($timeSheet->save()) {
+                   return redirect('admin/user/timesheet/'.$user_id)->with('success','Timesheet Updated Successfully.'); 
+                } else {
+                   return redirect()->back()->with('error','Timesheet could not be Updated Successfully.');
+                }  
+            }
+        } else {
+                return redirect()->back()->with('error','Sorry,Timesheet does not exists');
+        }
+        $page = 'user-time-sheet';
+        $u_details = User::where('id',$user_id)->first();
+        return view('backEnd.user.user_timesheet_form', compact('timeSheet','page','user_id','u_details'));
+    }
+    public function user_timesheet_delete($id){
+        try{
+          $update=TimeSheet::find($id);
+          if(!$update){
+            return redirect()->back()->with('error','Id does not exist.');
+          }
+          $update->deleted_at=date('Y-m-d H:i:s');
+          $update->save();
+          return redirect()->back()->with('success','Timesheet Deleted successfully done.');
+        } catch (\Exception $e) {
+            Log::error('Admin timesheet Delete: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }

@@ -324,6 +324,7 @@ class DailyLogsController extends ServiceUserManagementController
                     DB::raw('MIN(log_book.id) as id'),
                     DB::raw('MIN(log_book.date) as date'),
                     DB::raw('MIN(log_book.title) as title'),
+                    DB::raw('MIN(log_book.image_name) as image_name'),
                     DB::raw('MIN(user.name) as staff_name'),
                     DB::raw('MIN(dynamic_form.service_user_id) as service_user_id'),
                     DB::raw('MIN(service_user.name) as child_name'),

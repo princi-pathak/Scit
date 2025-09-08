@@ -482,7 +482,7 @@ class LogBookController extends ServiceUserManagementController
                     //echo "string";
                     $log_image = time() . '.' . request()->log_image->getClientOriginalExtension();
                     request()->log_image->move('upload/events/', $log_image);
-                } else {
+                } else { 
                     //echo "false";
                     $log_image = '';
                 }
