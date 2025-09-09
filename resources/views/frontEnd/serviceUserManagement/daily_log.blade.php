@@ -31,7 +31,7 @@
         }
 
         /* .timeline .time-show.first a.btn {
-                        } */
+                            } */
 
         #logs_articles {
             border-collapse: collapse;
@@ -120,9 +120,12 @@
         }
 
         .comment-list {
-
             width: 100%;
         }
+
+     div#formiotestForm label {
+        text-align: start;
+    }
     </style>
 
     @php
@@ -277,9 +280,9 @@
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
-                                                                                                                                                <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                                                                                                <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                                                                                            </div> -->
+                                                                                                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                                                                                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                                                                                                                                </div> -->
 
                 </div>
 
@@ -505,7 +508,7 @@
                 $("#addLogModal form")[0].reset();
                 $(".dynamic-form-log-fields").empty();
                 // document.getElementById('dynamic_form_builder_log').disabled = false;
-
+                $("#image-preview").css("display", "none");
                 $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", false);
 
                 let formEl = document.getElementById("addLogModal");

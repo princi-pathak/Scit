@@ -528,7 +528,7 @@
                                                             </a>
                                                         </div>
                                                         <!-- Pre Invoice -->
-                                                        <div class="col-md-2 col-sm-4 col-xs-12">
+                                                        {{-- <div class="col-md-2 col-sm-4 col-xs-12">
                                                             <div class="profile-nav alt">
                                                                 <a href="{{ url('/service/invoice/' . $service_user_id) }}">
                                                                     <section class="panel text-center profile-square">
@@ -543,7 +543,7 @@
                                                                     </section>
                                                                 </a>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                         <!-- end here -->
 
                                                     </div>
