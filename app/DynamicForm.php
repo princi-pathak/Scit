@@ -1015,7 +1015,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Date: </label>
                                          <div class="col-md-10 col-sm-10 col-xs-12 p-r-0">
                                            <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
-                                             <input name="date" size="16" class="form-control trans" type="text" '.$disabled.' value="'.date('d-m-Y h:i a', strtotime($form_info->date)).'" readonly>
+                                             <input name="date" size="16" class="form-control trans" type="text" '.$disabled.' value="'.date('d-m-Y', strtotime($form_info->date)).'" readonly>
                                              <span class="input-group-btn add-on">
                                                <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
                                              </span>
@@ -1029,7 +1029,7 @@ class DynamicForm extends Model //FormBuilder
                                          <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
                                          <div class="col-md-10 col-sm-12 col-xs-12 p-r-0">
                                              <div class="input-group popovr">
-                                                 <input type="time" class="form-control trans static_title" placeholder="" '.$disabled.' name="time" value="'. $form_info->time .'" />
+                                                 <input type="time" class="form-control trans static_title" placeholder="" '.$disabled.' name="time" value="'. date('H:i', strtotime($form_info->time)) .'" />
                                              </div>
                                          </div>
                                      </div>
@@ -1936,7 +1936,7 @@ class DynamicForm extends Model //FormBuilder
         $form                   = new DynamicForm;
         $form->home_id          = $home_id;
         $form->user_id          = Auth::user()->id;
-        $form->form_builder_id  = $data['dynamic_form_builder_id'];
+        $form->form_builder_id  = $data['dynamic_form_builder_id'] ??  $data['form_builder_id'];
         $form->image_path       = $formImage;
         // $form->user_id          = $data['user_id']; 
         /*----- June 07,2018 (Akhil) -----*/
