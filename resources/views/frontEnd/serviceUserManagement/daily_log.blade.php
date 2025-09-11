@@ -25,11 +25,6 @@
             margin-right: 0px;
         }
 
-        .timeline .time-show .btn {
-            min-width: 150px;
-            cursor: auto;
-        }
-
         /* .timeline .time-show.first a.btn {
                             } */
 
@@ -316,9 +311,15 @@ if (!function_exists('time_diff_string')) {
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
 
+                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                        </div> -->
+
+
                                                                                                                                                     <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
                                                                                                                                                     <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
                                                                                                                                                 </div> -->
+
 
                 </div>
 
