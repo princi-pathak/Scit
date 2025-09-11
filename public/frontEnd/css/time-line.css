@@ -411,9 +411,9 @@ span.timelineIcons {
     background: #fff;
 }
 
-input#date_range_input {
+/* input#date_range_input {
     width: 100%;
-}
+} */
 
 .form-group.has-feedback {
     padding: 0px 0px 10px 0px;

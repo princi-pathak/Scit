@@ -3207,7 +3207,7 @@ section.main_section_page_petty {
 } */
 
 .Additional_Hours .heading {
-  text-align: center;
+  text-align: start;
   font-weight: 700;
   font-size: 14px;
 }
