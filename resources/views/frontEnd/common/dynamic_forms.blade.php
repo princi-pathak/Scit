@@ -1099,7 +1099,6 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
                 var endDate = `${dd2}-${mm2}-${yyyy2}`;
                 endInput.value = endDate;
 
-
                 weekly.style.display = 'none';
                 monthly.style.display = 'block';
                 $('.logtitle').text("Add Record To Child's Monthly Log");
@@ -1110,117 +1109,117 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
         });
 
 
-        $('.sbt-su-dyn-frm-log').click(function() {
-            // alert("save");
-            var dyn_form_id = $('input[name=\'dyn_form_id\']').val();
-            var s_user_id = $('select[name=\'s_user_id\']').val();
-            var s_category_id = $('select[name=\'s_category_id\']').val();
-            var logtype = $('input[name=\'logtype\']').val();
-            var token = $('input[name=\'_token\']').val();
-            if (logtype == 1) {
-                var logtext = "daily";
-            } else if (logtype == 2) {
-                var logtext = "weekly";
-            } else if (logtype == 3) {
-                var logtext = "monthly";
-            }
+        // $('.sbt-su-dyn-frm-log').click(function() {
+        //     // alert("save");
+        //     var dyn_form_id = $('input[name=\'dyn_form_id\']').val();
+        //     var s_user_id = $('select[name=\'s_user_id\']').val();
+        //     var s_category_id = $('select[name=\'s_category_id\']').val();
+        //     var logtype = $('input[name=\'logtype\']').val();
+        //     var token = $('input[name=\'_token\']').val();
+        //     if (logtype == 1) {
+        //         var logtext = "daily";
+        //     } else if (logtype == 2) {
+        //         var logtext = "weekly";
+        //     } else if (logtype == 3) {
+        //         var logtext = "monthly";
+        //     }
 
-            error = 0;
-            if (s_category_id == 0) {
-                $('select[name=\'s_category_id\']').parent().addClass('red_border');
-                error = 1;
-            } else {
-                $('select[name=\'s_category_id\']').parent().removeClass('red_border');
-            }
-            if (s_user_id == 0) {
-                $('select[name=\'s_user_id\']').parent().addClass('red_border');
-                error = 1;
-            } else {
-                $('select[name=\'s_user_id\']').parent().removeClass('red_border');
-            }
+        //     error = 0;
+        //     if (s_category_id == 0) {
+        //         $('select[name=\'s_category_id\']').parent().addClass('red_border');
+        //         error = 1;
+        //     } else {
+        //         $('select[name=\'s_category_id\']').parent().removeClass('red_border');
+        //     }
+        //     if (s_user_id == 0) {
+        //         $('select[name=\'s_user_id\']').parent().addClass('red_border');
+        //         error = 1;
+        //     } else {
+        //         $('select[name=\'s_user_id\']').parent().removeClass('red_border');
+        //     }
 
-            if (error == 1) {
-                return false;
-            }
+        //     if (error == 1) {
+        //         return false;
+        //     }
 
-            $('.loader').show();
-            $('body').addClass('body-overflow');
+        //     $('.loader').show();
+        //     $('body').addClass('body-overflow');
 
-            var dataToSend = {
-                'dyn_form_id': dyn_form_id,
-                's_user_id': s_user_id,
-                's_category_id': s_category_id,
-                'logtype': logtype,
-                '_token': token
-            };
+        //     var dataToSend = {
+        //         'dyn_form_id': dyn_form_id,
+        //         's_user_id': s_user_id,
+        //         's_category_id': s_category_id,
+        //         'logtype': logtype,
+        //         '_token': token
+        //     };
 
-            // Add conditionally only if logtype is 2
-            if (logtype == 2) {
-                dataToSend.start_date = $('#week_start_date').val();
-                dataToSend.end_date = $('#week_end_date').val();
-            } else if(logtype == 3){
-                dataToSend.start_date = $('#month_start_date').val();
-                dataToSend.end_date = $('#month_end_date').val();
-            }
-            console.log("dataToSend", dataToSend);
+        //     // Add conditionally only if logtype is 2
+        //     if (logtype == 2) {
+        //         dataToSend.start_date = $('#week_start_date').val();
+        //         dataToSend.end_date = $('#week_end_date').val();
+        //     } else if(logtype == 3){
+        //         dataToSend.start_date = $('#month_start_date').val();
+        //         dataToSend.end_date = $('#month_end_date').val();
+        //     }
+        //     console.log("dataToSend", dataToSend);
 
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/service/dynamic-form/daily-log') }}",
-                data: dataToSend,
-                //dataType : 'json',
-                success: function(res) {
-                    console.log(res);
-                    if (isAuthenticated(res) == false) {
-                        return false;
-                    }
-                    // alert(resp); return false;
-                    if (res == '0') {
-                        $('span.popup_error_txt').text('Error Occured');
-                        $('.popup_error').show();
+        //     $.ajax({
+        //         type: 'post',
+        //         url: "{{ url('/service/dynamic-form/daily-log') }}",
+        //         data: dataToSend,
+        //         //dataType : 'json',
+        //         success: function(res) {
+        //             console.log(res);
+        //             if (isAuthenticated(res) == false) {
+        //                 return false;
+        //             }
+        //             // alert(resp); return false;
+        //             if (res == '0') {
+        //                 $('span.popup_error_txt').text('Error Occured');
+        //                 $('.popup_error').show();
 
-                    } else if (res == '1') {
-                        $('span.popup_success_txt').text('Record has been added to Child ' +
-                            logtext + ' log successfully.');
-                        $('.popup_success').show();
-                        setTimeout(function() {
-                            $('.popup_success').fadeOut()
-                        }, 5000);
+        //             } else if (res == '1') {
+        //                 $('span.popup_success_txt').text('Record has been added to Child ' +
+        //                     logtext + ' log successfully.');
+        //                 $('.popup_success').show();
+        //                 setTimeout(function() {
+        //                     $('.popup_success').fadeOut()
+        //                 }, 5000);
 
-                        window.location.href = "{{ url('/service/daily-logs?key=') }}" +
-                            s_user_id;
-
-
-                        // only one page load and show the data for daily weekly and monthly
-                        // if (logtype == 1) {
-                        //     window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;
-                        // } else if (logtype == 2) {
-                        //     window.location.href = "{{ url('/service/weekly-logs?key=') }}" + s_user_id;
-                        // } else if (logtype == 3) {
-                        //     window.location.href = "{{ url('/service/monthly-logs?key=') }}" + s_user_id;
-                        // }
+        //                 window.location.href = "{{ url('/service/daily-logs?key=') }}" +
+        //                     s_user_id;
 
 
-                        $('.dyn-logged-btn').click();
+        //                 // only one page load and show the data for daily weekly and monthly
+        //                 // if (logtype == 1) {
+        //                 //     window.location.href = "{{ url('/service/daily-logs?key=') }}" + s_user_id;
+        //                 // } else if (logtype == 2) {
+        //                 //     window.location.href = "{{ url('/service/weekly-logs?key=') }}" + s_user_id;
+        //                 // } else if (logtype == 3) {
+        //                 //     window.location.href = "{{ url('/service/monthly-logs?key=') }}" + s_user_id;
+        //                 // }
 
-                    } else {
-                        $('span.popup_error_txt').text(
-                            'Record is already added to YP log book');
-                        $('.popup_error').show();
-                        setTimeout(function() {
-                            $('.popup_error').fadeOut()
-                        }, 5000);
-                        // $('#service-user-add-log').find('select').val('');
-                    }
-                    $('#suDailyLogBook').modal('hide');
-                    $('#dynmicFormModal').modal('show');
 
-                    $('.loader').hide();
-                    $('body').addClass('body-overflow');
-                }
-            });
-            return false;
-        });
+        //                 $('.dyn-logged-btn').click();
+
+        //             } else {
+        //                 $('span.popup_error_txt').text(
+        //                     'Record is already added to YP log book');
+        //                 $('.popup_error').show();
+        //                 setTimeout(function() {
+        //                     $('.popup_error').fadeOut()
+        //                 }, 5000);
+        //                 // $('#service-user-add-log').find('select').val('');
+        //             }
+        //             $('#suDailyLogBook').modal('hide');
+        //             $('#dynmicFormModal').modal('show');
+
+        //             $('.loader').hide();
+        //             $('body').addClass('body-overflow');
+        //         }
+        //     });
+        //     return false;
+        // });
 
     });
 </script>
@@ -1231,36 +1230,20 @@ $service_user_id = isset($service_user_id) ? $service_user_id : 0;
 
             var printWindow = window.open('', '', 'height=600,width=600');
             printWindow.document.write('<html><head><title>Print DIV Content</title>');
-            printWindow.document.write(
-                '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">'
-            );
-            printWindow.document.write(
-                '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">'
-            );
-            printWindow.document.write(
-                '<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
-            printWindow.document.write(
-                '<link href="{{ url('
-                                                                                public / backEnd / css / amarjeet.css ') }}" rel="stylesheet" type="text/css" >'
-            );
-            printWindow.document.write(
-                '<link href="{{ url('
-                                                                                public / backEnd / css / pdfstyle.css ') }}" rel="stylesheet" type="text/css" >'
-            );
+            printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">');
+            printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">');
+            printWindow.document.write('<link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">');
+            printWindow.document.write('<link href="{{ url('public/backEnd/css/amarjeet.css') }}" rel="stylesheet" type="text/css">');
+            printWindow.document.write('<link href="{{ url('public/backEnd/css/pdfstyle.css') }}" rel="stylesheet" type="text/css" >');
             printWindow.document.write('</head><body > <div class="masterprintmainarea">');
             printWindow.document.write('<div class="header">');
-            printWindow.document.write(
-                '<img src="{{ url(' / public / images / scits.png ') }}" style="float:right;height:80px;">'
-            );
+            printWindow.document.write('<img src="{{ url('/public/images/scits.png') }}" style="float:right;height:80px;">');
             printWindow.document.write('</div>');
             // printWindow.document.write(divContents);
             printWindow.document.write('</div>');
             printWindow.document.write('<div class="footer">');
             printWindow.document.write('<div class="footer-section-area">');
-            printWindow.document.write(
-                '© {{ date('
-                                                                                Y ') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk '
-            );
+            printWindow.document.write('© {{ date('Y') }} Omega Care Group (SCITS). All Rights Reserved | www.socialcareitsolutions.co.uk ');
             printWindow.document.write('</div>');
             printWindow.document.write('</div>');
             printWindow.document.write('</div> </body></html>');

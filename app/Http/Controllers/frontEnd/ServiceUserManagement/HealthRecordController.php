@@ -153,7 +153,7 @@ class HealthRecordController extends ServiceUserManagementController
             $home_ids = Auth::user()->home_id;
             $ex_home_ids = explode(',', $home_ids);
             $home_id=$ex_home_ids[0];
-            $formdata = json_encode($data);
+            $formdata = json_encode($data['data']);
             $service_user_id        = $data['service_user_id'];
             $form                   = new DynamicForm;
             $form->home_id          = $home_id;

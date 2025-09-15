@@ -389,7 +389,7 @@
                                     <a data-toggle="tab" href="#overview">Overview</a>
                                 </li>
                                 <li><a data-toggle="tab" href="#job-history">Care History</a></li>
-                                <!-- <li><a data-toggle="tab" href="#contacts" class="contact-map">Contacts</a></li> -->
+                                {{-- <li><a data-toggle="tab" href="#contacts" class="contact-map">Contacts</a></li> --}}
                                 <li><a data-toggle="tab" href="#profile_detail">Full Profile</a></li>
                             </ul>
                         </header>
