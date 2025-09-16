@@ -9333,9 +9333,9 @@ a.close.edit_dyn_form {
 .modal-body form .input-group.date input {
     width: 100%;
 }
-.form-group.datepicker-sttng.date-sttng {
+/* .form-group.datepicker-sttng.date-sttng {
     width: 190px;
-}
+} */
 .input-group.date input {
     width: 190px;
 }

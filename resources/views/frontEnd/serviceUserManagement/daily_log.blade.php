@@ -121,6 +121,19 @@
      div#formiotestForm label {
         text-align: start;
     }
+    .log-type-text{
+        
+        font-weight: 700;
+    color: #1f88b5;
+    }
+
+    div#image-preview {
+    width: 72px;
+    margin: 0 12px 15px;
+    }
+    div#image-preview img {
+        width: 100%;
+    }
     </style>
 
     {{-- @php
@@ -212,7 +225,7 @@ if (!function_exists('time_diff_string')) {
                 <div class="row">
                     <div class="pull-right">
                         <div class="filter_buttons"
-                            style="text-align:right;padding-right:150px;display:inline-block; padding-bottom: 10px;">
+                            style="text-align:right;padding-right:16px;display:inline-block; padding-bottom: 10px;">
                             <a href="#!" class="btn btn-primary col-6" id='add_new_log_form'>Add
                                 New</a>
                             <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log'
@@ -310,15 +323,14 @@ if (!function_exists('time_diff_string')) {
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-
                             <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
                             <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
                         </div> -->
 
 
-                                                                                                                                                    <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                                                                                                                                                    <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                                                                                                                                                </div> -->
+                        {{-- <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                    </div> --}}
 
 
                 </div>
@@ -407,16 +419,16 @@ if (!function_exists('time_diff_string')) {
                                                         ?>
                                                         <p class="daily_log_time">
                                                             {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
-                                                                class="log_title">{{ $logType }} </span>
+                                                                class="log_title log-type-text" >{{ $logType }} </span>
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
                                                                         style="color:red;">{{ $key['late_time_text'] }}</span>
-                                                                    | <span class="log_title">{{ $logType }}</span>
+                                                                    | <span class="log_title log-type-text">{{ $logType }}</span>
                                                                 @else
                                                                     | <span
                                                                         style="color:red;">{{ date('d-m-Y H:i', strtotime($key['created_at'])) }}</span>
-                                                                    | <span class="log_title">{{ $logType }}</span>
+                                                                    | <span class="log_title log-type-text">{{ $logType }}</span>
                                                                 @endif
                                                             @endif
                                                         </p>
@@ -490,7 +502,7 @@ if (!function_exists('time_diff_string')) {
                                                         <p class="comment-detail-info-area">{{ $key['details'] }}</p>
                                                         <p class="daily_log_time">
                                                             {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
-                                                                class="log_title">{{ $logType }} </span>
+                                                                class="log_title log-type-text">{{ $logType }} </span>
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
