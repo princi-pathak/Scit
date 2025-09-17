@@ -257,6 +257,7 @@
                                                             <div class="dropdown-menu dropdown-menu-right fade-up m-0">
                                                                 <a href="{{url('staff/log/view?log=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Log View</a>
                                                                 <a href="{{url('staff/timesheet?staff=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Staff Timesheet</a>
+                                                                 {{-- <a href="#!" class="dropdown-item col-form-label openComingSoonModel">Staff Timesheet</a> --}}
                                                                 <!-- <a onclick="return confirm('Are you sure to reject it?')" href="{{url('/reject_expense?key=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Reject</a> -->
                                                             </div>
                                                         </div>
@@ -273,6 +274,7 @@
             </div>
         </div>
     </div>
+   
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 <script>

@@ -163,6 +163,8 @@
         var today = new Date;
         $('#log-book-datetimepicker').datetimepicker({
             format: 'dd-mm-yyyy',
+            todayHighlight: true,
+            startDate: today,
             // endDate: today,
             // minView : 2
 

@@ -17,6 +17,7 @@ use App\DynamicForm;
 
 class LogBookController extends ServiceUserManagementController
 {
+    
     public function index($service_user_id)
     {
 

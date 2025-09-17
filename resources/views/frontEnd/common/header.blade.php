@@ -133,6 +133,7 @@
 @include('frontEnd.common.add_user')
 @include('frontEnd.common.dynamic_forms')
 @include('frontEnd.common.handover_logbook')
+@include('frontEnd.common.coming_soon')
 
 <script>
     $(".add_user").click(function() {
