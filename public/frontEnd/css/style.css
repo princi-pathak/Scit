@@ -1416,7 +1416,7 @@ ul.top-menu>li>a:focus {
     position: absolute;
     top: 30px;
     width: 1px;
-    z-index: 0;
+    z-index: -1;
 }
 
 .comment_badge {
@@ -9336,10 +9336,10 @@ a.close.edit_dyn_form {
 /* .form-group.datepicker-sttng.date-sttng {
     width: 190px;
 } */
-.input-group.date input {
+/* .input-group.date input {
     width: 190px;
 }
-
+ */
 
 
 

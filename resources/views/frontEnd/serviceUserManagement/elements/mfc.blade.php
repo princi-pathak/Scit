@@ -57,19 +57,16 @@
 
                     <!-- sourabh -->
                     <div class="col-md-2 col-lg-2" style="margin-left: -10px;">
-                        <div class="form-group datepicker-sttng date-sttng">
-                            <label class="col-md-2 col-sm-1 col-xs-12 p-t-7" style="display: none;"> Date: </label>
-                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
-                                    class="input-group date">
-                                    <input id="date_range_input" style="cursor: pointer;" name="daterange"
-                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value=""
-                                        readonly="" size="16" class="form-control log-book-datetime">
-                                    <span class="input-group-btn add-on datetime-picker2">
-                                        <button onclick="showDate()" class="btn btn-primary" type="button"><span
-                                                class="glyphicon glyphicon-calendar"></span></button>
-                                    </span>
-                                </div>
+                        <div class="form-group datepicker-sttng date-sttng">                            
+                            <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
+                                class="input-group date">
+                                <input id="date_range_input" style="cursor: pointer;" name="daterange"
+                                    value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value=""
+                                    readonly="" size="16" class="form-control log-book-datetime">
+                                <span class="input-group-btn add-on datetime-picker2">
+                                    <button onclick="showDate()" class="btn btn-primary" type="button"><span
+                                            class="glyphicon glyphicon-calendar"></span></button>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -252,22 +249,22 @@
                                 <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Search</h3>
                             </div>
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 type-field">
-                                                    <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Type: </label>
-                                                    <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
-                                                        <div class="select-style">
-                                                            <select name="mfc_search_type">
-                                                                <option value='title' selected=""> Title </option>
-                                                                <option value='date'> Date </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                    <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Type: </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
+                                        <div class="select-style">
+                                            <select name="mfc_search_type">
+                                                <option value='title' selected=""> Title </option>
+                                                <option value='date'> Date </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> -->
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
-                                                    <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Title: </label>
-                                                    <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15 title">
-                                                        <input type="text" name="search_mfc_record" class="form-control" maxlength="255">
-                                                    </div>
-                                                </div> -->
+                                    <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Title: </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15 title">
+                                        <input type="text" name="search_mfc_record" class="form-control" maxlength="255">
+                                    </div>
+                                </div> -->
                             <div class="col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd srch-field">
                                 <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Date: </label>
                                 <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">

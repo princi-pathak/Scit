@@ -39,18 +39,31 @@
     .settingFlex {
         display: flex;
     }
-    .small-box.ScrollStyle .pop-notifbox{
-            right: -70px;
-            top: 30px;
-            left: auto;
+
+    .small-box.ScrollStyle .pop-notifbox {
+        right: -70px;
+        top: 30px;
+        left: auto;
     }
-        .setting-sze .pop-notification::after {
+
+    .setting-sze .pop-notification::after {
         top: -23px;
         left: 47%;
         right: 0;
         margin: auto;
         content: "\f0d8";
         color: #1f88b5;
+    }
+
+    .completed-box {
+        display: flex;
+    }
+
+    .addTasklist {
+        background: #eee;
+        margin: 5px;
+        padding: 5px;
+        border-radius: 3px;
     }
 </style>
 
@@ -72,98 +85,174 @@
                     <div class="row">
 
                         <!-- left part -->
-                        <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12 p-0">
                                 <h3 class="m-t-0 m-b-20 clr-blue fnt-20"> Targets </h3>
+                                <form method="post" action="{{ url('/service/placement-plan/add') }}" id="placement_plan">
+                                    <div class="form-group p-0 cus-label">
+                                        <label class="col-md-1 col-sm-2 p-t-7 p-0"> Add Task: </label>
+                                        <div class="col-md-3 col-sm-7 col-xs-12">
+                                            <input type="text" name="task" required class="form-control" maxlength="255">
+                                        </div>
+                                        <div class="col-md-4 col-sm-3 col-xs-12 cus-label">
+                                            <label class="col-md-2 col-sm-6 col-xs-12 p-0 r-tl text-right"> Date: </label>
+                                            <div class="col-md-10 col-sm-6 col-xs-12 p-r-0 r-p-0">
+                                                <input name="date" required class="form-control datetime-picker trans" type="text" value="" autocomplete="off" maxlength="10" readonly="" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-11 col-xs-12 p-0">
+                                            <input type="hidden" name="service_user_id" value="{{ $service_user_id }}">
+                                            <div class="input-group popovr fll-wdth">
+                                                <input type="text" class="form-control" name="description" required placeholder="" />
+                                                <span class="input-group-addon cus-inpt-grp-addon">
+                                                    <button type="submit" class="btn group-ico-placement p-l-50 p-r-50">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <p class="help-block"> Enter the description and instruction relevant to task.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                                        <label class="col-md-2 col-sm-1 p-t-7"> </label>
+                                        
+                                    </div> -->
+                                </form>
                             </div>
-                            <form method="post" action="{{ url('/service/placement-plan/add') }}" id="placement_plan">
-                                <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 cus-label">
-                                    <label class="col-md-2 col-sm-2 p-t-7 p-0"> Add Task: </label>
-                                    <div class="col-md-5 col-sm-7 col-xs-12 p-0">
-                                        <input type="text" name="task" required class="form-control" maxlength="255">
+
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <h3 class="m-t-0 m-b-20 clr-blue fnt-20"> Active Targets </h3>
+
+                                        <form id='active_targets'>
+                                            <div class="active-target-list" style="border:0px red solid; /*height:500px*/">
+
+                                                <?php
+                                                foreach ($active_targets as $key => $value) {
+
+                                                    $current_month = date('m');
+                                                    $target_month  = date('m', strtotime($value->date));
+                                                    if ($target_month == $current_month) {
+                                                        $clr_class = 'orange-bg';
+                                                    } else {
+                                                        $clr_class = 'bg-darkgreen';
+                                                    }
+                                                ?>
+
+                                                    <div class="form-group cog-panel p-0 delete-row">
+                                                        <div class="col-md-7 col-sm-7 col-xs-8">
+                                                            <input type="text" class="form-control trans" value="{{ $value->task }}" disabled="" maxlength="255">
+                                                        </div>
+                                                        <div class="col-md-5 col-sm-5 col-xs-8">
+                                                            <div class="date-settin">
+                                                                <div class="input-group popovr">
+                                                                    <span> Date:&nbsp; </span>
+
+                                                                    <label class="btn pp-txt-clr {{ $clr_class }}"> <?php echo date('d M', strtotime($value->date)); ?> </label>
+                                                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
+                                                                        <i class="fa fa-cog"></i>
+                                                                        <div class="pop-notifbox">
+                                                                            <ul type="none" class="pop-notification" target_id="{{ $value->id }}" target_task="{{ $value->task }}">
+
+                                                                                <li class="view_active_target_btn active-targets"><a href="#"> <span> <i class="fa fa-eye "></i> </span> View/Edit </a> </li>
+                                                                                <li> <a href="{{ url('/service/placement-plan/mark-complete/'.$value->id) }}" target_id="{{ $value->id }}"> <span class="color-green"> <i class="fa fa-check"></i> </span> Mark complete </a> </li>
+
+                                                                                <li class="view_qqa_review_btn" qqa="{{ $value->qqa_review }}"> <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> QQA Review </a> </li>
+                                                                                <!--        <li class="view_qqa_review_btn" qqa="" > <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> QQA Review </a> </li> -->
+
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                <?php } ?>
+                                                <div class="col-md-12 col-sm-12 col-xs-12 clearfix active-target-list-link">
+                                                    {{ $active_targets->links() }}
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="col-md-5 col-sm-3 col-xs-12 cus-label p-0">
-                                        <label class="col-md-4 col-sm-6 col-xs-12 p-0 r-tl text-right"> Date: </label>
-                                        <div class="col-md-8 col-sm-6 col-xs-12 p-r-0 r-p-0">
-                                            <input name="date" required class="form-control datetime-picker trans" type="text" value="" autocomplete="off" maxlength="10" readonly="" />
+                                </div>
+                            </div>
+
+                            <!-- Right part -->
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <h3 class="m-t-0 m-b-20 clr-blue fnt-20"> Completed </h3>
+                                        <div class="completed-target-list">
+                                            <div class="completed-box">
+                                                <?php foreach ($completed_targets as $key => $value) { ?>
+                                                    <div class="addTasklist">
+                                                        {{$value->task}} <span class="color-green m-l-15"><i class="fa fa-check"></i></span>
+                                                    </div>
+                                                <?php }  ?>
+                                            </div>
+
+                                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 clearfix completed-target-list-link">
+                                                {{ $completed_targets->links() }}
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
-                                <input type="hidden" name="service_user_id" value="{{ $service_user_id }}">
-                                <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                    <label class="col-md-2 col-sm-1 p-t-7"> </label>
-                                    <div class="col-md-10 col-sm-11 col-xs-12 p-0">
-                                        <div class="input-group popovr fll-wdth">
-                                            <input type="text" class="form-control" name="description" required placeholder="" />
-                                            <span class="input-group-addon cus-inpt-grp-addon">
-                                                <button type="submit" class="btn group-ico-placement">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <p class="help-block"> Enter the description and instruction relevant to task.</p>
-                                    </div>
-                                </div>
-                            </form>
+
+                            </div>
 
                             <!-- Divider -->
                             <div class="col-md-12 col-sm-12 col-xs-12 p-0">
-                                <div class="below-divider"></div>
-                            </div>
-
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <h3 class="color-green"> Active Targets </h3>
-                            </div>
-
-                            <form id='active_targets'>
-                                <div class="active-target-list" style="border:0px red solid; /*height:500px*/">
-
-                                    <?php
-                                    foreach ($active_targets as $key => $value) {
-
-                                        $current_month = date('m');
-                                        $target_month  = date('m', strtotime($value->date));
-                                        if ($target_month == $current_month) {
-                                            $clr_class = 'orange-bg';
-                                        } else {
-                                            $clr_class = 'bg-darkgreen';
-                                        }
-                                    ?>
-
-                                        <div class="form-group col-md-12 col-sm-12 col-xs-12 cog-panel p-0 delete-row">
-                                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                                <input type="text" class="form-control trans" value="{{ $value->task }}" disabled="" maxlength="255">
-                                            </div>
-                                            <div class="date-settin">
-                                                <div class="input-group popovr">
-                                                    <span> Date:&nbsp; </span>
-
-                                                    <label class="btn pp-txt-clr {{ $clr_class }}"> <?php echo date('d M', strtotime($value->date)); ?> </label>
-                                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
-                                                        <i class="fa fa-cog"></i>
-                                                        <div class="pop-notifbox">
-                                                            <ul type="none" class="pop-notification" target_id="{{ $value->id }}" target_task="{{ $value->task }}">
-
-                                                                <li class="view_active_target_btn active-targets"><a href="#"> <span> <i class="fa fa-eye "></i> </span> View/Edit </a> </li>
-                                                                <li> <a href="{{ url('/service/placement-plan/mark-complete/'.$value->id) }}" target_id="{{ $value->id }}"> <span class="color-green"> <i class="fa fa-check"></i> </span> Mark complete </a> </li>
-
-                                                                <li class="view_qqa_review_btn" qqa="{{ $value->qqa_review }}"> <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> QQA Review </a> </li>
-                                                                <!--        <li class="view_qqa_review_btn" qqa="" > <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> QQA Review </a> </li> -->
-
-                                                            </ul>
-                                                        </div>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    <?php } ?>
-                                    <div class="col-md-12 col-sm-12 col-xs-12 clearfix active-target-list-link">
-                                        {{ $active_targets->links() }}
-                                    </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <h3 class="m-t-0 m-b-30 color-red fnt-20"> Not achieved </h3>
                                 </div>
-                            </form>
+
+                                <form id="pending_targets">
+                                    <div class="pending-target-list">
+                                        <div class="small-box ScrollStyle">
+                                            <?php
+                                            foreach ($pending_targets as $key => $value) { ?>
+
+                                                <div class="cog-panel p-0 ">
+                                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 settingFlex">
+                                                        <div>
+                                                            {{ \Carbon\Carbon::parse($value->created_at)->format('d-m-Y H:i:s') }}
+
+                                                        </div>
+                                                        <div>
+                                                            <span class="m-l-15 clr-blue settings setting-sze">
+                                                                <i class="fa fa-cog"></i>
+                                                                <div class="pop-notifbox">
+                                                                    <ul type="none" class="pop-notification" target_id="{{ $value->id }}" target_task="{{ $value->task }}">
+                                                                        <li class="view_active_target_btn"><a href="#"> <span> <i class="fa fa-pencil "></i> </span> Mark Active </a> </li>
+                                                                        <li> <a href="{{ url('/service/placement-plan/mark-complete/'.$value->id) }}"> <span class="color-green"> <i class="fa fa-check"></i> </span> Mark complete </a> </li>
+                                                                        <li class="view_qqa_review_btn" qqa="{{ $value->qqa_review }}"> <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> QQA Review </a> </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12 clearfix pending-target-list-link">
+                                            {{ $pending_targets->links() }}
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- <div class="below-divider"></div> -->
+                            </div>
+
+
+
+
 
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="below-divider mrgn-rdce"></div>
@@ -176,72 +265,7 @@
                             </div>
                         </div>
 
-                        <!-- Right part -->
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <h3 class="m-t-0 m-b-20 clr-blue fnt-20"> Completed </h3>
-                            </div>
-                            <div class="completed-target-list">
-                                <div class="completed-box">
-                                    <?php foreach ($completed_targets as $key => $value) { ?>
-                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                            {{$value->task}} <span class="color-green m-l-15"><i class="fa fa-check"></i></span>
-                                        </div>
-                                    <?php }  ?>
-                                </div>
 
-                                <div class="col-md-12 col-sm-12 col-xs-12 clearfix completed-target-list-link">
-                                    {{ $completed_targets->links() }}
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="below-divider"></div>
-                            </div>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <h3 class="m-t-0 m-b-30 color-red fnt-20"> Not achieved </h3>
-                            </div>
-
-                            <form id="pending_targets">
-                                <div class="pending-target-list">
-                                    <div class="small-box ScrollStyle">
-                                        <?php
-                                        foreach ($pending_targets as $key => $value) { ?>
-
-                                            <div class="col-md-4 col-sm-12 col-xs-12 cog-panel p-0 ">
-                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 settingFlex">
-                                                    <div>
-                                                        {{  \Carbon\Carbon::parse($value->created_at)->format('d-m-Y H:i:s') }}
-
-                                                    </div>
-                                                    <div>
-                                                        <span class="m-l-15 clr-blue settings setting-sze">
-                                                            <i class="fa fa-cog"></i>
-                                                            <div class="pop-notifbox">
-                                                                <ul type="none" class="pop-notification" target_id="{{ $value->id }}" target_task="{{ $value->task }}">
-                                                                    <li class="view_active_target_btn"><a href="#"> <span> <i class="fa fa-pencil "></i> </span> Mark Active </a> </li>
-                                                                    <li> <a href="{{ url('/service/placement-plan/mark-complete/'.$value->id) }}"> <span class="color-green"> <i class="fa fa-check"></i> </span> Mark complete </a> </li>
-                                                                    <li class="view_qqa_review_btn" qqa="{{ $value->qqa_review }}"> <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> QQA Review </a> </li>
-                                                                </ul>
-                                                            </div>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12 clearfix pending-target-list-link">
-                                        {{ $pending_targets->links() }}
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="below-divider"></div>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
             </section>
@@ -277,7 +301,7 @@
 <script>
     $(document).ready(function() {
 
-       var today = new Date;
+        var today = new Date;
         $('.datetime-picker').datetimepicker({
             format: 'dd-mm-yyyy',
             startDate: today,

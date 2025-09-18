@@ -2,28 +2,7 @@
 @section('title', 'Daily Logs')
 @section('content')
     <style type="text/css">
-        /*09 Aug 2018*/
-        .back_opt {
-            background: #1f88b5;
-            border-radius: 100%;
-            color: #fff;
-            font-size: 20px;
-            padding: 8px 18px;
-            z-index: 999;
-            cursor: pointer;
-            height: 45px;
-            width: 45px;
-            display: inline-block;
-        }
 
-        .back_opt:hover i {
-            color: #fff;
-        }
-
-        .timeline .time-show {
-            text-align: center;
-            margin-right: 0px;
-        }
 
         /* .timeline .time-show.first a.btn {
                             } */
@@ -235,7 +214,7 @@ if (!function_exists('time_diff_string')) {
                 </div>
                 <!-- page start-->
                 <div class="Select_staff">
-                    <div class="Select_staff_inner">
+                    <div class="">
                         <a class="back_opt col-3" onclick="history.back()">
                             <i class="fa fa-angle-left"></i>
                         </a>
@@ -291,7 +270,7 @@ if (!function_exists('time_diff_string')) {
                             <label style="display: none;"> Category: </label>
                             <div>
                                 <select class="form-control" style="min-width:200px;" id="select_category"
-                                    name="category_timeline" required />
+                                    name="category_timeline" required>
                                 <!-- <option disabled value> -- select an option -- </option> -->
                                 <option selected value="all">All</option>
                                 @foreach ($categorys as $key)
