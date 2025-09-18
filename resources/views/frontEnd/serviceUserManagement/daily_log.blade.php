@@ -1447,7 +1447,10 @@
                         $('#dynamic_form_log_book_id').val(response.log_book_records.id);
                         $('select[name="category"]').val(response.log_book_records.category_id);
                         // $('input[name="log_date"]').val(response.log_book_records.date);
-if (response.log_book_records.date) { let formattedDate = moment(response.log_book_records.date, "YYYY-MM-DD HH:mm:ss") .format("DD-MM-YYYY HH:mm"); $('input[name="log_date"]').val(formattedDate); }
+                        if (response.log_book_records.date) { 
+                            let formattedDate = moment(response.log_book_records.date, "YYYY-MM-DD HH:mm:ss") .format("DD-MM-YYYY HH:mm"); 
+                            $('input[name="log_date"]').val(formattedDate); 
+                        }
 
 
                         $('textarea[name="log_detail"]').val(response.log_book_records.details);
