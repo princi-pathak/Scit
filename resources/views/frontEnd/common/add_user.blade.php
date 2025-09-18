@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close cancel-user-btn" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add User</h4>
+                <h4 class="modal-title">Add Child</h4>
             </div>
 
             <form method="post" action="{{ url('add-service-user') }}" enctype="multipart/form-data" id='add_service_user'>

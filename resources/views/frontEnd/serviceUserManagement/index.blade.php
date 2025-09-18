@@ -107,7 +107,7 @@
                                     <li><a href="{{ url('/service/placement-plans/'.$patient->id) }}"> <i class="{{$labels['placement_plan']['icon']}}"></i> {{ $labels['placement_plan']['label'] }} <span class="badge pull-right r-activity {{ $notifi_pp['color'] }}">{{ (strlen($notifi_pp['count']) < 2) ? '0':'' }}{{ $notifi_pp['count'] }}</span></a></li>
 
                                     <!-- <li><a href="{{ url('/service/user-profile/'.$patient->id) }}"> <i class="fa fa-scissors"></i> Risks <span class="badge {{ $notif_color }} pull-right r-activity">{{ (strlen($risk_notif) < 2) ? '0' : '' }}{{ $risk_notif }}</span></a></li> -->
-                                    <li><a href="{{ url('/service/rmp/'.$patient->id) }}"> <i class="fa fa-scissors"></i> Risks <span class="badge {{ $notif_color }} pull-right r-activity">{{ (strlen($risk_notif) < 2) ? '0' : '' }}{{ $risk_notif }}</span></a></li>
+                                    <li><a href="{{ url('/service/risks/'.$patient->id) }}"> <i class="fa fa-scissors"></i> Risks <span class="badge {{ $notif_color }} pull-right r-activity">{{ (strlen($risk_notif) < 2) ? '0' : '' }}{{ $risk_notif }}</span></a></li>
                                 </ul>
                             </section>
                         </aside>

@@ -446,12 +446,15 @@ class DynamicFormController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         $oneMonthAgo = Carbon::now()->subMonth()->format('Y-m-d');
 
-        $dyn_record  = DynamicForm:: //where('location_id',$this_location_id)
+        $dyn_record  = DynamicForm:: 
+            //where('location_id',$this_location_id)
             //whereIn('form_builder_id',$form_bildr_ids)
-            where('home_id', $home_id)
+            select('dynamic_form.*', 'dynamic_form_builder.title as form_title', 'dynamic_form_builder.send_to')
+            ->join('dynamic_form_builder', 'dynamic_form_builder.id', '=', 'dynamic_form.form_builder_id')
+            ->where('dynamic_form.home_id', $home_id)
             // ->whereDate('created_at', '=', $today)
-            ->where('is_deleted', '0')
-            ->orderBy('id', 'desc');
+            ->where('dynamic_form.is_deleted', '0')
+            ->orderBy('dynamic_form.id', 'desc');
 
         // $pagination = '';
 
@@ -474,7 +477,7 @@ class DynamicFormController extends Controller
                 $start = Carbon::parse($request->input('start_date'))->startOfDay();
                 $end   = Carbon::parse($request->input('end_date'))->endOfDay();
 
-                $dyn_record->whereBetween('created_at', [$start, $end]);
+                $dyn_record->whereBetween('dynamic_form.created_at', [$start, $end]);
             }
 
             if ($request->filled('keyword')) {
@@ -490,7 +493,7 @@ class DynamicFormController extends Controller
         } else {
 
             $today = Carbon::today();
-            $dyn_record->whereDate('created_at', $today);
+            $dyn_record->whereDate('dynamic_form.created_at', $today);
 
             // No filters — get paginated result
             $dyn_forms = $dyn_record->paginate();
@@ -503,19 +506,13 @@ class DynamicFormController extends Controller
 
         // dd($dyn_forms);
         foreach ($dyn_forms as $key => $value) {
-            $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
+            // $form_title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
             if ($value->date == '') {
                 $date = '';
             } else {
                 $date = date('d-m-Y', strtotime($value->date));
             }
-
-            // if ($value->created_at == '') {
-            //     $date = '';
-            // } else {
-            //     $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
-            // }
 
             if ((!empty($date)) || (!empty($value->time))) {
                 $start_brct = '(';
@@ -536,13 +533,13 @@ class DynamicFormController extends Controller
 
             if ($loop % 2 == 0) {
 
-                echo '  <div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows">
+                echo ' <div class="col-md-6 col-sm-6 col-xs-6 cog-panel rows">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                 <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                     <div class="input-group popovr rightSideInput">
                                         <a href="#" class="ritOrdring one dyn-form-view-data" id="' . $value->id . '">
                                             <span>
-                                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . ' " maxlength="255"/>
+                                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $value->form_title . ' - ' . $value->title . ' " maxlength="255"/>
                                             </span>
                                         </a>
                                         
@@ -551,11 +548,15 @@ class DynamicFormController extends Controller
                                             <div class="pop-notifbox">
                                                 <ul class="pop-notification" type="none">
                                                     <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
-                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
-                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
-                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>
-                                                </ul>
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>';
+
+                                                    if($value->send_to == "Y"){
+                                                          echo  '<li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa  fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
+                                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
+                                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>';
+                                                    }
+
+                                                echo '</ul>
                                             </div>
                                         </span>
                                         <span class="ritOrdring three rightdate"> ' . $date . ' - ' . $time . '</span>
@@ -571,7 +572,7 @@ class DynamicFormController extends Controller
                                     <div class="input-group popovr timelineInput">
                                         <a href="#" class="dyn-form-view-data" id="' . $value->id . '">
                                             <span class="inputTextLefttoRight">
-                                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $form_title . ' - ' . $value->title . '" maxlength="255"/>
+                                                <input type="text" class="form-control" style="cursor:pointer; background-color: ' . $color . ';" name="" readonly value="' . $value->form_title . ' - ' . $value->title . '" maxlength="255"/>
                                             </span>
                                         </a>
                                         <span class="timLineDate">' . $date . ' - ' . $time . ' </span>
@@ -582,11 +583,14 @@ class DynamicFormController extends Controller
                                             <div class="pop-notifbox">
                                                 <ul class="pop-notification" type="none">
                                                     <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
-                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
-                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
-                                                    <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>
-                                                </ul>
+                                                    <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>';
+
+                                                     if($value->send_to == "Y"){
+                                                            echo '<li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="1"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span>Send to Daily Log Book (In development)</a> </li>
+                                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="2"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Weekly Log Book (In development)</a> </li>
+                                                            <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '" logtype="3"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Send to Monthly Log Book (In development)</a> </li>';
+                                                     }
+                                                echo '</ul>
                                             </div>
                                         </span>
                                     </div>
