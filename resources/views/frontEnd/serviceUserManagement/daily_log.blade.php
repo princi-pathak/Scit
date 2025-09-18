@@ -2,28 +2,7 @@
 @section('title', 'Daily Logs')
 @section('content')
     <style type="text/css">
-        /*09 Aug 2018*/
-        .back_opt {
-            background: #1f88b5;
-            border-radius: 100%;
-            color: #fff;
-            font-size: 20px;
-            padding: 8px 18px;
-            z-index: 999;
-            cursor: pointer;
-            height: 45px;
-            width: 45px;
-            display: inline-block;
-        }
 
-        .back_opt:hover i {
-            color: #fff;
-        }
-
-        .timeline .time-show {
-            text-align: center;
-            margin-right: 0px;
-        }
 
         /* .timeline .time-show.first a.btn {
                                         } */
@@ -117,7 +96,6 @@
         .comment-list {
             width: 100%;
         }
-
         div#formiotestForm label {
             text-align: start;
         }
@@ -127,6 +105,7 @@
             font-weight: 700;
             color: #1f88b5;
         }
+
     </style>
 
     {{-- @php
@@ -224,7 +203,7 @@
                 <div class="row">
                     <div class="pull-right">
                         <div class="filter_buttons"
-                            style="text-align:right;padding-right:150px;display:inline-block; padding-bottom: 10px;">
+                            style="text-align:right;padding-right:16px;display:inline-block; padding-bottom: 10px;">
                             <a href="#!" class="btn btn-primary col-6" id='add_new_log_form'>Add
                                 New</a>
                             <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log'
@@ -234,7 +213,7 @@
                 </div>
                 <!-- page start-->
                 <div class="Select_staff">
-                    <div class="Select_staff_inner">
+                    <div class="">
                         <a class="back_opt col-3" onclick="history.back()">
                             <i class="fa fa-angle-left"></i>
                         </a>
@@ -290,7 +269,7 @@
                             <label style="display: none;"> Category: </label>
                             <div>
                                 <select class="form-control" style="min-width:200px;" id="select_category"
-                                    name="category_timeline" required />
+                                    name="category_timeline" required>
                                 <!-- <option disabled value> -- select an option -- </option> -->
                                 <option selected value="all">All</option>
                                 @foreach ($categorys as $key)
@@ -326,8 +305,8 @@
                                         <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
                                     </div> -->
 
-
                     {{-- <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+
                         <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
                     </div> --}}
 
@@ -417,8 +396,10 @@
                                                         ?>
                                                         <p class="daily_log_time">
                                                             {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
+
                                                                 class="log_title log-type-text">{{ $logType }}
                                                             </span>
+
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
@@ -430,6 +411,7 @@
                                                                         style="color:red;">{{ date('d-m-Y H:i', strtotime($key['created_at'])) }}</span>
                                                                     | <span
                                                                         class="log_title log-type-text">{{ $logType }}</span>
+
                                                                 @endif
                                                             @endif
                                                         </p>
@@ -505,6 +487,7 @@
                                                             {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
                                                                 class="log_title log-type-text">{{ $logType }}
                                                             </span>
+
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
