@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="pull-right">
                         <div class="filter_buttons"
-                            style="text-align:right;padding-right:150px;display:inline-block; padding-bottom: 10px;">
+                            style="text-align:right;padding-right:16px;display:inline-block; padding-bottom: 10px;">
                             <a data-toggle="modal" href="#dynmicFormModalhealthrecord" class="btn btn-primary  col-6"
                                 id='add_new_log'>Add New</a>
                         </div>
@@ -97,20 +97,19 @@
                     </div>
 
                     <!-- sourabh -->
-                    <div class="col-md-3 col-lg-3" style="margin-left: -10px;">
+                    <div class="col-md-2 col-lg-2" style="margin-left: -10px;">
                         <div class="form-group datepicker-sttng date-sttng">
-                            <label class="col-md-2 col-sm-1 col-xs-12 p-t-7" style="display: none;"> Date: </label>
-                            <div class="col-md-10 col-sm-10 col-xs-12">
-                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
-                                    class="input-group date">
-                                    <input id="date_range_input" style="cursor: pointer;" name="daterange"
-                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value=""
-                                        readonly="" size="16" class="form-control log-book-datetime">
-                                    <span class="input-group-btn add-on datetime-picker2">
-                                        <button onclick="showDate()" class="btn btn-primary" type="button"><span
-                                                class="glyphicon glyphicon-calendar"></span></button>
-                                    </span>
-                                </div>
+                            <!-- <label class="col-md-2 col-sm-1 col-xs-12 p-t-7" style="display: none;"> Date: </label> -->
+                            
+                            <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
+                                class="input-group date">
+                                <input id="date_range_input" style="cursor: pointer;" name="daterange"
+                                    value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value=""
+                                    readonly="" size="16" class="form-control log-book-datetime">
+                                <span class="input-group-btn add-on datetime-picker2">
+                                    <button onclick="showDate()" class="btn btn-primary" type="button"><span
+                                            class="glyphicon glyphicon-calendar"></span></button>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -126,7 +125,7 @@
                                 </div>
                             </div> -->
                     <!-- sourabh -->
-                    <div class="col-md-2 col-lg-2" style="padding-bottom:10px; margin-left: -10px;">
+                    <div class="col-md-2 col-lg-2" style="padding-bottom:10px; margin-left: 10px;">
                         <input type="text" class="form-control" id="keywordhr" onKeyPress="hrmyFunctionkey()"
                             name="keywordhr" placeholder="Keyword">
                     </div>

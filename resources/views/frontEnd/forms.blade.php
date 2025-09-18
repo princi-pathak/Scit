@@ -59,7 +59,7 @@
                 </div>
                 <!-- page start-->
                 <div class="Select_staff">
-                    <div class="Select_staff_inner">
+                    <div class="">
                         <a class="back_opt col-3" onclick="history.back()">
                             <i class="fa fa-angle-left"></i>
                         </a>
@@ -133,8 +133,7 @@
                                     </div>
                                 </div>
                             </article>
-                            <div class="timeline-messages view-dyn-record">
-                            </div>
+                            <div class="timeline-messages view-dyn-record"> </div>
                         </div>
                     </div>
                 </div>

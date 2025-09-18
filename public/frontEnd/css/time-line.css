@@ -177,24 +177,6 @@ span.timelineIcons {
     display: flow-root;
 }
 
-
-.back_opt {
-    background: #1f88b5;
-    border-radius: 100%;
-    color: #fff;
-    font-size: 20px;
-    padding: 8px 18px;
-    z-index: 999;
-    cursor: pointer;
-    height: 45px;
-    width: 45px;
-    display: inline-block;
-}
-
-.back_opt:hover i {
-    color: #fff;
-}
-
 .timeline .time-show {
     text-align: center;
     margin-right: 0px;
@@ -257,12 +239,13 @@ span.timelineIcons {
 .Select_staff {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     flex-wrap: wrap;
 }
 
 .Select_staff_inner {
-    margin: 10px 0;
+    margin: 10px 20px;
+    width: 15%;
 }
 
 @media (max-width:890px) {
@@ -447,7 +430,7 @@ span.timelineIcons {
 }
 .pop-notification::after {
     content: "\f0d8";
-    font-family: fontawesome;
+    font-family: "fontawesome";
     right: 12px;
     left: auto;
     position: absolute;
@@ -460,14 +443,13 @@ span.timelineIcons {
   /*09 Aug 2018*/
 .back_opt {
     background: #1f88b5;
-    border-radius: 100%;
+    border-radius: 10%;
     color: #fff;
     font-size: 20px;
-    padding: 8px 18px;
-    z-index: 999;
+    padding: 2px 15px;
     cursor: pointer;
-    height: 45px;
-    width: 45px;
+    height: 34px;
+    width: 40px;
     display: inline-block;
 }
 
@@ -493,10 +475,6 @@ i.fa.fa.fa-h-square {
     table-layout: fixed;
     width: 100%;
     min-height: 50vh;
-}
-.timeline .time-show {
-    margin-right: 0px;
-    text-align: center;
 }
 
 span.viewEditIcon {

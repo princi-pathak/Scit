@@ -2,27 +2,6 @@
 @section('title', 'Risk')
 @section('content')
     <style type="text/css">
-        /*09 Aug 2018*/
-        .back_opt {
-            background: #1f88b5;
-            border-radius: 100%;
-            /* bottom: 70px; */
-            color: #fff;
-            font-size: 20px;
-            padding: 8px 18px;
-            /* position: fixed; */
-            /* right: 90px; */
-            /* float:left; */
-            z-index: 999;
-            cursor: pointer;
-            height: 45px;
-            width: 45px;
-            display: inline-block;
-        }
-
-        .back_opt:hover i {
-            color: #fff;
-        }
 
         i.fontam {
             font-size: 25px
@@ -86,7 +65,7 @@
                 <div class="row">
                     <div class="pull-right">
                         <div class="filter_buttons"
-                            style="text-align:right;padding-right:150px;display:inline-block; padding-bottom: 10px;">
+                            style="text-align:right;padding-right:16px;display:inline-block; padding-bottom: 10px;">
                             <!-- <a data-toggle="modal" href="#riskDesc" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>             -->
                             <!-- <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>             -->
                         </div>
@@ -117,20 +96,17 @@
                     </div>
 
                     <!-- sourabh -->
-                    <div class="col-md-3 col-lg-3" style="margin-left: -10px;">
+                    <div class="col-md-2 col-lg-2" style="margin-left: -10px;">
                         <div class="form-group datepicker-sttng date-sttng">
-                            <label class="col-md-2 col-sm-1 col-xs-12 p-t-7" style="display: none;"> Date: </label>
-                            <div class="col-md-10 col-sm-10 col-xs-12">
-                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
-                                    class="input-group date">
-                                    <input id="date_range_input" style="cursor: pointer;" name="daterange"
-                                        value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value=""
-                                        readonly="" size="16" class="form-control log-book-datetime">
-                                    <span class="input-group-btn add-on datetime-picker2">
-                                        <button onclick="showDate()" class="btn btn-primary" type="button"><span
-                                                class="glyphicon glyphicon-calendar"></span></button>
-                                    </span>
-                                </div>
+                            <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date=""
+                                class="input-group date">
+                                <input id="date_range_input" style="cursor: pointer;" name="daterange"
+                                    value="{{ date('d-m-Y') }} - {{ date('d-m-Y') }}" type="text" value=""
+                                    readonly="" size="16" class="form-control log-book-datetime">
+                                <span class="input-group-btn add-on datetime-picker2">
+                                    <button onclick="showDate()" class="btn btn-primary" type="button"><span
+                                            class="glyphicon glyphicon-calendar"></span></button>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -147,7 +123,7 @@
                     </div>
                 </div> -->
                     <!-- sourabh -->
-                    <div class="col-md-2 col-lg-2" style="padding-bottom:10px; margin-left: -10px;">
+                    <div class="col-md-2 col-lg-2" style="padding-bottom:10px; margin-left: 10px;">
                         <input type="text" class="form-control" id="keywordhr" onKeyUp="hrmyFunctionkey()"
                             name="keywordhr" placeholder="Keyword">
                     </div>
