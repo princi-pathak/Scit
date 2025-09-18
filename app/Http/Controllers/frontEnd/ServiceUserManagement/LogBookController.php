@@ -17,6 +17,7 @@ use App\DynamicForm;
 
 class LogBookController extends ServiceUserManagementController
 {
+    
     public function index($service_user_id)
     {
 
@@ -185,13 +186,13 @@ class LogBookController extends ServiceUserManagementController
                     Mail::send(
                         'emails.su_late_entry_mail',
                         [
-                            'staff_name'     => $staff_name,
-                            'service_user_name'     => $service_user->name,
-                            'title'     => $log_book_record->title,
-                            'date'  => $log_book_record->date,
-                            'details'   => $log_book_record->details,
-                            'home_id'   => $log_book_record->home_id,
-                            'user_id'   => $log_book_record->user_id,
+                            'staff_name'        => $staff_name,
+                            'service_user_name' => $service_user->name,
+                            'title'             => $log_book_record->title,
+                            'date'              => $log_book_record->date,
+                            'details'           => $log_book_record->details,
+                            'home_id'           => $log_book_record->home_id,
+                            'user_id'           => $log_book_record->user_id,
                         ],
                         function ($message) use ($staff_email, $staff_name, $service_user) {
                             $message
@@ -446,18 +447,33 @@ class LogBookController extends ServiceUserManagementController
                 $category_icon = CategoryFrontEnd::where('id', $data['category'])->value('icon');
                 $category_name = CategoryFrontEnd::where('id', $data['category'])->value('name');
 
+                $latest_date  = LogBook::select('log_book.*')->orderBy('date', 'desc')->take(1)->value('date');
+                $latest_date  = date('Y-m-d H:i:s', strtotime($latest_date));
+                $given_date   = date('Y-m-d H:i:s', strtotime($data['log_date']));
+                // $given_date    = date('d-m-Y H:i:s');
+                $latest_date_without_time    = date('Y-m-d', strtotime($latest_date));
+                $given_date_without_time    = date('Y-m-d', strtotime($given_date));
+                $current_date_without_time    = date('Y-m-d');
+
 
                 if ($log_book_record) {
                     // update fields
                     $log_book_record->title          = $data['log_title'];
                     $log_book_record->category_id    = $data['category'];
                     $log_book_record->start_date     = date('Y-m-d');
+                    $log_book_record->date           = $given_date;
                     $log_book_record->category_name  = $category_name;
                     $log_book_record->category_icon  = $category_icon;
                     $log_book_record->details        = $data['log_detail'];
                     $log_book_record->image_name     = $log_image;
                     $log_book_record->latitude       = $latitude;
                     $log_book_record->longitude      = $longitude;
+
+                    if ($given_date < $latest_date) {
+                        $log_book_record->is_late = true;
+                    } else if ($current_date_without_time > $latest_date_without_time && $given_date_without_time < $current_date_without_time) {
+                        $log_book_record->is_late = true;
+                    }
 
                     // save changes
                     $log_book_record->save();
@@ -532,7 +548,6 @@ class LogBookController extends ServiceUserManagementController
 
                 $log_book_record->title   = $data['title'];
                 $log_book_record->category_id = $data['category'];
-                // $log_book_record->formdata = json_encode($data['log_date']);
                 $log_book_record->start_date =  date('Y-m-d');
                 $log_book_record->dynamic_form_id = $form_insert_id;
                 $log_book_record->category_name   = $category_name;

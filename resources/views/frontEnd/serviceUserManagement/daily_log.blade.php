@@ -5,7 +5,7 @@
 
 
         /* .timeline .time-show.first a.btn {
-                            } */
+                                        } */
 
         #logs_articles {
             border-collapse: collapse;
@@ -96,23 +96,16 @@
         .comment-list {
             width: 100%;
         }
+        div#formiotestForm label {
+            text-align: start;
+        }
 
-     div#formiotestForm label {
-        text-align: start;
-    }
-    .log-type-text{
-        
-        font-weight: 700;
-    color: #1f88b5;
-    }
+        .log-type-text {
 
-    div#image-preview {
-    width: 72px;
-    margin: 0 12px 15px;
-    }
-    div#image-preview img {
-        width: 100%;
-    }
+            font-weight: 700;
+            color: #1f88b5;
+        }
+
     </style>
 
     {{-- @php
@@ -153,38 +146,44 @@
 
 
     @php
-if (!function_exists('time_diff_string')) {
-    function time_diff_string($from, $to = 'now')
-    {
-        $from = new DateTime($from);
-        $to = new DateTime($to);
-        $diff = $to->diff($from);
+        if (!function_exists('time_diff_string')) {
+            function time_diff_string($from, $to = 'now')
+            {
+                $from = new DateTime($from);
+                $to = new DateTime($to);
+                $diff = $to->diff($from);
 
-        // total days
-        $days = (int)$diff->days;
+                // total days
+                $days = (int) $diff->days;
 
-        if ($days > 0 && $days <= 30) {
-            return $days . ' ' . ($days === 1 ? 'day' : 'days') . ' ago';
-        }
+                if ($days > 0 && $days <= 30) {
+                    return $days . ' ' . ($days === 1 ? 'day' : 'days') . ' ago';
+                }
 
-        if ($days > 30) {
-            $months = floor($days / 30);
-            if ($months < 12) {
-                return $months . ' ' . ($months === 1 ? 'month' : 'months') . ' ago';
-            } else {
-                $years = floor($months / 12);
-                return $years . ' ' . ($years === 1 ? 'year' : 'years') . ' ago';
+                if ($days > 30) {
+                    $months = floor($days / 30);
+                    if ($months < 12) {
+                        return $months . ' ' . ($months === 1 ? 'month' : 'months') . ' ago';
+                    } else {
+                        $years = floor($months / 12);
+                        return $years . ' ' . ($years === 1 ? 'year' : 'years') . ' ago';
+                    }
+                }
+
+                if ($diff->h) {
+                    return $diff->h . ' ' . ($diff->h === 1 ? 'hour' : 'hours') . ' ago';
+                }
+                if ($diff->i) {
+                    return $diff->i . ' ' . ($diff->i === 1 ? 'minute' : 'minutes') . ' ago';
+                }
+                if ($diff->s) {
+                    return $diff->s . ' ' . ($diff->s === 1 ? 'second' : 'seconds') . ' ago';
+                }
+
+                return 'just now';
             }
         }
-
-        if ($diff->h) return $diff->h . ' ' . ($diff->h === 1 ? 'hour' : 'hours') . ' ago';
-        if ($diff->i) return $diff->i . ' ' . ($diff->i === 1 ? 'minute' : 'minutes') . ' ago';
-        if ($diff->s) return $diff->s . ' ' . ($diff->s === 1 ? 'second' : 'seconds') . ' ago';
-
-        return 'just now';
-    }
-}
-@endphp
+    @endphp
 
 
     <!--Core CSS -->
@@ -302,12 +301,12 @@ if (!function_exists('time_diff_string')) {
                     </div>
                     <!-- sourabh -->
                     <!-- <div class="col-md-4 filter_buttons" style="text-align:right;padding-right:150px;display:inline-block;">
-                            <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
-                            <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
-                        </div> -->
+                                        <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
+                                        <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
+                                    </div> -->
 
+                    {{-- <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
 
-                        {{-- <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
                         <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
                     </div> --}}
 
@@ -382,7 +381,6 @@ if (!function_exists('time_diff_string')) {
                                                                 <span class="log_title">{{ $logType }}</span>
                                                             </h1> --}}
 
-
                                                         @if (!empty($key['image_name']))
                                                             <div class="logimg">
                                                                 <a
@@ -398,16 +396,22 @@ if (!function_exists('time_diff_string')) {
                                                         ?>
                                                         <p class="daily_log_time">
                                                             {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
-                                                                class="log_title log-type-text" >{{ $logType }} </span>
+
+                                                                class="log_title log-type-text">{{ $logType }}
+                                                            </span>
+
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
                                                                         style="color:red;">{{ $key['late_time_text'] }}</span>
-                                                                    | <span class="log_title log-type-text">{{ $logType }}</span>
+                                                                    | <span
+                                                                        class="log_title log-type-text">{{ $logType }}</span>
                                                                 @else
                                                                     | <span
                                                                         style="color:red;">{{ date('d-m-Y H:i', strtotime($key['created_at'])) }}</span>
-                                                                    | <span class="log_title log-type-text">{{ $logType }}</span>
+                                                                    | <span
+                                                                        class="log_title log-type-text">{{ $logType }}</span>
+
                                                                 @endif
                                                             @endif
                                                         </p>
@@ -481,7 +485,9 @@ if (!function_exists('time_diff_string')) {
                                                         <p class="comment-detail-info-area">{{ $key['details'] }}</p>
                                                         <p class="daily_log_time">
                                                             {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
-                                                                class="log_title log-type-text">{{ $logType }} </span>
+                                                                class="log_title log-type-text">{{ $logType }}
+                                                            </span>
+
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
@@ -534,8 +540,7 @@ if (!function_exists('time_diff_string')) {
 
                 // Reset form inside modal
                 $("#addLogModal form")[0].reset();
-                $(".dynamic-form-log-fields").empty();
-                // document.getElementById('dynamic_form_builder_log').disabled = false;
+                $(".dynamic-form-fields").empty();
                 $("#image-preview").css("display", "none");
                 $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", false);
 
@@ -547,77 +552,8 @@ if (!function_exists('time_diff_string')) {
                     keyboard: false,
                     show: true // configure but don't show yet
                 });
-
             });
-
-            // $(document).on('click', '.openModelDailyLog', function(e) {
-            //     e.preventDefault();
-
-            //     var previous_model_id = $(this).closest('.modal').attr('id');
-            //     var dynamic_form_id = $(this).attr('id');
-            //     var form_id = $(this).closest('form').attr('id');
-
-            //     $('.loader').show();
-            //     $('body').addClass('body-overflow');
-
-            //     $.ajax({
-            //         type: 'get',
-            //         url: "{{ url('/service/daily-log-form/view/data') }}" + '/' + dynamic_form_id,
-            //         dataType: 'json',
-            //         success: function(resp) {
-
-            //             if (isAuthenticated(resp) == false) {
-            //                 return false;
-            //             }
-
-            //             var response = resp['response'];
-            //             var form_builder_id = resp['form_builder_id'];
-            //             var form_title = resp['form_title'];
-            //             var service_user_id = resp['service_user_id'];
-            //             var form_data = resp['form_data'];
-            //             var form_alert = resp['form_alert'];
-
-            //             if (response == true) {
-
-            //                 $('#' + previous_model_id).modal('hide');
-            //                 var view_modal = '#DynFormViewModal';
-
-            //                 $(view_modal).modal('show');
-            //                 $(view_modal + ' .mdl-back-btn').attr('pre_modal',
-            //                     previous_model_id);
-
-            //                 $(view_modal + ' .dynamic_form_select').val(form_builder_id);
-            //                 if (service_user_id != null) {
-            //                     $(view_modal + ' .su_id').val(service_user_id);
-            //                 } else {
-            //                     $(view_modal + ' .su_id').val(0);
-            //                 }
-            //                 $(view_modal + ' .dynamic_form_id').val(dynamic_form_id);
-            //                 $(view_modal + ' .dynamic-form-log-fields').html(form_data);
-
-            //                 // setTimeout(function () {
-            //                 //     autosize($("textarea"));
-            //                 // },200);
-
-            //             } else {
-            //                 //show error message
-            //                 $('#' + form_id + '  span.popup_error_txt').text(
-            //                     "{{ COMMON_ERROR }}");
-            //                 $('#' + form_id + ' .popup_error').show();
-            //                 setTimeout(function() {
-            //                     $('#' + form_id + ' .popup_error').fadeOut()
-            //                 }, 5000);
-            //             }
-            //             viewdatawithvalueFormio();
-            //             $('.loader').hide();
-            //             $('body').removeClass('body-overflow');
-            //         }
-            //     });
-            //     return false;
-            // });
-
         });
-
 
         /**
          * Sanitizer Function
@@ -1171,52 +1107,51 @@ if (!function_exists('time_diff_string')) {
         //     return time;
         // }
         function timeAgo(time) {
-    switch (typeof time) {
-        case 'number':
-            break;
-        case 'string':
-            time = +new Date(time);
-            break;
-        case 'object':
-            if (time.constructor === Date) time = time.getTime();
-            break;
-        default:
-            time = +new Date();
-    }
+            switch (typeof time) {
+                case 'number':
+                    break;
+                case 'string':
+                    time = +new Date(time);
+                    break;
+                case 'object':
+                    if (time.constructor === Date) time = time.getTime();
+                    break;
+                default:
+                    time = +new Date();
+            }
 
-    var seconds = (+new Date() - time) / 1000;
-    var token = 'ago';
+            var seconds = (+new Date() - time) / 1000;
+            var token = 'ago';
 
-    if (seconds === 0) return 'Just now';
-    if (seconds < 0) {
-        seconds = Math.abs(seconds);
-        token = 'from now';
-    }
+            if (seconds === 0) return 'Just now';
+            if (seconds < 0) {
+                seconds = Math.abs(seconds);
+                token = 'from now';
+            }
 
-    var days = Math.floor(seconds / 86400); // 1 day = 86400 seconds
+            var days = Math.floor(seconds / 86400); // 1 day = 86400 seconds
 
-    if (days > 0 && days <= 30) {
-        return days + (days === 1 ? ' day ' : ' days ') + token;
-    }
+            if (days > 0 && days <= 30) {
+                return days + (days === 1 ? ' day ' : ' days ') + token;
+            }
 
-    if (days > 30) {
-        var months = Math.floor(days / 30);
-        if (months < 12) {
-            return months + (months === 1 ? ' month ' : ' months ') + token;
-        } else {
-            var years = Math.floor(months / 12);
-            return years + (years === 1 ? ' year ' : ' years ') + token;
+            if (days > 30) {
+                var months = Math.floor(days / 30);
+                if (months < 12) {
+                    return months + (months === 1 ? ' month ' : ' months ') + token;
+                } else {
+                    var years = Math.floor(months / 12);
+                    return years + (years === 1 ? ' year ' : ' years ') + token;
+                }
+            }
+
+            // For <1 day, show hours/minutes/seconds
+            if (seconds < 60) return Math.floor(seconds) + ' seconds ' + token;
+            if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ' + token;
+            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ' + token;
+
+            return 'Just now';
         }
-    }
-
-    // For <1 day, show hours/minutes/seconds
-    if (seconds < 60) return Math.floor(seconds) + ' seconds ' + token;
-    if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ' + token;
-    if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ' + token;
-
-    return 'Just now';
-}
-
     </script>
 
     <!-- Category Filter -->
@@ -1316,7 +1251,7 @@ if (!function_exists('time_diff_string')) {
             }
         }
     </script>
-    <!-- sourabh -->
+    {{-- Child Filter --}}
     <script type="text/javascript">
         $('#service_user').change(function() {
             let staff_member = $('#staff_member').val();
@@ -1353,7 +1288,8 @@ if (!function_exists('time_diff_string')) {
 
         });
     </script>
-    {{-- Staff or serice user --}}
+    {{-- Child Filter --}}
+    {{-- Staff Filter --}}
     <script type="text/javascript">
         $('#staff_member').change(function() {
             let staff_member = $('#staff_member').val();
@@ -1388,7 +1324,7 @@ if (!function_exists('time_diff_string')) {
             return false;
         });
     </script>
-    <!-- sourabh -->
+    {{-- Staff Filter --}}
 
     {{-- FIter on log type like daily weekly and monthly --}}
     <script type="text/javascript">
@@ -1424,9 +1360,10 @@ if (!function_exists('time_diff_string')) {
 
             getDailyLogData(data);
             return false;
-
         });
     </script>
+    {{-- FIter on log type like daily weekly and monthly --}}
+    {{-- Keyword Filter --}}
     <script>
         function myFunctionkey() {
             let staff_member = $('#staff_member').val();
@@ -1461,13 +1398,20 @@ if (!function_exists('time_diff_string')) {
             return false;
         }
     </script>
-    <!-- sourabh -->
+    {{-- Keyword Filter --}}
 
     <script>
+        //    $(function() {
+        //     $('#daily_log_date_edit').datetimepicker({
+        //         format: 'DD-MM-YYYY HH:mm',
+        //         sideBySide: true
+        //     });
+        // });
         $(document).ready(function() {
 
             $(document).on('click', '.dyn-form-view-data-log-book', function(e) {
                 e.preventDefault();
+                $(".dynamic-form-log-fields").empty();
                 var id = $(this).attr('id');
                 var dynamic_form_id = $(this).attr('dynamic_form_id');
                 var getFormUrl = "{{ route('get.dynamic.form.daily.log', ['id' => ':id']) }}";
@@ -1482,12 +1426,17 @@ if (!function_exists('time_diff_string')) {
                             "change");
                         $('input[name="log_title"]').val(response.log_book_records.title);
                         $('#log_dynamic_form_id').val(response.log_book_records
-                            .dynamic_form_id);
+                        .dynamic_form_id);
                         $('#dynamic_form_log_book_id').val(response.log_book_records.id);
                         $('select[name="category"]').val(response.log_book_records.category_id);
-                        $('input[name="log_date"]').val(response.log_book_records.date);
+                        // $('input[name="log_date"]').val(response.log_book_records.date);
+                        if (response.log_book_records.date) { 
+                            let formattedDate = moment(response.log_book_records.date, "YYYY-MM-DD HH:mm:ss") .format("DD-MM-YYYY HH:mm"); 
+                            $('input[name="log_date"]').val(formattedDate); 
+                        }
+
+
                         $('textarea[name="log_detail"]').val(response.log_book_records.details);
-                        // $("#formDataLogs").val(response.dynamicForm.form_data);
                         $('select[name="dynamic_form_builder_id"]').val(response.dynamicForm
                             .form_builder_id).trigger('change');
                         if (response.log_book_records.image_name && response.log_book_records
@@ -1499,8 +1448,6 @@ if (!function_exists('time_diff_string')) {
                         } else {
                             $('#image-preview').hide();
                         }
-
-                        $(".dynamic-form-log-fields").empty();
 
                         let formE = document.getElementById("addLogModal");
                         formE.setAttribute("data-mode", "edit");
@@ -1540,7 +1487,7 @@ if (!function_exists('time_diff_string')) {
                 document.getElementById('dynamic_form_builder_log').disabled = true;
                 $("#addLogModal").find("select[name='dynamic_form_builder_id']").prop("disabled", true);
 
-                $("#addLogModal").modal({
+                $("#editLogModal").modal({
                     backdrop: 'static',
                     keyboard: false,
                     show: true // configure but don't show yet

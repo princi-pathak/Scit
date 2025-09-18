@@ -897,8 +897,6 @@
                 'keyword': keyword
             };
 
-
-
             getFormData(data);
             return false;
 

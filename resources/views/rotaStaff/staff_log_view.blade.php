@@ -173,8 +173,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Login Date</th>
-                                            <th>Check In Time</th>
-                                            <th>Check Out Time</th>
+                                            <th>Clock In Time</th>
+                                            <th>Clock Out Time</th>
                                             <th>Reason</th>
                                             <th>Status</th>
                                         </tr>
