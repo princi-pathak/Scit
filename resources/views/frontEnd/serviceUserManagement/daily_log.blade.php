@@ -3,7 +3,6 @@
 @section('content')
     <style type="text/css">
 
-
         /* .timeline .time-show.first a.btn {
                                         } */
 
@@ -96,6 +95,7 @@
         .comment-list {
             width: 100%;
         }
+
         div#formiotestForm label {
             text-align: start;
         }
@@ -105,7 +105,6 @@
             font-weight: 700;
             color: #1f88b5;
         }
-
     </style>
 
     {{-- @php
@@ -269,7 +268,7 @@
                             <label style="display: none;"> Category: </label>
                             <div>
                                 <select class="form-control" style="min-width:200px;" id="select_category"
-                                    name="category_timeline" required>
+                                    name="category_timeline" required />
                                 <!-- <option disabled value> -- select an option -- </option> -->
                                 <option selected value="all">All</option>
                                 @foreach ($categorys as $key)
@@ -305,8 +304,8 @@
                                         <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
                                     </div> -->
 
-                    {{-- <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
 
+                    {{-- <a data-toggle="modal" href="#addLogModal" class="btn btn-primary  col-6" id='add_new_log'>Add New</a>
                         <a onclick="pdf()" id="pdf" target="_blank" class="btn col-6" id='add_new_log' style="background-color:#d9534f;color:white;">PDF Export</a>
                     </div> --}}
 
@@ -396,10 +395,8 @@
                                                         ?>
                                                         <p class="daily_log_time">
                                                             {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
-
                                                                 class="log_title log-type-text">{{ $logType }}
                                                             </span>
-
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
@@ -411,7 +408,6 @@
                                                                         style="color:red;">{{ date('d-m-Y H:i', strtotime($key['created_at'])) }}</span>
                                                                     | <span
                                                                         class="log_title log-type-text">{{ $logType }}</span>
-
                                                                 @endif
                                                             @endif
                                                         </p>
@@ -487,7 +483,6 @@
                                                             {{ date('d-m-Y H:i', strtotime($key['date'])) }} | <span
                                                                 class="log_title log-type-text">{{ $logType }}
                                                             </span>
-
                                                             @if ($key['is_late'])
                                                                 @if ($key['late_time_text'])
                                                                     | {{ $key['late_date_text'] }} <span
