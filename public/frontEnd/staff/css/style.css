@@ -4013,10 +4013,11 @@ margin: 0px 10px 0px 10px;
     position: relative;
     line-height: 11px; 
     display: flex;
+    height: 5.5rem;
 }
 
 #timeline .accordion .accordion-body .w_full .hour_box {
-    border-right: 1px solid #bbc0c359;
+    border-right: 1px solid #bbc0c359; 
     height: 5.5rem;
     display: inline-block;
     padding: 2px;
@@ -4038,7 +4039,8 @@ margin: 0px 10px 0px 10px;
     outline: none;
     left: 37.5%;
     line-height: 1rem;
-    border-bottom: 3px solid #999;
+    border-bottom: 3px solid #1f88b5;
+    border-right: 1px solid #e7e9ea;
 }
 
 #timeline .accordion .accordion-body .w_full .shift_timing_btn .name_of_member {
@@ -4365,9 +4367,10 @@ div#without_break {
     padding-bottom: 20px;
 }
 .editRota .accordion-item .accordion-header{
-    margin: 15px;
+    margin: 15px 0px;
     background: #1f88b5;
-    border-radius: 4px;
+    border-radius: 3px;
+    padding: 0px 20px;
 }
 .editRota .accordion-item .accordion-header .accordion-button:not(.collapsed){
     background-color: transparent;
@@ -4393,4 +4396,34 @@ div#without_break {
 .modelFooterBorder{
     border-top: 1px solid #eee;
     padding-top: 14px;
+}
+.addDiscriptest {
+    padding: 10px 10px 0 10px;
+    text-align: left;
+    line-height: 16px;
+    font-size: 13px;
+}
+
+.addDiscriptest {
+  padding: 10px 10px 0 10px;
+  text-align: left;
+  line-height: 16px;
+  font-size: 13px;
+  white-space: nowrap;  
+  overflow: hidden;    
+  text-overflow: ellipsis;  
+  max-width: 40ch;   
+}
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M1.5 4.5a1 1 0 0 1 1.4 0L8 9.6l5.1-5.1a1 1 0 1 1 1.4 1.4l-5.8 5.8a1 1 0 0 1-1.4 0l-5.8-5.8a1 1 0 0 1 0-1.4z'/%3e%3c/svg%3e");
+}
+
+.accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M1.5 4.5a1 1 0 0 1 1.4 0L8 9.6l5.1-5.1a1 1 0 1 1 1.4 1.4l-5.8 5.8a1 1 0 0 1-1.4 0l-5.8-5.8a1 1 0 0 1 0-1.4z'/%3e%3c/svg%3e");
+}
+.time-for-shift {
+    margin-top: 18px;
+}
+.time-for-shift .add-color{
+    text-align: center;
 }

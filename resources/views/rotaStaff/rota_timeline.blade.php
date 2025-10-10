@@ -210,7 +210,7 @@
                                             foreach ($period as $date) {
                                                 $date->format('D j M') . "<br>";
                                             ?>
-                                                <div class="d-flex">
+                                                <div class="addSoftBtmBorder">
                                                     <div class="date-of-shift">
                                                         <strong>{{$date->format('D j M')}}</strong>
                                                     </div>
@@ -266,7 +266,7 @@
                                                                         <div class="name_of_person">{{ $user_data->name }}</div>
                                                                         <div class="shift_timeing_duration">{{ \Carbon\Carbon::parse($shift_start)->format('h:i') }} - {{ \Carbon\Carbon::parse($shift_end) ->format('h:i') }}</div>
                                                                     </div>
-                                                                    <div class="">{{ $description }}</div>
+                                                                    <div class="addDiscriptest">{{ $description }}</div>
                                                                 </div>
                                                             </div>
                                                         </button>

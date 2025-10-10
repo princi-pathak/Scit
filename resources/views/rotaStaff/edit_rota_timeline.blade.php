@@ -41,6 +41,9 @@
     .modal-content .modal-header .modal-title{
         color: #fff;
     }
+    .accordion-item{
+        border: none;
+    }
 </style>
 @foreach($rota as $rota_data)
 <div class="row">
@@ -308,12 +311,12 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="d-flex">
+                                                        <div class="">
                                                             <div class="d-flex align-items-center">
                                                                 <div class="name_of_person">{{ $user_data->name }}</div>
                                                                 <div class="shift_timeing_duration">{{ \Carbon\Carbon::parse($shift_start)->format('h:i') }} - {{ \Carbon\Carbon::parse($shift_end) ->format('h:i') }}</div>
                                                             </div>
-                                                            <div class="m-l-10">{{ $description }}</div>
+                                                            <div class="addDiscriptest">{{ $description }}</div>
                                                         </div>
                                                     </div>
                                                 </button>
