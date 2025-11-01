@@ -1,10 +1,10 @@
 @extends('frontEnd.layouts.master')
+
 @include('rotaStaff.components.header')
 <style>
-    .disable_btn_nxt2 {
-        position: relative;
-        background-color: rgba(188, 203, 214) !important;
-        border: 2px solid rgba(188, 203, 214) !important;
+    .shift_detail_modal_body {
+        max-height: 60vh;
+        overflow-y: auto;
     }
 
     .employees-info .save-btn {
@@ -12,278 +12,323 @@
         font-weight: 600;
     }
 
-    .shift-patern {
-        display: none;
-    }
-
     .employee-name {
         max-height: 38vh;
         overflow-y: auto;
+        border: 1px solid #eee;
     }
 
     .modal {
         top: 5%;
     }
 
-    .date-of-shift {
-        width: 130px;
+    .backIcon i {
+        color: #1f88b5;
+        font-size: 20px;
     }
 
-    .add-shift-btn {
-        width: 120px;
+    .backIcon {
+        text-align: right;
+        margin-bottom: 25px;
     }
-
-    .shift_detail_modal_body {
-        max-height: 60vh;
-        overflow-y: auto;
+    .add-margin h4 {
+        font-weight: 600;
+        font-size: 20px;
+    }
+    .date-of-weak-shift {
+        color: #1f88b5;
+    }
+    .modal-content .modal-header .modal-title{
+        color: #fff;
+    }
+    .accordion-item{
+        border: none;
     }
 </style>
-<div class="wrapper">
-    <div class="panel">
-       <header class="panel-heading">
-        <h4> All Rota > Future rotas</h4>
-       </header>
-        <div class="" id="timeline">
-            <div class="row">
-                @foreach($rota as $rota_data)
-                @if($rota_data->status == 0 || $rota_data->rota_view == 2)
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                    <div class="accordion" id="accordionPanelsStayOpenExample">
-                        <div class="col-md-12">
-                            <div class="rota_name">
-                                <p class="breadcrum"> <a href="{{ url('/rota') }}"> <span class="rota-link">
-                                            All Rota</span> </a> {{ $rota_data->rota_name }} </p>
-                                <h3>{{ $rota_data->rota_name }}</h3>
-                            </div>
-                            <input type="hidden" value="{{ $rota_data->id }}" id="new_rota">
-                            <div class="d-flex justify-content-between">
-                                <div class="date-info">
-                                    <p> {{ date("D j M", strtotime($rota_data->rota_start_date)) }} - {{ date("D j M", strtotime($rota_data->rota_end_date)) }} | {{ $rota_data->rota_duration }} days | <span id="shift_count1"></span> staff members</p>
-                                </div>
-                                <div class="shift-patern">
-                                    <div class="select-shift">
-                                        Show shifts for:
-                                        <input type="radio" class="input_custom_btn" id="everyone" name="select">
-                                        <div class="label">
-                                            <label for="everyone" class="label_custom every">Everyone</label>
-                                        </div>
-                                        <input type="radio" id="me" class="input_custom_btn" name="select">
-                                        <div class="label">
-                                            <label for="me" class="label_custom me">Me</label>
-                                        </div>
-                                        <input type="radio" id="specific" class="input_custom_btn" name="select">
-                                        <div class="label">
-                                            <label for="specific" class="label_custom specific">Specific people...</label>
-                                        </div>
-                                    </div>
-                                    <div class="select-yes-no">
-                                        Show notes:
-                                        <input type="radio" class="input_custom_btn" id="yes" name="yes_no">
-                                        <div class="label">
-                                            <label for="yes" class="label_custom yes">Yes</label>
-                                        </div>
-                                        <input type="radio" id="no" class="input_custom_btn" name="yes_no">
-                                        <div class="label">
-                                            <label for="no" class="label_custom no">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+@foreach($rota as $rota_data)
+<div class="row">
+    <div class="col-md-12">
+        <div class="backIcon"> <a href="{{ url('/rota') }}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div>
+    </div>
+</div>
+<!-- Top Bar Info Section End Here -->
 
-                            <div class="d-flex justify-content-between">
-                                    <div id="BeforeShiftAdd" class="d-none">
-                                        <p>Once a shift has been added you can publish this rota.</p>
-                                    </div>
-                                
-                                    <div class="d-flex print_and_publish_button d-none" id="AfterShiftAdd">
-                                        <!-- Button trigger modal -->
-                                        @if($rota_data->status === 1)
-                                        <button type="button" onclick="renamedata(<?= $rota_data->id ?>,'<?= $rota_data->rota_name ?>',<?= $rota_data->status ?>)" class="publish_btn"> Unpublish</button>
-                                        @endif
-                                        @if($rota_data->status === 0)
-                                        <button type="button" onclick="renamedata(<?= $rota_data->id ?>,'<?= $rota_data->rota_name ?>',<?= $rota_data->status ?>)" class="publish_btn">Publish</button>
-                                        @endif
-                                        <!-- Publish/Unpublish Modal -->
-                                        <div class="modal  exampleModalPublish" id="exampleModalPublish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">Are you sure you want to
-                                                            @if($rota_data->status === 0)
-                                                            Publish
-                                                            @endif
-                                                            @if($rota_data->status === 1)
-                                                            Unpublish
-                                                            @endif this rota?
-                                                        </h4>
-                                                        <button type="button" class="modal_close_btn" data-bs-dismiss="modal" aria-label="Close"> &#10006; </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="publish_modal">
-                                                            <input type="hidden" id="rota_id">
-                                                            <input type="hidden" id="rota_status">
-                                                            <div class="content_publish_rota">This will show <span id="rota_name_model"></span> to your employees. They will be able to see their shifts and absence conflicts.</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-between">
-                                                        <button type="button" class="cancel_btn" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="publish_btn_footer" id="publish_unpublish_btn">
-                                                            @if($rota_data->status === 0)
-                                                            Publish
-                                                            @endif
-                                                            @if($rota_data->status === 1)
-                                                            Unpublish
-                                                            @endif
-                                                        </button>
-                                                    </div>
+<section class="wrapper">
+    <div class="panel">
+        <header class="panel-heading">
+              <h4><a href="{{ url('/rota') }}"> <span class="rota-link"> All Rota</span> </a> > {{ $rota_data->rota_name}}</h4>
+        </header>
+        <div class="panel-body" id="timeline">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="rota_name">
+                        <!-- <p class="breadcrum"> <a href="{{ url('/rota') }}"> <span class="rota-link">
+                                    All Rota</span> </a> > {{ $rota_data->rota_name}} </p> -->
+                        <!-- <h3>{{ $rota_data->rota_name}}</h3> -->
+                    </div>
+                    <input type="hidden" value="{{ $rota_data->id }}" id="new_rota">
+                    <div class="d-flex justify-content-between">
+                        <div class="date-info">
+                            <p>{{ date("D j M", strtotime($rota_data->rota_start_date)) }} - {{ date("D j M", strtotime($rota_data->rota_end_date)) }} | {{ $rota_data->rota_duration }} days | <span id="shift_count1">0</span> staff members</p>
+                        </div>
+                        <div class="shift-patern d-none">
+                            <div class="select-shift">
+                                Show shifts for:
+                                <input type="radio" class="input_custom_btn" id="everyone"
+                                    name="select">
+                                <div class="label">
+                                    <label for="everyone" class="label_custom every">Everyone</label>
+                                </div>
+                                <input type="radio" id="me" class="input_custom_btn" name="select">
+                                <div class="label">
+                                    <label for="me" class="label_custom me">Me</label>
+                                </div>
+                                <input type="radio" id="specific" class="input_custom_btn"
+                                    name="select">
+                                <div class="label">
+                                    <label for="specific" class="label_custom specific">Specific
+                                        people...</label>
+                                </div>
+                            </div>
+                            <div class="select-yes-no">
+                                Show notes:
+                                <input type="radio" class="input_custom_btn" id="yes" name="yes_no">
+                                <div class="label">
+                                    <label for="yes" class="label_custom yes">Yes</label>
+                                </div>
+                                <input type="radio" id="no" class="input_custom_btn" name="yes_no">
+                                <div class="label">
+                                    <label for="no" class="label_custom no">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-none">
+                            <p>Once a shift has been added you can publish this rota.</p>
+                        </div>
+                        <div class="d-flex print_and_publish_button">
+                            <div class="rotaWtBtn">
+                                <!-- Button trigger modal -->
+                                @if($rota_data->status === 1)
+                                <button type="button" onclick="renamedata(<?= $rota_data->id ?>,'<?= $rota_data->rota_name ?>',<?= $rota_data->status ?>)" class="publish_btn">
+                                    Unpublish
+                                </button>
+                                @endif
+                                @if($rota_data->status === 0)
+                                <button type="button" onclick="renamedata(<?= $rota_data->id ?>,'<?= $rota_data->rota_name ?>',<?= $rota_data->status ?>)" class="publish_btn">
+                                    Publish
+                                </button>
+                                @endif
+
+                                <!-- Modal -->
+                                <div class="modal" id="exampleModalPublish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLabel">Are you sure you want to @if($rota_data->status === 0)
+                                                    Publish
+                                                    @endif
+                                                    @if($rota_data->status === 1)
+                                                    Unpublish
+                                                    @endif this rota?</h4>
+                                                <button type="button" class="modal_close_btn" data-bs-dismiss="modal" aria-label="Close"> &#10006; </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="publish_modal">
+                                                    <input type="hidden" id="rota_id">
+                                                    <input type="hidden" id="rota_status">
+                                                    <div class="content_publish_rota">This will show <span id="rota_name_model"></span> to your employees. They will be able to see their shifts and absence conflicts.</div>
                                                 </div>
                                             </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="cancel_btn" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="publish_btn_footer" id="publish_unpublish_btn">
+                                                    @if($rota_data->status === 0)
+                                                    Publish
+                                                    @endif
+                                                    @if($rota_data->status === 1)
+                                                    Unpublish
+                                                    @endif
+                                                </button>
+                                            </div>
                                         </div>
-                                        <button type="button" class="print_btn" onclick="window.print()">Print rota</button>
                                     </div>
-                              
-                            </div>
-                            <div class="d-flex time-for-shift">
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
-                                    0:00
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
-                                    4:00</div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
-                                    8:00</div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
-                                    12:00</div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
-                                    16:00</div>
-                                <div class="add-color" style="border-bottom: 1px solid #e8eaec; width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
-                                    20:00</div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
-                                </div>
-                                <div class="add-color" style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
                                 </div>
                             </div>
-                            <div class="accordion editRota" id="accordionPanelsStayOpenExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-toggle="collapse" data-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                            {{ date("D j M Y", strtotime($rota_data->rota_start_date)) }} - {{ date("D j M Y", strtotime($rota_data->rota_end_date)) }}
-                                        </button>
-                                    </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
-                                        <div class="accordion-body">
-                                            <?php
-                                            $period = \Carbon\CarbonPeriod::create(date("Y-m-d", strtotime($rota_data->rota_start_date)), date("Y-m-d", strtotime($rota_data->rota_end_date)));
-                                            $i = 1;
-                                            // Iterate over the period
-                                            foreach ($period as $date) {
-                                                $date->format('D j M') . "<br>";
-                                            ?>
-                                                <div class="addSoftBtmBorder">
-                                                    <div class="date-of-shift">
-                                                        <strong>{{$date->format('D j M')}}</strong>
-                                                    </div>
-                                                    <div class="amount-of-shift">
-                                                        <p><span id="shift_count"></span> shifts</p>
-                                                    </div>
-                                                    <div class="add-shift-btn">
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="modal-btn" onclick="view_shift_model('<?= $date->format('l d F') ?>','<?= $date->format('D j M') ?>',<?= $i ?>)">
-                                                            Add shift
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                $rota_shift = App\RotaShift::where('rota_id', $rota_data->id)->where('rota_day_date', $date->format('Y-m-d'))->where('status', 1)->get();
-                                                $userdata = array();
-                                                foreach ($rota_shift as $rota_shifts) {
-                                                    $shift_id = $rota_shifts->id;
-                                                    $shift_start = $rota_shifts->shift_start_time;
-                                                    $shift_end = $rota_shifts->shift_end_time;
-                                                    $description = $rota_shifts->description;
-                                                    $list_emp = App\RotaAssignEmployee::where('rota_id', $rota_data->id)->where('shift_id', $shift_id)->where('status', 1)->first();
-                                                    // foreach ($list_emp as $emp_ids) {
-                                                    //     $userdata[] = App\User::where('id', $emp_ids->emp_id)->get();
-                                                    // }
-                                                    $user_data = App\User::where('id', $list_emp->emp_id)->first();
-                                                // }
-                                                // foreach ($userdata as $user_data) { ?>
-                                                    <div class="w_full">
-                                                        <?php for ($count = 0; $count < 24; $count++) {
-                                                            echo  "<div class='hour_box' style='width: calc(4.16667%);'>
+                            <div class="rotaWtBtn">
+                                <button type="button" class="print_btn" onclick="window.print()">Print rota</button>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center drag-table-link d-none">
+                            <a href="#"><i class="fa fa-clone"></i> Drag and drop view</a>
+                            <a href="#"><i class="fa fa-calendar"></i> Table view</a>
+                        </div>
+                    </div>
+                    <div class="d-flex time-for-shift">
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
+                            0:00
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
+                            4:00</div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
+                            8:00</div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
+                            12:00</div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
+                            16:00</div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid #e8eaec; width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(161, 169, 179);">
+                            20:00</div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                        <div class="add-color"
+                            style="border-bottom: 1px solid rgb(232, 234, 236); width: calc(4.16667%); border-left: 1px solid rgb(232, 234, 236);">
+                        </div>
+                    </div>
+                    <div class="accordion editRota" id="accordionPanelsStayOpenExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button" type="button" data-toggle="collapse"
+                                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                    aria-controls="panelsStayOpen-collapseOne">
+                                    {{ date("D j M Y", strtotime($rota_data->rota_start_date)) }} - {{ date("D j M Y", strtotime($rota_data->rota_end_date)) }}
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body">
+                                    <?php
+                                    $period = \Carbon\CarbonPeriod::create(date("Y-m-d", strtotime($rota_data->rota_start_date)), date("Y-m-d", strtotime($rota_data->rota_end_date)));
+                                    $i = 1;
+                                    foreach ($period as $date) {
+                                        $shift_count=App\RotaShift::where('rota_id', $rota_data->id)->where('rota_day_date', $date->format('Y-m-d'))->where('status', 1)->count();
+                                    ?>
+                                        <div class="addSoftBtmBorder">
+                                            <div class="date-of-shift">
+                                                <strong>{{$date->format('D j M')}}</strong>
+                                            </div>
+                                            <div class="amount-of-shift">
+                                                <p><span id="shift_count">{{$shift_count}}</span> shifts</p>
+                                            </div>
+                                            <div class="add-shift-btn">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="modal-btn" onclick="view_shift_model('<?= $date->format('l d F') ?>','<?= $date->format('D j M') ?>', <?= $i ?>)"> Add shift </button>
+
+                                                <!-- Modal -->
+
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $rota_shift = App\RotaShift::where('rota_id', $rota_data->id)->where('rota_day_date', $date->format('Y-m-d'))->where('status', 1)->get();
+                                        // $userdata = array();
+                                        foreach ($rota_shift as $rota_shifts) {
+                                            $shift_id = $rota_shifts->id;
+                                            $shift_start = $rota_shifts->shift_start_time;
+                                            $shift_end = $rota_shifts->shift_end_time;
+                                            $description = $rota_shifts->description;
+
+                                            $list_emp = App\RotaAssignEmployee::where('rota_id', $rota_data->id)->where('shift_id', $shift_id)->where('status', 1)->first();
+                                            // foreach ($list_emp as $emp_ids) {
+                                            //     $userdata[] = App\ServiceUser::where('id', $emp_ids->emp_id)->get();
+                                            // }
+                                            $user_data = App\User::where('id', $list_emp->emp_id)->first();
+                                        // }
+                                        // foreach ($userdata as $user_data) {
+                                        ?>
+                                            <div class="w_full">
+                                                <?php for ($count = 0; $count < 24; $count++) {
+                                                    echo  "<div class='hour_box' style='width: calc(4.16667%);'>
                                                                           </div>";
-                                                        } ?>
-                                                        <!-- Button shift modal -->
-                                                        <button type="button" class="shift_timing_btn" onclick="view_user_data(<?php echo $shift_id; ?>,`<?php echo $user_data->id; ?>`)" style="width: `+hours*4.16667+`%;  left: `+hours*4.16667+`%;" style="sdisplay: none;" data-testid="Shift card" style="width: 33.3333%; left: 37.5%;">
-                                                            <div class="d-flex align-items-center">
+                                                } ?>
+                                                <!-- Button shift modal -->
+                                                <button type="button" class="shift_timing_btn" onclick="view_user_data(<?php echo $shift_id; ?>,`<?php echo $user_data->id; ?>`)" style="width: `+hours*4.16667+`%;  left: `+hours*4.16667+`%;" style="sdisplay: none;" data-testid="Shift card" style="width: 33.3333%; left: 37.5%;">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="">
+                                                            <div class="name_of_member">
                                                                 <div class="">
-                                                                    <div class="name_of_member">
-                                                                        <div class="">
-                                                                            <?php
-                                                                            $str = str_split($user_data->name);
-                                                                            echo strtoupper($str[0]);
-                                                                            $whatIWant = substr($user_data->name, strpos($user_data->name, " ") + 1);
-                                                                            $str1 =  str_split($whatIWant);
-                                                                            echo strtoupper($str1[0]);
-                                                                            ?>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <input type="hidden" id="check_user_have" value="{{ $user_data->id }}">
-                                                                        <div class="name_of_person">{{ $user_data->name }}</div>
-                                                                        <div class="shift_timeing_duration">{{ \Carbon\Carbon::parse($shift_start)->format('h:i') }} - {{ \Carbon\Carbon::parse($shift_end) ->format('h:i') }}</div>
-                                                                    </div>
-                                                                    <div class="addDiscriptest">{{ $description }}</div>
+                                                                    <?php
+                                                                    $str = str_split($user_data->name);
+                                                                    echo strtoupper($str[0]);
+                                                                    $whatIWant = substr($user_data->name, strpos($user_data->name, " ") + 1);
+                                                                    $str1 =  str_split($whatIWant);
+                                                                    echo ($str1) ? strtoupper($str1[0]) : "";
+                                                                    ?>
                                                                 </div>
                                                             </div>
-                                                        </button>
-                                                        <!-- Modal -->
+                                                        </div>
+                                                        <div class="">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="name_of_person">{{ $user_data->name }}</div>
+                                                                <div class="shift_timeing_duration">{{ \Carbon\Carbon::parse($shift_start)->format('h:i') }} - {{ \Carbon\Carbon::parse($shift_end) ->format('h:i') }}</div>
+                                                            </div>
+                                                            <div class="addDiscriptest">{{ $description }}</div>
+                                                        </div>
                                                     </div>
-                                                <?php  } ?>
-                                                <input type="hidden" id="match_date" value="{{ $date->format('l d F') }}">
-                                                <div id="show_user_record<?= $i ?>"></div>
-                                            <?php
-                                                $i++;
-                                            }
-                                            $dates = $period->toArray(); ?>
-                                            <br>
-                                            @endif
-                                            @endforeach
+                                                </button>
+                                                <!-- Modal -->
+                                            </div>
+
+                                        <?php  } ?>
+                                        <div id="show_user_record<?= $i ?>">
                                         </div>
-                                    </div>
+                                    <?php $i++;
+                                    }  //$dates = $period->toArray();
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -292,8 +337,8 @@
             </div>
         </div>
     </div>
-</div>
-
+  
+    @endforeach
 </section>
 <!-- Modal -->
 <div class="modal addShift" id="exampleModalAddShift" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -301,7 +346,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="remove-padding M-right" id="multiForm" style="display: block;">
-                    <form action="" method="post" id="form1select">
+                    <form action="" method="post" id="select">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="follow-step">
@@ -318,7 +363,8 @@
                                             <span class="s-font">Create shift</span>
                                         </li>
                                         <li class="Address-details detail" id="bg1" style="color: rgb(153, 153, 153); background-color: rgb(255, 255, 255);">
-                                            <span class="s-font">Assign Staff</span>
+                                            <span class="s-font">Assign
+                                                Staff</span>
                                         </li>
                                         <li class="Employment-details detail" id="bg2" style="color: rgb(153, 153, 153); background-color: rgb(255, 255, 255);">
                                             <span class="s-font">Summary</span>
@@ -328,11 +374,12 @@
                                 <div class="row" id="form1" style="display: block;">
                                     <div class="col-md-12">
                                         <div class="employees-info">
-                                            <div class="add-margin col-md-12">
-                                                <h4>Create new shift</h4>
-                                                <span class="date-of-weak-shift" id="rota_shift_day_show"></span>
-                                            </div>
-                                            <div class="row">
+                                            
+                                            <div class="row">                                             
+                                                <div class="add-margin col-md-12">
+                                                    <h4>Create new shift</h4>
+                                                    <span class="date-of-weak-shift" id="rota_shift_day_show"></span>
+                                                </div>
                                                 <div class="col-md-12" id="showDiv">
                                                     <form class="employees-data" onsubmit="return validateform()">
                                                         <div class="row">
@@ -381,9 +428,9 @@
                                     <div class="row" id="form2" style="display: none;">
                                         <div class="col-md-12">
                                             <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Assign Childs to <span id="assign_emp_date"></span>, <span id="shift_time_show"></span></h4>
-                                                    <span class="date-of-weak-shift">Find a User or a team</span>
+                                                <div class="add-margin col-md-12">
+                                                    <h4>Assign employees to <span id="assign_emp_date"></span>, <span id="shift_time_show"></span></h4>
+                                                    <span class="date-of-weak-shift">Find an Childs or a team</span>
                                                 </div>
                                                 <div class="col-sm-3 col-md-4">
                                                     <select class="form-select form-control" aria-label="Default select example">
@@ -397,24 +444,16 @@
                                                     <input type="text" class="form-control" onkeyup="search_emp(this)" placeholder="Enter name">
                                                 </div>
                                                 <div class="col-md-4 d-flex justify-content-end">
-                                                    <button type="button" class="select-employee" onclick="SelectAll();">Select all</button>
-                                                    <button type="button" class="select-employee" onclick="DeselectAll();">Deselect all</button>
+                                                    <button type="button" onclick="SelectAll();" class="select-employee">Select
+                                                        all</button>
+                                                    <button type="button" onclick="DeselectAll();" class="select-employee">Deselect
+                                                        all</button>
                                                 </div>
                                             </div>
                                             <div class="row employee-name my-4" id="employee_list">
                                             </div>
+
                                             <div class="row">
-                                                <!-- <div class="d-flex annual_leave_color hide_div" id="leave_errors">
-                                                        <div class="">
-                                                            <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="20" width="20" viewBox="0 0 32 32" style="vertical-align: middle; color: rgb(255, 255, 255);">
-                                                            <path d="M30.5 32h-29a1.5 1.5 0 0 1-1.341-2.171l14.5-29a1.5 1.5 0 0 1 2.682 0l14.5 29A1.5 1.5 0 0 1 30.5 32zM3.928 29h24.146L16 4.854 3.928 29zM17.5 24.5a1.5 1.5 0 1 1-3.001-.001 1.5 1.5 0 0 1 3.001.001zM16 20.75a1.5 1.5 0 0 1-1.5-1.5V13.5a1.5 1.5 0 1 1 3 0v5.75a1.5 1.5 0 0 1-1.5 1.5z">
-                                                            </path>
-                                                            </svg>
-                                                        </div>
-                                                        <div class="annual_leave" id="">
-                                                        1 person is unavailable for some dates. You may need to create a new shift to cover these dates.
-                                                        </div>
-                                                    </div> -->
                                                 <div id="emp_count"></div>
                                             </div>
                                             <div class="address-detail">
@@ -424,7 +463,7 @@
                                                             <button type="button" id="back1" onclick="back({id:'back',form:'form',count:2})" class="previous_btn">Back</button>
                                                         </div>
                                                         <div class="continue_save ms-2">
-                                                            <button type="button" disabled class="continue_btn disable_btn_nxt2" id="next2" onclick="next({id:'next',form:'form',count:2})">Next
+                                                            <button type="button" class="continue_btn" id="next2" onclick="next({id:'next',form:'form',count:2})">Next
                                                                 step
                                                             </button>
                                                         </div>
@@ -483,7 +522,7 @@
                                         <div class="col-md-12">
                                             <div class="employment-details">
                                                 <div class="row my-2">
-                                                    <div class="col-md-12">
+                                                    <div class="add-margin col-md-12">
                                                         <h4>Shift summary</h4>
                                                         <p>Shift will be created for <strong> <span id="show_shift_date"></span>, <span id="show_shift_time"></span>.</strong></p>
                                                     </div>
@@ -517,7 +556,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Shift details</h4>
+                <h3 class="modal-title" id="exampleModalLabel">Shift details</h3>
                 <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close">&#10006;</button>
             </div>
             <div class="modal-body shift_detail_modal_body">
@@ -537,19 +576,19 @@
                                                     <input type="hidden" id="rota_shift_id">
                                                     <div class="row my-2">
                                                         <label for="assign_work" class="col-sm-3 col-form-label">Assigned worker</label>
-                                                        <div class="col-sm-9 col-md-9 position-rel">
+                                                        <div class="col-sm-9 position-rel">
                                                             <div class="position-rel" style="position: relative;">
                                                                 <input type="hidden" id="users_update_id">
-                                                                <input type="" id="show_emp_name" onclick="showSelect(event)" placeholder="Select employee" class="form-control select_employee_btn" id="staticEmail" value="">
+                                                                <input type="" id="show_emp_name" onclick="showSelect(event)" placeholder="Select employee" class="form-control select_employee_btn"
+                                                                    id="staticEmail" value="">
                                                                 <span class="position-abs" style="position: absolute;right: 12px; top: 3px; color: #a1a9b3; font-size: 20px;"><i class="fa fa-search" aria-hidden="true"></i></span>
                                                                 <ul class="customSelect" id="selectDropdown">
-
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row my-2">
-                                                        <label for="date_of_shift" class="col-sm-3 col-form-label">Shift AA day</label>
+                                                        <label for="date_of_shift" class="col-sm-3 col-form-label">Shift day</label>
                                                         <div class="col-md-9">
                                                             <input type="date" class="form-control" id="date_of_shift">
                                                         </div>
@@ -558,13 +597,13 @@
                                                         <label for="edit_start_time" class="col-sm-3 col-form-label">Shift time</label>
                                                         <!-- <div class="col-sm-5"> -->
                                                         <div class="col-sm-4">
-                                                            <input type="datetime-local" class="form-control" id="edit_start_time" aria-describedby="emailHelp" placeholder="">
+                                                            <input type="datetime-local" class="col-sm-2 form-control" id="edit_start_time" aria-describedby="emailHelp" value="<?php echo date('Y-m-d'); ?> 09:00" placeholder="">
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <span class="btew-time">to</span>
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <input type="datetime-local" class="form-control" id="edit_end_time" aria-describedby="emailHelp" placeholder="">
+                                                            <input type="datetime-local" class="col-sm-2 form-control" id="edit_end_time" value="<?php echo date('Y-m-d'); ?> 17:00" aria-describedby="emailHelp" placeholder="">
                                                         </div>
                                                         <!-- </div> -->
                                                     </div>
@@ -578,7 +617,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <label for="emailAdd" class="col-sm-3">Add a note</label>
-                                                        <div class="col-md-9">
+                                                        <div class="col-sm-9">
                                                             <textarea name="" class="form-control" id="description" cols="40" rows="3"></textarea>
                                                         </div>
                                                     </div>
@@ -590,8 +629,8 @@
                                                         <div class="col-md-4 my-3" style="opacity: 0.7; font-weight: 500;">No event on this day</div>
                                                         <p>This shift is <strong><span id="duration_of_shift"></span> </strong></p>
                                                     </div>
-                                                    <div class="form-group col-md-12 d-flex justify-content-end">
-                                                        <button type="button" onclick="DeleteShift()" class="delete_modal_btn">Delete</button>
+                                                    <div class="form-group modelFooterBorder d-flex justify-content-end">
+                                                        <button type="button" class="delete_modal_btn">Delete</button>
                                                         <button type="button" id="update_shift" onclick="next({id:'next',form:'form',count:1})" class="save-btn">Update shift</button>
                                                     </div>
                                                 </form>
@@ -604,15 +643,14 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer justify-content-start">
+            <!-- <div class="modal-footer justify-content-start">
                 <button type="button" class="close_modal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
 <!-- shift modal end here -->
 @include('rotaStaff.components.footer')
-
 <script>
     function SelectAll() {
         $('.custom_checkbox').prop('checked', true);
@@ -663,61 +701,64 @@
                             } else {
                                 leave_txt = "";
                             }
+
                         }
                     }
                     console.log(leave_txt);
 
                     document.querySelector('#employee_list').insertAdjacentHTML(
                         'afterbegin',
+
                         `<div class="col-md-6">
                                         <input type="checkbox" class="custom_checkbox" name="mycheckboxes" value="${result.users[i]['id']}" id="select_checkbox_${j}" onclick="countEmp(${result.users.length})">
                                         <label for="select_checkbox_${j}" class="name">
+
                                             <p>${result.users[i]['name']}</p>
                                             <p>${leave_txt}</p>
                                             
                                           <p class="select_tick"><span class="right_tick"><i class="fa fa-check" aria-hidden="true"></i></span></p>
+
                                         </label>
+
                                     </div>`
                     );
                     j++;
 
                 }
             }
+
         });
     }
 
-    function DeleteShift() {
-        var token = "<?= csrf_token() ?>";
-        delete_shift_id = document.getElementById('edit_shift_id').value;
-        $.ajax({
-            url: "{{ url('/delete-shift-data') }}",
-            type: "Post",
-            data: {
-                delete_shift_id: delete_shift_id,
-                _token: token
-            },
-            dataType: 'json',
-            success: function(result) {
-                console.log(result);
-                location.reload();
-            }
-        });
+    function renamedata(id, name, status) {
+        $('#rota_name_model').text(name);
+        $('#rota_id').val(id);
+        $('#rota_status').val(status);
+        $('#exampleModalPublish').modal('show');
+    }
+
+    function hasWhiteSpace(s) {
+        return /\s/g.test(s);
+    }
+
+    function showEmployeeName(id, name) {
+        document.getElementById('users_update_id').value = id;
+        document.getElementById('show_emp_name').value = name;
     }
 
     function view_user_data(shift_id, user_id) {
-
         var token = "<?= csrf_token() ?>";
         var rota_id = $('#new_rota').val();
         $.ajax({
             url: "{{ url('/get-all-users') }}",
+            type: "Post",
             data: {
                 rota_id: rota_id,
                 _token: token
             },
-            type: "post",
             dataType: 'json',
             success: function(result) {
-                console.log(result);
+                console.log(result.users);
                 for (i = 0; i < result.users.length; i++) {
                     var fullName = result.users[i]['name'];
                     var get_name = hasWhiteSpace(fullName);
@@ -732,6 +773,7 @@
                         fname = fullName.charAt(0);
                         shortname = fname;
                     }
+
                     if (result.users[i]['id'] == user_id) {
                         document.getElementById('users_update_id').value = result.users[i]['id'];
                         document.getElementById('show_emp_name').value = result.users[i]['name'];
@@ -739,17 +781,17 @@
                     document.querySelector('#selectDropdown').insertAdjacentHTML(
                         'afterbegin',
                         `<li class="d-flex customSelectItem">
-                                  <input id="employee1" class="d-none" type="radio" name="selectEmployee">
-                                  <div class="labelElement p-2">
-                                      <label for="employee1" class="d-flex align-items-center" onclick="showEmployeeName(${result.users[i]['id']} , '${result.users[i]['name']}');">
-                                          <div class="firstLastLetter">${shortname.toUpperCase()}</div>
-                                          <div class="fullName" id="fullName">${result.users[i]['name']}</div>
-                                          <div>
-                                              <span class="customRadio"><span class="dot"></span></span>
-                                          </div>
-                                      </label>
-                                  </div>
-                              </li>`
+                                    <input id="employee1" class="d-none" type="radio" name="selectEmployee">
+                                    <div class="labelElement p-2">
+                                        <label for="employee1" class="d-flex align-items-center" onclick="showEmployeeName(${result.users[i]['id']} , '${result.users[i]['name']}');">
+                                            <div class="firstLastLetter">${shortname.toUpperCase()}</div>
+                                            <div class="fullName" id="fullName">${result.users[i]['name']}</div>
+                                            <div>
+                                                <span class="customRadio"><span class="dot"></span></span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </li>`
                     );
                 }
             }
@@ -777,41 +819,37 @@
                 $('#edit_end_time').val(result['shift_end_time']);
                 $('#edit_break_time').val(result['break']);
                 $('#description').val(result['description']);
+
                 var start = moment(result['shift_start_time'], "HH:mm:ss").format("HH:mm");
                 var end = moment(result['shift_end_time'], "HH:mm:ss").format("HH:mm");
+
                 var startTime = moment(result['shift_start_time']);
                 var endTime = moment(result['shift_end_time']);
-                // calculate total duration
                 var duration = moment.duration(endTime.diff(startTime));
                 console.log(duration);
-                // duration in hours
-                var hours = parseInt(duration.asHours());
-
-                document.getElementById('duration_of_shift').innerHTML = hours + " hour with " + result['break'] + " mins break";
+                var hours_for_edit = parseInt(duration.asHours());
+                document.getElementById('duration_of_shift').innerHTML = hours_for_edit + " hour with " + result['break'] + " mins break";
             }
         });
         $('#exampleModalShiftModal').modal('show');
     }
 
     function view_shift_model(date1, date2, id) {
-        document.getElementById('employee_list').innerHTML = "";
+
         document.getElementById('emp_count').innerHTML = "";
+        document.getElementById('employee_list').innerHTML = "";
         var token = "<?= csrf_token() ?>";
         var rota_id = $('#new_rota').val();
         $.ajax({
             url: "{{ url('/get-all-users') }}",
             type: "Post",
-            dataType: 'json',
             data: {
                 rota_id: rota_id,
                 _token: token
             },
+            dataType: 'json',
             success: function(result) {
                 console.log(result);
-                console.log(result.users);
-
-                console.log(result.leave);
-
                 var j = 1;
                 leave_txt = "";
                 for (i = 0; i < result.users.length; i++) {
@@ -835,6 +873,7 @@
                             } else {
                                 leave_txt = "";
                             }
+
                         }
                     }
                     console.log(leave_txt);
@@ -842,22 +881,20 @@
                     document.querySelector('#employee_list').insertAdjacentHTML(
                         'afterbegin',
                         `<div class="col-md-6">
-                                      <input type="checkbox" class="custom_checkbox" name="mycheckboxes" value="${result.users[i]['id']}" id="select_checkbox_${j}" onclick="countEmp(${result.users.length})">
-                                      <label for="select_checkbox_${j}" class="name">
-                                          <p>${result.users[i]['name']}</p>
-                                          <p>${leave_txt}</p>
-                                          
-                                      <p class="select_tick"><span class="right_tick"><i class="fa fa-check" aria-hidden="true"></i></span></p>
-                                      </label>
-                                  </div>`
+                                        <input type="checkbox" class="custom_checkbox" name="mycheckboxes" value="${result.users[i]['id']}" id="select_checkbox_${j}" onclick="countEmp(${result.users.length})">
+                                        <label for="select_checkbox_${j}" class="name">
+                                            <p>${result.users[i]['name']}</p>
+                                            <p>${leave_txt}</p>  
+                                        <p class="select_tick"><span class="right_tick"><i class="fa fa-check" aria-hidden="true"></i></span></p>
+
+                                        </label>
+                                    </div>`
                     );
                     j++;
 
                 }
             }
         });
-        console.log(date1);
-        console.log(date2);
         $("#form1").css("display", "block")
         $('#form1select').trigger("reset");
         document.getElementById('rota_shift_day_show').innerHTML = date1;
@@ -866,72 +903,9 @@
         $('#shiftmodelid').val(id);
         $('#rota_shift_day_date').val(date1);
         $('#exampleModalAddShift').modal('show');
-    }
-
-    function next(id) {
-        let bg = document.getElementById('bg' + id.count)
-        let currentForm = document.getElementById(id.form + id.count);
-        let nextForm = document.getElementById(id.form + parseInt((id.count + 1)));
-        setTimeout(() => {
-            currentForm.style.display = 'none';
-            nextForm.style.display = 'block';
-            bg.style = 'none';
-        }, 200);
-    }
-
-    function back(id) {
-        let bg = document.getElementById('bg' + parseInt(id.count - 1))
-        let currentForm = document.getElementById(id.form + id.count);
-        let prevForm = document.getElementById(id.form + parseInt((id.count - 1)));
-        setTimeout(() => {
-            currentForm.style.display = 'none';
-            prevForm.style.display = 'block';
-            bg.style.color = '#999';
-            bg.style.backgroundColor = '#fff';
-        }, 200);
-    }
-
-    function renamedata(id, name, status) {
-        $('#rota_name_model').text(name);
-        $('#rota_id').val(id);
-        $('#rota_status').val(status);
-        $('#exampleModalPublish').modal('show');
-    }
-
-    function hasWhiteSpace(s) {
-        return (/\s/).test(s);
-    }
-
-    function showEmployeeName(id, name) {
-        document.getElementById('users_update_id').value = id;
-        document.getElementById('show_emp_name').value = name;
+        // $('#exampleModalAddShift').modal('show');
     }
     $(document).ready(function() {
-        var rota_id = $('#new_rota').val();
-        var token = "<?= csrf_token() ?>";
-        const AfterShiftAdd = document.getElementById("AfterShiftAdd");
-        console.log(AfterShiftAdd);
-        const BeforeShiftAdd = document.getElementById("BeforeShiftAdd");
-        console.log(BeforeShiftAdd);
-        $.ajax({
-        type: 'POST',
-        url: "{{ url('/check_users_add_in_shift') }}",
-        dataType: "json",
-        async:false,
-        data: { id: rota_id, _token: token },
-        success: function(data) {
-            console.log(data);
-            if(data === null){
-                AfterShiftAdd.classList.add("d-none");
-                BeforeShiftAdd.classList.remove("d-none");
-            } else {
-                AfterShiftAdd.classList.remove("d-none");
-                BeforeShiftAdd.classList.add("d-none");
-            }
-            
-        }
-
-    });
 
         const selectElementEdit = document.getElementById('edit_break_time');
         const duration_of_shift = document.getElementById('duration_of_shift');
@@ -947,6 +921,7 @@
             duration_of_shift.innerHTML = "";
             duration_of_shift.innerHTML = `${Math.abs(show_hour_edit)} hours incl. ${show_break_time_edit} mins break`;
         });
+
         const selectStartEdit = document.getElementById('edit_start_time');
         duration_of_shift.innerHTML = "8 hour with no break";
         selectStartEdit.addEventListener('change', (event) => {
@@ -964,6 +939,7 @@
                 duration_of_shift.innerHTML = `${Math.abs(show_hour_edit)} hours incl. ${show_break_time_edit} mins break`;
             }
         });
+
         const selectEndEdit = document.getElementById('edit_end_time');
         duration_of_shift.innerHTML = "8 hour with no break";
         selectEndEdit.addEventListener('change', (event) => {
@@ -981,6 +957,7 @@
                 duration_of_shift.innerHTML = `${Math.abs(show_hour_edit)} hours incl. ${show_break_time_edit} mins break`;
             }
         });
+
         const selectElement = document.getElementById('break_time');
         const result = document.getElementById('Shift_duration_show');
         result.innerHTML = "8 hour with no break";
@@ -1012,6 +989,7 @@
             }
 
         });
+
         const selectEnd = document.getElementById('end_time');
         selectEnd.addEventListener('change', (event) => {
             var show_shift_start_time = document.getElementById('start_time').value;
@@ -1028,57 +1006,25 @@
                 result.innerHTML = `${Math.abs(show_hour)} hours incl. ${show_break_time} mins break`;
             }
         });
+
         var first_btn = document.getElementById("next1");
         var second_btn = document.getElementById("next2");
+
         var shift_start_time = document.getElementById('start_time').value;
         shift_start_time = moment(shift_start_time).format("HH:mm")
+
         var shift_end_time = document.getElementById('end_time').value;
         shift_end_time = moment(shift_end_time).format("HH:mm")
+
         first_btn.addEventListener('click', (event) => {
             document.getElementById('shift_time_show').innerHTML = shift_start_time + '-' + shift_end_time;
         });
+
         second_btn.addEventListener('click', (event) => {
             document.getElementById('show_shift_time').innerHTML = shift_start_time + '-' + shift_end_time;
         });
-        var token = "<?= csrf_token() ?>";
-        $('#update_shift').on('click', function() {
-            var edit_rota_id = $('#edit_rota_id').val();
-            var edit_shift_id = $('#edit_shift_id').val();
-            var update_user_id = $('#users_update_id').val();
-            var updtate_date_of_shift = $('#date_of_shift').val();
-            var update_shift_start_time = $('#edit_start_time').val();
-            var update_shift_end_time = $('#edit_end_time').val();
-            var update_break = $('#edit_break_time').val();
-            var description = $('#description').val();
-            var assigned_user_id = $('#assigned_user_id').val();
-            var rota_shift_id = $('#rota_shift_id').val();
-            $.ajax({
-                url: "{{ url('/update-shift-data') }}",
-                type: "post",
-                dataType: 'json',
-                data: {
-                    edit_rota_id: edit_rota_id,
-                    edit_shift_id: edit_shift_id,
-                    update_user_id: update_user_id,
-                    updtate_date_of_shift: updtate_date_of_shift,
-                    update_shift_start_time: update_shift_start_time,
-                    update_shift_end_time: update_shift_end_time,
-                    update_break: update_break,
-                    description: description,
-                    assigned_user_id: assigned_user_id,
-                    rota_shift_id: rota_shift_id,
-                    _token: token
-                },
-                success: function(result) {
-                    console.log(result);
-                    if (result === 1) {
-                        $('#exampleModalShiftModal').modal('hide');
-                        location.reload();
-                    }
-                }
-            });
-        });
-        // $(".w_full").hide();
+
+
         $('#next4').on('click', function() {
             var rota_id = $('#new_rota').val();
             var rota_shift_day_date = $('#rota_shift_day_date').val();
@@ -1115,130 +1061,188 @@
                     _token: token
                 },
                 success: function(result) {
-                    console.log(result);
                     console.log(result.rotaShift);
                     console.log(result.user_name);
                     console.log(result.user_name.length);
                     for (i = 0; i < (result.user_name).length; i++) {
+
                         var start = moment(result.rotaShift[0]['shift_start_time']).format("HH");
+
                         var end = moment(result.rotaShift[0]['shift_end_time']).format("HH");
 
+
                         let a = moment(result.rotaShift[0]['shift_start_time']).format("DDMMYYYY");
+
                         let b = moment(result.rotaShift[0]['shift_end_time']).format("DDMMYYYY");
+
                         console.log(a);
+
                         console.log('time check', a == b, typeof a)
+
                         console.log('end, start', end, start)
+
                         if (a === b) {
+
                             result.user_name[i][0]['hours'] = parseInt(end - start);
+
                             result.user_name[i][0]['start'] = start;
+
                         } else {
+
                             let newUser;
+
                             if (result.user_name[i].length === 1) {
+
                                 result.user_name[i][0]['start'] = start;
+
                                 result.user_name[i][0]['hours'] = 24 - start;
+
                                 newUser = JSON.parse(JSON.stringify(result.user_name[i][0]));
+
                             } else {
+
                                 result.user_name[i][1]['start'] = start;
+
                                 result.user_name[i][1]['hours'] = 24 - start;
+
                                 newUser = JSON.parse(JSON.stringify(result.user_name[i][1]));
+
                             }
+
                             console.log(result.user_name[i][0])
+
                             newUser['start'] = 0;
+
                             newUser['hours'] = end;
 
+
+
                             if (result.user_name.length === i + 1) {
+
                                 result.user_name[i + 1].push(newUser)
+
                             } else {
+
                                 result.user_name[i + 1].unshift(newUser);
+
                             }
+
                             console.log(result.user_name)
 
                         }
 
                         var name = result.user_name[i][0]['name'];
+
                         var get_name = hasWhiteSpace(name);
 
+
+
                         console.log(get_name);
+
                         if (get_name == true) {
+
                             var names = name.split(' ');
+
                             var fname = names[0].charAt(0);
+
                             var lname = names[1].charAt(0);
+
                             shortname = fname + lname;
+
                         }
+
                         if (get_name == false) {
+
                             fname = name.charAt(0);
                             shortname = fname;
+
                         }
 
                         function loopDataFunction() {
+
                             let loopData = '';
+
                             for (let k = 0; k < 24; k++) {
+
                                 loopData += `<div class="hour_box" style="width: calc(4.16667%);"></div>`;
+
                             }
+
                             return loopData;
+
                         }
+
+
 
                         function userTimeData() {
+
                             let user;
-
                             result.user_name[i].forEach(oneUser => {
+
                                 console.log(oneUser.hours, typeof oneUser.hours)
+
                                 user = `<button type="button" class="shift_timing_btn" onclick="view_user_data(` + result.rotaShift[0]['id'] + `,` + oneUser['id'] + `) "style="width: ` + oneUser.hours * 4.16667 + `%;  left: ` + oneUser.start * 4.16667 + `%;" data-testid="Shift card">
-                                          <div class="d-flex align-items-center">
-                                              <div class="">
-                                                  <div class="name_of_member">
-                                                      <div class="">` + shortname + `</div>
-                                                  </div>
-                                              </div>
-                                          <div class="">
-                                                  <div class="d-flex align-items-center">
-                                                      <div class="name_of_person">${oneUser.name}</div>
-                                                      <div class="shift_timeing_duration">${moment(result.rotaShift[0]['shift_start_time']).format("HH:mm")+'-'+moment(result.rotaShift[0]['shift_end_time']).format("HH:mm")}</div>
-                                                      
-                                                  </div>
-                                                  <div class="addDiscriptest">${result.rotaShift[0]['description']}</div>
-                                              </div>
-                                          </div>
-                                      </button>`
 
+                                            <div class="d-flex align-items-center">
+
+                                                <div class="">
+
+                                                    <div class="name_of_member">
+
+                                                        <div class="">` + shortname + `</div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            <div class="">
+
+                                                    <div class="d-flex align-items-center">
+
+                                                        <div class="name_of_person">${oneUser.name}</div>
+
+                                                        <div class="shift_timeing_duration">${moment(result.rotaShift[0]['shift_start_time']).format("HH:mm")+'-'+moment(result.rotaShift[0]['shift_end_time']).format("HH:mm")}</div>
+
+                                                        
+                                                    </div>
+
+                                                    <div class=""></div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </button>`
                             });
-
                             return user;
-                        }
-                        document.querySelector('#show_user_record' + shiftmodelid).insertAdjacentHTML(
-                            'afterbegin',
-                            `<div class="w_full" style="">
-                                      ${loopDataFunction()}
 
-                                      <!-- Button shift modal -->
-                                      ${userTimeData()}
-                                      <!-- Modal -->
-                                  </div>`
+                        }
+
+                        document.querySelector('#show_user_record' + shiftmodelid).insertAdjacentHTML(
+
+                            'afterbegin',
+
+                            `<div class="w_full" style="">
+
+                                        ${loopDataFunction()}
+
+                                        <!-- Button shift modal -->
+
+                                        ${userTimeData()}
+
+                                        <!-- Modal -->
+
+                                    </div>`
+
                         );
                     }
-
-                    var rota_id = $('#new_rota').val();
-                    var token = "<?= csrf_token() ?>";
-                    $.ajax({
-                    type: 'POST',
-                    url: "{{ url('/check_users_add_in_shift') }}",
-                    dataType: "json",
-                    async:false,
-                    data: { id: rota_id, _token: token },
-                    success: function(data) {
-                        console.log(data);
-                        if(data){
-                            AfterShiftAdd.classList.remove("d-none");
-                            BeforeShiftAdd.classList.add("d-none");
-                        }
-                    }
-                });
-
                     document.getElementById('shift_count').innerHTML = result.user_name.length;
                     document.getElementById('shift_count1').innerHTML = result.user_name.length;
+
                 }
             });
-            $('#exampleModalAddShift').modal('hide');
+            location.reload();
+            // $('#exampleModalAddShift').modal('hide'); 
         });
         $('#publish_unpublish_btn').on('click', function() {
             var rota_id = $('#rota_id').val();
@@ -1259,7 +1263,56 @@
                 }
             });
         });
+        var token = "<?= csrf_token() ?>";
+        $('#update_shift').on('click', function() {
+            var edit_rota_id = $('#edit_rota_id').val();
+            var edit_shift_id = $('#edit_shift_id').val();
+            var updtate_date_of_shift = $('#date_of_shift').val();
+            var update_shift_start_time = $('#edit_start_time').val();
+            var update_shift_end_time = $('#edit_end_time').val();
+            var update_break = $('#edit_break_time').val();
+            var description = $('#description').val();
+            var update_user_id = $('#users_update_id').val();
+            var assigned_user_id = $('#assigned_user_id').val();
+            var rota_shift_id = $('#rota_shift_id').val();
+            $.ajax({
+                url: "{{ url('/update-shift-data') }}",
+                type: "post",
+                dataType: 'json',
+                data: {
+                    edit_rota_id: edit_rota_id,
+                    edit_shift_id: edit_shift_id,
+                    updtate_date_of_shift: updtate_date_of_shift,
+                    update_shift_start_time: update_shift_start_time,
+                    update_shift_end_time: update_shift_end_time,
+                    update_break: update_break,
+                    description: description,
+                    update_user_id: update_user_id,
+                    rota_shift_id: rota_shift_id,
+                    assigned_user_id: assigned_user_id,
+                    _token: token
+                },
+                success: function(result) {
+                    console.log(result);
+                    if (result === 1) {
+                        $('#exampleModalShiftModal').modal('hide');
+                        location.reload();
+                    }
+                }
+            });
+        });
     });
+
+    function showSelect(ev) {
+        ev.stopPropagation();
+        document.getElementById('selectDropdown').classList.toggle('show_select');
+    }
+    window.onclick = function(event) {
+        const el = document.getElementById('selectDropdown');
+        if (el.classList.contains("show_select")) {
+            el.classList.remove("show_select");
+        }
+    }
 
     function countEmp(TotalEmp) {
         var inputElement = document.getElementsByClassName('custom_checkbox');
@@ -1281,21 +1334,10 @@
             next2.disabled = true;
             next2.classList.add("disable_btn_nxt2");
         } else {
-            hour_emp.innerHTML = `<p>This shift has <strong>${countE} users </strong>working <strong>${Math.abs(show_hour*countE)} hrs</strong></p>`;
+            hour_emp.innerHTML = `<p>This shift has <strong>${countE} Childs </strong>working <strong>${Math.abs(show_hour*countE)} hrs</strong></p>`;
 
             next2.removeAttribute("disabled");
             next2.classList.remove("disable_btn_nxt2");
-        }
-    }
-
-    function showSelect(ev) {
-        ev.stopPropagation();
-        document.getElementById('selectDropdown').classList.toggle('show_select');
-    }
-    window.onclick = function(event) {
-        const el = document.getElementById('selectDropdown');
-        if (el.classList.contains("show_select")) {
-            el.classList.remove("show_select");
         }
     }
 </script>

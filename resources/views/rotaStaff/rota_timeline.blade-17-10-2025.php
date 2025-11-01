@@ -383,7 +383,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <h4>Assign Childs to <span id="assign_emp_date"></span>, <span id="shift_time_show"></span></h4>
-                                                    <span class="date-of-weak-shift">Find a User or a team</span>
+                                                    <span class="date-of-weak-shift">Find a Child or a team</span>
                                                 </div>
                                                 <div class="col-sm-3 col-md-4">
                                                     <select class="form-select form-control" aria-label="Default select example">
@@ -1196,7 +1196,7 @@
                                                       <div class="shift_timeing_duration">${moment(result.rotaShift[0]['shift_start_time']).format("HH:mm")+'-'+moment(result.rotaShift[0]['shift_end_time']).format("HH:mm")}</div>
                                                       
                                                   </div>
-                                                  <div class="addDiscriptest">${result.rotaShift[0]['description']}</div>
+                                                  <div class="">${result.rotaShift[0]['description']}</div>
                                               </div>
                                           </div>
                                       </button>`
@@ -1281,7 +1281,7 @@
             next2.disabled = true;
             next2.classList.add("disable_btn_nxt2");
         } else {
-            hour_emp.innerHTML = `<p>This shift has <strong>${countE} users </strong>working <strong>${Math.abs(show_hour*countE)} hrs</strong></p>`;
+            hour_emp.innerHTML = `<p>This shift has <strong>${countE} Childs </strong>working <strong>${Math.abs(show_hour*countE)} hrs</strong></p>`;
 
             next2.removeAttribute("disabled");
             next2.classList.remove("disable_btn_nxt2");

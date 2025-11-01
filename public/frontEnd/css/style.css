@@ -9341,5 +9341,6 @@ a.close.edit_dyn_form {
 }
  */
 
-
-
+.cus-calendar .panel-body{
+    padding: 34px 0;
+}
