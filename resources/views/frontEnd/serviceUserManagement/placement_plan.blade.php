@@ -3,18 +3,70 @@
 @section('content')
 
 <style>
-    .ScrollStyle::-webkit-scrollbar {  width: 10px; height: 10px; }
-    .ScrollStyle::-webkit-scrollbar-track { box-shadow: inset 0 0 5px grey; border-radius: 5px;  }
-    .ScrollStyle::-webkit-scrollbar-thumb { background: #1f88b5; border-radius: 10px; }
-    .ScrollStyle::-webkit-scrollbar-thumb:hover {background: #1f88b5; }
-    .small-box.ScrollStyle {  display: flex; min-height: 190px;  }
-    .ScrollStyle { overflow-x: auto; white-space: nowrap; overflow-y: hidden; }
-    .settingFlex {display: flex;    }
-    .small-box.ScrollStyle .pop-notifbox { right: -70px;  top: 30px;  left: auto;  }
-    .setting-sze .pop-notification::after { top: -23px; left: 47%; right: 0;margin: auto;  content: "\f0d8"; color: #1f88b5;  }
-    .completed-box {display: flex; }
-    .addTasklist { background: #eee; margin: 5px; padding: 5px; border-radius: 3px; }
-    .panelCard { min-height: 380px; overflow-x: hidden;  }
+    .ScrollStyle::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    .ScrollStyle::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 5px;
+    }
+
+    .ScrollStyle::-webkit-scrollbar-thumb {
+        background: #1f88b5;
+        border-radius: 10px;
+    }
+
+    .ScrollStyle::-webkit-scrollbar-thumb:hover {
+        background: #1f88b5;
+    }
+
+    .small-box.ScrollStyle {
+        display: flex;
+        min-height: 190px;
+    }
+
+    .ScrollStyle {
+        overflow-x: auto;
+        white-space: nowrap;
+        overflow-y: hidden;
+    }
+
+    .settingFlex {
+        display: flex;
+    }
+
+    .small-box.ScrollStyle .pop-notifbox {
+        right: -70px;
+        top: 30px;
+        left: auto;
+    }
+
+    .setting-sze .pop-notification::after {
+        top: -23px;
+        left: 47%;
+        right: 0;
+        margin: auto;
+        content: "\f0d8";
+        color: #1f88b5;
+    }
+
+    .completed-box {
+        display: flex;
+    }
+
+    .addTasklist {
+        background: #eee;
+        margin: 5px;
+        padding: 5px;
+        border-radius: 3px;
+    }
+
+    .panelCard {
+        min-height: 380px;
+        overflow-x: hidden;
+    }
 </style>
 
 <section id="main-content">
@@ -32,19 +84,27 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <h3 class="m-t-0 m-b-20 clr-blue fnt-20"> Targets </h3>
                                 <form method="post" action="{{ url('/service/placement-plan/add') }}" id="placement_plan">
-                                    <div class="form-group p-0 cus-label">
-                                        <label class="col-md-1 col-sm-2 p-t-7 p-0"> Add Task: </label>
-                                        <div class="col-md-3 col-sm-7 col-xs-12">
-                                            <input type="text" name="task" required class="form-control" maxlength="255">
+                                    <div class="form-group mb-0 p-0 cus-label placement_plan">
+                                        <div class="col-md-3 col-sm-3 col-xs-12 cus-label">
+                                            <label class="col-md-3 col-sm-3"> Add Task: </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                <input type="text" name="task" required class="form-control" maxlength="255">
+                                            </div>
                                         </div>
-                                        <div class="col-md-4 col-sm-3 col-xs-12 cus-label">
-                                            <label class="col-md-2 col-sm-6 col-xs-12 p-0 r-tl text-right"> Date: </label>
+                                        <div class="col-md-2 col-sm-3 col-xs-12 cus-label">
+                                            <div class="col-md-2 col-sm-2 recurringTaskCheck">
+                                                <input name="checkbox" class="" id="recurringTask" type="checkbox" value="" />
+                                            </div>
+                                            <label class="col-md-10 col-sm-10" for="recurringTask">: Is Recurring Task </label>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12 cus-label">
+                                            <label class="col-md-2 col-sm-6 col-xs-12 text-right"> Date: </label>
                                             <div class="col-md-10 col-sm-6 col-xs-12 p-r-0 r-p-0">
                                                 <input name="date" required class="form-control datetime-picker trans" type="text" value="" autocomplete="off" maxlength="10" readonly="" />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 col-sm-11 col-xs-12 p-0">
+                                        <div class="col-md-4 col-sm-3 col-xs-12 p-0">
                                             <input type="hidden" name="service_user_id" value="{{ $service_user_id }}">
                                             <div class="input-group popovr fll-wdth">
                                                 <input type="text" class="form-control" name="description" required placeholder="" />
@@ -55,9 +115,26 @@
                                                 </span>
                                             </div>
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <p class="help-block"> Enter the description and instruction relevant to task.</p>
+                                            <p class="help-block enterthedescription"> Enter the description and instruction relevant to task.</p>
                                         </div>
                                     </div>
+
+                                    <div class="form-group p-0 cus-label placement_plan">
+
+                                        <div class="col-md-3 col-sm-3 col-xs-12 cus-label">
+                                            <label class="col-md-3 col-sm-3"> Start Date: </label>
+                                            <div class="col-md-9 col-sm-9">
+                                                <input name="date1" required class="form-control" type="date" value="" autocomplete="off" maxlength="10" readonly="" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12 cus-label">
+                                            <label class="col-md-3 col-sm-6 col-xs-12 text-right">End Date: </label>
+                                            <div class="col-md-9 col-sm-6 col-xs-12 p-r-0 r-p-0">
+                                                <input name="date2" required class="form-control" type="date" value="" autocomplete="off" maxlength="10" readonly="" />
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </form>
                             </div>
 
@@ -91,11 +168,12 @@
                                                                     <label class="btn pp-txt-clr {{ $clr_class }}"> <?php echo date('d M', strtotime($value->date)); ?> </label>
                                                                     <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
                                                                         <i class="fa fa-cog"></i>
-                                                                        <div class="pop-notifbox">
+                                                                        <div class="pop-notifbox activeTargets">
                                                                             <ul type="none" class="pop-notification" target_id="{{ $value->id }}" target_task="{{ $value->task }}">
                                                                                 <li class="view_active_target_btn active-targets"><a href="#"> <span> <i class="fa fa-eye "></i> </span> View/Edit </a> </li>
                                                                                 <li> <a href="{{ url('/service/placement-plan/mark-complete/'.$value->id) }}" target_id="{{ $value->id }}"> <span class="color-green"> <i class="fa fa-check"></i> </span> Mark complete </a> </li>
                                                                                 <li class="view_qqa_review_btn" qqa="{{ $value->qqa_review }}"> <a href="#"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> QQA Review </a> </li>
+                                                                                <li class="#!"> <a href="#" data-toggle="modal" data-target="#addComments"> <span class="clr-blue"> <i class="fa fa-regular fa-comment"></i> </span> Comments </a> </li>
                                                                             </ul>
                                                                         </div>
                                                                     </span>
@@ -195,6 +273,49 @@
         </div>
     </section>
 </section>
+
+
+<div class="modal fade" id="addComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Comments</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="formDtail">
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" name="comments" rows="5" placeholder="Type comments..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group allAddComments">
+                                <div class="col-sm-12">
+                                    <textarea class="form-control commentsSave" name="comments" rows="3" readonly>Kids Hised sedaugue felis Phasellus gravida lacus quis eros. aenean sapien tornt sed diam className efficitur mus morbi eros dictum quam augue ac laor eet liglero comiodo consequat justo duis turpis lorem elit tornt sed diam consectetur.
+                                    </textarea>
+                                    <textarea class="form-control commentsSave" name="comments" rows="3" readonly>lassName efficitur mus morbi eros dictum quam augue ac laor eet liglero comiodo consequat justo duis turpis lorem elit tornt sed diam consectetur.
+                                    </textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer m-t-0 m-b-15 modal-bttm">
+                        <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
+                        <button class="btn btn-warning " type="submit"> Confirm </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @include('frontEnd.serviceUserManagement.elements.placement_targets')
 <script>
     $(document).ready(function() {
