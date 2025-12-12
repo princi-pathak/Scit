@@ -2,69 +2,47 @@
 @section('title', 'Report')
 @section('content')
     <style>
-        .white-box {
-            border-radius: 25px;
-        }
-
         .box_white {
-            border-radius: 25px;
+            border-radius: 4px;
             box-shadow: 0 5px 10px rgb(30 32 37 / 12%) !important;
             transition: .5s;
             color: #4691ce;
         }
-
-        .box_white:hover {
-            transform: translateY(calc(-1.5rem / 5));
-        }
-
+        .box_white:hover { transform: translateY(calc(-1.5rem / 5)); }
         .white-box {
             background: #fff;
             padding: 16px;
             margin-bottom: 30px;
         }
-
         .white-box .box-title {
-            font-weight: 700;
-            line-height: 30px;
+            font-weight: 600;
             font-size: 18px;
+            margin-top: 0;
+            color: #333;
+            text-align: end;
         }
-
         .list-inline {
             padding-left: 0;
             margin-left: -5px;
             list-style: none;
         }
-
-        .box_white {
-            color: #1F88B5;
-        }
-
-        .d-flex {
-            display: flex;
-        }
-
-        .ms-auto {
-            margin-left: auto !important;
-        }
-
-        .list-inline .counter {
-            font-size: 24px;
-            font-weight: 100;
-            font-weight: 600;
-        }
-
-        .text-success {
-            color: #7ace4c !important;
-        }
-
-        .bg-light {
-            background-color: #f7fafc !important;
-        }
-
+        .box_white { color: #1F88B5; }
+        .d-flex { display: flex; }
+        .ms-auto { margin-left: auto !important;}
+        .list-inline .counter { font-size: 34px;  font-weight: 700; }
+        .text-success { color: #7ace4c !important;  }
+        .bg-light { background-color: #f7fafc !important;  }
         .icon {
-            margin-left: auto;
+            display: flex;
+            justify-content: center; /* horizontally center */
+            align-items: center; 
         }
-
+        .icon .icon_name{
+            width: 80px;
+            text-align: center;
+            height: 80px;
+            line-height: 58px;
+        }
         .icon-1 .icon_name {
             font-size: 30px;
             background-color: #7ace4c40;
@@ -72,7 +50,6 @@
             border-radius: 5px;
             color: #7ace4c;
         }
-
         .icon-2 .icon_name {
             font-size: 30px;
             background-color: #1f88bc2e;
@@ -80,7 +57,6 @@
             border-radius: 5px;
             color: #1f88bc;
         }
-
         .icon-3 .icon_name {
             font-size: 30px;
             background-color: #8175c733;
@@ -88,7 +64,6 @@
             border-radius: 5px;
             color: #8175c7;
         }
-
         .icon-4 .icon_name {
             font-size: 30px;
             background-color: #1f88b526;
@@ -96,7 +71,6 @@
             border-radius: 5px;
             color: #1f88b5;
         }
-
         /* chart css  */
         .charts {
             display: grid;
@@ -105,7 +79,6 @@
             width: 100%;
             padding-top: 0px;
         }
-
         .chart {
             background: #fff;
             padding: 15px;
@@ -113,11 +86,21 @@
             border-radius: 10px;
             margin-bottom: 30px;
         }
-
         .chart-row2 {
             display: grid;
             width: 100%;
             padding-top: 0px;
+        }
+        .textOrIcon{
+            display: flex;
+            justify-content: space-between;
+        }
+        .allAreass .progress-stat-bar li {
+            height: 160px;
+            width: 30px;
+        }
+        .allAreass .bar-stats {
+            height: 162px;
         }
     </style>
     <section id="container">
@@ -126,143 +109,138 @@
         <section id="main-content">
             <section class="wrapper">
                 <div class="row">
-                    <div class="row justify-content-center owl-carousel owl-theme">
-                        <a class="col-lg-3 round_box col-md-4 col-sm-1 item">
-                            <div class="white-box analytics-info box_white counter">
-                                <div class="d-flex">
-                                    <div class="heading">
-                                        <h3 class="box-title">Calender Events Added</h3>
-                                    </div>
-                                    <div class="icon-1 icon">
-                                        <span class="icon_name"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="white-box analytics-info box_white counter">
+                            <div class="textOrIcon">
+                                 <div class="icon-1 icon">
+                                    <span class="icon_name"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                                 </div>
-                                <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                    <!-- <li>
-                                                                                                                <div id="sparklinedash">
-                                                                                                                    <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0">
-                                                                                                                        <i class="fa fa-arrow-up"></i> 16.24 %
-                                                                                                                    </span> vs. previous month</p>
-                                                                                                                </div>
-                                                                                                            </li> -->
-                                    <li class="ms-auto"><span
-                                            class="counter text-success counter-value"><?= $totaleventsadded ?></span></li>
-                                </ul>
-                            </div>
-                        </a>
-                        <a class="col-lg-3 round_box col-md-4 col-sm-1 item">
-                            <div class="white-box analytics-info box_white counter">
-                                <div class="d-flex">
-                                    <div class="heading">
-                                        <h3 class="box-title">Missing Child</h3>
-                                    </div>
-                                    <div class="icon-2 icon">
-                                        <span class="icon_name"><i class="fa fa-user-circle-o"
-                                                aria-hidden="true"></i></span>
-                                    </div>
-                                </div>
-                                <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                    {{-- <li>
-                                    <div id="sparklinedash2">
-                                        <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0">
-                                            <i class="fa fa-arrow-down"></i> 3.96 %
-                                        </span> vs. previous month</p>
-                                    </div>
-                                </li> --}}
-                                    <li class="ms-auto"><span
-                                            class="counter text-purple counter-value"><?= $missingserviceuser ?></span></li>
-                                </ul>
-                            </div>
-                        </a>
-                        <a class="col-lg-3 round_box col-md-4 col-sm-1 item">
-                            <div class="white-box analytics-info box_white counter">
-                                <div class="d-flex">
-                                    <div class="heading">
-                                        <h3 class="box-title">Police called</h3>
-                                    </div>
-                                    <div class="icon-3 icon">
-                                        <span class="icon_name"><i class="fa fa-gavel" aria-hidden="true"></i></span>
-                                    </div>
-                                </div>
-                                <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                    <!-- <li>
-                                                                                                                <div id="sparklinedash3">
-                                                                                                                    <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0">
-                                                                                                                        <i class="fa fa-arrow-up"></i> 16.24 %
-                                                                                                                    </span> vs. previous month</p>
-                                                                                                                </div>
-                                                                                                            </li> -->
-                                    <li class="ms-auto"><span
-                                            class="counter text-info counter-value"><?= $totalpolicecall ?></span> </li>
-                                </ul>
-                            </div>
-                        </a>
-                        <a class="col-lg-3 round_box col-md-4 col-sm-1 item">
-                            <div class="white-box analytics-info box_white counter">
-                                <div class="d-flex">
-                                    <div class="heading">
-                                        <h3 class="box-title">Appointments</h3>
-                                    </div>
-                                    <div class="icon-4 icon">
-                                        <span class="icon_name"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                                    </div>
-                                </div>
-                                <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                    <!-- <li>
-                                                                                                                <div id="sparklinedash4">
-                                                                                                                    <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0">
-                                                                                                                        <i class="fa fa-arrow-up"></i> 16.24 %
-                                                                                                                    </span> vs. previous month</p>
-                                                                                                                </div>
-                                                                                                            </li> -->
-                                    <li class="ms-auto"><span
-                                            class="counter text-purple counter-value"><?= $totalappointments ?></span></li>
-                                </ul>
-                            </div>
-                        </a>
+                                <div class="heading">
+                                    <h3 class="box-title">Calender Events Added</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">                        
+                                        <li class="ms-auto"><span class="counter text-success counter-value"><?= $totaleventsadded ?></span></li>
+                                    </ul>
+                                </div>                               
+                            </div>                            
+                        </div>
                     </div>
+                    <div class="col-lg-3 round_box col-md-4 col-sm-6 item">
+                        <div class="white-box analytics-info box_white counter">
+                            <div class="textOrIcon">                               
+                                <div class="icon-2 icon">
+                                    <span class="icon_name"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
+                                </div>
+                                 <div class="heading">
+                                    <h3 class="box-title">Missing Child</h3>
+                                     <ul class="list-inline two-part d-flex align-items-center mb-0">       
+                                        <li class="ms-auto"><span class="counter text-purple counter-value"><?= $missingserviceuser ?></span></li>
+                                    </ul>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                    <div class="col-lg-3 round_box col-md-4 col-sm-6 item">
+                        <div class="white-box analytics-info box_white counter">
+                            <div class="textOrIcon">                                
+                                <div class="icon-3 icon">
+                                    <span class="icon_name"><i class="fa fa-gavel" aria-hidden="true"></i></span>
+                                </div>
+                                <div class="heading">
+                                    <h3 class="box-title">Police called</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li class="ms-auto"><span  class="counter text-info counter-value"><?= $totalpolicecall ?></span> </li>
+                                    </ul>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="col-lg-3 round_box col-md-4 col-sm-6 item">
+                        <div class="white-box analytics-info box_white counter">
+                            <div class="textOrIcon">                               
+                                <div class="icon-4 icon">
+                                    <span class="icon_name"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                                 <div class="heading">
+                                    <h3 class="box-title">Appointments</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li class="ms-auto"><span class="counter text-purple counter-value"><?= $totalappointments ?></span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>   
+                    <a href="{{ url('service/incident-report/' . base64_decode($_GET['key'])) }}"
+                        class="col-lg-3 round_box col-md-4 col-sm-6 item">
+                        <div class="white-box analytics-info box_white counter">
+                            <div class="textOrIcon">                               
+                                <div class="icon-1 icon">
+                                    <span class="icon_name"><i class="fa fa-shield" aria-hidden="true"></i></span>
+                                </div>
+                                 <div class="heading">
+                                    <h3 class="box-title">Incident Reports</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li class="ms-auto"><span class="counter text-success counter-value"><?= $incidentCount ?></span></li>
+                                    </ul>
+                                </div>
+                            </div>                            
+                        </div>
+                    </a>
+                    <a href="{{ url('service/behavior/' . base64_decode($_GET['key'])) }}"
+                        class="col-lg-3 round_box col-md-4 col-sm-6 item">
+                        <div class="white-box analytics-info box_white counter">
+                            <div class="textOrIcon">                                
+                                <div class="icon-2 icon">
+                                    <span class="icon_name"><i class="fa fa-star" aria-hidden="true"></i></span>
+                                </div>
+                                <div class="heading">
+                                    <h3 class="box-title">Child Behavior</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li class="ms-auto"> @php
+                                            $displayAvg = isset($avg_rating) ? (float) $avg_rating : 0;
+                                            $fullStars = floor($displayAvg);
+                                            $hasHalf = $displayAvg - $fullStars >= 0.5 ? true : false;
+                                        @endphp
+                                            <span class="profile-rating" title="{{ $rating_count ?? 0 }} rating(s)"
+                                                style="vertical-align:middle; font-size: 22px;">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $fullStars)
+                                                        <i class="fa fa-star" style="color:#f90"></i>
+                                                    @elseif ($i == $fullStars + 1 && $hasHalf)
+                                                        <i class="fa fa-star-half-o" style="color:#f90"></i>
+                                                    @else
+                                                        <i class="fa fa-star-o" style="color:#ccc"></i>
+                                                    @endif
+                                                @endfor
+                                                <small style="margin-left:6px; color:#666;">({{ $displayAvg }})</small>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </a>
+                    <a href="{{ url('service/mood/' . base64_decode($_GET['key'])) }}" class="col-lg-3 round_box col-md-4 col-sm-6 item">
+                        <div class="white-box analytics-info box_white counter">
+                            <div class="textOrIcon">                                
+                                <div class="icon-2 icon">
+                                    <span class="icon_name" style="font-size:30px;">😊</span>
+                                </div>
+                                <div class="heading">
+                                    <h3 class="box-title">Child Mood</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li class="ms-auto"><span class="counter text-purple" style="font-size: 16px"> Today's Mood @if (isset($current_moods))
+                                                                <img src="{{ url(MoodImgPath . '/' . $current_moods->image) }}" style="width: 30px;">
+                                                            @endif</span></li>
+                                    </ul>
+                                </div>
+                            </div>                            
+                        </div>
+                    </a>
                 </div>
                 <div class="row">
-                    <div class="row justify-content-center owl-carousel owl-theme">
-                        <a class="col-lg-3 round_box col-md-4 col-sm-1 item">
-                            <div class="white-box analytics-info box_white counter">
-                                <div class="d-flex">
-                                    <div class="heading">
-                                        <h3 class="box-title">Incident Reports</h3>
-                                    </div>
-                                    <div class="icon-1 icon">
-                                        <span class="icon_name"><i class="fa fa-shield" aria-hidden="true"></i></span>
-                                    </div>
-                                </div>
-                                <ul class="list-inline two-part d-flex align-items-center mb-0">
-
-                                    <li class="ms-auto"><span
-                                            class="counter text-success counter-value"><?= $incidentCount ?></span></li>
-                                </ul>
-                            </div>
-                        </a>
-                        {{-- <a class="col-lg-3 round_box col-md-4 col-sm-1 item">
-                            <div class="white-box analytics-info box_white counter">
-                                <div class="d-flex">
-                                    <div class="heading">
-                                        <h3 class="box-title">Child Behavior</h3>
-                                    </div>
-                                    <div class="icon-2 icon">
-                                        <span class="icon_name"><i class="fa fa-user-circle-o"
-                                                aria-hidden="true"></i></span>
-                                    </div>
-                                </div>
-                                <ul class="list-inline two-part d-flex align-items-center mb-0">
-
-                                    <li class="ms-auto"><span
-                                            class="counter text-purple counter-value"><?= $missingserviceuser ?></span></li>
-                                </ul>
-                            </div>
-                        </a> --}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <section class="panel">
                             <header class="panel-heading">
                                 Police Called
@@ -280,9 +258,8 @@
                             </div>
                         </section>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
+             
+                    <div class="col-sm-6">
                         <section class="panel">
                             <header class="panel-heading">
                                 Appointments
@@ -303,8 +280,8 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                         <section class="panel">
-                           <header class="panel-heading">
+                        <section class="panel">
+                            <header class="panel-heading">
                                 Child Behavior
                                 <span class="tools pull-right">
                                     <a href="javascript:;" class="fa fa-chevron-down"></a>
@@ -331,12 +308,61 @@
                             <div class="panel-body">
                                 <div class="chartJS">
                                     <canvas id="moodChart" height="150" width="800"></canvas>
-                                    <div id="moodLegend" style=" display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                                    <div id="moodLegend"
+                                        style=" display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
                                         @foreach ($mood as $moodItem)
                                             <div style="display: flex; align-items: center;">
-                                                <span>{{ $moodItem->value }}</span> - <span>{{ $moodItem->name }}</span>
+                                                <span>{{ $moodItem->id }}</span> - <span>{{ $moodItem->name }}</span>
                                             </div>
                                         @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Task
+                                <span class="tools pull-right">
+                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                    <a href="javascript:;" class="fa fa-times"></a>
+                                </span>
+                            </header>
+                            <div class="panel-body pie-rel">
+                                <div class="chartJS">
+                                    <canvas id="pie-chart-js" width="608" height="355"></canvas>
+                                    
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-7">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                all areas
+                                <span class="tools pull-right">
+                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                    <a href="javascript:;" class="fa fa-times"></a>
+                                </span>
+                            </header>
+                            <div class="panel-body">
+                                <div class="top-stats-panel allAreass">
+                                    <div class="bar-stats">
+                                        <ul class="progress-stat-bar clearfix">
+                                        <li data-percent="{{ ($record_score['daily_record']/25)*100 }}%"><span class="progress-stat-percent bg-blue"></span></li>
+                                        <li data-percent="{{ ($record_score['living_skill']/25)*100 }}%"><span class="progress-stat-percent"></span></li>
+                                        <li data-percent="{{ ($record_score['education_record']/25)*100 }}%"><span class="progress-stat-percent pink"></span></li>
+                                        <li data-percent="{{ ($record_score['mfc']/25)*100 }}%"><span class="progress-stat-percent yellow-b"></span></li>
+                                    </ul>
+                                    <ul class="bar-legend">
+                                        <li><span class="bar-legend-pointer bg-blue"></span>{{ $labels['daily_record']['label'] }}</li>
+                                        <li><span class="bar-legend-pointer green"></span>{{ $labels['living_skill']['label'] }}</li>
+                                        <li><span class="bar-legend-pointer pink"></span>{{ $labels['education_record']['label'] }}</li>
+                                        <li><span class="bar-legend-pointer yellow-b"></span>{{ $labels['mfc']['label'] }}</li>
+                                    </ul>
                                     </div>
                                 </div>
                             </div>
@@ -360,7 +386,18 @@
         <!--main content end-->
 
     </section>
+    <script>
+        //for showing bar graph chart in right hand side
+        $('.progress-stat-bar li').each(function () {
+            $(this).find('.progress-stat-percent').animate({
+                height: $(this).attr('data-percent')
+            }, 1000);
+        });
+    </script>
     <script src="{{ url('public/frontEnd/js/Chart2.js') }}"></script>
+
+    <!--Easy Pie Chart-->
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script> --}}
 
     <script>
         $(document).ready(function() {
@@ -377,6 +414,48 @@
             });
         });
     </script>
+
+    <?php //print_r($task_count); ?>
+
+    {{-- Pie Chart Start --}}
+    <script>
+     var canvas = document.getElementById("pie-chart-js");
+
+// Set equal height & width by JS only
+// canvas.width = 435;   // you can change size
+// canvas.height = 435;
+
+var ctx = canvas.getContext("2d");
+
+var myPie = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ["Completed Targets","Pending Targets"],
+        datasets: [{
+            data: [
+                {{ $task_count['completed_targets'] }},
+                // {{ $task_count['active_targets'] }},
+                {{ $task_count['pending_targets'] }}
+            ],
+            backgroundColor: [
+                "#4ab661",
+                // "#e13533",
+                "#ed6a22"
+            ]
+        }]
+    },
+    options: {
+        responsive: false,          // required
+        maintainAspectRatio: false, // required
+        animation: {
+            animateScale: true
+        }
+    }
+});
+
+    </script>
+    {{-- Pie Chart End --}}
+
 
     {{-- Mood Graph start --}}
     <script>
@@ -397,6 +476,8 @@
                 {{ $m->id }}: "{{ $m->name }}",
             @endforeach
         };
+
+
 
         // Manual formatter (NO UTC issue)
         function formatDate(d) {
@@ -680,28 +761,6 @@
                 var myLineChart = new Chart(document.getElementById("line-chart-js").getContext("2d")).Line(Linedata);
 
 
-
-
-
-                var pieData = [{
-                        value: 30,
-                        color: "#E67A77"
-                    },
-                    {
-                        value: 50,
-                        color: "#D9DD81"
-                    },
-                    {
-                        value: 100,
-                        color: "#79D1CF"
-                    }
-
-                ];
-
-                var myPie = new Chart(document.getElementById("pie-chart-js").getContext("2d")).Pie(pieData);
-
-
-
                 var donutData = [{
                         value: 30,
                         color: "#E67A77"
@@ -737,10 +796,5 @@
 
 
     <!-- Date Range Initialization -->
-
-
-
-
-
 
 @endsection
