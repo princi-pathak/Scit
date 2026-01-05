@@ -43,7 +43,7 @@
                                     <a href="{{ url('roster/dashboard') }}">
                                         <div class="sys-mngmnt-box">
                                             <div>
-                                                <div class="sys-mngmnticon">
+                                                <div class="sysMngmnticon">
                                                     <i class="fa fa-building-o"></i>
                                                 </div>
                                             </div>
@@ -59,7 +59,7 @@
                                     <a href="#!" data-toggle="modal">
                                         <div class="sys-mngmnt-box">
                                             <div>
-                                                <div class="sys-mngmnticon">
+                                                <div class="sysMngmnticon">
                                                     <i class="fa fa-medkit"></i>
                                                 </div>
                                             </div>
@@ -75,7 +75,7 @@
                                     <a href="#!">
                                         <div class="sys-mngmnt-box">
                                             <div>
-                                                <div class="sys-mngmnticon">
+                                                <div class="sysMngmnticon">
                                                     <i class="fa fa-life-ring"></i>
                                                 </div>
                                             </div>
@@ -91,7 +91,7 @@
                                     <a href="#!">
                                         <div class="sys-mngmnt-box">
                                             <div>
-                                                <div class="sys-mngmnticon">
+                                                <div class="sysMngmnticon">
                                                     <i class="fa fa-sun-o"></i>
                                                 </div>
                                             </div>

@@ -32,10 +32,14 @@ use App\Http\Controllers\frontEnd\Roster\ManageDashboardController;
 use App\Http\Controllers\frontEnd\Roster\ScheduleShiftController;
 use App\Http\Controllers\frontEnd\Roster\Staff\CarerAvailabilityController;
 use App\Http\Controllers\frontEnd\Roster\Staff\StaffTaskController;
+use App\Http\Controllers\frontEnd\Roster\Staff\CarerController;
 use App\Http\Controllers\frontEnd\Roster\MessagingCenterController;
 use App\Http\Controllers\frontEnd\Roster\CareDocumentController;
 use App\Http\Controllers\frontEnd\Roster\ReportController;
 use App\Http\Controllers\frontEnd\Roster\LeaveRequestController;
+use App\Http\Controllers\frontEnd\Roster\Client\ClientController;
+use App\Http\Controllers\frontEnd\Roster\IncidentManagementController;
+use App\Http\Controllers\frontEnd\Roster\PayrollFinance\PayrollFinanceController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -60,6 +64,7 @@ use App\Http\Controllers\backEnd\salesfinance\TimeSheetBackendController;
 use App\Http\Controllers\Rota\RotaController;
 use App\Http\Controllers\backEnd\user\PayRatesTypeController;
 use App\Http\Controllers\backEnd\user\PayRatesController;
+use App\Http\Controllers\backEnd\homeManage\LeaveTypeController;
 
 
 Route::get('clear', function () {
@@ -230,6 +235,15 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/care-document', [CareDocumentController::class, 'index'])->name('roster.care.document');
 		Route::get('/reports', [ReportController::class, 'index'])->name('roster.report');
 		Route::get('/leave-request', [LeaveRequestController::class, 'index'])->name('roster.leave.request');
+
+		Route::get('/carer', [CarerController::class, 'index'])->name('roster.staff.carer');
+		Route::get('/carer-details/{carer_id}', [CarerController::class, 'carer_details'])->name('roster.staff.carer.details');
+		
+		Route::get('/client', [ClientController::class, 'index'])->name('roster.client');
+		Route::get('/client-details/{client_id}', [ClientController::class, 'client_details'])->name('roster.client.details');
+
+		Route::get('/incident-management', [IncidentManagementController::class, 'index'])->name('roster.incident.management');
+		Route::get('/payroll-finance', [PayrollFinanceController::class, 'index'])->name('roster.payroll.finance');
 
 	});
 
@@ -1599,6 +1613,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get', 'post'], '/company-manager/check_username_unique', 'App\Http\Controllers\backEnd\UserController@check_username_exist');
 	Route::post('/companyManager/change-status', [ManagerController::class, 'manager_change_status']);
 
+	// Backend Leave Type
+	Route::prefix('leave-type')->name('admin.leaveType.')->group(function () {
+		Route::get('/', [LeaveTypeController::class, 'index'])->name('index');
+		Route::get('/add', [LeaveTypeController::class, 'create'])->name('create');
+		Route::post('/save', [LeaveTypeController::class, 'store'])->name('store');
+		Route::get('/edit/{id}', [LeaveTypeController::class, 'edit'])->name('edit');
+		Route::post('/update/{id}', [LeaveTypeController::class, 'update'])->name('update');
+		Route::get('/delete/{id}', [LeaveTypeController::class, 'destroy'])->name('destroy');
+	});
+
 
 	//backEnd SystemAdmin in SuperAdmin 
 	Route::match(['get', 'post'], '/system-admins', 'App\Http\Controllers\backEnd\superAdmin\AdminController@system_admins');
@@ -1622,6 +1646,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get', 'post'], '/system-admin/home/undo-delete/{home_id}', 'App\Http\Controllers\backEnd\superAdmin\HomeController@undo_delete');
 	Route::match(['get', 'post'], '/system-admin/home/company-package-type', 'App\Http\Controllers\backEnd\superAdmin\HomeController@company_package_type');
 	Route::match(['get', 'post'], '/system-admin/home/card-detail', 'App\Http\Controllers\backEnd\superAdmin\HomeController@card_detail_save');
+	Route::match(['get', 'post'], '/system-admin/home/qr-code', 'App\Http\Controllers\backEnd\superAdmin\HomeController@qr_code');
 
 
 	Route::match(['get', 'post'], '/users', 'App\Http\Controllers\backEnd\UserController@users');

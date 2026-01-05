@@ -609,13 +609,13 @@ display: none;
 
 /*date time picker selected date color*/
 .day.active{
-  background : #41cac0 none repeat scroll 0 0 !important;
+  background : #2563eb  none repeat scroll 0 0 !important;
 }
 .clr-them-green{
-  color : #1fb5ad;  
+  color : #2563eb ;  
 }
 .clr-them-green:hover{
-  color : #1fb5ad;  
+  color : #2563eb ;  
 }
 
 
@@ -901,7 +901,7 @@ display: none;
   float: left;
 }
 .delete {
-  background-color: red;
+  /* background-color: red; */
   float: right;
   /*margin-right:24px;*/
 }
