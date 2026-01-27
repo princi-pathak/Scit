@@ -453,7 +453,7 @@
           <li> <a href="{{ url('/roster/carer-availability') }}"><i class='bx bx-calendar'></i> <span>Carer Availability</span> </a> </li>
           <li> <a href="{{ url('/roster/carer') }}"><i class='bx bx-group'></i>  <span>Carers</span> </a> </li>
           <li> <a href="{{ url('/roster/client') }}"><i class='bx bx-user-circle'></i>  <span>Clients</span> </a> </li>
-          <li> <a href="#"><i class='bx  bx-clipboard-detail'></i> <span>Daily Log</span> </a> </li>
+          <li> <a href="{{ url('/roster/daily-log') }}"><i class='bx  bx-clipboard-detail'></i> <span>Daily Log</span> </a> </li>
           
           <li class="header-menu"> <span>Domiciliary Care</span> </li>
           <li> <a href="#"><i class='bx bx-dashboard'></i>  <span>Dom Care Dashboard</span></a></li>

@@ -11,4 +11,12 @@ class IncidentManagementController extends Controller
     {
         return view('frontEnd.roster.incident_management.incident');
     }
+    public function ai_prevention()
+    {
+        return view('frontEnd.roster.incident_management.ai_prevention');
+    }
+    public function incident_report_details()
+    {
+        return view('frontEnd.roster.incident_management.incident_report_details');
+    }
 }
