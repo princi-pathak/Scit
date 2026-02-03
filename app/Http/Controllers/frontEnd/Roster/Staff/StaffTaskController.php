@@ -7,7 +7,12 @@ use Illuminate\Http\Request;
 
 class StaffTaskController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('frontEnd.roster.staff.staff_task');
+    }
+    public function staffTaskDetail($id)
+    {
+        return view('frontEnd\roster\staff\staffTaskDetail');
     }
 }

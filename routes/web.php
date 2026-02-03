@@ -239,6 +239,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/carer-availability', [CarerAvailabilityController::class, 'index'])->name('roster.carer.availability');
 		Route::get('/messaging-center', [MessagingCenterController::class, 'index'])->name('roster.carer.availability');
 		Route::get('/staff-task', [StaffTaskController::class, 'index'])->name('roster.staff.task');
+		Route::get('/staff-task-detail/{id}', [StaffTaskController::class, 'staffTaskDetail']);
 		Route::get('/care-document', [CareDocumentController::class, 'index'])->name('roster.care.document');
 		Route::get('/reports', [ReportController::class, 'index'])->name('roster.report');
 		Route::get('/leave-request', [LeaveRequestController::class, 'index'])->name('roster.leave.request');

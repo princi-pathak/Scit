@@ -9423,11 +9423,9 @@ a.close.edit_dyn_form {
     --purpleBlueCle: #4f46e5;
     --pinkClr: #db2777;
     /* pratima */
-
     --borderColor: #ddd;
     --redColor: #dc2626;
     --blueColor: #2563eb;
-    --purple: #9333ea;
     --black: #272727ff;
     --darkYellow: #92400e;
     --blueGrad: linear-gradient(82deg, rgba(239, 244, 255, 1) 59%, rgba(238, 242, 255, 1) 99%);
@@ -9440,9 +9438,12 @@ a.close.edit_dyn_form {
     --lightGreenp: #f0fdf4;
     --darkRedp: #a41d1d;
     --bxShadowHover: rgba(17, 12, 46, 0.15) 0px 12px 30px 0px;
-    --lightOrangep: #fff7ed;
     --darkBlue: #1e3a8a;
     --darkPurple: #581c87;
+    --purple: #9333ea;
+    --font13: 13px;
+    --lightRedBorder: #fecaca;
+
 }
 
 /* ******************Start Dashboard Css***************************** */
@@ -11008,7 +11009,11 @@ header.panel-heading.headingCapitilize {
     padding: 16px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
-    min-height: 430px;
+    /* min-height: 430px; */
+}
+
+.clientCardBox .profile-card {
+    min-height: 370px;
 }
 
 .carertabcontent .card-header {
@@ -11185,7 +11190,7 @@ header.panel-heading.headingCapitilize {
 
 .carertabcontent .care-list {
     margin-top: 8px;
-    height: 186px;
+    height: 80px;
     overflow: auto;
 }
 
@@ -13233,7 +13238,7 @@ header.panel-heading.headingCapitilize {
     color: #000;
 }
 
-label.redtext {
+.redtext {
     color: var(--iconRadClr);
 }
 
@@ -14419,6 +14424,57 @@ label.redtext {
     font-size: 13px;
 }
 
+.addUnavailabilityBtn button {
+    line-height: 34px;
+    width: 100%;
+}
+
+.addUnavailabilityList .planActions .cornorTags {
+    padding: 3px 8px;
+    font-size: 11px;
+    border-radius: 5px;
+}
+
+.addUnavailabilityList .planActions button {
+    border: transparent;
+}
+
+.addUnavailabilityList .planActions button:hover {
+    background-color: var(--lightRedbgClr);
+}
+
+.unavailabilityDateAndTime {
+    display: flex;
+    gap: 12px;
+}
+
+.unavailabilityDateAndTime .caldrIcon {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 18px;
+    color: var(--darkOrangep);
+    background: #ffe7c2;
+    border-radius: 50%;
+}
+
+.unavailabilityDateAndTime .caldrIcon i {
+    line-height: 40px;
+}
+
+.unavailabilityDateAndTime div strong {
+    font-size: 13px;
+}
+
+.addUnavailabilityForm.active {
+    display: block;
+}
+
+.addUnavailabilityForm {
+    display: none;
+}
+
 /********************************************************************************Start pratima css ********************************************************************************/
 /********************************************************************************Start pratima css ********************************************************************************/
 
@@ -14552,6 +14608,7 @@ label.redtext {
     align-items: center;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     color: #0a0a0a;
+    justify-content: center;
 }
 
 .emergencyContent h3,
@@ -14593,7 +14650,7 @@ label.redtext {
     border: 1px solid var(--borderColor);
     padding: 2px 7px;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 12px;
     color: #000;
     font-weight: 600;
     margin-top: 10px;
@@ -14639,6 +14696,7 @@ label.redtext {
     border-radius: 8px;
     transition: 0.7s;
     cursor: pointer;
+    text-align: center;
 }
 
 .deleteIcon:hover {
@@ -14657,7 +14715,7 @@ label.redtext {
 
 .emergencyForm .form-label {
     color: #000;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .redBtn {
@@ -14665,7 +14723,7 @@ label.redtext {
     border: unset;
     color: #fff;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     padding: 8px 15px;
     border-radius: 8px;
 }
@@ -14730,7 +14788,7 @@ label.redtext {
 
 .purpleBox p {
     color: var(--purple);
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .purpleBox i {
@@ -14740,8 +14798,8 @@ label.redtext {
 
 .careBadg {
     background: #2563eb30;
-    padding: 2px 8px;
-    font-size: 11px;
+    padding: 2px 10px;
+    font-size: 12px;
     border-radius: 5px;
     color: #002b89;
     box-shadow: var(--bxShadow);
@@ -15430,7 +15488,7 @@ label.redtext {
 }
 
 .mt20 {
-    margin-top: 20px;
+    margin-top: 24px;
 }
 
 .staffTaskTab span.title i,
@@ -15537,7 +15595,7 @@ label.redtext {
 
 .redbadges {
     color: var(--redColor);
-    background-color: var(--lightRedp);
+    background-color: #fee2e2;
 }
 
 .redDarkBadges {
@@ -15733,8 +15791,8 @@ label.redtext {
 
 .h6Head {
     font-size: 14px;
-    font-weight: 600;
     margin-top: 0px;
+    font-weight: 600;
 }
 
 .allterStafftask {
@@ -15770,7 +15828,6 @@ label.redtext {
     }
 }
 
-/* 20-1-2026 */
 .f20 {
     font-size: 20px;
 }
@@ -15852,8 +15909,6 @@ label.redtext {
     display: flex;
 }
 
-/* 21-1-2026 */
-
 .reportRedBox p,
 .reportRedBox strong {
     color: var(--darkRedp) !important;
@@ -15910,7 +15965,7 @@ label.redtext {
     align-items: center;
 }
 
-input[type="checkbox"] {
+.addReportCheck input[type="checkbox"] {
     height: unset;
     width: unset;
     margin: unset;
@@ -15933,4 +15988,318 @@ input[type="checkbox"] {
 
 .incidentAddFooter>div:nth-child(1) {
     width: 90%;
+}
+
+/* 30-1-2026 */
+.incidentDetailHead .h5Head i {
+    color: var(--redColor);
+    font-size: 25px;
+    vertical-align: middle;
+}
+
+.incidentDetailHead .h5Head {
+    font-size: 20px;
+}
+
+.cardHeaderp {
+    border-bottom: 1px solid var(--borderColor);
+    border-radius: 12px 12px 0px 0px;
+}
+
+.incidentDeCon strong,
+.icndentDeFooter strong {
+    font-size: var(--font13);
+    color: #4b5563;
+    font-weight: 600;
+}
+
+.incidentDeCon p {
+    font-size: var(--font13);
+}
+
+.incidentDeCon .bg-blue-50 p,
+.incidentDeCon .bg-blue-50 p strong {
+    color: var(--darkBlue);
+    font-size: var(--font13);
+}
+
+.incidentDeCon .bg-blue-50 {
+    border-radius: 8px;
+}
+
+.icndentDeFooter {
+    border-top: 1px solid var(--borderColor);
+
+}
+
+.w50 {
+    width: 50%;
+}
+
+.emergencyMain.bg-red-50 {
+    background: #fef2f2;
+    border: 1px solid var(--lightRedBorder);
+}
+
+.IncidentDetailsafe .cardHeaderp {
+    border-bottom: 1px solid var(--lightRedBorder);
+}
+
+.IncidentDetailsafe h5,
+.IncidentDetailsafe h5 i,
+.IncidentDetailsafe .incidentDeCon strong {
+    color: var(--darkRedp);
+    vertical-align: middle;
+}
+
+.parentRedBad {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.incidentRrqAction {
+    border: 1px solid var(--lightRedBorder);
+    background: #fff;
+    border-radius: 8px;
+}
+
+.incidentRrqAction ul {
+    padding-left: 16px;
+    margin-top: 10px;
+}
+
+.incidentRrqAction ul li {
+    font-size: var(--font13);
+    color: var(--darkRedp);
+    margin-bottom: 5px;
+}
+
+.aiInciDetaReport .cardHeaderp .h5Head i {
+    color: var(--purple);
+}
+
+i {
+    vertical-align: middle;
+}
+
+.redIColor {
+    color: var(--redColor);
+}
+
+.aiInciDetaReport .incidentRrqAction {
+    background: #fef2f2;
+}
+
+.aiInciDetaReport .incidentRrqAction strong,
+.aiInciDetaReport .incidentRrqAction p {
+    color: var(--darkRedp);
+}
+
+
+
+.inDeimpactAssest {
+    border-radius: 8px;
+}
+
+
+.inDeimpactAssest p strong,
+.inciDeRight strong {
+    font-size: var(--font13);
+
+    font-weight: 600;
+}
+
+.inDeimpactAssest p,
+.inciDeRight p,
+.inciDeRight p strong,
+.fs13 {
+    font-size: var(--font13);
+}
+
+.inDeimpactAssest.bg-orange-50 p,
+.inDeimpactAssest.bg-orange-50 strong {
+    color: var(--darkYellow);
+}
+
+.parentRedBad .userMum .title {
+    background-color: #fff;
+}
+
+.inDeimpactAssest.bg-greenp-50 p,
+.inDeimpactAssest.bg-greenp-50 p strong,
+.inDeimpactAssest.bg-greenp-50 h6 {
+    color: var(--darkbgGreen);
+}
+
+.cyanGrad {
+    background: linear-gradient(to right, #eff7ff, #ecfeff);
+}
+
+.rounded8 {
+    border-radius: 8px;
+}
+
+.muteBg {
+    background-color: #f9fafb;
+}
+
+.maincqcInde.bg-purple-50 {
+    background: #faf5ff !important;
+    border: 1px solid #dec5f7 !important;
+}
+
+.maincqcInde.bg-purple-50 h6,
+.maincqcInde.bg-purple-50 p,
+.maincqcInde.bg-purple-50 li {
+    color: var(--purple);
+}
+
+.listcqcInDe ul {
+    padding-left: 19px;
+}
+
+.maincqcInde p,
+.listcqcInDe li {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.emergencyMain.bg-purple-50 .cardHeaderp {
+    border-bottom: 1px solid #dec5f7 !important;
+}
+
+.listcqcInDe ul {
+    margin-top: 10px;
+}
+
+
+.rtcozCardInDe h6 {
+    color: #000;
+}
+
+.fs23 {
+    font-size: 23px;
+}
+
+.dotC {
+    height: 3px;
+    width: 3px;
+    display: inline-block;
+    background: #000000;
+    border-radius: 50%;
+}
+
+.textBlue {
+    color: var(--blueColor);
+}
+
+.textGreen {
+    color: var(--darkbgGreen);
+}
+
+.flexWrap {
+    flex-wrap: wrap;
+}
+
+.h7Head {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.darkGreenBadges {
+    background-color: var(--darkbgGreen);
+    color: #fff;
+}
+
+.darkBlackBadg {
+    background-color: #000;
+    color: #fff;
+}
+
+.rtcozCardInDe {
+    border: 1px solid var(--borderColor);
+}
+
+.competeMentalSt {
+    font-size: 15px;
+    color: var(--muteText);
+}
+
+.h2Head {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.tabStaffDe .tabs {
+    overflow-x: auto;
+}
+
+.tabStaffDe .tabs button {
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* hide scrollbar (optional) */
+.tabStaffDe .tabs::-webkit-scrollbar {
+    height: 6px;
+}
+
+.tabStaffDe .tabs::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.occupancyBox.bg-blue-50 .value {
+    color: var(--darkBlue);
+    font-size: 13px;
+}
+
+.formLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+}
+
+.bgWhite {
+    background-color: #fff;
+}
+
+.tableSTDetail {
+    border: 1px solid #dddddd;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.tableSTDetail thead {
+    background: #f9fafb;
+
+}
+
+.tableSTDetail table th,
+.tableSTDetail table td {
+    font-size: 13px;
+    color: #374151;
+    vertical-align: middle !important;
+}
+
+.tableSTDetail table td input {
+    width: 100%;
+    height: 34px;
+    border: 1px solid var(--borderColor);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.tableSTDetail table tfoot button {
+    width: 100%;
+}
+
+.tableSTDetail table th:nth-child(1) {
+    border-top-left-radius: 8px;
+}
+
+.pt24 {
+    padding-top: 24px;
 }
