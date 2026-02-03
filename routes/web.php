@@ -43,6 +43,7 @@ use App\Http\Controllers\frontEnd\Roster\LeaveRequestController;
 use App\Http\Controllers\frontEnd\Roster\Client\ClientController;
 use App\Http\Controllers\frontEnd\Roster\IncidentManagementController;
 use App\Http\Controllers\frontEnd\Roster\PayrollFinance\PayrollFinanceController;
+use App\Http\Controllers\frontEnd\Roster\Staff\SupervisionController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -274,6 +275,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save-daily-log', [DailyLogController::class, 'save_daily_log']);
 		Route::post('/edit-daily-log', [DailyLogController::class, 'save_daily_log']);
 		Route::post('/daily-log-delete', [DailyLogController::class, 'daily_log_delete']);
+		// Staff Supervisions
+		Route::get('supervision-management', [SupervisionController::class, 'index']);
 
 	});
 

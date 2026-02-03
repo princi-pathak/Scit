@@ -11190,9 +11190,11 @@ header.panel-heading.headingCapitilize {
 
 .carertabcontent .care-list {
     margin-top: 8px;
-    height: 80px;
+    max-height: 55px;
     overflow: auto;
+    min-height: 10px;
 }
+
 
 .carertabcontent .care-item {
     border: 1px solid #e5e7eb;
@@ -15518,7 +15520,7 @@ header.panel-heading.headingCapitilize {
     color: var(--darkOrangep);
 }
 
-.AllStaffTabC .bgIconStaffT {
+.bgIconStaffT {
     height: 40px;
     width: 40px;
     display: flex;
@@ -16302,4 +16304,18 @@ i {
 
 .pt24 {
     padding-top: 24px;
+}
+
+.h5Bold {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: left;
+}
+
+.darkRedText {
+    color: var(--darkRedp);
+}
+
+.rounded50 {
+    border-radius: 50%;
 }

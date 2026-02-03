@@ -387,35 +387,35 @@
         </script>
 
         <!-- <script>
-                                                                                                                                                                                         document.addEventListener("click", function(e) {
+                                                                                                                                                                                                         document.addEventListener("click", function(e) {
 
-                                                                                                                                                                                             // ADD ROW
-                                                                                                                                                                                             if (e.target.closest(".add-row-btn")) {
-                                                                                                                                                                                                 const wrapper = e.target.closest(".js-dynamic-table");
-                                                                                                                                                                                                 const tbody = wrapper.querySelector("tbody");
-                                                                                                                                                                                                 const template = tbody.querySelector(".js-row-template");
+                                                                                                                                                                                                             // ADD ROW
+                                                                                                                                                                                                             if (e.target.closest(".add-row-btn")) {
+                                                                                                                                                                                                                 const wrapper = e.target.closest(".js-dynamic-table");
+                                                                                                                                                                                                                 const tbody = wrapper.querySelector("tbody");
+                                                                                                                                                                                                                 const template = tbody.querySelector(".js-row-template");
 
-                                                                                                                                                                                                 const newRow = template.cloneNode(true);
+                                                                                                                                                                                                                 const newRow = template.cloneNode(true);
 
-                                                                                                                                                                                                 // reset fields (inputs, checkboxes, radios, selects)
-                                                                                                                                                                                                 newRow.querySelectorAll("input, select, textarea").forEach(el => {
-                                                                                                                                                                                                     if (el.type === "checkbox" || el.type === "radio") {
-                                                                                                                                                                                                         el.checked = false;
-                                                                                                                                                                                                     } else {
-                                                                                                                                                                                                         el.value = "";
-                                                                                                                                                                                                     }
-                                                                                                                                                                                                 });
+                                                                                                                                                                                                                 // reset fields (inputs, checkboxes, radios, selects)
+                                                                                                                                                                                                                 newRow.querySelectorAll("input, select, textarea").forEach(el => {
+                                                                                                                                                                                                                     if (el.type === "checkbox" || el.type === "radio") {
+                                                                                                                                                                                                                         el.checked = false;
+                                                                                                                                                                                                                     } else {
+                                                                                                                                                                                                                         el.value = "";
+                                                                                                                                                                                                                     }
+                                                                                                                                                                                                                 });
 
-                                                                                                                                                                                                 tbody.appendChild(newRow);
-                                                                                                                                                                                             }
+                                                                                                                                                                                                                 tbody.appendChild(newRow);
+                                                                                                                                                                                                             }
 
-                                                                                                                                                                                             // DELETE ROW
-                                                                                                                                                                                             if (e.target.closest(".delete-row-btn")) {
-                                                                                                                                                                                                 e.target.closest("tr").remove();
-                                                                                                                                                                                             }
+                                                                                                                                                                                                             // DELETE ROW
+                                                                                                                                                                                                             if (e.target.closest(".delete-row-btn")) {
+                                                                                                                                                                                                                 e.target.closest("tr").remove();
+                                                                                                                                                                                                             }
 
-                                                                                                                                                                                         });
-                                                                                                                                                                                         </script> -->
+                                                                                                                                                                                                         });
+                                                                                                                                                                                                         </script> -->
 
         <script>
             document.addEventListener("click", function (e) {
