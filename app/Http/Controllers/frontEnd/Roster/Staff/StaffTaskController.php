@@ -13,6 +13,6 @@ class StaffTaskController extends Controller
     }
     public function staffTaskDetail($id)
     {
-        return view('frontEnd\roster\staff\staffTaskDetail');
+        return view('frontEnd/roster/staff/staffTaskDetail');
     }
 }

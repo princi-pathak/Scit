@@ -1364,6 +1364,7 @@ ul.top-menu>li>a:focus {
 }
 
 /*badge*/
+
 .badge.bg-primary {
     background: #8075c4;
 }
@@ -9443,6 +9444,7 @@ a.close.edit_dyn_form {
     --purple: #9333ea;
     --font13: 13px;
     --lightRedBorder: #fecaca;
+    --darkGreenp: #14532d;
 
 }
 
@@ -11168,6 +11170,18 @@ header.panel-heading.headingCapitilize {
 .carertabcontent .actions .delete {
     color: #dc2626;
     /* border-color: #fecaca; */
+}
+
+.darkBlueTextp {
+    color: var(--darkBlue);
+}
+
+.purpleTextp {
+    color: var(--purple);
+}
+
+.darkPurpleTextp {
+    color: var(--darkPurple);
 }
 
 .orangeText {
@@ -13728,7 +13742,6 @@ header.panel-heading.headingCapitilize {
     display: flex;
     gap: 10px;
     align-items: center;
-    justify-content: space-between;
     cursor: pointer;
     transition: .5s;
     margin-right: 5px;
@@ -15554,10 +15567,7 @@ header.panel-heading.headingCapitilize {
     background: #fef9c3;
 }
 
-.yellowBadges {
-    background-color: #fef9c3;
-    color: var(--darkYellow);
-}
+
 
 .muteAllTabCard .bgIconStaffT {
     background: #f1f1ef;
@@ -15573,6 +15583,22 @@ header.panel-heading.headingCapitilize {
 
 .AllStaffTabC .title {
     font-size: 12px;
+}
+
+/* badges pratima */
+.darkBlackBadg {
+    background-color: #000;
+    color: #fff;
+}
+
+.darkBlueBadg {
+    background: var(--blueColor);
+    color: #fff;
+}
+
+.yellowBadges {
+    background-color: #fef9c3;
+    color: var(--darkYellow);
 }
 
 .muteBadges {
@@ -15608,6 +15634,16 @@ header.panel-heading.headingCapitilize {
 .highBadges {
     background-color: #ffedd5;
     color: var(--darkOrangep);
+}
+
+.purpleBadgesDark {
+    background-color: var(--purple);
+    color: #fff;
+}
+
+.darkGreenBadges {
+    background-color: var(--darkbgGreen);
+    color: #fff;
 }
 
 .completedTaskStaff .greenbadges {
@@ -15646,8 +15682,27 @@ header.panel-heading.headingCapitilize {
     margin-top: 0px;
 }
 
+.muchsmallText {
+    font-size: 11px;
+    color: var(--muteText);
+}
+
+.h6Head {
+    font-size: 14px;
+    margin-top: 0px;
+    font-weight: 600;
+}
+
 .f18 {
     font-size: 18px;
+}
+
+.fs30 {
+    font-size: 30px;
+}
+
+.mb25 {
+    margin-bottom: 25px;
 }
 
 .formIns {
@@ -15657,9 +15712,6 @@ header.panel-heading.headingCapitilize {
     margin-top: 3px;
 }
 
-.mb25 {
-    margin-bottom: 25px;
-}
 
 .checkboxp {
     display: flex;
@@ -15773,29 +15825,14 @@ header.panel-heading.headingCapitilize {
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
-.purpleBadgesDark {
-    background-color: var(--purple);
-    color: #fff;
-}
+
 
 .fallRedCon .para {
     color: #4b5563;
 }
 
-.muchsmallText {
-    font-size: 10px;
-}
 
-.muchsmallText {
-    font-size: 11px;
-    color: var(--muteText);
-}
 
-.h6Head {
-    font-size: 14px;
-    margin-top: 0px;
-    font-weight: 600;
-}
 
 .allterStafftask {
     border-left: 4px solid var(--redColor);
@@ -15889,10 +15926,7 @@ header.panel-heading.headingCapitilize {
     color: var(--darkOrangep)
 }
 
-.darkBlueBadg {
-    background: var(--blueColor);
-    color: #fff;
-}
+
 
 .contentAipreBlue p,
 .contentAipreBlue strong {
@@ -16209,15 +16243,8 @@ i {
     font-weight: 600;
 }
 
-.darkGreenBadges {
-    background-color: var(--darkbgGreen);
-    color: #fff;
-}
 
-.darkBlackBadg {
-    background-color: #000;
-    color: #fff;
-}
+
 
 .rtcozCardInDe {
     border: 1px solid var(--borderColor);
@@ -16318,4 +16345,41 @@ i {
 
 .rounded50 {
     border-radius: 50%;
+}
+
+.gradp-blue-50 {
+    background: linear-gradient(132deg, rgba(235, 244, 255, 1) 30%, rgba(223, 236, 254, 1) 82%);
+}
+
+.gradp-green-50 {
+    background: linear-gradient(132deg, #eefdf3, #defce8);
+}
+
+.gradp-orange-50 {
+    background: linear-gradient(132deg, #fff6eb, #ffeed8);
+}
+
+.gradp-purple-50 {
+    background: linear-gradient(132deg, #faf4ff, #f4eaff);
+}
+
+.h1Pay700 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.lightBorderp {
+    border: 1px solid var(--borderColor);
+}
+
+.w100 {
+    width: 100%;
+}
+
+.darkGreenTextp {
+    color: var(--darkGreenp);
+}
+
+.darkOrangeTextp {
+    color: var(--darkYellow);
 }

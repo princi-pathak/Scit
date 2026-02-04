@@ -337,12 +337,12 @@
                             <textarea name="morning" required="" class="form-control" rows="3" cols="20"
                                 placeholder="Additional details..."></textarea>
                             <div class="purpleBox p-4 reportyellowBox mt-4">
-                                <div class="d-flex gap-3">
+                                <div class="d-flex gap-3 align-items-center">
                                     <div>
                                         <i class="darkyellowIc bx bx-alert-circle f20"></i>
                                     </div>
                                     <div class="">
-                                        <p class="mb-2" for="safeguarding"> Please complete and submit the form
+                                        <p class="mb-0" for="safeguarding"> Please complete and submit the form
                                             above before marking this task as complete.
                                         </p>
 
@@ -387,35 +387,35 @@
         </script>
 
         <!-- <script>
-                                                                                                                                                                                                         document.addEventListener("click", function(e) {
+                                                                                                                                                                                                                 document.addEventListener("click", function(e) {
 
-                                                                                                                                                                                                             // ADD ROW
-                                                                                                                                                                                                             if (e.target.closest(".add-row-btn")) {
-                                                                                                                                                                                                                 const wrapper = e.target.closest(".js-dynamic-table");
-                                                                                                                                                                                                                 const tbody = wrapper.querySelector("tbody");
-                                                                                                                                                                                                                 const template = tbody.querySelector(".js-row-template");
+                                                                                                                                                                                                                     // ADD ROW
+                                                                                                                                                                                                                     if (e.target.closest(".add-row-btn")) {
+                                                                                                                                                                                                                         const wrapper = e.target.closest(".js-dynamic-table");
+                                                                                                                                                                                                                         const tbody = wrapper.querySelector("tbody");
+                                                                                                                                                                                                                         const template = tbody.querySelector(".js-row-template");
 
-                                                                                                                                                                                                                 const newRow = template.cloneNode(true);
+                                                                                                                                                                                                                         const newRow = template.cloneNode(true);
 
-                                                                                                                                                                                                                 // reset fields (inputs, checkboxes, radios, selects)
-                                                                                                                                                                                                                 newRow.querySelectorAll("input, select, textarea").forEach(el => {
-                                                                                                                                                                                                                     if (el.type === "checkbox" || el.type === "radio") {
-                                                                                                                                                                                                                         el.checked = false;
-                                                                                                                                                                                                                     } else {
-                                                                                                                                                                                                                         el.value = "";
+                                                                                                                                                                                                                         // reset fields (inputs, checkboxes, radios, selects)
+                                                                                                                                                                                                                         newRow.querySelectorAll("input, select, textarea").forEach(el => {
+                                                                                                                                                                                                                             if (el.type === "checkbox" || el.type === "radio") {
+                                                                                                                                                                                                                                 el.checked = false;
+                                                                                                                                                                                                                             } else {
+                                                                                                                                                                                                                                 el.value = "";
+                                                                                                                                                                                                                             }
+                                                                                                                                                                                                                         });
+
+                                                                                                                                                                                                                         tbody.appendChild(newRow);
                                                                                                                                                                                                                      }
+
+                                                                                                                                                                                                                     // DELETE ROW
+                                                                                                                                                                                                                     if (e.target.closest(".delete-row-btn")) {
+                                                                                                                                                                                                                         e.target.closest("tr").remove();
+                                                                                                                                                                                                                     }
+
                                                                                                                                                                                                                  });
-
-                                                                                                                                                                                                                 tbody.appendChild(newRow);
-                                                                                                                                                                                                             }
-
-                                                                                                                                                                                                             // DELETE ROW
-                                                                                                                                                                                                             if (e.target.closest(".delete-row-btn")) {
-                                                                                                                                                                                                                 e.target.closest("tr").remove();
-                                                                                                                                                                                                             }
-
-                                                                                                                                                                                                         });
-                                                                                                                                                                                                         </script> -->
+                                                                                                                                                                                                                 </script> -->
 
         <script>
             document.addEventListener("click", function (e) {
