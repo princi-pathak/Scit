@@ -843,76 +843,80 @@
                             </h4>
                         </div>
                         <div class="modal-body heightScrollModal" style="height: unset;">
-                            <div class="carer-form">
+                            <form action="">
+                                <div class="carer-form">
 
-                                <div class="row mb-4">
-                                    <div class="col-lg-12">
-                                        <label>Task Type *</label>
-                                        <select class="form-control">
-                                            <option>Assessment</option>
-                                            <option>Spot Check</option>
-                                        </select>
-                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-lg-12">
+                                            <label>Task Type *</label>
+                                            <select class="form-control">
+                                                <option>Assessment</option>
+                                                <option>Spot Check</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="col-md-12  m-t-10">
-                                        <label>Title *</label>
-                                        <input type="text" class="form-control"
-                                            placeholder="e.g. Monthly Supervision - John Smith">
-                                    </div>
-                                    <div class="col-lg-12 m-t-10">
-                                        <label> Assigned To (who will perform this task) *</label>
-                                        <select class="form-control">
-                                            <option>Assessment</option>
-                                            <option>Spot Check</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-12 m-t-10">
-                                        <label>About (staff member being supervised/assessed)</label>
-                                        <select class="form-control">
-                                            <option>Assessment</option>
-                                            <option>Spot Check</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-12 m-t-10">
-                                        <label>Form Template (optional)</label>
-                                        <select class="form-control">
-                                            <option>Assessment</option>
-                                            <option>Spot Check</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6  m-t-10">
-                                        <label>Due Date</label>
-                                        <input type="date" class="form-control">
-                                    </div>
-                                    <div class="col-lg-6 m-t-10">
-                                        <label>Priority</label>
-                                        <select class="form-control">
-                                            <option>Medium</option>
-                                            <option>High</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6  m-t-10">
-                                        <label>Scheduled Date</label>
-                                        <input type="date" class="form-control">
-                                    </div>
-                                    <div class="col-md-6  m-t-10">
-                                        <label>Time</label>
-                                        <input type="time" class="form-control">
-                                    </div>
-                                    <div class="col-md-12 m-t-10">
-                                        <label>Description</label>
-                                        <textarea name="morning" required="" class="form-control" rows="3" cols="20"
-                                            placeholder="Additional details..."></textarea>
+                                        <div class="col-md-12  m-t-10">
+                                            <label>Title *</label>
+                                            <input type="text" class="form-control"
+                                                placeholder="e.g. Monthly Supervision - John Smith">
+                                        </div>
+                                        <div class="col-lg-12 m-t-10">
+                                            <label> Assigned To (who will perform this task) *</label>
+                                            <select class="form-control">
+                                                <option>Assessment</option>
+                                                <option>Spot Check</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-12 m-t-10">
+                                            <label>About (staff member being supervised/assessed)</label>
+                                            <select class="form-control">
+                                                <option>Assessment</option>
+                                                <option>Spot Check</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-12 m-t-10">
+                                            <label>Form Template (optional)</label>
+                                            <select class="form-control">
+                                                <option>Assessment</option>
+                                                <option>Spot Check</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6  m-t-10">
+                                            <label>Due Date</label>
+                                            <input type="date" class="form-control">
+                                        </div>
+                                        <div class="col-lg-6 m-t-10">
+                                            <label>Priority</label>
+                                            <select class="form-control">
+                                                <option>Medium</option>
+                                                <option>High</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6  m-t-10">
+                                            <label>Scheduled Date</label>
+                                            <input type="date" class="form-control">
+                                        </div>
+                                        <div class="col-md-6  m-t-10">
+                                            <label>Time</label>
+                                            <input type="time" class="form-control">
+                                        </div>
+                                        <div class="col-md-12 m-t-10">
+                                            <label>Description</label>
+                                            <textarea name="morning" required="" class="form-control" rows="3" cols="20"
+                                                placeholder="Additional details..."></textarea>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mt20 d-flex gap-3 justify-content-end">
+                                                <button type="button" data-dismiss="modal" aria-hidden="true"
+                                                    class="borderBtn">Cancel</button>
+                                                <button type="submit" class="bgBtn darkBg submit ">Create Task</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-
-                            </div>
+                            </form>
                         </div>
-                        <div class="modal-footer d-flex gap-3 justify-content-end">
-                            <button type="button" data-dismiss="modal" aria-hidden="true" class="borderBtn">Cancel</button>
-                            <button type="submit" class="bgBtn darkBg submit ">Create Task</button>
-                        </div>
+
                     </div>
                 </div>
             </div>

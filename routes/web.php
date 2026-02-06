@@ -44,6 +44,7 @@ use App\Http\Controllers\frontEnd\Roster\Client\ClientController;
 use App\Http\Controllers\frontEnd\Roster\IncidentManagementController;
 use App\Http\Controllers\frontEnd\Roster\PayrollFinance\PayrollFinanceController;
 use App\Http\Controllers\frontEnd\Roster\Staff\SupervisionController;
+use App\Http\Controllers\frontEnd\Roster\Staff\invoiceManagementController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -270,6 +271,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/incident-ai-prevention', [IncidentManagementController::class, 'ai_prevention']);
 		Route::get('/incident-report-details', [IncidentManagementController::class, 'incident_report_details']);
 		Route::get('/payroll-finance', [PayrollFinanceController::class, 'index'])->name('roster.payroll.finance');
+		Route::get('/payroll-processing', [PayrollFinanceController::class, 'payrollprocessing']);
+		Route::get('/timesheet-reconciliation', [PayrollFinanceController::class, 'timesheetreconciliation']);
 		// Roster Daily Log frontend
 		Route::get('/daily-log', [DailyLogController::class, 'index']);
 		Route::post('/save-daily-log', [DailyLogController::class, 'save_daily_log']);
@@ -277,6 +280,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/daily-log-delete', [DailyLogController::class, 'daily_log_delete']);
 		// Staff Supervisions
 		Route::get('supervision-management', [SupervisionController::class, 'index']);
+		// invoicemanagement
+		Route::get('invoice-management', [invoiceManagementController::class, 'index']);
 
 	});
 

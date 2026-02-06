@@ -333,34 +333,37 @@
                         <h5 class="h5Head">Complete Task
                         </h5>
                         <div class="mt20">
-                            <label class="formLabel">Completion Notes</label>
-                            <textarea name="morning" required="" class="form-control" rows="3" cols="20"
-                                placeholder="Additional details..."></textarea>
-                            <div class="purpleBox p-4 reportyellowBox mt-4">
-                                <div class="d-flex gap-3 align-items-center">
+                            <form action="">
+
+                                <label class="formLabel">Completion Notes</label>
+                                <textarea name="morning" required="" class="form-control" rows="3" cols="20"
+                                    placeholder="Additional details..."></textarea>
+                                <div class="purpleBox p-4 reportyellowBox mt-4">
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <div>
+                                            <i class="darkyellowIc bx bx-alert-circle f20"></i>
+                                        </div>
+                                        <div class="">
+                                            <p class="mb-0" for="safeguarding"> Please complete and submit the form
+                                                above before marking this task as complete.
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-end gap-3 mt20 ">
                                     <div>
-                                        <i class="darkyellowIc bx bx-alert-circle f20"></i>
+                                        <button class="borderBtn">
+                                            Save & Exit
+                                        </button>
                                     </div>
-                                    <div class="">
-                                        <p class="mb-0" for="safeguarding"> Please complete and submit the form
-                                            above before marking this task as complete.
-                                        </p>
-
+                                    <div>
+                                        <button class="bgBtn pgreenBtn"><i class="bx bx-check-circle me-3 f18"></i>
+                                            Mark Complete</button>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="d-flex justify-content-end gap-3 mt20 ">
-                                <div>
-                                    <button class="borderBtn">
-                                        Save & Exit
-                                    </button>
-                                </div>
-                                <div>
-                                    <button class="bgBtn pgreenBtn"><i class="bx bx-check-circle me-3 f18"></i>
-                                        Mark Complete</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -387,35 +390,35 @@
         </script>
 
         <!-- <script>
-                                                                                                                                                                                                                 document.addEventListener("click", function(e) {
+                                                                                                                                                                                                                                     document.addEventListener("click", function(e) {
 
-                                                                                                                                                                                                                     // ADD ROW
-                                                                                                                                                                                                                     if (e.target.closest(".add-row-btn")) {
-                                                                                                                                                                                                                         const wrapper = e.target.closest(".js-dynamic-table");
-                                                                                                                                                                                                                         const tbody = wrapper.querySelector("tbody");
-                                                                                                                                                                                                                         const template = tbody.querySelector(".js-row-template");
+                                                                                                                                                                                                                                         // ADD ROW
+                                                                                                                                                                                                                                         if (e.target.closest(".add-row-btn")) {
+                                                                                                                                                                                                                                             const wrapper = e.target.closest(".js-dynamic-table");
+                                                                                                                                                                                                                                             const tbody = wrapper.querySelector("tbody");
+                                                                                                                                                                                                                                             const template = tbody.querySelector(".js-row-template");
 
-                                                                                                                                                                                                                         const newRow = template.cloneNode(true);
+                                                                                                                                                                                                                                             const newRow = template.cloneNode(true);
 
-                                                                                                                                                                                                                         // reset fields (inputs, checkboxes, radios, selects)
-                                                                                                                                                                                                                         newRow.querySelectorAll("input, select, textarea").forEach(el => {
-                                                                                                                                                                                                                             if (el.type === "checkbox" || el.type === "radio") {
-                                                                                                                                                                                                                                 el.checked = false;
-                                                                                                                                                                                                                             } else {
-                                                                                                                                                                                                                                 el.value = "";
-                                                                                                                                                                                                                             }
-                                                                                                                                                                                                                         });
+                                                                                                                                                                                                                                             // reset fields (inputs, checkboxes, radios, selects)
+                                                                                                                                                                                                                                             newRow.querySelectorAll("input, select, textarea").forEach(el => {
+                                                                                                                                                                                                                                                 if (el.type === "checkbox" || el.type === "radio") {
+                                                                                                                                                                                                                                                     el.checked = false;
+                                                                                                                                                                                                                                                 } else {
+                                                                                                                                                                                                                                                     el.value = "";
+                                                                                                                                                                                                                                                 }
+                                                                                                                                                                                                                                             });
 
-                                                                                                                                                                                                                         tbody.appendChild(newRow);
-                                                                                                                                                                                                                     }
+                                                                                                                                                                                                                                             tbody.appendChild(newRow);
+                                                                                                                                                                                                                                         }
 
-                                                                                                                                                                                                                     // DELETE ROW
-                                                                                                                                                                                                                     if (e.target.closest(".delete-row-btn")) {
-                                                                                                                                                                                                                         e.target.closest("tr").remove();
-                                                                                                                                                                                                                     }
+                                                                                                                                                                                                                                         // DELETE ROW
+                                                                                                                                                                                                                                         if (e.target.closest(".delete-row-btn")) {
+                                                                                                                                                                                                                                             e.target.closest("tr").remove();
+                                                                                                                                                                                                                                         }
 
-                                                                                                                                                                                                                 });
-                                                                                                                                                                                                                 </script> -->
+                                                                                                                                                                                                                                     });
+                                                                                                                                                                                                                                     </script> -->
 
         <script>
             document.addEventListener("click", function (e) {

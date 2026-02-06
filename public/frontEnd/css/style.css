@@ -9445,6 +9445,7 @@ a.close.edit_dyn_form {
     --font13: 13px;
     --lightRedBorder: #fecaca;
     --darkGreenp: #14532d;
+    --lightBlueClr: #eff6ff;
 
 }
 
@@ -11172,6 +11173,7 @@ header.panel-heading.headingCapitilize {
     /* border-color: #fecaca; */
 }
 
+/* text color pp */
 .darkBlueTextp {
     color: var(--darkBlue);
 }
@@ -11196,6 +11198,28 @@ header.panel-heading.headingCapitilize {
     color: var(--blueColor)
 }
 
+.darkGreenTextp {
+    color: var(--darkGreenp);
+}
+
+.darkRedText {
+    color: var(--darkRedp);
+}
+
+.darkRedC,
+.textRedp {
+    color: var(--darkRedp) !important;
+}
+
+.darkOrangeTextp {
+    color: var(--darkYellow);
+}
+
+.textGray {
+    color: #4b5563;
+}
+
+/* text color  pp*/
 .carertabcontent .care-needs .label {
     display: flex;
     align-items: center;
@@ -14663,9 +14687,9 @@ header.panel-heading.headingCapitilize {
 
 .userMum .title {
     border: 1px solid var(--borderColor);
-    padding: 2px 7px;
+    padding: 2px 10px;
     border-radius: 8px;
-    font-size: 12px;
+    font-size: 11px !important;
     color: #000;
     font-weight: 600;
     margin-top: 10px;
@@ -14703,11 +14727,11 @@ header.panel-heading.headingCapitilize {
 
 .deleteIcon i {
     color: #dc2626;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .deleteIcon {
-    padding: 10px 15px;
+    padding: 5px 15px;
     border-radius: 8px;
     transition: 0.7s;
     cursor: pointer;
@@ -14814,7 +14838,7 @@ header.panel-heading.headingCapitilize {
 .careBadg {
     background: #2563eb30;
     padding: 2px 10px;
-    font-size: 12px;
+    font-size: 11px;
     border-radius: 5px;
     color: #002b89;
     box-shadow: var(--bxShadow);
@@ -15701,6 +15725,18 @@ header.panel-heading.headingCapitilize {
     font-size: 30px;
 }
 
+.fs23 {
+    font-size: 23px;
+}
+
+.f20 {
+    font-size: 20px;
+}
+
+.fs11 {
+    font-size: 11px;
+}
+
 .mb25 {
     margin-bottom: 25px;
 }
@@ -15832,8 +15868,6 @@ header.panel-heading.headingCapitilize {
 }
 
 
-
-
 .allterStafftask {
     border-left: 4px solid var(--redColor);
 }
@@ -15867,9 +15901,7 @@ header.panel-heading.headingCapitilize {
     }
 }
 
-.f20 {
-    font-size: 20px;
-}
+
 
 .purpleGradBtn {
     background: linear-gradient(136deg, rgba(153, 92, 247, 1) 41%, rgba(84, 119, 246, 1) 82%);
@@ -15971,10 +16003,7 @@ header.panel-heading.headingCapitilize {
     color: var(--darkYellow) !important;
 }
 
-.darkRedC,
-.textRedp {
-    color: var(--darkRedp) !important;
-}
+
 
 .addReportCheck input[type="checkbox"] {
     height: 13px;
@@ -16214,9 +16243,6 @@ i {
     color: #000;
 }
 
-.fs23 {
-    font-size: 23px;
-}
 
 .dotC {
     height: 3px;
@@ -16339,9 +16365,7 @@ i {
     text-align: left;
 }
 
-.darkRedText {
-    color: var(--darkRedp);
-}
+
 
 .rounded50 {
     border-radius: 50%;
@@ -16357,6 +16381,10 @@ i {
 
 .gradp-orange-50 {
     background: linear-gradient(132deg, #fff6eb, #ffeed8);
+}
+
+.gradp-red-50 {
+    background: linear-gradient(132deg, #fef1f1, #fee4e4);
 }
 
 .gradp-purple-50 {
@@ -16376,10 +16404,49 @@ i {
     width: 100%;
 }
 
-.darkGreenTextp {
-    color: var(--darkGreenp);
+
+
+.font700 {
+    font-weight: 700;
 }
 
-.darkOrangeTextp {
-    color: var(--darkYellow);
+.font600 {
+    font-weight: 600;
+}
+
+.lightBlueBg {
+    background-color: var(--lightBlueClr);
+}
+
+.orderListpayPro li {
+    margin-bottom: 5px;
+}
+
+.orderListpayPro {
+    padding-left: 15px;
+}
+
+.greenBorderClr {
+    border-color: var(--darkbgGreen) !important;
+}
+
+.rounded12 {
+    border-radius: 12px;
+}
+
+.payRollCard {
+    min-height: 100px;
+}
+
+.equalColRow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.h100 {
+    height: 100%;
+}
+
+.bottomRadUnset {
+    border-radius: 12px 12px 0px 0px;
 }
