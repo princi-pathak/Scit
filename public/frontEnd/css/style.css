@@ -9728,7 +9728,8 @@ a.close.edit_dyn_form {
     font-weight: 600;
 }
 
-.rota_dash-left .rota_count {
+.rota_dash-left .rota_count,
+.cardBoldTitle {
     font-size: 24px;
     font-weight: 700;
 }
@@ -14685,16 +14686,6 @@ header.panel-heading.headingCapitilize {
     background-color: #e5e5e5;
 }
 
-.userMum .title {
-    border: 1px solid var(--borderColor);
-    padding: 2px 10px;
-    border-radius: 8px;
-    font-size: 11px !important;
-    color: #000;
-    font-weight: 600;
-    margin-top: 10px;
-    display: inline-block;
-}
 
 .icon__pp {
     height: 40px;
@@ -14838,12 +14829,23 @@ header.panel-heading.headingCapitilize {
 .careBadg {
     background: #2563eb30;
     padding: 2px 10px;
-    font-size: 11px;
+    font-size: 12px;
     border-radius: 5px;
     color: #002b89;
     box-shadow: var(--bxShadow);
     font-weight: 600;
     transition: 0.7s;
+}
+
+.userMum .title {
+    border: 1px solid var(--borderColor);
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-size: 12px !important;
+    color: #000;
+    font-weight: 600;
+    margin-top: 10px;
+    display: inline-block;
 }
 
 .careBadg:hover {
@@ -15700,11 +15702,6 @@ header.panel-heading.headingCapitilize {
     color: #484848;
 }
 
-.h5Head {
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 0px;
-}
 
 .muchsmallText {
     font-size: 11px;
@@ -15728,6 +15725,8 @@ header.panel-heading.headingCapitilize {
 .fs23 {
     font-size: 23px;
 }
+
+
 
 .f20 {
     font-size: 20px;
@@ -15927,12 +15926,7 @@ header.panel-heading.headingCapitilize {
     font-size: 30px;
 }
 
-.h3Head {
-    color: var(--black);
-    font-weight: 600;
-    font-size: 20px;
-    margin-top: 0px;
-}
+
 
 .activeRiskMain {
     border: 1px solid #fed7aa !important;
@@ -16269,8 +16263,18 @@ i {
     font-weight: 600;
 }
 
+.h5Head {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 0px;
+}
 
-
+.h3Head {
+    color: var(--black);
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 0px;
+}
 
 .rtcozCardInDe {
     border: 1px solid var(--borderColor);
@@ -16449,4 +16453,97 @@ i {
 
 .bottomRadUnset {
     border-radius: 12px 12px 0px 0px;
+}
+
+.card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.card-col {
+    flex: 0 0 calc(20% - 12px);
+    display: flex;
+}
+
+.emergencyMain {
+    flex: 1;
+}
+
+@media (max-width: 992px) {
+    .card-col {
+        flex: 0 0 calc(33.33% - 10px);
+
+    }
+}
+
+@media (max-width: 768px) {
+    .card-col {
+        flex: 0 0 calc(50% - 8px);
+
+    }
+}
+
+@media (max-width: 480px) {
+    .card-col {
+        flex: 0 0 100%;
+
+    }
+}
+
+
+.payRollAcood .panel-heading {
+    padding: 0px;
+}
+
+/* Default state: down */
+.accIcon {
+    float: right;
+    font-size: 25px;
+    transition: transform 0.3s;
+    transform: rotate(0deg);
+
+}
+
+.panel-title a[aria-expanded="true"] .accIcon {
+    transform: rotate(180deg);
+}
+
+.payRollAcood .panel-title a {
+    color: #000000 !important;
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    display: block;
+    padding: 25px 15px;
+}
+
+.payRollAcood .panel-title a:hover {
+    text-decoration: unset !important;
+    border: unset;
+}
+
+.payRollAcood .lightBlueBg:hover {
+    background-color: #dbeafe !important;
+}
+
+.payRollAcood .lighOrangeBg:hover {
+    background-color: #ffedd5 !important;
+}
+
+.payRollAcood .lightGreeBg:hover {
+    background-color: #dcfce7 !important;
+}
+
+.panel.panel-default.payRollAcood {
+    border-radius: 12px;
+    padding-bottom: 0px !important;
+}
+
+.lighOrangeBg {
+    background: #fff7ed;
+}
+
+.lightGreeBg {
+    background-color: var(--lightGreenp);
 }

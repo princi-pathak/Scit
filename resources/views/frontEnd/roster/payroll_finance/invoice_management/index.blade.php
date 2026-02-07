@@ -108,14 +108,14 @@
 
                     <div class="bBorderCard mt-4 p24">
 
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="d-flex gap-3">
-                                    <h3 class="h3Head">INV-2025-005
-                                    </h3>
-                                    <div class="mb-3"><span class="careBadg greenbadges">Paid</span></div>
+                                <div class="d-flex gap-3 mb-3">
+                                    <h5 class="h5Head">INV-2025-005
+                                    </h5>
+                                    <div><span class="careBadg greenbadges">Paid</span></div>
                                 </div>
-                                <h6 class="h6Head textGray">
+                                <h6 class="h6Head textGray mb-0">
                                     Unknown Client
                                 </h6>
 
@@ -125,29 +125,29 @@
                                     PDF</button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Invoice Date</p>
-                                    <h5 class="h5Head">2</h5>
+                                    <h6 class="h6Head">2</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Period</p>
-                                    <h5 class="h5Head">16.0</h5>
+                                    <h6 class="h6Head">16.0</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Due Date</p>
-                                    <h5 class="h5Head">16 Decemeber</h5>
+                                    <h6 class="h6Head">16 Decemeber</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Total Amount</p>
-                                    <h5 class="h5Head ">16.0</h5>
+                                    <h6 class="h6Head">16.0</h6>
                                 </div>
                             </div>
                         </div>
@@ -156,14 +156,14 @@
                     </div>
                     <div class="bBorderCard mt-4 p24">
 
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="d-flex gap-3">
-                                    <h3 class="h3Head">INV-2025-005
-                                    </h3>
-                                    <div class="mb-3"><span class="careBadg yellowBadges">Partially Paid</span></div>
+                                <div class="d-flex gap-3 mb-3">
+                                    <h5 class="h5Head">INV-2025-005
+                                    </h5>
+                                    <div><span class="careBadg yellowBadges">Partially Paid</span></div>
                                 </div>
-                                <h6 class="h6Head textGray">
+                                <h6 class="h6Head textGray mb-0">
                                     Unknown Client
                                 </h6>
 
@@ -173,29 +173,29 @@
                                     PDF</button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Invoice Date</p>
-                                    <h5 class="h5Head">2</h5>
+                                    <h6 class="h6Head">2</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Period</p>
-                                    <h5 class="h5Head">16.0</h5>
+                                    <h6 class="h6Head">16.0</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Due Date</p>
-                                    <h5 class="h5Head">16 Decemeber</h5>
+                                    <h6 class="h6Head">16 Decemeber</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Total Amount</p>
-                                    <h5 class="h5Head ">16.0</h5>
+                                    <h6 class="h6Head">16.0</h6>
                                 </div>
                             </div>
                         </div>
@@ -205,14 +205,14 @@
                     <!-- split billing purple -->
                     <div class="bBorderCard mt-4 p24">
 
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between  align-items-center">
                             <div>
                                 <div class="d-flex gap-3">
-                                    <h3 class="h3Head">INV-2025-005
-                                    </h3>
+                                    <h5 class="h5Head">INV-2025-005
+                                    </h5>
                                     <div class="mb-3"><span class="careBadg buleBadges">Sent</span></div>
                                 </div>
-                                <h6 class="h6Head textGray">
+                                <h6 class="h6Head textGray mb-0">
                                     Unknown Client
                                 </h6>
 
@@ -232,33 +232,33 @@
 
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Invoice Date</p>
-                                    <h5 class="h5Head">2</h5>
+                                    <h6 class="h6Head">2</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Period</p>
-                                    <h5 class="h5Head">16.0</h5>
+                                    <h6 class="h6Head">16.0</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Due Date</p>
-                                    <h5 class="h5Head">16 Decemeber</h5>
+                                    <h6 class="h6Head">16 Decemeber</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Total Amount</p>
-                                    <h5 class="h5Head ">16.0</h5>
+                                    <h6 class="h6Head">16.0</h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-purple-50 p-4 rounded8 mt-4" style="width:85%">
+                        <div class="bg-purple-50 p-4 rounded8 mt-4" style="width:92%">
                             <p class="fs13 font600 purpleTextp">Split Billing:</p>
                             <div class="d-flex gap-3 flexWrap">
                                 <div><span class="careBadg purpleBadges">Local Authority - Manchester: £204.8
@@ -274,17 +274,16 @@
                     <!-- split billing purple end -->
                     <div class="bBorderCard mt-4 p24">
 
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between  align-items-center">
                             <div>
-                                <div class="d-flex gap-3">
-                                    <h3 class="h3Head">INV-2025-005
-                                    </h3>
-                                    <div class="mb-3"><span class="careBadg buleBadges">Sent</span></div>
+                                <div class="d-flex gap-3 mb-3">
+                                    <h5 class="h5Head">INV-2025-005
+                                    </h5>
+                                    <div><span class="careBadg buleBadges">Sent</span></div>
                                 </div>
-                                <h6 class="h6Head textGray">
+                                <h6 class="h6Head textGray mb-0">
                                     Unknown Client
                                 </h6>
-
                             </div>
                             <div>
                                 <div>
@@ -302,33 +301,33 @@
 
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Invoice Date</p>
-                                    <h5 class="h5Head">2</h5>
+                                    <h6 class="h6Head">2</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Period</p>
-                                    <h5 class="h5Head">16.0</h5>
+                                    <h6 class="h6Head">16.0</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Due Date</p>
-                                    <h5 class="h5Head">16 Decemeber</h5>
+                                    <h6 class="h6Head">16 Decemeber</h6>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div>
                                     <p class="textGray fs13">Total Amount</p>
-                                    <h5 class="h5Head ">16.0</h5>
+                                    <h6 class="h6Head">16.0</h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-purple-50 p-4 rounded8 mt-4" style="width:85%">
+                        <div class="bg-purple-50 p-4 rounded8 mt-4" style="width:92%">
                             <p class="fs13 font600 purpleTextp">Split Billing:</p>
                             <div class="d-flex gap-3 flexWrap">
                                 <div><span class="careBadg purpleBadges">Local Authority - Manchester: £204.8

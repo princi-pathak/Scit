@@ -38,25 +38,20 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <h5 class="h5Head">Week 3 - January 2025</h5>
-
                                 <p class="textGray fs13">Jan 20 - Jan 26, 2025</p>
                                 <div><span class="careBadg darkBlackBadg">draft</span></div>
-
                             </div>
                             <div>
                                 <p class="textGray fs13">Pay Date </p>
                                 <h5 class="h5Head mb-0 font700">Jan 31, 2025</h5>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div class="row mt20">
-
                 <div class="col-lg-3">
                     <a href="{{ url('roster/timesheet-reconciliation') }}">
-
                         <div class="rota_dash-card gradp-blue-50 p-4 lightBorderp rouded8">
                             <div class="rota_dash-left w100">
                                 <div class="d-flex justify-content-between mb-3">
@@ -77,7 +72,6 @@
 
                 <div class="col-lg-3">
                     <a href="{{ url('roster/payroll-processing') }}">
-
                         <div class="rota_dash-card gradp-green-50 p-4 lightBorderp rouded8">
                             <div class="rota_dash-left w100">
                                 <div class="d-flex justify-content-between mb-3">
@@ -94,7 +88,6 @@
                             </div>
                         </div>
                     </a>
-
                 </div>
                 <div class="col-lg-3">
                     <div class="rota_dash-card gradp-orange-50 p-4 lightBorderp rouded8">
@@ -135,7 +128,7 @@
             <div class="row mt20 equalColRow">
                 <div class="col-lg-4">
                     <div class="emergencyMain h100">
-                        <a href="" class="d-block h100">
+                        <a href="{{ url('roster/timesheet-reconciliation') }}" class="d-block h100">
                             <div class="cardHeaderp p24" style="background-color: #eef2ff;">
                                 <h5 class="h5Head mb-0">
                                     <i class="bx bx-clock fs23 me-2 textBlue"></i>

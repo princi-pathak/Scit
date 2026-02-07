@@ -39,7 +39,7 @@
                         </ol>
                     </div>
                     <div class="bBorderCard greenBorderClr mt-4 p-0">
-                        <div class="muteBg p24 rounded12">
+                        <div class="muteBg bottomRadUnset p24 rounded12">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h3 class="h3Head">Week 5 - February 2025</h3>
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="bBorderCard greenBorderClr mt-4 p-0">
-                        <div class="muteBg p24 rounded12">
+                        <div class="muteBg  bottomRadUnset p24 rounded12">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h3 class="h3Head">Week 5 - February 2025</h3>
