@@ -11191,6 +11191,7 @@ header.panel-heading.headingCapitilize {
     color: #ff7417;
 }
 
+
 .greenText {
     color: #16a34a;
 }
@@ -13597,6 +13598,7 @@ header.panel-heading.headingCapitilize {
     border-radius: 4px;
     padding: 8px 10px;
     gap: 6px;
+    align-items: center;
 }
 
 .gayClrIcon {
@@ -15470,8 +15472,7 @@ header.panel-heading.headingCapitilize {
     font-size: 13px;
 }
 
-.staffCardp i,
-.bgIconStaffT i {
+.staffCardp i {
     font-size: 30px;
 }
 
@@ -15670,6 +15671,11 @@ header.panel-heading.headingCapitilize {
 .darkGreenBadges {
     background-color: var(--darkbgGreen);
     color: #fff;
+}
+
+.pinkBadges {
+    color: var(--pinkClr);
+    background-color: #eda4c15e;
 }
 
 .completedTaskStaff .greenbadges {
@@ -16546,4 +16552,41 @@ i {
 
 .lightGreeBg {
     background-color: var(--lightGreenp);
+}
+
+
+
+.dailyLogList .bgIconStaffT i {
+    font-size: 20px !important;
+}
+
+.blueDailyForm input,
+.blueDailyForm .trendClass-select,
+.blueDailyForm textarea {
+    background-color: transparent;
+}
+
+.addDailyCheck label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 10px 10px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.addDailyCheck input[type="checkbox"] {
+    height: 15px;
+    margin: 0px;
+    width: 15px;
+}
+
+.middleAlign {
+    vertical-align: middle;
+}
+
+.lightMute {
+    color: #cdd1d7;
 }

@@ -4,6 +4,7 @@
 
     @include('frontEnd.roster.common.roster_header')
     <main class="page-content">
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -88,11 +89,6 @@
             </div>
             <div class="row mt20">
                 <div class="col-lg-12">
-                    <!-- Bootstrap 3.1 Accordion Example -->
-
-                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
                     <div class="panel-group" id="accordion">
                         <!-- pannel 1 -->
                         <div class="panel panel-default payRollAcood">
@@ -423,4 +419,5 @@
             </div>
         </div>
     </main>
+
 @endsection

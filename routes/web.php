@@ -278,6 +278,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save-daily-log', [DailyLogController::class, 'save_daily_log']);
 		Route::post('/edit-daily-log', [DailyLogController::class, 'save_daily_log']);
 		Route::post('/daily-log-delete', [DailyLogController::class, 'daily_log_delete']);
+		Route::post('/daily-log-loadData', [DailyLogController::class, 'daily_log_loadData']);
 		// Staff Supervisions
 		Route::get('supervision-management', [SupervisionController::class, 'index']);
 		// invoicemanagement

@@ -17,9 +17,9 @@
                         </div>
                         <div class="d-flex align-items-center gap-3">
                             <div>
-
-                                <button class="bgBtn"><i class=" f18 bx bx-clock me-2"></i>
-                                    Timesheet Reconciliation</button>
+                                <a href="{{ url('roster/timesheet-reconciliation') }}" class="bgBtn"><i
+                                        class=" f18 bx bx-clock me-2"></i>
+                                    Timesheet Reconciliation</a>
                             </div>
 
                             <div>
@@ -90,20 +90,21 @@
                     </a>
                 </div>
                 <div class="col-lg-3">
-                    <div class="rota_dash-card gradp-orange-50 p-4 lightBorderp rouded8">
-                        <div class="rota_dash-left w100">
-                            <div class="d-flex justify-content-between mb-3">
-                                <i class="bx bx-file-detail fs30 orangeText"></i>
-                                <i class="bx-alert-triangle f20 orangeText"></i>
+                    <a href="{{ url('roster/timesheet-reconciliation') }}">
+                        <div class="rota_dash-card gradp-orange-50 p-4 lightBorderp rouded8">
+                            <div class="rota_dash-left w100">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <i class="bx bx-file-detail fs30 orangeText"></i>
+                                    <i class="bx-alert-triangle f20 orangeText"></i>
+                                </div>
+                                <p class="fs13 orangeText">
+                                    Pending Timesheets
+                                </p>
+                                <h1 class="h1Pay700 darkOrangeTextp mt-0">0</h1>
+                                <p class="fs13 orangeText"> Need approval </p>
                             </div>
-                            <p class="fs13 orangeText">
-                                Pending Timesheets
-                            </p>
-                            <h1 class="h1Pay700 darkOrangeTextp mt-0">0</h1>
-                            <p class="fs13 orangeText"> Need approval </p>
                         </div>
-                    </div>
-
+                    </a>
                 </div>
                 <div class="col-lg-3">
                     <a href="{{ url('roster/invoice-management') }}">
@@ -123,7 +124,6 @@
                     </a>
 
                 </div>
-
             </div>
             <div class="row mt20 equalColRow">
                 <div class="col-lg-4">
