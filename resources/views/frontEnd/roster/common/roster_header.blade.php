@@ -519,12 +519,14 @@
           <li> <a href="{{ url('/roster/incident-management') }}"><i class='bx  bx-shield'></i> <span>Incident
                 Management</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-education'></i> <span>Training</span> </a></li>
-          <li> <a href="#!"><i class='bx  bx-bell'></i> <span>Notifications</span> </a></li>
+          <li> <a href="{{url('/roster/notifications')}}"><i class='bx  bx-bell'></i> <span>Notifications</span> </a></li>
           <li> <a href="{{ url('/roster/leave-request') }}"><i class='bx  bx-clipboard-detail'></i> <span>Leave
                 Requests</span> </a></li>
           <li> <a href="{{ url('/roster/payroll-finance') }}"><i class='bx bx-file-detail'></i> <span>Payroll &
                 Finance</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-file-report'></i> <span>Reports</span> </a></li>
+          <li> <a href="{{url('/roster/staffonboarding')}}"><i class='bx  bx-file-report'></i> <span>Staff Onboarding</span> </a></li>
+          <li> <a href="{{url('/roster/clientonboarding')}}"><i class='bx  bx-file-report'></i> <span>Client Onboarding</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-shield'></i> <span>Compliance Hub</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Task Center</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Action Plan Progress</span> </a></li>
@@ -550,12 +552,12 @@
 
 
   <script>
-    $(".sidebar-dropdown > a").click(function () {
+    $(".sidebar-dropdown > a").click(function() {
       $(".sidebar-submenu").slideUp(200);
       if (
         $(this)
-          .parent()
-          .hasClass("active")
+        .parent()
+        .hasClass("active")
       ) {
         $(".sidebar-dropdown").removeClass("active");
         $(this)
@@ -572,23 +574,22 @@
       }
     });
 
-    $("#close-sidebar").click(function () {
+    $("#close-sidebar").click(function() {
       $(".page-wrapper").removeClass("toggled");
     });
-    $("#show-sidebar").click(function () {
+    $("#show-sidebar").click(function() {
       $(".page-wrapper").addClass("toggled");
     });
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
       var currentUrl = window.location.href;
 
-      $(".sidebar-menu ul li a").each(function () {
+      $(".sidebar-menu ul li a").each(function() {
         if (this.href === currentUrl) {
           $(".sidebar-menu ul li a").removeClass("active");
           $(this).addClass("active");
         }
       });
     });
-
   </script>

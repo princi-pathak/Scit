@@ -9423,7 +9423,7 @@ a.close.edit_dyn_form {
     --lightRedbgClr: #fef2f2;
     --purpleBlueCle: #4f46e5;
     --pinkClr: #db2777;
-    /* pratima */
+    /* pratima root */
     --borderColor: #ddd;
     --redColor: #dc2626;
     --blueColor: #2563eb;
@@ -9438,15 +9438,41 @@ a.close.edit_dyn_form {
     --hoverRed: #b91c1c;
     --lightGreenp: #f0fdf4;
     --darkRedp: #a41d1d;
+    --darkPink: #9d174d;
     --bxShadowHover: rgba(17, 12, 46, 0.15) 0px 12px 30px 0px;
     --darkBlue: #1e3a8a;
     --darkPurple: #581c87;
     --purple: #9333ea;
+    --darkCyan: #115e59;
+    --cyanTextClr: #0d9488;
+    --darkskyBlue: #155e75;
+    --skyBlue: #0891b2;
     --font13: 13px;
     --lightRedBorder: #fecaca;
     --darkGreenp: #14532d;
     --lightBlueClr: #eff6ff;
-
+    --blueMediumBorder: #93c5fd;
+    --violet70Border: #a6b5fc;
+    --purple70Border: #c4b5fd;
+    --orange70Border: #fdba74;
+    --green70Border: #87efad;
+    --pink70Border: #f9a8d4;
+    --red70Border: #fca5a5;
+    --cyan70Border: #5eead4;
+    --yellow70Border: #fde047;
+    --skyBlue70Border: #67e8f9;
+    --violet: #3730a3;
+    --blue70: #dbeafe;
+    --violet70: #e0e7ff;
+    --purple70: #ede9fe;
+    --orange70: #ffedd5;
+    --green70: #dcfce7;
+    --pink70: #fce7f3;
+    --red70: #fee2e2;
+    --cyan70: #ccfbf1;
+    --yellow70: #fef9c3;
+    --skyBlue70: #cffafe;
+    --darkGray: #4b5563;
 }
 
 /* ******************Start Dashboard Css***************************** */
@@ -9458,15 +9484,15 @@ a.close.edit_dyn_form {
 }
 
 .topHeaderCont h1 {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 25px;
+    font-weight: 700;
     margin-top: 0;
-    color: #484848;
+    color: var(--black);
 }
 
 .header-subtitle {
-    color: #718096;
-    font-size: 12px;
+    color: var(--darkGray);
+    font-size: 13px;
 }
 
 .header-actions {
@@ -10732,14 +10758,15 @@ header.panel-heading.headingCapitilize {
 }
 
 .leavebanktabCont i {
-    font-size: 54px;
-    color: #cdd1d7;
+    font-size: 55px;
+    color: #d1d5db;
+
 }
 
 .leavebanktabCont h4 {
     font-size: 18px;
-    color: #0a0a0a;
-    font-weight: 600;
+    color: var(--muteText);
+
 }
 
 
@@ -11174,54 +11201,7 @@ header.panel-heading.headingCapitilize {
     /* border-color: #fecaca; */
 }
 
-/* text color pp */
-.darkBlueTextp {
-    color: var(--darkBlue);
-}
 
-.purpleTextp {
-    color: var(--purple);
-}
-
-.darkPurpleTextp {
-    color: var(--darkPurple);
-}
-
-.orangeText {
-    color: #ff7417;
-}
-
-
-.greenText {
-    color: #16a34a;
-}
-
-.blueText {
-    color: var(--blueColor)
-}
-
-.darkGreenTextp {
-    color: var(--darkGreenp);
-}
-
-.darkRedText {
-    color: var(--darkRedp);
-}
-
-.darkRedC,
-.textRedp {
-    color: var(--darkRedp) !important;
-}
-
-.darkOrangeTextp {
-    color: var(--darkYellow);
-}
-
-.textGray {
-    color: #4b5563;
-}
-
-/* text color  pp*/
 .carertabcontent .care-needs .label {
     display: flex;
     align-items: center;
@@ -12950,10 +12930,11 @@ header.panel-heading.headingCapitilize {
 }
 
 .roundTag {
-    border-radius: 20px;
-    padding: 2px 12px;
+    border-radius: 4px;
+    padding: 3px 10px;
     font-size: 11px;
 }
+
 
 .borderBtn.backBtn i {
     font-size: 22px;
@@ -14517,6 +14498,66 @@ header.panel-heading.headingCapitilize {
     display: none;
 }
 
+/* ********09/02/2026********* */
+.planFooter.rota_alerts {
+    display: block;
+}
+
+.inORoutTime.mrsEleanorMargaret {
+    background: transparent;
+}
+
+.nameTitlebott {
+    font-size: 12px;
+    color: #4d4d4d;
+}
+
+.dliLogname label {
+    margin: 0;
+}
+
+.inORoutTime span {
+    font-size: 12.5px;
+}
+
+.simpleCard .rota_dash-left .rota_title i {
+    font-size: 20px;
+}
+
+.messagingCenterTabs {}
+
+.calendarTabs.leaveRequesttabs.messagingCenterTabs .tabs {
+    background: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    padding: 6px;
+
+}
+
+.calendarTabs.leaveRequesttabs.messagingCenterTabs .tabs button.tab {
+    width: 100%;
+    text-align: center;
+    display: block;
+    background: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    font-size: 13px;
+}
+
+.calendarTabs.leaveRequesttabs.messagingCenterTabs .tabs button.tab i {
+    font-size: 16px;
+}
+
+.calendarTabs.leaveRequesttabs.messagingCenterTabs .tabs button.tab.active {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+}
+
+.textBlueClr {
+    color: var(--blueColor);
+}
+
+/* ********09/02/2026********* */
+
 /********************************************************************************Start pratima css ********************************************************************************/
 /********************************************************************************Start pratima css ********************************************************************************/
 
@@ -14604,10 +14645,76 @@ header.panel-heading.headingCapitilize {
 
 
 
-
-
 /******************************************************************************** pratima css ********************************************************************************/
 /******************************************************************************** pratima css ********************************************************************************/
+.bgBtn {
+    background-color: var(--blueColor);
+    padding: 6px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+    gap: 6px;
+    display: flex;
+    align-items: center;
+    color: #f0fdfa;
+    border: unset;
+    justify-content: center;
+    font-weight: 600;
+}
+
+/* text color pp */
+.darkBlueTextp {
+    color: var(--darkBlue);
+}
+
+.purpleTextp {
+    color: var(--purple);
+}
+
+.darkPurpleTextp {
+    color: var(--darkPurple);
+}
+
+.orangeText {
+    color: #ff7417;
+}
+
+
+.greenText {
+    color: #16a34a;
+}
+
+.violetText {
+    color: var(--violet);
+}
+
+.blueText {
+    color: var(--blueColor)
+}
+
+.darkGreenTextp {
+    color: var(--darkGreenp);
+}
+
+.darkRedText {
+    color: var(--darkRedp);
+}
+
+.darkRedC,
+.textRedp {
+    color: var(--darkRedp) !important;
+}
+
+.darkOrangeTextp {
+    color: var(--darkYellow);
+}
+
+.textGray {
+    color: var(--darkGray);
+}
+
+/* text color  pp*/
 
 .addnewicons .btn {
     display: flex;
@@ -14651,6 +14758,7 @@ header.panel-heading.headingCapitilize {
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     color: #0a0a0a;
     justify-content: center;
+    font-weight: 600;
 }
 
 .emergencyContent h3,
@@ -14791,20 +14899,6 @@ header.panel-heading.headingCapitilize {
     font-size: 18px;
 }
 
-.bgBtn {
-    background-color: var(--blueColor);
-    padding: 6px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: 0.2s;
-    gap: 6px;
-    display: flex;
-    align-items: center;
-    color: #f0fdfa;
-    border: unset;
-    justify-content: center;
-}
 
 .bgBtn:hover {
     background-color: #1a53d1;
@@ -15644,7 +15738,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .greenbadges {
-    background-color: #dcfce7;
+    background-color: var(--green70);
     color: var(--darkbgGreen);
 }
 
@@ -15670,6 +15764,11 @@ header.panel-heading.headingCapitilize {
 
 .darkGreenBadges {
     background-color: var(--darkbgGreen);
+    color: #fff;
+}
+
+.darkOrangeBadg {
+    background-color: var(--darkOrangep);
     color: #fff;
 }
 
@@ -15702,10 +15801,10 @@ header.panel-heading.headingCapitilize {
 }
 
 .mainTitlep {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 25px;
+    font-weight: 700;
     margin-top: 0;
-    color: #484848;
+    color: var(--black);
 }
 
 
@@ -15732,7 +15831,9 @@ header.panel-heading.headingCapitilize {
     font-size: 23px;
 }
 
-
+.fs16 {
+    font-size: 16px;
+}
 
 .f20 {
     font-size: 20px;
@@ -15869,7 +15970,7 @@ header.panel-heading.headingCapitilize {
 
 
 .fallRedCon .para {
-    color: #4b5563;
+    color: var(--darkGray);
 }
 
 
@@ -16074,7 +16175,7 @@ header.panel-heading.headingCapitilize {
 .incidentDeCon strong,
 .icndentDeFooter strong {
     font-size: var(--font13);
-    color: #4b5563;
+    color: var(--darkGray);
     font-weight: 600;
 }
 
@@ -16589,4 +16690,205 @@ i {
 
 .lightMute {
     color: #cdd1d7;
+}
+
+/* 9/2/2026 */
+.care6card .card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Desktop – 6 cards in one row */
+.care6card .card-col {
+    flex: 0 0 calc(16.66% - 13px);
+    display: flex;
+}
+
+/* Laptop / Tablet */
+@media (max-width: 1240px) {
+    .care6card .card-col {
+        flex: 0 0 calc(33.33% - 10px);
+        /* 3 per row */
+    }
+}
+
+.borderLeftThick {
+    border-left-width: 4px;
+}
+
+.bg-blue-70 {
+    background-color: var(--blue70);
+    border-color: var(--blueMediumBorder);
+}
+
+.bg-violet-70 {
+    background-color: var(--violet70);
+    border-color: var(--violet70Border);
+}
+
+.bg-purple-70 {
+    background-color: var(--purple70);
+    border-color: var(--purple70Border);
+}
+
+.bg-orange-70 {
+    background-color: var(--orange70);
+    border-color: var(--orange70Border);
+}
+
+/*  border badges */
+.blueBorderBadg {
+    border: 1px solid var(--blueMediumBorder);
+    color: var(--blueColor);
+    background-color: var(--blue70);
+
+}
+
+.violetBorderBadg {
+    color: var(--violet);
+    border: 1px solid var(--violet70Border);
+    background-color: var(--violet70);
+}
+
+.purpleBorderBadg {
+    color: var(--iconPurpul);
+    border: 1px solid var(--purple70Border);
+    background-color: var(--purple70);
+}
+
+.orangeBorderBadg {
+    color: var(--darkYellow);
+    border: 1px solid var(--orange70Border);
+    background-color: var(--orange70);
+}
+
+.greenBorderBadg {
+    color: var(--darkGreenp);
+    border: 1px solid var(--green70Border);
+    background-color: var(--green70);
+}
+
+.pinkBorderBadg {
+    color: var(--darkPink);
+    border: 1px solid var(--pink70Border);
+    background-color: var(--pink70);
+}
+
+.redBorderBadg {
+    color: var(--darkRedp);
+    border: 1px solid var(--red70Border);
+    background-color: var(--red70);
+}
+
+.cyanBorderBadg {
+    color: var(--darkCyan);
+    border: 1px solid var(--cyan70Border);
+    background-color: var(--cyan70);
+}
+
+.yellowBorderBadg {
+    color: var(--darkYellow);
+    border: 1px solid var(--yellow70Border);
+    background-color: var(--yellow70);
+}
+
+.skyBorderBadg {
+    color: var(--darkYellow);
+    border: 1px solid var(--skyBlue70Border);
+    background-color: var(--skyBlue70);
+}
+
+/* end border bades */
+
+
+.whiteBtn {
+    background-color: #fff;
+}
+
+.careDocCard .whiteBtn:hover {
+    color: var(--black);
+    background-color: #f5f5f5;
+}
+
+.violetText {
+    color: var(--violet);
+}
+
+.borderBadg {
+    border: 1px solid var(--borderColor);
+    padding: 2px 10px;
+    color: var(--black);
+    font-size: var(--font13);
+    border-radius: 5px;
+}
+
+.bg-green-70 {
+    background-color: var(--green70);
+    border: 1px solid var(--green70Border);
+}
+
+.bg-pink-70 {
+    background-color: var(--pink70);
+    border: 1px solid var(--pink70Border);
+}
+
+.bg-red-70 {
+    background-color: var(--red70);
+    border: 1px solid var(--red70Border);
+}
+
+.bg-cyan-70 {
+    background-color: var(--cyan70);
+    border: 1px solid var(--cyan70Border);
+}
+
+.bg-yellow-70 {
+    background-color: var(--yellow70);
+    border: 1px solid var(--yellow70Border);
+}
+
+.bg-sky-70 {
+    background-color: var(--skyBlue70);
+    border: 1px solid var(--skyBlue70Border);
+}
+
+.darkPinkText {
+    color: var(--darkPink);
+}
+
+.pinkText {
+    color: var(--pinkClr);
+}
+
+.cyanText {
+    color: var(--cyanTextClr);
+}
+
+.darkCyanText {
+    color: var(--darkCyan);
+}
+
+.darkSkyText {
+    color: var(--darkskyBlue);
+}
+
+.skyBlueTex {
+    color: var(--skyBlue)
+}
+
+/* 11-2-2026 */
+.viewCareDoc h6 {
+    text-transform: uppercase;
+}
+
+.checkBoxHW {
+    width: 15px;
+    height: 15px;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+.trans {
+    background-color: transparent;
 }
