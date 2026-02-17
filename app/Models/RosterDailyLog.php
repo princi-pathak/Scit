@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\ServiceUser;
 
 class RosterDailyLog extends Model
 {
@@ -15,5 +16,11 @@ class RosterDailyLog extends Model
 
     public function subCategorys(){
         return $this->belongsTo(DailyLogSubCategory::class, 'entry_type_id' , 'id');
+    }
+    public function accompanyingStaffs(){
+        return $this->hasMany(AccompanyingStaff::class, 'roster_daily_log_id' , 'id');
+    }
+    public function clients(){
+        return $this->belongsTo(ServiceUser::class, 'client_id' , 'id');
     }
 }

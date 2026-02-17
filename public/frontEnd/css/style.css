@@ -11681,8 +11681,8 @@ header.panel-heading.headingCapitilize {
 
 .roundBtntag {
     font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 14px;
+    padding: 2px 10px;
+    border-radius: 5px;
 }
 
 .availabilityTabs__nav {
@@ -16891,4 +16891,103 @@ i {
 
 .trans {
     background-color: transparent;
+}
+
+/* 13/2/2026 */
+.flex1 {
+    flex: 1;
+}
+
+/* KOMAL SYS */
+.greenCarerCard {
+    border-color: var(--darkbgGreen) !important;
+    background-color: #f1fdf5 !important;
+}
+
+.greenCarerCard .avatar {
+    background: var(--blueColor);
+}
+
+.suggestedCarers .greenCarerCard .badge {
+    background: #f1fdf5 !important;
+
+}
+
+.newShiftModal {
+    width: 1000px !important;
+}
+
+.muteCarerCard {
+    background-color: #fff !important;
+    border-color: var(--borderColor) !important;
+}
+
+.suggestedCarers .muteCarerCard .badge {
+    background: #fff !important;
+
+}
+
+.cyanBadg {
+    background-color: var(--cyan70);
+    color: var(--cyanTextClr);
+}
+
+.renderVisitorHtmlData .rtcozCardInDe:first-child {
+    margin-top: 0px !important;
+}
+
+.bg-cyan-50 {
+    background-color: #ecfeff;
+}
+
+.redDarkGreenAni {
+    background-color: var(--lightbgGreen);
+    color: var(--darkGreenp);
+    animation: fadeBgOnly 2s ease-in-out infinite alternate;
+}
+
+@keyframes fadeBgOnly {
+    0% {
+        background-color: var(--lightbgGreen);
+        opacity: 0.7;
+    }
+
+    100% {
+        background-color: var(--green70Border);
+        opacity: 16;
+    }
+}
+
+.onSiteHov:hover {
+    animation: none !important;
+    background: var(--blackBtnColor);
+    opacity: 1;
+}
+
+.italicFont {
+    font-style: italic;
+}
+
+/* yellow animation */
+.yellowDarkAni {
+    background-color: var(--lightbgGligreen);
+    color: var(--darkYellow);
+    animation: fadeBgOnlyyellow 2s ease-in-out infinite alternate;
+}
+
+@keyframes fadeBgOnlyyellow {
+    0% {
+
+        opacity: 0.3;
+    }
+
+    100% {
+        background-color: #fde68a;
+        opacity: 1;
+    }
+}
+
+.darkYellowBadg {
+    background-color: #ca8a04;
+    color: #fff;
 }

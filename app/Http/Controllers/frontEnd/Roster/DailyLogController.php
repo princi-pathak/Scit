@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Auth,DB,Session;
 use Illuminate\Support\Facades\Validator;
 use App\ServiceUser;
+use App\User;
 use App\Models\RosterDailyLog;
 use App\Models\DailyLogCategory;
 use App\Models\DailyLogSubCategory;
+use App\Models\AccompanyingStaff;
 
 class DailyLogController extends Controller
 {
@@ -26,6 +28,7 @@ class DailyLogController extends Controller
             $q->select('id','home_id','daily_cat_id','sub_cat','icon','color','status');
         }])
         ->where('status',1)->get();
+        $data['accompanying_staff'] = User::where(['is_deleted'=>0,'status'=>1])->get();
         // echo "<pre>";print_r($data['followUpCount']);die;
 
         return view('frontEnd.roster.daily_log.daily_log',$data);
@@ -50,7 +53,16 @@ class DailyLogController extends Controller
             $requestData = $request->all();
             $requestData['home_id'] = $home_id;
             $requestData['user_id'] = Auth::user()->id;
+            $requestData['available_for_overtime'] = $request->available_for_overtime ?? 0;
             $getId = RosterDailyLog::updateOrCreate(['id' => $requestData['id'] ?? null],$requestData);
+            if($request->has('accompanyingstaff_id')){
+                for($i=0;$i<count($request->accompanyingstaff_id);$i++){
+                    $accompanying_staff = new AccompanyingStaff;
+                    $accompanying_staff->roster_daily_log_id = $getId->id;
+                    $accompanying_staff->staff_id = $request->accompanyingstaff_id[$i];
+                    $accompanying_staff->save();
+                }
+            }
             DB::commit();
             Session::flash('success','Saved successfully done.');
             return response()->json([
@@ -93,7 +105,12 @@ class DailyLogController extends Controller
 		$ex_home_ids = explode(',', $home_ids);
 		$home_id = $ex_home_ids[0];
 
-        $baseQuery = RosterDailyLog::where('home_id', $home_id)
+        $baseQuery = RosterDailyLog::with([
+                'subCategorys.dailyLogCategory',
+                'accompanyingStaffs:id,roster_daily_log_id,staff_id',
+                'clients:id,name'
+            ])
+            ->where('home_id', $home_id)
             ->where('user_id', Auth::id())
             ->whereDate('date', $date)
             ->when($request->filled('search_dailyLog'), function ($q) use ($request) {
@@ -114,43 +131,35 @@ class DailyLogController extends Controller
                 ->count();
 
         $allData = (clone $baseQuery)
-                ->with(['subCategorys.dailyLogCategory'])
-                ->orderByDesc('id')
-                ->paginate(50);
+            ->orderByDesc('id')
+            ->paginate(50);
+        
         $visitorsData = (clone $baseQuery)
-            ->whereHas('subCategorys', function ($q) {
-                $q->where('daily_cat_id', 1);
-            })
-        ->with(['subCategorys.dailyLogCategory'])
-        ->orderByDesc('id')
-        ->paginate(50);
+            ->whereHas('subCategorys', fn ($q) => $q->where('daily_cat_id', 1))
+            ->orderByDesc('id')
+            ->paginate(50);
         
         $outingsData = (clone $baseQuery)
-            ->whereHas('subCategorys', function ($q) {
-                $q->where('daily_cat_id', 2);
-            })
-        ->with(['subCategorys.dailyLogCategory'])
-        ->orderByDesc('id')
-        ->paginate(50);
-         $medicalData = (clone $baseQuery)
-            ->whereHas('subCategorys', function ($q) {
-                $q->where('id', 3);
-            })
-        ->with(['subCategorys.dailyLogCategory'])
-        ->orderByDesc('id')
-        ->paginate(50);
-        $falmilyData = (clone $baseQuery)
-            ->whereHas('subCategorys', function ($q) {
-                    $q->where('id', 2);
-                })
-        ->with(['subCategorys'])
-        ->orderByDesc('id')
-        ->paginate(50);
-        $allHtmlData = $this->htmlDataPrepare($allData);
-        $visitorsHtmlData = $this->htmlDataPrepare($visitorsData);
-        $outingsHtmlData = $this->htmlDataPrepare($outingsData);
-        $medicalHtmlData = $this->htmlDataPrepare($medicalData);
-        $falmilyHtmlData = $this->htmlDataPrepare($falmilyData);
+            ->whereHas('subCategorys', fn ($q) => $q->where('daily_cat_id', 2))
+            ->orderByDesc('id')
+            ->paginate(50);
+        
+        $medicalData = (clone $baseQuery)
+            ->whereHas('subCategorys', fn ($q) => $q->where('daily_cat_id', 3))
+            ->orderByDesc('id')
+            ->paginate(50);
+        
+        $familyData = (clone $baseQuery)
+            ->whereHas('subCategorys', fn ($q) => $q->where('id', 2))
+            ->orderByDesc('id')
+            ->paginate(50);
+        // return $allData;
+        $allHtmlData = $this->htmlDataPrepare($allData,$request->tab);
+        // return $allHtmlData;
+        $visitorsHtmlData = $this->htmlDataPrepare($visitorsData,$request->tab);
+        $outingsHtmlData = $this->htmlDataPrepare($outingsData,$request->tab);
+        $medicalHtmlData = $this->htmlDataPrepare($medicalData,$request->tab);
+        $falmilyHtmlData = $this->htmlDataPrepare($familyData,$request->tab);
        return response()->json([
             'success'=>true,
             'allHtmlData'=>$allHtmlData,
@@ -180,13 +189,13 @@ class DailyLogController extends Controller
                     'prev_page_url' => $medicalData->previousPageUrl(),
                 ],
                 'family_pagination' => [
-                    'next_page_url' => $falmilyData->nextPageUrl(),
-                    'prev_page_url' => $falmilyData->previousPageUrl(),
+                    'next_page_url' => $familyData->nextPageUrl(),
+                    'prev_page_url' => $familyData->previousPageUrl(),
                 ],
             ],
         ]);
     }
-    public function htmlDataPrepare($query){
+    public function htmlDataPrepare($query,$tab){
         // DB::enableQueryLog();
         
         // $queries = DB::getQueryLog();
@@ -194,108 +203,210 @@ class DailyLogController extends Controller
         $html_data = '';
         foreach ($query as $val) {
 
-            $color = $val->subCategorys->color ?? '#dbeafe';
-            $bgColor = $val->subCategorys->background_color ?? '#dbeafe';
-            $icon = $val->subCategorys->icon ?? '';
+            $color = !empty($val->subCategorys->color)? $val->subCategorys->color: "#1d69e3";
+            $bgColor = !empty($val->subCategorys->background_color)? $val->subCategorys->background_color:"#dbeafe";
+            $icon = $val->subCategorys->icon ?? "fa fa-user";
             $subCat = $val->subCategorys->sub_cat ?? '';
-
-            $html_data .= '
-            <div class="stepTimelineContentBx">
-                <div class="entryCardbxTimeline">
-                    <div class="step-timeline">
-                        <div class="step-item">
-                            <span class="step-dot" 
-                                style="color:' . $color . '; background:' . $bgColor . ';">
-                                ' . (!empty($val->arrival_time) ? date('H:i', strtotime($val->arrival_time)) : '') . '
-                            </span>
+            $is_outing = 0;
+            $client_name = $val->clients->name ?? "";
+            $arrival = "In";
+            $departure = "Out";
+            if($val->subCategorys->dailyLogCategory->id == 2){
+                $is_outing = 1;
+                // #ecfeff
+                $arrival = "Left";
+                $departure = "Returned";
+            }
+            $accStaffIds = $val->accompanyingStaffs->pluck('staff_id')->toArray();
+            if($tab == 1){
+                $html_data .= '
+                <div class="stepTimelineContentBx">
+                    <div class="entryCardbxTimeline">
+                        <div class="step-timeline">
+                            <div class="step-item">
+                                <span class="step-dot" 
+                                    style="color:' . $color . '; background:' . $bgColor . ';">
+                                    ' . (!empty($val->arrival_time) ? date('H:i', strtotime($val->arrival_time)) : '') . '
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="entryCardbx">
-                    <div class="planCard">
-                        <div class="planTop">
-                            <div class="planTitle">
-                                <span class="heartIcon blueLightclr" style="color:' . $color . '; background:' . $bgColor . ';"> <i class="' . $icon . '"></i></span>' . ($val->visitor_name ?? '') . '
-                                <span class="roundBtntag blueLightclr"
-                                    style="color:' . $color . '; background:' . $bgColor . ';">
-                                    ' . $subCat . '
-                                </span>
+                    <div class="entryCardbx">
+                        <div class="planCard">
+                            <div class="planTop">
+                                <div class="planTitle">
+                                    <span class="heartIcon blueLightclr" style="color:' . $color . '; background:' . $bgColor . ';"> <i class="' . $icon . '"></i></span>' . ($val->visitor_name ?? '') . '
+                                    <span class="roundBtntag blueLightclr"
+                                        style="color:' . $color . '; background:' . $bgColor . ';">
+                                        ' . $subCat . '
+                                    </span>
 
-                                <div class="inORoutTime">
-                                    <span><i class="bx bx-clock"></i></span>';
+                                    <div class="inORoutTime">
+                                        <span><i class="bx bx-clock"></i></span>';
 
-                                    if (!empty($val->arrival_time)) {
-                                        $html_data .= '
-                                        <span class="gayClrIcon">In:</span>
-                                        <span>' . date('H:i', strtotime($val->arrival_time)) . '</span>
-                                        <span class="gayClrIcon"><i class="bx bx-arrow-right"></i></span>';
-                                    }
+                                        if (!empty($val->arrival_time)) {
+                                            $html_data .= '
+                                            <span class="gayClrIcon">'.$arrival.':</span>
+                                            <span>' . date('H:i', strtotime($val->arrival_time)) . '</span>
+                                            <span class="gayClrIcon"><i class="bx bx-arrow-right"></i></span>';
+                                        }
 
-                                    if (!empty($val->departure_time)) {
-                                        $html_data .= '
-                                        <span class="gayClrIcon">Out:</span>
-                                        <span>' . date('H:i', strtotime($val->departure_time)) . '</span>';
-                                    }
+                                        if (!empty($val->departure_time)) {
+                                            $html_data .= '
+                                            <span class="gayClrIcon">'.$departure.':</span>
+                                            <span>' . date('H:i', strtotime($val->departure_time)) . '</span>';
+                                        }
 
-                                $html_data .= '
+                                    $html_data .= '
+                                    </div>
+                                </div>
+
+                                <div class="planActions">
+                                    <button type="button" class="editRosterDailyLog"
+                                        data-id="' . $val->id . '"
+                                        data-date="' . $val->date . '"
+                                        data-visitor_name="' . $val->visitor_name . '"
+                                        data-entry_type_id="' . $val->entry_type_id . '"
+                                        data-org_company="' . $val->org_company . '"
+                                        data-purpose_visit="' . $val->purpose_visit . '"
+                                        data-client_id="' . $val->client_id . '"
+                                        data-arrival_time="' . $val->arrival_time . '"
+                                        data-departure_time="' . $val->departure_time . '"
+                                        data-notes="' . $val->notes . '"
+                                        data-available_for_overtime="' . $val->available_for_overtime . '"
+                                        data-follow_details="' . $val->follow_details . '"
+                                        data-destination="' . $val->destination . '"
+                                        data-transport_id="' . $val->transport_id . '"
+                                        data-risk_assessment="' . $val->risk_assessment . '"
+                                        data-outing_summary="' . $val->outing_summary . '"
+                                        data-is_outing="' . $is_outing . '"
+                                        data-accompanying_staffs=\'' . json_encode($accStaffIds) . '\'>
+                                        <i class="bx bx-pencil"></i>
+                                    </button>
+
+                                    <button class="danger delete_rosterDailyLog" 
+                                        type="button" data-id="' . $val->id . '">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
                                 </div>
                             </div>
 
+                            <div class="AddFirstDetailsEntry">
+                                <div class="planFooter">
+                                    <span>' . ($val->org_company ?? '') . '</span>
+                                </div>
+                                <div class="planFooter">
+                                    <span>' . ($val->purpose_visit ?? '') . '</span>
+                                </div>
+                                <div class="planFooter">
+                                    <span>' . ($val->notes ?? '') . '</span>
+                                </div>';
+
+                                if ($val->available_for_overtime == 1) {
+                                    $html_data .= '
+                                    <div class="planFooter">
+                                        <span class="redalrttext">
+                                            <i class="bx bx-alert-circle"></i>
+                                            Follow-up: ' . ($val->follow_details ?? 'Required') . '
+                                        </span>
+                                    </div>';
+                                }
+
+                            $html_data .= '
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }else{
+                $html_data.='<div class="mt-4 p-4 rtcozCardInDe rounded8 bgWhite">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex gap-4 w100">
+                            <div class="bgIconStaffT rounded50" style="color:' . $color . '; background:' . $bgColor . ';">
+                                <i class="' . $icon . ' f20"></i>
+                            </div>
+                            <div class="flex1">';
+                            if($is_outing == 0){
+                                $html_data.='<h5 class="h5Head">'. ($val->visitor_name ?? '') . ' </h5>
+                                <p class="textGray fs13">' . ($val->org_company ?? '') . '</p>';
+                            }else{
+                                $html_data.='<h5 class="h5Head">'.$client_name.'</h5>';
+                            }
+                                $html_data.='
+
+                                <div class="d-flex gap-3 mb-3 align-items-center">
+                                    <div class="inORoutTime">';
+                                        if (!empty($val->arrival_time)) {
+                                            $html_data.='<span><i class="bx bx-clock"></i></span>
+                                            <span class="gayClrIcon">'.$arrival.':</span>
+                                            <span>' . date('H:i', strtotime($val->arrival_time)) . '</span>';
+                                        }
+                                        if (!empty($val->departure_time)) {
+                                        $html_data.='<span class="gayClrIcon"><i class="bx bx-arrow-right"></i></span>
+                                            <span class="gayClrIcon">'.$departure.':</span>
+                                            <span>' . date('H:i', strtotime($val->departure_time)) . '</span>';
+                                        }
+                                    $html_data.='</div>';
+                                    if($is_outing == 0){
+                                        $html_data.='<p class="textGray fs13 mb-0">
+                                            <i class="bx bx-user"></i>
+                                            '.$client_name.'
+                                        </p>';
+                                    }
+                               $html_data.='</div>
+                                <div>
+                                    <p class="fs13"> <span class="font700 fas13">Purpose :</span> <span
+                                            class="textGray">' . ($val->purpose_visit ?? '') . '</span> </p>
+                                    <p class="textGray fs13">' . ($val->notes ?? '') . '</p>';
+                                    if ($val->available_for_overtime == 1) {
+                                    $html_data.='<div class="bg-orange-50 p-3 rounded8 w100">
+                                            <p class="fs13 orangeIcon mb-0"> <i class="bx bx-alert-circle f18"></i>
+                                                <span class="font700 middleAlign">Follow-up required </span><span class="middleAlign">- '.$val->follow_details.'</span>
+                                            </p>
+                                        </div>';
+                                    }
+                                $html_data.='</div>
+                            </div>
+
+
+                        </div>
+                        <div class="d-flex gap-3">
+                            <div>
+                                <span class="careBadg" style="color:' . $color . '; background:' . $bgColor . ';">' . $subCat . '</span>
+                            </div>
                             <div class="planActions">
                                 <button type="button" class="editRosterDailyLog"
-                                    data-id="' . $val->id . '"
-                                    data-date="' . $val->date . '"
-                                    data-visitor_name="' . $val->visitor_name . '"
-                                    data-entry_type_id="' . $val->entry_type_id . '"
-                                    data-org_company="' . $val->org_company . '"
-                                    data-purpose_visit="' . $val->purpose_visit . '"
-                                    data-client_id="' . $val->client_id . '"
-                                    data-arrival_time="' . $val->arrival_time . '"
-                                    data-departure_time="' . $val->departure_time . '"
-                                    data-notes="' . $val->notes . '"
-                                    data-available_for_overtime="' . $val->available_for_overtime . '"
-                                    data-follow_details="' . $val->follow_details . '"
-                                    data-destination="' . $val->destination . '"
-                                    data-transport_id="' . $val->transport_id . '"
-                                    data-risk_assessment="' . $val->risk_assessment . '"
-                                    data-outing_summary="' . $val->outing_summary . '">
-                                    <i class="bx bx-pencil"></i>
-                                </button>
+                                        data-id="' . $val->id . '"
+                                        data-date="' . $val->date . '"
+                                        data-visitor_name="' . $val->visitor_name . '"
+                                        data-entry_type_id="' . $val->entry_type_id . '"
+                                        data-org_company="' . $val->org_company . '"
+                                        data-purpose_visit="' . $val->purpose_visit . '"
+                                        data-client_id="' . $val->client_id . '"
+                                        data-arrival_time="' . $val->arrival_time . '"
+                                        data-departure_time="' . $val->departure_time . '"
+                                        data-notes="' . $val->notes . '"
+                                        data-available_for_overtime="' . $val->available_for_overtime . '"
+                                        data-follow_details="' . $val->follow_details . '"
+                                        data-destination="' . $val->destination . '"
+                                        data-transport_id="' . $val->transport_id . '"
+                                        data-risk_assessment="' . $val->risk_assessment . '"
+                                        data-outing_summary="' . $val->outing_summary . '"
+                                        data-is_outing="' . $is_outing . '"
+                                        data-accompanying_staffs=\'' . json_encode($accStaffIds) . '\'>
+                                        <i class="bx bx-pencil"></i>
+                                    </button>
+                            </div>
+                            <div class="planActions">
 
-                                <button class="danger delete_rosterDailyLog" 
-                                    type="button" data-id="' . $val->id . '">
+                                <button class="danger delete_rosterDailyLog" type="button" data-id="' . $val->id . '">
                                     <i class="bx bx-trash"></i>
                                 </button>
                             </div>
                         </div>
-
-                        <div class="AddFirstDetailsEntry">
-                            <div class="planFooter">
-                                <span>' . ($val->org_company ?? '') . '</span>
-                            </div>
-                            <div class="planFooter">
-                                <span>' . ($val->purpose_visit ?? '') . '</span>
-                            </div>
-                            <div class="planFooter">
-                                <span>' . ($val->notes ?? '') . '</span>
-                            </div>';
-
-                            if ($val->available_for_overtime == 1) {
-                                $html_data .= '
-                                <div class="planFooter">
-                                    <span class="redalrttext">
-                                        <i class="bx bx-alert-circle"></i>
-                                        Follow-up: ' . ($val->follow_details ?? 'Required') . '
-                                    </span>
-                                </div>';
-                            }
-
-                        $html_data .= '
-                        </div>
                     </div>
-                </div>
-            </div>';
+                </div>';
+            }
         }
         return $html_data;
     }
