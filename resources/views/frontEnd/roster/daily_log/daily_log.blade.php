@@ -108,32 +108,56 @@
 
         <div class="calendarTabs leaveRequesttabs m-t-20">
             <div class="tabs">
-                <div class="input-group searchWithtabs">
-                    <span class="input-group-addon btn-white"><i class="fa fa-search"></i></span>
-                    <input type="text" class="form-control searchDailyLog" placeholder="Search entries...">
-                </div>
-                <button class="tab active" data-tab="dailyLogAllAddEntry">
-                    All
-                </button>
-                <button class="tab" data-tab="dailyLogVisitors">
-                    Visitors
-                </button>
-                <button class="tab" data-tab="dailyLogOutings">
-                    Outings
-                </button>
-                <button class="tab" data-tab="dailyLogMedical">
-                    Medical
-                </button>
-                <button class="tab" data-tab="dailyLogFamily">
-                    Family
-                </button>
-                <div class="timelineTab">
-                    <button class="layoutTab activeClass" data-design="1">
-                        Timeline
-                    </button>
-                    <button class="layoutTab" data-design="2" data-tab="inactiveCarer">
-                        List
-                    </button>
+                <div class="w100">
+                    <div class="d-flex gap-4 align-items-center">
+                        <div class="flex1">
+                            <div class="input-group searchWithtabs w100">
+                                <span class="input-group-addon btn-white"><i class="fa fa-search"></i></span>
+                                <input type="text" class="form-control searchDailyLog" placeholder="Search entries...">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dflexGap justify-content-end">
+                                <div>
+                                    <button class="tab active" data-tab="dailyLogAllAddEntry">
+                                        All
+                                    </button>
+
+                                </div>
+                                <div>
+                                    <button class="tab" data-tab="dailyLogVisitors">
+                                        Visitors
+                                    </button>
+
+                                </div>
+                                <div>
+                                    <button class="tab" data-tab="dailyLogOutings">
+                                        Outings
+                                    </button>
+                                </div>
+                                <div>
+
+                                    <button class="tab" data-tab="dailyLogMedical">
+                                        Medical
+                                    </button>
+                                </div>
+                                <div>
+
+                                    <button class="tab" data-tab="dailyLogFamily">
+                                        Family
+                                    </button>
+                                </div>
+                                <div class="timelineTab">
+                                    <button class="layoutTab activeClass" data-design="1">
+                                        Timeline
+                                    </button>
+                                    <button class="layoutTab" data-design="2" data-tab="inactiveCarer">
+                                        List
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

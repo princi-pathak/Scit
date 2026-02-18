@@ -9400,7 +9400,7 @@ a.close.edit_dyn_form {
     --redGradient: linear-gradient(90deg, rgba(254, 242, 242, 1) 35%, rgba(255, 247, 238, 1) 99%);
     --lightblueGradient: linear-gradient(to right, #eff6ff, #faf5ff);
     --lightpurpulGradient: linear-gradient(to right, #faf5ff, #eff6ff);
-    --bxShadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    --bxShadow: rgba(99, 99, 99, 0.2) 0px 2px 5px 0px;
     --radBgClr: #dc2626;
     --whiteBgBtncolor: #fff;
     --iconRadClr: #dc2626;
@@ -10012,13 +10012,14 @@ a.close.edit_dyn_form {
 
 header.panel-heading.headingCapitilize {
     text-transform: capitalize;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 500;
+    font-weight: 600;
     color: #0a0a0a;
     display: flex;
     justify-content: space-between;
-    align-items: anchor-center;
-    padding: 20px 15px;
+    align-items: center;
+    padding: 15px;
     border-radius: 8px 8px 0 0;
 }
 
@@ -10030,14 +10031,14 @@ header.panel-heading.headingCapitilize {
 
 .staffShifts div p {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     color: #666;
 }
 
 .staffShifts div h3 {
     margin-top: 5px;
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .text-green {
@@ -10143,9 +10144,9 @@ header.panel-heading.headingCapitilize {
 
 .staffShifts_alert-title {
     margin: 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: #d65a00;
+    font-size: 13px;
+    font-weight: 700;
+    color: #7c2d12;
 }
 
 .staffShifts_alert-subtitle {
@@ -10390,8 +10391,9 @@ header.panel-heading.headingCapitilize {
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     transition: 0.2s;
+    font-weight: 600;
 }
 
 .calendarTabs .tab:hover {
@@ -13406,6 +13408,11 @@ header.panel-heading.headingCapitilize {
     border: 1px solid #dec5f7;
 }
 
+.bg-yellow-50 {
+    background: var(--lightyellowclr);
+    border: 1px solid var(--yellow70Border);
+}
+
 .bg-blue-50 .rota_title,
 .bg-blue-50 .rota_count {
     color: #053b81;
@@ -14714,6 +14721,10 @@ header.panel-heading.headingCapitilize {
     color: var(--darkGray);
 }
 
+.yellowText {
+    color: var(--yellowclrdark);
+}
+
 /* text color  pp*/
 
 .addnewicons .btn {
@@ -14996,7 +15007,8 @@ header.panel-heading.headingCapitilize {
 
 .careIconButton div:nth-child(1) button:hover,
 .borderBtn:hover,
-.progress_history:hover {
+.progress_history:hover,
+.hoverBg:hover {
     background: #f5f5f5;
 }
 
@@ -15767,6 +15779,11 @@ header.panel-heading.headingCapitilize {
     color: #fff;
 }
 
+.darkYellowBadg {
+    background-color: var(--yellowclrdark);
+    color: #fff;
+}
+
 .darkOrangeBadg {
     background-color: var(--darkOrangep);
     color: #fff;
@@ -15835,6 +15852,11 @@ header.panel-heading.headingCapitilize {
     font-size: 16px;
 }
 
+.fs12 {
+
+    font-size: 12px;
+}
+
 .f20 {
     font-size: 20px;
 }
@@ -15858,9 +15880,7 @@ header.panel-heading.headingCapitilize {
 .checkboxp {
     display: flex;
     align-items: center;
-    /* vertical center */
     gap: 10px;
-    /* space between checkbox and text */
     margin-bottom: 10px;
 }
 
@@ -16245,9 +16265,7 @@ header.panel-heading.headingCapitilize {
     color: var(--purple);
 }
 
-i {
-    vertical-align: middle;
-}
+
 
 .redIColor {
     color: var(--redColor);
@@ -16793,6 +16811,12 @@ i {
     background-color: var(--yellow70);
 }
 
+.yellowBorderLight {
+    background-color: #fffbeb;
+    color: var(--darkYellow);
+    border: 1px solid var(--yellow70Border);
+}
+
 .skyBorderBadg {
     color: var(--darkYellow);
     border: 1px solid var(--skyBlue70Border);
@@ -16987,7 +17011,80 @@ i {
     }
 }
 
-.darkYellowBadg {
-    background-color: #ca8a04;
-    color: #fff;
+
+
+.verticalCenter {
+    display: flex;
+    align-items: center;
+}
+
+.flexBw {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dFlexGap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.downInfo {
+    transform: rotate(180deg);
+}
+
+.yellowHoverUnset:hover {
+    background-color: #fffbeb !important;
+    color: var(--darkYellow) !important;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.notificationSysAllert .bg-red-50 {
+    border: 1px solid var(--red70Border);
+}
+
+.notificationSysAllert .bg-yellow-50 {
+    border: 1px solid var(--yellow70Border);
+}
+
+.notificationSysAllert .bg-orange-50 {
+    border: 1px solid var(--orange70Border);
+}
+
+.notificationSysAllert .bg-blue-50 {
+    border: 1px solid var(--blueMediumBorder);
+}
+
+.bgWhite50 {
+    background-color: #ffffff80;
+}
+
+.blackText {
+    color: var(--black);
+}
+
+.manageDSysAlrt+.manageDSysAlrt {
+    margin-top: 1rem;
+}
+
+.mdashCardMain .headingCapitilize {
+    justify-content: start !important;
+    gap: 1rem;
+}
+
+i {
+    vertical-align: middle;
+}
+
+.lightGreenGradient {
+    background: linear-gradient(81deg, rgba(240, 253, 244, 1) 30%, rgba(240, 253, 249, 1) 82%);
+}
+
+.lightredGradient {
+    background: var(--redGradient);
 }

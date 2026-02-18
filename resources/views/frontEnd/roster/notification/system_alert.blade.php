@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="emergencyMain mt20">
-                    <div id="emergencyAller">
+                    <div id="emergencyAller" class="notificationSysAllert">
                         <div class="emergencyHeader">
                             <div class="emeregencyParent">
                                 <div class="emergencyContent">
@@ -43,9 +43,8 @@
                             </div>
                         </div>
                         <div class="p-3">
-                            <!-- blue part end -->
-
-                            <div class="bg-blue-50 p-3  rounded8" id="actionBox" style="display:none">
+                            <!-- blue suggestation -->
+                            <div class="bg-blue-50 p-3 mb-3  rounded8" id="actionBox" style="display:none">
                                 <div class="d-flex justify-content-between flexWrap ">
                                     <div class="fs13">
                                         <p class="mb-2 darkBlueTextp  font600"> 9 selected </p>
@@ -54,7 +53,7 @@
                                     <div>
                                         <div class="d-flex flexWrap gap-2 align-items-center">
                                             <div class="userMum">
-                                                <span class="title mt-0 bgWhite"><i class="bx bx-check-circle f18 me-2"></i> Acknowledge</span>
+                                                <span class="title mt-0 bgWhite50"><i class="bx bx-check-circle f18 me-2"></i> Acknowledge</span>
                                             </div>
                                             <div>
                                                 <span class="careBadg darkGreenBadges">Resolve (9)</span>
@@ -66,8 +65,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- orange part end -->
-                            <div class="bg-orange-50 rounded8 p-3 mt-3">
+                            <!-- High orange part start -->
+                            <div class="bg-orange-50 rounded8 p-3 manageDSysAlrt">
                                 <div class="d-flex gap-3">
                                     <div>
                                         <div>
@@ -90,23 +89,28 @@
                                                 <span class="careBadg darkOrangeBadg">High</span>
                                             </div>
                                         </div>
-                                        <div class="darkOrangeTextp fs13 w100">
-                                            <p class="mb-2">Shift scheduled for 09:00 has not been started. No carer assigned</p>
-                                            <div class="p-2 bgWhite rounded8 mb-2">
-                                                <p class="text-sm para mb-0 font600"> ⚡ Contact carer immediately and verify shift status</p>
+                                        <div class="darkOrangeTextp fs12 w100">
+                                            <p class="mb-2 fs12">Shift scheduled for 09:00 has not been started. No carer assigned</p>
+                                            <div class="p-2 bgWhite50 rounded8 mb-2">
+                                                <p class="fs12 blackText mb-0 font600"> ⚡ Contact carer immediately and verify shift status</p>
                                             </div>
-                                            <p class="mb-2 textGray"> <i class="bx bx-clock  me-1"></i>Feb 6, 11:11</p>
-                                            <p class="darkGreenTextp mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
-                                            </p>
-                                            <div class="userMum">
-                                                <span class="title bgwhite mt-0"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
+                                            <p class="mb-2 textGray verticalCenter"> <i class="bx bx-clock  me-1"></i>Feb 6, 11:11</p>
+
+                                            <div class="dFlexGap">
+                                                <div class="userMum ">
+                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                </div>
+                                                <div class="userMum ">
+                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                </div>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-orange-50 rounded8 p-3 mt-3">
+                            <!-- acknowledge button -->
+                            <div class="bg-orange-50 rounded8 p-3 manageDSysAlrt">
                                 <div class="d-flex gap-3">
                                     <div>
                                         <div>
@@ -129,23 +133,24 @@
                                                 <span class="careBadg darkOrangeBadg">High</span>
                                             </div>
                                         </div>
-                                        <div class="darkOrangeTextp fs13 w100">
-                                            <p class="mb-2">Shift scheduled for 09:00 has not been started. No carer assigned</p>
-                                            <div class="p-2 bgWhite rounded8 mb-2">
-                                                <p class="text-sm para mb-0 font600"> ⚡ Contact carer immediately and verify shift status</p>
+                                        <div class="darkOrangeTextp fs12 w100">
+                                            <p class="mb-2 fs12">Shift scheduled for 09:00 has not been started. No carer assigned</p>
+                                            <div class="p-2 bgWhite50 rounded8 mb-2">
+                                                <p class="fs12 blackText mb-0 font600"> ⚡ Contact carer immediately and verify shift status</p>
                                             </div>
-                                            <p class="mb-2 textGray"> <i class="bx bx-clock  me-1"></i>Feb 6, 11:11</p>
-                                            <p class="darkGreenTextp mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
+                                            <p class="mb-2 textGray verticalCenter"> <i class="bx bx-clock  me-1"></i>Feb 6, 11:11</p>
+                                            <p class="darkGreenTextp verticalCenter  mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
                                             </p>
                                             <div class="userMum">
-                                                <span class="title bgwhite mt-0"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
+                                                <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-orange-50 rounded8 p-3 mt-3">
+                            <!-- medium card yellow part-->
+                            <div class="bg-yellow-50 rounded8 p-3 manageDSysAlrt">
                                 <div class="d-flex gap-3">
                                     <div>
                                         <div>
@@ -154,7 +159,7 @@
                                                     <input class="checkBoxHW trans alertCheck" type="checkbox">
                                                 </div>
                                                 <div>
-                                                    <i class="bx bx-bell f18 orangeText"></i>
+                                                    <i class="bx bx-alert-circle f18 yellowText"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,19 +168,109 @@
                                         <div class="d-flex justify-content-between mb-2">
                                             <p class="font600 darkOrangeTextp fs13 mb-0">Missed Shift - 09:00</p>
                                             <div>
-                                                <span class="careBadg darkOrangeBadg">High</span>
+                                                <span class="careBadg darkYellowBadg">Medium</span>
                                             </div>
                                         </div>
-                                        <div class="darkOrangeTextp fs13 w100">
-                                            <p class="mb-2">Shift scheduled for 09:00 has not been started. No carer assigned</p>
-                                            <div class="p-2 bgWhite rounded8 mb-2">
-                                                <p class="text-sm para mb-0 font600"> ⚡ Contact carer immediately and verify shift status</p>
+                                        <div class="darkOrangeTextp fs12 w100">
+                                            <p class="mb-2 fs12">Shift scheduled for 09:00 has not been started. No carer assigned</p>
+                                            <div class="p-2 bgWhite50 rounded8 mb-2">
+                                                <p class="fs12 blackText mb-0 font600"> ⚡ Contact carer immediately and verify shift status</p>
                                             </div>
-                                            <p class="mb-2 textGray"> <i class="bx bx-clock  me-1"></i>Feb 6, 11:11</p>
-                                            <p class="darkGreenTextp mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
+                                            <p class="mb-2 textGray verticalCenter"> <i class="bx bx-clock  me-1"></i>Feb 6, 11:11</p>
+                                            <p class="darkGreenTextp verticalCenter  mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
                                             </p>
                                             <div class="userMum">
-                                                <span class="title bgwhite mt-0"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
+                                                <span class="title bgWhite50 mt-0"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- critical card red part-->
+                            <div class="bg-red-50 rounded8 p-3 manageDSysAlrt">
+                                <div class="d-flex gap-3">
+                                    <div>
+                                        <div>
+                                            <div class="d-flex gap-3">
+                                                <div class="pt-1">
+                                                    <input class="checkBoxHW trans alertCheck" type="checkbox">
+                                                </div>
+                                                <div>
+                                                    <i class="bx bx-pill f18 redText"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w100">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="font600 darkRedText fs13 mb-0">Missed Shift - 09:00</p>
+                                            <div>
+                                                <span class="careBadg redDarkBadges">Critical</span>
+                                            </div>
+                                        </div>
+                                        <div class="fs12 w100">
+                                            <p class="mb-2 fs12 darkRedText">Shift scheduled for 09:00 has not been started. No carer assigned</p>
+                                            <div class="p-2 bgWhite50 rounded8 mb-2">
+                                                <p class="fs12 blackText mb-0 font600"> ⚡ Contact carer immediately and verify shift status</p>
+                                            </div>
+                                            <div class="m-t-10 mb10">
+                                                <span class="careBadg yellowBorderLight yellowHoverUnset">
+                                                    Requires Individual Review
+                                                </span>
+                                            </div>
+                                            <p class="mb-2 textGray verticalCenter"> <i class="bx bx-clock  me-1"></i>Feb 6, 11:11</p>
+
+                                            <div class="dFlexGap">
+                                                <div class="userMum ">
+                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                </div>
+                                                <div class="userMum ">
+                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- low card blue part-->
+                            <div class="bg-blue-50 rounded8 p-3  manageDSysAlrt">
+                                <div class="d-flex gap-3">
+                                    <div>
+                                        <div>
+                                            <div class="d-flex gap-3">
+                                                <div class="pt-1">
+                                                    <input class="checkBoxHW trans alertCheck" type="checkbox">
+                                                </div>
+                                                <div>
+                                                    <i class="bx bx-alert-circle f18 blueText"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w100">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="font600 darkBlueTextp fs13 mb-0">Missed Shift - 09:00</p>
+                                            <div>
+                                                <span class="careBadg darkBlueBadg">Low</span>
+                                            </div>
+                                        </div>
+                                        <div class=" fs12 w100">
+                                            <p class="mb-2 fs12 darkBlueTextp">Shift scheduled for 09:00 has not been started. No carer assigned</p>
+                                            <div class="p-2 bgWhite50 rounded8 mb-2">
+                                                <p class="fs12 blackText mb-0 font600"> ⚡ Contact carer immediately and verify shift status</p>
+                                            </div>
+
+                                            <p class="mb-2 textGray verticalCenter"> <i class="bx bx-clock  me-1"></i>Feb 6, 11:11</p>
+
+                                            <div class="dFlexGap">
+                                                <div class="userMum ">
+                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                </div>
+                                                <div class="userMum ">
+                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -218,7 +313,7 @@
                 <!-- no notification -->
                 <div class="leave-card">
 
-                    <div class="leavebanktabCont bgWhite">
+                    <div class="leavebanktabCont bgWhite50">
                         <i class="bx bx-bell"></i>
 
                         <h4>No notifications</h4>
