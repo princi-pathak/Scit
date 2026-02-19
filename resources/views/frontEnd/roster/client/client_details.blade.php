@@ -30,7 +30,7 @@
                     <button class="tab" data-tab="clientAIInsightsTab"> AI Insights </button>
                     <button class="tab" data-tab="clientCarePlanTab"> Care Plan </button>
                     <button class="tab" data-tab="clientRiskAssessmentsTab"> Risk Assessments </button>
-                    <button class="tab" data-tab="clientMedicationTab"> Medication </button>
+                    <button class="tab" data-tab="clientMedicationTab" onclick="getMedication()"> Medication </button>
                     <button class="tab" data-tab="clientPEEPTab"> PEEP </button>
                     <button class="tab" data-tab="clientRepositioningTab"> Repositioning </button>
                     <button class="tab" data-tab="clientBehaviorTab"> Behavior </button>
@@ -2963,8 +2963,8 @@
                             <div class="medicationManagement" id="availabilityTab">
                                 <div class="availabilityTabs">
                                     <div class="availabilityTabs__nav">
-                                        <button class="availabilityTabs__tab borderBtn active" data-target="MARSheetsPanel">MAR Sheets <span>(2)</span> </button>
-                                        <button class="availabilityTabs__tab borderBtn" data-target="medicationLogsPanel">Medication Logs <span>(6)</span></button>
+                                        <button class="availabilityTabs__tab borderBtn active" data-target="MARSheetsPanel" id="marSheetBtn">MAR Sheets <span id="countMarSheet">(0)</span> </button>
+                                        <button class="availabilityTabs__tab borderBtn" data-target="medicationLogsPanel" id="medicationLogsBtn">Medication Logs <span id="countMedicationLogs">(0)</span></button>
                                     </div>
                                     <div class="availabilityTabs__content">
                                         <div class="availabilityTabs__panel active" id="MARSheetsPanel">
@@ -3038,104 +3038,75 @@
 
                                                         <div class="createNewAlert"><i class='bx  bx-link'></i> Add Medication Administration Log </div>
 
-                                                        <form action="" class="addAlertForm">
+                                                        <form id="medication_logsForm" class="addAlertForm">
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>Medication Name *</label>
-                                                                        <input type="text" class="form-control" name="" placeholder="e.g., Paracetamol">
+                                                                        <input type="text" class="form-control checkMediLog" name="medication_name" id="medication_name" placeholder="e.g., Paracetamol">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>Dosage *</label>
-                                                                        <input type="text" class="form-control" name="" placeholder="e.g., 500mg">
+                                                                        <input type="text" class="form-control checkMediLog" name="dosage" id="dosage" placeholder="e.g., 500mg">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>Frequency</label>
-                                                                        <input type="text" class="form-control" name="" placeholder="e.g., Twice daily">
+                                                                        <input type="text" class="form-control" name="frequesncy" id="frequesncy" placeholder="e.g., Twice daily">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>Administration Time *</label>
-                                                                        <input type="date" class="form-control" name="" placeholder="">
+                                                                        <input type="datetime-local" class="form-control checkMediLog" name="administrator_date" id="administrator_date" placeholder="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>Status *</label>
-                                                                        <select class="form-control">
-                                                                            <option>Single Day</option>
+                                                                        <select class="form-control checkMediLog" id="status" name="status">
+                                                                            <option value="1" selected>Administered</option>
+                                                                            <option value="2">Refused</option>
+                                                                            <option value="3">Missed</option>
+                                                                            <option value="4">Not Required</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>Witnessed By (if required)</label>
-                                                                        <input type="text" class="form-control" name="" placeholder="">
+                                                                        <input type="text" class="form-control" name="witnessed_by" id="witnessed_by" placeholder="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
-                                                                        <label> Notes *</label>
-                                                                        <textarea name="" class="form-control" rows="3" cols="20" placeholder="Any additional notes about administration"></textarea>
+                                                                        <label> Notes</label>
+                                                                        <textarea name="notes" id="medication_log_notes" class="form-control" rows="3" cols="20" placeholder="Any additional notes about administration"></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
                                                                         <label> Side Effects Observed</label>
-                                                                        <textarea name="" class="form-control" rows="3" cols="20" placeholder="Any observed side effects or reactions"></textarea>
+                                                                        <textarea name="side_effect" id="side_effect" class="form-control" rows="3" cols="20" placeholder="Any observed side effects or reactions"></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <div class="header-actions">
-                                                                        <button class="btn allbuttonDarkClr " type="submit">Save Log </button>
-                                                                        <button class="btn borderBtn" type="submit"> Cancel </button>
+                                                                        <button class="btn allbuttonDarkClr saveMedicationLogBtn" type="button">Save Log </button>
+                                                                        <button class="btn borderBtn cancelMedicationLogBtn" type="button"> Cancel </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </form>
                                                     </div>
 
-                                                    <div class="carePlanWrapper m-t-15">
-                                                        <div class="planCard borderleftPurple">
-                                                            <div class="planTop">
-                                                                <div class="planTitle">
-                                                                    DFVDF <span class="roundTag yellow"> missed</span>
-                                                                </div>
-                                                                <div class="planActions">
-                                                                    <button class="danger"><i class='bx  bx-info-circle'></i> </button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="planFooter">
-                                                                <span>Dosage:<strong> DSFDS </strong> </span>
-                                                            </div>
-                                                            <div class="planFooter">
-                                                                <span>Frequency: DSF </span>
-                                                            </div>
-
-
-                                                            <div class="planMeta">
-                                                                <div class="aligniconMedication"><i class='bx  bx-clock-4'></i> Jan 6, 2026 at 18:28</div>
-                                                                <div class="aligniconMedication"><i class='bx  bx-user'></i> By: Unknown Staff</div>
-                                                            </div>
-                                                            <div class="witnessedBy">
-                                                                <span><strong>Witnessed by:</strong> DSFF </span>
-                                                            </div>
-
-                                                            <div class="witnessedBy witnessedByNotes">
-                                                                <span><strong>Notes:</strong> DSFDSFSAFSDF </span>
-                                                            </div>
-
-                                                            <div class="witnessedBy witnessedBySideEffects yellow">
-                                                                <strong class="aligniconMedication"><i class='bx  bx-info-circle'></i> Side Effects:</strong>
-                                                                <p>SDFSDF</p>
-                                                            </div>
-                                                        </div>
+                                                    <div class="carePlanWrapper m-t-15" id="renderHtmlMedicalLogs">
+                                                        
                                                     </div>
+                                                    <div id="medicationLogsPagination"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -7300,7 +7271,14 @@
         </div>
     </div>
     <!-- pratima modal end -->
-
+<!-- script for URL's variables -->
+<script>
+    var saveMedicationLogUrl = "{{url('roster/client/medication-log-save')}}";
+    var listMedicationLogUrl = "{{url('roster/client/medication-log-list')}}";
+    var token = "{{csrf_token()}}";
+</script>
+    <!-- end here -->
+<script src="{{ url('public/js/roster/client/client_details.js')}}" defer></script>
     <script>
         const tabs = document.querySelectorAll(".tab");
         const contents = document.querySelectorAll(".content");
@@ -8234,6 +8212,7 @@
             $('.riskAssessmentSectionFirst').show();
         });
         $(document).on('click', '#logMedicationBtn', function() {
+            setDateTimeFormat();
             $(".medicationLogsForm").toggle();
         });
         $(document).on('click', '.marSheetDetails', function() {

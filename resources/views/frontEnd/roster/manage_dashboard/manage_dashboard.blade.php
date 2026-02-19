@@ -439,7 +439,7 @@
                         </div>
                         <div class="bg-red-50 p-3  rounded8 ">
                             <div class="d-flex gap-4 align-items-center">
-                                <i class="bx  bx-alert-triangle f18 darkRedText"></i>
+                                <i class="bx  bx-alert-triangle f18 redtext"></i>
                                 <div>
                                     <h6 class="fs13 font700 darkRedText mb-1 mt-0"> 8 Critical Incidents </h6>
                                     <p class="mb-0 fs13 darkRedText">Needs review</p>
@@ -451,87 +451,117 @@
                         </div>
                     </div>
                 </div>
-                <!--  -->
-                <div class="panel">
-                    <header class="panel-heading headingCapitilize" style="background-color: #eef2ff;"> <i class="fa fa-warning (alias)"></i> Incidents &amp; Safety</header>
+                <!--cyan today dailylog-->
+                <div class="panel mdashCardMain rounded8">
+                    <header class="panel-heading headingCapitilize cyanGrad"> <i class="bx bx-file-detail f20 skyBlueTex"></i>Today's Daily Log</header>
                     <div class="panel-body">
                         <div class="staffShifts">
                             <div class="todayNumber">
-                                <p>This Month</p>
+                                <p>Total Entries</p>
                                 <h3>3</h3>
                             </div>
                             <div class="fillPersent">
-                                <p>Unresolved</p>
-                                <h3 class="text-orange">1</h3>
+                                <p>Follow-ups</p>
+                                <h3 class="text-orange">23</h3>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <a href="#!" class="profileDrop profileDropNobgcolor d-block"><i class="fa fa-info-circle"></i> View All Incidents</a>
+
+                        <div class="text-center mt-3">
+                            <a href="#!" class="borderBtn"><i class="bx bx-file-detail f18 me-2"></i> View All Log</a>
                         </div>
                     </div>
                 </div>
-                <div class="panel">
-                    <header class="panel-heading headingCapitilize" style="background-color: #fdf2f8;"> <i class="fa fa-home"></i> Occupancy &amp; Capacity</header>
+                <!--green financial summery-->
+                <div class="panel mdashCardMain rounded8">
+                    <header class="panel-heading headingCapitilize lightGreenGradient"> <i class="bx bx-dollar f20 greenText"></i>Financial summary</header>
                     <div class="panel-body">
-
-                        <div class="occupancyBox">
-                            <div class="topRow">
-                                <span>Current Occupancy</span>
-                                <span class="value">8/50</span>
+                        <div class="flexBw p-3 pt-0">
+                            <div>
+                                <p class="mb-0 fs13 textGray">Total Revenue</p>
                             </div>
-
-                            <div class="progressBar">
-                                <div class="progressFill" style="width:16%;"></div>
+                            <div>
+                                <p class="mb-0 greenText f20 font700">£ 125,000</p>
                             </div>
                         </div>
-                        <div class="staffShifts">
+                        <div class="staffShifts financialSumDash pt-4 pb-0" style="border-top: 1px solid #dddddd;">
                             <div class="todayNumber">
-                                <p>Occupancy Rate</p>
-                                <h3>66.0%</h3>
+                                <p>Paid</p>
+                                <h3 class="greenText">35</h3>
                             </div>
                             <div class="fillPersent">
-                                <p>Planned Admissions</p>
-                                <h3>3</h3>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <a href="#!" class="profileDrop profileDropNobgcolor d-block"><i class="fa fa-info-circle"></i> Manage client information</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel">
-                    <header class="panel-heading headingCapitilize" style="background-color: #fefce8;"> <i class="fa fa-book"></i> Training Compliance</header>
-                    <div class="panel-body">
-                        <div class="occupancyBox">
-                            <div class="topRow">
-                                <span>Completion Rate</span>
-                                <span class="value">0.0%</span>
-                            </div>
-
-                            <div class="progressBar">
-                                <div class="progressFill" style="width:0%;"></div>
-                            </div>
-                        </div>
-                        <div class="staffShifts">
-                            <div class="todayNumber">
-                                <p>Expiring Soon</p>
-                                <h3 class="text-orange">3</h3>
+                                <p>Pending</p>
+                                <h3 class="orangeIcon">23</h3>
                             </div>
                             <div class="fillPersent">
                                 <p>Overdue</p>
-                                <h3 class="text-orange">33.3%</h3>
+                                <h3 class="redtext">23</h3>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <a href="#!" class="profileDrop profileDropNobgcolor d-block"><i class="fa fa-info-circle"></i> View Training</a>
                         </div>
                     </div>
                 </div>
+                <!--  -->
+
+
             </div>
             <div class="col-md-6">
+                <!--blue occupency and capacity-->
+                <div class="panel mdashCardMain rounded8">
+                    <header class="panel-heading headingCapitilize gradp-blue-50"> <i class="bx bx-home-alt f20 blueText"></i>Occupancy & Capacity</header>
+                    <div class="panel-body">
+                        <div class="occupancyBox">
+                            <div class="topRow">
+                                <span class="fs13 textGay">Current Occupancy</span>
+                                <span class="value f20" style="color: #3376f2;">8/50</span>
+                            </div>
+                            <div class="progressBar">
+                                <div class="progressFill" style="width:16%; background:#3376f2"></div>
+                            </div>
+                        </div>
+                        <div class="staffShifts pt-4 pb-0 financialSumDash ">
+                            <div class="todayNumber">
+                                <p>Occupancy Rate</p>
+                                <h3>66.5%</h3>
+                            </div>
+                            <div class="fillPersent">
+                                <p>Planned Admissions</p>
+                                <h3>3</h3>
+                            </div>
 
-                <div class="panel">
-                    <header class="panel-heading headingCapitilize" style="background-color: #eef2ff;"> <i class="fa fa-warning (alias)"></i> Incidents &amp; Safety</header>
+                        </div>
+                    </div>
+                </div>
+                <!--purple training compliances-->
+                <div class="panel mdashCardMain rounded8">
+                    <header class="panel-heading headingCapitilize gradp-purple-50"> <i class="bx bx-education f20 purpleTextp"></i>Occupancy & Capacity</header>
+                    <div class="panel-body">
+                        <div class="occupancyBox">
+                            <div class="topRow">
+                                <span class="fs13 textGay">Completion Rate</span>
+                                <span class="value f20" style="color:#9333ea;">8/50</span>
+                            </div>
+                            <div class="progressBar">
+                                <div class="progressFill" style="width:16%; background:#9333ea"></div>
+                            </div>
+                        </div>
+                        <div class="staffShifts pt-4 pb-0">
+                            <div class="todayNumber">
+                                <p>Expiring Soon</p>
+                                <h3 class="orangeText">66.5%</h3>
+                            </div>
+                            <div class="fillPersent">
+                                <p>Overdue</p>
+                                <h3 class="redText">3</h3>
+                            </div>
+
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="#!" class="borderBtn"><i class="bx bx-education f18 me-2"></i> View Training</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- yellow communication -->
+                <div class="panel mdashCardMain rounded8">
+                    <header class="panel-heading headingCapitilize gradp-yellow-50"> <i class="bx bx-message yellowText"></i>Communication</header>
                     <div class="panel-body">
                         <div class="staffShifts">
                             <div class="todayNumber">
@@ -548,63 +578,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel">
-                    <header class="panel-heading headingCapitilize" style="background-color: #fdf2f8;"> <i class="fa fa-home"></i> Occupancy &amp; Capacity</header>
-                    <div class="panel-body">
+                <!--  -->
 
-                        <div class="occupancyBox">
-                            <div class="topRow">
-                                <span>Current Occupancy</span>
-                                <span class="value">8/50</span>
-                            </div>
-
-                            <div class="progressBar">
-                                <div class="progressFill" style="width:16%;"></div>
-                            </div>
-                        </div>
-                        <div class="staffShifts">
-                            <div class="todayNumber">
-                                <p>Occupancy Rate</p>
-                                <h3>66.0%</h3>
-                            </div>
-                            <div class="fillPersent">
-                                <p>Planned Admissions</p>
-                                <h3>3</h3>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <a href="#!" class="profileDrop profileDropNobgcolor d-block"><i class="fa fa-info-circle"></i> Manage client information</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel">
-                    <header class="panel-heading headingCapitilize" style="background-color: #fefce8;"> <i class="fa fa-book"></i> Training Compliance</header>
-                    <div class="panel-body">
-                        <div class="occupancyBox">
-                            <div class="topRow">
-                                <span>Completion Rate</span>
-                                <span class="value">0.0%</span>
-                            </div>
-
-                            <div class="progressBar">
-                                <div class="progressFill" style="width:0%;"></div>
-                            </div>
-                        </div>
-                        <div class="staffShifts">
-                            <div class="todayNumber">
-                                <p>Expiring Soon</p>
-                                <h3 class="text-orange">3</h3>
-                            </div>
-                            <div class="fillPersent">
-                                <p>Overdue</p>
-                                <h3 class="text-orange">33.3%</h3>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <a href="#!" class="profileDrop profileDropNobgcolor d-block"><i class="fa fa-info-circle"></i> View Training</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

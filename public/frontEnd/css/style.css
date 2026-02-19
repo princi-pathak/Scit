@@ -16520,6 +16520,10 @@ header.panel-heading.headingCapitilize {
     background: linear-gradient(132deg, #faf4ff, #f4eaff);
 }
 
+.gradp-yellow-50 {
+    background: linear-gradient(132deg, #fffbeb, #fefce8);
+}
+
 .h1Pay700 {
     font-size: 30px;
     font-weight: 700;
@@ -16967,10 +16971,10 @@ header.panel-heading.headingCapitilize {
 .redDarkGreenAni {
     background-color: var(--lightbgGreen);
     color: var(--darkGreenp);
-    animation: fadeBgOnly 2s ease-in-out infinite alternate;
+    animation: fadeBgOnlyGreen 2s ease-in-out infinite alternate;
 }
 
-@keyframes fadeBgOnly {
+@keyframes fadeBgOnlyGreen {
     0% {
         background-color: var(--lightbgGreen);
         opacity: 0.7;
@@ -17087,4 +17091,13 @@ i {
 
 .lightredGradient {
     background: var(--redGradient);
+}
+
+.staffShifts.financialSumDash {
+    display: flex !important;
+    justify-content: space-between;
+}
+
+.financialSumDash h3 {
+    font-size: 16px !important;
 }
