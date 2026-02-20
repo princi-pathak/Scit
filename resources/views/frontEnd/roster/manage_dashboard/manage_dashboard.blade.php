@@ -465,7 +465,29 @@
                                 <h3 class="text-orange">23</h3>
                             </div>
                         </div>
-
+                        <div class="muteBg py-1 px-3 rounded8 mt-1">
+                            <div class="flexBw">
+                                <div>
+                                    <p class="fs12 mb-0 blackText font600">Arjun</p>
+                                    <p class="fs12 textGray500 mb-0">01:30</p>
+                                </div>
+                                <div class="userMum">
+                                    <span class="title bgWhite50 mt-0 hoverBg">Doctor appointment</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="muteBg py-1 px-3 rounded8 mt-1">
+                            <div class="flexBw">
+                                <div>
+                                    <p class="fs12 mb-0 blackText font600">Arjun</p>
+                                    <p class="fs12 textGray500 mb-0">01:30</p>
+                                </div>
+                                <div class="userMum">
+                                    <span class="title bgWhite50 mt-0 hoverBg">Doctor appointment</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="fs12 textGray500 text-center mb-4">No entries today</p>
                         <div class="text-center mt-3">
                             <a href="#!" class="borderBtn"><i class="bx bx-file-detail f18 me-2"></i> View All Log</a>
                         </div>
@@ -563,18 +585,36 @@
                 <div class="panel mdashCardMain rounded8">
                     <header class="panel-heading headingCapitilize gradp-yellow-50"> <i class="bx bx-message yellowText"></i>Communication</header>
                     <div class="panel-body">
-                        <div class="staffShifts">
-                            <div class="todayNumber">
-                                <p>This Month</p>
-                                <h3>3</h3>
-                            </div>
-                            <div class="fillPersent">
-                                <p>Unresolved</p>
-                                <h3 class="text-orange">1</h3>
+
+                        <div class="lightBlueBg rounded8 p-3">
+                            <div class="flexBw">
+                                <div>
+                                    <p class="mb-0 fs12 font600"> <i class="bx bx-bell f18 blueText me-2"></i>New Feedback</p>
+                                </div>
+                                <div>
+                                    <span class="careBadg darkBlueBadg">0</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <a href="#!" class="profileDrop profileDropNobgcolor d-block"><i class="fa fa-info-circle"></i> View All Incidents</a>
+                        <div class="lightPurpleBg rounded8 p-3 mt-2">
+                            <div class="flexBw">
+                                <div>
+                                    <p class="mb-0 fs12 font600"> <i class="bx bx-message f18 purpleTextp me-2"></i> Pending Leave</p>
+                                </div>
+                                <div>
+                                    <span class="careBadg purpleBadgesDark">1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lightRedBg rounded8 p-3 mt-2">
+                            <div class="flexBw">
+                                <div>
+                                    <p class="mb-0 fs12 font600"> <i class="bx bx-alert-triangle f18 redText me-2"></i>Critical Alerts</p>
+                                </div>
+                                <div>
+                                    <span class="careBadg redDarkBadges">3</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

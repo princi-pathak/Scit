@@ -9473,6 +9473,8 @@ a.close.edit_dyn_form {
     --yellow70: #fef9c3;
     --skyBlue70: #cffafe;
     --darkGray: #4b5563;
+    --orangeReal: #f97316;
+    --lightPurpleClr: #faf5ff;
 }
 
 /* ******************Start Dashboard Css***************************** */
@@ -14684,7 +14686,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .orangeText {
-    color: #ff7417;
+    color: var(--orangeReal);
 }
 
 
@@ -14719,6 +14721,10 @@ header.panel-heading.headingCapitilize {
 
 .textGray {
     color: var(--darkGray);
+}
+
+.textGray500 {
+    color: #6b7280;
 }
 
 .yellowText {
@@ -16551,6 +16557,14 @@ header.panel-heading.headingCapitilize {
     background-color: var(--lightBlueClr);
 }
 
+.lightPurpleBg {
+    background-color: var(--lightbgPurple);
+}
+
+.lightRedBg {
+    background-color: var(--lightRedp);
+}
+
 .orderListpayPro li {
     margin-bottom: 5px;
 }
@@ -16736,7 +16750,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .borderLeftThick {
-    border-left-width: 4px;
+    border-left-width: 4px !important;
 }
 
 .bg-blue-70 {
@@ -17100,4 +17114,41 @@ i {
 
 .financialSumDash h3 {
     font-size: 16px !important;
+}
+
+.dFlexNoAlign {
+    display: flex;
+    gap: 1rem;
+}
+
+.allertMsgBtn .userMum .title {
+    padding: 3px 10px !important;
+}
+
+.redBorder {
+    border: 1px solid var(--redColor);
+}
+
+.orangeBorder {
+    border: 1px solid var(--orangeReal);
+}
+
+.blueBorder {
+    border: 1px solid var(--blueColor);
+}
+
+.yellowBorder {
+    border: 1px solid var(--yellowclrdark);
+
+}
+
+.fileBoxSuper {
+    height: 36px;
+    width: 35px;
+    border-radius: 5px;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blueColor)
 }

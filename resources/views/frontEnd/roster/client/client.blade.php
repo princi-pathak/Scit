@@ -62,7 +62,7 @@
                 </div>
 
                 <!-- TAB CONTENT -->
-                <div class="tab-content carertabcontent">
+                <div class="tab-content carertabcontent clientCardBox">
                     <div class="content active" id="allCarerActibity">
                         <div class="row all_ClienData">
                             @forelse($child as $childVal)
@@ -99,7 +99,7 @@
 
                                         <div class="sectionCarer">
 
-                                            <div class="tags">
+                                            <div class="tags care-list">
                                                 <?php 
                                                     $moreNeedsAll=0;
                                                     if(!empty($childVal->care_needs)){
@@ -176,7 +176,7 @@
 
                                         <div class="sectionCarer">
 
-                                            <div class="tags">
+                                            <div class="tags care-list">
                                                  <?php 
                                                     $moreNeedsActive=0;
                                                     if(!empty($activeVal->care_needs)){
@@ -251,7 +251,7 @@
 
                                     <div class="sectionCarer">
 
-                                        <div class="tags">
+                                        <div class="tags care-list">
                                            <?php 
                                                     $moreNeedsInactive=0;
                                                     if(!empty($inactiveVal->care_needs)){

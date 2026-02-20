@@ -59,7 +59,7 @@
                                                 <span class="careBadg darkGreenBadges">Resolve (9)</span>
                                             </div>
                                             <div>
-                                                <i class='bx bx-x-circle f18 ms-2'></i>
+                                                <i class='bx bx-x-circle f18 ms-2' id="closeActionBox"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -349,6 +349,7 @@
             const selectAll = document.getElementById('selectAll');
             const actionBox = document.getElementById('actionBox');
             const checks = document.querySelectorAll('.alertCheck');
+            const closeBtn = document.getElementById('closeActionBox');
 
             function updateSytemAlert() {
                 const count = document.querySelectorAll('.alertCheck:checked').length;
@@ -367,6 +368,12 @@
                     selectAll.checked = total === checked;
                     updateSytemAlert();
                 });
+            });
+            closeBtn.addEventListener('click', function() {
+                actionBox.style.display = 'none';
+
+                checks.forEach(cb => cb.checked = false);
+                selectAll.checked = false;
             });
         </script>
 
