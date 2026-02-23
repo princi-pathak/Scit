@@ -11,7 +11,7 @@
         <div class="topHeaderCont">
             <div>
                 <h1>{{$clientDetails['name']}}</h1>
-                <p class="header-subtitle"><span>{{$status}}</span> local authority</p>
+                <p class="header-subtitle"><span class="careBadg greenBadges me-2">active</span> <span>{{$status}}</span> local authority</p>
             </div>
             <div class="header-actions addnewicons">
                 <button class="btn borderBtn editClient" data-toggle="modal" data-target="#addServiceUserModal" data-child_id="{{$clientDetails['id']}}"><i class='bx  bx-edit'></i> Edit Client</button>
@@ -20,6 +20,213 @@
 
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- yellow  medium  risk-->
+                <div class="yellowBorder borderLeftThick rounded8 bg-yellow-50 p-3 manageDSysAlrt">
+                    <div class="dFlexNoAlign">
+                        <div>
+                            <div class="bgIconStaffT" style="background-color: #fef08a;">
+                                <i class="bx bx-bell darkOrangeTextp f18"></i>
+                            </div>
+                        </div>
+                        <div class="flex1">
+                            <div class="dFlexNoAlign flexWrap">
+
+                                <div>
+                                    <h6 class="mb-0 h6Head font600 blackText">Missed Medication - Dextromethorphan
+                                    </h6>
+                                </div>
+
+                                <span class="carebadg yellowBorderBadg">
+                                    Medium
+                                </span>
+
+
+                                <div class="userMum ">
+                                    <span class="title bgWhite50 mt-0 hoverBg">
+                                        safeguarding</span>
+                                </div>
+                            </div>
+                            <p class="mb-2 fs14 textGray">Description details</p>
+                            <div class="lightBorderp bg-blue-70 fs12 p-2 rounded5 mt-3 mb-2">
+                                <p class=" darkBlueTextp mb-0"><span class="font700 me-1">Required Action:</span> Administer medication immediately if still within safe window, otherwise contact prescriber </p>
+                            </div>
+
+                            <div>
+                                <p class="mb-0 fs12 textGray verticalCenter"> <i class="bx bx-eye  me-1"></i>Requires acknowledgment before proceeding</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--blue low risk-->
+                <div class="blueBorder borderLeftThick rounded8 bg-blue-50 p-3 manageDSysAlrt">
+                    <div class="dFlexNoAlign">
+                        <div>
+                            <div class="bgIconStaffT" style="background-color: #bfdbfe;">
+                                <i class="bx bx-bell darkBlueTextp"></i>
+                            </div>
+                        </div>
+                        <div class="flex1">
+                            <div class="dFlexNoAlign flexWrap">
+
+                                <div>
+                                    <h6 class="mb-0 h6Head font600 blackText">Missed Medication - Dextromethorphan
+                                    </h6>
+                                </div>
+
+                                <span class="carebadg blueBorderBadg">
+                                    Low
+                                </span>
+
+
+                                <div class="userMum ">
+                                    <span class="title bgWhite50 mt-0 hoverBg">
+                                        Medication</span>
+                                </div>
+                            </div>
+                            <p class="mb-2 fs14 textGray">Description details</p>
+                            <div class="lightBorderp bg-blue-70 fs12 p-2 rounded5 mt-3 mb-2">
+                                <p class=" darkBlueTextp mb-0"><span class="font700 me-1">Required Action:</span> Administer medication immediately if still within safe window, otherwise contact prescriber </p>
+                            </div>
+
+                            <div>
+                                <p class="mb-0 fs12 textGray verticalCenter"> <i class="bx bx-eye  me-1"></i>Requires acknowledgment before proceeding</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="moreAllertsSec mt-3">
+                    <!--high medium risk-->
+                    <div class="orangeBorder borderLeftThick rounded8 bg-orange-50 p-3 manageDSysAlrt">
+                        <div class="dFlexNoAlign">
+                            <div>
+                                <div class="bgIconStaffT" style="background-color: #fed7aa;">
+                                    <i class="bx bx-alert-triangle orangeIcon"></i>
+                                </div>
+                            </div>
+                            <div class="flex1">
+                                <div class="dFlexNoAlign flexWrap">
+
+                                    <div>
+                                        <h6 class="mb-0 h6Head font600 blackText">Missed Medication - Dextromethorphan
+                                        </h6>
+                                    </div>
+
+                                    <span class="carebadg orangeBorderBadg">
+                                        High
+                                    </span>
+
+
+                                    <div class="userMum ">
+                                        <span class="title bgWhite50 mt-0 hoverBg">
+                                            Allergy</span>
+                                    </div>
+                                </div>
+                                <p class="mb-2 fs14 textGray">Description details</p>
+                                <div class="lightBorderp bg-orange-70 fs12 p-2 rounded5 mt-3 mb-2">
+                                    <p class=" orangeIcon mb-0"><span class="font700 me-1">Required Action:</span> Administer medication immediately if still within safe window, otherwise contact prescriber </p>
+                                </div>
+
+                                <div>
+                                    <p class="mb-0 fs12 textGray verticalCenter"> <i class="bx bx-eye  me-1"></i>Requires acknowledgment before proceeding</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--critical medium risk-->
+                    <div class="redBorder borderLeftThick rounded8 bg-red-50 p-3 manageDSysAlrt">
+                        <div class="dFlexNoAlign">
+                            <div>
+                                <div class="bgIconStaffT" style="background-color: #fecaca;">
+                                    <i class="bx bx-alert-triangle darkRedText"></i>
+                                </div>
+                            </div>
+                            <div class="flex1">
+                                <div class="dFlexNoAlign flexWrap">
+
+                                    <div>
+                                        <h6 class="mb-0 h6Head font600 blackText">Missed Medication - Dextromethorphan
+                                        </h6>
+                                    </div>
+
+                                    <span class="carebadg orangeBorderBadg">
+                                        High
+                                    </span>
+
+
+                                    <div class="userMum ">
+                                        <span class="title bgWhite50 mt-0 hoverBg">
+                                            Allergy</span>
+                                    </div>
+                                </div>
+                                <p class="mb-2 fs14 textGray">Description details</p>
+                                <div class="lightBorderp bg-red-70 fs12 p-2 rounded5 mt-3 mb-2">
+                                    <p class="darkRedText mb-0"><span class="font700 me-1">Required Action:</span> Administer medication immediately if still within safe window, otherwise contact prescriber </p>
+                                </div>
+
+                                <div>
+                                    <p class="mb-0 fs12 textGray verticalCenter"> <i class="bx bx-eye  me-1"></i>Requires acknowledgment before proceeding</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--critical medium risk-->
+                    <div class="redBorder borderLeftThick rounded8 bg-red-50 p-3 manageDSysAlrt">
+                        <div class="dFlexNoAlign">
+                            <div>
+                                <div class="bgIconStaffT" style="background-color: #fecaca;">
+                                    <i class="bx bx-alert-triangle darkRedText"></i>
+                                </div>
+                            </div>
+                            <div class="flex1">
+                                <div class="dFlexNoAlign flexWrap">
+
+                                    <div>
+                                        <h6 class="mb-0 h6Head font600 blackText">Missed Medication - Dextromethorphan
+                                        </h6>
+                                    </div>
+
+                                    <span class="carebadg orangeBorderBadg">
+                                        High
+                                    </span>
+
+
+                                    <div class="userMum ">
+                                        <span class="title bgWhite50 mt-0 hoverBg">
+                                            Allergy</span>
+                                    </div>
+                                </div>
+                                <p class="mb-2 fs14 textGray">Description details</p>
+                                <div class="lightBorderp bg-red-70 fs12 p-2 rounded5 mt-3 mb-2">
+                                    <p class="darkRedText mb-0"><span class="font700 me-1">Required Action:</span> Administer medication immediately if still within safe window, otherwise contact prescriber </p>
+                                </div>
+
+                                <div>
+                                    <p class="mb-0 fs12 textGray verticalCenter"> <i class="bx bx-eye  me-1"></i>Requires acknowledgment before proceeding</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="borderBtn showMoreBtn w100">
+                        <i class="bx bx-chevron-down me-2 fs23"></i>
+                        <span>Show 9 More Alerts</span>
+                    </button>
+                    <div class="mt-3">
+                        <span class="fs12 redtext font600 me-2">2 Critical</span>
+                        <span class="fs12 orangeText font600 me-2">.1 High</span>
+                        <span class="fs12 muteText font600">. 7 Other</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- above part of tab -->
         <div class="calendarTabs leaveRequesttabs employeeDetailsTabs  m-t-20">
             <div class="clientOverTabs">
                 <div class="tabs p-1 ">
@@ -2713,7 +2920,7 @@
                                 <button class="btn allBtnUseColor"><i class='bx  bx-edit'></i> Edit Plan</button>
                             </div>
                         </div>
-                        <div class="CarePlanAllObjective" style="display: ;">
+                        <div class="CarePlanAllObjective">
                             <div class="assessmentDetails leave-card p-0">
                                 <header class="panel-heading headingCapitilize careTaskheader">
                                     <div class="clientHeadung">
@@ -8677,6 +8884,24 @@
             selectAll.checked = false;
         });
     </script>
+    <script>
+        const showMoreBtn = document.querySelector(".showMoreBtn");
+        const moreAllertsSec = document.querySelector(".moreAllertsSec");
+        const icon = showMoreBtn.querySelector("i");
+        const text = showMoreBtn.querySelector("span");
 
+        showMoreBtn.addEventListener("click", () => {
+            moreAllertsSec.classList.toggle("active");
+
+            const isOpen = moreAllertsSec.classList.contains("active");
+
+            // Update text
+            text.textContent = isOpen ? "Show less" : "Show 9 More Alerts";
+
+            // Update icon
+            icon.classList.toggle("bx-chevron-down", !isOpen);
+            icon.classList.toggle("bx-chevron-up", isOpen);
+        });
+    </script>
     @endsection
 </main>

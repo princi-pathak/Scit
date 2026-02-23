@@ -2624,8 +2624,8 @@ ul.inbox-pagination li {
 }
 
 .modal-header h4.modal-title {
-    font-weight: 300;
     font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
 }
 
 .modal-body label {
@@ -9666,6 +9666,7 @@ a.close.edit_dyn_form {
     border: 2px solid transparent;
     overflow: hidden;
     flex-grow: 1;
+    transition: 0.7s;
 }
 
 /* Background Blob */
@@ -9750,8 +9751,8 @@ a.close.edit_dyn_form {
 }
 
 .rota_dash-left .rota_title {
-    font-size: 15px;
-    color: #404040;
+    font-size: 13px;
+    color: var(--grayColor);
     margin-bottom: 4px;
     font-weight: 600;
 }
@@ -10768,7 +10769,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .leavebanktabCont h4 {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--muteText);
 
 }
@@ -14659,7 +14660,7 @@ header.panel-heading.headingCapitilize {
 .bgBtn {
     background-color: var(--blueColor);
     padding: 6px 16px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 13px;
     transition: 0.2s;
@@ -14765,7 +14766,7 @@ header.panel-heading.headingCapitilize {
     padding: 6px 16px;
     background: #fff;
     border: 1px solid var(--borderColor);
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 13px;
     transition: 0.2s;
@@ -15651,7 +15652,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .bgIconStaffT i {
-    font-size: 23px;
+    font-size: 21px;
 }
 
 .AllStaffTabC h5 {
@@ -15673,8 +15674,8 @@ header.panel-heading.headingCapitilize {
 }
 
 .bgIconStaffT {
-    height: 40px;
-    width: 40px;
+    height: 37px;
+    width: 37px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15856,6 +15857,10 @@ header.panel-heading.headingCapitilize {
 
 .fs16 {
     font-size: 16px;
+}
+
+.fs14 {
+    font-size: 14px;
 }
 
 .fs12 {
@@ -16328,6 +16333,10 @@ header.panel-heading.headingCapitilize {
 
 .rounded8 {
     border-radius: 8px;
+}
+
+.rounded5 {
+    border-radius: 5px;
 }
 
 .muteBg {
@@ -17151,4 +17160,180 @@ i {
     align-items: center;
     justify-content: center;
     color: var(--blueColor)
+}
+
+.manageDashCard .rota_dash-icon i {
+    color: unset;
+}
+
+.deletewithBorder:hover {
+    background-color: var(--lightRedp);
+}
+
+.deletewithBorder {
+    height: 32px;
+}
+
+.HighBorderCare {
+    border-left-color: var(--orangeReal) !important;
+    border-left-width: 4px !important;
+}
+
+.manageDashCard .rota_dash-card:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.manageDashCard .rota_dash-card {
+    box-shadow: var(--bxShadow) !important;
+}
+
+.leavebanktabCont .f18 {
+    font-size: 18px !important;
+}
+
+
+.shiftHeadIcon {
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff2b;
+}
+
+.whiteText {
+    color: #ffff;
+}
+
+.bluePurpleDarkGrad {
+    background: linear-gradient(273deg, rgba(153, 92, 247, 1) 41%, rgba(84, 119, 246, 1) 82%);
+}
+
+.modal-header.bluePurpleDarkGrad {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.sendShiftModal .modal-header h4 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.blueShadowLight {
+    /* box-shadow: 0px 2px 8px 0px #3b82f680; */
+    border: 2px solid #bfdbfe;
+    box-shadow: var(--bxShadow);
+}
+
+.darkBlueGrad {
+    background: linear-gradient(90deg, #60a5fa, #4289f7);
+
+}
+
+.orangeClrp {
+    background-color: #ffedd5;
+    color: var(--darkOrangep) !important;
+}
+
+.bgBtn.bluePurpleDarkGrad:hover {
+    background: linear-gradient(70deg, #2749d7, #7a24cf) !important;
+}
+
+.scrollDailyCheck {
+    min-height: 30vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 60vh;
+}
+
+.sendShiftCheck label:hover {
+    cursor: pointer;
+}
+
+.sendShiftCheck .lightBorderp:has(input:checked) {
+    border-color: var(--blueColor);
+    background-color: var(--lightblue);
+}
+
+.shiftBlueBadg {
+    background-color: var(--lightblue);
+    color: var(--blueColor);
+}
+
+.priorityBtn.shiftBlueBadg:hover,
+.priorityBtn.muteBadges:hover,
+.priorityBtn.highBadges:hover,
+.priorityBtn.redBadges:hover {
+    background-color: var(--blackBtnColor);
+    color: #fff;
+}
+
+.blackActive {
+    background-color: var(--blackBtnColor);
+    color: #fff;
+}
+
+.dropModalShift .issuesDetectedDrop button {
+    background-color: unset !important;
+    border: unset !important;
+    padding: unset !important;
+}
+
+.modal:nth-of-type(2) {
+    z-index: 1060;
+}
+
+#firstModal .modal-dialog {
+    z-index: 1040;
+    top: 50px;
+
+    position: relative;
+
+}
+
+#firstModalOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1045;
+    display: none;
+
+}
+
+
+#secondModal .modal-dialog {
+    z-index: 1050;
+}
+
+#secondModal .modal-content {
+    background-color: #ffffff;
+}
+
+.aiConflictMain .bg-orange-50 {
+    padding: 20px !important;
+    border: unset;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.aiConflictMain .rounded50 {
+    border-radius: 50% !important;
+}
+
+div#secondModal .modal-lg {
+    max-width: 770px !important;
+}
+
+.moreAllertsSec {
+    display: none;
+}
+
+.moreAllertsSec.active {
+    display: block;
 }

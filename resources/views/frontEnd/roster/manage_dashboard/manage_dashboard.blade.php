@@ -15,50 +15,50 @@
                 <p class="header-subtitle">Operational overview and key metrics</p>
             </div>
             <div class="header-actions">
-                <button class="btn allBtnUseColor">📊 Export</button>
-                <button class="btn">⚙️ Customize</button>
+                <button class="borderBtn"> <i class="bx bx-arrow-to-bottom f18 me-2"></i> Export</button>
+                <button class="borderBtn"> <i class="bx bx-cog f18 me-2"></i> Customize</button>
             </div>
         </div>
 
-        <div class="rota_dashboard-cards simpleCard">
+        <div class="rota_dashboard-cards simpleCard manageDashCard">
 
-            <div class="rota_dash-card blue">
+            <div class="rota_dash-card">
                 <div class="rota_dash-left">
-                    <p class="rota_title">Active Carers</p>
-                    <h2 class="rota_count">11</h2>
+                    <p class="rota_title fs12">Active Carers</p>
+                    <h2 class="rota_count mt-2">11</h2>
                 </div>
-                <div class="rota_dash-icon">
-                    <i class="fa fa-users"></i>
+                <div>
+                    <i class="bx bx-user-circle blueText fs30"></i>
                 </div>
             </div>
 
-            <div class="rota_dash-card green">
+            <div class="rota_dash-card">
                 <div class="rota_dash-left">
                     <p class="rota_title">Active Clients</p>
-                    <h2 class="rota_count">9</h2>
+                    <h2 class="rota_count mt-2">9</h2>
                 </div>
-                <div class="rota_dash-icon">
-                    <i class="fa fa-user"></i>
+                <div>
+                    <i class="bx bx-group greenTextp fs30"></i>
                 </div>
             </div>
 
-            <div class="rota_dash-card purple">
+            <div class="rota_dash-card">
                 <div class="rota_dash-left">
                     <p class="rota_title">Today's Shifts</p>
-                    <h2 class="rota_count">3</h2>
+                    <h2 class="rota_count mt-2">3</h2>
                 </div>
-                <div class="rota_dash-icon">
-                    <i class="fa fa-calendar"></i>
+                <div>
+                    <i class="bx bx-calendar-week purpleTextp fs30"></i>
                 </div>
             </div>
 
-            <div class="rota_dash-card orangeClr">
+            <div class="rota_dash-card">
                 <div class="rota_dash-left">
                     <p class="rota_title">Unfilled Shifts</p>
-                    <h2 class="rota_count">307</h2>
+                    <h2 class="rota_count mt-2 orangeText">307</h2>
                 </div>
-                <div class="rota_dash-icon">
-                    <i class="fa fa-exclamation-circle"></i>
+                <div>
+                    <i class="bx bx-alert-triangle orangeText fs30"></i>
                 </div>
             </div>
 
@@ -167,7 +167,7 @@
                                                 <span class="careBadg darkGreenBadges">Resolve (9)</span>
                                             </div>
                                             <div>
-                                                <i class='bx bx-x-circle f18 ms-2'></i>
+                                                <i class='bx bx-x-circle f18 ms-2' id="closeActionBox"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -206,10 +206,10 @@
 
                                             <div class="dFlexGap">
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                    <span class="title bgWhite hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
                                                 </div>
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                    <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -250,7 +250,7 @@
                                             <p class="darkGreenTextp verticalCenter  mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
                                             </p>
                                             <div class="userMum">
-                                                <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
+                                                <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
                                             </div>
                                         </div>
 
@@ -288,7 +288,7 @@
                                             <p class="darkGreenTextp verticalCenter  mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
                                             </p>
                                             <div class="userMum">
-                                                <span class="title bgWhite50 mt-0"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
+                                                <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
                                             </div>
                                         </div>
 
@@ -331,10 +331,10 @@
 
                                             <div class="dFlexGap">
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                    <span class="title bgWhite hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
                                                 </div>
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                    <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -374,10 +374,10 @@
 
                                             <div class="dFlexGap">
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                    <span class="title bgWhite hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
                                                 </div>
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                    <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -472,7 +472,7 @@
                                     <p class="fs12 textGray500 mb-0">01:30</p>
                                 </div>
                                 <div class="userMum">
-                                    <span class="title bgWhite50 mt-0 hoverBg">Doctor appointment</span>
+                                    <span class="title bgWhite mt-0 hoverBg">Doctor appointment</span>
                                 </div>
                             </div>
                         </div>
@@ -483,7 +483,7 @@
                                     <p class="fs12 textGray500 mb-0">01:30</p>
                                 </div>
                                 <div class="userMum">
-                                    <span class="title bgWhite50 mt-0 hoverBg">Doctor appointment</span>
+                                    <span class="title bgWhite mt-0 hoverBg">Doctor appointment</span>
                                 </div>
                             </div>
                         </div>
@@ -628,6 +628,7 @@
         const selectAll = document.getElementById('selectAll');
         const actionBox = document.getElementById('actionBox');
         const checks = document.querySelectorAll('.alertCheck');
+        const closeBtn = document.getElementById('closeActionBox');
 
         function updateSytemAlert() {
             const count = document.querySelectorAll('.alertCheck:checked').length;
@@ -646,6 +647,12 @@
                 selectAll.checked = total === checked;
                 updateSytemAlert();
             });
+        });
+        closeBtn.addEventListener('click', function() {
+            actionBox.style.display = 'none';
+
+            checks.forEach(cb => cb.checked = false);
+            selectAll.checked = false;
         });
     </script>
     @endsection

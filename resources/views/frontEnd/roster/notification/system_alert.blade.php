@@ -98,10 +98,10 @@
 
                                             <div class="dFlexGap">
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                    <span class="title bgWhite mt-0 hoverBg "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
                                                 </div>
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                    <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +142,7 @@
                                             <p class="darkGreenTextp verticalCenter  mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
                                             </p>
                                             <div class="userMum">
-                                                <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
+                                                <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
                                             </div>
                                         </div>
 
@@ -180,7 +180,7 @@
                                             <p class="darkGreenTextp verticalCenter  mb-2"> <i class="bx bx-check-circle  me-1"></i>Acknowledged
                                             </p>
                                             <div class="userMum">
-                                                <span class="title bgWhite50 mt-0"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
+                                                <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x fs16 me-2"></i> Resolve</span>
                                             </div>
                                         </div>
 
@@ -223,10 +223,10 @@
 
                                             <div class="dFlexGap">
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                    <span class="title bgWhite mt-0 hoverBg "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
                                                 </div>
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                    <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,10 +266,10 @@
 
                                             <div class="dFlexGap">
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 hoverBg mt-0 "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
+                                                    <span class="title bgWhite mt-0 hoverBg "><i class="bx bx-check-circle f18 me-2"></i>Acknowledge</span>
                                                 </div>
                                                 <div class="userMum ">
-                                                    <span class="title bgWhite50 mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
+                                                    <span class="title bgWhite mt-0 hoverBg"><i class="bx bx-x f18 me-2"></i> Resolve</span>
                                                 </div>
                                             </div>
                                         </div>
