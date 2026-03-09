@@ -10867,8 +10867,8 @@ header.panel-heading.headingCapitilize {
 }
 
 .leaveCommunStyle .modal-header>h4 {
-    color: #374151;
-    font-size: 18px;
+    color: var(--black);
+    font-size: 15px;
     font-weight: 600;
     display: flex;
     line-height: 20px;
@@ -13064,10 +13064,6 @@ header.panel-heading.headingCapitilize {
     border-left: 6px solid var(--iconPurpul);
 }
 
-.purpleBgBtn {
-    background: var(--iconPurpul);
-    color: var(--whiteBgBtncolor);
-}
 
 .aligniconMedication {
     display: flex;
@@ -14847,6 +14843,7 @@ header.panel-heading.headingCapitilize {
 .deleteIcon i {
     color: #dc2626;
     font-size: 17px;
+    vertical-align: baseline;
 }
 
 .deleteIcon {
@@ -15661,7 +15658,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .AllStaffTabC:hover {
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    box-shadow: 0px 8px 12px -6px rgba(0, 0, 0, 0.15);
 }
 
 .AllStaffTabC .borderBtn i,
@@ -15674,8 +15671,8 @@ header.panel-heading.headingCapitilize {
 }
 
 .bgIconStaffT {
-    height: 37px;
-    width: 37px;
+    height: 40px;
+    width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15916,6 +15913,15 @@ header.panel-heading.headingCapitilize {
 
 .blackBtn {
     background-color: var(--blackBtnColor);
+}
+
+.purpleBgBtn {
+    background: var(--iconPurpul);
+    color: var(--whiteBgBtncolor);
+}
+
+.purpleBgBtn:hover {
+    background-color: #7e22ce;
 }
 
 .blackBtn:hover {
@@ -16339,6 +16345,10 @@ header.panel-heading.headingCapitilize {
     border-radius: 5px;
 }
 
+.rounded12 {
+    border-radius: 12px;
+}
+
 .muteBg {
     background-color: #f9fafb;
 }
@@ -16700,10 +16710,8 @@ header.panel-heading.headingCapitilize {
     background-color: var(--lightGreenp);
 }
 
-
-
 .dailyLogList .bgIconStaffT i {
-    font-size: 20px !important;
+    font-size: 22px !important;
 }
 
 .blueDailyForm input,
@@ -17336,4 +17344,57 @@ div#secondModal .modal-lg {
 
 .moreAllertsSec.active {
     display: block;
+}
+
+.greenBox {
+    height: 30px;
+    width: 30px;
+    background-color: #22c55e;
+    border-radius: 50%;
+}
+
+.shadowp {
+    box-shadow: var(--bxShadow);
+}
+
+.virtGap {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.row-equal {
+    display: flex;
+    flex-wrap: wrap;
+    /* responsive ke liye */
+}
+
+.row-equal>[class*='col-lg-6'] {
+    display: flex;
+}
+
+.circleFill {
+    height: 30px;
+    width: 30px;
+    display: block;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-body,
+.modal-header {
+    padding: 24px !important;
+}
+
+.payRollAcood .bBorderCard+.bBorderCard {
+    margin-top: 10px !important;
+}
+
+@media (min-width: 992px) {
+    .modalMd {
+        width: 700px;
+        /* or whatever width you want */
+    }
 }

@@ -8889,7 +8889,6 @@
         const moreAllertsSec = document.querySelector(".moreAllertsSec");
         const icon = showMoreBtn.querySelector("i");
         const text = showMoreBtn.querySelector("span");
-
         showMoreBtn.addEventListener("click", () => {
             moreAllertsSec.classList.toggle("active");
 
