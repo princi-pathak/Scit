@@ -14724,6 +14724,10 @@ header.panel-heading.headingCapitilize {
     color: #6b7280;
 }
 
+.textGray400 {
+    color: #d1d5db;
+}
+
 .yellowText {
     color: var(--yellowclrdark);
 }
@@ -15854,6 +15858,10 @@ header.panel-heading.headingCapitilize {
 
 .fs16 {
     font-size: 16px;
+}
+
+.fs15 {
+    font-size: 15px;
 }
 
 .fs14 {
@@ -17397,4 +17405,71 @@ div#secondModal .modal-lg {
         width: 700px;
         /* or whatever width you want */
     }
+}
+
+.hoverBtn {
+    color: var(--blackBtnColor);
+    background: #fff;
+    padding: 7px 10px;
+    transition: 0.6s;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+.hoverBtn:hover {
+    background: #f1f1ef;
+}
+
+.uploadBox {
+    border: 2px dashed #d1d5db;
+    border-radius: 5px;
+    padding: 15px;
+
+    position: relative;
+    cursor: pointer;
+}
+
+.uploadBox i {
+    font-size: 25px;
+    color: #b5b5b5;
+}
+
+.uploadBox input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.recordingPart:hover {
+    border-color: var(--blueColor);
+}
+
+.muteHover:hover {
+    background-color: #f9fafb;
+}
+
+.preEmpMain .bg-blue-50:hover {
+    background-color: var(--blue70);
+}
+
+.dbsFormMain input,
+.dbsFormMain select,
+.dbsFormMain .uploadBox,
+.dbsFormMain input[type="checkbox"] {
+    background-color: transparent;
+}
+
+.dbsFormMain .uploadBox:hover {
+    background-color: #ffff !important;
+}
+
+.recordContent {
+    display: none;
+}
+
+.recordCard+.recordCard,
+.appendRow+.appendRow {
+    margin-top: 10px;
 }
