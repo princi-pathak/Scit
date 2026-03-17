@@ -507,7 +507,7 @@
           <li> <a href="#!"><i class='bx  bx-phone'></i> <span> Call Transcripts</span></a></li>
 
           <li class="header-menu"> <span>General</span> </li>
-          <li> <a href="#!"><i class='bx  bx-mobile'></i> <span>Staff Portal</span> </a></li>
+          <li> <a href="{{url('roster/staff-portal')}}"><i class='bx  bx-mobile'></i> <span>Staff Portal</span> </a></li>
           <li> <a href="{{ url('/roster/messaging-center') }}"><i class='bx  bx-message'></i> <span>Messaging
                 Center</span> </a></li>
           <li> <a href="{{ url('/roster/staff-task') }}"><i class='bx  bx-clipboard-detail'></i> <span>Staff

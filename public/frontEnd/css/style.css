@@ -2626,6 +2626,7 @@ ul.inbox-pagination li {
 .modal-header h4.modal-title {
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
+    font-weight: 700;
 }
 
 .modal-body label {
@@ -9475,6 +9476,8 @@ a.close.edit_dyn_form {
     --darkGray: #4b5563;
     --orangeReal: #f97316;
     --lightPurpleClr: #faf5ff;
+    --gray400: #d1d5db;
+    --gray500: #6b7280;
 }
 
 /* ******************Start Dashboard Css***************************** */
@@ -9486,7 +9489,7 @@ a.close.edit_dyn_form {
 }
 
 .topHeaderCont h1 {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 700;
     margin-top: 0;
     color: var(--black);
@@ -9646,7 +9649,7 @@ a.close.edit_dyn_form {
     font-size: 14px;
 }
 
-/* ****************************************************** */
+/* *******************************************************/
 .rota_dashboard-cards {
     display: flex;
     gap: 20px;
@@ -9662,11 +9665,11 @@ a.close.edit_dyn_form {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--bxShadow);
     border: 2px solid transparent;
     overflow: hidden;
     flex-grow: 1;
-    transition: 0.7s;
+    transition: 0.3s;
 }
 
 /* Background Blob */
@@ -12619,7 +12622,7 @@ header.panel-heading.headingCapitilize {
 
 .carePlanWrapper .planMeta {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     margin-top: 10px;
     font-size: 12.5px;
     color: #374151;
@@ -12630,7 +12633,7 @@ header.panel-heading.headingCapitilize {
     display: flex;
     gap: 18px;
     font-size: 12.5px;
-    color: #374151;
+    color: #6b7280;
 }
 
 .carePlanWrapper .planFooter span {
@@ -13061,7 +13064,7 @@ header.panel-heading.headingCapitilize {
 
 .planCard.borderleftPurple {
     border: 1px solid var(--iconPurpul);
-    border-left: 6px solid var(--iconPurpul);
+    border-left: 4px solid var(--iconPurpul);
 }
 
 
@@ -13069,6 +13072,16 @@ header.panel-heading.headingCapitilize {
     display: flex;
     line-height: 15px;
     gap: 7px;
+
+}
+
+.carePlanWrapper .aligniconMedication {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.carePlanWrapper .aligniconMedication i {
+    font-size: 16px;
 }
 
 .aligniconMedication i {
@@ -13079,7 +13092,7 @@ header.panel-heading.headingCapitilize {
     background: #eff6ff;
     padding: 9px 12px;
     border-radius: 8px;
-    font-size: 12px;
+    font-size: 13px;
     color: #000000;
     margin-top: 12px;
 }
@@ -14655,7 +14668,7 @@ header.panel-heading.headingCapitilize {
 /******************************************************************************** pratima css ********************************************************************************/
 .bgBtn {
     background-color: var(--blueColor);
-    padding: 6px 16px;
+    padding: 7px 16px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 13px;
@@ -14763,7 +14776,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .borderBtn {
-    padding: 6px 16px;
+    padding: 7px 16px;
     background: #fff;
     border: 1px solid var(--borderColor);
     border-radius: 6px;
@@ -14853,7 +14866,7 @@ header.panel-heading.headingCapitilize {
 .deleteIcon {
     padding: 5px 15px;
     border-radius: 8px;
-    transition: 0.7s;
+    transition: 0.4s;
     cursor: pointer;
     text-align: center;
 }
@@ -14900,7 +14913,7 @@ header.panel-heading.headingCapitilize {
     border: 1px solid var(--borderColor);
     padding: 20px;
     border-radius: 8px;
-    transition: 0.7s;
+    transition: 0.4s;
 }
 
 .progress_history>div div:nth-child(3) .careBadg {
@@ -14949,7 +14962,7 @@ header.panel-heading.headingCapitilize {
     color: #002b89;
     box-shadow: var(--bxShadow);
     font-weight: 600;
-    transition: 0.7s;
+    transition: 0.4s;
 }
 
 .userMum .title {
@@ -15594,7 +15607,7 @@ header.panel-heading.headingCapitilize {
     box-shadow: var(--bxShadow);
     border-radius: 12px;
     cursor: pointer;
-    transition: 0.7s;
+    transition: 0.4s;
 }
 
 .staffCardp:hover {
@@ -15763,7 +15776,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .redbadges {
-    color: var(--redColor);
+    color: #991b1b;
     background-color: #fee2e2;
 }
 
@@ -15785,6 +15798,12 @@ header.panel-heading.headingCapitilize {
 .darkGreenBadges {
     background-color: var(--darkbgGreen);
     color: #fff;
+}
+
+.darkVioletBadg {
+    background-color: #4f46e5;
+    color: #fff;
+
 }
 
 .darkYellowBadg {
@@ -15826,7 +15845,7 @@ header.panel-heading.headingCapitilize {
 }
 
 .mainTitlep {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 700;
     margin-top: 0;
     color: var(--black);
@@ -17411,10 +17430,11 @@ div#secondModal .modal-lg {
     color: var(--blackBtnColor);
     background: #fff;
     padding: 7px 10px;
-    transition: 0.6s;
+    transition: 0.4s;
     font-size: 13px;
     font-weight: 600;
     border-radius: 6px;
+    border: unset;
 }
 
 .hoverBtn:hover {
@@ -17424,8 +17444,7 @@ div#secondModal .modal-lg {
 .uploadBox {
     border: 2px dashed #d1d5db;
     border-radius: 5px;
-    padding: 15px;
-
+    padding: 10px;
     position: relative;
     cursor: pointer;
 }
@@ -17472,4 +17491,195 @@ div#secondModal .modal-lg {
 .recordCard+.recordCard,
 .appendRow+.appendRow {
     margin-top: 10px;
+}
+
+.darkYellowText {
+    color: #ca8a04;
+}
+
+.blueGradBtn {
+    background: linear-gradient(264deg, #9333ea, #2563eb);
+}
+
+.blueGradBtn:hover {
+    background: linear-gradient(264deg, #7e22ce, #1d4ed8);
+}
+
+.msgCardMain .rota_dash-card:hover {
+    transform: scale(1.08);
+    cursor: pointer;
+}
+
+.recordUploadSec a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--blueColor);
+    color: var(--blueColor);
+}
+
+.modal-header .hoverBtn {
+    padding: 10px 15px !important;
+    color: #000 !important;
+}
+
+.modal-header .hoverBtn:hover {
+    color: #000 !important;
+    opacity: 1;
+}
+
+.modalXl {
+    width: 85%;
+    margin: auto;
+}
+
+.circleBlue {
+    height: 35px;
+    width: 35px;
+    background: linear-gradient(120deg, #3b82f6, #2563eb);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.hrLine {
+    background: var(--borderColor) !important;
+}
+
+.checkIBox {
+    cursor: pointer;
+}
+
+.scrollBulkMsg {
+    min-height: 30px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.cardRow4 .card-col {
+    flex: 0 0 calc((100% - 45px) / 4);
+}
+
+.noData {
+    border: 1px solid var(--borderColor);
+    box-shadow: var(--bxShadow);
+    border-radius: 12px;
+    background: #fff;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.noData>div {
+    text-align: center;
+}
+
+.noData i {
+    font-size: 50px;
+    color: var(--gray400);
+}
+
+.noData p {
+    font-size: 15px;
+    color: var(--gray500);
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.borderBadg {
+    border: 1px solid var(--borderColor);
+    padding: 2px 10px;
+    color: var(--black);
+    font-size: var(--font13);
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.darkMuteBadg {
+    background-color: #9ca3af;
+    color: #fff;
+
+}
+
+.staffPortanEmer {
+    border: 2px solid var(--redColor);
+    border-radius: 8px;
+}
+
+.tabContainerp .content {
+    display: none;
+}
+
+.tabContainerp .content.active {
+    display: block;
+}
+
+.mainTabstaffPortal .muteBg {
+    background: #f5f5f5;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.mainTabstaffPortal .tab {
+    border: unset;
+    font-weight: 600;
+    color: var(--gray500);
+    font-size: 13px;
+    background: unset;
+    padding: 7px 5px;
+    white-space: nowrap;
+}
+
+.mainTabstaffPortal .tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mainTabstaffPortal button.tab.active {
+    background: #fff;
+    color: #000;
+    border-radius: 5px;
+}
+
+.scrollTabX {
+    overflow-x: auto;
+
+}
+
+.textGray600 {
+    color: #374151;
+}
+
+.rounded8TR {
+    border-radius: 8px 8px 0px 0px;
+}
+
+.mainTabstaffPortal .content h2 {
+    font-size: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.mainTabstaffPortal .content h2 i {
+    font-size: 22px;
+}
+
+.grayBtn {
+    background-color: var(--darkGray);
+    color: #fff;
+}
+
+.grayBtn:hover {
+    background-color: var(--blackBtnColor);
+
+}
+
+.safeGuardConForm {
+    border: 2px solid var(--lightBorderPurple);
+    border-radius: 8px;
 }

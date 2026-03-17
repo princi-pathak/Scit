@@ -107,7 +107,7 @@
                                 <i class="bx bx-lock fs23 orangeText"> </i>
                                 <div>
                                     <h6 class="h6Head mb-2">Jane Wakefield </h6>
-                                    <p class="mb-0 textGray500 fs13">jwake@gmail.co.uk</p>
+                                    <p class="mb-0 textGray500 fs13 mt-2">jwake@gmail.co.uk</p>
                                 </div>
                             </div>
                             <div class="dFlexGap flex1">
@@ -141,7 +141,109 @@
                                 <i class="bx bx-lock fs23 orangeText"> </i>
                                 <div>
                                     <h6 class="h6Head mb-2">Jane Wakefield </h6>
-                                    <p class="mb-0 textGray500 fs13">jwake@gmail.co.uk</p>
+                                    <p class="mb-0 textGray500 fs13 mt-2">jwake@gmail.co.uk</p>
+                                </div>
+                            </div>
+                            <div class="dFlexGap flex1">
+                                <div class="flex1">
+                                    <div class="progressBar" style="width:150px; margin-left:auto;">
+                                        <div class="progressFill" style="width:16%; background:#3376f2"></div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="fs13 font700 mb-2 blackText">0%</p>
+                                    <p class="fs13 mb-2 textGray500">0/5 complete</p>
+
+                                </div>
+                                <div>
+                                    <span class="careBadg darkOrangeBadg">Onboarding
+                                    </span>
+                                </div>
+                                <div>
+                                    <button class="borderBtn" data-toggle="modal" data-target="#manageModal">
+                                        <i class="bx bx-eye me-2 f18"></i>
+                                        Manage
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="emergencyMain p-3 AllStaffTabC ">
+                        <div class="flexBw align-items-center">
+                            <div class="dFlexGap flex1">
+
+                                <i class="bx bx-lock fs23 orangeText"> </i>
+                                <div>
+                                    <h6 class="h6Head mb-2">Jane Wakefield </h6>
+                                    <p class="mb-0 textGray500 fs13 mt-2">jwake@gmail.co.uk</p>
+                                </div>
+                            </div>
+                            <div class="dFlexGap flex1">
+                                <div class="flex1">
+                                    <div class="progressBar" style="width:150px; margin-left:auto;">
+                                        <div class="progressFill" style="width:16%; background:#3376f2"></div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="fs13 font700 mb-2 blackText">0%</p>
+                                    <p class="fs13 mb-2 textGray500">0/5 complete</p>
+
+                                </div>
+                                <div>
+                                    <span class="careBadg darkOrangeBadg">Onboarding
+                                    </span>
+                                </div>
+                                <div>
+                                    <button class="borderBtn" data-toggle="modal" data-target="#manageModal">
+                                        <i class="bx bx-eye me-2 f18"></i>
+                                        Manage
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="emergencyMain p-3 AllStaffTabC ">
+                        <div class="flexBw align-items-center">
+                            <div class="dFlexGap flex1">
+
+                                <i class="bx bx-lock fs23 orangeText"> </i>
+                                <div>
+                                    <h6 class="h6Head mb-2">Jane Wakefield </h6>
+                                    <p class="mb-0 textGray500 fs13 mt-2">jwake@gmail.co.uk</p>
+                                </div>
+                            </div>
+                            <div class="dFlexGap flex1">
+                                <div class="flex1">
+                                    <div class="progressBar" style="width:150px; margin-left:auto;">
+                                        <div class="progressFill" style="width:16%; background:#3376f2"></div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="fs13 font700 mb-2 blackText">0%</p>
+                                    <p class="fs13 mb-2 textGray500">0/5 complete</p>
+
+                                </div>
+                                <div>
+                                    <span class="careBadg darkOrangeBadg">Onboarding
+                                    </span>
+                                </div>
+                                <div>
+                                    <button class="borderBtn" data-toggle="modal" data-target="#manageModal">
+                                        <i class="bx bx-eye me-2 f18"></i>
+                                        Manage
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="emergencyMain p-3 AllStaffTabC ">
+                        <div class="flexBw align-items-center">
+                            <div class="dFlexGap flex1">
+
+                                <i class="bx bx-lock fs23 orangeText"> </i>
+                                <div>
+                                    <h6 class="h6Head mb-2">Jane Wakefield </h6>
+                                    <p class="mb-0 textGray500 fs13 mt-2">jwake@gmail.co.uk</p>
                                 </div>
                             </div>
                             <div class="dFlexGap flex1">
@@ -175,7 +277,7 @@
                             <div class="modal-content">
                                 <div class="modal-header p24">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title"> <i class="bx bx-user-check blueText blueText fs23 me-2"></i>Staff Onboarding: Sarah Johnson </h4>
+                                    <h4 class="modal-title"> <i class="bx bx-user-check blueText blueText fs23"></i>Staff Onboarding: Sarah Johnson </h4>
                                 </div>
                                 <div class="modal-body heightScrollModal p24" style="height: unset;">
                                     <!-- main modal content-->
@@ -313,7 +415,6 @@
                                     <!-- main modal content end -->
                                     <!-- continue part -->
                                     <div class="interViewMain" style="display: none;">
-
                                         <button class="hoverBtn backToOriginal" style="border: unset;"><i class="bx bx-arrow-left-stroke f18 me-2"></i> Back to Overview</button>
                                         <div>
                                             <form action="">
@@ -328,19 +429,22 @@
                                                         </div>
                                                         <h6 class="h6Head mb-0"> Interview Analysis </h6>
                                                         <div>
-                                                            <i class="bx bx-sparkles me-2 f20 yellowText"></i>
+                                                            <i class="bx bx-sparkles me-2 f18 yellowText"></i>
                                                         </div>
                                                     </div>
                                                     <!-- recording uploaded -->
-                                                    <div class="bg-greenp-50 p-4 rounded5 mt-4">
+                                                    <div class="bg-greenp-50 p-3 rounded5 mt-4 recordUploadSec">
                                                         <div class="flexBw">
                                                             <div>
-                                                                <p class="mb-0"><i class="bx bx-check-circle f20 me-1 greenText"></i>Recording uploaded</p>
+                                                                <p class="mb-0 fs13 blackText"><i class="bx bx-check-circle f20 me-1 greenText"></i>Recording uploaded</p>
                                                             </div>
                                                             <div>
-                                                                <a href="" class="blueText">View</a>
+                                                                <a href="" class="blueText fs13">View</a>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div class="mt-4">
+                                                        <button class="bgBtn blackBtn w100"><i class="bx bx-sparkles me-2 f18"></i> Transcribe & Analyze with AI </button>
                                                     </div>
                                                     <!-- without uploading video -->
                                                     <div>
@@ -355,7 +459,7 @@
                                                 <div class="shadowp rounded8  p24 mt20 lightBorderp">
                                                     <div class="dFlexGap">
                                                         <div>
-                                                            <i class="bx bx-file-detail f20 blueText"></i>
+                                                            <i class="bx bx-file-detail fs23 blueText"></i>
                                                         </div>
                                                         <h6 class="h6Head mb-0"> Pre-Employment Compliance Checks
                                                         </h6>
@@ -374,7 +478,6 @@
                                                             <div class="flex1">
                                                                 <label for="">Proof of Address *</label>
                                                                 <div class="uploadBox mb-2 text-center muteHover">
-
                                                                     <i class='bx bx-arrow-from-bottom'></i>
                                                                     <p class="fs13 mb-0 textGray500"> Upload Proof of Address</p>
                                                                     <input type="file">
@@ -386,7 +489,7 @@
                                                                 <label for="">Right to Work Document</label>
                                                                 <div class="uploadBox mb-2 text-center muteHover">
                                                                     <i class='bx bx-arrow-from-bottom'></i>
-                                                                    <p class="fs13 mb-0 textGray500"> Upload Photo ID</p>
+                                                                    <p class="fs13 mb-0 textGray500">Upload RTW Document</p>
                                                                     <input type="file">
                                                                 </div>
                                                             </div>
@@ -394,7 +497,7 @@
                                                                 <label for="">Application Form / CV</label>
                                                                 <div class="uploadBox mb-2 text-center muteHover">
                                                                     <i class='bx bx-arrow-from-bottom'></i>
-                                                                    <p class="fs13 mb-0 textGray500"> Upload Proof of Address</p>
+                                                                    <p class="fs13 mb-0 textGray500">Upload Application</p>
                                                                     <input type="file">
                                                                 </div>
                                                                 <div>
@@ -402,7 +505,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="mt-4 bg-blue-50 p-4 rounded5" style="border: unset;">
+                                                        <div class="mt-4 bg-blue-50 p-3 rounded5" style="border: unset;">
                                                             <label for="workRight">
                                                                 <div class="dFlexGap" style="cursor:pointer">
                                                                     <div>
@@ -416,7 +519,7 @@
                                                                 </div>
                                                             </label>
                                                         </div>
-                                                        <div class="mt-4 bg-blue-50 p-4 rounded5" style="border: unset;">
+                                                        <div class="mt-4 bg-blue-50 p-3 rounded5" style="border: unset;">
                                                             <label for="hisVerify">
                                                                 <div class="dFlexGap" style="cursor:pointer">
                                                                     <div>
@@ -444,7 +547,7 @@
                                             <div class="shadowp rounded8  p24 mt20 lightBorderp">
                                                 <div class="dFlexGap">
                                                     <div>
-                                                        <i class="bx bx-shield redText f20 "></i>
+                                                        <i class="bx bx-shield redText fs23 "></i>
                                                     </div>
                                                     <h6 class="h6Head mb-0">DBS Check & Employment References </h6>
                                                 </div>
@@ -598,7 +701,7 @@
                                             <div class="shadowp rounded8  p24 mt20 lightBorderp">
                                                 <div class="dFlexGap">
                                                     <div>
-                                                        <i class="bx bx-user-check purpleTextp f20 "></i>
+                                                        <i class="bx bx-user-check purpleTextp fs23 "></i>
                                                     </div>
                                                     <h6 class="h6Head mb-0">Induction & Competency Assessment</h6>
                                                 </div>
@@ -615,7 +718,7 @@
 
                                                         </div>
 
-                                                        <div class="shadowp lightBorderp p-3 appendRow rounded5" style="display: none;">
+                                                        <div class="shadowp lightBorderp p-3 appendRow rounded5">
                                                             <div class="row">
                                                                 <div class="col-lg-4">
                                                                     <label for="">Shift Date</label>
@@ -670,43 +773,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="checkItem muteBg p-2 mt-3 rounded5" style="border: none;">
-                                                                <div class="dFlexGap">
-                                                                    <div>
-                                                                        <input type="checkbox" class="checkBoxHw">
-                                                                    </div>
-                                                                    <div>
-                                                                        <p class="fs13 mb-0"> Fire safety and emergency procedures
-                                                                        </p>
-                                                                        <p class="mb-0 fs12 textGray500 completedDate" style="display:none;">Completed: 10/03/2026 </p>
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="checkItem muteBg p-2 mt-3 rounded5" style="border: none;">
-                                                                <div class="dFlexGap">
-                                                                    <div>
-                                                                        <input type="checkbox" class="checkBoxHw">
-                                                                    </div>
-                                                                    <div>
-                                                                        <p class="fs13 mb-0">
-                                                                            Health & safety tour </p>
-                                                                        <p class="mb-0 fs12 textGray500 completedDate" style="display:none;">Completed: 10/03/2026 </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="checkItem muteBg p-2 mt-3 rounded5" style="border: none;">
-                                                                <div class="dFlexGap">
-                                                                    <div>
-                                                                        <input type="checkbox" class="checkBoxHw">
-                                                                    </div>
-                                                                    <div>
-                                                                        <p class="fs13 mb-0">Data protection and confidentiality</p>
-                                                                        <p class="mb-0 fs12 textGray500 completedDate" style="display:none;">Completed: 10/03/2026 </p>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
 
                                                             <div class="checkItem muteBg p-2 mt-3 rounded5" style="border: none;">
                                                                 <div class="dFlexGap">
@@ -789,7 +856,7 @@
                                         <div class="shadowp rounded8  p24 mt20 lightBorderp">
                                             <div class="dFlexGap">
                                                 <div>
-                                                    <i class="bx bx-education purpleTextp f20 "></i>
+                                                    <i class="bx bx-education purpleTextp fs23 "></i>
                                                 </div>
                                                 <h6 class="h6Head mb-0">Mandatory Training (0/8)
                                                 </h6>

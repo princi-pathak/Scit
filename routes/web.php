@@ -48,6 +48,7 @@ use App\Http\Controllers\frontEnd\Roster\Staff\invoiceManagementController;
 use App\Http\Controllers\frontEnd\Roster\Staff\notificationAlertController;
 use App\Http\Controllers\frontEnd\Roster\Staff\clientonboardingController;
 use App\Http\Controllers\frontEnd\Roster\Staff\staffonboardingController;
+use App\Http\Controllers\frontEnd\Roster\Staff\StaffPortalController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -292,6 +293,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('staffonboarding', [staffonboardingController::class, 'index']);
 		// clientonboarding 
 		Route::get('clientonboarding', [clientonboardingController::class, 'index']);
+		// staff-portal
+		Route::get('staff-portal', [StaffPortalController::class, 'index']);
 	});
 
 	Route::post('/service/mood/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MoodController@saveMood')->name('mood.add');
