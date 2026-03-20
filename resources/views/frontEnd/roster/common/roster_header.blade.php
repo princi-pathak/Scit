@@ -525,6 +525,7 @@
           <li> <a href="{{ url('/roster/payroll-finance') }}"><i class='bx bx-file-detail'></i> <span>Payroll &
                 Finance</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-file-report'></i> <span>Reports</span> </a></li>
+          <li> <a href="{{url('/roster/onboarding-configuration')}}"><i class='bx bx-cog'></i><span>Onboarding Configuration</span></a></li>
           <li> <a href="{{url('/roster/staffonboarding')}}"><i class='bx  bx-file-report'></i> <span>Staff Onboarding</span> </a></li>
           <li> <a href="{{url('/roster/clientonboarding')}}"><i class='bx  bx-file-report'></i> <span>Client Onboarding</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-shield'></i> <span>Compliance Hub</span> </a></li>

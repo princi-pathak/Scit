@@ -181,15 +181,32 @@
                                                 <form action="">
                                                     <div class="row">
                                                         <div class="col-lg-12">
-                                                            <label for=""> Type of Concern *</label>
+                                                            <label for="" class="formLabel"> Type of Concern *</label>
                                                             <select name="" id="" class="form-control">
                                                                 <option value="">Physical Abuse</option>
                                                                 <option value="">Emotional and psychological Abuse</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-lg-12 m-t-10">
-                                                            <label for="">Person at Risk</label>
-                                                            <input type="text" class="form-control">
+                                                            <label for="" class="formLabel">Person at Risk</label>
+                                                            <input type="text" class="form-control" placeholder="Name of person you are concerned about">
+                                                        </div>
+                                                        <div class="col-lg-12 m-t-10">
+                                                            <label for="" class="formLabel">Description of Concern *</label>
+                                                            <textarea class="form-control" rows="3" cols="15" placeholder="Describe what you have seen, heard or been told. Include dates, times and any witnesses if known."></textarea>
+                                                        </div>
+                                                        <div class="col-lg-12 m-t-10">
+                                                            <label for="" class="formLabel">Any Witnesses? </label>
+                                                            <input type="text" class="form-control" placeholder="Names of any witnesses (optional)">
+                                                        </div>
+                                                        <div class="col-lg-12 m-t-10">
+                                                            <div class="dFlexGap">
+                                                                <input type="checkbox" class="checkBoxHW" id="immediateDanger">
+                                                                <label for="immediateDanger" class="formLabel mb-0">This person is in immediate danger</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 m-t-10">
+                                                            <button class="w100 bgBtn purpleBgBtn"> <i class="bx bx-send f18"></i> Submit Safeguarding Concern</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -212,7 +229,18 @@
                                 </div>
                                 <!-- end safeguarding content -->
                             </div>
-                            <div class="content" id="confidentialTab">Confidential Data</div>
+                            <div class="content" id="confidentialTab">
+                                <!-- confidential tab content -->
+                                <div class="noData mt20">
+                                    <div>
+                                        <i class="bx bx-lock"></i>
+                                        <h6 class="mt-4 mb-3 blackText fs16 font600">No Confidential Information</h6>
+                                        <p class="mb-0">You don't have any confidential information at the moment</p>
+                                    </div>
+                                </div>
+                                <!-- end confidential tab content -->
+
+                            </div>
                             <div class="content" id="updatesTab">Updates Data</div>
                             <div class="content" id="photosTab">Photos Data</div>
                             <div class="content" id="offlineTab">Offline Data</div>

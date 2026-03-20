@@ -249,9 +249,12 @@
                                                     <div class="role"> flipholt72@yahoo.co.uk</div>
                                                 </div>
                                             </div>
-                                            <span class="status greenShowbtn">
-                                                <i class='bx  bx-clock-4'></i> 5 days • 50h/week
-                                            </span>
+                                            <div class="dFlexGap">
+                                                <span class="status greenShowbtn">
+                                                    <i class='bx  bx-clock-4'></i> 5 days • 50h/week
+                                                </span>
+                                                <span class="careBadg muteBadges">No working hours set</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -575,11 +578,25 @@
 
                                 </div>
                             </div>
-
                             <div class="content" id="unavailabilityTab">
+                                <div class="shadowp bg-purple-50 rounded8 p24">
+                                    <p class="fs13 font600 darkPurpleTextp"> <i class="bx bx-calendar-week f18 me-2"></i> Approved Leave Requests </p>
+                                    <div class="bg-purple-50 bgWhite rounded5 p-3">
+                                        <div class="flexBw">
+                                            <div>
+                                                <h5 class="h5Head mb-2">Nov 7 - Nov 7, 2025</h5>
+                                                <p class="textGray500 fs13 mb-0">holiday</p>
+                                            </div>
+                                            <div>
+                                                <span class="careBadg purpleBadges">Via Leave System</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="leave-card">
                                     <div class="workHoursHeader">
                                         <!-- <div class="title"><i class="bx  bx-clipboard-detail"></i> Unavailability</div> -->
+
                                     </div>
                                 </div>
                             </div>
