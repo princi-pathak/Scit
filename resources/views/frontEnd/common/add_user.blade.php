@@ -625,7 +625,6 @@ $childSection = App\Models\ChildSection::where(['home_id' => Auth::user()->home_
             }
         }
     });
-
     tags.addEventListener('click', function(event) {
         if (event.target.classList.contains('delete-button')) {
             event.target.parentNode.remove();
