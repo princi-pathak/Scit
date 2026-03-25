@@ -284,7 +284,7 @@
                                                         <div class="flex1">
                                                             <label for="">Message Type </label>
                                                             <div class="priorityContainer">
-                                                                <div class="dFlexGap gap-2">
+                                                                <div class="dFlexGap gap-2 flexWrap">
                                                                     <div class="borderBtn priorityBtn" data-type="General">General</div>
                                                                     <div class="borderBtn priorityBtn" data-type="Announcement">Announcement</div>
                                                                     <div class="borderBtn priorityBtn" data-type="Urgent">Urgent</div>
@@ -296,7 +296,7 @@
                                                         <div class="flex1">
                                                             <label for="">Priority</label>
                                                             <div class="priorityContainer">
-                                                                <div class="dFlexGap gap-2">
+                                                                <div class="dFlexGap gap-2 flexWrap">
                                                                     <div class="borderBtn priorityBtn" data-type="low">Low</div>
                                                                     <div class="borderBtn priorityBtn" data-type="normal">Normal</div>
                                                                     <div class="borderBtn priorityBtn" data-type="high">High</div>

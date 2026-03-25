@@ -14801,10 +14801,9 @@ header.panel-heading.headingCapitilize {
 }
 
 .userMum h2 {
-    color: #000;
     font-weight: 600;
     margin: 0px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .emergencyContent {
@@ -16171,8 +16170,8 @@ header.panel-heading.headingCapitilize {
 
 
 .addReportCheck input[type="checkbox"] {
-    height: 13px;
-    width: 13px;
+    height: 15px;
+    width: 15px;
 }
 
 .addReportCheck .checkboxp label {
@@ -16193,12 +16192,6 @@ header.panel-heading.headingCapitilize {
     height: 40px;
     display: flex;
     align-items: center;
-}
-
-.addReportCheck input[type="checkbox"] {
-    height: unset;
-    width: unset;
-    margin: unset;
 }
 
 .pupleTextp {
@@ -17082,7 +17075,7 @@ header.panel-heading.headingCapitilize {
 
 .dFlexGap {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 1rem;
     align-items: center;
 }
@@ -17612,9 +17605,9 @@ div#secondModal .modal-lg {
     display: block;
 }
 
-.mainTabstaffPortal .muteBg {
+.mainTabstaffPortal .stfPlMainTabHeader {
     background: #f5f5f5;
-    border-radius: 8px 8px 0px 0px;
+    border-radius: 12px 12px 0px 0px;
 }
 
 .mainTabstaffPortal .tab {
@@ -17818,7 +17811,7 @@ div#secondModal .modal-lg {
 }
 
 .careRow>div {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 /* tag */
@@ -17870,4 +17863,26 @@ div#secondModal .modal-lg {
     margin-left: 6px;
     font-size: 17px;
     font-weight: 700;
+}
+
+.lightShadow {
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 3px;
+}
+
+.form-control {
+    font-size: 13px;
+}
+
+.inidgoBtn {
+    background-color: #4f46e5;
+}
+
+.inidgoBtn:hover {
+    background-color: #4338ca;
+}
+
+input[type="checkbox"] {
+    margin: 0px;
+    height: 15px;
+    width: 15px;
 }

@@ -30,8 +30,8 @@
             <div class="col-lg-12">
                 <!-- main tab -->
                 <div class="tabContainerp mainTabstaffPortal">
-                    <div class="shadowp lightBorderp rounded8">
-                        <div class="muteBg p-3 scrollTabX">
+                    <div class="shadowp lightBorderp rounded12">
+                        <div class="stfPlMainTabHeader p-3 scrollTabX">
                             <div class="tabs p-1">
                                 <button class="tab active" data-tab="myShiftsTab"><i class="bx bx-calendar-week"></i> My Shifts</button>
                                 <button class="tab" data-tab="careTasksTab"><i class="bx bx-heart"></i> Care Tasks</button>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <!-- tab content -->
-                        <div class="tab-content p24 bgWhite">
+                        <div class="tab-content p24 bgWhite rounded12">
                             <div class="content active" id="myShiftsTab">
                                 <!-- shift content -->
                                 <div class="shadowp rounded8 lightBorderp bgWhite">
@@ -147,14 +147,12 @@
                                         <div class="flexBw">
                                             <h2><i class="bx bx-shield me-2 purpleTextp"></i>Safeguarding</h2>
                                             <div>
-                                                <button class="bgBtn grayBtn cancelConnBtn" style="display: none;"> <i class="bx bx-alert-triangle"></i> Cancel</button>
+                                                <button class="bgBtn grayBtn cancelConnBtn" style="display: none;"> <i class="bx bx-alert-triangle me-2"></i> Cancel</button>
                                                 <button class="bgBtn bgRedBtn addReportBtn"> <i class="bx bx-alert-triangle"></i> Report a Concern</button>
                                             </div>
                                         </div>
-
                                     </div>
                                     <!-- danger red section start-->
-
                                     <div class="col-lg-12">
                                         <div class="bBorderCard mt20 urReqSec ">
                                             <div class="d-flex gap-3 urReqCon">
@@ -162,7 +160,7 @@
                                                     <i class="bx  bx-alert-triangle"></i>
                                                 </div>
                                                 <div>
-                                                    <h5 class="h5Head">If Someone is in Immediate Danger</h5>
+                                                    <h6 class="h6Head darkRedText">If Someone is in Immediate Danger</h6>
                                                     <div class="d-flex gap-4 mt-3 urReqDetails">
 
                                                         <span>Call 999 immediately. Do not wait. Then inform your manager and complete a safeguarding referral. </span>
@@ -202,14 +200,120 @@
                                                         <div class="col-lg-12 m-t-10">
                                                             <div class="dFlexGap">
                                                                 <input type="checkbox" class="checkBoxHW" id="immediateDanger">
-                                                                <label for="immediateDanger" class="formLabel mb-0">This person is in immediate danger</label>
+                                                                <label for="immediateDanger" class="formLabel mb-0" style="color: #a41d1d;">This person is in immediate danger</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 m-t-10">
-                                                            <button class="w100 bgBtn purpleBgBtn"> <i class="bx bx-send f18"></i> Submit Safeguarding Concern</button>
+                                                            <button class="w100 bgBtn purpleBgBtn"> <i class="bx bx-send f18 me-2"></i> Submit Safeguarding Concern</button>
                                                         </div>
                                                     </div>
                                                 </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="mt20 emergencyMain p-4">
+                                            <h5 class="h5Head mt-4"> <i class="bx bx-phone f20 blueText me-2"></i>Key Contacts</h5>
+                                            <div class="mt20 pt-4">
+                                                <div class="muteBg rounded8 p-3 bottomSpace">
+                                                    <div class="flexBw gap-3">
+                                                        <div>
+                                                            <h6 class="h6Head">Safeguarding Lead</h6>
+                                                            <p class="fs13 textGray500 mb-0">For all safeguarding concerns during office hours</p>
+                                                        </div>
+                                                        <div>
+                                                            <span class="borderBadg">Internal </span>
+                                                            <h6 class="h6Head blueText mt-3 mb-0">Extension 101</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="muteBg rounded8 p-3 bottomSpace">
+                                                    <div class="flexBw gap-3">
+                                                        <div>
+                                                            <h6 class="h6Head">Safeguarding Lead</h6>
+                                                            <p class="fs13 textGray500 mb-0">For all safeguarding concerns during office hours</p>
+                                                        </div>
+                                                        <div>
+                                                            <span class="borderBadg">Internal </span>
+                                                            <h6 class="h6Head blueText mt-3 mb-0">07XXX XXXXXX</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="muteBg rounded8 p-3 bottomSpace">
+                                                    <div class="flexBw gap-3">
+                                                        <div>
+                                                            <h6 class="h6Head">Safeguarding Lead</h6>
+                                                            <p class="fs13 textGray500 mb-0">For all safeguarding concerns during office hours</p>
+                                                        </div>
+                                                        <div>
+                                                            <span class="borderBadg">Internal </span>
+                                                            <h6 class="h6Head blueText mt-3 mb-0">0XXX XXX XXXX</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt20 emergencyMain p-4">
+                                            <h5 class="h5Head mt-4"> My Submitted Concerns </h5>
+                                            <div class="mt20 pt-4">
+                                                <div class="lightBorderp p-4 rounded8">
+                                                    <div class="flexBw">
+                                                        <p class="mb-0 fs13 textGray500">3/24/2026</p>
+                                                        <div>
+                                                            <span class="careBadg yellowBadges">Reported</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt20 emergencyMain p-4">
+                                            <h5 class="h5Head mt-4"> <i class="bx bx-file-detail f20 textGray600 me-2"></i> Safeguarding Resources</h5>
+                                            <div class="row mt20 careRow pt-4">
+                                                <div class="col-lg-6">
+                                                    <div class="emergencyMain p-4 hoverBg cursorPointer lightShadow ">
+                                                        <div class="dFlexGap">
+                                                            <i class="bx bx-file-detail f18 blueText"></i>
+                                                            <div>
+                                                                <h6 class="h6Head mb-2">Safeguarding Policy</h6>
+                                                                <p class="mb-0 fs13 textGray500 font600">Read our full policy document</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="emergencyMain p-4 hoverBg cursorPointer lightShadow ">
+                                                        <div class="dFlexGap">
+                                                            <i class="bx bx-file-detail f18 greenTextp"></i>
+                                                            <div>
+                                                                <h6 class="h6Head mb-2">Safeguarding Policy</h6>
+                                                                <p class="mb-0 fs13 textGray500 font600">Read our full policy document</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="emergencyMain p-4 hoverBg cursorPointer lightShadow ">
+                                                        <div class="dFlexGap">
+                                                            <i class="bx bx-file-detail f18 purpleTextp"></i>
+                                                            <div>
+                                                                <h6 class="h6Head mb-2">Safeguarding Policy</h6>
+                                                                <p class="mb-0 fs13 textGray500 font600">Read our full policy document</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="emergencyMain p-4 hoverBg cursorPointer lightShadow ">
+                                                        <div class="dFlexGap">
+                                                            <i class="bx bx-arrow-out-up-right-square f18 orangeText"></i>
+                                                            <div>
+                                                                <h6 class="h6Head mb-2">Safeguarding Policy</h6>
+                                                                <p class="mb-0 fs13 textGray500 font600">Read our full policy document</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -217,8 +321,6 @@
 
                                     <!--end safeguarding form section -->
                                 </div>
-
-
                                 <!-- no data -->
                                 <div class="noData mt20">
                                     <div>
@@ -231,6 +333,129 @@
                             </div>
                             <div class="content" id="confidentialTab">
                                 <!-- confidential tab content -->
+                                <div>
+                                    <h2><i class="bx bx-lock me-2 violetText"></i>Raise a Confidential Issue</h2>
+                                    <!-- violet part -->
+                                    <div class="mt20 bg-violet-70 rounded12 lightBorderp borderLeftThick p-4" style="border-color: #6366f1">
+                                        <div class="dFlexGap violetText align-items-start">
+                                            <div>
+                                                <i class="bx bx-shield fs23"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="h6Head violetText">Your Privacy is Protected</h6>
+                                                <p class="mb-0 fs13 ">All issues raised here are treated with strict confidentiality. Only the designated recipient will have access to your submission. You can choose to remain anonymous if you prefer.</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- end violet part -->
+                                    <!-- confidential form -->
+                                    <div class="emergencyMain p-4 mt20">
+                                        <h5 class="h5Head mt-4">Submit Your Concern</h5>
+                                        <form action="">
+                                            <div class="row mt20 pt-4">
+                                                <div class="col-lg-12">
+                                                    <label class="formLabel">Category of Issue *</label>
+                                                    <div class="heathOff">
+                                                        <select name="" id="" class="form-control">
+                                                            <option value="">Select Category of Issue</option>
+                                                            <option value="1">Bullying or harassment</option>
+                                                            <option value="2">Discrimination</option>
+                                                            <option value="3"> Concerns About Management</option>
+                                                        </select>
+                                                        <div class="bg-blue-50 p-4 rounded8 m-t-10 heathOffCon shadowp" style="display: none;">
+                                                            <h6 class="h6Head darkBlueTextp mb-2"><i class="bx bx-user-check me-2 blueText f18"></i> This will be sent to: Health & Safety Officer</h6>
+                                                            <p class="mb-0 blueText fs13">Health and safety concerns for investigation</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 m-t-10">
+                                                    <label class="formLabel">Subject *</label>
+                                                    <input type="text" class="form-control" placeholder="Brief subject line for your issue">
+                                                </div>
+                                                <div class="col-lg-12 m-t-10">
+                                                    <label class="formLabel">Subject *</label>
+                                                    <textarea name="notes" id="" placeholder="Please provide as much detail as possible. Include dates, times, names, and any evidence you may have." class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-lg-6 m-t-10">
+                                                    <label class="formLabel">Urgency</label>
+                                                    <select name="" id="" class="form-control">
+                                                        <option value="">Normal</option>
+                                                        <option value="">Urgent</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-6 m-t-10">
+                                                    <label class="formLabel">Preferred Contact Method</label>
+                                                    <select name="" id="" class="form-control">
+                                                        <option value="">Email</option>
+                                                        <option value="">Phone Call</option>
+                                                        <option value="">In-Person Meeting</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-12 m-t-10">
+                                                    <div class="muteBg rounded5 p-3">
+                                                        <div class="dFlexGap">
+                                                            <div>
+                                                                <input type="checkbox" id="submitAnony" class="checkBoxHW submitAnonyC">
+                                                            </div>
+                                                            <div>
+                                                                <label class="formLabel cursorPointer" for="submitAnony"> <i class="bx f18 eyesBtn"></i> Submit anonymously</label>
+                                                            </div>
+                                                            <div>
+                                                                <span class="careBadg muteBadges confidentialBadg" style="display: none;">Your identity will be hidden</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mt-4">
+                                                    <button class="w100 bgBtn inidgoBtn"> <i class="bx bx-send f18 me-2"></i> Submit Confidentially</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="mt20 emergencyMain p-4">
+                                        <h5 class="h5Head mt-4">External Support & Advice</h5>
+                                        <div class="mt20 pt-4">
+                                            <p class="fs13 textGray500">If you don't feel comfortable raising an issue internally, or need independent advice, these external organisations can help: </p>
+                                            <div class="muteBg rounded8 p-3 bottomSpace mt-4">
+                                                <div class="flexBw gap-3">
+                                                    <div>
+                                                        <h6 class="h6Head">ACAS </h6>
+                                                        <p class="fs13 textGray500 mb-0">For all safeguarding concerns during office hours</p>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="h6Head blueText mb-0">Extension 101</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="muteBg rounded8 p-3 bottomSpace">
+                                                <div class="flexBw gap-3">
+                                                    <div>
+                                                        <h6 class="h6Head">Protect (Whistleblowing Charity)</h6>
+                                                        <p class="fs13 textGray500 mb-0">For all safeguarding concerns during office hours</p>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="h6Head blueText mb-0">07XXX XXXXXX</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="muteBg rounded8 p-3 bottomSpace">
+                                                <div class="flexBw gap-3">
+                                                    <div>
+                                                        <h6 class="h6Head">CQC</h6>
+                                                        <p class="fs13 textGray500 mb-0">For all safeguarding concerns during office hours</p>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="h6Head blueText mb-0">0XXX XXX XXXX</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end  confidential form-->
+                                </div>
+                                <!-- no data -->
                                 <div class="noData mt20">
                                     <div>
                                         <i class="bx bx-lock"></i>
@@ -241,7 +466,38 @@
                                 <!-- end confidential tab content -->
 
                             </div>
-                            <div class="content" id="updatesTab">Updates Data</div>
+                            <div class="content" id="updatesTab">
+                                <div class="flexBw mb-4">
+                                    <div>
+                                        <h6 class="h6Head">Today's Schedule</h6>
+
+                                    </div>
+                                    <div>
+                                        <button class="hoverBtn"><i class="bx bx-refresh-cw me-2 fs16"></i> Refresh</button>
+                                    </div>
+                                </div>
+
+                                <!-- no data -->
+                                <div class="noData mt20" style="background-color: #f9fafb;">
+                                    <div>
+                                        <i class="bx bx-clock"></i>
+                                        <p class=" mb-0">No shifts scheduled for today</p>
+                                    </div>
+                                </div>
+                                <!-- end no data -->
+                                <!-- real time update -->
+                                <div class="shadowp aIInsightsheader p-4 rounded8 mt20" style="border: 1px solid #ddd;">
+                                    <div class="dFlexGap purpleTextp align-items-start">
+                                        <div>
+                                            <i class="bx bx-pulse purpleTextp fs23"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="h6Head darkPurpleTextp">Real-Time Updates</h6>
+                                            <p class="fs13 mb-0">Updates are automatically shared with the care team and management. Use quick buttons for common updates or write custom notes for detailed information.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="content" id="photosTab">Photos Data</div>
                             <div class="content" id="offlineTab">Offline Data</div>
 
@@ -263,13 +519,10 @@
                         </div>
                         <div class="modal-body p24 pt-0">
                             <p class="fs15 font600 textGray600">This will immediately alert all managers to your location and situation.</p>
-
-
                             <div>
                                 <label>You can add additional notes if needed:</label>
                                 <textarea rows="3" cols="20" placeholder="Optional: Describe the situation..." class="form-control m-t-10"></textarea>
                             </div>
-
                         </div>
                         <div class="modal-footer p24 pt-0 dFlexGap justify-content-end" style="border-top: unset;">
                             <button class="borderBtn" data-dismiss="modal"> Cancel</button>
@@ -318,6 +571,40 @@
                 addReportBtn.style.display = "inline-block";
                 safeGuardConForm.style.display = "none";
             })
+        </script>
+        <script>
+            const checkbox = document.querySelector(".submitAnonyC");
+            const badge = document.querySelector(".confidentialBadg");
+            const eyesBtn = document.querySelector(".eyesBtn");
+            console.log(eyesBtn);
+
+            checkbox.addEventListener("change", function() {
+
+                if (checkbox.checked) {
+                    badge.style.display = "inline-block";
+                    eyesBtn.classList.add("bx-eye-slash")
+
+                    eyesBtn.classList.remove("bx-eye");
+                } else {
+                    badge.style.display = "none";
+                    eyesBtn.classList.add("bx-eye")
+                    eyesBtn.classList.remove("bx-eye-slash")
+
+                }
+
+            });
+        </script>
+        <script>
+            const select = document.querySelector(".heathOff select");
+            const box = document.querySelector(".heathOffCon");
+            select.addEventListener("change", function() {
+                if (this.value !== "") {
+                    box.style.display = "block";
+                } else {
+                    box.style.display = "none";
+                }
+
+            });
         </script>
     </div>
 

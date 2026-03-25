@@ -21,8 +21,8 @@
                     <div class="calendarTabs onBoardConTabHor">
                         <div class="tabs p-1 ">
                             <div class="dFlexGap onBoardTabBtn">
-                                <button class="tab active" data-tab="generalTab"> <i class="bx bx-group f18"></i> Staff Workflows </button>
-                                <button class="tab " data-tab="availabilityTab"> <i class="bx bx-user-circle f18"></i> Client Workflows </button>
+                                <button class="tab configureBtn active"> <i class="bx bx-group f18"></i> Staff Workflows </button>
+                                <button class="tab configureBtn"> <i class="bx bx-user-circle f18"></i> Client Workflows </button>
                             </div>
                         </div>
                         <div class="mt20">
@@ -47,8 +47,8 @@
                         <div>
                             <div class="row mt20">
                                 <div class="col-lg-4">
-                                    <div class="tab-content carertabcontent">
-                                        <div class="content active" id="generalTab">
+                                    <div>
+                                        <div>
                                             <!-- staff list  -->
                                             <div class="workflowList">
                                                 <div class="workflowItem active" data-id="1" data-target="wf">
@@ -68,7 +68,7 @@
                                                         <div class="flexBw mb-2">
                                                             <h6 class="h6Head mb-0">Supported Staff Onboarding</h6>
                                                             <div>
-                                                                <span class="careBadg darkGreenBadges">Active</span>
+                                                                <span class="careBadg darkMuteBadg">Inactive</span>
                                                             </div>
                                                         </div>
                                                         <p class="mb-0 muchsmallText">5 stage . domiciliary</p>
@@ -84,54 +84,12 @@
                                                             </div>
                                                         </div>
                                                         <p class="mb-0 muchsmallText">5 stage . domiciliary</p>
-
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- end  staff list -->
                                         </div>
-                                        <div class="content" id="availabilityTab">
-                                            <!-- client list  -->
-                                            <div class="workflowList">
-                                                <div class="workflowItem active" data-id="1" data-target="wfTab2_">
-                                                    <div class="emergencyMain p-4">
-                                                        <div class="flexBw mb-2">
-                                                            <h6 class="h6Head mb-0">Domiciliary Client Onboarding</h6>
-                                                            <div>
-                                                                <span class="careBadg darkGreenBadges">Active</span>
-                                                            </div>
-                                                        </div>
-                                                        <p class="mb-0 muchsmallText">5 stage . domiciliary</p>
 
-                                                    </div>
-                                                </div>
-                                                <div class="workflowItem" data-id="2" data-target="wfTab2_">
-                                                    <div class="emergencyMain p-4">
-                                                        <div class="flexBw mb-2">
-                                                            <h6 class="h6Head mb-0">Supported Client Onboarding</h6>
-                                                            <div>
-                                                                <span class="careBadg darkGreenBadges">Active</span>
-                                                            </div>
-                                                        </div>
-                                                        <p class="mb-0 muchsmallText">5 stage . domiciliary</p>
-
-                                                    </div>
-                                                </div>
-                                                <div class="workflowItem" data-id="3" data-target="wfTab2_">
-                                                    <div class="emergencyMain p-4">
-                                                        <div class="flexBw mb-2">
-                                                            <h6 class="h6Head mb-0">Resident Client Onboarding</h6>
-                                                            <div>
-                                                                <span class="careBadg darkGreenBadges">Active</span>
-                                                            </div>
-                                                        </div>
-                                                        <p class="mb-0 muchsmallText">5 stage . domiciliary</p>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end client list -->
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -380,255 +338,15 @@
                                                 <!-- workflow details end -->
                                             </div>
                                         </div>
-                                        <!-- client details  -->
-                                        <div class="wfContent2 active" id="wfTab2_1">
-                                            <div class="emergencyMain p24">
-                                                <div class="flexBw">
-                                                    <h6 class="h6Head mb-0"> Domiciliary Client Onboarding </h6>
-                                                    <div class="dFlexGap">
-                                                        <div>
-                                                            <button class="borderBtn">Deactivate</button>
-                                                        </div>
-                                                        <div>
-                                                            <button class="bgBtn redBtn"><i class="bx bx-trash" style="font-size: 17px;"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mt20">
-                                                    <div class="flexBw align-items-center">
-                                                        <p class="mb-0 h6Head">Workflow Stages</p>
-                                                        <div>
-                                                            <button class="bgBtn blackBtn"><i class="bx bx-plus me-2"></i>Add Stage</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- workflow list detail -->
-                                                <div class="mt20">
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">1. Probation Review <span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">2. Pre-Employment Checks <span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">3. stagen <span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="worFlowFooter">
-                                                        <div class="flexBw">
-                                                            <p class="mb-0 font700 fs13">Auto-activate on completion</p>
-                                                            <div>
-                                                                <label class="mySwitch">
-                                                                    <input type="checkbox" checked>
-                                                                    <span class="slider round"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- workflow details end -->
+                                        <div class="noData">
+                                            <div>
+                                                <i class="bx bx-cog"></i>
+                                                <p class="mb-0">Select a workflow to configure</p>
                                             </div>
-                                        </div>
-
-                                        <div class="wfContent2" id="wfTab2_2">
-                                            <div class="emergencyMain p24">
-                                                <div class="flexBw">
-                                                    <h6 class="h6Head mb-0"> Domiciliary Client Onboarding </h6>
-                                                    <div class="dFlexGap">
-                                                        <div>
-                                                            <button class="borderBtn">Deactivate</button>
-                                                        </div>
-                                                        <div>
-                                                            <button class="bgBtn redBtn"><i class="bx bx-trash" style="font-size: 17px;"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mt20">
-                                                    <div class="flexBw align-items-center">
-                                                        <p class="mb-0 h6Head">Workflow Stages</p>
-                                                        <div>
-                                                            <button class="bgBtn blackBtn"><i class="bx bx-plus me-2"></i>Add Stage</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- workflow list detail -->
-                                                <div class="mt20">
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">1. Probation Review <span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">2. Pre-Employment Checks <span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">3. stagen <span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="worFlowFooter">
-                                                        <div class="flexBw">
-                                                            <p class="mb-0 font700 fs13">Auto-activate on completion</p>
-                                                            <div>
-                                                                <label class="mySwitch">
-                                                                    <input type="checkbox" checked>
-                                                                    <span class="slider round"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- workflow details end -->
-                                            </div>
-                                        </div>
-
-                                        <div class="wfContent2" id="wfTab2_3">
-                                            <div class="emergencyMain p24">
-                                                <div class="flexBw">
-                                                    <h6 class="h6Head mb-0"> Domiciliary Client Onboarding </h6>
-                                                    <div class="dFlexGap">
-                                                        <div>
-                                                            <button class="borderBtn">Deactivate</button>
-                                                        </div>
-                                                        <div>
-                                                            <button class="bgBtn redBtn"><i class="bx bx-trash" style="font-size: 17px;"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mt20">
-                                                    <div class="flexBw align-items-center">
-                                                        <p class="mb-0 h6Head">Workflow Stages</p>
-                                                        <div>
-                                                            <button class="bgBtn blackBtn"><i class="bx bx-plus me-2"></i>Add Stage</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- workflow list detail -->
-                                                <div class="mt20">
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">1.Mandatory Training <span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">2. Mandatory Training <span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="emergencyMain p-4 bottomSpace">
-                                                        <div class="flexBw">
-                                                            <h6 class="h6Head mb-0">3.Induction<span class="borderBadg ms-2">Required </span></h6>
-                                                            <div class="dFlexGap onBoardIcons mb-3">
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="bx bx-arrow-left f20" style="transform: rotate(-90deg);"></i></button>
-                                                                <button class="hoverBtn"><i class="fa fa-pencil-square-o f20"> </i> </button>
-                                                                <button class="hoverBtn"><i class="fa fa-trash-o f20"> </i> </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <p class="muteText mb-2">ID verification, right to work, application form</p>
-                                                        <p class="muchsmallText mb-0">Entity: PreEmploymentCompliance</p>
-                                                    </div>
-                                                    <div class="worFlowFooter">
-                                                        <div class="flexBw">
-                                                            <p class="mb-0 font700 fs13">Auto-activate on completion</p>
-                                                            <div>
-                                                                <label class="mySwitch">
-                                                                    <input type="checkbox" checked>
-                                                                    <span class="slider round"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- workflow details end -->
-                                            </div>
-
-                                            <!-- workflow details end -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <!-- END TAB CONTENT -->
                     </div>
@@ -698,63 +416,45 @@
         </div>
         <!-- end add stage -->
     </div>
-
     <script>
-        document.querySelectorAll(".tab").forEach(tab => {
-            tab.addEventListener("click", () => {
-                // Activate clicked tab button
-                document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-                tab.classList.add("active");
+        document.querySelectorAll(".workflowItem").forEach(item => {
 
-                document.querySelectorAll(".content").forEach(c => c.classList.remove("active"));
-                const tabId = tab.dataset.tab;
-                document.getElementById(tabId).classList.add("active");
+            item.addEventListener("click", function() {
 
-                document.querySelectorAll(".wfContent, .wfContent2").forEach(d => d.classList.remove("active"));
+                let id = this.dataset.id;
+                let target = this.dataset.target; // wf
 
-                const activeLeftPanel = document.getElementById(tabId);
-                const firstItem = activeLeftPanel.querySelector(".workflowItem");
+                // remove active from all menu
+                document.querySelectorAll(".workflowItem")
+                    .forEach(el => el.classList.remove("active"));
 
-                if (firstItem) {
+                this.classList.add("active");
 
-                    activeLeftPanel.querySelectorAll(".workflowItem").forEach(i => i.classList.remove("active"));
-                    firstItem.classList.add("active");
-                    const prefix = firstItem.dataset.target || "wf";
-                    const id = firstItem.dataset.id;
-                    const detailId = prefix + id;
+                // hide all contents
+                document.querySelectorAll(".wfContent")
+                    .forEach(c => c.classList.remove("active"));
 
-                    const detailElement = document.getElementById(detailId);
-                    if (detailElement) {
-                        detailElement.classList.add("active");
-                    }
-                }
+                // show selected content
+                let content = document.getElementById(target + id); // wf1
+                if (content) content.classList.add("active");
+
             });
+
         });
     </script>
     <script>
-        document.querySelectorAll(".workflowItem").forEach(item => {
-            item.addEventListener("click", () => {
-                const parentContent = item.closest(".content");
-                parentContent.querySelectorAll(".workflowItem").forEach(i => i.classList.remove("active"));
-                item.classList.add("active");
-                const targetPrefix = item.dataset.target || "wf";
-                document.querySelectorAll(`[id^="${targetPrefix}"]`).forEach(d => d.classList.remove("active"));
-                const id = item.dataset.id;
-                const targetElement = document.getElementById(targetPrefix + id);
-                if (targetElement) {
-                    targetElement.classList.add("active");
-                }
-            });
-            const activeTabContent = document.querySelector(".content.active");
-            if (!activeTabContent) return;
-            let activeItem = activeTabContent.querySelector(".workflowItem.active");
-            if (!activeItem) {
-                activeItem = activeTabContent.querySelector(".workflowItem"); // fallback to first one
-            }
+        document.querySelectorAll(".configureBtn").forEach(btn => {
 
-            if (activeItem) {
-                activeItem.click();
-            }
+            btn.addEventListener("click", function() {
+
+                document.querySelectorAll(".configureBtn")
+                    .forEach(b => b.classList.remove("active"));
+
+                // add active to clicked
+                this.classList.add("active");
+
+            });
+
         });
     </script>
 </main>
