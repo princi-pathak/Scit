@@ -6,7 +6,7 @@
 <main class="page-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="staffHeaderp">
                     <div>
                         <div class="d-flex gap-2 mb-3">
@@ -23,7 +23,7 @@
         </div>
         <!-- card -->
         <div class="row mt20">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="card-row cardRow4">
                     <div class="card-col">
                         <div class="emergencyMain p-4">
@@ -72,7 +72,7 @@
         </div>
         <!-- search bar -->
         <div class="row mt20">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="dFlexGap">
                     <div class="input-group searchWithtabs flex1 shadowp">
                         <span class="input-group-addon btn-white"><i class="fa fa-search"></i></span>
@@ -103,12 +103,12 @@
         </div>
         <!--  all staff stripe  -->
         <div class="row mt20">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="virtGap">
                     <!-- residential -->
                     <div class="emergencyMain p-3 AllStaffTabC ">
-                        <div class="flexBw align-items-center">
-                            <div class="dFlexGap flex1">
+                        <div class="flexBw align-items-center flexWrap gap-3">
+                            <div class="dFlexGap">
 
                                 <i class="bx bx-alert-circle fs23 orangeText"> </i>
                                 <div>
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dFlexGap flex1">
+                            <div class="dFlexGap">
                                 <div class="flex1">
                                     <div class="progressBar" style="width:150px; margin-left:auto;">
                                         <div class="progressFill" style="width:16%; background:#3376f2"></div>
@@ -156,9 +156,8 @@
                         </div>
                     </div>
                     <div class="emergencyMain p-3 AllStaffTabC ">
-                        <div class="flexBw align-items-center">
-                            <div class="dFlexGap flex1">
-
+                        <div class="flexBw align-items-center flexWrap gap-3">
+                            <div class="dFlexGap">
                                 <i class="bx bx-alert-circle fs23 orangeText"> </i>
                                 <div>
                                     <h6 class="h6Head mb-2">Jane Wakefield <span class="careBadg darkBlueBadg ms-2">Residential</span></h6>
@@ -180,8 +179,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dFlexGap flex1">
-                                <div class="flex1">
+                            <div class="dFlexGap">
+                                <div>
                                     <div class="progressBar" style="width:150px; margin-left:auto;">
                                         <div class="progressFill" style="width:16%; background:#3376f2"></div>
                                     </div>
@@ -205,8 +204,8 @@
                         </div>
                     </div>
                     <div class="emergencyMain p-3 AllStaffTabC ">
-                        <div class="flexBw align-items-center">
-                            <div class="dFlexGap flex1">
+                        <div class="flexBw align-items-center flexWrap gap-3">
+                            <div class="dFlexGap">
 
                                 <i class="bx bx-check-circle fs23 greenText"> </i>
                                 <div>
@@ -229,8 +228,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dFlexGap flex1">
-                                <div class="flex1">
+                            <div class="dFlexGap">
+                                <div>
                                     <div class="progressBar" style="width:150px; margin-left:auto;">
                                         <div class="progressFill" style="width:16%; background:#3376f2"></div>
                                     </div>
@@ -255,8 +254,8 @@
                     </div>
                     <!-- domiciliary -->
                     <div class="emergencyMain p-3 AllStaffTabC ">
-                        <div class="flexBw align-items-center">
-                            <div class="dFlexGap flex1">
+                        <div class="flexBw align-items-center flexWrap gap-3">
+                            <div class="dFlexGap">
 
                                 <i class="bx bx-alert-circle fs23 orangeText"> </i>
                                 <div>
@@ -279,8 +278,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dFlexGap flex1">
-                                <div class="flex1">
+                            <div class="dFlexGap">
+                                <div>
                                     <div class="progressBar" style="width:150px; margin-left:auto;">
                                         <div class="progressFill" style="width:16%; background:#3376f2"></div>
                                     </div>
@@ -304,8 +303,8 @@
                         </div>
                     </div>
                     <div class="emergencyMain p-3 AllStaffTabC ">
-                        <div class="flexBw align-items-center">
-                            <div class="dFlexGap flex1">
+                        <div class="flexBw align-items-center flexWrap gap-3">
+                            <div class="dFlexGap">
 
                                 <i class="bx bx-alert-circle fs23 orangeText"> </i>
                                 <div>
@@ -328,8 +327,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dFlexGap flex1">
-                                <div class="flex1">
+                            <div class="dFlexGap">
+                                <div>
                                     <div class="progressBar" style="width:150px; margin-left:auto;">
                                         <div class="progressFill" style="width:16%; background:#3376f2"></div>
                                     </div>
@@ -354,8 +353,8 @@
                     </div>
                     <!-- supported living -->
                     <div class="emergencyMain p-3 AllStaffTabC ">
-                        <div class="flexBw align-items-center">
-                            <div class="dFlexGap flex1">
+                        <div class="flexBw align-items-center flexWrap gap-3">
+                            <div class="dFlexGap">
                                 <i class="bx bx-alert-circle fs23 orangeText"> </i>
                                 <div>
                                     <h6 class="h6Head mb-2">Jane Wakefield <span class="careBadg darkVioletBadg ms-2">Supported living</span></h6>
@@ -377,8 +376,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dFlexGap flex1">
-                                <div class="flex1">
+                            <div class="dFlexGap">
+                                <div>
                                     <div class="progressBar" style="width:150px; margin-left:auto;">
                                         <div class="progressFill" style="width:16%; background:#3376f2"></div>
                                     </div>
@@ -402,8 +401,8 @@
                         </div>
                     </div>
                     <div class="emergencyMain p-3 AllStaffTabC ">
-                        <div class="flexBw align-items-center">
-                            <div class="dFlexGap flex1">
+                        <div class="flexBw align-items-center flexWrap gap-3">
+                            <div class="dFlexGap">
 
                                 <i class="bx bx-alert-circle fs23 orangeText"> </i>
                                 <div>
@@ -426,8 +425,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dFlexGap flex1">
-                                <div class="flex1">
+                            <div class="dFlexGap">
+                                <div>
                                     <div class="progressBar" style="width:150px; margin-left:auto;">
                                         <div class="progressFill" style="width:16%; background:#3376f2"></div>
                                     </div>
@@ -452,8 +451,8 @@
                     </div>
                     <!-- day centre -->
                     <div class="emergencyMain p-3 AllStaffTabC ">
-                        <div class="flexBw align-items-center">
-                            <div class="dFlexGap flex1">
+                        <div class="flexBw align-items-center flexWrap gap-3">
+                            <div class="dFlexGap">
 
                                 <i class="bx bx-alert-circle fs23 orangeText"> </i>
                                 <div>
@@ -476,8 +475,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dFlexGap flex1">
-                                <div class="flex1">
+                            <div class="dFlexGap">
+                                <div>
                                     <div class="progressBar" style="width:150px; margin-left:auto;">
                                         <div class="progressFill" style="width:16%; background:#3376f2"></div>
                                     </div>
@@ -520,7 +519,7 @@
                     </div>
                     <div class="modal-body heightScrollModal p24" style="height: unset;">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-md-12">
                                 <div class="bg-blue-50 rounded8 shadowp p-4">
                                     <div class="occupancyBox" style="border: none;">
                                         <div class="topRow">
@@ -558,7 +557,7 @@
                                                 <h6 class="fs13 font600">Mental Capacity Assessment</h6>
                                                 <form action="">
                                                     <div class="row mt-4">
-                                                        <div class="col-lg-12">
+                                                        <div class="col-md-12">
                                                             <div class="mentalCheckParent">
                                                                 <div class="dFlexGap">
                                                                     <input type="checkbox" class="checkBoxHw mentalCheckIn">
@@ -574,11 +573,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6 m-t-10">
+                                                        <div class="col-md-6 col-sm-6 m-t-10">
                                                             <label for="">Consent Given By *</label>
                                                             <input type="text" placeholder="Name" class="form-control">
                                                         </div>
-                                                        <div class="col-lg-6 m-t-10">
+                                                        <div class="col-md-6 col-sm-6 m-t-10">
                                                             <label for="">Relationship * </label>
                                                             <select name="relationship" id="relationship" class="form-control">
                                                                 <option value="full">Self(Client)</option>
@@ -586,7 +585,7 @@
                                                                 <option value="none">Power of Attorney</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Consent Types *</label>
                                                             <div class="flexBw">
                                                                 <div class="flex1">
@@ -625,7 +624,7 @@
 
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Signed Consent Form</label>
                                                             <div class="uploadBox mb-2 text-center muteHover">
                                                                 <i class="bx bx-arrow-from-bottom"></i>
@@ -633,7 +632,7 @@
                                                                 <input type="file">
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <button class="bgBtn blueBtn w100"><i class="bx bx-check-circle f18 me-2"></i> Save Consent Record</button>
                                                         </div>
                                                     </div>
@@ -665,35 +664,35 @@
                                                 <form action="">
 
                                                     <div class="row">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <label for="">Assessment Date *</label>
                                                             <input type="date" class="form-control">
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <label for="">Completed By *</label>
                                                             <input type="text" class="form-control" placeholder="Assessor name">
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Health Needs</label>
                                                             <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Physical and mental health needs..."></textarea>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Mobility & Transfer Needs</label>
                                                             <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Mobility assessment and support requirements..."></textarea>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Medication Requirements</label>
                                                             <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Current medications, administration support needed..."></textarea>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Safeguarding Risks Identified</label>
                                                             <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Any vulnerabilities or safeguarding concerns..."></textarea>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Personal Preferences & Routines</label>
                                                             <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Daily routines, likes/dislikes, preferences..."></textarea>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <button class="bgBtn pgreenBtn w100"><i class="bx bx-check-circle f18 me-2"></i> Complete Assessment</button>
                                                         </div>
                                                     </div>
@@ -768,7 +767,7 @@
                                                 <h6 class="fs13 font600">Mental Capacity Assessment</h6>
                                                 <form action="">
                                                     <div class="row mt-4">
-                                                        <div class="col-lg-12">
+                                                        <div class="col-md-12">
                                                             <div class="mentalCheckParent">
                                                                 <div class="dFlexGap">
                                                                     <input type="checkbox" class="checkBoxHw mentalCheckIn">
@@ -784,11 +783,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6 m-t-10">
+                                                        <div class="col-md-6 col-sm-6 m-t-10">
                                                             <label for="">Consent Given By *</label>
                                                             <input type="text" placeholder="Name" class="form-control">
                                                         </div>
-                                                        <div class="col-lg-6 m-t-10">
+                                                        <div class="col-md-6 col-sm-6 m-t-10">
                                                             <label for="">Relationship * </label>
                                                             <select name="relationship" id="relationship" class="form-control">
                                                                 <option value="full">Self(Client)</option>
@@ -796,7 +795,7 @@
                                                                 <option value="none">Power of Attorney</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Consent Types *</label>
                                                             <div class="flexBw">
                                                                 <div class="flex1">
@@ -835,7 +834,7 @@
 
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <label for="">Signed Consent Form</label>
                                                             <div class="uploadBox mb-2 text-center muteHover">
                                                                 <i class="bx bx-arrow-from-bottom"></i>
@@ -843,7 +842,7 @@
                                                                 <input type="file">
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 m-t-10">
+                                                        <div class="col-md-12 m-t-10">
                                                             <button class="bgBtn blueBtn w100"><i class="bx bx-check-circle f18 me-2"></i> Save Consent Record</button>
                                                         </div>
                                                     </div>

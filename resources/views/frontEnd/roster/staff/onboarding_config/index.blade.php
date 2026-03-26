@@ -6,7 +6,7 @@
 <main class="page-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="staffHeaderp">
                     <div>
                         <h1 class="mainTitlep"> Onboarding Configuration</h1>
@@ -17,7 +17,7 @@
         </div>
         <div class="mt20">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <div class="calendarTabs onBoardConTabHor">
                         <div class="tabs p-1 ">
                             <div class="dFlexGap onBoardTabBtn">
@@ -46,7 +46,7 @@
                         <!-- TAB CONTENT -->
                         <div>
                             <div class="row mt20">
-                                <div class="col-lg-4">
+                                <div class="col-md-4">
                                     <div>
                                         <div>
                                             <!-- staff list  -->
@@ -92,7 +92,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-lg-8">
+                                <div class="col-md-8">
                                     <div class="workflowDetails">
                                         <!-- staff details -->
                                         <div class="wfContent active" id="wf1">
@@ -365,15 +365,15 @@
                         </div>
                         <div class="modal-body heightScrollModal">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-md-12">
                                     <label for="">Stage Name</label>
                                     <input type="text" class="form-control" placeholder="e.g., Pre-Employment Checks">
                                 </div>
-                                <div class="col-lg-12 m-t-10">
+                                <div class="col-md-12 m-t-10">
                                     <label for="">Description</label>
                                     <textarea name="morning" class="form-control" rows="3" cols="20" placeholder="Describe what needs to be completed"></textarea>
                                 </div>
-                                <div class="col-lg-6 m-t-10">
+                                <div class="col-md-6 m-t-10">
                                     <label for="">Entity Type </label>
                                     <select name="" id="" class="form-control">
                                         <option value="">Pre-Employment</option>
@@ -381,11 +381,11 @@
                                         <option value="">Training</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-6 m-t-10">
+                                <div class="col-md-6 m-t-10">
                                     <label for="">Stage Name</label>
                                     <input type="text" class="form-control" placeholder="e.g., Pre-Employment Checks">
                                 </div>
-                                <div class="col-lg-12 mt-4">
+                                <div class="col-md-12 mt-4">
                                     <div class="flexBw mb-3">
                                         <p class="fs13 font700 mb-0">Required Stage</p>
                                         <label class="mySwitch">

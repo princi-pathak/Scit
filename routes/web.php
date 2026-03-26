@@ -50,6 +50,7 @@ use App\Http\Controllers\frontEnd\Roster\Staff\clientonboardingController;
 use App\Http\Controllers\frontEnd\Roster\Staff\staffonboardingController;
 use App\Http\Controllers\frontEnd\Roster\Staff\StaffPortalController;
 use App\Http\Controllers\frontEnd\Roster\Staff\OnboardingConfigurationController;
+use App\Http\Controllers\frontEnd\Roster\Staff\AuditLogController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -301,6 +302,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		// Onboarding Configuration
 		Route::get('onboarding-configuration', [OnboardingConfigurationController::class, 'index']);
+
+		// Audit Log
+		Route::get('audit-log', [AuditLogController::class, 'index']);
 	});
 
 	Route::post('/service/mood/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MoodController@saveMood')->name('mood.add');

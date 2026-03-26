@@ -532,7 +532,7 @@
           <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Task Center</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Action Plan Progress</span> </a></li>
           <li> <a href="#!"><i class='bx bx-file-detail'></i> <span>Reporting Engine</span> </a></li>
-          <li> <a href="#!"><i class='bx bx-file-detail'></i> <span>Audit Templates</span> </a></li>
+          <li> <a href="{{url('/roster/audit-log')}}"><i class='bx bx-file-detail'></i> <span>Audit Log</span> </a></li>
           <li> <a href="#!"><i class='bx bx-file-detail'></i> <span>Form Builder</span> </a></li>
           <li> <a href="#!"><i class='bx bx-group'></i> <span>CRM Dashboard</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-message'></i> <span>Client Comms Hub</span> </a></li>

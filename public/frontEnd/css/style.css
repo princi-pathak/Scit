@@ -9478,6 +9478,7 @@ a.close.edit_dyn_form {
     --lightPurpleClr: #faf5ff;
     --gray400: #d1d5db;
     --gray500: #6b7280;
+    --lightShadow: rgba(0, 0, 0, 0.05) 0px 1px 3px;
 }
 
 /* ******************Start Dashboard Css***************************** */
@@ -14673,7 +14674,7 @@ header.panel-heading.headingCapitilize {
     cursor: pointer;
     font-size: 13px;
     transition: 0.2s;
-    gap: 6px;
+    gap: 10px;
     display: flex;
     align-items: center;
     color: #f0fdfa;
@@ -14783,7 +14784,7 @@ header.panel-heading.headingCapitilize {
     cursor: pointer;
     font-size: 13px;
     transition: 0.2s;
-    gap: 6px;
+    gap: 10px;
     display: flex;
     align-items: center;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -14794,10 +14795,9 @@ header.panel-heading.headingCapitilize {
 
 .emergencyContent h3,
 .contactMain h3 {
-    color: #000;
     font-weight: 600;
     margin: 0px;
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .userMum h2 {
@@ -14925,11 +14925,6 @@ header.panel-heading.headingCapitilize {
 #clientDocumentsTab .emergencyHeader {
     background: var(--blueGrad);
 }
-
-.emergencyBtn i {
-    font-size: 18px;
-}
-
 
 .bgBtn:hover {
     background-color: #1a53d1;
@@ -15060,8 +15055,7 @@ header.panel-heading.headingCapitilize {
 .docForm select,
 .docForm textarea {
     background-color: transparent;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
-        rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    box-shadow: var(--lightShadow);
     margin-bottom: 15px;
     border-radius: 5px;
     height: 40px;
@@ -15675,11 +15669,6 @@ header.panel-heading.headingCapitilize {
 
 .AllStaffTabC:hover {
     box-shadow: 0px 8px 12px -6px rgba(0, 0, 0, 0.15);
-}
-
-.AllStaffTabC .borderBtn i,
-.AllStaffTabC .bgBtn i {
-    font-size: 18px;
 }
 
 .orangeAllTabCard .bgIconStaffT i {
@@ -16643,6 +16632,10 @@ header.panel-heading.headingCapitilize {
     gap: 15px;
 }
 
+.cardRow4 .card-col {
+    flex: 0 0 calc((100% - 45px) / 4);
+}
+
 .card-col {
     flex: 0 0 calc(20% - 12px);
     display: flex;
@@ -16653,21 +16646,27 @@ header.panel-heading.headingCapitilize {
 }
 
 @media (max-width: 992px) {
-    .card-col {
+
+    .card-col,
+    .cardRow4 .card-col {
         flex: 0 0 calc(33.33% - 10px);
 
     }
 }
 
 @media (max-width: 768px) {
-    .card-col {
+
+    .card-col,
+    .cardRow4 .card-col {
         flex: 0 0 calc(50% - 8px);
 
     }
 }
 
 @media (max-width: 480px) {
-    .card-col {
+
+    .card-col,
+    .cardRow4 .card-col {
         flex: 0 0 100%;
 
     }
@@ -17075,7 +17074,6 @@ header.panel-heading.headingCapitilize {
 
 .dFlexGap {
     display: flex;
-    /* flex-wrap: wrap; */
     gap: 1rem;
     align-items: center;
 }
@@ -17543,9 +17541,7 @@ div#secondModal .modal-lg {
     overflow: auto;
 }
 
-.cardRow4 .card-col {
-    flex: 0 0 calc((100% - 45px) / 4);
-}
+
 
 .noData {
     border: 1px solid var(--borderColor);
@@ -17885,4 +17881,26 @@ input[type="checkbox"] {
     margin: 0px;
     height: 15px;
     width: 15px;
+}
+
+.borderBtn i,
+.bgBtn i {
+    font-size: 17px;
+    margin-right: unset !important;
+}
+
+/* ar css 25-03-2026 */
+.complianceTaskCenter .simpleCard .rota_dash-card {
+    padding: 12px 14px;
+}
+
+.complianceTaskCenter .manageDashCard .rota_dash-card:hover {
+    transform: none;
+}
+
+.complianceTaskCenter .rota_dash-left .rotaTitle {
+    font-size: 13px;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-weight: 600;
 }
