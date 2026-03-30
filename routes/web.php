@@ -51,6 +51,7 @@ use App\Http\Controllers\frontEnd\Roster\Staff\staffonboardingController;
 use App\Http\Controllers\frontEnd\Roster\Staff\StaffPortalController;
 use App\Http\Controllers\frontEnd\Roster\Staff\OnboardingConfigurationController;
 use App\Http\Controllers\frontEnd\Roster\Staff\AuditLogController;
+use App\Http\Controllers\frontEnd\Roster\Client\CarePlanController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -272,6 +273,18 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/client-delete', [ClientController::class, 'client_delete']);
 		Route::post('/client-search', [ClientController::class, 'client_search']);
 		Route::get('/care-task-add', [ClientController::class, 'care_task_add']);
+		Route::post('/care-task-save', [ClientController::class, 'care_task_save']);
+		Route::post('/care-task-delete', [ClientController::class, 'care_task_delete']);
+		Route::post('/client/care-task-list', [ClientController::class, 'care_task_list']);
+		Route::post('/client/medication-log-save', [ClientController::class, 'medication_log_save']);
+		Route::post('/client/medication-log-list', [ClientController::class, 'medication_log_list']);
+		Route::post('/client-alert-save', [ClientController::class, 'client_alert_save']);
+		Route::post('/client/alert-type', [ClientController::class, 'client_alert_type']);
+		Route::post('/client/alert-increase-acknowledge', [ClientController::class, 'alert_increase_acknowledge']);
+		Route::post('/client/alert-resolve', [ClientController::class, 'client_alert_resolve']);
+		Route::post('/client/alert-archived', [ClientController::class, 'client_alert_archived']);
+		Route::post('/client/alert-increase-all-acknowledge', [ClientController::class, 'alert_increase_all_acknowledge']);
+		Route::post('/get-carer-shifts', [ClientController::class, 'get_carer_shifts']);
 
 		Route::get('/incident-management', [IncidentManagementController::class, 'index'])->name('roster.incident.management');
 		Route::get('/incident-ai-prevention', [IncidentManagementController::class, 'ai_prevention']);
@@ -289,6 +302,19 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('supervision-management', [SupervisionController::class, 'index']);
 		// invoicemanagement
 		Route::get('invoice-management', [invoiceManagementController::class, 'index']);
+		// Client Dols
+		Route::post('client/save-dols', [DolsController::class, 'save_dols']);
+		Route::post('client/dols-list', [DolsController::class, 'index']);
+		// Client Care Plan
+		Route::post('client/care-plan-save', [CarePlanController::class, 'care_plan_save']);
+		Route::post('client/care-plan-get-list', [CarePlanController::class, 'index']);
+		Route::post('client/care-plan-delete', [CarePlanController::class, 'care_plan_delete']);
+		Route::post('client/care-plan-details', [CarePlanController::class, 'care_plan_details']);
+
+		Route::post('client/care-plan-objective-delete', [CarePlanController::class, 'objective_delete']);
+		Route::post('client/care-plan-task-delete', [CarePlanController::class, 'task_delete']);
+		Route::post('client/care-plan-medical-delete', [CarePlanController::class, 'medical_delete']);
+		Route::post('client/care-plan-risk-delete', [CarePlanController::class, 'risk_delete']);
 		// alert Notification
 		Route::get('notifications', [notificationAlertController::class, 'index']);
 		// staffonboarding
