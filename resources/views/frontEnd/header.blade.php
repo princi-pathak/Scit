@@ -85,13 +85,8 @@ float: right;
 
 
 
-        
+
     }
-
-
-
-
-
 </style>
 
 <!--header start-->
@@ -304,10 +299,6 @@ float: right;
         $('#HandoverlogBookModal').modal('show');
 
     });
-
-
-
-
 </script>
 
 <!-- <script>
@@ -353,4 +344,3 @@ float: right;
         };
     });
 </script> -->
-

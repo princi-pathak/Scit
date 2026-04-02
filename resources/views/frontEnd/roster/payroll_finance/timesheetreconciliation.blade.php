@@ -330,8 +330,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <div class="bBorderCard mt-4 p-4">
                                     <div class="d-flex justify-content-between">

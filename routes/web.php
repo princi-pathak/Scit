@@ -52,6 +52,7 @@ use App\Http\Controllers\frontEnd\Roster\Staff\StaffPortalController;
 use App\Http\Controllers\frontEnd\Roster\Staff\OnboardingConfigurationController;
 use App\Http\Controllers\frontEnd\Roster\Staff\AuditLogController;
 use App\Http\Controllers\frontEnd\Roster\Client\CarePlanController;
+use App\Http\Controllers\frontEnd\Roster\TaskCenter\TaskCenterController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -331,6 +332,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		// Audit Log
 		Route::get('audit-log', [AuditLogController::class, 'index']);
+		// Task Center
+		Route::get('/task-center', [TaskCenterController::class, 'index'])->name('roster.task.center');
 	});
 
 	Route::post('/service/mood/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MoodController@saveMood')->name('mood.add');

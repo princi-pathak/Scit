@@ -101,7 +101,7 @@
             <!-- TAB CONTENT -->
             <div class="tab-content carertabcontent">
                 <div class="content active" id="allCarerActibity">
-                    <div class="row careRow"></div>
+                    <div class="row"></div>
                 </div>
                 <div class="content" id="activeCarer">
                     <div class="row"></div>

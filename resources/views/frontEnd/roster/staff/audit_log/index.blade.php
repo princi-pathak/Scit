@@ -27,7 +27,7 @@
         <div class="row mt20">
             <div class="col-md-12">
                 <div class="emergencyMain p24">
-                    <h5 class="h5Head">Filters</h5>
+                    <h5 class="h5Head"> <i class="bx bx-filter f20"></i> Filters</h5>
                     <form action="">
                         <div class="mt20 auditLogRow">
                             <div>
@@ -273,7 +273,7 @@
                             </div>
                             <div class="mt-4">
                                 <div class="lightBlueBg p-4 rounded8">
-                                    <p class="fs13 textGray500">
+                                    <p class="fs13 blackText">
                                         This will analyze your audit log data (26 entries) and generate a comprehensive mock inspection report with ratings, strengths, areas for improvement, and compliance findings.
                                     </p>
                                 </div>

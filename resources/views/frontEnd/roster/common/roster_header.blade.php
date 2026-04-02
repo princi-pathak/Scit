@@ -458,17 +458,12 @@
         <ul>
           <li class="header-menu"> <span>Residential Care</span> </li>
           <li> <a href="{{ url('/roster')}}"><i class='bx  bx-dashboard'></i> <span>Dashboard</span> </a> </li>
-          <li> <a href="{{ url('/roster/manage-dashboard') }}"><i class='bx bx-dashboard'></i> <span>Manager
-                Dashboard</span> </a></li>
-          <li> <a href="{{ url('/roster/schedule-shift') }}"><i class='bx bx-calendar'></i> <span>Schedule</span> </a>
-          </li>
-          <li> <a href="{{ url('/roster/carer-availability') }}"><i class='bx bx-calendar'></i> <span>Carer
-                Availability</span> </a> </li>
-          <li> <a href="{{ url('/roster/carer') }}"><i class='bx bx-group'></i> <span>Carers</span> </a> </li>
-          <li> <a href="{{ url('/roster/client') }}"><i class='bx bx-user-circle'></i> <span>Clients</span> </a> </li>
-          <li> <a href="{{ url('/roster/daily-log') }}"><i class='bx  bx-clipboard-detail'></i> <span>Daily Log</span>
-            </a> </li>
-
+          <li> <a href="{{ url('/roster/manage-dashboard') }}"><i class='bx bx-dashboard'></i> <span>Manager Dashboard</span> </a></li>
+          <li> <a href="{{ url('/roster/schedule-shift') }}"><i class='bx bx-calendar'></i> <span>Schedule</span> </a></li>
+          <li> <a href="{{ url('/roster/carer-availability') }}"><i class='bx bx-calendar'></i> <span>Carer Availability</span> </a></li>
+          <li> <a href="{{ url('/roster/carer') }}"><i class='bx bx-group'></i> <span>Carers</span> </a></li>
+          <li> <a href="{{ url('/roster/client') }}"><i class='bx bx-user-circle'></i> <span>Clients</span> </a></li>
+          <li> <a href="{{ url('/roster/daily-log') }}"><i class='bx  bx-clipboard-detail'></i> <span>Daily Log</span></a></li>
           <li class="header-menu"> <span>Domiciliary Care</span> </li>
           <li> <a href="#"><i class='bx bx-dashboard'></i> <span>Dom Care Dashboard</span></a></li>
           <li> <a href="#"><i class='bx bx-location'></i> <span>Visit Schedule</span></a></li>
@@ -476,20 +471,19 @@
           <li> <a href="#"><i class='bx bx-group'></i> <span>Staff</span></a></li>
           <li> <a href="#"><i class='bx bx-user-circle'></i> <span>Clients</span></a></li>
           <li> <a href="#"><i class='bx bx-send'></i> <span>Runs</span></a></li>
-          <li> <a href="{{ url('/roster/reports') }}"><i class='bx  bx-file-report'></i> <span> Reports </span> </a>
-          </li>
+          <li> <a href="#"><i class='bx  bx-file-report'></i> <span>Reports</span></a></li>
           <li> <a href="#"><i class='bx bx-message'></i> <span>Communications</span></a></li>
-          <li> <a href="#"><i class='bx bx-message'></i> <span>Client Feedback</span> </a></li>
+          <li> <a href="#"><i class='bx bx-message'></i> <span>Client Feedback</span></a></li>
 
           <li class="header-menu"> <span>Supported Living</span> </li>
           <li> <a href="#"><i class='bx bx-dashboard'></i> <span>SL Dashboard</span></a></li>
-          <li> <a href="#"><i class='bx bx-user-circle'></i> <span>Clients</span> </a></li>
-          <li> <a href="#"><i class='bx  bx-home'></i> <span>Properties</span> </a></li>
-          <li> <a href="#"><i class='bx bx-calendar'></i> <span>Schedule</span> </a></li>
+          <li> <a href="#"><i class='bx bx-user-circle'></i> <span>Clients</span></a></li>
+          <li> <a href="#"><i class='bx  bx-home'></i> <span>Properties</span></a></li>
+          <li> <a href="#"><i class='bx bx-calendar'></i> <span>Schedule</span></a></li>
 
           <!-- <li class="header-menu"> <span>General</span> </li>
           <li> <a href="{{ url('/roster/messaging-center') }}"><i class="fa fa-globe"></i> <span> Messaging Center</span> </a> </li>
-          <li> <a href="{{ url('/roster/staff-task') }}"><i class="fa fa-globe"></i> <span> Staff Tasks</span> </a> </li>
+          <li> <a href="{{ url('/roster/staff-task') }}"><i class="fa fa-globe"></i> <span>Staff Tasks</span> </a> </li>
           <li> <a href="{{ url('/roster/care-document') }}"><i class="fa fa-globe"></i> <span> Care Documents</span> </a> </li>
           <li> <a href="{{ url('/roster/leave-request') }}"><i class="fa fa-globe"></i> <span> Leave Requests </span> </a> </li>
           <li> <a href="{{ url('/roster/payroll-finance') }}"><i class="fa fa-globe"></i> <span> Payroll & Finance </span> </a> </li>
@@ -498,38 +492,35 @@
           <li> <a href="#"><i class="fa fa-calendar"></i> <span>Calendar</span> </a></li>
           <li> <a href="#"> <i class="fa fa-folder"></i> <span>Examples</span> </a></li> -->
           <li class="header-menu"> <span>Day Centre</span> </li>
-          <li> <a href="#!"><i class='bx bx-dashboard'></i> <span> Day Centre Dashboard</span> </a> </li>
-          <li> <a href="#!"><i class='bx bx-user-circle'></i> <span> Clients</span> </a> </li>
-          <li> <a href="#!"><i class='bx bx-pulse'></i> <span> Activities</span> </a> </li>
-          <li> <a href="#!"><i class='bx bx-calendar'></i> <span> Sessions </span> </a> </li>
-          <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span> Attendance </span> </a> </li>
-          <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span> Follow-up Tracker</span></a></li>
-          <li> <a href="#!"><i class='bx  bx-phone'></i> <span> Call Transcripts</span></a></li>
+          <li> <a href="#!"><i class='bx bx-dashboard'></i> <span>Day Centre Dashboard</span> </a> </li>
+          <li> <a href="#!"><i class='bx bx-user-circle'></i> <span>Clients</span> </a> </li>
+          <li> <a href="#!"><i class='bx bx-pulse'></i> <span>Activities</span> </a> </li>
+          <li> <a href="#!"><i class='bx bx-calendar'></i> <span>Sessions</span> </a> </li>
+          <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Attendance</span> </a> </li>
+          <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Follow-up Tracker</span></a></li>
+          <li> <a href="#!"><i class='bx  bx-phone'></i> <span>Call Transcripts</span></a></li>
 
           <li class="header-menu"> <span>General</span> </li>
-          <li> <a href="{{url('roster/staff-portal')}}"><i class='bx  bx-mobile'></i> <span>Staff Portal</span> </a></li>
-          <li> <a href="{{ url('/roster/messaging-center') }}"><i class='bx  bx-message'></i> <span>Messaging
-                Center</span> </a></li>
-          <li> <a href="{{ url('/roster/staff-task') }}"><i class='bx  bx-clipboard-detail'></i> <span>Staff
-                Tasks</span> </a></li>
-          <li> <a href="{{ url('/roster/care-document') }}"><i class='bx  bx-folder-open'></i> <span>Care
-                Documents</span> </a></li>
-          <li> <a href="{{ url('roster/supervision-management') }}"><i class='bx  bx-clipboard-detail'></i> <span>Staff
-                Supervisions</span> </a></li>
-          <li> <a href="{{ url('/roster/incident-management') }}"><i class='bx  bx-shield'></i> <span>Incident
-                Management</span> </a></li>
-          <li> <a href="#!"><i class='bx  bx-education'></i> <span>Training</span> </a></li>
+          <li> <a href="#!"><i class='bx  bx-mobile'></i> <span>Staff Portal</span> </a></li>
+          <li> <a href="{{ url('/roster/messaging-center') }}"><i class='bx  bx-message'></i> <span>Messaging Center</span> </a></li>
+          <li> <a href="{{ url('/roster/staff-task') }}"><i class='bx  bx-clipboard-detail'></i> <span>Staff Tasks</span> </a></li>
+          <li> <a href="{{ url('/roster/care-document') }}"><i class='bx  bx-folder-open'></i> <span>Care Documents</span> </a></li>
+          <li> <a href="{{ url('roster/supervision-management') }}"><i class='bx  bx-clipboard-detail'></i> <span>Staff Supervisions</span> </a></li>
+          <li> <a href="{{ url('/roster/incident-management') }}"><i class='bx  bx-shield'></i> <span>Incident Management</span> </a></li>
+          <?php $encodedUser = base64_encode(Auth::user()->user_name);
+          $url = "http://thunderingslap.com/Learner/Learner-Dashboard/?key=" . $encodedUser;
+          ?>
+          <li> <a href="{{ $url }}"><i class='bx  bx-education'></i> <span>Training</span> </a></li>
           <li> <a href="{{url('/roster/notifications')}}"><i class='bx  bx-bell'></i> <span>Notifications</span> </a></li>
-          <li> <a href="{{ url('/roster/leave-request') }}"><i class='bx  bx-clipboard-detail'></i> <span>Leave
-                Requests</span> </a></li>
-          <li> <a href="{{ url('/roster/payroll-finance') }}"><i class='bx bx-file-detail'></i> <span>Payroll &
-                Finance</span> </a></li>
-          <li> <a href="#!"><i class='bx  bx-file-report'></i> <span>Reports</span> </a></li>
-          <li> <a href="{{url('/roster/onboarding-configuration')}}"><i class='bx bx-cog'></i><span>Onboarding Configuration</span></a></li>
+          <li> <a href="{{ url('/roster/leave-request') }}"><i class='bx  bx-clipboard-detail'></i> <span>Leave Requests</span> </a></li>
+          <li> <a href="{{ url('/roster/payroll-finance') }}"><i class='bx bx-file-detail'></i> <span>Payroll & Finance</span> </a></li>
+          <li> <a href="{{ url('/roster/reports') }}"><i class='bx  bx-file-report'></i> <span>Reports</span> </a></li>
+          <li> <a href="{{ url('/roster/onboarding-configuration') }}"><i
+                class='bx bx-cog'></i><span>Onboarding Configuration</span></a></li>
           <li> <a href="{{url('/roster/staffonboarding')}}"><i class='bx  bx-file-report'></i> <span>Staff Onboarding</span> </a></li>
           <li> <a href="{{url('/roster/clientonboarding')}}"><i class='bx  bx-file-report'></i> <span>Client Onboarding</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-shield'></i> <span>Compliance Hub</span> </a></li>
-          <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Task Center</span> </a></li>
+          <li> <a href="{{url('/roster/task-center')}}"><i class='bx  bx-clipboard-detail'></i> <span>Task Center</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Action Plan Progress</span> </a></li>
           <li> <a href="#!"><i class='bx bx-file-detail'></i> <span>Reporting Engine</span> </a></li>
           <li> <a href="{{url('/roster/audit-log')}}"><i class='bx bx-file-detail'></i> <span>Audit Log</span> </a></li>
