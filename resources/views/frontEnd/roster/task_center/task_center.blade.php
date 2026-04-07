@@ -71,11 +71,11 @@
         </div>
 
         <div class="row mt20">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="emergencyMain p-4">
                     <div class="carer-form">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                 <select class="form-control" id="incident_typeFileter">
                                     <option value="0">All Status</option>
                                     <option value="1">Pending</option>
@@ -83,7 +83,7 @@
                                     <option value="4">Completed</option>
                                 </select>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                 <select class="form-control" id="incident_statusFilter">
                                     <option value="0">All Priority</option>
                                     <option value="1">Urgent</option>
@@ -101,7 +101,7 @@
         </div>
 
         <div class="row mt20">
-            <div class="col-lg-12 col-md-12">
+            <div class="col-md-12 col-md-12">
                 <div class="emergencyMain p24 bottomSpace">
                     <div class="flexBw align-items-start">
                         <div>

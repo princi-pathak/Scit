@@ -882,7 +882,6 @@
                 // close all
                 recordSec.querySelectorAll(".recordContent").forEach(c => {
                     console.log(c);
-
                     c.style.display = "none";
                 });
 

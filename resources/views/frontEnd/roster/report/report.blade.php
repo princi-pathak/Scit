@@ -560,23 +560,23 @@
 
                 <div class="content" id="staffPerformanceTab">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 mb15">
                             <div class="emergencyMain p24">
                                 <p class="fs13 textGray500">Total Hours Worked </p>
-                                <h3 class="fs23 font700 mb-0 blueText mt-0">71.0</h3>
+                                <h3 class="fs30 font700 mb-0 blueText mt-0">71.0</h3>
                             </div>
                         </div>
-                        <div class="col-md-4 pX">
+                        <div class="col-md-4 col-sm-6 pX mb15">
                             <div class="emergencyMain p24">
                                 <p class="fs13 textGray500">Overtime Hours</p>
-                                <h3 class="fs23 font700 mb-2 orangeText mt-0">9.5</h3>
+                                <h3 class="fs30 font700 mb-2 orangeText mt-0">9.5</h3>
                                 <p class="mb-0 muchsmallText">13.4% of total</p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 mb15">
                             <div class="emergencyMain p24">
-                                <p class="fs13 textGray500">Total Hours Worked </p>
-                                <h3 class="fs23 font700 mb-2 greenText mt-0">00.0</h3>
+                                <p class="fs13 textGray500">Average Rating</p>
+                                <h3 class="fs30 font700 mb-2 greenText mt-0">00.0</h3>
                                 <p class="mb-0 muchsmallText">13.4% of total</p>
                             </div>
                         </div>
@@ -695,29 +695,138 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mt20">
+                        <div class="col-md-6">
+                            <div class="emergencyMain p24">
+                                <h5 class="h5Head">Revenue Breakdown by Client
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="emergencyMain p24">
+                                <h5 class="h5Head">Cost per Client </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt20">
+                        <div class="col-md-12">
+                            <div class="emergencyMain p24">
+                                <h5 class="h5Head">Average Cost per Client</h5>
+                                <div class="mt20">
+                                    <h3 class="fs30 blueText mt-0 font700">£0.00</h3>
+                                    <p class="muteText">Across 0 clients</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="content" id="operationalTab">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 mb15">
                             <div class="emergencyMain p24 blueBorder borderLeftThick">
                                 <p class="fs13 textGray500">Total Shifts </p>
                                 <h3 class="fs23 font700 mb-2 blueText mt-0">71.0</h3>
                                 <p class="mb-0 muchsmallText">0 unfilled</p>
                             </div>
                         </div>
-                        <div class="col-md-4 pX">
+                        <div class="col-md-4 col-sm-6 pX mb15">
                             <div class="emergencyMain p24 greenBorder borderLeftThick">
                                 <p class="fs13 textGray500">Overtime Hours</p>
                                 <h3 class="fs23 font700 mb-2 greenText mt-0">9.5</h3>
                                 <p class="mb-0 muchsmallText"><i class="bx bx-check-circle fs16 greenTextp"></i>Good</p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 mb15">
                             <div class="emergencyMain p24 purpleBorder borderLeftThick">
                                 <p class="fs13 textGray500">On-Time Rate </p>
                                 <h3 class="fs23 font700 mb-2 purpleTextp mt-0">100.0%</h3>
                                 <p class="mb-0 muchsmallText">Staff punctuality</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt20 d-flex flexWrap">
+                        <div class="col-md-6">
+                            <div class="emergencyMain p24 h100">
+                                <h5 class="h5Head">Shift Status Distribution</h5>
+                                <div class="mt20">
+                                    <div class="occupancyBox py-0 bottomSpace" style="border-bottom:unset;">
+                                        <div class="topRow">
+                                            <span class="textBlack font600 fs13">Completed</span>
+                                            <span class="muteText">0 (0.0%)</span>
+                                        </div>
+                                        <div class="progressBar">
+                                            <div class="progressFill" style="width:0%; background:#3376f2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="occupancyBox py-0 bottomSpace" style="border-bottom:unset;">
+                                        <div class="topRow">
+                                            <span class="textBlack font600 fs13">Schedule</span>
+                                            <span class="muteText">40 (38.8%)</span>
+                                        </div>
+                                        <div class="progressBar">
+                                            <div class="progressFill" style="width:40%; background:#3376f2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="occupancyBox py-0 bottomSpace" style="border-bottom:unset;">
+                                        <div class="topRow">
+                                            <span class="textBlack font600 fs13">In Progress</span>
+                                            <span class="muteText">0 (0.0%)</span>
+                                        </div>
+                                        <div class="progressBar">
+                                            <div class="progressFill" style="width:0%; background:#3376f2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="occupancyBox py-0 bottomSpace" style="border-bottom:unset;">
+                                        <div class="topRow">
+                                            <span class="textBlack font600 fs13">Unfilled</span>
+                                            <span class="muteText">4 (3.9%)</span>
+                                        </div>
+                                        <div class="progressBar">
+                                            <div class="progressFill" style="width:40%; background:#dc2626"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="emergencyMain p24 h100">
+                                <h5 class="h5Head">Shift Status Distribution</h5>
+                                <div class="mt20">
+                                    <div class="muteBg rounded8 p-4 bottomSpace">
+                                        <div class="occupancyBox py-0 " style="border-bottom:unset;">
+                                            <div class="topRow">
+                                                <span class="textBlack font600 fs13">Completion Rate </span>
+                                                <span class="careBadg greenbadges">51.5%</span>
+                                            </div>
+                                            <div class="progressBar">
+                                                <div class="progressFill" style="width:50%; background:#22c55e"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="muteBg rounded8 p-4 bottomSpace">
+                                        <div class="occupancyBox py-0 " style="border-bottom:unset;">
+                                            <div class="topRow">
+                                                <span class="textBlack font600 fs13">Staff Punctuality </span>
+                                                <span class="careBadg purpleBadges">51.5%</span>
+                                            </div>
+                                            <div class="progressBar">
+                                                <div class="progressFill" style="width:50%; background:#a855f7"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="muteBg rounded8 p-4 bottomSpace">
+                                        <div class="occupancyBox py-0 " style="border-bottom:unset;">
+                                            <div class="topRow">
+                                                <span class="textBlack font600 fs13">Fill Rate </span>
+                                                <span class="careBadg orangeBages">51.5% </span>
+                                            </div>
+                                            <div class="progressBar">
+                                                <div class="progressFill" style="width:50%; background:#f97316"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

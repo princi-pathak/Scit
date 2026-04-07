@@ -280,7 +280,7 @@
                                     <div class="staffOnBoardMain" style="display: block;">
                                         <div class="row row-equal">
                                             <div class="col-md-6 col-sm-6">
-                                                <div class="shadowp p-5 lightBorderp rounded8" style="border-color: #9333ea33;">
+                                                <div class="shadowp p-5 lightBorderp rounded8 h100" style="border-color: #9333ea33;">
                                                     <h5 class="h5Head purpleTextp mb-4"> <i class="bx bx-sparkles me-2 f20"></i>AI Personalized Onboarding Plan
                                                     </h5>
                                                     <p class="fs13 textGray">Generate a customized 30-60-90 day onboarding plan tailored to Sarah Johnson's role and background</p>
@@ -288,7 +288,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6">
-                                                <div class="shadowp p-5 lightBorderp rounded8" style="border-color: #bfdbfe;">
+                                                <div class="shadowp p-5 lightBorderp rounded8 h100" style="border-color: #bfdbfe;">
                                                     <h5 class="h5Head blueText mb-4"> <i class="bx bx-file-detail me-2 f20"></i> AI Welcome Packet</h5>
                                                     <p class="fs13 textGray">Generate a personalized welcome packet with company info, team introductions, and first-week tasks for Jane Wakefield.</p>
                                                     <button class="bgBtn w100"><i class="bx bx-sparkles me-2 f18 "></i> Generate Welcome Packet</button>
@@ -895,7 +895,7 @@
                                                                         <div>
                                                                             <div class="dFlexGap">
                                                                                 <button class="bgBtn blackBtn"><i class="bx bx-check-circle f18"></i></button>
-                                                                                <button class="borderBtn">Cancel</button>
+                                                                                <button class="borderBtn cancelRecord" type="button">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -936,7 +936,7 @@
                                                                         <div>
                                                                             <div class="dFlexGap">
                                                                                 <button class="bgBtn blackBtn"><i class="bx bx-check-circle f18"></i></button>
-                                                                                <button class="borderBtn">Cancel</button>
+                                                                                <button class="borderBtn cancelRecord" type="button">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1038,7 +1038,6 @@
         <!-- record sec js-->
         <script>
             const recordSec = document.querySelector(".recordSec");
-
             recordSec.querySelectorAll(".recordBtn").forEach(button => {
 
                 button.addEventListener("click", () => {
@@ -1062,6 +1061,15 @@
 
                 });
             });
+            document.querySelectorAll(".cancelRecord").forEach((btn) => {
+                const card = btn.closest(".recordCard");
+                console.log(card);
+
+                const content = card.querySelector(".recordContent");
+                btn.addEventListener("click", () => {
+                    content.style.display = "none";
+                })
+            })
         </script>
         <!-- record sec  -->
 </main>

@@ -53,6 +53,9 @@ use App\Http\Controllers\frontEnd\Roster\Staff\OnboardingConfigurationController
 use App\Http\Controllers\frontEnd\Roster\Staff\AuditLogController;
 use App\Http\Controllers\frontEnd\Roster\Client\CarePlanController;
 use App\Http\Controllers\frontEnd\Roster\TaskCenter\TaskCenterController;
+use App\Http\Controllers\frontEnd\Roster\general\ActionPlanProgress;
+use App\Http\Controllers\frontEnd\Roster\general\OnboaedingHubController;
+use App\Http\Controllers\frontEnd\Roster\general\PolicyLibraryController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -334,6 +337,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('audit-log', [AuditLogController::class, 'index']);
 		// Task Center
 		Route::get('/task-center', [TaskCenterController::class, 'index'])->name('roster.task.center');
+		// Action Plan Progress
+		Route::get('action-plan-progress', [ActionPlanProgress::class, 'index']);
+		// Onboarding Hub
+		Route::get('onboarding-hub', [OnboaedingHubController::class, 'index']);
+
+		// Policy Library
+		Route::get('policylibrary', [PolicyLibraryController::class, 'index']);
 	});
 
 	Route::post('/service/mood/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MoodController@saveMood')->name('mood.add');

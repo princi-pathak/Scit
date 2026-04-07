@@ -15901,6 +15901,10 @@ header.panel-heading.headingCapitilize {
     margin-bottom: 25px;
 }
 
+.fs45 {
+    font-size: 45px;
+}
+
 .formIns {
     font-size: 11px;
     color: var(--muteText);
@@ -17686,7 +17690,7 @@ div#secondModal .modal-lg {
 /* 20/03/2025 */
 .bottomSpace+.bottomSpace,
 .workflowItem+.workflowItem {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 
@@ -18045,12 +18049,70 @@ input[type="checkbox"] {
 }
 
 #staffPerformanceTab .emergencyMain {
-    min-height: 125px;
+    min-height: 132px;
 }
 
-@media(min-width:992) {
+@media(min-width:992px) {
     .pX {
         padding-left: 0px !important;
         padding-right: 0px !important;
     }
 }
+
+@media(max-width:767px) {
+    .mb15 {
+        margin-bottom: 15px;
+    }
+
+    .mbf10 {
+        margin-bottom: 10px;
+    }
+}
+
+@media(max-width:992px) and (min-width:768px) {
+    .mb15 {
+        margin-bottom: 15px;
+    }
+
+    .mbf10 {
+        margin-bottom: 10px;
+    }
+}
+
+.document_type_badgeSection .careBadg {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+
+}
+
+.document_type_badgeSection>div {
+    border: 2px solid #9ca3af;
+    padding: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hw35 {
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconCenter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.deleteHover:hover {
+    background-color: var(--lightRedbgClr) !important;
+}
+
+.uploadBox.p24 {
+    padding: 24px !important;
+}
+
+/*  */

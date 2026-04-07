@@ -519,12 +519,14 @@
                 class='bx bx-cog'></i><span>Onboarding Configuration</span></a></li>
           <li> <a href="{{url('/roster/staffonboarding')}}"><i class='bx  bx-file-report'></i> <span>Staff Onboarding</span> </a></li>
           <li> <a href="{{url('/roster/clientonboarding')}}"><i class='bx  bx-file-report'></i> <span>Client Onboarding</span> </a></li>
+          <li> <a href="{{url('/roster/policylibrary')}}"><i class='bx  bx-file-report'></i> <span>Policy Library</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-shield'></i> <span>Compliance Hub</span> </a></li>
           <li> <a href="{{url('/roster/task-center')}}"><i class='bx  bx-clipboard-detail'></i> <span>Task Center</span> </a></li>
-          <li> <a href="#!"><i class='bx  bx-clipboard-detail'></i> <span>Action Plan Progress</span> </a></li>
+          <li> <a href="{{url('roster/action-plan-progress')}}"><i class='bx  bx-clipboard-detail'></i> <span>Action Plan Progress</span> </a></li>
           <li> <a href="#!"><i class='bx bx-file-detail'></i> <span>Reporting Engine</span> </a></li>
           <li> <a href="{{url('/roster/audit-log')}}"><i class='bx bx-file-detail'></i> <span>Audit Log</span> </a></li>
           <li> <a href="#!"><i class='bx bx-file-detail'></i> <span>Form Builder</span> </a></li>
+          <li> <a href="{{url('roster/onboarding-hub')}}"><i class='bx bx-file-detail'></i> <span>Onboarding Hub</span> </a></li>
           <li> <a href="#!"><i class='bx bx-group'></i> <span>CRM Dashboard</span> </a></li>
           <li> <a href="#!"><i class='bx  bx-message'></i> <span>Client Comms Hub</span> </a></li>
           <li class="header-menu"> <span>System</span> </li>
