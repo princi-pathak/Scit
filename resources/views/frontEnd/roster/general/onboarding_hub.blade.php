@@ -14,48 +14,48 @@
                         </p>
                     </div>
                     <div>
-                        <button class="borderBtn" type="button" data-toggle="modal" data-target="#generateCqc"><i class="bx bx-school"></i>Organisation Setup</button>
+                        <button class="borderBtn" type="button" data-toggle="modal" data-target="#addOnboarding"><i class="bx bx-school"></i>Organisation Setup</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt20 card-row gap-0">
             <div class="col-md-4 col-sm-6 mb15">
-                <div class="emergencyMain p24 h100">
+                <div class="emergencyMain p-4 h100                                                            ">
                     <div class="flexBw">
                         <div>
-                            <p class="fs13 textGray500">Total Staff</p>
-                            <h3 class="fs30 font700 mb-0 blueText mt-0">35</h3>
+                            <p class="muteText">Total Staff</p>
+                            <h3 class="fs30 font700 mb-0 mt-0">35</h3>
                         </div>
                         <div>
-                            <i class="bx bx-group fs45 blueText"></i>
+                            <i class="bx bx-group fs35 blueText"></i>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb15 pX">
-                <div class="emergencyMain p24 h100">
+                <div class="emergencyMain p-4 h100                                                            ">
                     <div class="flexBw">
                         <div>
-                            <p class="fs13 textGray500">Fit to Work</p>
-                            <h3 class="fs30 font700 mb-2 orangeText mt-0">0/35</h3>
+                            <p class="muteText">Fit to Work</p>
+                            <h3 class="fs30 font700 mb-2 mt-0">0/35</h3>
                             <span class="careBadg darkGreenBadges">0% compliant</span>
                         </div>
                         <div>
-                            <i class="bx bx-lock-open fs45 greenTextp "></i>
+                            <i class="bx bx-lock-open fs35 greenTextp "></i>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 mb15">
-                <div class="emergencyMain p24 h100">
+                <div class="emergencyMain p-4 h100                                                            ">
                     <div class="flexBw">
                         <div>
-                            <p class="fs13 textGray500">DBS Expiring Soon</p>
-                            <h3 class="fs30 font700 mb-2 greenText mt-0">0</h3>
+                            <p class="muteText">DBS Expiring Soon</p>
+                            <h3 class="fs30 font700 mb-2 mt-0">0</h3>
                         </div>
                         <div>
-                            <i class="bx bx-alert-triangle fs45 orangeText "></i>
+                            <i class="bx bx-alert-triangle fs35 orangeText "></i>
                         </div>
                     </div>
                 </div>
@@ -73,22 +73,12 @@
                     <div class="tab-content carertabcontent">
                         <div class="content active" id="dailyLogAllAddEntry">
                             <!-- staff on board -->
-
                             <!-- search bar -->
                             <div class="row mt20">
                                 <div class="col-md-12">
-                                    <div class="dFlexGap">
-                                        <div class="input-group searchWithtabs flex1 shadowp">
-                                            <span class="input-group-addon btn-white"><i class="fa fa-search"></i></span>
-                                            <input type="text" class="form-control searchDailyLog" placeholder="Search staff by name or email...">
-                                        </div>
-                                        <div><select class="form-control">
-                                                <option>All Staff</option>
-                                                <option>Approved Only</option>
-                                                <option>In Progress</option>
-                                                <option>Not Started</option>
-                                            </select>
-                                        </div>
+                                    <div class="input-group searchWithtabs flex1 lightShadow w100">
+                                        <span class="input-group-addon btn-white"><i class="fa fa-search"></i></span>
+                                        <input type="text" class="form-control searchDailyLog" placeholder="Search staff by name or email...">
                                     </div>
                                 </div>
                             </div>
@@ -106,11 +96,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="dFlexGap">
-                                                    <div>
-                                                        <div class="progressBar" style="width:150px; margin-left:auto;">
-                                                            <div class="progressFill" style="width:16%; background:#3376f2"></div>
-                                                        </div>
-                                                    </div>
+
                                                     <div class="text-right">
                                                         <p class="fs13 font700 mb-2 blackText">0%</p>
                                                         <p class="fs13 mb-2 textGray500">0/5 complete</p>
@@ -123,7 +109,7 @@
                                                     <div>
                                                         <button class="borderBtn" data-toggle="modal" data-target="#manageModal">
                                                             <i class="bx bx-eye me-2 f18"></i>
-                                                            Manage
+
                                                         </button>
                                                     </div>
                                                 </div>
@@ -139,11 +125,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="dFlexGap">
-                                                    <div>
-                                                        <div class="progressBar" style="width:150px; margin-left:auto;">
-                                                            <div class="progressFill" style="width:16%; background:#3376f2"></div>
-                                                        </div>
-                                                    </div>
+
                                                     <div class="text-right">
                                                         <p class="fs13 font700 mb-2 blackText">0%</p>
                                                         <p class="fs13 mb-2 textGray500">0/5 complete</p>
@@ -156,7 +138,7 @@
                                                     <div>
                                                         <button class="borderBtn" data-toggle="modal" data-target="#manageModal">
                                                             <i class="bx bx-eye me-2 f18"></i>
-                                                            Manage
+
                                                         </button>
                                                     </div>
                                                 </div>
@@ -172,11 +154,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="dFlexGap">
-                                                    <div>
-                                                        <div class="progressBar" style="width:150px; margin-left:auto;">
-                                                            <div class="progressFill" style="width:16%; background:#3376f2"></div>
-                                                        </div>
-                                                    </div>
+
                                                     <div class="text-right">
                                                         <p class="fs13 font700 mb-2 blackText">0%</p>
                                                         <p class="fs13 mb-2 textGray500">0/5 complete</p>
@@ -189,79 +167,13 @@
                                                     <div>
                                                         <button class="borderBtn" data-toggle="modal" data-target="#manageModal">
                                                             <i class="bx bx-eye me-2 f18"></i>
-                                                            Manage
+
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="emergencyMain p-3 AllStaffTabC ">
-                                            <div class="flexBw align-items-center flexWrap">
-                                                <div class="dFlexGap">
-                                                    <i class="bx bx-lock fs23 orangeText"> </i>
-                                                    <div>
-                                                        <h6 class="h6Head mb-2">Jane Wakefield </h6>
-                                                        <p class="mb-0 textGray500 fs13 mt-2">jwake@gmail.co.uk</p>
-                                                    </div>
-                                                </div>
-                                                <div class="dFlexGap">
-                                                    <div>
-                                                        <div class="progressBar" style="width:150px; margin-left:auto;">
-                                                            <div class="progressFill" style="width:16%; background:#3376f2"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <p class="fs13 font700 mb-2 blackText">0%</p>
-                                                        <p class="fs13 mb-2 textGray500">0/5 complete</p>
 
-                                                    </div>
-                                                    <div>
-                                                        <span class="careBadg darkOrangeBadg">Onboarding
-                                                        </span>
-                                                    </div>
-                                                    <div>
-                                                        <button class="borderBtn" data-toggle="modal" data-target="#manageModal">
-                                                            <i class="bx bx-eye me-2 f18"></i>
-                                                            Manage
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="emergencyMain p-3 AllStaffTabC ">
-                                            <div class="flexBw align-items-center flexWrap">
-                                                <div class="dFlexGap">
-
-                                                    <i class="bx bx-lock fs23 orangeText"> </i>
-                                                    <div>
-                                                        <h6 class="h6Head mb-2">Jane Wakefield </h6>
-                                                        <p class="mb-0 textGray500 fs13 mt-2">jwake@gmail.co.uk</p>
-                                                    </div>
-                                                </div>
-                                                <div class="dFlexGap">
-                                                    <div>
-                                                        <div class="progressBar" style="width:150px; margin-left:auto;">
-                                                            <div class="progressFill" style="width:16%; background:#3376f2"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <p class="fs13 font700 mb-2 blackText">0%</p>
-                                                        <p class="fs13 mb-2 textGray500">0/5 complete</p>
-
-                                                    </div>
-                                                    <div>
-                                                        <span class="careBadg darkOrangeBadg">Onboarding
-                                                        </span>
-                                                    </div>
-                                                    <div>
-                                                        <button class="borderBtn" data-toggle="modal" data-target="#manageModal1">
-                                                            <i class="bx bx-eye me-2 f18"></i>
-                                                            Manage
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <!-- manage doc detail modal -->
                                         <div class="modal fade leaveCommunStyle" id="manageModal" tabindex="1" role="dialog"
                                             aria-labelledby="myModalLabel" aria-hidden="true">
@@ -601,7 +513,7 @@
                                                                         </div>
                                                                         <div class="mt20">
                                                                             <h6 class="h6Head">Employment References (Minimum 2 Required)</h6>
-                                                                            <p class="fs13 textGray500 mb-0">Enter referee details and send automated requests, or manually upload reference documents.</p>
+                                                                            <p class="muteText mb-0">Enter referee details and send automated requests, or manually upload reference documents.</p>
                                                                             <div class="row mt-4">
                                                                                 <div class="col-md-4">
                                                                                     <label for="">Referee Name *</label>
@@ -957,17 +869,717 @@
                             <!-- staff on board end-->
                         </div>
                         <div class="content" id="dailyLogVisitors">
-                            <div class="leave-card">
-                                <div>
-                                    <div class="title"> Shift </div>
-                                    <div class="title"> Shift Requestsasda </div>
+                            <!-- client onboarding -->
+                            <!-- search bar -->
+                            <div class="row mt20">
+                                <div class="col-md-12">
+                                    <div class="input-group searchWithtabs lightShadow w100">
+                                        <span class="input-group-addon btn-white"><i class="fa fa-search"></i></span>
+                                        <input type="text" class="form-control searchDailyLog" placeholder="Search clients...">
+                                    </div>
                                 </div>
+                            </div>
+                            <!--  all staff stripe  -->
+                            <div class="row mt20">
+                                <div class="col-md-12">
+                                    <div class="virtGap">
+                                        <!-- residential -->
+                                        <div class="emergencyMain p-3 AllStaffTabC ">
+                                            <div class="flexBw align-items-center flexWrap gap-3">
+                                                <div class="dFlexGap">
+                                                    <i class="bx bx-user-circle  fs23 blueText"> </i>
+                                                    <div>
+                                                        <h6 class="h6Head mb-2">Jane Wakefield </h6>
+                                                        <p class="muteText mb-0">L15 3JH</p>
+                                                    </div>
+                                                </div>
+                                                <div class="dFlexGap">
+
+                                                    <div class="text-right">
+                                                        <p class="fs13 font700 mb-2 blackText">0%</p>
+                                                        <p class="fs13 mb-2 textGray500">0/1 stages</p>
+
+                                                    </div>
+                                                    <div>
+                                                        <span class="careBadg darkGreenBadges">Active
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <button class="borderBtn" data-toggle="modal" data-target="#manageModalClient">
+                                                            <i class="bx bx-eye me-2 f18"></i>
+                                                            Manage
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="emergencyMain p-3 AllStaffTabC ">
+                                            <div class="flexBw align-items-center flexWrap gap-3">
+                                                <div class="dFlexGap">
+                                                    <i class="bx bx-user-circle  fs23 blueText"> </i>
+                                                    <div>
+                                                        <h6 class="h6Head mb-2">Jane Wakefield </h6>
+                                                        <p class="muteText mb-0">L15 3JH</p>
+                                                    </div>
+                                                    <span class="careBadg greenbadges"> consent </span>
+                                                </div>
+                                                <div class="dFlexGap">
+
+                                                    <div class="text-right">
+                                                        <p class="fs13 font700 mb-2 blackText">0%</p>
+                                                        <p class="fs13 mb-2 textGray500">0/1 stages</p>
+
+                                                    </div>
+                                                    <div>
+                                                        <span class="careBadg darkGreenBadges">Active
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <button class="borderBtn" data-toggle="modal" data-target="#manageModalClient">
+                                                            <i class="bx bx-eye me-2 f18"></i>
+                                                            Manage
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="emergencyMain p-3 AllStaffTabC ">
+                                            <div class="flexBw align-items-center flexWrap gap-3">
+                                                <div class="dFlexGap">
+                                                    <i class="bx bx-user-circle  fs23 blueText"> </i>
+                                                    <div>
+                                                        <h6 class="h6Head mb-2">Jane Wakefield </h6>
+                                                        <p class="muteText mb-0">L15 3JH</p>
+                                                    </div>
+                                                    <span class="careBadg greenbadges"> consent </span>
+                                                </div>
+                                                <div class="dFlexGap">
+
+                                                    <div class="text-right">
+                                                        <p class="fs13 font700 mb-2 blackText">0%</p>
+                                                        <p class="fs13 mb-2 textGray500">0/1 stages</p>
+
+                                                    </div>
+                                                    <div>
+                                                        <span class="careBadg darkGreenBadges">Active
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <button class="borderBtn" data-toggle="modal" data-target="#manageModalClient">
+                                                            <i class="bx bx-eye me-2 f18"></i>
+                                                            Manage
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="emergencyMain p-3 AllStaffTabC ">
+                                            <div class="flexBw align-items-center flexWrap gap-3">
+                                                <div class="dFlexGap">
+                                                    <i class="bx bx-user-circle  fs23 blueText"> </i>
+                                                    <div>
+                                                        <h6 class="h6Head mb-2">Jane Wakefield </h6>
+                                                        <p class="muteText mb-0">L15 3JH</p>
+                                                    </div>
+                                                    <span class="careBadg greenbadges"> consent </span>
+                                                </div>
+                                                <div class="dFlexGap">
+
+                                                    <div class="text-right">
+                                                        <p class="fs13 font700 mb-2 blackText">0%</p>
+                                                        <p class="fs13 mb-2 textGray500">0/1 stages</p>
+
+                                                    </div>
+                                                    <div>
+                                                        <span class="careBadg darkGreenBadges">Active
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <button class="borderBtn" data-toggle="modal" data-target="#manageModalClient">
+                                                            <i class="bx bx-eye me-2 f18"></i>
+                                                            Manage
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="noData">
+                                            <div>
+                                                <i class="bx bx-user-circle"></i>
+                                                <p class="mb-0">No clients found</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade leaveCommunStyle" id="manageModalClient" tabindex="1" role="dialog"
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg pModalScroll">
+                                    <div class="modal-content">
+                                        <div class="modal-header p24">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title"> <i class="bx bx-user-circle purpleTextp fs23"></i>Client Onboarding: Logan Jones
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body heightScrollModal p24" style="height: unset;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="bg-blue-50 rounded8 shadowp p-4">
+                                                        <div class="occupancyBox" style="border: none;">
+                                                            <div class="topRow">
+                                                                <span class="fs16 font600">Onboarding Progress</span>
+                                                                <span class="value f20" style="color: #3376f2;">75%</span>
+                                                            </div>
+                                                            <div class="progressBar">
+                                                                <div class="progressFill" style="width:75%; background:#3376f2"></div>
+                                                            </div>
+                                                        </div>
+                                                        <p class="textGray500 fs13">
+                                                            3/4 required stages complete
+                                                        </p>
+                                                    </div>
+                                                    <div class="recordSec">
+                                                        <div class="recordCard">
+                                                            <div class="rounded8 shadowp p24 mt20 recordBtn cursorPointer" style="border: 1px solid #86efac;" type="button">
+                                                                <div class="flexBw">
+                                                                    <div>
+                                                                        <div class="dFlexGap mb-3 align-items-start">
+                                                                            <div>
+                                                                                <i class="bx bx-check-circle fs23 greenText"></i>
+                                                                            </div>
+                                                                            <div>
+                                                                                <h6 class="h6Head">Consent & Mental Capacity <span class="careBadg redbadges ms-2">Required</span></h6>
+                                                                                <p class="muteText mb-0">Obtain consent and assess mental capacity</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="careBadg darkGreenBadges">Complete</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="recordContent">
+                                                                    <h6 class="fs13 font600">Mental Capacity Assessment</h6>
+                                                                    <form action="">
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-12">
+                                                                                <div class="mentalCheckParent">
+                                                                                    <div class="dFlexGap">
+                                                                                        <input type="checkbox" class="checkBoxHw mentalCheckIn">
+                                                                                        <p class="fs13 font600 mb-0">Mental capacity assessment completed</p>
+                                                                                    </div>
+                                                                                    <div class="mentalCapacitySelect" style="display: none;">
+                                                                                        <select name="mentalCapacity" class="form-control m-t-10">
+
+                                                                                            <option value="full">Has capacity</option>
+                                                                                            <option value="partial">Lacks capacity</option>
+                                                                                            <option value="none">Fluctuating Capacity</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 m-t-10">
+                                                                                <label for="">Consent Given By *</label>
+                                                                                <input type="text" placeholder="Name" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 m-t-10">
+                                                                                <label for="">Relationship * </label>
+                                                                                <select name="relationship" id="relationship" class="form-control">
+                                                                                    <option value="full">Self(Client)</option>
+                                                                                    <option value="partial">LPA(Health and Welfare)</option>
+                                                                                    <option value="none">Power of Attorney</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Consent Types *</label>
+                                                                                <div class="flexBw">
+                                                                                    <div class="flex1">
+                                                                                        <div class="virtGap gap-2">
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Care provision</p>
+                                                                                            </div>
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Information sharing</p>
+                                                                                            </div>
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Medical treatment</p>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    <div class="flex1">
+                                                                                        <div class="virtGap gap-2">
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Data processing</p>
+                                                                                            </div>
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Photography</p>
+                                                                                            </div>
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Personal Care</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Signed Consent Form</label>
+                                                                                <div class="uploadBox mb-2 text-center muteHover">
+                                                                                    <i class="bx bx-arrow-from-bottom"></i>
+                                                                                    <p class="fs13 mb-0 textGray500">Upload Consent Form</p>
+                                                                                    <input type="file">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <button class="bgBtn blueBtn w100"><i class="bx bx-check-circle f18 me-2"></i> Save Consent Record</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="recordCard">
+                                                            <div class="rounded8 shadowp p24 mt20 recordBtn cursorPointer" style="border: 1px solid #86efac;" type="button">
+                                                                <div class="flexBw">
+                                                                    <div>
+                                                                        <div class="dFlexGap mb-3 align-items-start">
+                                                                            <div>
+                                                                                <i class="bx bx-check-circle fs23 greenText"></i>
+                                                                            </div>
+                                                                            <div>
+
+                                                                                <h6 class="h6Head">2. Care Assessment <span class="careBadg redbadges ms-2">Required</span></h6>
+                                                                                <p class="muteText mb-0">Complete comprehensive care needs assessment</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="careBadg darkGreenBadges">Complete</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="recordContent">
+                                                                    <form action="">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 col-sm-6">
+                                                                                <label for="">Assessment Date *</label>
+                                                                                <input type="date" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6">
+                                                                                <label for="">Completed By *</label>
+                                                                                <input type="text" class="form-control" placeholder="Assessor name">
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Health Needs</label>
+                                                                                <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Physical and mental health needs..."></textarea>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Mobility & Transfer Needs</label>
+                                                                                <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Mobility assessment and support requirements..."></textarea>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Medication Requirements</label>
+                                                                                <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Current medications, administration support needed..."></textarea>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Safeguarding Risks Identified</label>
+                                                                                <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Any vulnerabilities or safeguarding concerns..."></textarea>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Personal Preferences & Routines</label>
+                                                                                <textarea name="notes" class="form-control" rows="3" cols="15" placeholder="Daily routines, likes/dislikes, preferences..."></textarea>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <button class="bgBtn pgreenBtn w100"><i class="bx bx-check-circle f18 me-2"></i> Complete Assessment</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="rounded8 shadowp p24 mt20" style="border: 1px solid #86efac;">
+                                                            <div class="flexBw">
+                                                                <div>
+                                                                    <div class="dFlexGap mb-3 align-items-start">
+                                                                        <div>
+                                                                            <i class="bx bx-check-circle fs23 greenText"></i>
+                                                                        </div>
+                                                                        <div>
+
+                                                                            <h6 class="h6Head">3. Care Plan<span class="careBadg redbadges ms-2">Required</span></h6>
+                                                                            <p class="muteText mb-0">Create and approve care plan</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="careBadg darkGreenBadges">Complete</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-4">
+                                                                <p class="muteText mb-2">Create care plan from the client profile page using the Care Plan Manager</p>
+                                                                <div class="bg-greenp-50 p-3 rounded5" style="border: unset;">
+                                                                    <p class="mb-0 fs13 greenText"> <i class="bx bx-heart f18"></i> Care plan approved on 17/02/2026 </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="rounded8 shadowp p24 mt20 lightBorderp">
+                                                            <div class="flexBw">
+                                                                <div>
+                                                                    <div class="dFlexGap mb-3 align-items-start">
+                                                                        <div class="muteCircle">
+                                                                            <i class="bx bx-circle f20 textGray400"></i>
+                                                                        </div>
+                                                                        <div>
+
+                                                                            <h6 class="h6Head">4. Risk Assessment<span class="borderBadg ms-2">Optional</span></h6>
+                                                                            <p class="muteText mb-0">Complete environmental and care risk assessments</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="careBadg darkMuteBadg">Pending</span>
+                                                                </div>
+                                                            </div>
+                                                            <p class="muteText mt-4 mb-0">Complete risk assessment from the client profile page</p>
+                                                        </div>
+                                                        <div class="recordCard">
+                                                            <div class="rounded8 shadowp p24 mt20 recordBtn cursorPointer lightBorderp" type="button">
+                                                                <div class="flexBw">
+                                                                    <div>
+                                                                        <div class="dFlexGap mb-3 align-items-start">
+                                                                            <div class="muteCircle">
+                                                                                <i class="bx bx-circle f20 textGray400"></i>
+                                                                            </div>
+                                                                            <div>
+                                                                                <h6 class="h6Head">Test Stage <span class="careBadg redbadges ms-2">Required</span></h6>
+                                                                                <p class="muteText mb-0">No need to this.</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="careBadg darkGreenBadges">Complete</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="recordContent">
+                                                                    <h6 class="fs13 font600">Mental Capacity Assessment</h6>
+                                                                    <form action="">
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-12">
+                                                                                <div class="mentalCheckParent">
+                                                                                    <div class="dFlexGap">
+                                                                                        <input type="checkbox" class="checkBoxHw mentalCheckIn">
+                                                                                        <p class="fs13 font600 mb-0">Mental capacity assessment completed</p>
+                                                                                    </div>
+                                                                                    <div class="mentalCapacitySelect" style="display: none;">
+                                                                                        <select name="mentalCapacity" class="form-control m-t-10">
+
+                                                                                            <option value="full">Has capacity</option>
+                                                                                            <option value="partial">Lacks capacity</option>
+                                                                                            <option value="none">Fluctuating Capacity</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 m-t-10">
+                                                                                <label for="">Consent Given By *</label>
+                                                                                <input type="text" placeholder="Name" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 m-t-10">
+                                                                                <label for="">Relationship * </label>
+                                                                                <select name="relationship" id="relationship" class="form-control">
+                                                                                    <option value="full">Self(Client)</option>
+                                                                                    <option value="partial">LPA(Health and Welfare)</option>
+                                                                                    <option value="none">Power of Attorney</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Consent Types *</label>
+                                                                                <div class="flexBw">
+                                                                                    <div class="flex1">
+                                                                                        <div class="virtGap gap-2">
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Care provision</p>
+                                                                                            </div>
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Information sharing</p>
+                                                                                            </div>
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Medical treatment</p>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    <div class="flex1">
+                                                                                        <div class="virtGap gap-2">
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Data processing</p>
+                                                                                            </div>
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Photography</p>
+                                                                                            </div>
+                                                                                            <div class="dFlexGap align-items-center">
+                                                                                                <input type="checkbox" class="checkBoxHw">
+                                                                                                <p class="fs13 font600 mb-0">Personal Care</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <label for="">Signed Consent Form</label>
+                                                                                <div class="uploadBox mb-2 text-center muteHover">
+                                                                                    <i class="bx bx-arrow-from-bottom"></i>
+                                                                                    <p class="fs13 mb-0 textGray500">Upload Consent Form</p>
+                                                                                    <input type="file">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12 m-t-10">
+                                                                                <button class="bgBtn blueBtn w100"><i class="bx bx-check-circle f18 me-2"></i> Save Consent Record</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <!--  -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- client onboarding end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- notesModal -->
+        <div class="modal fade leaveCommunStyle" id="addOnboarding" tabindex="1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg pModalScroll">
+                <div class="modal-content">
+                    <div class="modal-header p24">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Organisation Setup </h4>
+                    </div>
+                    <div class="modal-body heightScrollModal p24" style="height: unset;">
+                        <div class="dFlexGap mb-2">
+                            <i class="blueText bx bx-school fs30"></i>
+                            <h2 class="fs23 font700 my-0">Organisation Regulatory Setup </h2>
+                        </div>
+                        <p class="fs14 textGray600 mb-0">Configure your organisation profile for CQC/Ofsted compliance
+                        </p>
+                        <div class="emergencyMain p24 mt20" style="border-color: #bfdbfe;">
+                            <div class="flexBw">
+                                <h5 class="h5Head mb-0">Organisation Details</h5>
+                                <span class="careBadg darkOrangeBadg">incomplete</span>
+                            </div>
+                            <form action="">
+                                <div class="row mt20">
+                                    <div class="col-md-12">
+                                        <label for="">Organisation Name *</label>
+                                        <input type="text" class="form-control" placeholder="Legal organisation name">
+                                    </div>
+                                    <div class="col-md-12 m-t-10">
+                                        <label for="">Care Settings Operated *</label>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="dFlexGap">
+                                                    <input type="checkbox" class="checkBoxHW">
+                                                    <label class="mb-0" for="">Domiciliary</label>
+                                                </div>
+                                                <div class="dFlexGap m-t-10">
+                                                    <input type="checkbox" class="checkBoxHW">
+                                                    <label class="mb-0" for="">Supported Living </label>
+                                                </div>
+                                                <div class="dFlexGap m-t-10">
+                                                    <input type="checkbox" class="checkBoxHW">
+                                                    <label class="mb-0" for="">Day Centre</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="dFlexGap">
+                                                    <input type="checkbox" class="checkBoxHW">
+                                                    <label class="mb-0" for="">Residential</label>
+                                                </div>
+                                                <div class="dFlexGap m-t-10">
+                                                    <input type="checkbox" class="checkBoxHW">
+                                                    <label class="mb-0" for=""> Children Services</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 m-t-10">
+                                        <label for="">Regulators *</label>
+                                        <div class="dFlexGap gap-5">
+                                            <div class="dFlexGap">
+                                                <input type="checkbox" class="checkBoxHW">
+                                                <label class="mb-0" for="">CQC</label>
+                                            </div>
+                                            <div class="dFlexGap">
+                                                <input type="checkbox" class="checkBoxHW">
+                                                <label class="mb-0" for="">Ofsted</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 m-t-10">
+                                        <label for="">CQC Registration Number</label>
+                                        <input type="text" class="form-control" placeholder="1-123456789">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 m-t-10">
+                                        <label for="">Ofsted URN</label>
+                                        <input type="text" class="form-control" placeholder="URN number">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 m-t-10">
+                                        <label for="">Registered Manager Name *</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 m-t-10">
+                                        <label for="">Registered Manager Email *</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-12 m-t-10">
+                                        <label for="">Policy Document (PDF) *</label>
+                                        <div class="uploadSec">
+                                            <div class="uploadBox p24 mb-2 text-center muteHover py5">
+                                                <i class="bx bx-arrow-from-bottom" style="font-size: 30px;"></i>
+                                                <p class="muteText mb-0"> Upload Statement of Purpose </p>
+                                                <input type="file">
+                                            </div>
+                                            <div class="dFlexGap m-t-10">
+                                                <p class="fs13 greenTextp dFlexGap mb-0"> <i class="bx bx-check-circle fs16"></i><span> Document uploaded</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-4">
+                                        <button class="bgBtn w100"> <i class="bx bx-check-circle"></i> Save Organisation Profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="emergencyMain p24 mt20">
+                            <div class="dFlexGap">
+                                <i class="bx bx-book-open purpleTextp f20"></i>
+                                <h5 class="h5Head mb-0">Mandatory Policy Library</h5>
+                            </div>
+                            <div class="progressBar mt20 mb-4">
+                                <div class="progressFill" style="width:20%; background:#3376f2"></div>
+                            </div>
+                            <p class="muteText mb-0">1 of 8 mandatory policies uploaded </p>
+                            <div class="mt-4">
+                                <div class="lightBorderp bottomSpace rounded5 p-3">
+                                    <div class="flexBw">
+                                        <div class="dFlexGap">
+                                            <i class="bx bx-check-circle f18 greenTextp"></i>
+                                            <p class="fs14 mb-0">Safeguarding Adults</p>
+                                        </div>
+                                        <div>
+                                            <span class="careBadg darkGreenBadges">Uploaded</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lightBorderp bottomSpace rounded5 p-3">
+                                    <div class="flexBw">
+                                        <div class="dFlexGap">
+                                            <i class="bx bx-file-detail f18 textGray400"></i>
+                                            <p class="fs14 mb-0">Safeguarding Children</p>
+                                        </div>
+                                        <div>
+                                            <span class="careBadg darkMuteBadg">Requrired</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lightBorderp bottomSpace rounded5 p-3">
+                                    <div class="flexBw">
+                                        <div class="dFlexGap">
+                                            <i class="bx bx-file-detail f18 textGray400"></i>
+                                            <p class="fs14 mb-0">Health Safety</p>
+                                        </div>
+                                        <div>
+                                            <span class="careBadg darkMuteBadg">Requrired</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lightBorderp bottomSpace rounded5 p-3">
+                                    <div class="flexBw">
+                                        <div class="dFlexGap">
+                                            <i class="bx bx-file-detail f18 textGray400"></i>
+                                            <p class="fs14 mb-0">Infection Control</p>
+                                        </div>
+                                        <div>
+                                            <span class="careBadg darkMuteBadg">Requrired</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lightBorderp bottomSpace rounded5 p-3">
+                                    <div class="flexBw">
+                                        <div class="dFlexGap">
+                                            <i class="bx bx-file-detail f18 textGray400"></i>
+                                            <p class="fs14 mb-0">Medication Management </p>
+                                        </div>
+                                        <div>
+                                            <span class="careBadg darkMuteBadg">Requrired</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lightBorderp bottomSpace rounded5 p-3">
+                                    <div class="flexBw">
+                                        <div class="dFlexGap">
+                                            <i class="bx bx-file-detail f18 textGray400"></i>
+                                            <p class="fs14 mb-0">Gdpr Confidentiality</p>
+                                        </div>
+                                        <div>
+                                            <span class="careBadg darkMuteBadg">Requrired</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lightBorderp bottomSpace rounded5 p-3">
+                                    <div class="flexBw">
+                                        <div class="dFlexGap">
+                                            <i class="bx bx-file-detail f18 textGray400"></i>
+                                            <p class="fs14 mb-0">Complaints</p>
+                                        </div>
+                                        <div>
+                                            <span class="careBadg darkMuteBadg">Requrired</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lightBorderp bottomSpace rounded5 p-3">
+                                    <div class="flexBw">
+                                        <div class="dFlexGap">
+                                            <i class="bx bx-file-detail f18 textGray400"></i>
+                                            <p class="fs14 mb-0">Whistleblowing</p>
+                                        </div>
+                                        <div>
+                                            <span class="careBadg darkMuteBadg">Requrired</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-4 muchsmallText">Upload policies from the Compliance Hub → Policy Library</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- notesModal end -->
         <!-- tab  -->
         <script>
             const tabs = document.querySelectorAll(".tab");
@@ -1067,37 +1679,43 @@
                 });
             });
         </script>
-        <!-- record sec js-->
+        <!-- FIXED Record Section JavaScript - Works in multiple modals -->
         <script>
-            const recordSec = document.querySelector(".recordSec");
-
-            recordSec.querySelectorAll(".recordBtn").forEach(button => {
-
-                button.addEventListener("click", () => {
-                    const card = button.closest(".recordCard");
-                    const content = card.querySelector(".recordContent");
-                    if (!content) return;
-                    // close all
-                    recordSec.querySelectorAll(".recordContent").forEach(c => {
-                        console.log(c);
-                        c.style.display = "none";
-                    });
-                    // open current
-                    content.style.display = "block";
-
+            document.addEventListener('DOMContentLoaded', function() {
+                document.addEventListener('click', function(event) {
+                    const recordBtn = event.target.closest('.recordBtn');
+                    if (recordBtn) {
+                        const card = recordBtn.closest('.recordCard');
+                        if (!card) return;
+                        const content = card.querySelector('.recordContent');
+                        if (!content) return;
+                        document.querySelectorAll('.recordContent').forEach(c => c.style.display = 'none');
+                        content.style.display = 'block';
+                        return;
+                    }
+                    const cancelBtn = event.target.closest('.cancelRecord');
+                    if (cancelBtn) {
+                        const card = cancelBtn.closest('.recordCard');
+                        if (!card) return;
+                        const content = card.querySelector('.recordContent');
+                        if (content) content.style.display = 'none';
+                    }
                 });
             });
-
-            document.querySelectorAll(".cancelRecord").forEach((btn) => {
-                const card = btn.closest(".recordCard");
-                console.log(card);
-
-                const content = card.querySelector(".recordContent");
-                btn.addEventListener("click", () => {
-                    content.style.display = "none";
-                })
-            })
         </script>
         <!-- record sec  -->
+
+        <!-- checkToggle-->
+        <script>
+            const mentalCheckin = document.querySelector(".mentalCheckIn");
+            const mentalCapacitySelect = document.querySelector(".mentalCapacitySelect");
+            mentalCheckin.addEventListener("change", () => {
+                if (mentalCheckin.checked) {
+                    mentalCapacitySelect.style.display = "block"
+                } else {
+                    mentalCapacitySelect.style.display = "none"
+                }
+            })
+        </script>
 </main>
 @endsection

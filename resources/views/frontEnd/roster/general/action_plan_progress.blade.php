@@ -25,7 +25,7 @@
                                 <h2 class="font700 fs30 darkBlueTextp my-0">3</h2>
                             </div>
                             <div>
-                                <i class="bx bx-trending-up font700 blueText fs45"></i>
+                                <i class="bx bx-trending-up font700 blueText fs35"></i>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                                 <h2 class="font700 fs30 darkPurpleTextp my-0">3</h2>
                             </div>
                             <div>
-                                <i class="bx bx-clock font700 purpleTextp fs45"></i>
+                                <i class="bx bx-clock font700 purpleTextp fs35"></i>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                 <h2 class="font700 fs30 darkGreenTextp my-0">3</h2>
                             </div>
                             <div>
-                                <i class="bx bx-check-circle font700 greenText fs45"></i>
+                                <i class="bx bx-check-circle font700 greenText fs35"></i>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                 <h2 class="font700 fs30 darkRedText my-0">33</h2>
                             </div>
                             <div>
-                                <i class="bx bx-alert-triangle font700 redtext fs45"></i>
+                                <i class="bx bx-alert-triangle font700 redtext fs35"></i>
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="row mt20">
                 <div class="col-md-12">
-                    <div class="emergencyMain bottomSpace p24 cursorPointer actionList">
+                    <div class="emergencyMain bottomSpace15 p24 cursorPointer actionList">
                         <div class="dFlexGap mb-3">
                             <h5 class="h5Head mb-0">CQC Mock Inspection Action Plan - 18/02/2026</h5>
                             <span class="careBadg orangeBages">high</span>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="emergencyMain bottomSpace p24 cursorPointer actionList">
+                    <div class="emergencyMain bottomSpace15 p24 cursorPointer actionList">
                         <div class="dFlexGap mb-3">
                             <h5 class="h5Head mb-0">CQC Mock Inspection Action Plan - 18/02/2026</h5>
                             <span class="careBadg orangeBages">high</span>
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="emergencyMain bottomSpace p24 cursorPointer actionList">
+                    <div class="emergencyMain bottomSpace15 p24 cursorPointer actionList">
                         <div class="dFlexGap mb-3">
                             <h5 class="h5Head mb-0">CQC Mock Inspection Action Plan - 18/02/2026</h5>
                             <span class="careBadg orangeBages">high</span>
@@ -173,7 +173,7 @@
                     <div class="mt20 emergencyMain p24">
                         <h6 class="h6Head">Action Items</h6>
                         <div class="mt20">
-                            <div class="lightBorderp rounded12 p24 AllStaffTabC bottomSpace">
+                            <div class="lightBorderp rounded12 p24 AllStaffTabC bottomSpace15">
                                 <div class="dFlexGap align-items-start">
                                     <div>
                                         <div class="redbadges hw35 rounded50">
@@ -208,7 +208,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="lightBorderp rounded12 p24 AllStaffTabC bottomSpace">
+                            <div class="lightBorderp rounded12 p24 AllStaffTabC bottomSpace15">
                                 <div class="dFlexGap align-items-start">
                                     <div>
                                         <div class="careBadg hw35 rounded50">
@@ -246,7 +246,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="lightBorderp rounded12 p24 AllStaffTabC bottomSpace">
+                            <div class="lightBorderp rounded12 p24 AllStaffTabC bottomSpace15">
                                 <div class="dFlexGap align-items-start">
                                     <div>
                                         <div class="muteBadges hw35 rounded50">
