@@ -57,6 +57,7 @@ use App\Http\Controllers\frontEnd\Roster\general\ActionPlanProgress;
 use App\Http\Controllers\frontEnd\Roster\general\OnboaedingHubController;
 use App\Http\Controllers\frontEnd\Roster\general\PolicyLibraryController;
 use App\Http\Controllers\frontEnd\Roster\general\ClientCommunicationController;
+use App\Http\Controllers\frontEnd\Roster\general\AuditTemplateController;
 
 // Backend Controllers
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
@@ -347,6 +348,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('policylibrary', [PolicyLibraryController::class, 'index']);
 		// Client Communication Hub
 		Route::get('clientcommunicationhub', [ClientCommunicationController::class, 'index']);
+		Route::get('audittemplates', [AuditTemplateController::class, 'index']);
 	});
 
 	Route::post('/service/mood/add', 'App\Http\Controllers\frontEnd\ServiceUserManagement\MoodController@saveMood')->name('mood.add');

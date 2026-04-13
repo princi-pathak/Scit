@@ -17,6 +17,7 @@ body {
     margin: 0px !important;
     font-size: 15px;
     text-rendering: optimizeLegibility;
+    line-height: 1.5;
 }
 
 ul,
@@ -54,6 +55,7 @@ h6,
 .h5,
 .h6 {
     color: #272727;
+
 }
 
 #container {
@@ -18276,4 +18278,12 @@ input[type="checkbox"] {
     border-radius: 0px 12px 12px 0px;
     border: 1px solid var(--borderColor);
     border-left: unset;
+}
+
+.checkListItem {
+    padding-left: 16px;
+}
+
+.checkListItem {
+    margin-bottom: 5px;
 }

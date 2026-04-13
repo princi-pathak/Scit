@@ -453,7 +453,6 @@
                     detailBox.style.display = "block";
                     btn.classList.add("active");
                 }
-
             });
         });
     </script>
