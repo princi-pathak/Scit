@@ -7810,14 +7810,145 @@
                                 </div>
 
                             </div>
-                            <div class="mt-4">
-                                <button class="bgBtn w100 purpleBgBtn "> <i class="bx bx-sparkles"></i> Extract Data</button>
+                            <div class="mt20">
+                                <h5 class="h5Head">Extracted Data - Review Before Importing</h5>
+                                <div class="mt20">
+                                    <!-- care plan-->
+                                    <div class="panel panel-default  bottomSpace15 rounded12 aiDocAcc p-0 shadowp bg-blue-50 bgWhite">
+                                        <div class="panel-heading rounded12 p-0">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#carePlanAcc"
+                                                    class="rounded12 p24">
+                                                    <span class="careBadg">Care Plan</span>
+                                                    <i class="bx bx-chevron-down accIcon"></i>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="carePlanAcc" class="panel-collapse collapse in">
+                                            <div class="panel-body p24 pt-0">
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Daily Routine:</span>Not specified in document </p>
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Personal Care:</span>Not specified in document </p>
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Dietary:</span>Not specified in document </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Medication -->
+                                    <div class="panel panel-default bottomSpace15 rounded12  aiDocAcc p-0 shadowp bg-greenp-50 bgWhite">
+                                        <div class="panel-heading rounded12 p-0">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#medicationAcc"
+                                                    class="rounded12 p24">
+                                                    <span class="careBadg greenbadges">Medication (2)</span>
+                                                    <i class="bx bx-chevron-down accIcon"></i>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="medicationAcc" class="panel-collapse collapse">
+                                            <div class="panel-body p24 pt-0">
+                                                <div class="muteBg p-4 bottomSpace">
+                                                    <p class="muteText mb-0"> <span class=" blackText font700 me-1">Daily Routine:</span>Not specified in document </p>
+                                                </div>
+                                                <div class="muteBg p-4 bottomSpace">
+                                                    <p class="muteText mb-0"> <span class=" blackText font700 me-1">Daily Routine:</span>Not specified in document </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- risk assessments -->
+                                    <div class="panel panel-default bottomSpace15 rounded12  aiDocAcc p-0 shadowp bg-orange-50 bgWhite">
+                                        <div class="panel-heading rounded12 p-0">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#riskAcc"
+                                                    class="rounded12 p24">
+                                                    <span class="careBadg orangeBages">Risk Assessments (2)</span>
+                                                    <i class="bx bx-chevron-down accIcon"></i>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="riskAcc" class="panel-collapse collapse">
+                                            <div class="panel-body p24 pt-0">
+                                                <div class="muteBg p-4 bottomSpace">
+                                                    <p class="muteText mb-0"> <span class=" blackText font700 me-1">Medication Management:</span>Level: Medium</p>
+                                                </div>
+                                                <div class="muteBg p-4 bottomSpace">
+                                                    <p class="muteText mb-0"> <span class=" blackText font700 me-1">Daily Routine:</span>Not specified in document </p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- behaviour support plan -->
+                                    <div class="panel panel-default  bottomSpace15 rounded12 aiDocAcc p-0 shadowp bg-purple-50 bgWhite">
+                                        <div class="panel-heading rounded12 p-0">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#behaviourAcc"
+                                                    class="rounded12 p24">
+                                                    <span class="careBadg purpleBadges">Behaviour Support Plan</span>
+                                                    <i class="bx bx-chevron-down accIcon"></i>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="behaviourAcc" class="panel-collapse collapse">
+                                            <div class="panel-body p24 pt-0">
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Daily Routine:</span>Not specified in document </p>
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Personal Care:</span>Not specified in document </p>
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Dietary:</span>Not specified in document </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Menatal capacity -->
+                                    <div class="panel panel-default  bottomSpace15 rounded12 aiDocAcc p-0 shadowp  lightBorderp bgWhite">
+                                        <div class="panel-heading rounded12 p-0">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#mentalAcc"
+                                                    class="rounded12 p24">
+                                                    <span class="careBadg muteBadges">Mental Capacity Assessment</span>
+                                                    <i class="bx bx-chevron-down accIcon"></i>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="mentalAcc" class="panel-collapse collapse">
+                                            <div class="panel-body p24 pt-0">
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Daily Routine:</span>Not specified in document </p>
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Personal Care:</span>Not specified in document </p>
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Dietary:</span>Not specified in document </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--peep  -->
+                                    <div class="panel panel-default bottomSpace15 rounded12  aiDocAcc p-0 shadowp bg-red-50 bgWhite">
+                                        <div class="panel-heading rounded12 p-0">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#peepAcc"
+                                                    class="rounded12 p24">
+                                                    <span class="careBadg redBadges">Peep</span>
+                                                    <i class="bx bx-chevron-down accIcon"></i>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="peepAcc" class="panel-collapse collapse">
+                                            <div class="panel-body p24 pt-0">
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Mobility:</span>Not specified in document </p>
+
+                                                <p class="muteText"> <span class=" blackText font700 me-1">Evacaution Method:</span>Not specified in document </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
+                            <!-- accc -->
                         </div>
-                    </form>
+
+                        <div class="mt-4">
+                            <a class="bgBtn w100 purpleBgBtn "> <i class="bx bx-sparkles"></i> Extract Data</a>
+                        </div>
                 </div>
+                </form>
             </div>
         </div>
+    </div>
 
     </div>
     <!-- pratima modal end -->
@@ -8955,6 +9086,34 @@
             fileName.textContent = "PDF, Word, or Image files";
             removeBtn.style.display = 'none';
             hasFile = false;
+        });
+    </script>
+
+    <!-- accc -->
+    <script>
+        const recordSec = document.querySelector(".recordSec");
+
+        recordSec.querySelectorAll(".recordBtn").forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const card = button.closest(".recordCard");
+                console.log(card);
+
+                const content = card.querySelector(".recordContent");
+
+                if (!content) return;
+
+                // close all
+                recordSec.querySelectorAll(".recordContent").forEach(c => {
+                    console.log(c);
+                    c.style.display = "none";
+                });
+
+                // open current
+                content.style.display = "block";
+
+            });
         });
     </script>
     @endsection

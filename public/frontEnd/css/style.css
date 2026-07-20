@@ -18287,3 +18287,24 @@ input[type="checkbox"] {
 .checkListItem {
     margin-bottom: 5px;
 }
+
+/* 15 */
+
+.aiDocAcc a {
+    width: 100%;
+    display: block;
+    border-bottom: unset !important;
+
+}
+
+.aiDocAcc .panel-collapse {
+    border-top: unset !important;
+}
+
+.aiDocAcc .panel-heading {
+    border-bottom: unset !important;
+}
+
+.aiDocAcc .careBadg {
+    text-transform: capitalize;
+}
